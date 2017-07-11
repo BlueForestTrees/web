@@ -1,0 +1,63 @@
+.logConsole p{
+    margin: 0px;
+}
+
+.childNameZone, .childQuantityZone{
+    border:none;
+}
+.filteredThing{
+    cursor: pointer;
+}
+
+li{
+    cursor: default;
+    display: table;
+}
+
+li span{
+    vertical-align: middle;
+    display: table-cell;
+}
+
+.deleteBt{
+    cursor: pointer;
+    border: none;
+    margin-left: 5px;
+    background-image: url(/img/deleteBt.png);
+    background-size: 15px 15px;
+    height: 15px;
+    width: 15px;
+    vertical-align: middle;
+    display: table-cell;
+}
+
+.addBt{
+    cursor: pointer;
+    border: none;
+    margin-left: 5px;
+    background-image: url(/img/addBt.png);
+    background-size: 15px 15px;
+    height: 15px;
+    width: 15px;
+    vertical-align: middle;
+    display: table-cell;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    background-color: #f5f5f5;
+}
