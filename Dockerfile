@@ -1,4 +1,4 @@
-FROM node:latest AS trees.web.html
+FROM node:8.1.3 AS trees.web.html
 
 RUN mkdir -p /usr/src/trees.web
 COPY . /usr/src/trees.web/
