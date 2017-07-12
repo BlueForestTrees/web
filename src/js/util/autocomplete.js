@@ -6,7 +6,6 @@ import AutocompleteTree from "domain/autocomplete/AutocompleteTree";
 import TrunkHeaderDTO from "domain/dto/TrunkHeaderDTO";
 import AutocompleteQtUnitShortName from "domain/autocomplete/AutocompleteQtUnitShortName";
 import QtUnitShortName from "domain/model/QtUnitShortName";
-import mapper from "service/MapperService"
 
 const toQtUnitShortName = (termToParse: string): QtUnitShortName => {
     const qtUnitArray = termToParse.match(/(\d*[.,]?\d*)(\S*)/);

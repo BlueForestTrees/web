@@ -6,6 +6,7 @@ import RestServiceBase from "rest/RestServiceBase";
 import RootCreatedDTO from "domain/dto/RootCreatedDTO";
 import Unit from "../domain/unit/Unit";
 import AutocompleteTree from "../domain/autocomplete/AutocompleteTree";
+import RequantifiedTrunkRequestDTO from "../domain/dto/RequantifiedTrunkRequestDTO";
 
 class TreesService extends RestServiceBase {
 
