@@ -1,0 +1,26 @@
+{
+  "name": "web",
+  "version": "1.0.0",
+  "description": "web for trees",
+  "main": "index.js",
+  "author": "slim",
+  "license": "MIT",
+  "scripts": {
+    "init": "yarn install",
+    "build": "webpack --config webpack.dev.js --progress --profile --display-error-details",
+    "start": "webpack-dev-server --config webpack.dev.js --progress --profile"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "html-webpack-plugin": "^2.30.1",
+    "uglifyjs-webpack-plugin": "^1.1.0",
+    "webpack": "^3.8.1",
+    "webpack-cli": "^1.4.5",
+    "webpack-dev-server": "^2.9.4"
+  },
+  "dependencies": {
+    "request-promise-lite": "^0.12.0"
+  }
+}
