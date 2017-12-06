@@ -1,24 +1,26 @@
 <template>
     <div id="search">
         <search-input></search-input>
-        <button v-if='noResults'>Créer {{term}}</button>
+        <search-create></search-create>
         <search-results></search-results>
     </div>
 </template>
 <script>
-    import { createNamespacedHelpers } from 'vuex'
-    const { mapState, mapGetters } = createNamespacedHelpers('search');
+    import {mapState, mapGetters} from 'vuex';
     import SearchInput from './SearchInput';
-    import SearchResults from './SearchResults'
+    import SearchResults from './SearchResults';
+    import SearchCreate from './SearchCreate';
 
     export default {
         name: "search",
         components: {
-            SearchInput, SearchResults
+            SearchInput, SearchResults, SearchCreate
         },
         computed: {
-            ...mapState(['term']),
-            ...mapGetters(['noResults'])
+            ...mapState({
+                term: state => state.search.term
+            }),
+            ...mapGetters(['canCreate'])
         }
     }
 </script>

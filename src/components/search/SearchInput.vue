@@ -3,16 +3,14 @@
 </template>
 
 <script>
-    import {createNamespacedHelpers} from 'vuex'
-    import {ON_SEARCH_TERM_CHANGE} from "../../store/mutations";
-
-    const {mapActions} = createNamespacedHelpers('search');
+    import {mapActions} from 'vuex';
+    import {CHANGE_TERM} from "mutations";
 
     export default {
         name: "search-input",
         methods: {
             ...mapActions({
-                'termChanged': ON_SEARCH_TERM_CHANGE
+                'termChanged': CHANGE_TERM
             })
         },
         computed: {
