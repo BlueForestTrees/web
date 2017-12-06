@@ -6,21 +6,39 @@
   "author": "slim",
   "license": "MIT",
   "scripts": {
-    "init": "yarn install",
-    "build": "webpack --config webpack.dev.js --progress --profile --display-error-details",
-    "start": "webpack-dev-server --config webpack.dev.js --progress --profile"
+    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
+    "css-loader": "^0.28.7",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "friendly-errors-webpack-plugin": "^1.6.1",
     "html-webpack-plugin": "^2.30.1",
+    "node-notifier": "^5.1.2",
     "uglifyjs-webpack-plugin": "^1.1.0",
+    "vue-loader": "^13.5.0",
+    "vue-style-loader": "^3.0.3",
+    "vue-template-compiler": "^2.5.9",
     "webpack": "^3.8.1",
     "webpack-cli": "^1.4.5",
     "webpack-dev-server": "^2.9.4"
   },
   "dependencies": {
-    "request-promise-lite": "^0.12.0"
-  }
+    "lodash": "^4.17.4",
+    "request-promise-lite": "^0.12.0",
+    "vue": "^2.5.9",
+    "vuex": "^3.0.1"
+  },
+  "engines": {
+    "node": ">= 4.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
 }
