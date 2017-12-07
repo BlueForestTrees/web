@@ -13,10 +13,12 @@ const conf = {
     resolve: {
         extensions: ['.js', '.vue', '.json'],
         alias: {
+            const$: path.resolve(__dirname, '../src/services/const.js'),
+            trunks$: path.resolve(__dirname, '../src/services/trunks.js'),
+            mapper$: path.resolve(__dirname, '../src/services/mapper.js'),
+            units$: path.resolve(__dirname, '../src/services/units.js'),
+            api$: path.resolve(__dirname, '../src/services/api.js'),
             mutations$: path.resolve(__dirname, '../src/store/mutations.js'),
-            const$: path.resolve(__dirname, '../src/const/index.js'),
-            api$: path.resolve(__dirname, '../src/api/index.js'),
-            mapper$: path.resolve(__dirname, '../src/mapper/index.js'),
             vue$: 'vue/dist/vue.esm.js'
         }
     },

@@ -1,10 +1,10 @@
 <template>
-    <button v-if='canCreate' @click='create(term)'>Créer {{term}}</button>
+    <button v-if='canCreate' @click='create()'>Créer {{term}}</button>
 </template>
 
 <script>
     import {mapState,mapGetters, mapActions} from 'vuex';
-    import {CHANGE_TERM} from "mutations";
+    import {UPDATE_TERM} from "mutations";
     import * as Do from 'mutations'
 
     export default {

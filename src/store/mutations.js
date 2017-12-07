@@ -1,6 +1,12 @@
-export const CHANGE_TERM = 'changeTerm';
-export const CHANGE_RESULTS = 'changeResults';
+export const UPDATE_TERM = 'updateTerm';
+export const UPDATE_RESULTS = 'updateResults';
 export const CLEAR_RESULTS = 'clearResults';
-export const CHANGE_SELECTED_TRUNK = 'changeSelectedTrunk';
-export const CHANGE_SELECTED_TRUNK_ID = 'changeSelectedTrunkId';
+export const UPDATE_SELECTED_TRUNK = 'updateSelectedTrunk';
+export const UPDATE_SELECTED_TRUNK_ID = 'updateSelectedTrunkId';
 export const CREATE = 'create';
+export const UPDATE_INPUT_TRUNK = 'updateInputTrunk';
+export const TRIGGER_PURGE = 'triggerPurge';
+export const LIST_ALL = 'listAll';
+export const SEARCH = 'search';
+export const CLOSE_TRUNK = 'closeTrunk';
+export const UPDATE_SEARCHING = 'updateSearching';

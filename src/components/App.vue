@@ -1,16 +1,20 @@
 <template>
     <div id="app">
         <SearchGrid/>
+        <Trunk/>
+        <CommandBar/>
     </div>
 </template>
 
 <script>
     import SearchGrid from './search/Search'
+    import CommandBar from './command/Command'
+    import Trunk from './trunk/Trunk'
 
     export default {
         name: 'app',
         components: {
-            SearchGrid
+            SearchGrid, CommandBar, Trunk
         }
     }
 </script>

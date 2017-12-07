@@ -4,13 +4,13 @@
 
 <script>
     import {mapActions} from 'vuex';
-    import {CHANGE_TERM} from "mutations";
+    import {UPDATE_TERM} from "mutations";
 
     export default {
         name: "search-input",
         methods: {
             ...mapActions({
-                'termChanged': CHANGE_TERM
+                'termChanged': UPDATE_TERM
             })
         },
         computed: {

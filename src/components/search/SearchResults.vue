@@ -1,9 +1,9 @@
 <template>
-    <ol>
-        <li v-for="trunk in trunks" v-bind:key="trunk.id" @click="changeSelectedTrunkId(trunk._id)">
-            {{trunk.name}}
-        </li>
-    </ol>
+    <div>
+        <span v-for="(trunk, i) in trunks" v-bind:key="trunk.id" @click="updateSelectedTrunkId(trunk._id)">
+            {{trunk.name}}<span v-if="i !== trunks.length - 1">, </span>
+        </span>
+    </div>
 </template>
 
 <script>
@@ -18,7 +18,7 @@
             })
         },
         methods: {
-            ...mapActions([Do.CHANGE_SELECTED_TRUNK_ID])
+            ...mapActions([Do.UPDATE_SELECTED_TRUNK_ID])
         }
     }
 </script>

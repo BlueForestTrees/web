@@ -1,5 +1,5 @@
 <template>
-    <div id="search">
+    <div id="search" v-if="trunkIsSelected">
         <search-input></search-input>
         <search-create></search-create>
         <search-results></search-results>
@@ -18,7 +18,8 @@
         },
         computed: {
             ...mapState({
-                term: state => state.search.term
+                term: state => state.search.term,
+                trunkIsSelected : state => !state.selectedTrunk
             }),
             ...mapGetters(['canCreate'])
         }
