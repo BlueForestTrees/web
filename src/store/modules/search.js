@@ -16,17 +16,17 @@ const getters = {
 };
 
 const actions = {
-    [Do.UPDATE_TERM]: ({commit, dispatch}, value) => {
-        commit(Do.UPDATE_TERM, value);
-        commit(Do.UPDATE_INPUT_TRUNK, toTrunk(value));
+    [Do.UPDATE_TERM]: ({commit, dispatch}, term) => {
+        commit(Do.UPDATE_TERM, term);
+        commit(Do.UPDATE_INPUT_TRUNK, toTrunk(term));
         commit(Do.UPDATE_SEARCHING,true);
-        dispatch(Do.SEARCH, value);
+        dispatch(Do.SEARCH, term);
     },
 
     [Do.SEARCH]: _.debounce(
-        async function ({commit}, value) {
+        async function ({commit, state}) {
             commit(Do.CLEAR_RESULTS);
-            commit(Do.UPDATE_RESULTS, await trunks.search(value));
+            commit(Do.UPDATE_RESULTS, await trunks.search(state.inputTrunk));
             commit(Do.UPDATE_SEARCHING,false);
         },
         DEBOUNCE_DELAY),
@@ -50,7 +50,7 @@ const mutations = {
         state.inputTrunk = value;
     },
     [Do.UPDATE_RESULTS]: (state, value) => {
-        state.results = _.sortBy(value, trunk => trunk.name);
+        state.results = value;
     },
     [Do.CLEAR_RESULTS]: state => {
         state.results = [];

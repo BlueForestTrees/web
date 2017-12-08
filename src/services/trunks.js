@@ -1,4 +1,5 @@
 import api from 'api'
+import units from 'units'
 
 export default {
 
@@ -19,8 +20,12 @@ export default {
         return api.del(`api/trunk/${trunkId}`);
     },
 
-    search: (namepart) => {
-        return api.get(`api/trunks?q=${namepart}`);
+    search: ({qt,unit,name}) => {
+        const _qt = qt ? `qt=${qt}&` : ``;
+        const _unit = units.lookup(unit) ? `unit=${unit}&` : ``;
+        const _name = `name=${name}`;
+
+        return api.get(`api/trunks?` + _qt + _unit + _name);
     },
 
     all: () => {

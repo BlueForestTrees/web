@@ -1,5 +1,5 @@
 <template>
-    <button v-if='canCreate' @click='create()'>Créer {{term}}</button>
+    <button v-if='canCreate' @click='create()'>Créer {{trunk.qt?trunk.qt:'?'}}{{trunk.unit}} {{trunk.unit?'de ':''}}'{{trunk.name?trunk.name:'?'}}'</button>
 </template>
 
 <script>
@@ -11,7 +11,7 @@
         name: "search-create",
         computed: {
             ...mapState({
-                term:state=>state.search.term
+                trunk:state=>state.search.inputTrunk
             }),
             ...mapGetters(['canCreate'])
         },
