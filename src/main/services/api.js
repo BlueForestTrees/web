@@ -1,8 +1,8 @@
-import {BASE_URL} from 'const';
+import {baseUrl} from './const';
 import req from 'request-promise-lite';
 
 const url = (path) => {
-    return BASE_URL + path;
+    return baseUrl + path;
 };
 
 const options =  (body) => {

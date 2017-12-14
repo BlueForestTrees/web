@@ -1,0 +1,12 @@
+export const UPDATE_TERM = 'updateTerm';
+export const CLEAR_SEARCH = 'clearSearch';
+export const CLEAR_RESULTS = 'clearResults';
+export const CLOSE_TRUNK = 'closeTrunk';
+export const CREATE_TRUNK = 'createTrunk';
+export const SET_TRUNK = 'setTrunk';
+export const SEARCH = 'search';
+export const SELECT_ROOT = 'selectRoot';
+export const SELECT_SUB_TRUNK = 'selectSubTrunk';
+export const LOAD_TRUNK = 'loadTrunk';
+export const UPDATE_RESULTS = 'updateResults';
+export const UPDATE_SEARCHING = 'updateSearching';

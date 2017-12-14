@@ -1,9 +1,9 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 
 const conf = {
-    entry: './src/main.js',
+    entry: './src/main/main.js',
 
     output: {
         filename: '[name].bundle.js',
@@ -13,12 +13,6 @@ const conf = {
     resolve: {
         extensions: ['.js', '.vue', '.json'],
         alias: {
-            const$: path.resolve(__dirname, '../src/services/const.js'),
-            trunks$: path.resolve(__dirname, '../src/services/trunks.js'),
-            mapper$: path.resolve(__dirname, '../src/services/mapper.js'),
-            units$: path.resolve(__dirname, '../src/services/units.js'),
-            api$: path.resolve(__dirname, '../src/services/api.js'),
-            mutations$: path.resolve(__dirname, '../src/store/mutations.js'),
             vue$: 'vue/dist/vue.esm.js'
         }
     },
@@ -31,7 +25,7 @@ const conf = {
     },
 
     plugins: [
-        new HtmlWebpackPlugin({template: './src/index.html', inject: 'body', hash: 'true'})
+        new HtmlWebpackPlugin({template: './src/main/index.html', inject: 'body', hash: 'true'})
     ],
     devServer: {
         port: 8079,
