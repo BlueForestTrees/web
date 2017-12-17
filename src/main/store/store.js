@@ -8,17 +8,24 @@ Vue.use(Vuex);
 
 const state = {
     search:{
-        term: "",
+        term: null,
         results: null,
         searching: false
     },
-    path: null,
-    seed: null
+    path: []
 };
 
 const getters = {
     trunk(state){
         return _.first(state.path);
+    },
+    seed(state){
+        return _.last(state.path);
+    },
+    allowCreate(state){
+        return !state.search.searching
+        && state.search.results && state.search.results.length === 0
+            && state.search.term;
     }
 };
 

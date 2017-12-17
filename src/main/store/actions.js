@@ -19,11 +19,16 @@ export default {
         DEBOUNCE_DELAY),
 
     [Do.CREATE_TRUNK]: async ({commit, state, dispatch}, term) => {
-        dispatch(Do.SET_TRUNK, await trunks.create({name: term}));
+        const trunk = await trunks.create({name: term});
+        dispatch(Do.SET_TRUNK, trunk);
         commit(Do.CLEAR_SEARCH);
     },
+    [Do.CREATE_ROOT]: async ({commit, state, dispatch}, term) => {
+        const root = await trunks.create({name: term});
+        dispatch(Do.LINK_ROOT, root);
+    },
 
-    [Do.LOAD_TRUNK]: async ({state, commit, dispatch}, trunk) => {
+    [Do.LOAD_TRUNK]: async ({dispatch}, trunk) => {
         dispatch(Do.SET_TRUNK, await trunks.get(trunk._id));
     },
 
@@ -32,15 +37,9 @@ export default {
         commit(Do.CLEAR_SEARCH);
     },
 
-
-    [Do.SELECT_ROOT]: async ({commit, dispatch}, root)=>{
-        const trunk = getters.trunk;
-        await trunks.link({trunkId: trunk._id, rootId: root._id});
-        commit(Do.SELECT_ROOT, root);
-        commit(Do.CLEAR_SEARCH);
+    [Do.LINK_ROOT]: async ({commit, dispatch, getters}, root)=>{
+        await trunks.link({trunkId: getters.seed._id, rootId: root._id});
+        commit(Do.ADD_ROOT, root);
     },
 
-    [Do.CLOSE_TRUNK]: ({commit}) => {
-        commit(Do.CLOSE_TRUNK);
-    }
 };

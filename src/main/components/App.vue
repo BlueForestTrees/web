@@ -3,40 +3,62 @@
 
         <div id="trunk" v-if="trunk">
             <button @click="closeTrunk">X</button>
-            <trunk-list :trunks="path"></trunk-list>
-            <trunk-list :trunks="seed.roots"></trunk-list>
+            <trunk-path :path="path" v-on:select="splicePath"></trunk-path>
+            <trunk-list :trunks="seed.cache" v-on:select="linkRoot"></trunk-list>
+
+            <p><input :value="search.term" @input="updateTerm($event.target.value)"></p>
+            <div v-if="search.searching">Recherche..</div>
+            <trunk-list :trunks="search.results" v-on:select="addRoot"></trunk-list>
+            <span v-if="allowCreate"> Pas de Résultats. <button @click="createRoot">Créer "{{search.term}}" . . .</button></span>
+
         </div>
 
-        <div id="search">
+        <div id="search" v-if="!trunk">
+
             <p><input :value="search.term" @input="updateTerm($event.target.value)"></p>
-            <button v-if='search.term' @click='createTrunk'>{{`Créer "${search.term}"`}}</button>
             <div v-if="search.searching">Recherche..</div>
             <trunk-list :trunks="search.results" v-on:select="loadTrunk"></trunk-list>
+            <span v-if="allowCreate"> Pas de Résultats. <button @click="createTrunk">Créer "{{search.term}}" . . .</button></span>
+
         </div>
 
     </div>
 </template>
 
 <script>
-    import {mapState, mapActions, mapGetters} from 'vuex'
-    import {CLOSE_TRUNK, CREATE_TRUNK, LOAD_TRUNK, UPDATE_TERM} from "../store/keys";
+    import {mapState, mapActions, mapGetters, mapMutations} from 'vuex'
+    import {
+        CLOSE_TRUNK,
+        CREATE_ROOT,
+        CREATE_TRUNK,
+        LOAD_TRUNK,
+        SPLICE_PATH,
+        ADD_ROOT,
+        UPDATE_TERM, LINK_ROOT, CLEAR_SEARCH
+    } from "../store/keys";
     import TrunkList from './search/TrunkList';
+    import TrunkPath from './search/TrunkPath';
 
     export default {
         name: 'app',
         components: {
-            TrunkList
+            TrunkList, TrunkPath
         },
         computed: {
-            ...mapGetters(['trunk']),
+            ...mapGetters(['trunk','seed','allowCreate']),
             ...mapState(
-                ['path', 'seed', 'search']
+                ['path', 'search']
             )
         },
         methods: {
-            ...mapActions([CLOSE_TRUNK, UPDATE_TERM, LOAD_TRUNK]),
+            ...mapActions([LINK_ROOT, UPDATE_TERM, LOAD_TRUNK]),
+            ...mapMutations([SPLICE_PATH, ADD_ROOT, CLOSE_TRUNK]),
             createTrunk(){
                 this.$store.dispatch(CREATE_TRUNK,this.search.term);
+            },
+            createRoot(){
+                this.$store.dispatch(CREATE_ROOT,this.search.term);
+                this.$store.commit(CLEAR_SEARCH);
             }
         }
     }

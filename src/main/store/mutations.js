@@ -18,18 +18,18 @@ export default {
         state.search.searching = value;
     },
     [Do.CLOSE_TRUNK]: (state) => {
-        state.seed = state.path = null;
+        state.path = null;
     },
     [Do.SET_TRUNK]: (state, value) => {
         state.path = [value];
-        state.seed = value;
     },
-    [Do.SELECT_ROOT]: (state, value) => {
-        state.seed = value;
+    [Do.ADD_ROOT]: (state, value) => {
+        //TODO à la création d'un root, il faut ajouter dans roots du parent ET dans le path
+        console.log(state.seed);
+        state.seed.roots.push(value);
         state.path.push(value);
     },
-    [Do.SELECT_SUB_TRUNK]: (state, index) => {
-        state.seed = value;
-        state.path.length = index + 1;
+    [Do.SPLICE_PATH]: (state, idx) => {
+        state.path.splice(idx+1);
     }
 };
