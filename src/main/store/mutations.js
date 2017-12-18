@@ -1,11 +1,18 @@
-import * as Do from "./keys";
+import * as Do from "./mutationKeys";
+import Vue from 'vue'
 
 export default {
-    [Do.UPDATE_TERM]: (state, value) => {
-        state.search.term = value;
+    [Do.ADD_TO_PATH]: (state, root) => {
+        state.path.push(root);
     },
-    [Do.UPDATE_RESULTS]: (state, value) => {
-        state.search.results = value;
+    [Do.ADD_SEED]: (state, {root, seed}) => {
+        if(!root.roots){
+            Vue.set(root,'roots', []);
+        }
+        root.roots.push(seed);
+    },
+    [Do.CHANGE_PATH_INDEX]: (state, idx) => {
+        state.path.splice(idx+1);
     },
     [Do.CLEAR_SEARCH]: state => {
         state.search.term = null;
@@ -14,22 +21,19 @@ export default {
     [Do.CLEAR_RESULTS]: state => {
         state.search.results = [];
     },
-    [Do.UPDATE_SEARCHING]: (state, value) => {
-        state.search.searching = value;
-    },
     [Do.CLOSE_TRUNK]: (state) => {
         state.path = null;
     },
-    [Do.SET_TRUNK]: (state, value) => {
+    [Do.OPEN_TREE]: (state, value) => {
         state.path = [value];
     },
-    [Do.ADD_ROOT]: (state, value) => {
-        //TODO à la création d'un root, il faut ajouter dans roots du parent ET dans le path
-        console.log(state.seed);
-        state.seed.roots.push(value);
-        state.path.push(value);
+    [Do.UPDATE_TERM]: (state, value) => {
+        state.search.term = value;
     },
-    [Do.SPLICE_PATH]: (state, idx) => {
-        state.path.splice(idx+1);
-    }
+    [Do.UPDATE_RESULTS]: (state, value) => {
+        state.search.results = value;
+    },
+    [Do.UPDATE_SEARCHING]: (state, value) => {
+        state.search.searching = value;
+    },
 };

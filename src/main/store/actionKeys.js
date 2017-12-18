@@ -1,0 +1,10 @@
+export const CREATE_AND_OPEN_TREE_CLICK = 'onCreateAndOpenTreeClick';
+export const CREATE_SEED_CLICK = 'onCreateSeedClick';
+export const CREATE_TRUNK_THEN_SEED_CLICK = 'onCreateTrunkThenSeedClick';
+export const CREATE_TRUNK = 'onCreateTrunk';
+export const OPEN_TREE_CLICK = 'onOpenTreeClick';
+export const PATH_CLICK = 'onPathClick';
+export const ROOT_CLICK = 'onRootClick';
+export const SEARCH = 'onSearch';
+export const TERM_CHANGE = "onTermChange";
+export const TRUNK_CLOSE = 'onTrunkClose';
