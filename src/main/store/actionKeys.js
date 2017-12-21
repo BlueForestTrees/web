@@ -1,9 +1,11 @@
-export const CREATE_AND_OPEN_TREE_CLICK = 'onCreateAndOpenTreeClick';
-export const CREATE_SEED_CLICK = 'onCreateSeedClick';
-export const CREATE_TRUNK_THEN_SEED_CLICK = 'onCreateTrunkThenSeedClick';
+export const CREATE_AND_OPEN_TREE = 'onCreateAndOpenTree';
+export const CREATE_SEED = 'onCreateSeed';
+export const CREATE_TRUNK_THEN_SEED = 'onCreateTrunkThenSeed';
 export const CREATE_TRUNK = 'onCreateTrunk';
-export const OPEN_TREE_CLICK = 'onOpenTreeClick';
+export const OPEN_TREE = 'onOpenTree';
 export const PATH_CLICK = 'onPathClick';
+export const PATH_LINK_CLICK = 'onPathLinkClick';
+export const SET_QT_UNIT = 'onSetQtUnit';
 export const ROOT_CLICK = 'onRootClick';
 export const SEARCH = 'onSearch';
 export const TERM_CHANGE = "onTermChange";

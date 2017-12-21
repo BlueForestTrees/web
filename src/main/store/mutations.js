@@ -18,22 +18,13 @@ export default {
         state.search.term = null;
         state.search.results = [];
     },
-    [Do.CLEAR_RESULTS]: state => {
-        state.search.results = [];
-    },
-    [Do.CLOSE_TRUNK]: (state) => {
+    [Do.CLOSE_TREE]: (state) => {
         state.path = null;
     },
     [Do.OPEN_TREE]: (state, value) => {
         state.path = [value];
     },
-    [Do.UPDATE_TERM]: (state, value) => {
-        state.search.term = value;
-    },
-    [Do.UPDATE_RESULTS]: (state, value) => {
-        state.search.results = value;
-    },
-    [Do.UPDATE_SEARCHING]: (state, value) => {
-        state.search.searching = value;
-    },
+    [Do.LINK_EDIT]: (state, value) => {
+        state.linkEdit = value;
+    }
 };

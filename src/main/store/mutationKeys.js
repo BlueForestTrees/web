@@ -3,8 +3,9 @@ export const ADD_SEED = 'addSeed';
 export const CHANGE_PATH_INDEX = 'changePathIndex';
 export const CLEAR_SEARCH = 'clearSearch';
 export const CLEAR_RESULTS = 'clearResults';
-export const CLOSE_TRUNK = 'closeTrunk';
+export const CLOSE_TREE = 'closeTree';
 export const OPEN_TREE = 'openTree';
+export const LINK_EDIT = 'linkEdit';
 
 export const UPDATE_RESULTS = 'updateResults';
 export const UPDATE_SEARCHING = 'updateSearching';

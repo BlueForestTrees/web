@@ -3,22 +3,15 @@
 
         <div id="trunk" v-if="trunk">
             <button @click="onTrunkClose">X</button>
-            <trunk-path :path="path" v-on:select="onPathClick"></trunk-path>
-            <trunk-list :trunks="seed.roots" v-on:select="onRootClick"></trunk-list>
-
-            <p><input :value="search.term" @input="onTermChange($event.target.value)"></p>
-            <div v-if="search.searching">Recherche..</div>
-            <trunk-list :trunks="search.results" v-on:select="onCreateSeedClick"></trunk-list>
-            <span v-if="allowCreate"> Pas de Résultats. <button @click="onCreateTrunkThenSeedClick">Créer "{{search.term}}" . . .</button></span>
-
+            <trunk-path :path="path" v-on:select="onPathClick" v-on:select-link="onPathLinkClick"></trunk-path>
+            <qt-unit-setter v-if="linkEdit" :trunk="linkEdit.trunk" :root="linkEdit.root" v-on:setQtUnit="onSetQtUnit"></qt-unit-setter>
+            <trunk-list :trunks="seed.roots" v-on:select="onRootClick" :qt="true"></trunk-list>
+            <search-box v-if="!linkEdit" :search="search" v-on:select="onCreateSeed" v-on:create="onCreateTrunkThenSeed"></search-box>
         </div>
 
         <div id="search" v-if="!trunk">
 
-            <p><input :value="search.term" @input="onTermChange($event.target.value)"></p>
-            <div v-if="search.searching">Recherche..</div>
-            <trunk-list :trunks="search.results" v-on:select="onOpenTreeClick"></trunk-list>
-            <span v-if="allowCreate"> Pas de Résultats. <button @click="onCreateAndOpenTreeClick">Créer "{{search.term}}" . . .</button></span>
+            <search-box :search="search" v-on:select="onOpenTree" v-on:create="onCreateAndOpenTree"></search-box>
 
         </div>
 
@@ -28,22 +21,24 @@
 <script>
     import {mapState, mapActions, mapGetters} from 'vuex'
     import * as On from "../store/actionKeys";
-    import TrunkList from './search/TrunkList';
-    import TrunkPath from './search/TrunkPath';
+    import TrunkList from './common/TrunkList';
+    import TrunkPath from './common/TrunkPath';
+    import SearchBox from "./search/SearchBox";
+    import QtUnitSetter from "./props/QtUnitSetter";
 
     export default {
         name: 'app',
         components: {
-            TrunkList, TrunkPath
+            SearchBox, TrunkList, TrunkPath, QtUnitSetter
         },
         computed: {
-            ...mapGetters(['trunk', 'seed', 'allowCreate']),
+            ...mapGetters(['trunk', 'seed']),
             ...mapState(
-                ['path', 'search']
+                ['path','search', 'linkEdit']
             )
         },
         methods: {
-            ...mapActions([On.TERM_CHANGE, On.TRUNK_CLOSE, On.PATH_CLICK, On.ROOT_CLICK, On.CREATE_SEED_CLICK, On.CREATE_TRUNK_THEN_SEED_CLICK, On.CREATE_AND_OPEN_TREE_CLICK, On.OPEN_TREE_CLICK])
+            ...mapActions([On.TRUNK_CLOSE, On.PATH_CLICK, On.PATH_LINK_CLICK, On.SET_QT_UNIT, On.ROOT_CLICK, On.CREATE_SEED, On.CREATE_TRUNK_THEN_SEED, On.CREATE_AND_OPEN_TREE, On.OPEN_TREE])
         }
     }
 </script>

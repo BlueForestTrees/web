@@ -3,37 +3,34 @@ import Vuex from 'vuex'
 import actions from './actions';
 import mutations from './mutations';
 import _ from 'lodash';
+import search from './search';
 
 Vue.use(Vuex);
 
 const state = {
-    search:{
-        term: null,
-        results: null,
-        searching: false
-    },
-    path: []
+    path: null,
+    linkEdit: null
 };
 
 const getters = {
-    trunk(state){
+    trunk(state) {
         return _.first(state.path);
     },
-    seed(state){
+    seed(state) {
         return _.last(state.path);
-    },
-    allowCreate(state){
-        return !state.search.searching
-        && state.search.results && state.search.results.length === 0
-            && state.search.term;
     }
+};
+
+const modules = {
+    search
 };
 
 const store = new Vuex.Store({
     state,
     getters,
     mutations,
-    actions
+    actions,
+    modules
 });
 
 export default store;
