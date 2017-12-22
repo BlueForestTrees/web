@@ -46,6 +46,7 @@ export default {
             root:{_id:root._id, qt: rootQt}
         });
         commit(Do.LINK_EDIT, null);
+        commit(Do.REQUANTIFY, {trunk, root, trunkQt, rootQt});
     }
 
 
