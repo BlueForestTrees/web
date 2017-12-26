@@ -3,6 +3,7 @@ import units from './units'
 
 export default {
     get:(_id) => api.get(`api/trunk/${_id}`),
+    getQuantified:(qt, _id) => api.get(`api/trunk/${qt}/${_id}`),
     create:(trunk) =>  api.post('api/trunk', trunk),
     qtUnit:(qtUnit) =>  api.post('api/qtunit', qtUnit),
     del: (trunkId) =>  api.del(`api/trunk/${trunkId}`),

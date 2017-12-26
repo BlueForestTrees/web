@@ -6,7 +6,9 @@ export const CLEAR_RESULTS = 'clearResults';
 export const CLOSE_TREE = 'closeTree';
 export const OPEN_TREE = 'openTree';
 export const LINK_EDIT = 'linkEdit';
-export const REQUANTIFY = 'requantify';
+export const UPDATE_ROOT = 'updateRoot';
+export const UPDATE_PATH_ITEM = 'updatePathItem';
+export const UPDATE_QT = 'updateQt';
 
 export const UPDATE_RESULTS = 'updateResults';
 export const UPDATE_SEARCHING = 'updateSearching';

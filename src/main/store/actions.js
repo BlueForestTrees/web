@@ -8,20 +8,18 @@ export default {
         return dispatch(On.OPEN_TREE, tree);
     },
     [On.OPEN_TREE]: async ({commit}, trunk) => {
-        let tree = await trunks.get(trunk._id);
-        commit(Do.OPEN_TREE, tree);
+        commit(Do.OPEN_TREE, await trunks.get(trunk._id));
         commit(Do.CLEAR_SEARCH);
     },
     [On.CREATE_SEED]: async ({commit, dispatch, getters}, seed) => {
         await trunks.link({trunkId: getters.seed._id, rootId: seed._id});
-        commit(Do.ADD_SEED, {root: getters.seed, seed: seed});
+        commit(Do.ADD_SEED, {root: getters.seed, seed: await trunks.get(seed._id)});
         commit(Do.CLEAR_SEARCH);
     },
 
     [On.CREATE_TRUNK_THEN_SEED]: async ({state, dispatch, commit}, name) => {
         const seed = await dispatch(On.CREATE_TRUNK, name);
         await dispatch(On.CREATE_SEED, seed);
-        commit(Do.CLEAR_SEARCH);
     },
 
     [On.CREATE_TRUNK]: async ({commit, state, dispatch}, name) => {
@@ -42,11 +40,17 @@ export default {
     },
     [On.SET_QT_UNIT]: async ({commit}, {trunk, root, trunkQt, rootQt}) => {
         await trunks.qtUnit({
-            trunk:{_id:trunk._id, qt: trunkQt},
-            root:{_id:root._id, qt: rootQt}
+            trunk: {_id: trunk._id, qt: trunkQt},
+            root: {_id: root._id, qt: rootQt}
         });
+        if(!trunk.qt){
+            commit(Do.UPDATE_QT, {trunk, qt:trunkQt});
+        }
+        //TODO pas rootQt car bug si c trunkQt qui a changé
+        let newRoot = await trunks.getQuantified(rootQt, root._id);
+        commit(Do.UPDATE_ROOT, {trunk, root: newRoot});
+        commit(Do.UPDATE_PATH_ITEM, newRoot);
         commit(Do.LINK_EDIT, null);
-        commit(Do.REQUANTIFY, {trunk, root, trunkQt, rootQt});
     }
 
 

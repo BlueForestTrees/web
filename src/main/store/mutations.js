@@ -1,13 +1,6 @@
 import * as Do from "./mutationKeys";
 import Vue from 'vue'
-import _ from 'lodash';
-
-const applyOnAll = (root, coef) => {
-    root.qt *= coef;
-    _.forEach(root.roots, root => {
-        applyOnAll(root, coef);
-    });
-};
+import {NONE} from "../services/const";
 
 export default {
     [Do.ADD_TO_PATH]: (state, root) => {
@@ -35,14 +28,28 @@ export default {
     [Do.LINK_EDIT]: (state, value) => {
         state.linkEdit = value;
     },
-    [Do.REQUANTIFY]: (state, {trunk, root, trunkQt, rootQt}) => {
-        if(!trunk.qt){
-            trunk.qt = trunkQt;
-            root.qt = rootQt;
-        }else if(!root.qt) {
-            root.qt = rootQt * trunk.qt / trunkQt;
-        }else{
-            applyOnAll(root, (trunk.qt / trunkQt) / (root.qt / rootQt));
+    [Do.UPDATE_ROOT]: (state, {trunk, root}) => {
+        const rootIdx = _.findIndex(trunk.roots, {_id: root._id});
+        if (rootIdx !== NONE) {
+            trunk.roots.splice(rootIdx, 1, root);
         }
+    },
+    [Do.UPDATE_QT]: (state, {trunk, qt}) => {
+        Vue.set(trunk, "qt", qt);
+    },
+    [Do.UPDATE_PATH_ITEM]: (state, root) => {
+
+        let idx = _.findIndex(state.path, {_id:root._id});
+
+        state.path.splice(idx,1,root);
+
+        idx++;
+
+        for(; idx < state.path.length; idx++){
+            root = _.find(root.roots, {_id:state.path[idx]._id});
+            state.path.splice(idx,1,root);
+        }
+
     }
+
 };
