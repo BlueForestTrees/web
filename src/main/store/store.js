@@ -9,7 +9,8 @@ Vue.use(Vuex);
 
 const state = {
     path: null,
-    linkEdit: null
+    linkEdit: null,
+    addingSeed: false
 };
 
 const getters = {
@@ -18,6 +19,9 @@ const getters = {
     },
     seed(state) {
         return _.last(state.path);
+    },
+    isCurrentTrunk(state) {
+        return (trunk) => trunk._id === this.$store.getters.trunk._id;
     }
 };
 

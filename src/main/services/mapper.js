@@ -1,13 +1,13 @@
 import units from './units'
 
-const mapper = {
-    applyQtCoef: (trunk, coef) => {
+export const applyQtCoef = (trunk, coef) => {
         trunk.qt *= coef;
         _.forEach(trunk.roots, root => {
-            mapper.applyQtCoef(root, coef);
+            applyQtCoef(root, coef);
         });
-    },
-    toTrunk: (value) => {
+    };
+
+export const toTrunk = (value) => {
         if (!value)
             return null;
 
@@ -27,7 +27,17 @@ const mapper = {
             unit: u,
             name: n || null
         };
-    }
+    };
+
+const addAllSeeds = (trunk, tank) => {
+    _.forEach(trunk.roots, seed => {
+        if(_.isEmpty(seed.roots)){
+            tank.push(seed);
+        }else{
+            addAllSeeds(seed, tank);
+        }
+    });
+    return tank;
 };
 
-export default mapper;
+export const tank = (trunk) => addAllSeeds(trunk,{});

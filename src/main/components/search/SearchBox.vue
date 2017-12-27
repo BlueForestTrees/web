@@ -1,10 +1,16 @@
 <template>
-    <div>
-        <input :value="search.term" @input="onTermChange($event.target.value)">
-        <div v-if="search.searching">Recherche..</div>
-        <trunk-list :trunks="search.results" @select="$emit('select',$event)"></trunk-list>
-        <span v-if="allowCreate"> Pas de Résultats. <button @click="$emit('create',search.term)">Créer "{{search.term}}" . . .</button></span>
-    </div>
+    <span>
+        <div>
+            <input :value="search.term" @input="onTermChange($event.target.value)"/>
+        </div>
+        <div v-if="searchOccur">
+            <span v-if="hasResults">Ouvrir: </span>
+            <trunk-list :trunks="search.results" @select="$emit('select',$event)"></trunk-list>
+        </div>
+        <div v-if="allowCreate">
+            <span @click="$emit('create',search.term)">Créer "{{search.term}}"...</span>
+        </div>
+    </span>
 </template>
 
 <script>
@@ -21,7 +27,7 @@
             TrunkList
         },
         computed: {
-            ...mapGetters(['allowCreate'])
+            ...mapGetters(['allowCreate', 'searchOccur', 'hasResults'])
         },
         methods: {
             ...mapActions([On.TERM_CHANGE])

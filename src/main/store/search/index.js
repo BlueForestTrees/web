@@ -2,9 +2,20 @@ import actions from './actions'
 import mutations from './mutations'
 
 const getters = {
-    allowCreate(state) {
-        return state.term && !state.searching
-            && state.results && (state.results.length === 0);
+    searchOccur(state) {
+        return !!(state.term && !state.searching && !!state.results);
+    },
+    noResults(state) {
+        return _.isEmpty(state.results);
+    },
+    hasResults(state, getters) {
+        return !!(getters.searchOccur && !getters.noResults);
+    },
+    exactMatch(state) {
+        return !!_.find(state.results, {name:state.term});
+    },
+    allowCreate(state, getters) {
+        return !!(getters.searchOccur && (getters.noResults || !getters.exactMatch));
     }
 };
 

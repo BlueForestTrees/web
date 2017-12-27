@@ -1,8 +1,9 @@
 <template>
-    <div>
-        <input :value="trunkQt" @input="updateTrunkQt"/> {{trunk.name}} >>> <input :value="rootQt" @input="updateRootQt"/> {{root.name}}
+    <span>
+        <input :value="trunk.qt" @input="updateTrunkQt"/> {{trunk.name}} >>> <input :value="root.qt" @input="updateRootQt"/> {{root.name}}
         <button @click="setQtUnit">Ok</button>
-    </div>
+        <button @click="close">Close</button>
+    </span>
 </template>
 
 <script>
@@ -21,6 +22,9 @@
             },
             setQtUnit: function(){
                 this.$emit('setQtUnit', {trunk: this.trunk, root: this.root, trunkQt:this.trunkQt, rootQt:this.rootQt});
+            },
+            close: function(){
+                this.$emit('close');
             }
         }
     }

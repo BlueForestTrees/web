@@ -25,7 +25,7 @@ export default {
     [Do.OPEN_TREE]: (state, value) => {
         state.path = [value];
     },
-    [Do.LINK_EDIT]: (state, value) => {
+    [Do.UPDATE_LINK_EDIT]: (state, value) => {
         state.linkEdit = value;
     },
     [Do.UPDATE_ROOT]: (state, {trunk, root}) => {
@@ -50,6 +50,9 @@ export default {
             state.path.splice(idx,1,root);
         }
 
+    },
+    [Do.UPDATE_ADDING_SEED]: (state, value) => {
+        state.addingSeed = value;
     }
 
 };

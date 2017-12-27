@@ -11,10 +11,11 @@ export default {
         commit(Do.CLEAR_RESULTS);
         return dispatch(On.SEARCH, term);
     },
-    [On.SEARCH]: _.debounce(
+    [On.SEARCH]: //_.debounce(
         async function ({commit}, term) {
             commit(Do.UPDATE_RESULTS, await trunks.search(term));
             commit(Do.UPDATE_SEARCHING, false);
-        },
-        DEBOUNCE_DELAY),
+        }
+       // },
+        //DEBOUNCE_DELAY),
 }
