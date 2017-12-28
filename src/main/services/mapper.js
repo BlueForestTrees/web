@@ -7,7 +7,7 @@ export const applyQtCoef = (trunk, coef) => {
         });
     };
 
-export const toTrunk = (value) => {
+export const trunk = (value) => {
         if (!value)
             return null;
 
@@ -32,7 +32,9 @@ export const toTrunk = (value) => {
 const addAllSeeds = (trunk, tank) => {
     _.forEach(trunk.roots, seed => {
         if(_.isEmpty(seed.roots)){
-            tank.push(seed);
+            let tankEntry = tank[seed._id] || {_id:seed._id, name:seed.name, qt:0};
+            tankEntry.qt += seed.qt;
+            tank[seed._id] = tankEntry;
         }else{
             addAllSeeds(seed, tank);
         }
@@ -40,4 +42,4 @@ const addAllSeeds = (trunk, tank) => {
     return tank;
 };
 
-export const tank = (trunk) => addAllSeeds(trunk,{});
+export const tank = (trunk) => _.values(addAllSeeds(trunk,{}));

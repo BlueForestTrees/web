@@ -1,8 +1,20 @@
-import * as Do from "./mutationKeys";
 import Vue from 'vue'
 import {NONE} from "../services/const";
+import {Do} from "./keys";
 
 export default {
+    [Do.CLEAR_RESULTS]: state => {
+        state.search.results = [];
+    },
+    [Do.UPDATE_TERM]: (state, value) => {
+        state.search.term = value;
+    },
+    [Do.UPDATE_RESULTS]: (state, value) => {
+        state.search.results = value;
+    },
+    [Do.UPDATE_SEARCHING]: (state, value) => {
+        state.search.searching = value;
+    },
     [Do.ADD_TO_PATH]: (state, root) => {
         state.path.push(root);
     },

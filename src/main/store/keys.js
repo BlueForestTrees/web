@@ -1,0 +1,37 @@
+export const On = {
+    UPDATE_SEARCH_TERM: "updateSearchTerm",
+    UPDATE_ADDING_SEED_CLICK: 'onUpdateAddingSeedClick',
+    CLEAR_LINK_EDIT: "onClearLinkEdit",
+    CREATE_AND_OPEN_TREE: 'onCreateAndOpenTree',
+    CREATE_SEED: 'onCreateSeed',
+    CREATE_TRUNK_THEN_SEED: 'onCreateTrunkThenSeed',
+    CREATE_TRUNK: 'onCreateTrunk',
+    LINK_CHANGED: 'onLinkChanged',
+    OPEN_TREE: 'onOpenTree',
+    PATH_CLICK: 'onPathClick',
+    PATH_LINK_CLICK: 'onPathLinkClick',
+    ROOT_CLICK: 'onRootClick',
+    SEARCH: 'onSearch',
+    TRUNK_CLOSE: 'onTrunkClose',
+    PATH_CHANGED: "onPathChanged",
+    REFRESH_ROOT: "onRefreshRoot",
+    UPSERT_LINK: "upsertLink"
+};
+
+export const Do = {
+    ADD_TO_PATH: 'addToPath',
+    ADD_SEED: 'addSeed',
+    CHANGE_PATH_INDEX: 'changePathIndex',
+    CLEAR_SEARCH: 'clearSearch',
+    CLEAR_RESULTS: 'clearResults',
+    CLOSE_TREE: 'closeTree',
+    OPEN_TREE: 'openTree',
+    UPDATE_ADDING_SEED: 'updateAddingSeed',
+    UPDATE_LINK_EDIT: 'updateLinkEdit',
+    UPDATE_ROOT: 'updateRoot',
+    UPDATE_PATH_ITEM: 'updatePathItem',
+    UPDATE_QT: 'updateQt',
+    UPDATE_RESULTS: 'updateResults',
+    UPDATE_SEARCHING: 'updateSearching',
+    UPDATE_TERM: 'updateTerm',
+};

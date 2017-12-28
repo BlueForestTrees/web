@@ -1,8 +1,18 @@
-import * as Do from "./mutationKeys";
-import * as On from "./actionKeys";
+import {Do} from "./keys";
+import {On} from "./keys";
 import trunks from "../services/trunks";
 
 export default {
+    [On.UPDATE_SEARCH_TERM]: ({commit, dispatch}, term) => {
+        commit(Do.UPDATE_TERM, term);
+        commit(Do.UPDATE_SEARCHING, true);
+        commit(Do.CLEAR_RESULTS);
+        return dispatch(On.SEARCH, term);
+    },
+    [On.SEARCH]: async ({commit}, term) => {
+        commit(Do.UPDATE_RESULTS, await trunks.search(term));
+        commit(Do.UPDATE_SEARCHING, false);
+    },
     [On.CREATE_AND_OPEN_TREE]: async ({dispatch}, name) => {
         const tree = await dispatch(On.CREATE_TRUNK, name);
         return dispatch(On.OPEN_TREE, tree);

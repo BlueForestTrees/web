@@ -5,7 +5,7 @@
         </div>
         <div v-if="searchOccur">
             <span v-if="hasResults">Ouvrir: </span>
-            <trunk-list :trunks="search.results" @select="$emit('select',$event)"></trunk-list>
+            <list :trunks="search.results" @select="$emit('select',$event)"></list>
         </div>
         <div v-if="allowCreate">
             <span @click="$emit('create',search.term)">Créer "{{search.term}}"...</span>
@@ -14,9 +14,9 @@
 </template>
 
 <script>
-    import TrunkList from '../common/TrunkList';
+    import List from '../common/List';
     import {createNamespacedHelpers} from 'vuex'
-    import * as On from "../../store/actionKeys";
+    import {On} from "../../store/keys";
 
     const {mapGetters, mapActions} = createNamespacedHelpers('search');
 
@@ -24,13 +24,13 @@
         name: 'search-box',
         props: ['search'],
         components: {
-            TrunkList
+            List
         },
         computed: {
             ...mapGetters(['allowCreate', 'searchOccur', 'hasResults'])
         },
         methods: {
-            ...mapActions([On.TERM_CHANGE])
+            ...mapActions([On.UPDATE_SEARCH_TERM])
         }
     }
 </script>
