@@ -1,23 +1,19 @@
 <template>
-    <v-btn fab bottom right color="pink" dark fixed @click.stop="_dialog = !_dialog">
+    <v-btn fab bottom right color="pink" dark fixed @click.stop="onAddClick">
         <v-icon>add</v-icon>
     </v-btn>
 </template>
 
-
 <script>
+    import {Do} from "../store/keys";
+    import {mapMutations} from 'vuex';
+
     export default {
         name:'floating-bar',
-        props: ['dialog'],
-        computed: {
-            _dialog: {
-                get: function () {
-                    return this.dialog;
-                },
-                set: function (value) {
-                    this.$emit('update:dialog', value);
-                }
-            }
+        methods:{
+            ...mapMutations({
+                "onAddClick":Do.OPEN_CREATE_DIALOG
+            })
         }
     }
 </script>

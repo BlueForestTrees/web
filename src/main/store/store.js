@@ -15,6 +15,14 @@ const state = {
         term: null,
         results: null,
         searching: false
+    },
+    dialogs: {
+        create: {
+            visible:false,
+            data:{
+                name:null
+            }
+        }
     }
 };
 

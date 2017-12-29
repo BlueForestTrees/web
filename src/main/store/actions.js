@@ -5,9 +5,12 @@ import trunks from "../services/trunks";
 export default {
     [On.UPDATE_SEARCH_TERM]: ({commit, dispatch}, term) => {
         commit(Do.UPDATE_TERM, term);
-        commit(Do.UPDATE_SEARCHING, true);
-        commit(Do.CLEAR_RESULTS);
-        return dispatch(On.SEARCH, term);
+        if (term) {
+            commit(Do.UPDATE_SEARCHING, true);
+            return dispatch(On.SEARCH, term);
+        } else {
+            commit(Do.CLEAR_SEARCH);
+        }
     },
     [On.SEARCH]: async ({commit}, term) => {
         commit(Do.UPDATE_RESULTS, await trunks.search(term));

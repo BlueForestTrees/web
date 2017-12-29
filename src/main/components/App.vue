@@ -4,8 +4,8 @@
             <main-bar :drawer.sync="drawer"></main-bar>
             <left-menu :drawer.sync="drawer"></left-menu>
             <main-content></main-content>
-            <dialog-form :dialog.sync="dialog"></dialog-form>
-            <floating-bar :dialog.sync="dialog"></floating-bar>
+            <create-dialog :data="create"></create-dialog>
+            <floating-bar></floating-bar>
             <main-footer></main-footer>
         </v-app>
     </div>
@@ -16,23 +16,31 @@
     import LeftMenu from './LeftMenu';
     import MainBar from "./MainBar";
     import FloatingBar from "./FloatingBar";
-    import DialogForm from "./Dialog";
     import MainContent from "./MainContent";
     import MainFooter from "./MainFooter";
-
+    import CreateDialog from "./dialog/CreateDialog";
+    import {mapState} from 'vuex';
 
     export default {
         name: 'app',
+        computed: {
+            ...mapState({
+                "create": state => state.dialogs.create
+            })
+        },
         watch: {
-            "drawer": function (value) { this.drawer = value; },
-            "dialog": function (value) { this.dialog = value; }
+            "drawer": function (value) {
+                this.drawer = value;
+            },
         },
         data: function () {
             return {
-                dialog: false,
                 drawer: false
             }
         },
-        components: { MainFooter, MainContent, DialogForm, FloatingBar, MainBar, LeftMenu }
+        components: {
+            CreateDialog,
+            MainFooter, MainContent, FloatingBar, MainBar, LeftMenu
+        }
     }
 </script>

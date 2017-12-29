@@ -3,12 +3,6 @@
         <v-container fluid fill-height>
             <v-layout justify-center align-center>
 
-                <div v-if="searchOccur">
-                    <span v-if="hasResults">Ouvrir: </span>
-                    <list :trunks="search.results" @select="$emit('select',$event)"></list>
-                </div>
-
-
 
                 <!--<div id="trunk" v-if="trunk">-->
                     <!--<div>-->

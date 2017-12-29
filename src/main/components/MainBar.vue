@@ -8,9 +8,8 @@
             <span class="hidden-xs-only">BlueForest Trees</span>
         </v-toolbar-title>
 
-        <v-text-field @input="On.UPDATE_SEARCH_TERM"
-                      light solo prepend-icon="search" placeholder="Recherche"
-                      style="max-width: 500px; min-width: 128px"/>
+        <search :search="search" @createDialog=""/>
+
 
         <div class="d-flex align-center" style="margin-left: auto">
             <v-btn icon>
@@ -30,17 +29,17 @@
 </template>
 
 <script>
-    import {mapState, mapActions} from 'vuex';
-    import {On} from "../store/keys";
+    import {mapState, mapGetters} from 'vuex';
+    import Search from "./Search";
 
 
     export default {
+        components: {Search},
         name: 'main-bar',
         props: ['drawer'],
         computed: {
-            ...mapState(
-                ['search']
-            ),
+            ...mapState(['search']),
+            ...mapGetters(['allowCreate']),
             _drawer: {
                 get: function () {
                     return this.drawer;
@@ -49,12 +48,6 @@
                     this.$emit('update:drawer', value);
                 }
             }
-        },
-        methods: {
-            ...mapActions([On.UPDATE_SEARCH_TERM])
-        },
-        created () {
-            this.On = On
         }
     }
 </script>

@@ -3,6 +3,23 @@ import {NONE} from "../services/const";
 import {Do} from "./keys";
 
 export default {
+    [Do.UPDATE]: (state, {data, key, value}) => {
+        Vue.set(data, key, value);
+    },
+    [Do.OPEN_CREATE_DIALOG]: (state, {name}) => {
+        state.dialogs.create.visible = true;
+        state.dialogs.create.data.name = name;
+    },
+    [Do.CLOSE_CREATE_DIALOG]: (state) => {
+        state.dialogs.create.visible = false;
+    },
+    [Do.UPDATE_CREATE_DIALOG]: (state,visible) => {
+        state.dialogs.create.visible = visible;
+    },
+
+
+
+
     [Do.CLEAR_RESULTS]: state => {
         state.search.results = [];
     },
@@ -29,7 +46,7 @@ export default {
     },
     [Do.CLEAR_SEARCH]: state => {
         state.search.term = null;
-        state.search.results = [];
+        state.search.results = null;
     },
     [Do.CLOSE_TREE]: (state) => {
         state.path = null;
