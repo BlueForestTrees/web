@@ -1,12 +1,11 @@
 <template>
-    <v-menu offset-y>
+    <v-menu offset-y style="width: 100%">
 
         <v-text-field @input="termInputChanged" :value="search.term"
                       slot="activator"
-                      style="max-width: 500px; min-width: 128px"
                       light solo prepend-icon="search" placeholder="Recherche"/>
 
-        <v-list v-if="search.results">
+        <v-list v-if="search.results" focus>
             <v-list-tile v-for="trunk in search.results" :key="trunk._id" @click="">
                 <v-list-tile-avatar>
                     <v-icon>assignment</v-icon>
@@ -22,6 +21,7 @@
             </v-list-tile>
         </v-list>
     </v-menu>
+
 </template>
 
 <script>

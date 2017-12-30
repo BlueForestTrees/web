@@ -1,6 +1,6 @@
 <template>
 
-    <v-select label="Recherche" v-bind:items="results" item-text="name" item-value="_id" chips max-height="auto" autocomplete :search-input.sync="term" @change="select">
+    <v-select label="Recherche" v-bind:items="results || []" item-text="name" item-value="_id" chips max-height="auto" autocomplete :search-input.sync="term" @change="select">
 
         <template slot="item" slot-scope="data">
             <v-list-tile-avatar>

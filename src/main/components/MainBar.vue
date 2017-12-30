@@ -8,8 +8,7 @@
             <span class="hidden-xs-only">BlueForest Trees</span>
         </v-toolbar-title>
 
-        <search :search="search" @createDialog=""/>
-
+        <search :search="search" @createDialog="" style="max-width: 500px; min-width: 128px"/>
 
         <div class="d-flex align-center" style="margin-left: auto">
             <v-btn icon>
@@ -31,10 +30,13 @@
 <script>
     import {mapState, mapGetters} from 'vuex';
     import Search from "./Search";
+    import Doudou from "./test-select";
 
 
     export default {
-        components: {Search},
+        components: {
+            Doudou,
+            Search},
         name: 'main-bar',
         props: ['drawer'],
         computed: {
