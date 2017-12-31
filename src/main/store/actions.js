@@ -65,9 +65,6 @@ export default {
         commit(Do.ADD_TO_PATH, root);
         dispatch(On.PATH_CHANGED);
     },
-    [On.TRUNK_CLOSE]: ({commit}) => {
-        commit(Do.CLOSE_TREE);
-    },
     [On.LINK_CHANGED]: async ({dispatch, commit, getters}, {trunk, root, trunkQt, rootQt}) => {
         await dispatch(On.UPSERT_LINK, {trunkId: trunk._id, rootId: root._id, trunkQt, rootQt});
 

@@ -11,7 +11,7 @@
                             <v-avatar size="40px" class="mr-3">
                                 <v-icon>bookmark</v-icon>
                             </v-avatar>
-                            <v-text-field placeholder="Nom" :value="data.data.name" @input="changeName"/>
+                            <v-text-field ref="nameInput" placeholder="Nom" :value="data.data.name" @input="changeName"/>
                         </v-layout>
                     </v-flex>
                 </v-layout>
@@ -56,5 +56,12 @@
                 }
             }
         },
+        watch:{
+            visible(visible){
+                if(visible) {
+                    this.$nextTick(this.$refs.nameInput.focus);
+                }
+            }
+        }
     }
 </script>

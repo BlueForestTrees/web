@@ -4,7 +4,7 @@
             <main-bar :drawer.sync="drawer"></main-bar>
             <left-menu :drawer.sync="drawer"></left-menu>
             <main-content></main-content>
-            <create-dialog :data="create"></create-dialog>
+            <create-dialog :data="createDialog"></create-dialog>
             <floating-bar></floating-bar>
             <main-footer></main-footer>
         </v-app>
@@ -25,7 +25,7 @@
         name: 'app',
         computed: {
             ...mapState({
-                "create": state => state.dialogs.create
+                "createDialog": state => state.dialogs.create
             })
         },
         watch: {

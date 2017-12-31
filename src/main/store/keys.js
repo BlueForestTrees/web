@@ -14,7 +14,6 @@ export const On = {
     REFRESH_ROOT: "onRefreshRoot",
     ROOT_CLICK: 'onRootClick',
     SEARCH: 'onSearch',
-    TRUNK_CLOSE: 'onTrunkClose',
     UPSERT_LINK: "upsertLink"
 };
 
@@ -22,8 +21,8 @@ export const Do = {
     ADD_TO_PATH: 'addToPath',
     ADD_SEED: 'addSeed',
     CHANGE_PATH_INDEX: 'changePathIndex',
-    CLEAR_SEARCH: 'clearSearch',
     CLEAR_RESULTS: 'clearResults',
+    CLEAR_SEARCH: 'clearSearch',
     CLEAR_CREATE_DIALOG_DATA: 'clearCreateDialogData',
     CLOSE_TREE: 'closeTree',
     CLOSE_CREATE_DIALOG: 'closeCreateDialog',

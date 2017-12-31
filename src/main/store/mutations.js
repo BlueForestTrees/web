@@ -48,11 +48,13 @@ export default {
         state.search.term = null;
         state.search.results = null;
     },
-    [Do.CLOSE_TREE]: (state) => {
-        state.path = null;
-    },
     [Do.OPEN_TREE]: (state, value) => {
         state.path = [value];
+        state.tree = value;
+    },
+    [Do.CLOSE_TREE]: (state) => {
+        state.path = null;
+        state.tree = null;
     },
     [Do.UPDATE_LINK_EDIT]: (state, value) => {
         state.linkEdit = value;

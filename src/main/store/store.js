@@ -8,6 +8,7 @@ import * as To from '../services/mapper';
 Vue.use(Vuex);
 
 const state = {
+    tree: null,
     path: null,
     linkEdit: null,
     addingSeed: false,

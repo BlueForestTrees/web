@@ -4,7 +4,7 @@
         <v-text-field ref="textfield" @input="termInputChanged" :value="search.term" slot="activator" light solo prepend-icon="search" placeholder="Recherche"/>
 
         <v-list v-if="search.results">
-            <v-list-tile v-for="trunk in search.results" :key="trunk._id" @click="">
+            <v-list-tile v-for="trunk in search.results" :key="trunk._id" @click="open(trunk)">
                 <v-list-tile-avatar>
                     <v-icon>assignment</v-icon>
                 </v-list-tile-avatar>
@@ -33,7 +33,8 @@
         props: ['search'],
         methods: {
             ...mapActions({
-                'termInputChanged': On.UPDATE_SEARCH_TERM
+                'termInputChanged': On.UPDATE_SEARCH_TERM,
+                'open': On.OPEN_TREE
             }),
             ...mapMutations([Do.OPEN_CREATE_DIALOG, Do.CLEAR_SEARCH]),
             onCreateClick: function () {

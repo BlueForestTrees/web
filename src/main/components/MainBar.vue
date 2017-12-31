@@ -30,7 +30,7 @@
 <script>
     import {mapState, mapGetters} from 'vuex';
     import Search from "./Search";
-    import Doudou from "./test-select";
+    import Doudou from "../_bak/test-select";
 
 
     export default {
