@@ -1,6 +1,6 @@
 import {Do} from "./keys";
 import {On} from "./keys";
-import trunks from "../services/trunks";
+import rest from "../services/rest";
 
 export default {
     [On.UPDATE_SEARCH_TERM]: ({commit, dispatch}, term) => {
@@ -13,7 +13,7 @@ export default {
         }
     },
     [On.SEARCH]: async ({commit}, term) => {
-        commit(Do.UPDATE_RESULTS, await trunks.search(term));
+        commit(Do.UPDATE_RESULTS, await rest.search(term));
         commit(Do.UPDATE_SEARCHING, false);
     },
     [On.CREATE_AND_OPEN_TREE]: async ({dispatch}, name) => {
@@ -21,12 +21,12 @@ export default {
         return dispatch(On.OPEN_TREE, tree);
     },
     [On.OPEN_TREE]: async ({commit}, trunk) => {
-        commit(Do.OPEN_TREE, await trunks.get(trunk._id));
+        commit(Do.OPEN_TREE, await rest.get(trunk._id));
         commit(Do.CLEAR_SEARCH);
     },
     [On.CREATE_SEED]: async ({commit, dispatch, getters}, seed) => {
-        await trunks.link({trunkId: getters.seed._id, rootId: seed._id});
-        commit(Do.ADD_SEED, {root: getters.seed, seed: await trunks.get(seed._id)});
+        await rest.link({trunkId: getters.seed._id, rootId: seed._id});
+        commit(Do.ADD_SEED, {root: getters.seed, seed: await rest.get(seed._id)});
         commit(Do.CLEAR_SEARCH);
     },
 
@@ -36,7 +36,7 @@ export default {
     },
 
     [On.CREATE_TRUNK]: async ({commit, state, dispatch}, name) => {
-        return await trunks.create({name});
+        return await rest.create({name});
     },
 
     [On.PATH_CLICK]: ({commit, dispatch}, idx) => {
@@ -81,17 +81,21 @@ export default {
     },
     [On.UPSERT_LINK]: async ({}, {trunkId, rootId, trunkQt, rootQt}) => {
         //pour faire x de a, il faut y de b.
-        await trunks.qtUnit({
+        await rest.qtUnit({
             trunk: {_id: trunkId, qt: trunkQt},
             root: {_id: rootId, qt: rootQt}
         });
     },
     [On.REFRESH_ROOT]: async ({}, {trunk, root}) => {
-        let newRoot = await trunks.getQuantified(root.qt, root._id);
+        let newRoot = await rest.getQuantified(root.qt, root._id);
         commit(Do.UPDATE_ROOT, {trunk, root: newRoot});
         commit(Do.UPDATE_PATH_ITEM, newRoot);
     },
     [On.UPDATE_ADDING_SEED_CLICK]: async ({commit}, value) => {
         commit(Do.UPDATE_ADDING_SEED, value);
+    },
+    [On.ADD_FACET]: async ({commit}, {tree, facet}) => {
+        rest.addFacet(tree._id, facet);
+        commit(Do.ADD_FACET, {tree, facet});
     }
 };

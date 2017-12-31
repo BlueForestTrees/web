@@ -3,6 +3,28 @@
         <h1>{{tree.name}}</h1>
         <h2>Usages</h2>
         <h2>Caractéristiques</h2>
+        <v-list>
+            <v-list-tile avatar if="tree.facets" v-for="facet in tree.facets" v-bind:key="facet.name" @click="">
+                <v-list-tile-avatar>
+                    <v-icon>assignment</v-icon>
+                </v-list-tile-avatar>
+                <v-list-tile-content>
+                    {{facet.name}}
+                </v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile avatar>
+                <v-list-tile-avatar @click="addingFacet">
+                    <v-icon>edit</v-icon>
+                </v-list-tile-avatar>
+                <v-list-tile-content v-if="isAddingFacet">
+                    <v-text-field autofocus v-model="facetInput"></v-text-field>
+                </v-list-tile-content>
+                <v-list-tile-action v-if="isAddingFacet">
+                    <v-icon color="green" @click="confirmAddFacet">done</v-icon>
+                    <v-icon color="red darken-1" @click="unaddingFacet">cancel</v-icon>
+                </v-list-tile-action>
+            </v-list-tile>
+        </v-list>
         <h2>Impact</h2>
         <h2>Ressources</h2>
         <h3>Bilan Ressources</h3>
@@ -35,16 +57,33 @@
 
 <script>
     import {mapState, mapActions} from 'vuex';
-
+    import {On} from '../store/keys';
 
     export default {
         name: 'tree',
         props:['tree'],
+        data(){
+            return {
+                isAddingFacet:false,
+                facetInput:null
+            }
+        },
         computed: {
             ...mapState(['search'])
         },
         methods: {
-            ...mapActions([])
+            addingFacet:function(){
+                this.isAddingFacet = true;
+            },
+            unaddingFacet:function(){
+                this.facetInput = null;
+                this.isAddingFacet = false;
+            },
+            confirmAddFacet:function(){
+                this.addFacet({tree:this.tree,facet:{name:this.facetInput}});
+                this.unaddingFacet();
+            },
+            ...mapActions([On.ADD_FACET])
         }
     }
 </script>

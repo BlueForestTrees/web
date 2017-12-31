@@ -84,6 +84,13 @@ export default {
     },
     [Do.UPDATE_ADDING_SEED]: (state, value) => {
         state.addingSeed = value;
+    },
+    [Do.ADD_FACET]: (state, {tree,facet})=>{
+        if(!tree.facets){
+            Vue.set(tree,"facets", [facet]);
+        }else{
+            tree.facets.push({name:facet});
+        }
     }
 
 };

@@ -1,4 +1,5 @@
 export const On = {
+    ADD_FACET: "addFacet",
     CLEAR_LINK_EDIT: "onClearLinkEdit",
     CREATE_AND_OPEN_TREE: 'onCreateAndOpenTree',
     CREATE_SEED: 'onCreateSeed',
@@ -18,6 +19,7 @@ export const On = {
 };
 
 export const Do = {
+    ADD_FACET: "addFacet",
     ADD_TO_PATH: 'addToPath',
     ADD_SEED: 'addSeed',
     CHANGE_PATH_INDEX: 'changePathIndex',

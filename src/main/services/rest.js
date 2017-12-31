@@ -8,5 +8,6 @@ export default {
     qtUnit:(qtUnit) =>  api.post('api/qtunit', qtUnit),
     del: (trunkId) =>  api.del(`api/trunk/${trunkId}`),
     search:(name) =>  api.get(`api/trunks?n=${name}`),
-    link:(link) =>  api.post('api/root', link)
+    link:(link) =>  api.post('api/root', link),
+    addFacet:(treeId, facet) => api.post('api/facet', {treeId,facet})
 }
