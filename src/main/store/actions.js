@@ -1,8 +1,15 @@
 import {Do} from "./keys";
 import {On} from "./keys";
 import rest from "../services/rest";
+import units from "../services/units";
 
 export default {
+    [On.MOUNT_APP]: async ({dispatch}) => {
+        dispatch(On.LOAD_UNITS);
+    },
+    [On.LOAD_UNITS]: async ({commit}) => {
+        commit(Do.LOAD_UNITS, await units.load());
+    },
     [On.UPDATE_SEARCH_TERM]: ({commit, dispatch}, term) => {
         commit(Do.UPDATE_TERM, term);
         if (term) {

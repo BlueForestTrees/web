@@ -12,14 +12,14 @@
 </template>
 
 <script>
-    import {Do} from "../store/keys";
+    import {Do} from "../../store/keys";
     import {mapMutations, mapGetters} from 'vuex';
 
     export default {
-        name: 'floating-bar',
+        name: 'floating-button',
         methods: {
             ...mapMutations({
-                "onAddClick": Do.OPEN_CREATE_DIALOG,
+                "onAddClick": Do.SHOW_TRUNK_DIALOG,
                 "onCloseClick": Do.CLOSE_TREE
             })
         },

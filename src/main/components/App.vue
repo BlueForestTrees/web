@@ -1,31 +1,35 @@
 <template>
     <div id="app">
         <v-app id="blueforest">
-            <main-bar :drawer.sync="drawer"></main-bar>
-            <left-menu :drawer.sync="drawer"></left-menu>
-            <main-content></main-content>
-            <create-dialog :data="createDialog"></create-dialog>
-            <floating-bar></floating-bar>
-            <main-footer></main-footer>
+            <bar :drawer.sync="drawer"/>
+            <left-menu :drawer.sync="drawer"/>
+            <main-content/>
+            <floating-button/>
+            <main-footer/>
+
+            <trunk-dialog :data="trunkDialog"/>
+
         </v-app>
     </div>
 </template>
 
 <script>
 
-    import LeftMenu from './LeftMenu';
-    import MainBar from "./MainBar";
-    import FloatingBar from "./FloatingBar";
-    import MainContent from "./MainContent";
-    import MainFooter from "./MainFooter";
-    import CreateDialog from "./dialog/CreateDialog";
+    import LeftMenu from './layout/LeftMenu';
+    import Bar from "./layout/bar/Bar";
+    import FloatingButton from "./layout/FloatingButton";
+    import MainContent from "./layout/MainContent";
+    import MainFooter from "./layout/MainFooter";
+    import TrunkDialog from "./dialog/TrunkDialog";
     import {mapState} from 'vuex';
+    import FacetDialog from "./dialog/FacetDialog";
+    import {On} from "../store/keys";
 
     export default {
         name: 'app',
         computed: {
             ...mapState({
-                "createDialog": state => state.dialogs.create
+                "trunkDialog": state => state.dialogs.trunk
             })
         },
         watch: {
@@ -39,8 +43,12 @@
             }
         },
         components: {
-            CreateDialog,
-            MainFooter, MainContent, FloatingBar, MainBar, LeftMenu
+            FacetDialog,
+            TrunkDialog,
+            MainFooter, MainContent, FloatingButton, Bar, LeftMenu
+        },
+        mounted: async function(){
+            this.$store.dispatch(On.MOUNT_APP);
         }
     }
 </script>

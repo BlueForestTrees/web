@@ -9,7 +9,7 @@
 </template>
 
 <script>
-    import Tree from "./Tree";
+    import Tree from "../tree/Tree";
 
     import {mapState} from 'vuex';
 
@@ -20,4 +20,5 @@
             ...mapState(['tree'])
         }
     }
+
 </script>

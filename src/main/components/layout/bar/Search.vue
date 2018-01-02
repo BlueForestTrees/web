@@ -23,7 +23,7 @@
 </template>
 
 <script>
-    import {Do, On} from "../store/keys";
+    import {Do, On} from "../../../store/keys";
 
     import {mapGetters, mapActions, mapMutations} from 'vuex';
 
@@ -36,11 +36,11 @@
                 'termInputChanged': On.UPDATE_SEARCH_TERM,
                 'open': On.OPEN_TREE
             }),
-            ...mapMutations([Do.OPEN_CREATE_DIALOG, Do.CLEAR_SEARCH]),
+            ...mapMutations([Do.SHOW_TRUNK_DIALOG, Do.UPDATE_TRUNK_DIALOG_DATA, Do.CLEAR_SEARCH]),
             onCreateClick: function () {
-                let creation = {name: this.search.term};
+                this.showTrunkDialog();
+                this.updateTrunkDialogData({name: this.search.term});
                 this.clearSearch();
-                this.openCreateDialog(creation);
             },
             focus() {
                 this.$refs.textfield.focus();

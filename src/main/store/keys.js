@@ -6,6 +6,8 @@ export const On = {
     CREATE_TRUNK_THEN_SEED: 'onCreateTrunkThenSeed',
     CREATE_TRUNK: 'onCreateTrunk',
     LINK_CHANGED: 'onLinkChanged',
+    LOAD_UNITS: 'loadUnits',
+    MOUNT_APP: 'mountApp',
     OPEN_TREE: 'onOpenTree',
     UPDATE_ADDING_SEED_CLICK: 'onUpdateAddingSeedClick',
     UPDATE_SEARCH_TERM: "updateSearchTerm",
@@ -25,15 +27,19 @@ export const Do = {
     CHANGE_PATH_INDEX: 'changePathIndex',
     CLEAR_RESULTS: 'clearResults',
     CLEAR_SEARCH: 'clearSearch',
-    CLEAR_CREATE_DIALOG_DATA: 'clearCreateDialogData',
     CLOSE_TREE: 'closeTree',
-    CLOSE_CREATE_DIALOG: 'closeCreateDialog',
-    OPEN_CREATE_DIALOG: "openCreateDialog",
+    HIDE_TRUNK_DIALOG:'hideTrunkDialog',
+    HIDE_FACET_DIALOG:'hideFacetDialog',
+    LOAD_UNITS: 'loadUnits',
+    SHOW_TRUNK_DIALOG: "showTrunkDialog",
+    SHOW_FACET_DIALOG: "showFacetDialog",
+    UPDATE_TRUNK_DIALOG_VISIBILITY: "updateTrunkDialogVisibility",
+    UPDATE_FACET_DIALOG_VISIBILITY: "updateFacetDialogVisibility",
     OPEN_TREE: 'openTree',
-    SET_CREATE_DIALOG_DATA: 'setCreateDialogData',
     UPDATE_ADDING_SEED: 'updateAddingSeed',
-    UPDATE_CREATE_DIALOG: 'updateCreateDialog',
     UPDATE: 'update',
+    UPDATE_TRUNK_DIALOG_DATA: 'updateTrunkDialogData',
+    UPDATE_FACET_DIALOG_DATA: 'updateFacetDialogData',
     UPDATE_LINK_EDIT: 'updateLinkEdit',
     UPDATE_ROOT: 'updateRoot',
     UPDATE_PATH_ITEM: 'updatePathItem',
@@ -41,4 +47,9 @@ export const Do = {
     UPDATE_RESULTS: 'updateResults',
     UPDATE_SEARCHING: 'updateSearching',
     UPDATE_TERM: 'updateTerm',
+};
+
+export const Dial = {
+    TRUNK : "trunk",
+    FACET: "facet"
 };

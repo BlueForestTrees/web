@@ -1,25 +1,88 @@
 import Vue from 'vue'
 import {NONE} from "../services/const";
-import {Do} from "./keys";
+import {Do, Dial} from "./keys";
+import {dialogs} from "./state"
+
+const updateDialogVisibility = (state, {dialog, visible}) => {
+    if (state.dialogs[dialog]) {
+        state.dialogs[dialog].visible = visible;
+    } else {
+        console.error(`dialog ${dialog} not found`);
+    }
+};
+const updateDialog = (state, {dialog, data}) => {
+    if (state.dialogs[dialog]) {
+        state.dialogs[dialog].data = data;
+    } else {
+        console.error(`dialog ${dialog} not found`);
+    }
+};
+
+
+
+const clearTrunkDialogData = (state) => {
+    updateTrunkDialogData(state, dialogs[Dial.TRUNK]());
+};
+const updateTrunkDialogData = (state, data) => {
+    updateDialog(state, {dialog: Dial.TRUNK, data});
+};
+const updateTrunkDialogVisibility = (state, visible) => {
+    updateDialogVisibility(state, {dialog:Dial.TRUNK, visible:visible});
+};
+const clearFacetDialogData = (state) => {
+    updateFacetDialogData(state, dialogs[Dial.FACET]());
+};
+const updateFacetDialogData = (state, data) => {
+    updateDialog(state, {dialog: Dial.FACET, data});
+};
+const updateFacetDialogVisibility = (state, visible) => {
+    updateDialogVisibility(state, {dialog:Dial.FACET, visible:visible});
+};
+
 
 export default {
+
+    [Do.LOAD_UNITS]: (state, units) => {
+        state.units = units;
+    },
+    //DIALOG
+    [Do.UPDATE_TRUNK_DIALOG_VISIBILITY]: (state, visible) => {
+        if(visible){
+            clearTrunkDialogData(state);
+        }
+        updateTrunkDialogVisibility(state, visible);
+    },
+    [Do.SHOW_TRUNK_DIALOG]: (state) => {
+        clearTrunkDialogData(state);
+        updateTrunkDialogVisibility(state, true);
+    },
+    [Do.HIDE_TRUNK_DIALOG]: (state) => {
+        updateTrunkDialogVisibility(state, false);
+    },
+    [Do.UPDATE_TRUNK_DIALOG_DATA]: (state, data) => {
+        updateTrunkDialogData(state, data);
+    },
+    [Do.UPDATE_FACET_DIALOG_VISIBILITY]: (state, visible) => {
+        if(visible){
+            clearFacetDialogData(state);
+        }
+        updateFacetDialogVisibility(state, visible);
+    },
+    [Do.SHOW_FACET_DIALOG]: (state) => {
+        clearFacetDialogData(state);
+        updateFacetDialogVisibility(state, true);
+    },
+    [Do.HIDE_FACET_DIALOG]: (state) => {
+        updateFacetDialogVisibility(state, false);
+    },
+    [Do.UPDATE_FACET_DIALOG_DATA]: (state, data) => {
+        updateFacetDialogData(state, data);
+    },
+
+
     [Do.UPDATE]: (state, {data, key, value}) => {
         Vue.set(data, key, value);
     },
-    [Do.OPEN_CREATE_DIALOG]: (state, {name}) => {
-        state.dialogs.create.visible = true;
-        state.dialogs.create.data.name = name;
-    },
-    [Do.CLOSE_CREATE_DIALOG]: (state) => {
-        state.dialogs.create.visible = false;
-    },
-    [Do.UPDATE_CREATE_DIALOG]: (state,visible) => {
-        state.dialogs.create.visible = visible;
-    },
-
-
-
-
     [Do.CLEAR_RESULTS]: state => {
         state.search.results = [];
     },
@@ -70,26 +133,26 @@ export default {
     },
     [Do.UPDATE_PATH_ITEM]: (state, root) => {
 
-        let idx = _.findIndex(state.path, {_id:root._id});
+        let idx = _.findIndex(state.path, {_id: root._id});
 
-        state.path.splice(idx,1,root);
+        state.path.splice(idx, 1, root);
 
         idx++;
 
-        for(; idx < state.path.length; idx++){
-            root = _.find(root.roots, {_id:state.path[idx]._id});
-            state.path.splice(idx,1,root);
+        for (; idx < state.path.length; idx++) {
+            root = _.find(root.roots, {_id: state.path[idx]._id});
+            state.path.splice(idx, 1, root);
         }
 
     },
     [Do.UPDATE_ADDING_SEED]: (state, value) => {
         state.addingSeed = value;
     },
-    [Do.ADD_FACET]: (state, {tree,facet})=>{
-        if(!tree.facets){
-            Vue.set(tree,"facets", [facet]);
-        }else{
-            tree.facets.push({name:facet});
+    [Do.ADD_FACET]: (state, {tree, facet}) => {
+        if (!tree.facets) {
+            Vue.set(tree, "facets", [facet]);
+        } else {
+            tree.facets.push(facet);
         }
     }
 
