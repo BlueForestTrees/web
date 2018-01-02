@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import App from './components/App'
+import App from './vue/App'
 import store from './store/store'
 import Vuetify from 'vuetify'
 
