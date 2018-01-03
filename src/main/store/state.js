@@ -5,14 +5,19 @@ const dialogStateFromData = (data) => ({
     data: data
 });
 
-export const dialogs = {
+const dialogFactory = {
     trunk: () => ({name: null}),
     facet: () => ({qt: null, unit: null, name: null})
+};
+
+export const dialogs = {
+    get: name => dialogFactory[name]()
 };
 
 export default {
     units: null,
     tree: null,
+    otherTree: null,
     path: null,
     linkEdit: null,
     addingSeed: false,
@@ -21,8 +26,13 @@ export default {
         results: null,
         searching: false
     },
+    search2: {
+        term: null,
+        results: null,
+        searching: false
+    },
     dialogs: {
-        [Dial.TRUNK]: dialogStateFromData(dialogs.trunk()),
-        [Dial.FACET]: dialogStateFromData(dialogs.facet())
+        [Dial.TRUNK]: dialogStateFromData(dialogs.get(Dial.TRUNK)),
+        [Dial.FACET]: dialogStateFromData(dialogs.get(Dial.FACET))
     }
 };

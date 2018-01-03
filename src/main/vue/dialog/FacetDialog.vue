@@ -1,6 +1,6 @@
 <template>
-    <v-dialog v-model="visible" width="800px">
-        <v-card>
+    <main-dialog :dialog="Dial.FACET" @focus="$refs.qtUnitNameInput.focus()" @validate="validate" ref="dialog">
+        <template slot-scope="props">
             <v-card-title class="grey lighten-4 py-4 title" >
                 Ajouter une caractéristique
             </v-card-title>
@@ -12,58 +12,37 @@
                                 <v-icon>assignment</v-icon>
                             </v-avatar>
                             <v-text-field ref="qtUnitNameInput" placeholder="Quantité Unité Nom (ex.: 10l eau)"
-                                          @input="changeQtUnitName"/>
+                                          @input="updateQtUnitName"/>
                         </v-layout>
                     </v-flex>
                 </v-layout>
             </v-container>
-            <v-card-actions>
-                <v-spacer/>
-                <v-btn flat color="primary" @click="hide">Annuler</v-btn>
-                <v-btn flat @click="validate">Créer</v-btn>
-            </v-card-actions>
-        </v-card>
-    </v-dialog>
+        </template>
+    </main-dialog>
 </template>
 
 <script>
-    import {mapActions, mapMutations, mapGetters} from 'vuex';
-    import {Do, On} from "../../store/keys";
+    import MainDialog from "./MainDialog";
+    import {Dial, On} from "../../store/keys";
+    import {mapActions, mapGetters} from "vuex";
 
     export default {
-        name:'facet-dialog',
-        props: ['data','tree'],
+        name: 'facet-dialog',
+        data() {
+            return {
+                Dial: Dial
+            }
+        },
+        components: {MainDialog},
+        props: ['data', 'tree'],
         methods: {
-            ...mapActions({"addFacet": On.ADD_FACET}),
-            ...mapMutations({
-                "hide": Do.HIDE_FACET_DIALOG,
-                "setVisible":Do.UPDATE_FACET_DIALOG_VISIBILITY,
-                "update":Do.UPDATE_FACET_DIALOG_DATA
-            }),
             ...mapGetters(['qtUnitName']),
+            ...mapActions({"commitFacet": On.ADD_FACET}),
             validate: function () {
-                this.addFacet({tree:this.tree, facet:this.data.data});
-                this.hide();
+                this.commitFacet({tree:this.tree, facet:this.$refs.dialog.data});
             },
-            changeQtUnitName: function (value) {
-                this.update(this.$store.getters.qtUnitName(value));
-            }
-        },
-        computed: {
-            visible: {
-                get: function () {
-                    return this.data.visible;
-                },
-                set: function(value){
-                    this.setVisible(value);
-                }
-            }
-        },
-        watch: {
-            visible(visible) {
-                if (visible) {
-                    this.$nextTick(this.$refs.qtUnitNameInput.focus);
-                }
+            updateQtUnitName: function (value) {
+                this.$refs.dialog.data = this.$store.getters.qtUnitName(value);
             }
         }
     }

@@ -23,14 +23,19 @@ export default {
         commit(Do.UPDATE_RESULTS, await rest.search(term));
         commit(Do.UPDATE_SEARCHING, false);
     },
-    [On.CREATE_AND_OPEN_TREE]: async ({dispatch}, name) => {
+    [On.CREATE_AND_OPEN_TREE]: async ({dispatch}, {name}) => {
         const tree = await dispatch(On.CREATE_TRUNK, name);
         return dispatch(On.OPEN_TREE, tree);
+    },
+
+    [On.OPEN_OTHER_TREE]: async ({commit}, trunk) => {
+        commit(Do.OPEN_OTHER_TREE, await rest.get(trunk._id));
     },
     [On.OPEN_TREE]: async ({commit}, trunk) => {
         commit(Do.OPEN_TREE, await rest.get(trunk._id));
         commit(Do.CLEAR_SEARCH);
     },
+
     [On.CREATE_SEED]: async ({commit, dispatch, getters}, seed) => {
         await rest.link({trunkId: getters.seed._id, rootId: seed._id});
         commit(Do.ADD_SEED, {root: getters.seed, seed: await rest.get(seed._id)});
@@ -104,5 +109,8 @@ export default {
     [On.ADD_FACET]: async ({commit}, {tree, facet}) => {
         rest.addFacet(tree._id, facet);
         commit(Do.ADD_FACET, {tree, facet});
+    },
+    [On.FOCUS_ON_SEARCH]:()=>{
+        console.log("focus on search");
     }
 };

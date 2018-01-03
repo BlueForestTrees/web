@@ -17,27 +17,11 @@ const updateDialog = (state, {dialog, data}) => {
         console.error(`dialog ${dialog} not found`);
     }
 };
+const cleanDialog = (state, dialog) => {
+    updateDialog(state, {dialog, data: dialogs.get(dialog)});
+};
 
 
-
-const clearTrunkDialogData = (state) => {
-    updateTrunkDialogData(state, dialogs[Dial.TRUNK]());
-};
-const updateTrunkDialogData = (state, data) => {
-    updateDialog(state, {dialog: Dial.TRUNK, data});
-};
-const updateTrunkDialogVisibility = (state, visible) => {
-    updateDialogVisibility(state, {dialog:Dial.TRUNK, visible:visible});
-};
-const clearFacetDialogData = (state) => {
-    updateFacetDialogData(state, dialogs[Dial.FACET]());
-};
-const updateFacetDialogData = (state, data) => {
-    updateDialog(state, {dialog: Dial.FACET, data});
-};
-const updateFacetDialogVisibility = (state, visible) => {
-    updateDialogVisibility(state, {dialog:Dial.FACET, visible:visible});
-};
 
 
 export default {
@@ -45,39 +29,23 @@ export default {
     [Do.LOAD_UNITS]: (state, units) => {
         state.units = units;
     },
-    //DIALOG
-    [Do.UPDATE_TRUNK_DIALOG_VISIBILITY]: (state, visible) => {
-        if(visible){
-            clearTrunkDialogData(state);
-        }
-        updateTrunkDialogVisibility(state, visible);
+
+
+    [Do.SHOW_DIALOG]: (state, dialog) => {
+        cleanDialog(state, dialog);
+        updateDialogVisibility(state, {dialog, visible:true});
     },
-    [Do.SHOW_TRUNK_DIALOG]: (state) => {
-        clearTrunkDialogData(state);
-        updateTrunkDialogVisibility(state, true);
+    [Do.UPDATE_DIALOG_DATA]: (state, {dialog, data}) => {
+        updateDialog(state, {dialog, data});
     },
-    [Do.HIDE_TRUNK_DIALOG]: (state) => {
-        updateTrunkDialogVisibility(state, false);
+    [Do.UPDATE_DIALOG_VISIBILITY]: (state, {dialog, visible}) => {
+        updateDialogVisibility(state, {dialog, visible});
     },
-    [Do.UPDATE_TRUNK_DIALOG_DATA]: (state, data) => {
-        updateTrunkDialogData(state, data);
+    [Do.CLEAR_DIALOG_DATA]: (state, dialog) => {
+        cleanDialog(state, dialog);
     },
-    [Do.UPDATE_FACET_DIALOG_VISIBILITY]: (state, visible) => {
-        if(visible){
-            clearFacetDialogData(state);
-        }
-        updateFacetDialogVisibility(state, visible);
-    },
-    [Do.SHOW_FACET_DIALOG]: (state) => {
-        clearFacetDialogData(state);
-        updateFacetDialogVisibility(state, true);
-    },
-    [Do.HIDE_FACET_DIALOG]: (state) => {
-        updateFacetDialogVisibility(state, false);
-    },
-    [Do.UPDATE_FACET_DIALOG_DATA]: (state, data) => {
-        updateFacetDialogData(state, data);
-    },
+
+
 
 
     [Do.UPDATE]: (state, {data, key, value}) => {
@@ -95,6 +63,13 @@ export default {
     [Do.UPDATE_SEARCHING]: (state, value) => {
         state.search.searching = value;
     },
+    [Do.CLEAR_SEARCH]: state => {
+        state.search.term = null;
+        state.search.results = null;
+    },
+
+
+
     [Do.ADD_TO_PATH]: (state, root) => {
         state.path.push(root);
     },
@@ -107,10 +82,18 @@ export default {
     [Do.CHANGE_PATH_INDEX]: (state, idx) => {
         state.path.splice(idx + 1);
     },
-    [Do.CLEAR_SEARCH]: state => {
-        state.search.term = null;
-        state.search.results = null;
+
+
+
+
+
+
+    [Do.OPEN_OTHER_TREE]: (state, value) => {
+        state.otherTree = value;
     },
+
+
+
     [Do.OPEN_TREE]: (state, value) => {
         state.path = [value];
         state.tree = value;
@@ -148,6 +131,12 @@ export default {
     [Do.UPDATE_ADDING_SEED]: (state, value) => {
         state.addingSeed = value;
     },
+
+
+
+
+
+
     [Do.ADD_FACET]: (state, {tree, facet}) => {
         if (!tree.facets) {
             Vue.set(tree, "facets", [facet]);

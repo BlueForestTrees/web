@@ -17,7 +17,8 @@ export const On = {
     REFRESH_ROOT: "onRefreshRoot",
     ROOT_CLICK: 'onRootClick',
     SEARCH: 'onSearch',
-    UPSERT_LINK: "upsertLink"
+    UPSERT_LINK: "upsertLink",
+    FOCUS_ON_SEARCH: "focusOnSearch"
 };
 
 export const Do = {
@@ -25,20 +26,20 @@ export const Do = {
     ADD_TO_PATH: 'addToPath',
     ADD_SEED: 'addSeed',
     CHANGE_PATH_INDEX: 'changePathIndex',
+    CLEAR_DIALOG_DATA: 'clearDialogData',
     CLEAR_RESULTS: 'clearResults',
     CLEAR_SEARCH: 'clearSearch',
     CLOSE_TREE: 'closeTree',
-    HIDE_TRUNK_DIALOG:'hideTrunkDialog',
     HIDE_FACET_DIALOG:'hideFacetDialog',
     LOAD_UNITS: 'loadUnits',
-    SHOW_TRUNK_DIALOG: "showTrunkDialog",
-    SHOW_FACET_DIALOG: "showFacetDialog",
-    UPDATE_TRUNK_DIALOG_VISIBILITY: "updateTrunkDialogVisibility",
+    SHOW_DIALOG: "showDialog",
     UPDATE_FACET_DIALOG_VISIBILITY: "updateFacetDialogVisibility",
     OPEN_TREE: 'openTree',
+    OPEN_OTHER_TREE: 'openOtherTree',
     UPDATE_ADDING_SEED: 'updateAddingSeed',
     UPDATE: 'update',
-    UPDATE_TRUNK_DIALOG_DATA: 'updateTrunkDialogData',
+    UPDATE_DIALOG_VISIBILITY: 'updateDialogVisibility',
+    UPDATE_DIALOG_DATA: 'updateDialogData',
     UPDATE_FACET_DIALOG_DATA: 'updateFacetDialogData',
     UPDATE_LINK_EDIT: 'updateLinkEdit',
     UPDATE_ROOT: 'updateRoot',
@@ -46,10 +47,11 @@ export const Do = {
     UPDATE_QT: 'updateQt',
     UPDATE_RESULTS: 'updateResults',
     UPDATE_SEARCHING: 'updateSearching',
-    UPDATE_TERM: 'updateTerm',
+    UPDATE_TERM: 'updateTerm'
 };
 
 export const Dial = {
     TRUNK : "trunk",
-    FACET: "facet"
+    FACET: "facet",
+    LOOKUP_TREE: "lookupTree"
 };

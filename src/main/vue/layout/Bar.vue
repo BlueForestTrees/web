@@ -8,7 +8,7 @@
             <span class="hidden-xs-only">BlueForest Trees</span>
         </v-toolbar-title>
 
-        <search :search="search" style="max-width: 500px; min-width: 128px"/>
+        <lookup :data="search" style="max-width: 500px; min-width: 128px"/>
 
         <div class="d-flex align-center" style="margin-left: auto">
             <v-btn icon>
@@ -23,16 +23,18 @@
                 </v-avatar>
             </v-btn>
         </div>
-
     </v-toolbar>
 </template>
 
 <script>
     import {mapState, mapGetters} from 'vuex';
-    import Search from "./Search";
+    import Lookup from "../common/Lookup";
+    import MainDialog from "../dialog/MainDialog";
 
     export default {
-        components: {Search},
+        components: {
+            MainDialog,
+            Lookup},
         name: 'bar',
         props: ['drawer'],
         computed: {
