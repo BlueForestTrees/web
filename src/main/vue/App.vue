@@ -8,6 +8,7 @@
             <floating-button/>
             <main-footer/>
             <trunk-dialog />
+
         </v-app>
     </div>
 </template>
@@ -24,6 +25,7 @@
     import FacetDialog from "./dialog/FacetDialog";
     import {On} from "../store/keys";
     import {mapActions} from "vuex";
+    import Lookup from "./common/Lookup";
 
     export default {
         name: 'app',
@@ -43,6 +45,7 @@
             }
         },
         components: {
+            Lookup,
             FacetDialog,TrunkDialog,MainFooter, MainContent, FloatingButton, Bar, LeftMenu
         },
         mounted: async function(){

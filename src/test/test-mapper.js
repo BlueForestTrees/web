@@ -6,22 +6,22 @@ import mapper from '../main/services/mapper';
 
 describe('Mapper', function () {
 
-    let lookup;
+    let lookupUnits;
 
     beforeEach(() => {
-        lookup = mock(units)
+        lookupUnits = mock(units)
     });
 
     describe('#toTrunk(null)', function () {
         it('should return null', function () {
 
-            lookup
-                .expects("lookup")
+            lookupUnits
+                .expects("lookup_bak")
                 .never();
 
             expect(mapper.toTrunk(null)).to.not.exist;
 
-            lookup.verify();
+            lookupUnits.verify();
 
         });
     });
@@ -29,13 +29,13 @@ describe('Mapper', function () {
     describe('#toTrunk("")', function () {
         it('should return null', function () {
 
-            lookup
-                .expects("lookup")
+            lookupUnits
+                .expects("lookup_bak")
                 .never();
 
             expect(mapper.toTrunk(null)).to.not.exist;
 
-            lookup.verify();
+            lookupUnits.verify();
 
         });
     });
@@ -43,13 +43,13 @@ describe('Mapper', function () {
     describe('#toTrunk(" ")', function () {
         it('should return null', function () {
 
-            lookup
-                .expects("lookup")
+            lookupUnits
+                .expects("lookup_bak")
                 .never();
 
             expect(mapper.toTrunk(null)).to.not.exist;
 
-            lookup.verify();
+            lookupUnits.verify();
 
         });
     });
@@ -57,39 +57,39 @@ describe('Mapper', function () {
     describe('#toTrunk("10")', function () {
         it('should return qt unit', function () {
 
-            lookup
-                .expects("lookup")
+            lookupUnits
+                .expects("lookup_bak")
                 .withArgs("")
                 .returns(true);
 
             expect(mapper.toTrunk("10")).to.deep.equal({qt:"10", unit:"", name:null});
-            lookup.verify();
+            lookupUnits.verify();
         });
     });
 
     describe('#toTrunk("10 ")', function () {
         it('should return qt unit', function () {
 
-            lookup
-                .expects("lookup")
+            lookupUnits
+                .expects("lookup_bak")
                 .withArgs("")
                 .returns(true);
 
             expect(mapper.toTrunk("10 ")).to.deep.equal({qt:"10", unit:"", name:null});
-            lookup.verify();
+            lookupUnits.verify();
         });
     });
 
     describe('#toTrunk("10k")', function(){
         it('should return null', function(){
 
-            lookup
-                .expects("lookup")
+            lookupUnits
+                .expects("lookup_bak")
                 .withArgs("k")
                 .returns(false);
 
             expect(mapper.toTrunk("10k")).to.deep.equal({name:'10k'});
-            lookup.verify();
+            lookupUnits.verify();
 
         });
     });
@@ -97,13 +97,13 @@ describe('Mapper', function () {
     describe('#toTrunk("10k eau")', function(){
         it('should return null', function(){
 
-            lookup
-                .expects("lookup")
+            lookupUnits
+                .expects("lookup_bak")
                 .withArgs("k")
                 .returns(false);
 
             expect(mapper.toTrunk("10k eau")).to.deep.equal({name:'10k eau'});
-            lookup.verify();
+            lookupUnits.verify();
 
         });
     });
@@ -111,13 +111,13 @@ describe('Mapper', function () {
     describe('#toTrunk("10kg")', function(){
         it('should return a qtUnit', function(){
 
-            lookup
-                .expects("lookup")
+            lookupUnits
+                .expects("lookup_bak")
                 .withArgs("kg")
                 .returns(true);
 
             expect(mapper.toTrunk("10kg")).to.deep.equal({qt:"10", unit:"kg", name:null});
-            lookup.verify();
+            lookupUnits.verify();
 
         });
     });
@@ -125,13 +125,13 @@ describe('Mapper', function () {
     describe('#toTrunk("10kg ")', function(){
         it('should return a qtUnit', function(){
 
-            lookup
-                .expects("lookup")
+            lookupUnits
+                .expects("lookup_bak")
                 .withArgs("kg")
                 .returns(true);
 
             expect(mapper.toTrunk("10kg ")).to.deep.equal({qt:"10", unit:"kg", name:null});
-            lookup.verify();
+            lookupUnits.verify();
 
         });
     });
@@ -139,13 +139,13 @@ describe('Mapper', function () {
     describe('#toTrunk("10kg eau")', function(){
         it('should return a qtUnitName', function(){
 
-            lookup
-                .expects("lookup")
+            lookupUnits
+                .expects("lookup_bak")
                 .withArgs("kg")
                 .returns(true);
 
             expect(mapper.toTrunk("10kg eau")).to.deep.equal({qt:"10", unit:"kg", name:"eau"});
-            lookup.verify();
+            lookupUnits.verify();
 
         });
     });
@@ -153,13 +153,13 @@ describe('Mapper', function () {
     describe('#toTrunk("10kg eau de rochas")', function(){
         it('should return a qtUnitName', function(){
 
-            lookup
-                .expects("lookup")
+            lookupUnits
+                .expects("lookup_bak")
                 .withArgs("kg")
                 .returns(true);
 
             expect(mapper.toTrunk("10kg eau de rochas")).to.deep.equal({qt:"10", unit:"kg", name:"eau de rochas"});
-            lookup.verify();
+            lookupUnits.verify();
 
         });
     });
@@ -167,12 +167,12 @@ describe('Mapper', function () {
     describe('#toTrunk("eau")', function(){
         it('should return a name', function(){
 
-            lookup
-                .expects("lookup")
+            lookupUnits
+                .expects("lookup_bak")
                 .never();
 
             expect(mapper.toTrunk("eau")).to.deep.equal({ qt: null, unit: null, name: 'eau' });
-            lookup.verify();
+            lookupUnits.verify();
 
         });
     });
@@ -180,12 +180,12 @@ describe('Mapper', function () {
     describe('#toTrunk("eau de rochas")', function(){
         it('should return a name', function(){
 
-            lookup
-                .expects("lookup")
+            lookupUnits
+                .expects("lookup_bak")
                 .never();
 
             expect(mapper.toTrunk("eau de rochas")).to.deep.equal({ qt: null, unit: null, name: 'eau de rochas' });
-            lookup.verify();
+            lookupUnits.verify();
 
         });
     });

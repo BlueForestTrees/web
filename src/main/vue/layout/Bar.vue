@@ -1,14 +1,13 @@
 <template>
     <v-toolbar dark fixed app clipped color="blue darken-3">
 
-        <v-toolbar-title :style="$vuetify.breakpoint.smAndUp ? 'width: 300px; min-width: 250px' : 'min-width: 72px'"
-                         class="ml-0 pl-3">
+        <v-toolbar-title :style="$vuetify.breakpoint.smAndUp ? 'width: 300px; min-width: 250px' : 'min-width: 72px'" class="ml-0 pl-3">
             <v-toolbar-side-icon @click.stop="_drawer = !_drawer">
             </v-toolbar-side-icon>
             <span class="hidden-xs-only">BlueForest Trees</span>
         </v-toolbar-title>
 
-        <lookup :data="search" style="max-width: 500px; min-width: 128px"/>
+        <lookup :lookup="Loo.GLOBAL" @select="open" :cancreate="true" style="max-width: 500px; min-width: 128px"/>
 
         <div class="d-flex align-center" style="margin-left: auto">
             <v-btn icon>
@@ -27,19 +26,19 @@
 </template>
 
 <script>
-    import {mapState, mapGetters} from 'vuex';
     import Lookup from "../common/Lookup";
     import MainDialog from "../dialog/MainDialog";
+    import {Do, Loo} from "../../store/keys";
+    import {mapMutations} from "vuex";
 
     export default {
         components: {
             MainDialog,
             Lookup},
         name: 'bar',
+        data(){ return {Loo} },
         props: ['drawer'],
         computed: {
-            ...mapState(['search']),
-            ...mapGetters(['allowCreate']),
             _drawer: {
                 get: function () {
                     return this.drawer;
@@ -48,6 +47,11 @@
                     this.$emit('update:drawer', value);
                 }
             }
+        },
+        methods:{
+            ...mapMutations({
+                open:Do.OPEN_TREE
+            })
         }
     }
 </script>

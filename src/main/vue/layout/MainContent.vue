@@ -6,8 +6,6 @@
             <v-icon x-large v-if="tree">settings_ethernet</v-icon>
             <tree v-if="tree" :tree="tree"/>
 
-            <lookup data="search2"/>
-
         </v-layout>
     </v-container>
 </template>
@@ -24,7 +22,12 @@
             Tree},
         name: 'main-content',
         computed: {
-            ...mapState(['tree', 'search2'])
+            ...mapState(['tree'])
+        },
+        methods: {
+            select(item){
+                console.log(item);
+            }
         }
     }
 

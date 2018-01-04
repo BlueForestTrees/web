@@ -10,6 +10,23 @@ export default {
     [On.LOAD_UNITS]: async ({commit}) => {
         commit(Do.LOAD_UNITS, await units.load());
     },
+
+
+    [On.UPDATE_LOOKUP_TERM]: ({commit, dispatch}, {lookup, term}) => {
+        commit(Do.UPDATE_LOOKUP_TERM, {lookup, term});
+        if (term) {
+            commit(Do.UPDATE_LOOKUP_SEARCHING, {lookup, searching: true});
+            return dispatch(On.LOOKUP_SEARCH, {lookup, term});
+        } else {
+            commit(Do.CLEAR_LOOKUP_SEARCH, lookup);
+        }
+    },
+    [On.LOOKUP_SEARCH]: async ({commit}, {lookup, term}) => {
+        commit(Do.UPDATE_LOOKUP_RESULTS, {lookup, results: await rest.search(term)});
+        commit(Do.UPDATE_LOOKUP_SEARCHING, {lookup, searching: false});
+    },
+
+
     [On.UPDATE_SEARCH_TERM]: ({commit, dispatch}, term) => {
         commit(Do.UPDATE_TERM, term);
         if (term) {
@@ -110,7 +127,7 @@ export default {
         rest.addFacet(tree._id, facet);
         commit(Do.ADD_FACET, {tree, facet});
     },
-    [On.FOCUS_ON_SEARCH]:()=>{
+    [On.FOCUS_ON_SEARCH]: () => {
         console.log("focus on search");
     }
 };

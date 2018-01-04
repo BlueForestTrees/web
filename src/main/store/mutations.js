@@ -22,7 +22,13 @@ const cleanDialog = (state, dialog) => {
 };
 
 
-
+function lookups(state, lookup) {
+    if(state.lookups[lookup]){
+        return state.lookups[lookup];
+    }else{
+        console.error(`dialog ${dialog} not found`);
+    }
+}
 
 export default {
 
@@ -47,15 +53,30 @@ export default {
 
 
 
+    [Do.UPDATE_LOOKUP_TERM]: (state, {lookup, term}) => {
+        lookups(state, lookup).term = term;
+    },
+    [Do.UPDATE_LOOKUP_SEARCHING]: (state, {lookup, searching}) => {
+        lookups(state, lookup).searching = searching;
+    },
+    [Do.CLEAR_LOOKUP_SEARCH]: (state,lookup) => {
+        lookups(state, lookup).term = null;
+        lookups(state, lookup).results = null;
+    },
+    [Do.UPDATE_LOOKUP_RESULTS]: (state, {lookup, results}) => {
+        lookups(state, lookup).results = results;
+    },
 
+
+
+    [Do.UPDATE_TERM]: (state, value) => {
+        state.search.term = value;
+    },
     [Do.UPDATE]: (state, {data, key, value}) => {
         Vue.set(data, key, value);
     },
     [Do.CLEAR_RESULTS]: state => {
         state.search.results = [];
-    },
-    [Do.UPDATE_TERM]: (state, value) => {
-        state.search.term = value;
     },
     [Do.UPDATE_RESULTS]: (state, value) => {
         state.search.results = value;
