@@ -8,6 +8,7 @@
             <floating-button/>
             <main-footer/>
             <trunk-dialog />
+            <lookup-tree-dialog/>
 
         </v-app>
     </div>
@@ -23,9 +24,10 @@
     import TrunkDialog from "./dialog/TrunkDialog";
     import {mapState} from 'vuex';
     import FacetDialog from "./dialog/FacetDialog";
-    import {On} from "../store/keys";
+    import {On} from "../const/on";
     import {mapActions} from "vuex";
     import Lookup from "./common/Lookup";
+    import LookupTreeDialog from "./dialog/CompareToDialog";
 
     export default {
         name: 'app',
@@ -45,6 +47,7 @@
             }
         },
         components: {
+            LookupTreeDialog,
             Lookup,
             FacetDialog,TrunkDialog,MainFooter, MainContent, FloatingButton, Bar, LeftMenu
         },

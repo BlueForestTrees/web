@@ -3,11 +3,6 @@ import _ from 'lodash';
 import units from "../services/units";
 
 export default {
-    searchOccur: state => state.search.term && !state.search.searching && !!state.search.results,
-    noResults: state => _.isEmpty(state.search.results),
-    hasResults: (state, getters) => !!(getters.searchOccur && !getters.noResults),
-    exactMatch: state => !!_.find(state.search.results, {name: state.search.term}),
-    allowCreate: (state, getters) => !!(getters.searchOccur && (getters.noResults || !getters.exactMatch)),
     trunk: state => _.first(state.path),
     seed: state => _.last(state.path),
     isCurrentTrunk: (state, getters) => (trunk) => trunk._id === getters.trunk._id,

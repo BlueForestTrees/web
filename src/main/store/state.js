@@ -1,34 +1,36 @@
-import {Dial, Loo} from "./keys";
+import {Loo} from "../const/loo";
+import _ from 'lodash';
+import {Dial} from "../const/dial";
 
 const dialogStateFromData = (data) => ({
     visible: false,
     data: data
 });
 const dialogFactory = {
-    trunk: () => ({name: null}),
-    facet: () => ({qt: null, unit: null, name: null})
-};
-export const dialogs = {
-    get: name => dialogFactory[name]()
+    [Dial.TRUNK]: () => ({name: null}),
+    [Dial.FACET]: () => ({qt: null, unit: null, name: null}),
+    [Dial.COMPARE_TO]: () => ({name: null})
 };
 
+export const createDialog = name => dialogFactory[name]();
+const dialogs = ()=> _.reduce(Dial, (dials, key) => {
+    dials[key] = dialogStateFromData(createDialog(key));
+    return dials;
+}, {});
+
 const lookup = () => ({term: null, results: null, searching: false});
+const lookups = () => _.reduce(Loo, (lookups, key) => {
+    lookups[key] = lookup();
+    return lookups;
+}, {});
 
 export default {
     units: null,
     tree: null,
-    otherTree: null,
+    compareTo: null,
     path: null,
     linkEdit: null,
     addingSeed: false,
-    lookups: {
-        [Loo.GLOBAL]: lookup(),
-        [Loo.FACET]: lookup(),
-        [Loo.ROOT]: lookup(),
-    },
-    search: lookup(),
-    dialogs: {
-        [Dial.TRUNK]: dialogStateFromData(dialogs.get(Dial.TRUNK)),
-        [Dial.FACET]: dialogStateFromData(dialogs.get(Dial.FACET))
-    }
+    lookups: lookups(),
+    dialogs: dialogs()
 };

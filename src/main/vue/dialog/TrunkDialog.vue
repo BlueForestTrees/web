@@ -22,8 +22,9 @@
 
 <script>
     import MainDialog from "./MainDialog";
-    import {Dial, On} from "../../store/keys";
+    import {On} from "../../const/on";
     import {mapActions} from "vuex";
+    import {Dial} from "../../const/dial";
 
     export default {
         name: 'trunk-dialog',

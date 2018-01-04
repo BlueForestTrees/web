@@ -12,7 +12,7 @@
 </template>
 
 <script>
-    import {Do} from "../../store/keys";
+    import {Do} from "../../const/do";
     import {mapMutations} from "vuex";
 
     export default {

@@ -3,8 +3,6 @@
         <v-layout justify-center align-center>
 
             <tree v-if="tree" :tree="tree"/>
-            <v-icon x-large v-if="tree">settings_ethernet</v-icon>
-            <tree v-if="tree" :tree="tree"/>
 
         </v-layout>
     </v-container>
@@ -25,9 +23,6 @@
             ...mapState(['tree'])
         },
         methods: {
-            select(item){
-                console.log(item);
-            }
         }
     }
 

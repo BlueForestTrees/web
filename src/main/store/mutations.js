@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import {NONE} from "../services/const";
-import {Do, Dial} from "./keys";
-import {dialogs} from "./state"
+import {Do} from "../const/do";
+import {createDialog} from "./state"
 
 const updateDialogVisibility = (state, {dialog, visible}) => {
     if (state.dialogs[dialog]) {
@@ -14,11 +14,11 @@ const updateDialog = (state, {dialog, data}) => {
     if (state.dialogs[dialog]) {
         state.dialogs[dialog].data = data;
     } else {
-        console.error(`dialog ${dialog} not found`);
+        console.error(`state not found : state.dialogs['${dialog}']`);
     }
 };
 const cleanDialog = (state, dialog) => {
-    updateDialog(state, {dialog, data: dialogs.get(dialog)});
+    updateDialog(state, {dialog, data: createDialog(dialog)});
 };
 
 
@@ -109,8 +109,8 @@ export default {
 
 
 
-    [Do.OPEN_OTHER_TREE]: (state, value) => {
-        state.otherTree = value;
+    [Do.OPEN_COMPARE_TO]: (state, value) => {
+        state.compareTo = value;
     },
 
 

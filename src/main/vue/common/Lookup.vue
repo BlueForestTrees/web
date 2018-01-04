@@ -1,6 +1,8 @@
 <template>
+
     <v-menu offset-y style="width: 100%">
-        <v-text-field ref="textfield" @input="term = $event" :value="term" slot="activator" light solo prepend-icon="search" placeholder="Recherche"/>
+        <v-text-field ref="termInput" @input="term = $event" :value="term" slot="activator" light solo prepend-icon="search" placeholder="Recherche"/>
+
         <v-list v-if="allowCreate || hasResults">
             <v-list-tile v-for="item in results" :key="item._id" @click="select(item)">
                 <v-list-tile-avatar>
@@ -20,17 +22,21 @@
 </template>
 
 <script>
-    import {Do, On} from "../../store/keys";
+    import {Do} from "../../const/do";
     import {mapActions, mapMutations} from 'vuex';
+    import {On} from "../../const/on";
 
     export default {
         name: "lookup",
-        props: ["lookup","cancreate"],
+        props: {lookup: String, cancreate: Boolean},
         computed: {
             data: {
                 get: function () {
-                    console.log(this.cancreate);
-                    return this.$store.state.lookups[this.lookup];
+                    if(this.$store.state.lookups[this.lookup]) {
+                        return this.$store.state.lookups[this.lookup];
+                    }else{
+                        console.error(`state not found: state.lookups[${this.lookup}]`);
+                    }
                 },
             },
             term: {
@@ -63,6 +69,9 @@
             },
         },
         methods: {
+            focus(){
+                this.$refs.termInput.focus();
+            },
             ...mapActions({
                 dispatchTerm: On.UPDATE_LOOKUP_TERM,
                 dispatchCreate: On.CREATE_TRUNK
@@ -74,7 +83,7 @@
                 this.$emit('select', item);
                 this.clearSearch(this.lookup);
             },
-            create: async function(term) {
+            create: async function (term) {
                 this.select(await this.dispatchCreate(term));
             }
         }

@@ -24,9 +24,10 @@
 </template>
 
 <script>
-    import {Dial, Do} from "../../store/keys"
-    import {mapState, mapMutations} from 'vuex';
+    import {Do} from "../../const/do"
+    import {mapMutations} from 'vuex';
     import FacetDialog from "../dialog/FacetDialog";
+    import {Dial} from "../../const/dial";
 
 
     export default {
