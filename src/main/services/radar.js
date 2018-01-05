@@ -13,7 +13,6 @@ export default (id, data, options) => {
         dotRadius: 4, 			//The size of the colored circles of each blog
         opacityCircles: 0.1, 	//The opacity of the circles of each blob
         strokeWidth: 2, 		//The width of the stroke around each blob
-        roundStrokes: false,	//If true the area and stroke will follow a round path (cardinal-closed)
         color: d3.scaleOrdinal(d3.schemeCategory10)	//Color function
     };
 
@@ -30,7 +29,7 @@ export default (id, data, options) => {
     var allAxis = (data[0].map(function(i, j){return i.axis})),	//Names of each axis
         total = allAxis.length,					//The number of different axes
         radius = Math.min(cfg.w/2, cfg.h/2), 	//Radius of the outermost circle
-        Format = d3.format('%'),			 	//Percentage formatting
+        Format = d3.format('.0%'),			 	//Percentage formatting
         angleSlice = Math.PI * 2 / total;		//The width in radians of each "slice"
 
     //Scale for the radius
@@ -130,16 +129,12 @@ export default (id, data, options) => {
     /////////////////////////////////////////////////////////
     ///////////// Draw the radar chart blobs ////////////////
     /////////////////////////////////////////////////////////
-/*
+
     //The radial line function
-    var radarLine = d3.svg.line.radial()
-        .interpolate("linear-closed")
+    var radarLine = d3.lineRadial()
+        .curve(d3.curveCardinalClosed)
         .radius(function(d) { return rScale(d.value); })
         .angle(function(d,i) {	return i*angleSlice; });
-
-    if(cfg.roundStrokes) {
-        radarLine.interpolate("cardinal-closed");
-    }
 
     //Create a wrapper for the blobs
     var blobWrapper = g.selectAll(".radarWrapper")
@@ -191,9 +186,9 @@ export default (id, data, options) => {
         .style("fill", function(d,i,j) { return cfg.color(j); })
         .style("fill-opacity", 0.8);
 
-    /////////////////////////////////////////////////////////
-    //////// Append invisible circles for tooltip ///////////
-    /////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
+    ////// Append invisible circles for tooltip ///////////
+    ///////////////////////////////////////////////////////
 
     //Wrapper for the invisible circles on top
     var blobCircleWrapper = g.selectAll(".radarCircleWrapper")
@@ -212,8 +207,8 @@ export default (id, data, options) => {
         .style("fill", "none")
         .style("pointer-events", "all")
         .on("mouseover", function(d,i) {
-            newX =  parseFloat(d3.select(this).attr('cx')) - 10;
-            newY =  parseFloat(d3.select(this).attr('cy')) - 10;
+            const newX =  parseFloat(d3.select(this).attr('cx')) - 10;
+            const newY =  parseFloat(d3.select(this).attr('cy')) - 10;
 
             tooltip
                 .attr('x', newX)
@@ -230,7 +225,7 @@ export default (id, data, options) => {
     //Set up the small tooltip for when you hover over a circle
     var tooltip = g.append("text")
         .attr("class", "tooltip")
-        .style("opacity", 0);*/
+        .style("opacity", 0);
 
     /////////////////////////////////////////////////////////
     /////////////////// Helper Function /////////////////////

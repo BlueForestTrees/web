@@ -108,7 +108,7 @@
                 ],
                 [
                     {axis:"Prix",value:0.22},
-                    {axis:"Quantité",value:2.8},
+                    {axis:"Quantité",value:1},
                     {axis:"Calories",value:0.29},
                     {axis:"Glucides",value:0.17},
                     {axis:"Fibres",value:0.22}
@@ -122,7 +122,6 @@
                 margin: margin,
                 maxValue: 1,
                 levels: 4,
-                roundStrokes: true,
                 color: d3.scaleOrdinal().range(["#00A0B0","#CC333F"])
             };
 
