@@ -1,7 +1,8 @@
 <template>
     <v-container grid-list-md text-xs-center>
         <v-layout>
-            <v-flex xs12 sm6 offset-sm3>
+            <v-flex>
+
                 <v-toolbar color="pink" dark>
                     <v-toolbar-side-icon/>
                     <v-toolbar-title>{{tree.name}} et {{compareTo.name}}</v-toolbar-title>
@@ -10,12 +11,13 @@
                         <v-icon large>highlight_off</v-icon>
                     </v-btn>
                 </v-toolbar>
+
                 <v-container fluid grid-list-md class="grey lighten-4">
-                    <v-layout row wrap>
-                        <v-flex xs-12>
+                    <v-layout>
+                        <v-flex>
                             <v-card>
-                                <v-card-text>
-                                    <div class="facetRadar"></div>
+                                <v-card-text style="height:700px">
+                                    <div class="facetRadar" style="height: 100%;width: 100%;"></div>
                                 </v-card-text>
                                 <v-card-actions class="white">
                                     <v-spacer></v-spacer>
@@ -31,7 +33,7 @@
                                 </v-card-actions>
                             </v-card>
                         </v-flex>
-                        <v-flex xs-6>
+                <!--        <v-flex xs-6>
                             <v-card>
                                 <v-card-text>ici réglage axe</v-card-text>
                                 <v-card-actions class="white">
@@ -64,7 +66,7 @@
                                     </v-btn>
                                 </v-card-actions>
                             </v-card>
-                        </v-flex>
+                        </v-flex>-->
                     </v-layout>
                 </v-container>
             </v-flex>
@@ -98,18 +100,18 @@
 
             var data = [
                 [
-                    {axis:"Battery Life",value:1},
-                    {axis:"Brand",value:1},
-                    {axis:"Contract Cost",value:1},
-                    {axis:"Design And Quality",value:1},
-                    {axis:"Have Internet Connectivity",value:1}
+                    {axis:"Prix",value:1},
+                    {axis:"Quantité",value:1},
+                    {axis:"Calories",value:1},
+                    {axis:"Glucides",value:1},
+                    {axis:"Fibres",value:1}
                 ],
                 [
-                    {axis:"Battery Life",value:0.22},
-                    {axis:"Brand",value:2.8},
-                    {axis:"Contract Cost",value:0.29},
-                    {axis:"Design And Quality",value:0.17},
-                    {axis:"Have Internet Connectivity",value:0.22}
+                    {axis:"Prix",value:0.22},
+                    {axis:"Quantité",value:2.8},
+                    {axis:"Calories",value:0.29},
+                    {axis:"Glucides",value:0.17},
+                    {axis:"Fibres",value:0.22}
                 ]
             ];
             //////////////////////////////////////////////////////////////
