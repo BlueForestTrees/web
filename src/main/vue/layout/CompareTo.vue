@@ -83,9 +83,6 @@
 
     export default {
         props: ['tree', 'compareTo'],
-        methods: {
-            ...mapMutations({close: Do.CLEAR_COMPARE_TO})
-        },
         computed: {
             compareData: {
                 get:function(){
@@ -95,12 +92,17 @@
         },
         watch: {
             compareData(data) {
-
-                //TODO
-                console.log("ne se lance pas");
-
+                this.updateRadar(data);
+            }
+        },
+        methods: {
+            ...mapMutations({close: Do.CLEAR_COMPARE_TO}),
+            updateRadar(data){
                 radar(".facetRadar", data);
             }
+        },
+        mounted(){
+            this.updateRadar(this.compareData);
         }
     }
 </script>
