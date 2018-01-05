@@ -8,7 +8,6 @@
 
 <script>
     export default {
-        name: "qt-unit-setter",
         props: ['trunk', 'root'],
         data: function () {
             return {trunkQt: this.trunk.qt, rootQt: this.root.qt};

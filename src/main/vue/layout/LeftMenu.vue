@@ -51,7 +51,6 @@
 
 <script>
     export default {
-        name:'left-menu',
         props: ['drawer'],
         computed: {
             _drawer: {

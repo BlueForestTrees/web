@@ -28,7 +28,6 @@
     import {Dial} from "../../const/dial";
 
     export default {
-        name: 'facet-dialog',
         data() {
             return {
                 Dial: Dial

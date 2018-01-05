@@ -30,7 +30,6 @@
     import LookupTreeDialog from "./dialog/CompareToDialog";
 
     export default {
-        name: 'app',
         computed: {
             ...mapState({
                 "trunkDialog": state => state.dialogs.trunk

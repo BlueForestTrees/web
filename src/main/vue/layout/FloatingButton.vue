@@ -17,7 +17,6 @@
     import {Dial} from "../../const/dial";
 
     export default {
-        name: 'floating-button',
         methods: {
             ...mapMutations({
                 "doShowDialog": Do.SHOW_DIALOG

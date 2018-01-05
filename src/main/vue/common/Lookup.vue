@@ -27,7 +27,6 @@
     import {On} from "../../const/on";
 
     export default {
-        name: "lookup",
         props: {lookup: String, cancreate: Boolean},
         computed: {
             data: {

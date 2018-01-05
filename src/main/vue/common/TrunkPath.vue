@@ -10,7 +10,6 @@
 <script>
 
     export default {
-        name: "trunk-path",
         props: ['path']
     }
 </script>

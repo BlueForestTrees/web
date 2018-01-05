@@ -27,7 +27,6 @@
     import {Dial} from "../../const/dial";
 
     export default {
-        name: 'trunk-dialog',
         data() {
             return {
                 Dial: Dial

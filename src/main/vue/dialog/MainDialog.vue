@@ -16,7 +16,6 @@
     import {mapMutations} from "vuex";
 
     export default {
-        name: "main-dialog",
         props: ['dialog'],
         methods: {
             validate: function () {

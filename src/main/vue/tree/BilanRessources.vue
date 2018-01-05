@@ -9,6 +9,5 @@
 
 <script>
     export default {
-        name:"bilan-ressources"
     }
 </script>

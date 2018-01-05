@@ -4,6 +4,7 @@
 
             <tree v-if="tree" :tree="tree"/>
 
+
         </v-layout>
     </v-container>
 </template>
@@ -18,7 +19,6 @@
         components: {
             Lookup,
             Tree},
-        name: 'main-content',
         computed: {
             ...mapState(['tree'])
         },

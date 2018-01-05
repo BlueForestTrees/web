@@ -36,7 +36,6 @@
         components: {
             MainDialog,
             Lookup},
-        name: 'bar',
         data(){ return {Loo} },
         props: ['drawer'],
         computed: {

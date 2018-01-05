@@ -27,7 +27,6 @@
 
     export default {
         components: {Lookup, MainDialog},
-        name: 'compare-to-dialog',
         data() {
             return {
                 Dial: Dial,

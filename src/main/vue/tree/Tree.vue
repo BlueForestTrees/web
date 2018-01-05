@@ -79,7 +79,6 @@
             Branches,
             Facets
         },
-        name: 'tree',
         props: ['tree'],
         computed: {
             ...mapState(['search'])

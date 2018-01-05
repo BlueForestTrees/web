@@ -12,7 +12,6 @@
 <script>
 
     export default {
-        name: "list",
         props: ['trunks', 'qt', 'sep'],
         computed:{
             separator: function(){
