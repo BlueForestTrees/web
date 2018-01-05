@@ -3,6 +3,8 @@ import _ from 'lodash';
 import units from "../services/units";
 
 export default {
+    treeing: (state, getters) => state.tree && !getters.comparing,
+    comparing: (state) => state.tree && state.compareTo,
     isCurrentTrunk: (state, getters) => (trunk) => trunk._id === getters.trunk._id,
     tank(state, getters) {
         if (!getters.trunk) return undefined;

@@ -7,6 +7,7 @@ export const Do = {
     CLEAR_LOOKUP_SEARCH: 'clearLookupSearch',
     CLEAR_RESULTS: 'clearResults',
     CLEAR_SEARCH: 'clearSearch',
+    CLEAR_COMPARE_TO: 'clearCompareTo',
     CLOSE_TREE: 'closeTree',
     HIDE_FACET_DIALOG:'hideFacetDialog',
     LOAD_UNITS: 'loadUnits',

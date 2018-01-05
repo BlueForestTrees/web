@@ -42,7 +42,27 @@ export default {
             }
         ]
     },
-    compareTo: null,
+    compareTo: {
+        "_id": "5a4cd5dfbd5d0348033903a8",
+        "name": "chantier",
+        "facets": [
+            {
+                "qt": "5",
+                "unit": "l",
+                "name": "eau"
+            },
+            {
+                "qt": "15",
+                "unit": "l",
+                "name": "coca"
+            },
+            {
+                "qt": "14",
+                "unit": "kg",
+                "name": "terre"
+            }
+        ]
+    },
     linkEdit: null,
     addingSeed: false,
     lookups: lookups(),

@@ -2,8 +2,8 @@
     <v-container fluid fill-height>
         <v-layout justify-center align-center>
 
-            <tree v-if="tree" :tree="tree"/>
-
+            <tree v-if="treeing" :tree="tree"/>
+            <compare-to v-if="comparing" :tree="tree" :compareTo="compareTo"/>
 
         </v-layout>
     </v-container>
@@ -12,18 +12,19 @@
 <script>
     import Tree from "../tree/Tree";
 
-    import {mapState} from 'vuex';
+    import {mapState, mapGetters} from 'vuex';
     import Lookup from "../common/Lookup";
+    import CompareTo from "./CompareTo";
 
     export default {
         components: {
-            Lookup,
-            Tree},
+            CompareTo,
+            Lookup, Tree},
         computed: {
-            ...mapState(['tree'])
+            ...mapState(['tree', 'compareTo']),
+            ...mapGetters(['treeing','comparing'])
         },
-        methods: {
-        }
+        methods: {}
     }
 
 </script>

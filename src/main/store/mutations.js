@@ -112,7 +112,9 @@ export default {
     [Do.OPEN_COMPARE_TO]: (state, value) => {
         state.compareTo = value;
     },
-
+    [Do.CLEAR_COMPARE_TO]: (state) => {
+        state.compareTo = null;
+    },
 
 
     [Do.OPEN_TREE]: (state, value) => {
