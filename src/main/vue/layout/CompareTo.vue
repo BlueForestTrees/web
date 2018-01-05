@@ -33,40 +33,40 @@
                                 </v-card-actions>
                             </v-card>
                         </v-flex>
-                <!--        <v-flex xs-6>
-                            <v-card>
-                                <v-card-text>ici réglage axe</v-card-text>
-                                <v-card-actions class="white">
-                                    <v-spacer></v-spacer>
-                                    <v-btn icon>
-                                        <v-icon>favorite</v-icon>
-                                    </v-btn>
-                                    <v-btn icon>
-                                        <v-icon>bookmark</v-icon>
-                                    </v-btn>
-                                    <v-btn icon>
-                                        <v-icon>share</v-icon>
-                                    </v-btn>
-                                </v-card-actions>
-                            </v-card>
-                        </v-flex>
-                        <v-flex xs-6>
-                            <v-card>
-                                <v-card-text>ici radar ressources</v-card-text>
-                                <v-card-actions class="white">
-                                    <v-spacer></v-spacer>
-                                    <v-btn icon>
-                                        <v-icon>favorite</v-icon>
-                                    </v-btn>
-                                    <v-btn icon>
-                                        <v-icon>bookmark</v-icon>
-                                    </v-btn>
-                                    <v-btn icon>
-                                        <v-icon>share</v-icon>
-                                    </v-btn>
-                                </v-card-actions>
-                            </v-card>
-                        </v-flex>-->
+                        <!--        <v-flex xs-6>
+                                    <v-card>
+                                        <v-card-text>ici réglage axe</v-card-text>
+                                        <v-card-actions class="white">
+                                            <v-spacer></v-spacer>
+                                            <v-btn icon>
+                                                <v-icon>favorite</v-icon>
+                                            </v-btn>
+                                            <v-btn icon>
+                                                <v-icon>bookmark</v-icon>
+                                            </v-btn>
+                                            <v-btn icon>
+                                                <v-icon>share</v-icon>
+                                            </v-btn>
+                                        </v-card-actions>
+                                    </v-card>
+                                </v-flex>
+                                <v-flex xs-6>
+                                    <v-card>
+                                        <v-card-text>ici radar ressources</v-card-text>
+                                        <v-card-actions class="white">
+                                            <v-spacer></v-spacer>
+                                            <v-btn icon>
+                                                <v-icon>favorite</v-icon>
+                                            </v-btn>
+                                            <v-btn icon>
+                                                <v-icon>bookmark</v-icon>
+                                            </v-btn>
+                                            <v-btn icon>
+                                                <v-icon>share</v-icon>
+                                            </v-btn>
+                                        </v-card-actions>
+                                    </v-card>
+                                </v-flex>-->
                     </v-layout>
                 </v-container>
             </v-flex>
@@ -79,54 +79,28 @@
     import {Do} from "../../const/do";
     import {mapMutations} from 'vuex';
     import radar from '../../services/radar';
-    import * as d3 from 'd3';
-
+    import {toRadarData} from "../../services/mapper";
 
     export default {
         props: ['tree', 'compareTo'],
         methods: {
             ...mapMutations({close: Do.CLEAR_COMPARE_TO})
         },
-        mounted(){
-            //////////////////////////////////////////////////////////////
-            //////////////////////// Set-Up //////////////////////////////
-            //////////////////////////////////////////////////////////////
+        computed: {
+            compareData: {
+                get:function(){
+                    return toRadarData(this.tree.facets, this.compareTo.facets);
+                }
+            }
+        },
+        watch: {
+            compareData(data) {
 
-            var margin = {top: 100, right: 100, bottom: 100, left: 100};
+                //TODO
+                console.log("ne se lance pas");
 
-            //////////////////////////////////////////////////////////////
-            ////////////////////////// Data //////////////////////////////
-            //////////////////////////////////////////////////////////////
-
-            var data = [
-                [
-                    {axis:"Prix",value:1},
-                    {axis:"Quantité",value:1},
-                    {axis:"Calories",value:1},
-                    {axis:"Glucides",value:1},
-                    {axis:"Fibres",value:1}
-                ],
-                [
-                    {axis:"Prix",value:0.22},
-                    {axis:"Quantité",value:1},
-                    {axis:"Calories",value:0.29},
-                    {axis:"Glucides",value:0.17},
-                    {axis:"Fibres",value:0.22}
-                ]
-            ];
-            //////////////////////////////////////////////////////////////
-            //////////////////// Draw the Chart //////////////////////////
-            //////////////////////////////////////////////////////////////
-
-            var radarChartOptions = {
-                margin: margin,
-                maxValue: 1,
-                levels: 4,
-                color: d3.scaleOrdinal().range(["#00A0B0","#CC333F"])
-            };
-
-
-            radar(".facetRadar", data, radarChartOptions);
+                radar(".facetRadar", data);
+            }
         }
     }
 </script>

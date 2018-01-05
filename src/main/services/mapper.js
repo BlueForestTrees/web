@@ -21,3 +21,23 @@ const addAllSeeds = (trunk, tank) => {
 };
 
 export const tank = (trunk) => _.values(addAllSeeds(trunk,{}));
+
+
+export const toRadarData = (facetLeft, facetsRight) => {
+    return [
+        [
+            {axis: "Prix", value: 1},
+            {axis: "Quantité", value: 1},
+            {axis: "Calories", value: 1},
+            {axis: "Glucides", value: 1},
+            {axis: "Fibres", value: 1}
+        ],
+        [
+            {axis: "Prix", value: 0.22},
+            {axis: "Quantité", value: 1},
+            {axis: "Calories", value: 0.29},
+            {axis: "Glucides", value: 0.17},
+            {axis: "Fibres", value: 0.22}
+        ]
+    ];
+}
