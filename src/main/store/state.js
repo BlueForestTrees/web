@@ -43,7 +43,6 @@ export default {
         ]
     },
     compareTo: null,
-    path: null,
     linkEdit: null,
     addingSeed: false,
     lookups: lookups(),

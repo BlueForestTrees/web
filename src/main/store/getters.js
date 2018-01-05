@@ -3,8 +3,6 @@ import _ from 'lodash';
 import units from "../services/units";
 
 export default {
-    trunk: state => _.first(state.path),
-    seed: state => _.last(state.path),
     isCurrentTrunk: (state, getters) => (trunk) => trunk._id === getters.trunk._id,
     tank(state, getters) {
         if (!getters.trunk) return undefined;

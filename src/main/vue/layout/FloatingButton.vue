@@ -1,7 +1,7 @@
 <template>
 
     <span>
-    <v-btn v-if="!trunk" fab bottom right color="pink" dark fixed @click.stop="onAddClick" class="floating-bar">
+    <v-btn v-if="!tree" fab bottom right color="pink" dark fixed @click.stop="onAddClick" class="floating-bar">
         <v-icon>add</v-icon>
     </v-btn>
     <v-btn v-else fab bottom right color="pink" dark fixed @click.stop="openOtherTree" class="floating-bar">
@@ -13,7 +13,7 @@
 
 <script>
     import {Do} from "../../const/do";
-    import {mapMutations, mapGetters} from 'vuex';
+    import {mapMutations, mapState} from 'vuex';
     import {Dial} from "../../const/dial";
 
     export default {
@@ -30,7 +30,7 @@
             }
         },
         computed: {
-            ...mapGetters(['trunk'])
+            ...mapState(['tree'])
         }
     }
 </script>
