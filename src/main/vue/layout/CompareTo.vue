@@ -14,7 +14,9 @@
                     <v-layout row wrap>
                         <v-flex xs-12>
                             <v-card>
-                                <v-card-text>ici radar caractéristiques</v-card-text>
+                                <v-card-text>
+                                    <div class="facetRadar"></div>
+                                </v-card-text>
                                 <v-card-actions class="white">
                                     <v-spacer></v-spacer>
                                     <v-btn icon>
@@ -74,11 +76,60 @@
 <script>
     import {Do} from "../../const/do";
     import {mapMutations} from 'vuex';
+    import radar from '../../services/radar';
+    import * as d3 from 'd3';
+
 
     export default {
         props: ['tree', 'compareTo'],
-        methods:{
+        methods: {
             ...mapMutations({close: Do.CLEAR_COMPARE_TO})
+        },
+        mounted(){
+            //////////////////////////////////////////////////////////////
+            //////////////////////// Set-Up //////////////////////////////
+            //////////////////////////////////////////////////////////////
+
+            var margin = {top: 100, right: 100, bottom: 100, left: 100},
+                width = Math.min(700, window.innerWidth - 10) - margin.left - margin.right,
+                height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
+
+            //////////////////////////////////////////////////////////////
+            ////////////////////////// Data //////////////////////////////
+            //////////////////////////////////////////////////////////////
+
+            var data = [
+                [
+                    {axis:"Battery Life",value:1},
+                    {axis:"Brand",value:1},
+                    {axis:"Contract Cost",value:1},
+                    {axis:"Design And Quality",value:1},
+                    {axis:"Have Internet Connectivity",value:1}
+                ],
+                [
+                    {axis:"Battery Life",value:0.22},
+                    {axis:"Brand",value:2.8},
+                    {axis:"Contract Cost",value:0.29},
+                    {axis:"Design And Quality",value:0.17},
+                    {axis:"Have Internet Connectivity",value:0.22}
+                ]
+            ];
+            //////////////////////////////////////////////////////////////
+            //////////////////// Draw the Chart //////////////////////////
+            //////////////////////////////////////////////////////////////
+
+            var radarChartOptions = {
+                w: width,
+                h: height,
+                margin: margin,
+                maxValue: 1,
+                levels: 4,
+                roundStrokes: true,
+                color: d3.scaleOrdinal().range(["#00A0B0","#CC333F"])
+            };
+
+
+            radar(".facetRadar", data, radarChartOptions);
         }
     }
 </script>

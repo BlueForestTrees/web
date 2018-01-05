@@ -64,7 +64,7 @@
         ],
         [
             {axis:"Battery Life",value:0.22},
-            {axis:"Brand",value:0.28},
+            {axis:"Brand",value:2.8},
             {axis:"Contract Cost",value:0.29},
             {axis:"Design And Quality",value:0.17},
             {axis:"Have Internet Connectivity",value:0.22}
@@ -74,8 +74,6 @@
     //////////////////// Draw the Chart //////////////////////////
     //////////////////////////////////////////////////////////////
 
-    var color = d3.scale.ordinal().range(["#00A0B0","#CC333F"]);
-
     var radarChartOptions = {
         w: width,
         h: height,
@@ -83,7 +81,7 @@
         maxValue: 1,
         levels: 4,
         roundStrokes: true,
-        color: color
+        color: d3.scale.ordinal().range(["#00A0B0","#CC333F"])
     };
     //Call function to draw the Radar chart
     RadarChart(".radarChart", data, radarChartOptions);
