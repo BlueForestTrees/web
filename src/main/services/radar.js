@@ -2,8 +2,8 @@ import * as d3 from 'd3';
 
 export default (id, data, options) => {
     var cfg = {
-        w: 600,				//Width of the circle
-        h: 600,				//Height of the circle
+        w: 500,				//Width of the circle
+        h: 500,				//Height of the circle
         margin: {top: 20, right: 20, bottom: 20, left: 20}, //The margins of the SVG
         levels: 3,				//How many levels or inner circles should there be drawn
         maxValue: 0, 			//What is the value that the biggest circle will represent
@@ -47,8 +47,8 @@ export default (id, data, options) => {
 
     //Initiate the radar chart SVG
     var svg = d3.select(id).append("svg")
-        .attr("width",  cfg.w + cfg.margin.left + cfg.margin.right)
-        .attr("height", cfg.h + cfg.margin.top + cfg.margin.bottom)
+        .attr("width",  "100%")
+        .attr("height", "100%")
         .attr("class", "radar"+id);
     //Append a g element
     var g = svg.append("g")
@@ -130,7 +130,7 @@ export default (id, data, options) => {
     /////////////////////////////////////////////////////////
     ///////////// Draw the radar chart blobs ////////////////
     /////////////////////////////////////////////////////////
-
+/*
     //The radial line function
     var radarLine = d3.svg.line.radial()
         .interpolate("linear-closed")
@@ -230,7 +230,7 @@ export default (id, data, options) => {
     //Set up the small tooltip for when you hover over a circle
     var tooltip = g.append("text")
         .attr("class", "tooltip")
-        .style("opacity", 0);
+        .style("opacity", 0);*/
 
     /////////////////////////////////////////////////////////
     /////////////////// Helper Function /////////////////////

@@ -1,6 +1,6 @@
 <template>
     <v-container grid-list-md text-xs-center>
-        <v-layout column>
+        <v-layout>
             <v-flex xs12 sm6 offset-sm3>
                 <v-toolbar color="pink" dark>
                     <v-toolbar-side-icon/>
@@ -90,9 +90,7 @@
             //////////////////////// Set-Up //////////////////////////////
             //////////////////////////////////////////////////////////////
 
-            var margin = {top: 100, right: 100, bottom: 100, left: 100},
-                width = Math.min(700, window.innerWidth - 10) - margin.left - margin.right,
-                height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
+            var margin = {top: 100, right: 100, bottom: 100, left: 100};
 
             //////////////////////////////////////////////////////////////
             ////////////////////////// Data //////////////////////////////
@@ -119,8 +117,6 @@
             //////////////////////////////////////////////////////////////
 
             var radarChartOptions = {
-                w: width,
-                h: height,
                 margin: margin,
                 maxValue: 1,
                 levels: 4,

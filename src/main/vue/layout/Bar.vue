@@ -1,5 +1,5 @@
 <template>
-    <v-toolbar dark fixed app clipped color="blue darken-3">
+    <v-toolbar app dark fixed clipped color="blue darken-3">
 
         <v-toolbar-title :style="$vuetify.breakpoint.smAndUp ? 'width: 300px; min-width: 250px' : 'min-width: 72px'" class="ml-0 pl-3">
             <v-toolbar-side-icon @click.stop="_drawer = !_drawer">

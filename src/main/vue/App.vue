@@ -3,10 +3,10 @@
         <v-app id="blueforest" @keydown.ctrl.space.native="focusOnSearch">
 
             <bar :drawer.sync="drawer" />
-            <left-menu :drawer.sync="drawer"/>
+            <!--<left-menu :drawer.sync="drawer"/>-->
             <main-content/>
             <floating-button/>
-            <main-footer/>
+            <!--<main-footer/>-->
             <trunk-dialog />
             <lookup-tree-dialog/>
 
