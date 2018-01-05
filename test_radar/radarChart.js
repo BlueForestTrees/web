@@ -1,9 +1,3 @@
-/////////////////////////////////////////////////////////
-/////////////// The Radar Chart Function ////////////////
-/////////////// Written by Nadieh Bremer ////////////////
-////////////////// VisualCinnamon.com ///////////////////
-/////////// Inspired by the code of alangrafu ///////////
-/////////////////////////////////////////////////////////
 
 function RadarChart(id, data, options) {
     var cfg = {
@@ -22,12 +16,12 @@ function RadarChart(id, data, options) {
         color: d3.scale.category10()	//Color function
     };
 
-    //Put all of the options into a variable called cfg
+    //merge options into cfg
     if('undefined' !== typeof options){
         for(var i in options){
             if('undefined' !== typeof options[i]){ cfg[i] = options[i]; }
-        }//for i
-    }//if
+        }
+    }
 
     //If the supplied maxValue is smaller than the actual one, replace by the max in the data
     var maxValue = Math.max(cfg.maxValue, d3.max(data, function(i){return d3.max(i.map(function(o){return o.value;}))}));
