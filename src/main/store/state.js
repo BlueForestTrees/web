@@ -26,7 +26,22 @@ const lookups = () => _.reduce(Loo, (lookups, key) => {
 
 export default {
     units: null,
-    tree: null,
+    tree: {
+        "_id": "5a4cd5a4bd5d0348033903a7",
+        "name": "champignon",
+        "facets": [
+            {
+                "qt": "10",
+                "unit": "l",
+                "name": "eau"
+            },
+            {
+                "qt": "10",
+                "unit": "l",
+                "name": "coca"
+            }
+        ]
+    },
     compareTo: null,
     path: null,
     linkEdit: null,

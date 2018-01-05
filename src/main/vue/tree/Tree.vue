@@ -1,12 +1,63 @@
 <template>
-    <div>
-        <trunk :tree="tree"/>
-        <branches />
-        <facets :tree="tree"/>
-        <impacts/>
-        <ressources/>
-        <bilan-ressources/>
-    </div>
+
+    <v-container grid-list-md text-xs-center>
+        <v-layout row wrap>
+            <v-flex xs12>
+                <v-card  >
+                    <v-card-text class="px-3">
+                        <branches/>
+                    </v-card-text>
+                </v-card>
+            </v-flex>
+
+
+
+
+            <v-flex xs4>
+                <v-card  >
+                    <v-card-text class="px-0">
+                        <facets :tree="tree"/>
+                    </v-card-text>
+                </v-card>
+            </v-flex>
+            <v-flex xs4>
+                <v-card  >
+                    <v-card-text class="px-0">
+                        <trunk :tree="tree"/>
+                    </v-card-text>
+                </v-card>
+            </v-flex>
+            <v-flex xs4>
+                <v-card  >
+                    <v-card-text class="px-0">
+                        <impacts/>
+                    </v-card-text>
+                </v-card>
+            </v-flex>
+
+
+
+
+
+
+            <v-flex xs12>
+                <v-card  >
+                    <v-card-text class="px-0">
+                        <ressources/>
+                    </v-card-text>
+                </v-card>
+            </v-flex>
+
+            <v-flex xs12>
+                <v-card  >
+                    <v-card-text class="px-0">
+                        <bilan-ressources/>
+                    </v-card-text>
+                </v-card>
+            </v-flex>
+        </v-layout>
+    </v-container>
+
 
 </template>
 
@@ -26,7 +77,8 @@
             BilanRessources,
             Impacts,
             Branches,
-            Facets},
+            Facets
+        },
         name: 'tree',
         props: ['tree'],
         computed: {
