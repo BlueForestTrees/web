@@ -87,9 +87,6 @@
             compareData: {
                 get:function(){
                     let radarData = toRadarData(this.tree, this.compareTo);
-
-                     console.log(radarData);
-
                     return radarData;
                 }
             }

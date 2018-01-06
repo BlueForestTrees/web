@@ -2,59 +2,17 @@
 
     <v-container grid-list-md text-xs-center>
         <v-layout row wrap>
-            <v-flex xs12>
-                <v-card  >
-                    <v-card-text class="px-3">
-                        <branches/>
-                    </v-card-text>
-                </v-card>
-            </v-flex>
 
+            <v-flex xs12 d-flex><branches/></v-flex>
 
+            <v-flex xs4 d-flex><facets :tree="tree"/></v-flex>
+            <v-flex xs4 d-flex><trunk :tree="tree"/></v-flex>
+            <v-flex xs4 d-flex><impacts/></v-flex>
 
+            <v-flex xs12 d-flex><ressources/></v-flex>
 
-            <v-flex xs4>
-                <v-card  >
-                    <v-card-text class="px-0">
-                        <facets :tree="tree"/>
-                    </v-card-text>
-                </v-card>
-            </v-flex>
-            <v-flex xs4>
-                <v-card  >
-                    <v-card-text class="px-0">
-                        <trunk :tree="tree"/>
-                    </v-card-text>
-                </v-card>
-            </v-flex>
-            <v-flex xs4>
-                <v-card  >
-                    <v-card-text class="px-0">
-                        <impacts/>
-                    </v-card-text>
-                </v-card>
-            </v-flex>
+            <v-flex xs12 d-flex><bilan-ressources/></v-flex>
 
-
-
-
-
-
-            <v-flex xs12>
-                <v-card  >
-                    <v-card-text class="px-0">
-                        <ressources/>
-                    </v-card-text>
-                </v-card>
-            </v-flex>
-
-            <v-flex xs12>
-                <v-card  >
-                    <v-card-text class="px-0">
-                        <bilan-ressources/>
-                    </v-card-text>
-                </v-card>
-            </v-flex>
         </v-layout>
     </v-container>
 

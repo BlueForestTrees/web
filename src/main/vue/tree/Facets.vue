@@ -1,25 +1,30 @@
 <template>
-    <span>
-    <h2>Caractéristiques</h2>
-    <facet-dialog :dialog="Dial.FACET" :tree="tree"/>
+    <v-card>
+        <facet-dialog :dialog="Dial.FACET" :tree="tree"/>
 
-    <v-text-field placeholder="Quantité Unité"/>
-    <v-text-field placeholder="Prix"/>
-
-    <v-list>
-        <v-list-tile avatar if="tree.facets" v-for="facet in tree.facets" v-bind:key="facet.name" @click="">
-            <v-list-tile-avatar>
-                <v-icon>assignment</v-icon>
-            </v-list-tile-avatar>
-            <v-list-tile-content>{{facet.qt}}{{facet.unit}} {{facet.name}}</v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile avatar>
-            <v-list-tile-avatar @click="showDialog(Dial.FACET)">
-                <v-icon>add</v-icon>
-            </v-list-tile-avatar>
-        </v-list-tile>
-    </v-list>
-    </span>
+        <v-toolbar>
+            <v-toolbar-title>Caractéristiques</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-btn icon @click="showDialog(Dial.FACET)">
+                <v-icon>edit</v-icon>
+            </v-btn>
+        </v-toolbar>
+        <v-list two-line>
+            <template v-for="facet in tree.facets">
+                <v-divider/>
+                <v-list-tile :key="facet.name" @click="">
+                    <v-list-tile-action>
+                        <v-icon>forward</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <v-list-tile-title>{{facet.name}}</v-list-tile-title>
+                        <v-list-tile-sub-title>{{facet.qt}}{{facet.unit}}</v-list-tile-sub-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+            </template>
+            <v-divider/>
+        </v-list>
+    </v-card>
 
 </template>
 
@@ -43,3 +48,9 @@
         }
     }
 </script>
+
+<style>
+    .list {
+        padding: 0px;
+    }
+</style>

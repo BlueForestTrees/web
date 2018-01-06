@@ -1,5 +1,4 @@
 import api from './api'
-import units from './units'
 
 export default {
     get:(_id) => api.get(`api/trunk/${_id}`),

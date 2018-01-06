@@ -26,7 +26,9 @@ const lookups = () => _.reduce(Loo, (lookups, key) => {
 
 export default {
     units: null,
-    tree: {
+    tree:
+    //null,
+{
         "_id": "5a5081a3bd5d0348033903cf",
         "name": "tarte",
         "facets": [
@@ -47,27 +49,28 @@ export default {
             }
         ]
     },
-    compareTo: {
-        "_id": "5a5081efbd5d0348033903d0",
-        "name": "gateau",
-        "facets": [
-            {
-                "qt": 10,
-                "unit": "kg",
-                "name": "pomme"
-            },
-            {
-                "qt": 3,
-                "unit": "l",
-                "name": "eau"
-            },
-            {
-                "qt": 9,
-                "unit": "km",
-                "name": "queue"
-            }
-        ]
-    },
+    compareTo: null,
+    //     {
+    //     "_id": "5a5081efbd5d0348033903d0",
+    //     "name": "gateau",
+    //     "facets": [
+    //         {
+    //             "qt": 10,
+    //             "unit": "kg",
+    //             "name": "pomme"
+    //         },
+    //         {
+    //             "qt": 3,
+    //             "unit": "l",
+    //             "name": "eau"
+    //         },
+    //         {
+    //             "qt": 9,
+    //             "unit": "km",
+    //             "name": "queue"
+    //         }
+    //     ]
+    // },
     linkEdit: null,
     addingSeed: false,
     lookups: lookups(),
