@@ -40,7 +40,7 @@ export default {
         }
 
         return {
-            qt: q ? q.replace(",", ".") : null,
+            qt: q ? Number(q.replace(",", ".")) : null,
             unit: u,
             name: n || null
         };

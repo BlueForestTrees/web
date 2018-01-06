@@ -11,8 +11,7 @@
                             <v-avatar size="40px" class="mr-3">
                                 <v-icon>assignment</v-icon>
                             </v-avatar>
-                            <v-text-field ref="qtUnitNameInput" placeholder="Quantité Unité Nom (ex.: 10l eau)"
-                                          @input="updateQtUnitName"/>
+                            <v-text-field ref="qtUnitNameInput" placeholder="Quantité Unité Nom (ex.: 10l eau)" @input="inputChanged"/>
                         </v-layout>
                     </v-flex>
                 </v-layout>
@@ -41,7 +40,7 @@
             validate: function () {
                 this.commitFacet({tree:this.tree, facet:this.$refs.dialog.data});
             },
-            updateQtUnitName: function (value) {
+            inputChanged: function (value) {
                 this.$refs.dialog.data = this.$store.getters.qtUnitName(value);
             }
         }

@@ -86,7 +86,11 @@
         computed: {
             compareData: {
                 get:function(){
-                    return toRadarData(this.tree.facets, this.compareTo.facets);
+                    let radarData = toRadarData(this.tree, this.compareTo);
+
+                     console.log(radarData);
+
+                    return radarData;
                 }
             }
         },
