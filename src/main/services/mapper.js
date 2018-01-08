@@ -105,3 +105,19 @@ export const toRadarData = (left, right) => {
 
     return [leftAxes, rightAxes];
 };
+
+export const toQtUnit = value => {
+    if (!value)
+        return null;
+    const r = value.match(/^(\d+[.,]?\d*)([a-zA-Z]+)?$/);
+
+    if (r) {
+
+        let q, u;
+        [, q, u] = r;
+
+        return {qt: parseFloat(q), unit: u || ""};
+    } else {
+        return null;
+    }
+};

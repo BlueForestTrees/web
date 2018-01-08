@@ -1,62 +1,121 @@
 <template>
-    <v-card>
+    <v-card style="cursor: default;padding-right: 1em;padding-left: 1em">
 
-        <h1>{{tree.name}}</h1>
+        <h1 style="margin-bottom: 1em">{{tree.name}}</h1>
 
 
-        <div v-if="qtUnitDefined">
-            <v-chip>{{qtUnitDefined.qt}}{{qtUnitDefined.unit}}</v-chip>
+        <div v-if="qt.editing" style="margin-top: 1em;margin-left: 1em">
+            <v-layout row>
+                <v-text-field label="quantité unité (ex.: 10g)" autofocus :value="qt.input && (qt.input.qt + qt.input.unit)" @input="qtInput"
+                              @keydown.esc.native="qt.editing = false" @keydown.enter.native="validateQuantity"/>
+                <v-icon right color="green" @click="validateQuantity">done</v-icon>
+                <v-icon right color="red" @click="qt.editing = false">clear</v-icon>
+            </v-layout>
+            <unit-grid :filter="qt.input && qt.input.unit" @select="unitInput"/>
         </div>
-        <div v-else class="text-xs-center">
-            <span v-if="editingQtUnit">
-                <v-text-field autofocus placeholder="quantité unité (ex.: 10g)" :input="qtUnitInput"/>
-                <v-btn v-if="qtUnitValid"><v-icon>valid</v-icon></v-btn>
-                <unit-grid v-if="unitTyped"/>
-            </span>
-            <v-btn v-else @click="editingQtUnit = true" color="primary">
-                Définir la quantité
-                <v-icon right>edit</v-icon>
-            </v-btn>
-        </div>
-
-        <div v-if="!prixDefined" class="text-xs-center">
-            <v-chip color="green" text-color="white">
-                <v-avatar class="green darken-4">
+        <div v-else-if="tree.quantity" style="margin-top: 1em;margin-left: 1em">
+            <v-layout row align-center>
+                <span style="color:rgba(0,0,0,.54);">Quantité</span>
+                <v-spacer/>
+                <span>{{tree.quantity.qt}}{{tree.quantity.unit}}</span>
+                <v-spacer/>
+                <v-btn fab small outline @click="editingQt" color="primary">
                     <v-icon>edit</v-icon>
-                </v-avatar>
-                Définir le prix
-            </v-chip>
+                </v-btn>
+            </v-layout>
         </div>
+        <span v-else>
+            <v-btn @click="qt.editing = true" color="primary">
+                Définir la quantité<v-icon right>edit</v-icon>
+            </v-btn>
+        </span>
+
+
+        <div v-if="price.editing" style="margin-top: 1em;margin-left: 1em">
+            <v-layout row>
+                <v-text-field label="Prix" prefix="€" autofocus :value="tree.price" @input="prixInput"
+                              @keydown.esc.native="price.editing = false" @keydown.enter.native="validatePrice"/>
+                <v-icon right color="green" @click="validatePrice">done</v-icon>
+                <v-icon right color="red" @click="price.editing = false">clear</v-icon>
+            </v-layout>
+        </div>
+        <div v-else-if="tree.price" style="margin-top: 1em;margin-left: 1em">
+            <v-layout row align-center>
+                <span style="color:rgba(0,0,0,.54);">Prix</span>
+                <v-spacer/>
+                <span>{{tree.price}}€</span>
+                <v-spacer/>
+                <v-btn fab small outline @click="price.editing = true" color="primary">
+                  <v-icon>edit</v-icon>
+                </v-btn>
+            </v-layout>
+        </div>
+        <span v-else>
+            <v-btn @click="price.editing = true" color="primary">
+                Définir le prix<v-icon right>edit</v-icon>
+            </v-btn>
+        </span>
+
+
+
+
+
+
 
     </v-card>
 </template>
 
 <script>
-    import {Facet} from "../../const/facet";
-    import {mapGetters} from 'vuex';
+    import {mapActions} from 'vuex';
+    import UnitGrid from "../common/UnitGrid";
+    import {On} from "../../const/on";
+    import {toQtUnit} from "../../services/mapper";
 
     export default {
+        components: {UnitGrid},
         props: ['tree'],
         data() {
             return {
-                editingQtUnit: false,
-                qtUnitTyped:null,
-                unitTyped:null,
-                qtUnitValid:false
-            }
-        },
-        computed: {
-            ...mapGetters([Facet.PRIX, Facet.QT]),
-            prixDefined() {
-                return this.prix(this.tree)
-            },
-            qtUnitDefined() {
-                return this.qt(this.tree)
+
+                qt: {
+                    editing: false,
+                    valued: false,
+                    input: null
+                },
+                price: {
+                    editing: false,
+                    valued: false,
+                    input: null
+                },
+
+                qtUnitTyped: null
             }
         },
         methods: {
-            qtUnitInput(value){
-                this.qtUnitTyped = parse(value);
+            ...mapActions([On.UPSERT_PRICE, On.UPSERT_QUANTITY]),
+            qtInput(value) {
+                 this.qt.input = toQtUnit(value);
+            },
+            unitInput(value){
+                this.qt.input.unit = value.shortname;
+                this.validateQuantity();
+            },
+            prixInput(value) {
+                this.price.input = !isNaN(value) ? parseInt(value) : null;
+            },
+            validatePrice() {
+                this.upsertPrice({tree: this.tree, price: this.price.input});
+                this.price.editing = false;
+            },
+            validateQuantity() {
+                this.upsertQuantity({tree: this.tree, quantity: this.qt.input});
+                this.qt.editing = false;
+            },
+            editingQt(){
+                this.qt.editing = true;
+                if(this.tree.quantity){
+                    this.qt.input = this.tree.quantity;
+                }
             }
         }
     }

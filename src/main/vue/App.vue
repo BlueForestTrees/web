@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <v-app id="blueforest" @keydown.ctrl.space.native="focusOnSearch">
+        <v-app id="blueforest" light @keydown.ctrl.space.native="focusOnSearch">
 
             <bar :drawer.sync="drawer" />
             <!--<left-menu :drawer.sync="drawer"/>-->

@@ -21,5 +21,7 @@ export const On = {
     ROOT_CLICK: 'onRootClick',
     SEARCH: 'onSearch',
     UPSERT_LINK: "upsertLink",
-    UPDATE_LOOKUP_TERM: "updateLookupTerm"
+    UPDATE_LOOKUP_TERM: "updateLookupTerm",
+    UPSERT_PRICE: "upsertPrice",
+    UPSERT_QUANTITY: "upsertQuantity"
 };

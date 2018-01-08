@@ -32,8 +32,13 @@ function lookups(state, lookup) {
 
 export default {
 
-    [Do.LOAD_UNITS]: (state, units) => {
-        state.units = units;
+    [Do.UPDATE_GRANDEURS]: (state, grandeurs) => {
+        state.grandeurs = grandeurs;
+        state.units = _.chain(grandeurs)
+            .values()
+            .flatten()
+            .keyBy('shortname')
+            .value();
     },
 
 
@@ -136,6 +141,12 @@ export default {
     },
     [Do.UPDATE_QT]: (state, {trunk, qt}) => {
         Vue.set(trunk, "qt", qt);
+    },
+    [Do.UPSERT_PRICE]: (state, {tree, price}) => {
+        Vue.set(tree, "price", price);
+    },
+    [Do.UPSERT_QUANTITY]: (state, {tree, quantity}) => {
+        Vue.set(tree, "quantity", quantity);
     },
     [Do.UPDATE_PATH_ITEM]: (state, root) => {
 

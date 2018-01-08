@@ -1,5 +1,5 @@
-import api from './api'
+import rest from "./rest";
 
 export default {
-    load : async () => await api.get("api/units")
+    load : async () => await rest.grandeurs()
 };

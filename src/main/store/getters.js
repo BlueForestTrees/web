@@ -3,20 +3,8 @@ import _ from 'lodash';
 import units from "../services/units";
 
 export default {
-    units: state => keyPart => {
-            const first = [], last = [];
-            for (const key in state.units) {
-                const unit = state.units[key];
-                if (unit.shortname.indexOf(keyPart) > -1) {
-                    first.push(unit);
-                } else if (unit.name.indexOf(keyPart) > -1) {
-                    last.push(unit);
-                }
-            }
-            return [...first, ...last];
-    },
     prix: () => (tree) => _.find(tree.facets, {name: "prix"}),
-    qt:() => (tree) => _.find(tree.facets, {name: "quantité"}),
+    qt: () => (tree) => _.find(tree.facets, {name: "quantité"}),
     treeing: (state, getters) => state.tree && !getters.comparing,
     comparing: (state) => state.tree && state.compareTo,
     isCurrentTrunk: (state, getters) => (trunk) => trunk._id === getters.trunk._id,
@@ -25,7 +13,7 @@ export default {
         return To.tank(getters.trunk);
     },
     lookupUnit: state => key => state.units[key],
-    qtUnitName : (state, getters) => (value) => {
+    qtUnitName: (state, getters) => (value) => {
         if (!value)
             return null;
 
@@ -46,10 +34,10 @@ export default {
             name: n || null
         };
     },
-    qtUnitNameString : () => qtUnitName => {
-        if(qtUnitName && qtUnitName.qt && qtUnitName.unit && qtUnitName.name){
+    qtUnitNameString: () => qtUnitName => {
+        if (qtUnitName && qtUnitName.qt && qtUnitName.unit && qtUnitName.name) {
             return `${qtUnitName.qt}${qtUnitName.unit} ${qtUnitName.name}`
-        }else{
+        } else {
             return null;
         }
 

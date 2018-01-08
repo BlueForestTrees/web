@@ -6,9 +6,12 @@ import units from "../services/units";
 export default {
     [On.MOUNT_APP]: async ({dispatch}) => {
         dispatch(On.LOAD_UNITS);
+
+        //ouvrir la tarte
+        dispatch(On.OPEN_TREE, {_id: "5a5081a3bd5d0348033903cf"});
     },
     [On.LOAD_UNITS]: async ({commit}) => {
-        commit(Do.LOAD_UNITS, await units.load());
+        commit(Do.UPDATE_GRANDEURS, await units.load());
     },
 
 
@@ -27,7 +30,6 @@ export default {
     },
 
 
-
     [On.CREATE_AND_OPEN_TREE]: async ({dispatch}, {name}) => {
         const tree = await dispatch(On.CREATE_TRUNK, name);
         return dispatch(On.OPEN_TREE, tree);
@@ -36,7 +38,7 @@ export default {
     [On.OPEN_TREE]: async ({commit}, trunk) => {
         commit(Do.OPEN_TREE, await rest.get(trunk._id));
     },
-    [On.OPEN_COMPARE_TO]: async({commit}, trunk) => {
+    [On.OPEN_COMPARE_TO]: async ({commit}, trunk) => {
         commit(Do.OPEN_COMPARE_TO, await rest.get(trunk._id));
     },
 
@@ -115,5 +117,13 @@ export default {
     },
     [On.FOCUS_ON_SEARCH]: () => {
         console.log("focus on search");
+    },
+    [On.UPSERT_PRICE]: async ({commit}, {tree, price}) => {
+        await rest.upsertPrice(tree._id, price);
+        commit(Do.UPSERT_PRICE, {tree, price});
+    },
+    [On.UPSERT_QUANTITY]: async ({commit}, {tree, quantity}) => {
+        await rest.upsertQuantity(tree._id, quantity);
+        commit(Do.UPSERT_QUANTITY, {tree, quantity});
     }
 };
