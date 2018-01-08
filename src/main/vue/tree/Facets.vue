@@ -5,6 +5,7 @@
         <v-toolbar>
             <v-toolbar-title>Caractéristiques</v-toolbar-title>
             <v-spacer></v-spacer>
+            <check/>
             <v-btn icon @click="showDialog(Dial.FACET)">
                 <v-icon>edit</v-icon>
             </v-btn>
@@ -33,10 +34,13 @@
     import {mapMutations} from 'vuex';
     import FacetDialog from "../dialog/FacetDialog";
     import {Dial} from "../../const/dial";
+    import Check from "../common/Check";
 
 
     export default {
-        components: {FacetDialog},
+        components: {
+            Check,
+            FacetDialog},
         data() {
             return {
                 Dial: Dial
