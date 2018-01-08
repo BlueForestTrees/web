@@ -101,7 +101,7 @@
                 this.validateQuantity();
             },
             prixInput(value) {
-                this.price.input = !isNaN(value) ? parseInt(value) : null;
+                this.price.input = parseFloat(value.replace(',','.'));
             },
             validatePrice() {
                 this.upsertPrice({tree: this.tree, price: this.price.input});

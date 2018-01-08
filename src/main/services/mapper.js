@@ -116,7 +116,7 @@ export const toQtUnit = value => {
         let q, u;
         [, q, u] = r;
 
-        return {qt: parseFloat(q), unit: u || ""};
+        return {qt: parseFloat(q.replace(',','.')), unit: u || ""};
     } else {
         return null;
     }
