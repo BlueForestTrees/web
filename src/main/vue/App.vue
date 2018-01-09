@@ -3,7 +3,7 @@
         <v-app id="blueforest" light @keydown.ctrl.space.native="focusOnSearch">
 
             <bar :drawer.sync="drawer" />
-            <!--<left-menu :drawer.sync="drawer"/>-->
+            <left-menu :drawer.sync="drawer"/>
             <main-content/>
             <floating-button/>
             <!--<main-footer/>-->

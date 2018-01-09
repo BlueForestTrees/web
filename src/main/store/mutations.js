@@ -34,6 +34,7 @@ export default {
 
     [Do.UPDATE_GRANDEURS]: (state, grandeurs) => {
         state.grandeurs = grandeurs;
+        state.grandeursKeys = Object.keys(grandeurs);
         state.units = _.chain(grandeurs)
             .values()
             .flatten()

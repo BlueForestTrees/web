@@ -1,6 +1,6 @@
 <template>
     <v-dialog width="800px" v-model="visible" @keydown.esc="close" @keydown.ctrl.enter="validate">
-        <v-card>
+        <v-card style="padding:2em;">
             <slot :data="data" ref="content"/>
             <v-card-actions>
                 <v-spacer/>

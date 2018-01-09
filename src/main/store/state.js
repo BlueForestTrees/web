@@ -25,6 +25,8 @@ const lookups = () => _.reduce(Loo, (lookups, key) => {
 }, {});
 
 export default {
+    grandeursKeys:null,
+    grandeurs:null,
     units: null,
     tree:null,
     compareTo: null,

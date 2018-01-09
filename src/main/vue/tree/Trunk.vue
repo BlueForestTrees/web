@@ -11,7 +11,7 @@
                 <v-icon right color="green" @click="validateQuantity">done</v-icon>
                 <v-icon right color="red" @click="qt.editing = false">clear</v-icon>
             </v-layout>
-            <unit-grid :filter="qt.input && qt.input.unit" @select="unitInput"/>
+            <unit-grid v-if="qt.input && qt.input.unit" :filter="qt.input && qt.input.unit" @select="unitInput"/>
         </div>
         <div v-else-if="tree.quantity" style="margin-top: 1em;margin-left: 1em">
             <v-layout row align-center>

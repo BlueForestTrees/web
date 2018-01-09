@@ -8,7 +8,7 @@ export default {
         dispatch(On.LOAD_UNITS);
 
         //ouvrir la tarte
-        dispatch(On.OPEN_TREE, {_id: "5a5081a3bd5d0348033903cf"});
+        dispatch(On.OPEN_TREE, {_id: "5a54da9a4a47fa5eec339b7e"});
     },
     [On.LOAD_UNITS]: async ({commit}) => {
         commit(Do.UPDATE_GRANDEURS, await units.load());
@@ -28,15 +28,22 @@ export default {
         commit(Do.UPDATE_LOOKUP_RESULTS, {lookup, results: await rest.search(term)});
         commit(Do.UPDATE_LOOKUP_SEARCHING, {lookup, searching: false});
     },
-
-
+    [On.LOOKUP_TRUNK]:async({},name)=>await rest.lookupTrunk(name),
     [On.CREATE_AND_OPEN_TREE]: async ({dispatch}, {name}) => {
         const tree = await dispatch(On.CREATE_TRUNK, name);
         return dispatch(On.OPEN_TREE, tree);
     },
-
-    [On.OPEN_TREE]: async ({commit}, trunk) => {
-        commit(Do.OPEN_TREE, await rest.get(trunk._id));
+    [On.EXCEPTION]: ({},e) => {
+        console.error("saloute",e);
+    },
+    [On.OPEN_TREE]: async ({dispatch, commit}, trunk) => {
+        let tree = null;
+        try {
+            tree = await rest.get(trunk._id);
+        } catch (e) {
+            dispatch(On.EXCEPTION, e);
+        }
+        commit(Do.OPEN_TREE, tree);
     },
     [On.OPEN_COMPARE_TO]: async ({commit}, trunk) => {
         commit(Do.OPEN_COMPARE_TO, await rest.get(trunk._id));
@@ -115,6 +122,8 @@ export default {
         rest.addFacet(tree._id, facet);
         commit(Do.ADD_FACET, {tree, facet});
     },
+    [On.CREATE_FACET]: async ({}, {name,grandeur}) => rest.createFacet({name,grandeur}),
+
     [On.FOCUS_ON_SEARCH]: () => {
         console.log("focus on search");
     },
