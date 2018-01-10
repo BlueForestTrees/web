@@ -48,7 +48,6 @@
     import {On} from "../../const/on";
     import {mapActions, mapGetters, mapState} from "vuex";
     import {Dial} from "../../const/dial";
-    import GrandeurGrid from "../common/GrandeurGrid";
 
     export default {
         data() {
@@ -60,7 +59,6 @@
             }
         },
         components: {
-            GrandeurGrid,
             MainDialog
         },
         props: ['data'],

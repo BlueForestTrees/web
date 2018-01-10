@@ -99,7 +99,10 @@
         methods: {
             ...mapMutations({close: Do.CLEAR_COMPARE_TO}),
             updateRadar(data){
-                radar(".facetRadar", data);
+
+                console.log(data);
+
+                //radar(".facetRadar", data);
             }
         },
         mounted(){
