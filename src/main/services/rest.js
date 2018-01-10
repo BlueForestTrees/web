@@ -11,7 +11,7 @@ export default {
     link: link => api.post('api/root', link),
     qtUnit: qtUnit => api.post('api/qtunit', qtUnit),
     search: name => api.get(`api/trunks?q=${name}`),
-    upsertPrice: (treeId, price) => api.post(`api/price`, {treeId, price}),
-    upsertQuantity: (treeId, quantity) => api.post(`api/quantity`, {treeId, quantity}),
+    upsertPrice: (treeId, price) => api.post(`api/trunk/price`, {treeId, price}),
+    upsertQuantity: (treeId, quantity) => api.post(`api/trunk/quantity`, {treeId, quantity}),
     grandeurs: () => api.get('api/grandeurs')
 }

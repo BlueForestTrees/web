@@ -11,7 +11,7 @@
 
 
             <facet-entry-dialog :visible="facetEntryDialog"/>
-            <!--<trunk-dialog />-->
+            <trunk-dialog />
             <!--<lookup-tree-dialog/>-->
 
         </v-app>

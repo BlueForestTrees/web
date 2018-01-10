@@ -2,13 +2,15 @@ import {Do} from "../const/do";
 import {On} from "../const/on";
 import rest from "../services/rest";
 import units from "../services/units";
+import {Dial} from "../const/dial";
 
 export default {
-    [On.MOUNT_APP]: async ({dispatch}) => {
+    [On.MOUNT_APP]: async ({commit, dispatch}) => {
         dispatch(On.LOAD_UNITS);
 
         //ouvrir la tarte
         dispatch(On.OPEN_TREE, {_id: "5a54da9a4a47fa5eec339b7e"});
+        //commit(Do.SHOW_DIALOG,Dial.TRUNK);
     },
     [On.LOAD_UNITS]: async ({commit}) => {
         commit(Do.UPDATE_GRANDEURS, await units.load());

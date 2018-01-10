@@ -23,9 +23,9 @@
         },
         methods:{
             filteredGrandeur(filter, units){
-                return _.find(units,unit=>this.filteredGrandeur(filter,unit))
+                return _.find(units,unit=>this.filteredUnit(filter,unit))
             },
-            filteredGrandeur(filter, unit){
+            filteredUnit(filter, unit){
                 if(filter === null){
                     return false;
                 }else if(filter.length === 0){

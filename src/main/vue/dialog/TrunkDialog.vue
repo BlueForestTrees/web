@@ -1,29 +1,34 @@
 <template>
-    <main-dialog :dialog="Dial.TRUNK" @focus="$refs.nameInput.focus()" @validate="validate" ref="dialog">
-        <template slot-scope="props">
-            <v-card-title class="grey lighten-4 py-4 title">
-                Créer une ressource
-            </v-card-title>
-            <v-container grid-list-sm class="pa-4">
-                <v-layout row wrap>
-                    <v-flex xs12 align-center justify-space-between>
-                        <v-layout align-center>
-                            <v-avatar size="40px" class="mr-3">
-                                <v-icon>bookmark</v-icon>
-                            </v-avatar>
-                            <v-text-field ref="nameInput" placeholder="Nom" :value="props.data.name" @input="updateName"/>
-                        </v-layout>
-                    </v-flex>
-                    <v-flex v-if="existingTrunk" xs12 align-center justify-space-between>
-                        <v-layout align-center>
-                            <v-avatar size="40px" class="mr-3">
-                                <v-icon color="red">warning</v-icon>
-                            </v-avatar>
-                            Ce nom est déjà utilisé. <v-btn @click="open(existingTrunk)">Ouvrir</v-btn>
-                        </v-layout>
-                    </v-flex>
-                </v-layout>
-            </v-container>
+    <main-dialog :dialog="Dial.TRUNK" @focus="$refs.nom.focus()" @esc="close" @enter="validate" ref="dialog">
+        <template slot-scope="dialog">
+            <v-card>
+                <v-card-title class="grey lighten-4 py-4 title">
+                    Créer une ressource
+                </v-card-title>
+                <v-card-text>
+                        <v-flex xs12 align-center justify-space-between>
+                            <v-layout align-center>
+                                <v-avatar size="40px" class="mr-3">
+                                    <v-icon>bookmark</v-icon>
+                                </v-avatar>
+                                <v-text-field ref="nom" placeholder="Nom" :value="dialog.data.name" @input="updateName"/>
+                            </v-layout>
+                        </v-flex>
+                        <v-flex v-if="existingTrunk" xs12 align-center justify-space-between>
+                            <v-layout align-center>
+                                <v-avatar size="40px" class="mr-3">
+                                    <v-icon>info</v-icon>
+                                </v-avatar>
+                                Ce nom sera le même que d'autres ressources.
+                            </v-layout>
+                        </v-flex>
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer/>
+                    <v-btn flat color="primary" @click="close">Annuler</v-btn>
+                    <v-btn flat @click="validate">Ok</v-btn>
+                </v-card-actions>
+            </v-card>
         </template>
     </main-dialog>
 </template>
@@ -38,20 +43,27 @@
         data() {
             return {
                 Dial: Dial,
-                existingTrunk:null
+                existingTrunk: null
             }
         },
         components: {MainDialog},
         props: ['data'],
         methods: {
-            ...mapActions({"validate": On.CREATE_AND_OPEN_TREE, "lookup":On.LOOKUP_TRUNK, "openTree":On.OPEN_TREE}),
-            updateName:async function(value) {
-                this.$refs.dialog.data = {name:value};
+            ...mapActions({
+                "createAndOpen": On.CREATE_AND_OPEN_TREE,
+                "lookup": On.LOOKUP_TRUNK,
+                "openTree": On.OPEN_TREE
+            }),
+            validate() {
+                this.createAndOpen({name: this.$refs.dialog.data.name});
+                this.close();
+            },
+            updateName: async function (value) {
+                this.$refs.dialog.data = {name: value};
                 this.existingTrunk = await this.lookup(value);
             },
-            open(tree){
+            close: function () {
                 this.$refs.dialog.close();
-                this.openTree(tree);
             }
         }
     }

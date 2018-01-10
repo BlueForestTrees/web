@@ -3,10 +3,11 @@
                  @focus="$refs.nom.focus()" @validate="validate" @esc="close" @enter="validate">
         <template slot-scope="props">
 
-            <v-card style="padding:2em;">
+            <v-card>
                 <v-card-title class="grey lighten-4 py-4 title">
                     Créer une caractéristique
                 </v-card-title>
+
 
                 <v-text-field label="Nom" ref="nom" v-model="name" required/>
 
