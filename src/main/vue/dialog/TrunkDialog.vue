@@ -56,7 +56,7 @@
             }),
             validate() {
                 this.createAndOpen({name: this.$refs.dialog.data.name});
-                this.close();
+                this.$refs.dialog.close();
             },
             updateName: async function (value) {
                 this.$refs.dialog.data = {name: value};

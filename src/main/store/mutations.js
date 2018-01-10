@@ -23,9 +23,9 @@ const cleanDialog = (state, dialog) => {
 
 
 function lookups(state, lookup) {
-    if(state.lookups[lookup]){
+    if (state.lookups[lookup]) {
         return state.lookups[lookup];
-    }else{
+    } else {
         console.error(`dialog ${dialog} not found`);
     }
 }
@@ -34,7 +34,7 @@ export default {
 
     [Do.UPDATE_GRANDEURS]: (state, grandeurs) => {
         state.grandeurs = grandeurs;
-        state.grandeursKeys = Object.keys(grandeurs);
+        state.labelsGrandeurs = Object.keys(grandeurs);
         state.units = _.chain(grandeurs)
             .values()
             .flatten()
@@ -47,7 +47,7 @@ export default {
     },
     [Do.SHOW_DIALOG]: (state, dialog) => {
         cleanDialog(state, dialog);
-        updateDialogVisibility(state, {dialog, visible:true});
+        updateDialogVisibility(state, {dialog, visible: true});
     },
     [Do.UPDATE_DIALOG_DATA]: (state, {dialog, data}) => {
         updateDialog(state, {dialog, data});
@@ -60,21 +60,19 @@ export default {
     },
 
 
-
     [Do.UPDATE_LOOKUP_TERM]: (state, {lookup, term}) => {
         lookups(state, lookup).term = term;
     },
     [Do.UPDATE_LOOKUP_SEARCHING]: (state, {lookup, searching}) => {
         lookups(state, lookup).searching = searching;
     },
-    [Do.CLEAR_LOOKUP_SEARCH]: (state,lookup) => {
+    [Do.CLEAR_LOOKUP_SEARCH]: (state, lookup) => {
         lookups(state, lookup).term = null;
         lookups(state, lookup).results = null;
     },
     [Do.UPDATE_LOOKUP_RESULTS]: (state, {lookup, results}) => {
         lookups(state, lookup).results = results;
     },
-
 
 
     [Do.UPDATE_TERM]: (state, value) => {
@@ -98,7 +96,6 @@ export default {
     },
 
 
-
     [Do.ADD_TO_PATH]: (state, root) => {
         state.path.push(root);
     },
@@ -111,10 +108,6 @@ export default {
     [Do.CHANGE_PATH_INDEX]: (state, idx) => {
         state.path.splice(idx + 1);
     },
-
-
-
-
 
 
     [Do.OPEN_COMPARE_TO]: (state, value) => {
@@ -170,15 +163,17 @@ export default {
     },
 
 
-
-
-
-
     [Do.ADD_FACET]: (state, {tree, facet}) => {
         if (!tree.facets) {
             Vue.set(tree, "facets", [facet]);
         } else {
             tree.facets.push(facet);
+        }
+    },
+
+    [Do.DELETE_FACETS]: (state, {tree, facets}) => {
+        if (tree.facets) {
+            _.forEach(facets, facet => tree.facets.splice(tree.facets.indexOf(facet), 1));
         }
     }
 

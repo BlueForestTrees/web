@@ -9,8 +9,13 @@ export default {
         dispatch(On.LOAD_UNITS);
 
         //ouvrir la tarte
-        dispatch(On.OPEN_TREE, {_id: "5a54da9a4a47fa5eec339b7e"});
-        //commit(Do.SHOW_DIALOG,Dial.TRUNK);
+        await dispatch(On.OPEN_TREE, {_id: "5a54da9a4a47fa5eec339b7e"});
+        //commit(Do.SHOW_DIALOG,Dial.COMPARE_TO);
+
+
+        //commit(Do.SHOW_DIALOG, Dial.FACET);
+
+
     },
     [On.LOAD_UNITS]: async ({commit}) => {
         commit(Do.UPDATE_GRANDEURS, await units.load());
@@ -30,13 +35,13 @@ export default {
         commit(Do.UPDATE_LOOKUP_RESULTS, {lookup, results: await rest.search(term)});
         commit(Do.UPDATE_LOOKUP_SEARCHING, {lookup, searching: false});
     },
-    [On.LOOKUP_TRUNK]:async({},name)=>await rest.lookupTrunk(name),
+    [On.LOOKUP_TRUNK]: async ({}, name) => await rest.lookupTrunk(name),
     [On.CREATE_AND_OPEN_TREE]: async ({dispatch}, {name}) => {
         const tree = await dispatch(On.CREATE_TRUNK, name);
         return dispatch(On.OPEN_TREE, tree);
     },
-    [On.EXCEPTION]: ({},e) => {
-        console.error("saloute",e);
+    [On.EXCEPTION]: ({}, e) => {
+        console.error("saloute", e);
     },
     [On.OPEN_TREE]: async ({dispatch, commit}, trunk) => {
         let tree = null;
@@ -120,12 +125,17 @@ export default {
     [On.UPDATE_ADDING_SEED_CLICK]: async ({commit}, value) => {
         commit(Do.UPDATE_ADDING_SEED, value);
     },
+    [On.DELETE_FACETS]: async ({commit}, {tree, facets}) => {
+        rest.deleteFacets(tree._id, _.map(facets,"_id"));
+        commit(Do.DELETE_FACETS, {tree, facets});
+    },
     [On.ADD_FACET]: async ({commit}, {tree, facet}) => {
         rest.addFacet(tree._id, facet);
         commit(Do.ADD_FACET, {tree, facet});
     },
-    [On.CREATE_FACET_ENTRY]: async ({}, {name,grandeur}) => rest.createFacet({name,grandeur}),
+    [On.CREATE_FACET_ENTRY]: async ({}, {name, grandeur}) => rest.createFacetEntry({name, grandeur}),
 
+    [On.SEARCH_FACET_ENTRY]: async ({}, {namepart}) => rest.searchFacetEntry(namepart),
     [On.FOCUS_ON_SEARCH]: () => {
         console.log("focus on search");
     },

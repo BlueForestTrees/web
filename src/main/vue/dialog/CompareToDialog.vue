@@ -1,19 +1,17 @@
 <template>
-    <main-dialog :dialog="Dial.COMPARE_TO" @focus="$refs.lookup.focus()" @validate="" ref="dialog">
-        <v-card-title class="grey lighten-4 py-4 title">
-            Comparer à ...
-        </v-card-title>
-        <v-container grid-list-sm class="pa-4">
-            <v-layout row wrap>
-                <v-flex xs12 align-center justify-space-between>
-                    <v-layout align-center>
-
-                        <lookup :lookup="Loo.COMPARE_TO" ref="lookup" @select="openOtherTree"/>
-
-                    </v-layout>
-                </v-flex>
-            </v-layout>
-        </v-container>
+    <main-dialog :dialog="Dial.COMPARE_TO" @focus="$refs.lookup.focus()" @esc="close" ref="dialog">
+        <v-card>
+            <v-card-title class="grey lighten-4 py-4 title">
+                Comparer à ...
+            </v-card-title>
+            <v-card-text>
+                <lookup :lookup="Loo.COMPARE_TO" ref="lookup" @select="openOtherTree"/>
+            </v-card-text>
+            <v-card-actions>
+                <v-spacer/>
+                <v-btn flat color="primary" @click="close">Annuler</v-btn>
+            </v-card-actions>
+        </v-card>
     </main-dialog>
 </template>
 
@@ -35,11 +33,14 @@
         },
         methods: {
             ...mapActions({
-                dispatchOpenCompareTo : On.OPEN_COMPARE_TO
+                dispatchOpenCompareTo: On.OPEN_COMPARE_TO
             }),
             openOtherTree(otherTree) {
                 this.dispatchOpenCompareTo(otherTree);
-                this.$refs.dialog.visible = false;
+                this.close();
+            },
+            close(){
+                this.$refs.dialog.close();
             }
         }
     }

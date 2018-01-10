@@ -9,6 +9,7 @@ export const Do = {
     CLEAR_SEARCH: 'clearSearch',
     CLEAR_COMPARE_TO: 'clearCompareTo',
     CLOSE_TREE: 'closeTree',
+    DELETE_FACETS: 'deleteFacets',
     HIDE_FACET_DIALOG:'hideFacetDialog',
     SHOW_DIALOG: "showDialog",
     SHOW_FACET_ENTRY_DIALOG: "showFacetEntryDialog",

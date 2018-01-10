@@ -57,13 +57,13 @@ const relativeTo1 = (first, second) => first > second ? 1 : first / second;
  */
 export const toRadarData = (left, right) => {
 
-    if (!left || !right || !left.facets || !right.facets) {
+    if (!left || !right || !left.facetEntries || !right.facetEntries) {
         console.warn("rendu de radar sans data", left, right);
         return;
     }
 
-    const leftFacets = left.facets;
-    const rightFacets = right.facets;
+    const leftFacets = left.facetEntries;
+    const rightFacets = right.facetEntries;
 
     const leftNames = _.map(leftFacets, 'name');
     const rightNames = _.map(rightFacets, 'name');

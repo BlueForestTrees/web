@@ -7,12 +7,31 @@
                 <v-card-title class="grey lighten-4 py-4 title">
                     Créer une caractéristique
                 </v-card-title>
+                <v-card-text>
+                    <v-container fluid>
+                        <v-layout row>
+                            <v-flex xs4>
+                                <v-subheader>Comment cela s'appelle-t-il?</v-subheader>
+                            </v-flex>
+                            <v-flex xs8>
+                                <v-text-field label="Nom" ref="nom" v-model="name"/>
+                            </v-flex>
+                        </v-layout>
 
+                        <v-layout row>
+                            <v-flex xs4>
+                                <v-subheader>C'est un(e): {{grandeur}}</v-subheader>
+                            </v-flex>
+                            <v-flex xs8>
+                                <v-chip v-for="(units,key) in grandeurs" :key="key" @click="grandeur = key"
+                                        fab dark small color="primary" text-color="white">
+                                    {{key}}
+                                </v-chip>
+                            </v-flex>
+                        </v-layout>
 
-                <v-text-field label="Nom" ref="nom" v-model="name" required/>
-
-                <grandeur-grid :items="grandeursKeys" @select="selectGrandeur"/>
-
+                    </v-container>
+                </v-card-text>
                 <v-card-actions>
                     <v-spacer/>
                     <v-btn flat color="primary" @click="close">Annuler</v-btn>
@@ -46,7 +65,7 @@
         },
         props: ['data'],
         computed: {
-            ...mapState(['grandeursKeys'])
+            ...mapState({'grandeurs': 'grandeurs'})
         },
         methods: {
             selectGrandeur(grandeur) {

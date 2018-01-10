@@ -1,10 +1,10 @@
 <template>
     <v-card class="grid" style="padding:1em;">
-        <span v-for="(units,name) in grandeurs" :key="name" v-if="filteredGrandeur(filter, units)">
+        <span v-for="(units,name) in grandeurs" :key="name" v-if="unitsMatch(units, filter)">
             <v-subheader>{{name}}</v-subheader>
             <v-container fluid grid-list-sm>
             <v-layout row wrap>
-                <v-chip v-for="unit in units" :key="unit.shortname" v-if="filteredUnit(filter, unit)"
+                <v-chip v-for="unit in units" :key="unit.shortname" v-if="unitMatch(unit, filter)"
                         fab dark small @click="select(unit)" color="primary" text-color="white">{{unit.shortname || "pas d'unité"}}</v-chip>
             </v-layout>
             </v-container>
@@ -14,21 +14,16 @@
 
 <script>
 
-    import {mapState} from 'vuex';
-
     export default {
-        props: ['filter'],
-        computed: {
-            ...mapState(['grandeurs'])
-        },
+        props: ['filter','grandeurs'],
         methods:{
-            filteredGrandeur(filter, units){
-                return _.find(units,unit=>this.filteredUnit(filter,unit))
+            unitsMatch(units, filter){
+                return _.find(units,unit=>this.unitMatch(unit, filter))
             },
-            filteredUnit(filter, unit){
-                if(filter === null){
-                    return false;
-                }else if(filter.length === 0){
+            unitMatch(unit, filter){
+                if(_.isNil(filter)){
+                    return true;
+                }else if(_.isEmpty(filter)){
                     return unit.shortname === "";
                 }else {
                     return unit.shortname.toLowerCase().indexOf(filter.toLowerCase()) > -1;

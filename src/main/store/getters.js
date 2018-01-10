@@ -3,8 +3,8 @@ import _ from 'lodash';
 import units from "../services/units";
 
 export default {
-    prix: () => (tree) => _.find(tree.facets, {name: "prix"}),
-    qt: () => (tree) => _.find(tree.facets, {name: "quantité"}),
+    prix: () => (tree) => _.find(tree.facetEntries, {name: "prix"}),
+    qt: () => (tree) => _.find(tree.facetEntries, {name: "quantité"}),
     treeing: (state, getters) => state.tree && !getters.comparing,
     comparing: (state) => state.tree && state.compareTo,
     isCurrentTrunk: (state, getters) => (trunk) => trunk._id === getters.trunk._id,

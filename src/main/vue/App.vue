@@ -8,11 +8,10 @@
             <floating-button/>
             <!--<main-footer/>-->
 
-
-
+            <facet-dialog :tree="tree"/>
             <facet-entry-dialog :visible="facetEntryDialog"/>
             <trunk-dialog />
-            <!--<lookup-tree-dialog/>-->
+            <lookup-tree-dialog/>
 
         </v-app>
     </div>
@@ -32,12 +31,15 @@
     import {mapActions} from "vuex";
     import Lookup from "./common/Lookup";
     import LookupTreeDialog from "./dialog/CompareToDialog";
+    import Test from "./Test";
+    import FacetDialog from "./dialog/FacetDialog";
 
     export default {
         computed: {
             ...mapState({
                 "trunkDialog": state => state.dialogs.trunk,
-                "facetEntryDialog":state=>state.dialogs2.facetEntryDialog.visible
+                "facetEntryDialog":state=>state.dialogs2.facetEntryDialog.visible,
+                "tree":state=>state.tree
             })
         },
         watch: {
@@ -51,6 +53,8 @@
             }
         },
         components: {
+            FacetDialog,
+            Test,
             LookupTreeDialog,
             Lookup,
             FacetEntryDialog,TrunkDialog,MainFooter, MainContent, FloatingButton, Bar, LeftMenu
