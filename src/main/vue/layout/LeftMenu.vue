@@ -18,9 +18,9 @@
 </template>
 
 <script>
-    import {Dial} from "../../const/dial";
     import {Do} from "../../const/do";
     import {mapMutations} from "vuex";
+    import {Dial} from "../../const/dial";
 
     export default {
         props: ['drawer'],
@@ -38,16 +38,16 @@
             ...mapMutations({
                 "showDialog": Do.SHOW_DIALOG
             }),
-            createFacet() {
-                this.showDialog(Dial.FACET);
-            },
             action(name){
                 this[name]();
+            },
+            showFacetEntityDialog(){
+                this.showDialog(Dial.FACET_ENTITY);
             }
         },
         data: () => ({
             items: [
-                {icon: 'done', text: 'Créer une caractéristique', action: 'createFacet'},
+                {icon: 'done', text: 'Créer une caractéristique', action: 'showFacetEntityDialog'},
                 {icon: 'settings', text: 'Paramètres'},
                 {icon: 'chat_bubble', text: 'Faire un commentaire'},
                 {icon: 'help', text: 'Help'}

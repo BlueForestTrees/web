@@ -7,8 +7,12 @@
             <main-content/>
             <floating-button/>
             <!--<main-footer/>-->
-            <trunk-dialog />
-            <lookup-tree-dialog/>
+
+
+
+            <facet-entry-dialog :visible="facetEntryDialog"/>
+            <!--<trunk-dialog />-->
+            <!--<lookup-tree-dialog/>-->
 
         </v-app>
     </div>
@@ -23,7 +27,7 @@
     import MainFooter from "./layout/MainFooter";
     import TrunkDialog from "./dialog/TrunkDialog";
     import {mapState} from 'vuex';
-    import FacetDialog from "./dialog/FacetDialog";
+    import FacetEntryDialog from "./dialog/FacetEntryDialog";
     import {On} from "../const/on";
     import {mapActions} from "vuex";
     import Lookup from "./common/Lookup";
@@ -32,7 +36,8 @@
     export default {
         computed: {
             ...mapState({
-                "trunkDialog": state => state.dialogs.trunk
+                "trunkDialog": state => state.dialogs.trunk,
+                "facetEntryDialog":state=>state.dialogs2.facetEntryDialog.visible
             })
         },
         watch: {
@@ -48,7 +53,7 @@
         components: {
             LookupTreeDialog,
             Lookup,
-            FacetDialog,TrunkDialog,MainFooter, MainContent, FloatingButton, Bar, LeftMenu
+            FacetEntryDialog,TrunkDialog,MainFooter, MainContent, FloatingButton, Bar, LeftMenu
         },
         mounted: async function(){
             this.$store.dispatch(On.MOUNT_APP);

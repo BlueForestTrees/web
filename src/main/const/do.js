@@ -11,6 +11,7 @@ export const Do = {
     CLOSE_TREE: 'closeTree',
     HIDE_FACET_DIALOG:'hideFacetDialog',
     SHOW_DIALOG: "showDialog",
+    SHOW_FACET_ENTRY_DIALOG: "showFacetEntryDialog",
     SHOW_OTHER_TREE_DIALOG: "showOtherTreeDialog",
     OPEN_TREE: 'openTree',
     OPEN_COMPARE_TO: 'openCompareTo',

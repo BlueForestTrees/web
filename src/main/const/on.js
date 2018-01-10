@@ -3,7 +3,7 @@ export const On = {
     CLEAR_LINK_EDIT: "onClearLinkEdit",
     CREATE_AND_OPEN_TREE: 'onCreateAndOpenTree',
     CREATE_SEED: 'onCreateSeed',
-    CREATE_FACET: 'onCreateFacet',
+    CREATE_FACET_ENTRY: 'onCreateFacetEntry',
     CREATE_TRUNK_THEN_SEED: 'onCreateTrunkThenSeed',
     CREATE_TRUNK: 'onCreateTrunk',
     EXCEPTION: 'exception',

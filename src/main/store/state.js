@@ -8,7 +8,7 @@ const dialogStateFromData = (data) => ({
 });
 const dialogFactory = {
     [Dial.TRUNK]: () => ({name: null}),
-    [Dial.FACET]: () => ({qt: null, unit: null, name: null}),
+    [Dial.FACET_ENTITY]: () => ({qt: null, unit: null, name: null}),
     [Dial.COMPARE_TO]: () => ({name: null})
 };
 
@@ -33,5 +33,10 @@ export default {
     linkEdit: null,
     addingSeed: false,
     lookups: lookups(),
-    dialogs: dialogs()
+    dialogs: dialogs(),
+    dialogs2:{
+        facetEntryDialog:{
+            visible:false
+        }
+    }
 };

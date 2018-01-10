@@ -122,7 +122,7 @@ export default {
         rest.addFacet(tree._id, facet);
         commit(Do.ADD_FACET, {tree, facet});
     },
-    [On.CREATE_FACET]: async ({}, {name,grandeur}) => rest.createFacet({name,grandeur}),
+    [On.CREATE_FACET_ENTRY]: async ({}, {name,grandeur}) => rest.createFacet({name,grandeur}),
 
     [On.FOCUS_ON_SEARCH]: () => {
         console.log("focus on search");

@@ -1,7 +1,5 @@
 <template>
     <v-card>
-        <facet-dialog :dialog="Dial.FACET" :tree="tree"/>
-
         <v-toolbar>
             <v-toolbar-title>Caractéristiques</v-toolbar-title>
         </v-toolbar>
@@ -30,7 +28,7 @@
 <script>
     import {Do} from "../../const/do"
     import {mapMutations} from 'vuex';
-    import FacetDialog from "../dialog/FacetDialog";
+    import FacetDialog from "../dialog/FacetEntryDialog";
     import {Dial} from "../../const/dial";
     import FlyingBtn from "../common/FlyingBtn";
     import {Fly} from "../../const/fly";
