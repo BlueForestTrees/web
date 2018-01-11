@@ -7,7 +7,14 @@
 
             <v-flex xs4 d-flex><facets :tree="tree"/></v-flex>
             <v-flex xs4 d-flex><trunk :tree="tree"/></v-flex>
-            <v-flex xs4 d-flex><impacts/></v-flex>
+
+
+            <v-flex xs4 d-flex>
+                <v-layout column>
+                    <impacts/>
+                    <dechets/>
+                </v-layout>
+            </v-flex>
 
             <v-flex xs12 d-flex><ressources/></v-flex>
 
@@ -24,6 +31,7 @@
     import Facets from "./Facets";
     import Branches from "./Branches";
     import Impacts from "./Impacts";
+    import Dechets from "./Dechets";
     import BilanRessources from "./BilanRessources";
     import Trunk from "./Trunk";
     import Ressources from "./Ressources";
@@ -34,6 +42,7 @@
             Trunk,
             BilanRessources,
             Impacts,
+            Dechets,
             Branches,
             Facets
         },

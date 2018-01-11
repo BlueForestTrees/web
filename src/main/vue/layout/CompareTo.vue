@@ -54,10 +54,13 @@
                 axis: null
             }
         },
+        mounted(){
+          this.updateRadar();
+        },
         methods: {
             ...mapMutations({close: Do.CLEAR_COMPARE_TO}),
-            updateRadar(data) {
-                radar(".facetRadar", data);
+            updateRadar() {
+                radar(".facetRadar", this.compareData);
             }
         },
         computed: {
