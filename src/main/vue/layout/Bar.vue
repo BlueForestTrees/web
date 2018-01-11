@@ -7,7 +7,7 @@
             <span class="hidden-xs-only">BlueForest Trees</span>
         </v-toolbar-title>
 
-        <lookup :lookup="Loo.GLOBAL" @select="open" cancreate style="max-width: 500px; min-width: 128px"/>
+        <lookup @select="open" cancreate style="max-width: 500px; min-width: 128px"/>
 
         <div class="d-flex align-center" style="margin-left: auto">
             <v-btn icon>
@@ -28,7 +28,6 @@
 <script>
     import Lookup from "../common/Lookup";
     import MainDialog from "../dialog/MainDialog";
-    import {Loo} from "../../const/loo";
     import {mapMutations} from "vuex";
     import {Do} from "../../const/do";
 
@@ -36,7 +35,6 @@
         components: {
             MainDialog,
             Lookup},
-        data(){ return {Loo} },
         props: ['drawer'],
         computed: {
             _drawer: {

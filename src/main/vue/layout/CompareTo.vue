@@ -33,40 +33,6 @@
                                 </v-card-actions>
                             </v-card>
                         </v-flex>
-                        <!--        <v-flex xs-6>
-                                    <v-card>
-                                        <v-card-text>ici réglage axe</v-card-text>
-                                        <v-card-actions class="white">
-                                            <v-spacer></v-spacer>
-                                            <v-btn icon>
-                                                <v-icon>favorite</v-icon>
-                                            </v-btn>
-                                            <v-btn icon>
-                                                <v-icon>bookmark</v-icon>
-                                            </v-btn>
-                                            <v-btn icon>
-                                                <v-icon>share</v-icon>
-                                            </v-btn>
-                                        </v-card-actions>
-                                    </v-card>
-                                </v-flex>
-                                <v-flex xs-6>
-                                    <v-card>
-                                        <v-card-text>ici radar ressources</v-card-text>
-                                        <v-card-actions class="white">
-                                            <v-spacer></v-spacer>
-                                            <v-btn icon>
-                                                <v-icon>favorite</v-icon>
-                                            </v-btn>
-                                            <v-btn icon>
-                                                <v-icon>bookmark</v-icon>
-                                            </v-btn>
-                                            <v-btn icon>
-                                                <v-icon>share</v-icon>
-                                            </v-btn>
-                                        </v-card-actions>
-                                    </v-card>
-                                </v-flex>-->
                     </v-layout>
                 </v-container>
             </v-flex>
@@ -79,34 +45,42 @@
     import {Do} from "../../const/do";
     import {mapMutations} from 'vuex';
     import radar from '../../services/radar';
-    import {toRadarData} from "../../services/mapper";
+    import {applyCoef, egaliserSelonAxe, extraireCoef, toRadarData} from "../../services/mapper";
 
     export default {
         props: ['tree', 'compareTo'],
+        data() {
+            return {
+                axis: null
+            }
+        },
+        methods: {
+            ...mapMutations({close: Do.CLEAR_COMPARE_TO}),
+            updateRadar(data) {
+                radar(".facetRadar", data);
+            }
+        },
         computed: {
             compareData: {
-                get:function(){
-                    let radarData = toRadarData(this.tree, this.compareTo);
-                    return radarData;
+                get: function () {
+
+                    const axis = this.axis || "Quantité";
+
+                    const leftRight = _.cloneDeep({left: this.tree, right: this.compareTo});
+
+                    const coef = extraireCoef(axis, leftRight);
+
+                    applyCoef(leftRight.right, coef);
+
+                    return toRadarData(leftRight);
                 }
             }
         },
         watch: {
             compareData(data) {
-                this.updateRadar(data);
+                //    this.updateRadar(data);
+                console.log("compareDate change");
             }
-        },
-        methods: {
-            ...mapMutations({close: Do.CLEAR_COMPARE_TO}),
-            updateRadar(data){
-
-                console.log(data);
-
-                //radar(".facetRadar", data);
-            }
-        },
-        mounted(){
-            this.updateRadar(this.compareData);
         }
     }
 </script>

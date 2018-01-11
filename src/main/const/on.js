@@ -11,7 +11,6 @@ export const On = {
     FOCUS_ON_SEARCH: "focusOnSearch",
     LINK_CHANGED: 'onLinkChanged',
     LOAD_UNITS: 'loadUnits',
-    LOOKUP_SEARCH: 'lookupSearch',
     LOOKUP_TRUNK: 'lookupTrunk',
     MOUNT_APP: 'mountApp',
     OPEN_TREE: 'onOpenTree',
@@ -26,7 +25,6 @@ export const On = {
     SEARCH: 'onSearch',
     SEARCH_FACET_ENTRY: 'searchFacetEntry',
     UPSERT_LINK: "upsertLink",
-    UPDATE_LOOKUP_TERM: "updateLookupTerm",
     UPSERT_PRICE: "upsertPrice",
     UPSERT_QUANTITY: "upsertQuantity"
 };

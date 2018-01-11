@@ -1,7 +1,7 @@
 <template>
 
     <v-menu offset-y style="width: 100%">
-        <v-text-field ref="termInput" @input="term = $event" :value="term" slot="activator" solo prepend-icon="search" placeholder="Recherche"/>
+        <v-text-field ref="termInput" @input="search" slot="activator" solo prepend-icon="search" placeholder="Recherche"/>
 
         <v-list v-if="allowCreate || hasResults">
             <v-list-tile v-for="item in results" :key="item._id" @click="select(item)">
@@ -22,35 +22,19 @@
 </template>
 
 <script>
-    import {Do} from "../../const/do";
-    import {mapActions, mapMutations} from 'vuex';
+    import {mapActions} from 'vuex';
     import {On} from "../../const/on";
 
     export default {
-        props: {lookup: String, cancreate: Boolean},
+        props: {cancreate: Boolean},
+        data() {
+            return {
+                term: null,
+                results: null,
+                searching: null
+            }
+        },
         computed: {
-            data: {
-                get: function () {
-                    if(this.$store.state.lookups[this.lookup]) {
-                        return this.$store.state.lookups[this.lookup];
-                    }else{
-                        console.error(`state not found: state.lookups[${this.lookup}]`);
-                    }
-                },
-            },
-            term: {
-                get: function () {
-                    return this.data.term;
-                },
-                set: function (value) {
-                    this.dispatchTerm({lookup: this.lookup, term: value});
-                }
-            },
-            results: {
-                get: function () {
-                    return this.data.results;
-                }
-            },
             searchOccur: function () {
                 return this.term && !this.searching && !!this.results
             },
@@ -65,22 +49,35 @@
             },
             allowCreate: function () {
                 return this.cancreate && !!(this.searchOccur && (this.noResults || !this.exactMatch))
-            },
+            }
         },
         methods: {
-            focus(){
-                this.$refs.termInput.focus();
-            },
             ...mapActions({
-                dispatchTerm: On.UPDATE_LOOKUP_TERM,
+                dispatchSearch: On.SEARCH,
                 dispatchCreate: On.CREATE_TRUNK
             }),
-            ...mapMutations({
-                clearSearch: Do.CLEAR_LOOKUP_SEARCH
-            }),
+            focus() {
+                this.$refs.termInput.focus();
+            },
+            async search(value) {
+                this.term = value;
+                if (value) {
+                    this.searching = true;
+                    try {
+                        this.results = await this.dispatchSearch(value);
+                    } finally {
+                        this.searching = false;
+                    }
+                }
+            },
             select(item) {
                 this.$emit('select', item);
-                this.clearSearch(this.lookup);
+                this.clearSearch();
+            },
+            clearSearch() {
+                this.term = null;
+                this.results = null;
+                this.searching = null;
             },
             create: async function (term) {
                 this.select(await this.dispatchCreate(term));

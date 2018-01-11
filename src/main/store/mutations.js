@@ -22,14 +22,6 @@ const cleanDialog = (state, dialog) => {
 };
 
 
-function lookups(state, lookup) {
-    if (state.lookups[lookup]) {
-        return state.lookups[lookup];
-    } else {
-        console.error(`dialog ${dialog} not found`);
-    }
-}
-
 export default {
 
     [Do.UPDATE_GRANDEURS]: (state, grandeurs) => {
@@ -57,21 +49,6 @@ export default {
     },
     [Do.CLEAR_DIALOG_DATA]: (state, dialog) => {
         cleanDialog(state, dialog);
-    },
-
-
-    [Do.UPDATE_LOOKUP_TERM]: (state, {lookup, term}) => {
-        lookups(state, lookup).term = term;
-    },
-    [Do.UPDATE_LOOKUP_SEARCHING]: (state, {lookup, searching}) => {
-        lookups(state, lookup).searching = searching;
-    },
-    [Do.CLEAR_LOOKUP_SEARCH]: (state, lookup) => {
-        lookups(state, lookup).term = null;
-        lookups(state, lookup).results = null;
-    },
-    [Do.UPDATE_LOOKUP_RESULTS]: (state, {lookup, results}) => {
-        lookups(state, lookup).results = results;
     },
 
 

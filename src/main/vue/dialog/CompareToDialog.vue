@@ -5,7 +5,7 @@
                 Comparer à ...
             </v-card-title>
             <v-card-text>
-                <lookup :lookup="Loo.COMPARE_TO" ref="lookup" @select="openOtherTree"/>
+                <lookup ref="lookup" @select="openOtherTree"/>
             </v-card-text>
             <v-card-actions>
                 <v-spacer/>
@@ -16,7 +16,6 @@
 </template>
 
 <script>
-    import {Loo} from "../../const/loo";
     import MainDialog from "./MainDialog";
     import Lookup from "../common/Lookup";
     import {mapActions} from 'vuex';
@@ -27,8 +26,7 @@
         components: {Lookup, MainDialog},
         data() {
             return {
-                Dial: Dial,
-                Loo: Loo
+                Dial: Dial
             }
         },
         methods: {

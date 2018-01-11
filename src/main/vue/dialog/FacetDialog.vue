@@ -102,7 +102,7 @@
                 const facet = {
                     _id: this.selectedFacetEntry._id,
                     name: this.selectedFacetEntry.name,
-                    qt: this.qt,
+                    qt: parseFloat(this.qt.replace(',','.')),
                     unit: this.unit.shortname
                 };
 

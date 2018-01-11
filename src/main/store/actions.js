@@ -21,20 +21,8 @@ export default {
         commit(Do.UPDATE_GRANDEURS, await units.load());
     },
 
+    [On.SEARCH]: async ({commit}, term) => await rest.search(term),
 
-    [On.UPDATE_LOOKUP_TERM]: ({commit, dispatch}, {lookup, term}) => {
-        commit(Do.UPDATE_LOOKUP_TERM, {lookup, term});
-        if (term) {
-            commit(Do.UPDATE_LOOKUP_SEARCHING, {lookup, searching: true});
-            return dispatch(On.LOOKUP_SEARCH, {lookup, term});
-        } else {
-            commit(Do.CLEAR_LOOKUP_SEARCH, lookup);
-        }
-    },
-    [On.LOOKUP_SEARCH]: async ({commit}, {lookup, term}) => {
-        commit(Do.UPDATE_LOOKUP_RESULTS, {lookup, results: await rest.search(term)});
-        commit(Do.UPDATE_LOOKUP_SEARCHING, {lookup, searching: false});
-    },
     [On.LOOKUP_TRUNK]: async ({}, name) => await rest.lookupTrunk(name),
     [On.CREATE_AND_OPEN_TREE]: async ({dispatch}, {name}) => {
         const tree = await dispatch(On.CREATE_TRUNK, name);

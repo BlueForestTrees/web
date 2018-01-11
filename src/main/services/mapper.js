@@ -1,9 +1,4 @@
-export const applyQtCoef = (trunk, coef) => {
-    trunk.qt *= coef;
-    _.forEach(trunk.roots, root => {
-        applyQtCoef(root, coef);
-    });
-};
+export const tank = trunk => _.values(addAllSeeds(trunk, {}));
 
 const addAllSeeds = (trunk, tank) => {
     _.forEach(trunk.roots, seed => {
@@ -18,7 +13,22 @@ const addAllSeeds = (trunk, tank) => {
     return tank;
 };
 
-export const tank = (trunk) => _.values(addAllSeeds(trunk, {}));
+
+const valuesByAxis = {
+    "Prix": tree => tree.price,
+    "Quantité": tree => tree.quantity.qt
+};
+
+export const axisLabels = () => Object.keys(valuesByAxis);
+
+export const extraireCoef = (axis, {left, right}) => valuesByAxis[axis](left) / valuesByAxis[axis](right);
+
+export const applyCoef = (tree, coef) => {
+    tree.quantity.qt *= coef;
+    tree.price *= coef;
+    _.each(tree.facets, facet => facet.qt *= coef);
+};
+
 
 const relativeTo1 = (first, second) => first > second ? 1 : first / second;
 
@@ -55,15 +65,15 @@ const relativeTo1 = (first, second) => first > second ? 1 : first / second;
  ]
  ];
  */
-export const toRadarData = (left, right) => {
+export const toRadarData = ({left, right}) => {
 
-    if (!left || !right || !left.facetEntries || !right.facetEntries) {
+    if (!left || !right || !left.facets || !right.facets) {
         console.warn("rendu de radar sans data", left, right);
         return;
     }
 
-    const leftFacets = left.facetEntries;
-    const rightFacets = right.facetEntries;
+    const leftFacets = left.facets;
+    const rightFacets = right.facets;
 
     const leftNames = _.map(leftFacets, 'name');
     const rightNames = _.map(rightFacets, 'name');
@@ -116,7 +126,7 @@ export const toQtUnit = value => {
         let q, u;
         [, q, u] = r;
 
-        return {qt: parseFloat(q.replace(',','.')), unit: u || ""};
+        return {qt: parseFloat(q.replace(',', '.')), unit: u || ""};
     } else {
         return null;
     }
