@@ -28,19 +28,13 @@ const wrap = (text, width) => {
     });
 };
 
-const maxQtUnit = (name, leftAxis, rightAxis)=> {
-    const left = _.find(leftAxis, {name});
-    const right = _.find(rightAxis,{name});
-    return left.value > right.value ? left.qtUnit : right.qtUnit;
-};
-
 export default (id, data, options) => {
     var cfg = {
         w: 450,				//Width of the circle
         h: 450,				//Height of the circle
         margin: {top: 100, right: 100, bottom: 100, left: 100}, //The margins of the SVG
         levels: 4,				//How many levels or inner circles should there be drawn
-        maxValue: 1, 			//What is the value that the biggest circle will represent
+        maxCoef: 1, 			//What is the coef that the biggest circle will represent
         labelFactor: 1.20, 	//How much farther than the radius of the outer circle should the labels be placed
         wrapWidth: 60, 		//The number of pixels after which a label needs to be given a new line
         opacityArea: 0.35, 	//The opacity of the area of the blob
@@ -60,16 +54,16 @@ export default (id, data, options) => {
     }
 
     //If the supplied maxValue is smaller than the actual one, replace by the max in the data
-    var maxValue = Math.max(cfg.maxValue, d3.max(data, function (i) {
+    var maxValue = Math.max(cfg.maxCoef, d3.max(data, function (i) {
         return d3.max(i.map(function (o) {
-            return o.value;
+            return o.coef;
         }))
     }));
 
     var axisNames = _.map(data[0], 'name'),        //Names of each axis
         total = axisNames.length,					//The number of different axes
         radius = Math.min(cfg.w / 2, cfg.h / 2), 	//Radius of the outermost circle
-        Format = d3.format('.0%'),			 	//Percentage formatting
+        FormatPercent = d3.format('.0%'),			 	//Percentage formatting
         angleSlice = Math.PI * 2 / total;		//The width in radians of each "slice"
 
     //Scale for the radius
@@ -173,7 +167,7 @@ export default (id, data, options) => {
         .attr("y", function (d, i) {
             return rScale(maxValue * cfg.labelFactor) * Math.sin(angleSlice * i - Math.PI / 2);
         })
-        .text(axisName=>`${maxQtUnit(axisName,data[0],data[1])} ${axisName}`)
+        .text(axisName=>axisName)
         .call(wrap, cfg.wrapWidth);
 
     /////////////////////////////////////////////////////////
@@ -184,7 +178,7 @@ export default (id, data, options) => {
     var radarLine = d3.lineRadial()
         .curve(d3.curveCardinalClosed)
         .radius(function (d) {
-            return rScale(d.value);
+            return rScale(d.coef);
         })
         .angle(function (d, i) {
             return i * angleSlice;
@@ -271,10 +265,10 @@ export default (id, data, options) => {
         .attr("class", "radarInvisibleCircle")
         .attr("r", cfg.dotRadius * 4)
         .attr("cx", function (d, i) {
-            return rScale(d.value) * Math.cos(angleSlice * i - Math.PI / 2);
+            return rScale(d.coef) * Math.cos(angleSlice * i - Math.PI / 2);
         })
         .attr("cy", function (d, i) {
-            return rScale(d.value) * Math.sin(angleSlice * i - Math.PI / 2);
+            return rScale(d.coef) * Math.sin(angleSlice * i - Math.PI / 2);
         })
         .style("fill", "none")
         .style("pointer-events", "all")
@@ -285,7 +279,7 @@ export default (id, data, options) => {
             tooltip
                 .attr('x', newX)
                 .attr('y', newY)
-                .text(Format(d.value))
+                .text(FormatPercent(d.coef))
                 .transition().duration(200)
                 .style('opacity', 1);
         })

@@ -1,4 +1,5 @@
 export const tank = trunk => _.values(addAllSeeds(trunk, {}));
+export const format = bigNumber => Math.floor(bigNumber*100)/100;
 
 const addAllSeeds = (trunk, tank) => {
     _.forEach(trunk.roots, seed => {
@@ -19,9 +20,7 @@ const valuesByAxis = {
     "Quantité": tree => tree.quantity.qt
 };
 
-export const axisLabels = () => Object.keys(valuesByAxis);
-
-export const extraireCoef = (axis, {left, right}) => valuesByAxis[axis](left) / valuesByAxis[axis](right);
+export const extraireCoef = (axis, {leftTree, rightTree}) => valuesByAxis[axis](leftTree) / valuesByAxis[axis](rightTree);
 
 export const applyCoef = (tree, coef) => {
     tree.quantity.qt *= coef;
@@ -30,96 +29,103 @@ export const applyCoef = (tree, coef) => {
 };
 
 
-const relativeTo1 = (first, second) => first > second ? 1 : first / second;
+const relativeTo1 = (first, second) => first > second ? 1 : format(first / second);
 
 /**
  *
- * @param left = [
- {
-    "qt": 20,
-    "unit": "kg",
-    "name": "pomme"
-}
- ]
- * @param right = [
- {
-    "qt": 10,
-    "unit": "kg",
-    "name": "pomme"
-}
- ];
- * @returns  let sample = [
- [
- {axis: "Prix", value: 1, qtUnit:"20kg"},
- {axis: "Quantité", value: 1},
- {axis: "Calories", value: 1},
- {axis: "Glucides", value: 1},
- {axis: "Fibres", value: 1}
- ],
- [
- {axis: "Prix", value: 0.22},
- {axis: "Quantité", value: 1},
- {axis: "Calories", value: 0.29},
- {axis: "Glucides", value: 0.17},
- {axis: "Fibres", value: 0.22}
- ]
+ * @param leftTree, un arbre
+ * @param rightTree, un arbre
+ * @returns  let radarData = [
+     [
+         {name: "Prix", coef: 1, qt:20, unit:"€"},
+         {name: "Quantité", coef: 1, qt:20, unit:"l"},
+         {name: "Lipides", coef: 1, qt:5, unit:"mol"},
+         {name: "Glucides", coef: 1, qt:12, unit:"mol"},
+     ],
+     [
+         {name: "Prix", coef: 0.22, qt:20, unit:"€"},
+         {name: "Quantité", coef: 1, qt:20, unit:"l"},
+         {name: "Lipides", coef: 0.5, qt:2.5, unit:"mol"},
+         {name: "Glucides", coef: 0, qt:0, unit:"mol"},
+     ]
  ];
  */
-export const toRadarData = ({left, right}) => {
+export const toRadarData = ({leftTree, rightTree}) => {
 
-    if (!left || !right || !left.facets || !right.facets) {
-        console.warn("rendu de radar sans data", left, right);
+    if (!leftTree || !rightTree || !leftTree.facets || !rightTree.facets) {
+        console.warn("rendu de radar sans data", leftTree, rightTree);
         return;
     }
 
-    const leftFacets = left.facets;
-    const rightFacets = right.facets;
+    const leftFacets = leftTree.facets;
+    const rightFacets = rightTree.facets;
 
     const leftNames = _.map(leftFacets, 'name');
     const rightNames = _.map(rightFacets, 'name');
 
     const commonNames = _.intersection(leftNames, rightNames);
 
-    const leftAxes = _.map(commonNames, name => ({
-        name, value: relativeTo1(_.find(leftFacets, {name}).qt, _.find(rightFacets, {name}).qt),
-        qtUnit: _.find(leftFacets, {name}).qt + _.find(leftFacets, {name}).unit
+    const left = _.map(commonNames, name => ({
+        name, coef: relativeTo1(_.find(leftFacets, {name}).qt, _.find(rightFacets, {name}).qt),
+        qt: format(_.find(leftFacets, {name}).qt),
+        unit: _.find(leftFacets, {name}).unit
     }));
-    const rightAxes = _.map(commonNames, name => ({
-        name, value: relativeTo1(_.find(rightFacets, {name}).qt, _.find(leftFacets, {name}).qt),
-        qtUnit: _.find(rightFacets, {name}).qt + _.find(rightFacets, {name}).unit
+    const right = _.map(commonNames, name => ({
+        name, coef: relativeTo1(_.find(rightFacets, {name}).qt, _.find(leftFacets, {name}).qt),
+        qt: format(_.find(rightFacets, {name}).qt),
+        unit: _.find(rightFacets, {name}).unit
     }));
 
-    const leftOnly = _.difference(leftNames, rightNames);
-    _.forEach(leftOnly, name => {
-        leftAxes.push({
-            name, value: 1,
-            qtUnit: _.find(leftFacets, {name}).qt + _.find(leftFacets, {name}).unit
+    const leftFacetsOnly = _.difference(leftNames, rightNames);
+    _.forEach(leftFacetsOnly, name => {
+        left.push({
+            name, coef: 1,
+            qt: format(_.find(leftFacets, {name}).qt),
+            unit: _.find(leftFacets, {name}).unit
         });
-        rightAxes.push({
-            name, value: 0,
-            qtUnit: 0 + _.find(leftFacets, {name}).unit
+        right.push({
+            name, coef: 0,
+            qt: 0,
+            unit: _.find(leftFacets, {name}).unit
         });
     });
 
-    const rightOnly = _.difference(rightNames, leftNames);
-    _.forEach(rightOnly, name => {
-        rightAxes.push({
-            name, value: 1,
-            qtUnit: _.find(rightFacets, {name}).qt + _.find(rightFacets, {name}).unit
+    const rightFacetsOnly = _.difference(rightNames, leftNames);
+    _.forEach(rightFacetsOnly, name => {
+        right.push({
+            name, coef: 1,
+            qt: format(_.find(rightFacets, {name}).qt),
+            unit: _.find(rightFacets, {name}).unit
         });
-        leftAxes.push({
-            name, value: 0,
-            qtUnit: 0 + _.find(rightFacets, {name}).unit
+        left.push({
+            name, coef: 0,
+            qt: 0,
+            unit: _.find(rightFacets, {name}).unit
         });
     });
 
-    return [leftAxes, rightAxes];
+
+    _.forEach(valuesByAxis, (valFct, name)=>{
+        left.push({name, coef: relativeTo1(valFct(leftTree), valFct(rightTree)),
+            qt: format(valFct(leftTree)),
+            unit: "€"
+        });
+        right.push({name, coef: relativeTo1(valFct(rightTree), valFct(leftTree)),
+            qt: format(valFct(rightTree)),
+            unit: "€"
+        });
+    });
+
+    console.log(left);
+    console.log(right);
+
+    return {left, right};
 };
 
-export const toQtUnit = value => {
-    if (!value)
+export const toQtUnit = rawInput => {
+    if (!rawInput)
         return null;
-    const r = value.match(/^(\d+[.,]?\d*)([a-zA-Z]+)?$/);
+    const r = rawInput.match(/^(\d+[.,]?\d*)([a-zA-Z]+)?$/);
 
     if (r) {
 

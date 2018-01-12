@@ -5,7 +5,7 @@
 
                 <v-toolbar color="pink" dark>
                     <v-toolbar-side-icon/>
-                    <v-toolbar-title>{{tree.name}} et {{compareTo.name}}</v-toolbar-title>
+                    <v-toolbar-title>Comparer {{tree.name}} et {{compareTo.name}}, à {{axis}} égal(e).</v-toolbar-title>
                     <v-spacer/>
                     <v-btn @click="close" icon>
                         <v-icon large>highlight_off</v-icon>
@@ -17,7 +17,27 @@
                         <v-flex>
                             <v-card>
                                 <v-card-text style="height:700px">
-                                    <div class="facetRadar" style="height: 100%;width: 100%;"></div>
+                                    <v-layout row style="height: 100%;width: 100%;">
+                                        <div class="facetRadar" style="height: 100%;width: 100%;"></div>
+                                        <v-layout column>
+                                            <v-data-table :headers="leftHeader" :items="leftItems" hide-actions>
+                                                <template slot="items" slot-scope="props">
+                                                    <td>{{ props.item.name }}</td>
+                                                    <td class="text-xs-right">{{ props.item.qt }}</td>
+                                                    <td class="text-xs-right">{{ props.item.unit }}</td>
+                                                    <td class="text-xs-right">{{ props.item.coef }}</td>
+                                                </template>
+                                            </v-data-table>
+                                            <v-data-table :headers="rightHeader" :items="rightItems" hide-actions>
+                                                <template slot="items" slot-scope="props">
+                                                    <td>{{ props.item.name }}</td>
+                                                    <td class="text-xs-right">{{ props.item.qt }}</td>
+                                                    <td class="text-xs-right">{{ props.item.unit }}</td>
+                                                    <td class="text-xs-right">{{ props.item.coef }}</td>
+                                                </template>
+                                            </v-data-table>
+                                        </v-layout>
+                                    </v-layout>
                                 </v-card-text>
                                 <v-card-actions class="white">
                                     <v-spacer></v-spacer>
@@ -51,31 +71,41 @@
         props: ['tree', 'compareTo'],
         data() {
             return {
-                axis: null
+                axis: "Quantité",
+                leftHeader: [{text: this.tree.name}, {text: 'qt'},{text: 'unit'}, {text: 'coef'}],
+                rightHeader: [{text: this.compareTo.name}, {text: 'qt'}, {text: 'unit'}, {text: 'coef'}]
             }
         },
-        mounted(){
-          this.updateRadar();
+        mounted() {
+            this.updateRadar();
         },
         methods: {
             ...mapMutations({close: Do.CLEAR_COMPARE_TO}),
             updateRadar() {
-                radar(".facetRadar", this.compareData);
+                radar(".facetRadar", [this.compareData.left, this.compareData.right]);
             }
         },
         computed: {
             compareData: {
                 get: function () {
 
-                    const axis = this.axis || "Quantité";
+                    const leftRightTrees = _.cloneDeep({leftTree: this.tree, rightTree: this.compareTo});
 
-                    const leftRight = _.cloneDeep({left: this.tree, right: this.compareTo});
+                    const coef = extraireCoef(this.axis, leftRightTrees);
 
-                    const coef = extraireCoef(axis, leftRight);
+                    applyCoef(leftRightTrees.rightTree, coef);
 
-                    applyCoef(leftRight.right, coef);
-
-                    return toRadarData(leftRight);
+                    return toRadarData(leftRightTrees);
+                }
+            },
+            leftItems: {
+                get: function () {
+                    return this.compareData.left;
+                }
+            },
+            rightItems: {
+                get: function () {
+                    return this.compareData.right;
                 }
             }
         },

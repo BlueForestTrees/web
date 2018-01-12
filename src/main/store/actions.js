@@ -15,7 +15,7 @@ export default {
 
         //commit(Do.SHOW_DIALOG, Dial.FACET);
 
-
+        await dispatch(On.OPEN_COMPARE_TO, {_id: "5a567b76b566b931f6348a9f"});
     },
     [On.LOAD_UNITS]: async ({commit}) => {
         commit(Do.UPDATE_GRANDEURS, await units.load());
@@ -114,7 +114,7 @@ export default {
         commit(Do.UPDATE_ADDING_SEED, value);
     },
     [On.DELETE_FACETS]: async ({commit}, {tree, facets}) => {
-        rest.deleteFacets(tree._id, _.map(facets,"_id"));
+        rest.deleteFacets(tree._id, _.map(facets, "_id"));
         commit(Do.DELETE_FACETS, {tree, facets});
     },
     [On.ADD_FACET]: async ({commit}, {tree, facet}) => {
