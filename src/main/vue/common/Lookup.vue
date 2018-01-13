@@ -1,7 +1,8 @@
 <template>
 
     <v-menu offset-y style="width: 100%">
-        <v-text-field ref="termInput" @input="search" slot="activator" solo prepend-icon="search" placeholder="Recherche"/>
+
+        <v-text-field ref="termInput" @input="search" :value="term" slot="activator" prepend-icon="search" placeholder="Recherche"/>
 
         <v-list v-if="allowCreate || hasResults">
             <v-list-tile v-for="item in results" :key="item._id" @click="select(item)">

@@ -13,6 +13,7 @@ export const Do = {
     SHOW_DIALOG: "showDialog",
     SHOW_FACET_ENTRY_DIALOG: "showFacetEntryDialog",
     SHOW_OTHER_TREE_DIALOG: "showOtherTreeDialog",
+    SWAP_LEFT_RIGHT: 'swapLeftRight',
     OPEN_TREE: 'openTree',
     OPEN_COMPARE_TO: 'openCompareTo',
     UPDATE_ADDING_SEED: 'updateAddingSeed',

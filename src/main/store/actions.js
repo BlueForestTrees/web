@@ -8,14 +8,11 @@ export default {
     [On.MOUNT_APP]: async ({commit, dispatch}) => {
         dispatch(On.LOAD_UNITS);
 
-        //ouvrir la tarte
-        await dispatch(On.OPEN_TREE, {_id: "5a54da9a4a47fa5eec339b7e"});
+         await dispatch(On.OPEN_TREE, {_id: "5a5a1091f4c48338abc571c9"});
+         await dispatch(On.OPEN_COMPARE_TO, {_id: "5a5a1147d14a5b38ff202796"});
         //commit(Do.SHOW_DIALOG,Dial.COMPARE_TO);
-
-
         //commit(Do.SHOW_DIALOG, Dial.FACET);
 
-        await dispatch(On.OPEN_COMPARE_TO, {_id: "5a567b76b566b931f6348a9f"});
     },
     [On.LOAD_UNITS]: async ({commit}) => {
         commit(Do.UPDATE_GRANDEURS, await units.load());
@@ -30,14 +27,19 @@ export default {
     },
     [On.EXCEPTION]: ({}, e) => {
         console.error("saloute", e);
+        throw e;
     },
     [On.OPEN_TREE]: async ({dispatch, commit}, trunk) => {
+
         let tree = null;
         try {
             tree = await rest.get(trunk._id);
         } catch (e) {
             dispatch(On.EXCEPTION, e);
         }
+
+        commit(Do.CLOSE_TREE);
+        commit(Do.CLEAR_COMPARE_TO);
         commit(Do.OPEN_TREE, tree);
     },
     [On.OPEN_COMPARE_TO]: async ({commit}, trunk) => {

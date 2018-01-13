@@ -1,57 +1,11 @@
 import * as d3 from 'd3';
 import _ from 'lodash';
+import {config} from "./config";
+import {wrap} from "./helper";
 
-/////////////////////////////////////////////////////////
-/////////////////// Helper Function /////////////////////
-/////////////////////////////////////////////////////////
+export const radar = ({selectAxis, id, data, options, selectedAxis}) => {
 
-//Taken from http://bl.ocks.org/mbostock/7555321
-//Wraps SVG text
-const wrap = (text, width) => {
-    text.each(function () {
-        var text = d3.select(this),
-            words = text.text().split(/\s+/).reverse(),
-            word, line = [], lineNumber = 0, lineHeight = 1.4, // ems
-            y = text.attr("y"), x = text.attr("x"), dy = parseFloat(text.attr("dy")),
-            tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
-
-        while (word = words.pop()) {
-            line.push(word);
-            tspan.text(line.join(" "));
-            if (tspan.node().getComputedTextLength() > width) {
-                line.pop();
-                tspan.text(line.join(" "));
-                line = [word];
-                tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
-            }
-        }
-    });
-};
-
-export default (id, data, options) => {
-    var cfg = {
-        w: 450,				//Width of the circle
-        h: 450,				//Height of the circle
-        margin: {top: 100, right: 100, bottom: 100, left: 100}, //The margins of the SVG
-        levels: 4,				//How many levels or inner circles should there be drawn
-        maxCoef: 1, 			//What is the coef that the biggest circle will represent
-        labelFactor: 1.20, 	//How much farther than the radius of the outer circle should the labels be placed
-        wrapWidth: 60, 		//The number of pixels after which a label needs to be given a new line
-        opacityArea: 0.35, 	//The opacity of the area of the blob
-        dotRadius: 4, 			//The size of the colored circles of each blog
-        opacityCircles: 0.1, 	//The opacity of the circles of each blob
-        strokeWidth: 2, 		//The width of the stroke around each blob
-        color: d3.scaleOrdinal().range(["#00A0B0", "#CC333F"]) //d3.scaleOrdinal(d3.schemeCategory10)	//Color function
-    };
-
-    //merge options into cfg
-    if ('undefined' !== typeof options) {
-        for (var i in options) {
-            if ('undefined' !== typeof options[i]) {
-                cfg[i] = options[i];
-            }
-        }
-    }
+    const cfg = config(options);
 
     //If the supplied maxValue is smaller than the actual one, replace by the max in the data
     var maxValue = Math.max(cfg.maxCoef, d3.max(data, function (i) {
@@ -63,7 +17,6 @@ export default (id, data, options) => {
     var axisNames = _.map(data[0], 'name'),        //Names of each axis
         total = axisNames.length,					//The number of different axes
         radius = Math.min(cfg.w / 2, cfg.h / 2), 	//Radius of the outermost circle
-        FormatPercent = d3.format('.0%'),			 	//Percentage formatting
         angleSlice = Math.PI * 2 / total;		//The width in radians of each "slice"
 
     //Scale for the radius
@@ -155,10 +108,16 @@ export default (id, data, options) => {
         .style("stroke", "white")
         .style("stroke-width", "2px");
 
+    const axisLabel = name =>
+        name !== selectedAxis ? name :
+            `${name}: ${_.find(data[0], {name}).qt}${_.find(data[0], {name}).unit}`;
+
     //Append the labels at each axis
     axis.append("text")
         .attr("class", "legend")
         .style("font-size", "1.3em")
+        .style("font-weight", (e) => (e === selectedAxis ? "bold" : "normal"))
+        .style("cursor", "hand")
         .attr("text-anchor", "middle")
         .attr("dy", "0em")
         .attr("x", function (d, i) {
@@ -167,7 +126,10 @@ export default (id, data, options) => {
         .attr("y", function (d, i) {
             return rScale(maxValue * cfg.labelFactor) * Math.sin(angleSlice * i - Math.PI / 2);
         })
-        .text(axisName=>axisName)
+        .text(axisName => axisLabel(axisName))
+        .on('click', (axisName) => {
+            selectAxis(axisName);
+        })
         .call(wrap, cfg.wrapWidth);
 
     /////////////////////////////////////////////////////////
@@ -198,72 +160,76 @@ export default (id, data, options) => {
             return radarLine(d);
         })
         .style("fill", function (d, i) {
-            return cfg.color(i);
+            return cfg.color[i];
         })
         .style("fill-opacity", cfg.opacityArea);
-    // .on('mouseover', function (d,i){
-    //     //Dim all blobs
-    //     d3.selectAll(".radarArea")
-    //         .transition().duration(200)
-    //         .style("fill-opacity", 0.1);
-    //     //Bring back the hovered over blob
-    //     d3.select(this)
-    //         .transition().duration(200)
-    //         .style("fill-opacity", 0.7);
-    // })
-    // .on('mouseout', function(){
-    //     //Bring back all blobs
-    //     d3.selectAll(".radarArea")
-    //         .transition().duration(200)
-    //         .style("fill-opacity", cfg.opacityArea);
-    // });
-
-    //Create the outlines
-    // blobWrapper.append("path")
-    //     .attr("class", "radarStroke")
-    //     .attr("d", function(d,i) { return radarLine(d); })
-    //     .style("stroke-width", cfg.strokeWidth + "px")
-    //     .style("stroke", function(d,i) { return cfg.color(i); })
-    //     .style("fill", "none")
-    //     .style("filter" , "url(#glow)");
 
 
-    ///////////////////////////////////////////////////////
-    ////// Append circles + invisible circles for tooltip /
-    ///////////////////////////////////////////////////////
-    //Append the circles
-    // blobWrapper.selectAll(".radarCircle")
-    //     .data(function (d, i) {
-    //         return d;
-    //     })
-    //     .enter().append("circle")
-    //     .attr("class", "radarCircle")
-    //     .attr("r", cfg.dotRadius)
-    //     .attr("cx", function (d, i) {
-    //         return rScale(d.value) * Math.cos(angleSlice * i - Math.PI / 2);
-    //     })
-    //     .attr("cy", function (d, i) {
-    //         return rScale(d.value) * Math.sin(angleSlice * i - Math.PI / 2);
-    //     })
-    //     .style("fill", function (d, i, j) {
-    //         return cfg.color(j);
-    //     })
-    //     .style("fill-opacity", 0.8);
+// .on('mouseover', function (d,i){
+//     //Dim all blobs
+//     d3.selectAll(".radarArea")
+//         .transition().duration(200)
+//         .style("fill-opacity", 0.1);
+//     //Bring back the hovered over blob
+//     d3.select(this)
+//         .transition().duration(200)
+//         .style("fill-opacity", 0.7);
+// })
+// .on('mouseout', function(){
+//     //Bring back all blobs
+//     d3.selectAll(".radarArea")
+//         .transition().duration(200)
+//         .style("fill-opacity", cfg.opacityArea);
+// });
 
-    //Wrapper for the invisible circles on top
+//Create the outlines
+// blobWrapper.append("path")
+//     .attr("class", "radarStroke")
+//     .attr("d", function(d,i) { return radarLine(d); })
+//     .style("stroke-width", cfg.strokeWidth + "px")
+//     .style("stroke", function(d,i) { return cfg.color(i); })
+//     .style("fill", "none")
+//     .style("filter" , "url(#glow)");
+
+
+///////////////////////////////////////////////////////
+////// Append circles + invisible circles for tooltip /
+///////////////////////////////////////////////////////
+//Append the circles
+    blobWrapper.selectAll(".radarCircle")
+        .data(function (d, i) {
+            return d;
+        })
+        .enter().append("circle")
+        .attr("class", "radarCircle")
+        .attr("r", cfg.dotRadius)
+        .attr("cx", function (d, i) {
+            return rScale(d.coef) * Math.cos(angleSlice * i - Math.PI / 2);
+        })
+        .attr("cy", function (d, i) {
+            return rScale(d.coef) * Math.sin(angleSlice * i - Math.PI / 2);
+        })
+        .style("fill", function (d, i, j) {
+            return 0;
+        })
+        .style("fill-opacity", 0.1);
+
+//Wrapper for the invisible circles on top
     var blobCircleWrapper = g.selectAll(".radarCircleWrapper")
         .data(data)
         .enter().append("g")
         .attr("class", "radarCircleWrapper");
 
-    //Append a set of invisible circles on top for the mouseover pop-up
+    const overPoint = d => `${d.axis}: ${d.qt}${d.unit} ${d.name}`;
+
+//Append a set of invisible circles on top for the mouseover pop-up
     blobCircleWrapper.selectAll(".radarInvisibleCircle")
         .data(function (d, i) {
             return d;
         })
         .enter().append("circle")
         .attr("class", "radarInvisibleCircle")
-        .attr("r", cfg.dotRadius * 4)
+        .attr("r", cfg.dotRadius * 6)
         .attr("cx", function (d, i) {
             return rScale(d.coef) * Math.cos(angleSlice * i - Math.PI / 2);
         })
@@ -279,7 +245,7 @@ export default (id, data, options) => {
             tooltip
                 .attr('x', newX)
                 .attr('y', newY)
-                .text(FormatPercent(d.coef))
+                .text(overPoint(d))
                 .transition().duration(200)
                 .style('opacity', 1);
         })
@@ -288,9 +254,10 @@ export default (id, data, options) => {
                 .style("opacity", 0);
         });
 
-    //Set up the small tooltip for when you hover over a circle
+//Set up the small tooltip for when you hover over a circle
     var tooltip = g.append("text")
         .attr("class", "tooltip")
         .style("opacity", 0);
 
-}
+
+};

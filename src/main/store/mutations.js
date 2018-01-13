@@ -93,15 +93,19 @@ export default {
     [Do.CLEAR_COMPARE_TO]: (state) => {
         state.compareTo = null;
     },
-
-
     [Do.OPEN_TREE]: (state, value) => {
-        state.path = [value];
         state.tree = value;
     },
     [Do.CLOSE_TREE]: (state) => {
-        state.path = null;
         state.tree = null;
+    },
+
+    [Do.SWAP_LEFT_RIGHT]: state => {
+        const left = state.tree;
+        const right = state.compareTo;
+
+        Vue.set(state, "tree", right);
+        Vue.set(state, "compareTo", left);
     },
     [Do.UPDATE_LINK_EDIT]: (state, value) => {
         state.linkEdit = value;

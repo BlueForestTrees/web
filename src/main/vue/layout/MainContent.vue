@@ -4,7 +4,7 @@
             <v-layout justify-center align-center>
 
                 <tree v-if="treeing" :tree="tree"/>
-                <compare-to v-if="comparing" :tree="tree" :compareTo="compareTo"/>
+                <compare-to v-if="comparing" :leftTree="tree" :rightTree="compareTo"/>
 
             </v-layout>
         </v-container>
