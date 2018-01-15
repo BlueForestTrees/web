@@ -14,14 +14,6 @@
                                 <v-text-field ref="nom" placeholder="Nom" :value="dialog.data.name" @input="updateName"/>
                             </v-layout>
                         </v-flex>
-                        <v-flex v-if="existingTrunk" xs12 align-center justify-space-between>
-                            <v-layout align-center>
-                                <v-avatar size="40px" class="mr-3">
-                                    <v-icon>info</v-icon>
-                                </v-avatar>
-                                Ce nom sera le même que d'autres ressources.
-                            </v-layout>
-                        </v-flex>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer/>
@@ -42,8 +34,7 @@
     export default {
         data() {
             return {
-                Dial: Dial,
-                existingTrunk: null
+                Dial: Dial
             }
         },
         components: {MainDialog},
@@ -51,7 +42,6 @@
         methods: {
             ...mapActions({
                 "createAndOpen": On.CREATE_AND_OPEN_TREE,
-                "lookup": On.LOOKUP_TRUNK,
                 "openTree": On.OPEN_TREE
             }),
             validate() {
@@ -60,7 +50,6 @@
             },
             updateName: async function (value) {
                 this.$refs.dialog.data = {name: value};
-                this.existingTrunk = await this.lookup(value);
             },
             close: function () {
                 this.$refs.dialog.close();

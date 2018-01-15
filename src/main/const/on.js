@@ -11,7 +11,6 @@ export const On = {
     FOCUS_ON_SEARCH: "focusOnSearch",
     LINK_CHANGED: 'onLinkChanged',
     LOAD_UNITS: 'loadUnits',
-    LOOKUP_TRUNK: 'lookupTrunk',
     MOUNT_APP: 'mountApp',
     OPEN_TREE: 'onOpenTree',
     OPEN_COMPARE_TO: 'openCompareTo',

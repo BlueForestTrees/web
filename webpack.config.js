@@ -29,7 +29,7 @@ const conf = {
     ],
     devServer: {
         port: 8079,
-        host: 'localhost',
+        host: '0.0.0.0',
         proxy: {
             '/api/*': {target: 'http://localhost:8080'},
             '/adminapi/*': {target: 'http://localhost:8080'}

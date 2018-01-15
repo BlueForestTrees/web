@@ -8,8 +8,8 @@ export default {
     [On.MOUNT_APP]: async ({commit, dispatch}) => {
         dispatch(On.LOAD_UNITS);
 
-         await dispatch(On.OPEN_TREE, {_id: "5a5a1091f4c48338abc571c9"});
-         await dispatch(On.OPEN_COMPARE_TO, {_id: "5a5a1147d14a5b38ff202796"});
+         // await dispatch(On.OPEN_TREE, {_id: "5a5a1091f4c48338abc571c9"});
+         // await dispatch(On.OPEN_COMPARE_TO, {_id: "5a5a1147d14a5b38ff202796"});
         //commit(Do.SHOW_DIALOG,Dial.COMPARE_TO);
         //commit(Do.SHOW_DIALOG, Dial.FACET);
 
@@ -20,7 +20,6 @@ export default {
 
     [On.SEARCH]: async ({commit}, term) => await rest.search(term),
 
-    [On.LOOKUP_TRUNK]: async ({}, name) => await rest.lookupTrunk(name),
     [On.CREATE_AND_OPEN_TREE]: async ({dispatch}, {name}) => {
         const tree = await dispatch(On.CREATE_TRUNK, name);
         return dispatch(On.OPEN_TREE, tree);

@@ -20,6 +20,7 @@ export const Do = {
     UPDATE: 'update',
     UPDATE_DIALOG_VISIBILITY: 'updateDialogVisibility',
     UPDATE_DIALOG_DATA: 'updateDialogData',
+    UPDATE_DIALOG_FIELD: 'updateDialogField',
     UPDATE_FACET_DIALOG_DATA: 'updateFacetDialogData',
     UPDATE_FACET_DIALOG_VISIBILITY: "updateFacetDialogVisibility",
     UPDATE_GRANDEURS: "UPDATE_GRANDEURS",

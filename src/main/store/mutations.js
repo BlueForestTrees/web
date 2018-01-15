@@ -17,6 +17,15 @@ const updateDialog = (state, {dialog, data}) => {
         console.error(`state not found : state.dialogs['${dialog}']`);
     }
 };
+const updateDialogField = (state, {dialog, data}) => {
+    if (state.dialogs[dialog]) {
+        _.forEach(data, (value, key) => {
+            state.dialogs[dialog].data[key] = value;
+        });
+    } else {
+        console.error(`state not found : state.dialogs['${dialog}']`);
+    }
+};
 const cleanDialog = (state, dialog) => {
     updateDialog(state, {dialog, data: createDialog(dialog)});
 };
@@ -40,6 +49,9 @@ export default {
     [Do.SHOW_DIALOG]: (state, dialog) => {
         cleanDialog(state, dialog);
         updateDialogVisibility(state, {dialog, visible: true});
+    },
+    [Do.UPDATE_DIALOG_FIELD]: (state, {dialog, data}) => {
+        updateDialogField(state, {dialog, data});
     },
     [Do.UPDATE_DIALOG_DATA]: (state, {dialog, data}) => {
         updateDialog(state, {dialog, data});

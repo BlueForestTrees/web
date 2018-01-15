@@ -3,11 +3,10 @@
         <template slot-scope="props">
             <v-card>
                 <v-card-title class="grey lighten-4 py-4 title">
-                    Ajouter à {{tree && tree.name}}
+                    Ajouter à {{tree && tree.name}}: {{qt}}{{unit && unit.shortname}}
                 </v-card-title>
                 <v-card-text>
                     <v-container fluid>
-
                         <v-layout row>
                             <v-flex xs4>
                                 <v-subheader>Comment cela s'appelle-t-il?</v-subheader>
@@ -110,6 +109,7 @@
                 this.close();
             },
             focus(){
+                console.log("focus");
                 this.$refs.nom.focus();
                 this.namepart = null;
                 this.qt = null;

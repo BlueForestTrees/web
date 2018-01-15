@@ -7,6 +7,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "webpack-dev-server --inline --progress",
+    "prod": "webpack-dev-server --inline --progress --public blueforest.org:8079",
     "build": "webpack",
     "test": "mocha $(find src/test -name '*.js') --require babel-register"
   },

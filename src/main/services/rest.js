@@ -7,7 +7,6 @@ export default {
     del: trunkId => api.del(`api/trunk/${trunkId}`),
     deleteFacets: (treeId, facetIds) => api.post('api/facets/deletions', {treeId, facetIds}),
     get: _id => api.get(`api/trunk/${_id}`),
-    lookupTrunk: name => api.get(`api/trunk?q=${name}`),
     getQuantified: (qt, _id) => api.get(`api/trunk/${qt}/${_id}`),
     link: link => api.post('api/root', link),
     qtUnit: qtUnit => api.post('api/qtunit', qtUnit),
