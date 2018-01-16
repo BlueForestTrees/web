@@ -72,7 +72,7 @@
         props: ['leftTree', 'rightTree'],
         data() {
             return {
-                defaultAxis: "Quantité",
+                defaultAxis: "Nombre",
                 axis: {name: null, coef: NaN},
                 leftHeader: [{text: this.leftTree.name}, {text: 'qt'}, {text: 'unit'}, {text: 'coef'}],
                 rightHeader: [{text: this.rightTree.name}, {text: 'qt'}, {text: 'unit'}, {text: 'coef'}],

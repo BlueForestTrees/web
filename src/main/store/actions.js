@@ -8,8 +8,8 @@ export default {
     [On.MOUNT_APP]: async ({commit, dispatch}) => {
         dispatch(On.LOAD_UNITS);
 
-          await dispatch(On.OPEN_TREE, {_id: "5a5b9e6bf0cd7a63cbf236bd"});
-         await dispatch(On.OPEN_COMPARE_TO, {_id: "5a5b9e8ef0cd7a63cbf236be"});
+          await dispatch(On.OPEN_TREE, {_id: "5a5b9e8ef0cd7a63cbf236be"});
+         await dispatch(On.OPEN_COMPARE_TO, {_id: "5a5b9e6bf0cd7a63cbf236bd"});
         //commit(Do.SHOW_DIALOG,Dial.COMPARE_TO);
         //commit(Do.SHOW_DIALOG, Dial.FACET);
 
