@@ -109,6 +109,7 @@ export default {
         state.tree = value;
     },
     [Do.CLOSE_TREE]: (state) => {
+        state.compareTo = null;
         state.tree = null;
     },
 

@@ -20,33 +20,24 @@
                             <v-card>
                                 <v-card-text style="height:700px">
                                     <v-layout row style="height: 100%;width: 100%;">
-                                        <div @click.native="axis = $event" class="leftRightRadar"
-                                             style="height: 100%;width: 100%;"></div>
-                                        <v-layout column v-if="showTables">
-                                            <v-data-table v-if="leftItems" :headers="leftHeader" :items="leftItems"
-                                                          hide-actions>
-                                                <template slot="items" slot-scope="props">
-                                                    <td>{{ props.item.name }}</td>
-                                                    <td class="text-xs-right">{{ props.item.qt }}</td>
-                                                    <td class="text-xs-right">{{ props.item.unit }}</td>
-                                                    <td class="text-xs-right">{{ props.item.coef }}</td>
-                                                </template>
-                                            </v-data-table>
-                                            <v-data-table v-if="rightItems" :headers="rightHeader" :items="rightItems"
-                                                          hide-actions>
-                                                <template slot="items" slot-scope="props">
-                                                    <td>{{ props.item.name }}</td>
-                                                    <td class="text-xs-right">{{ props.item.qt }}</td>
-                                                    <td class="text-xs-right">{{ props.item.unit }}</td>
-                                                    <td class="text-xs-right">{{ props.item.coef }}</td>
-                                                </template>
-                                            </v-data-table>
-                                        </v-layout>
+
+                                        <v-data-table :headers="headers" :items="items" hide-actions v-if="showTables" class="elevation-1">
+                                            <template slot="items" slot-scope="props">
+                                                <td @click="selectAxis(props.item.name)">{{ props.item.name }}</td>
+                                                <td @click="selectAxis(props.item.name)">{{props.item.leftQt }}{{props.item.leftUnit}}</td>
+                                                <td @click="selectAxis(props.item.name)">{{props.item.rightQt }}{{props.item.rightUnit}}</td>
+                                            </template>
+                                        </v-data-table>
+
+                                        <div class="elevation-1 leftRightRadar" @click.native="axis = $event" style="height: 100%;width: 100%;">
+                                                <v-icon x-large :color="namedColors[0]">label</v-icon>{{leftTree.name}}
+                                                <v-icon x-large :color="namedColors[1]" style="padding-left:0.5em">label</v-icon>{{rightTree.name}}
+                                        </div>
+
+
                                     </v-layout>
                                 </v-card-text>
                                 <v-card-actions class="white">
-                                    <v-icon x-large :color="namedColors[0]">label</v-icon>{{leftTree.name}}
-                                    <v-icon x-large :color="namedColors[1]" style="padding-left:0.5em">label</v-icon>{{rightTree.name}}
                                     <v-spacer></v-spacer>
                                     <v-btn icon @click="swapLeftRight">
                                         <v-icon>swap_horiz</v-icon>
@@ -87,7 +78,7 @@
                 rightHeader: [{text: this.rightTree.name}, {text: 'qt'}, {text: 'unit'}, {text: 'coef'}],
                 namedColors:["cyan darken1","pink darken1"],
                 colors:["#00A0B0", "#CC333F"],
-                showTables:false
+                showTables:true
             }
         },
         mounted() {
@@ -120,6 +111,11 @@
             }
         },
         computed: {
+            headers:{
+                get(){
+                    return [{text:`${this.axis.name} égal(e)`, value:"name"},{text:this.leftTree.name, sortable:false},{text:this.rightTree.name, sortable:false}]
+                }
+            },
             radarData: {
                 get() {
                     return treeToRadar(_.cloneDeep({
@@ -129,14 +125,25 @@
                     }));
                 }
             },
-            leftItems: {
+            items:{
                 get() {
-                    return this.radarData && this.radarData.leftTree;
-                }
-            },
-            rightItems: {
-                get() {
-                    return this.radarData && this.radarData.rightTree;
+                    const result = [];
+
+                    _.forEach(this.radarData.leftTree,leftAxis=>{
+                        const isMainAxis = this.axis.name === leftAxis.name;
+                        const rightAxis = _.find(this.radarData.rightTree,{name:leftAxis.name});
+
+                        result.push({
+                            isMainAxis,
+                            name:leftAxis.name,
+                            leftUnit:leftAxis.unit,
+                            leftQt:leftAxis.qt,
+                            rightUnit:rightAxis.unit,
+                            rightQt:rightAxis.qt
+                        })
+                    });
+
+                    return result;
                 }
             }
         }

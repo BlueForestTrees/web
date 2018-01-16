@@ -8,8 +8,8 @@ export default {
     [On.MOUNT_APP]: async ({commit, dispatch}) => {
         dispatch(On.LOAD_UNITS);
 
-         // await dispatch(On.OPEN_TREE, {_id: "5a5a1091f4c48338abc571c9"});
-         // await dispatch(On.OPEN_COMPARE_TO, {_id: "5a5a1147d14a5b38ff202796"});
+          await dispatch(On.OPEN_TREE, {_id: "5a5b9e6bf0cd7a63cbf236bd"});
+         await dispatch(On.OPEN_COMPARE_TO, {_id: "5a5b9e8ef0cd7a63cbf236be"});
         //commit(Do.SHOW_DIALOG,Dial.COMPARE_TO);
         //commit(Do.SHOW_DIALOG, Dial.FACET);
 
@@ -25,7 +25,7 @@ export default {
         return dispatch(On.OPEN_TREE, tree);
     },
     [On.EXCEPTION]: ({}, e) => {
-        console.error("saloute", e);
+        console.error(e);
         throw e;
     },
     [On.OPEN_TREE]: async ({dispatch, commit}, trunk) => {
@@ -38,7 +38,6 @@ export default {
         }
 
         commit(Do.CLOSE_TREE);
-        commit(Do.CLEAR_COMPARE_TO);
         commit(Do.OPEN_TREE, tree);
     },
     [On.OPEN_COMPARE_TO]: async ({commit}, trunk) => {
