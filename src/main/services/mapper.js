@@ -17,7 +17,7 @@ const addAllSeeds = (trunk, tank) => {
 
 const baseValueByAxis = {
     "Prix": tree => ({qt:tree.price,unit:"€"}),
-    "Quantité": tree => ({qt:tree.quantity.qt,unit:tree.quantity.unit})
+    "Poids": tree => ({qt:tree.quantity.qt,unit:tree.quantity.unit})
 };
 
 const facetUnit = (tree, name) => {

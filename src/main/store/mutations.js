@@ -108,6 +108,9 @@ export default {
     [Do.OPEN_TREE]: (state, value) => {
         state.tree = value;
     },
+    [Do.RENAME_TREE]: (state, {tree, name}) => {
+        Vue.set(tree, "name", name);
+    },
     [Do.CLOSE_TREE]: (state) => {
         state.compareTo = null;
         state.tree = null;

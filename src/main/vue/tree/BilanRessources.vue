@@ -1,13 +1,17 @@
 <template>
-    <h2>Bilan Ressources</h2>
+    <v-card>
+        <v-toolbar>
+            <v-toolbar-title>Bilan Ressources</v-toolbar-title>
+            <v-spacer/>
+            <v-icon @click="" style="cursor: pointer">add</v-icon>
+        </v-toolbar>
+        <v-list two-line style="height: 300px">
 
-    <!--<div>Tank de {{trunk.name}}:</div>-->
-    <!--<list :trunks="tank" :qt="true" :sep="'+'"></list>-->
-    <!--</span>-->
+        </v-list>
+    </v-card>
 
 </template>
 
 <script>
-    export default {
-    }
+    export default {}
 </script>

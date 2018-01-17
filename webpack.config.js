@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 
 const conf = {
@@ -25,7 +26,8 @@ const conf = {
     },
 
     plugins: [
-        new HtmlWebpackPlugin({template: './src/main/index.html', inject: 'body', hash: 'true'})
+        new HtmlWebpackPlugin({template: './src/main/index.html', inject: 'body', hash: 'true'}),
+        new CopyWebpackPlugin([{ from: './src/img', to: 'img'}]),
     ],
     devServer: {
         port: 8079,

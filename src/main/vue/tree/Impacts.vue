@@ -1,6 +1,9 @@
 <template>
-    <h2>Impact</h2>
-
+    <v-toolbar>
+        <v-toolbar-title>Impacts</v-toolbar-title>
+        <v-spacer/>
+        <v-icon @click="" style="cursor: pointer">add</v-icon>
+    </v-toolbar>
 </template>
 
 <script>

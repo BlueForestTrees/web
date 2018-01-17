@@ -10,6 +10,7 @@ export const Do = {
     CLOSE_TREE: 'closeTree',
     DELETE_FACETS: 'deleteFacets',
     HIDE_FACET_DIALOG:'hideFacetDialog',
+    RENAME_TREE: 'renameTree',
     SHOW_DIALOG: "showDialog",
     SHOW_FACET_ENTRY_DIALOG: "showFacetEntryDialog",
     SHOW_OTHER_TREE_DIALOG: "showOtherTreeDialog",

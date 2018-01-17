@@ -2,6 +2,8 @@
     <div id="app">
         <v-app id="blueforest" light @keydown.ctrl.space.native="focusOnSearch">
 
+            <corner :text="'DEMO NWX'"/>
+
             <bar :drawer.sync="drawer" />
             <left-menu :drawer.sync="drawer"/>
             <main-content/>
@@ -33,6 +35,7 @@
     import LookupTreeDialog from "./dialog/CompareToDialog";
     import Test from "./Test";
     import FacetDialog from "./dialog/FacetDialog";
+    import Corner from "./layout/Corner";
 
     export default {
         computed: {
@@ -53,6 +56,7 @@
             }
         },
         components: {
+            Corner,
             FacetDialog,
             Test,
             LookupTreeDialog,

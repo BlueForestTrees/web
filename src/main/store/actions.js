@@ -8,12 +8,18 @@ export default {
     [On.MOUNT_APP]: async ({commit, dispatch}) => {
         dispatch(On.LOAD_UNITS);
 
-          await dispatch(On.OPEN_TREE, {_id: "5a5b9e8ef0cd7a63cbf236be"});
-         await dispatch(On.OPEN_COMPARE_TO, {_id: "5a5b9e6bf0cd7a63cbf236bd"});
+         await dispatch(On.OPEN_TREE, {_id: "5a5b9e8ef0cd7a63cbf236be"});
+         //await dispatch(On.OPEN_COMPARE_TO, {_id: "5a5b9e6bf0cd7a63cbf236bd"});
         //commit(Do.SHOW_DIALOG,Dial.COMPARE_TO);
         //commit(Do.SHOW_DIALOG, Dial.FACET);
 
     },
+
+    [On.RENAME_TREE]: async ({commit}, {tree, name}) => {
+        await rest.renameTree(tree._id, name);
+        commit(Do.RENAME_TREE, {tree, name});
+    },
+
     [On.LOAD_UNITS]: async ({commit}) => {
         commit(Do.UPDATE_GRANDEURS, await units.load());
     },
@@ -28,6 +34,14 @@ export default {
         console.error(e);
         throw e;
     },
+    [On.CLONE_OPEN_TREE]: async ({dispatch}, tree) => {
+        console.log(tree);
+        const clone = await dispatch(On.CLONE_TREE, tree);
+        return await dispatch(On.OPEN_TREE, clone);
+    },
+    [On.CLONE_TREE]: async ({}, {_id}) => {
+          return await rest.cloneTree(_id);
+    },
     [On.OPEN_TREE]: async ({dispatch, commit}, trunk) => {
 
         let tree = null;
@@ -39,6 +53,8 @@ export default {
 
         commit(Do.CLOSE_TREE);
         commit(Do.OPEN_TREE, tree);
+
+        return tree;
     },
     [On.OPEN_COMPARE_TO]: async ({commit}, trunk) => {
         commit(Do.OPEN_COMPARE_TO, await rest.get(trunk._id));
@@ -116,6 +132,10 @@ export default {
     [On.DELETE_FACETS]: async ({commit}, {tree, facets}) => {
         rest.deleteFacets(tree._id, _.map(facets, "_id"));
         commit(Do.DELETE_FACETS, {tree, facets});
+    },
+    [On.DELETE_TREE]: async ({commit}, tree) => {
+        await rest.deleteTree(tree._id);
+        commit(Do.CLOSE_TREE);
     },
     [On.ADD_FACET]: async ({commit}, {tree, facet}) => {
         rest.addFacet(tree._id, facet);

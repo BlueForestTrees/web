@@ -1,5 +1,14 @@
 <template>
-    <h2>Ressources</h2>
+    <v-card>
+        <v-toolbar>
+            <v-toolbar-title>Ressources</v-toolbar-title>
+            <v-spacer/>
+            <v-icon @click="" style="cursor: pointer">add</v-icon>
+        </v-toolbar>
+        <v-list two-line style="height: 300px">
+
+        </v-list>
+    </v-card>
 
     <!--<div>Composants de {{seed.name}}:</div>-->
     <!--<span>{{seed.qt}} {{seed.name}} = </span>-->
@@ -16,6 +25,5 @@
 </template>
 
 <script>
-    export default {
-    }
+    export default {}
 </script>

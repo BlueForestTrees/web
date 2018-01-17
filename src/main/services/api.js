@@ -11,15 +11,12 @@ const options =  (body) => {
 
 export default {
 
-    get: (path) => {
-        return req.get(url(path), options());
-    },
+    get: (path) => req.get(url(path), options()),
 
-    post: (path, body) => {
-        return req.post(url(path), options(body));
-    },
+    post: (path, body) => req.post(url(path), options(body)),
 
-    del: (path) => {
-        return req.del(url(path));
-    }
+    del: (path) => req.del(url(path)),
+
+    put: (path,body) => req.put(url(path), options(body))
+
 }

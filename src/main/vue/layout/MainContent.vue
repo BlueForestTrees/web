@@ -3,6 +3,7 @@
         <v-container fluid>
             <v-layout justify-center align-center>
 
+                <div class="logo-back"/>
                 <tree v-if="treeing" :tree="tree"/>
                 <compare-to v-if="comparing" :leftTree="tree" :rightTree="compareTo"/>
 
@@ -31,3 +32,17 @@
     }
 
 </script>
+
+<style>
+    .logo-back{
+        background-size:453px 568px;
+        width:453px;
+        height:568px;
+        position: absolute;
+        opacity: 0.2;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: url(/img/Bleuie.png) no-repeat;
+    }
+</style>

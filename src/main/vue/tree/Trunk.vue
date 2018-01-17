@@ -1,7 +1,16 @@
 <template>
-    <v-card style="cursor: default;padding-right: 1em;padding-left: 1em">
+    <v-card>
 
-        <h1 style="margin-bottom: 1em">{{tree.name}}</h1>
+        <v-toolbar>
+            <v-toolbar-title style="width:100%">
+                <span v-if="!name.editing" @click="activateRenaming">{{tree.name.toUpperCase()}}</span>
+                <v-layout row v-else style="margin-left: 1em">
+                    <v-text-field ref="renamingInput" :value="tree.name" @input="name.input = $event" @keydown.esc.native="unactivateRemaning" @keydown.enter.native="validateRenaming"/>
+                    <v-icon right color="green" @click="validateRenaming">done</v-icon>
+                    <v-icon right color="red" @click="unactivateRemaning">clear</v-icon>
+                </v-layout>
+            </v-toolbar-title>
+        </v-toolbar>
 
 
         <div v-if="qt.editing" style="margin-top: 1em;margin-left: 1em">
@@ -56,12 +65,6 @@
             </v-btn>
         </span>
 
-
-
-
-
-
-
     </v-card>
 </template>
 
@@ -79,7 +82,10 @@
         },
         data() {
             return {
-
+                name: {
+                    editing: false,
+                    input: null
+                },
                 qt: {
                     editing: false,
                     valued: false,
@@ -90,12 +96,22 @@
                     valued: false,
                     input: null
                 },
-
                 qtUnitTyped: null
             }
         },
         methods: {
-            ...mapActions([On.UPSERT_PRICE, On.UPSERT_QUANTITY]),
+            activateRenaming(){
+                this.name.editing = true;
+                this.$nextTick(()=>this.$refs.renamingInput.focus());
+            },
+            unactivateRemaning(){
+                this.name.editing = false;
+            },
+            validateRenaming(){
+                this.renameTree({tree:this.tree, name:this.name.input.trim()});
+                this.unactivateRemaning();
+            },
+            ...mapActions([On.UPSERT_PRICE, On.UPSERT_QUANTITY, On.RENAME_TREE]),
             qtInput(value) {
                  this.qt.input = toQtUnit(value);
             },

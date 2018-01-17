@@ -1,5 +1,9 @@
 <template>
-    <h2>Dechets</h2>
+    <v-toolbar>
+        <v-toolbar-title>Déchets</v-toolbar-title>
+        <v-spacer/>
+        <v-icon @click="" style="cursor: pointer">add</v-icon>
+    </v-toolbar>
 
 </template>
 
