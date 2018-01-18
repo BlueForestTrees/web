@@ -4,8 +4,14 @@
             <v-layout justify-center align-center>
 
                 <div class="logo-back"/>
-                <tree v-if="treeing" :tree="tree"/>
-                <compare-to v-if="comparing" :leftTree="tree" :rightTree="compareTo"/>
+
+                <transition name="fade">
+                    <tree v-if="treeing" :tree="tree"/>
+                </transition>
+
+                <transition name="fade">
+                    <compare-to v-if="comparing" :leftTree="tree" :rightTree="compareTo"/>
+                </transition>
 
             </v-layout>
         </v-container>
@@ -34,15 +40,27 @@
 </script>
 
 <style>
-    .logo-back{
-        background-size:453px 568px;
-        width:453px;
-        height:568px;
+    .logo-back {
+        background-size: 453px 568px;
+        width: 453px;
+        height: 568px;
         position: absolute;
         opacity: 0.2;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         background: url(/img/Bleuie.png) no-repeat;
+    }
+
+    .fade-enter-active {
+        transition: opacity .35s
+    }
+
+    .fade-leave-active {
+        transition: opacity .2s
+    }
+
+    .fade-enter, .fade-leave-to {
+        opacity: 0
     }
 </style>

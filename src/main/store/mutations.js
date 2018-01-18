@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import {NONE} from "../services/const";
-import {Do} from "../const/do";
+import Do from "../const/do";
 import {createDialog} from "./state"
 
 const updateDialogVisibility = (state, {dialog, visible}) => {
@@ -85,18 +85,6 @@ export default {
     },
 
 
-    [Do.ADD_TO_PATH]: (state, root) => {
-        state.path.push(root);
-    },
-    [Do.ADD_SEED]: (state, {root, seed}) => {
-        if (!root.roots) {
-            Vue.set(root, 'roots', []);
-        }
-        root.roots.push(seed);
-    },
-    [Do.CHANGE_PATH_INDEX]: (state, idx) => {
-        state.path.splice(idx + 1);
-    },
 
 
     [Do.OPEN_COMPARE_TO]: (state, value) => {
@@ -141,6 +129,14 @@ export default {
     [Do.UPSERT_QUANTITY]: (state, {tree, quantity}) => {
         Vue.set(tree, "quantity", quantity);
     },
+
+
+
+
+
+
+
+
     [Do.UPDATE_PATH_ITEM]: (state, root) => {
 
         let idx = _.findIndex(state.path, {_id: root._id});
@@ -153,8 +149,29 @@ export default {
             root = _.find(root.roots, {_id: state.path[idx]._id});
             state.path.splice(idx, 1, root);
         }
-
     },
+    [Do.ADD_TO_PATH]: (state, root) => {
+        state.path.push(root);
+    },
+    [Do.CHANGE_PATH_INDEX]: (state, idx) => {
+        state.path.splice(idx + 1);
+    },
+    [Do.ADD_SEED]: (state, {root, seed}) => {
+        if (!root.roots) {
+            Vue.set(root, 'roots', []);
+        }
+        root.roots.push(seed);
+    },
+
+
+
+
+
+
+
+
+
+
     [Do.UPDATE_ADDING_SEED]: (state, value) => {
         state.addingSeed = value;
     },

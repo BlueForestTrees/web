@@ -16,9 +16,9 @@
                 </v-layout>
             </v-flex>
 
-            <v-flex xs12 d-flex><ressources/></v-flex>
+            <v-flex xs12 d-flex><ressources :tree="tree"/></v-flex>
 
-            <v-flex xs12 d-flex><bilan-ressources/></v-flex>
+            <v-flex xs12 d-flex><bilan-ressources :tree="tree"/></v-flex>
 
         </v-layout>
     </v-container>

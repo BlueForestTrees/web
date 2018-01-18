@@ -20,7 +20,7 @@
     import Lookup from "../common/Lookup";
     import {mapActions} from 'vuex';
     import {Dial} from "../../const/dial";
-    import {On} from "../../const/on";
+    import On from "../../const/on";
 
     export default {
         components: {Lookup, MainDialog},
@@ -31,7 +31,7 @@
         },
         methods: {
             ...mapActions({
-                dispatchOpenCompareTo: On.OPEN_COMPARE_TO
+                dispatchOpenCompareTo: On.LOAD_OPEN_COMPARE_TO
             }),
             openOtherTree(otherTree) {
                 this.dispatchOpenCompareTo(otherTree);

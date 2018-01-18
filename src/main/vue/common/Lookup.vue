@@ -4,27 +4,29 @@
 
         <v-text-field ref="termInput" @input="search" :value="term" slot="activator" prepend-icon="search" placeholder="Recherche"/>
 
-        <v-list v-if="allowCreate || hasResults">
-            <v-list-tile v-for="item in results" :key="item._id" @click="select(item)">
-                <v-list-tile-avatar>
-                    <v-icon>assignment</v-icon>
-                </v-list-tile-avatar>
-                <v-list-tile-title>{{ item.name }}</v-list-tile-title>
-            </v-list-tile>
-            <v-divider v-if="allowCreate && hasResults"/>
-            <v-list-tile v-if="allowCreate" @click="create(term)">
-                <v-list-tile-avatar>
-                    <v-icon>add</v-icon>
-                </v-list-tile-avatar>
-                <v-list-tile-title>Créer "{{term}}"...</v-list-tile-title>
-            </v-list-tile>
-        </v-list>
+        <transition name="fade">
+            <v-list v-if="allowCreate || hasResults">
+                <v-list-tile v-for="item in results" :key="item._id" @click="select(item)">
+                    <v-list-tile-avatar>
+                        <v-icon>assignment</v-icon>
+                    </v-list-tile-avatar>
+                    <v-list-tile-title>{{ item.name }}</v-list-tile-title>
+                </v-list-tile>
+                <v-divider v-if="allowCreate && hasResults"/>
+                <v-list-tile v-if="allowCreate" @click="create(term)">
+                    <v-list-tile-avatar>
+                        <v-icon>add</v-icon>
+                    </v-list-tile-avatar>
+                    <v-list-tile-title>Créer "{{term}}"...</v-list-tile-title>
+                </v-list-tile>
+            </v-list>
+        </transition>
     </v-menu>
 </template>
 
 <script>
     import {mapActions} from 'vuex';
-    import {On} from "../../const/on";
+    import On from "../../const/on";
 
     export default {
         props: {cancreate: Boolean},

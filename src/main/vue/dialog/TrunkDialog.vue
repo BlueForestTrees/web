@@ -27,7 +27,7 @@
 
 <script>
     import MainDialog from "./MainDialog";
-    import {On} from "../../const/on";
+    import On from "../../const/on";
     import {mapActions} from "vuex";
     import {Dial} from "../../const/dial";
 
@@ -41,8 +41,7 @@
         props: ['data'],
         methods: {
             ...mapActions({
-                "createAndOpen": On.CREATE_AND_OPEN_TREE,
-                "openTree": On.OPEN_TREE
+                "createAndOpen": On.CREATE_AND_OPEN_TREE
             }),
             validate() {
                 this.createAndOpen({name: this.$refs.dialog.data.name});

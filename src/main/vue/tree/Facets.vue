@@ -32,13 +32,13 @@
 </template>
 
 <script>
-    import {Do} from "../../const/do"
+    import Do from "../../const/do"
     import {mapMutations, mapActions} from 'vuex';
     import FacetDialog from "../dialog/FacetEntryDialog";
     import {Dial} from "../../const/dial";
     import FlyingBtn from "../common/FlyingBtn";
     import {Fly} from "../../const/fly";
-    import {On} from "../../const/on";
+    import On from "../../const/on";
 
 
     export default {
@@ -73,13 +73,9 @@
         padding: 0px;
     }
 
-    .fade-enter-active{
-        transition: opacity .35s
-    }
-    .fade-leave-active {
-        transition: opacity 0s
-    }
-    .fade-enter, .fade-leave-to {
-        opacity: 0
-    }
+
+
+
+
+
 </style>

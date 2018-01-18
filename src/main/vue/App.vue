@@ -29,7 +29,7 @@
     import TrunkDialog from "./dialog/TrunkDialog";
     import {mapState} from 'vuex';
     import FacetEntryDialog from "./dialog/FacetEntryDialog";
-    import {On} from "../const/on";
+    import On from "../const/on";
     import {mapActions} from "vuex";
     import Lookup from "./common/Lookup";
     import LookupTreeDialog from "./dialog/CompareToDialog";

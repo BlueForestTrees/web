@@ -1,4 +1,4 @@
-export const Do = {
+export default {
     ADD_FACET: "addFacet",
     ADD_TO_PATH: 'addToPath',
     ADD_SEED: 'addSeed',

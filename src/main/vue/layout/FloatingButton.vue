@@ -16,7 +16,7 @@
 </template>
 
 <script>
-    import {Do} from "../../const/do";
+    import Do from "../../const/do";
     import {mapMutations, mapState} from 'vuex';
     import {Dial} from "../../const/dial";
 

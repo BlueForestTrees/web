@@ -5,7 +5,7 @@
 </template>
 
 <script>
-    import {Do} from "../../const/do";
+    import Do from "../../const/do";
     import {mapMutations} from "vuex";
 
     export default {

@@ -63,7 +63,7 @@
 </template>
 
 <script>
-    import {Do} from "../../const/do";
+    import Do from "../../const/do";
     import {mapMutations} from 'vuex';
     import {extraireAxePrincipal, treeToRadar} from "../../services/mapper";
     import {radar} from "../../services/d3/radar";

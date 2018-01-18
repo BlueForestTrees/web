@@ -28,8 +28,8 @@
 <script>
     import Lookup from "../common/Lookup";
     import MainDialog from "../dialog/MainDialog";
-    import {mapMutations} from "vuex";
-    import {Do} from "../../const/do";
+    import {mapActions} from "vuex";
+    import On from "../../const/on";
 
     export default {
         components: {
@@ -47,8 +47,8 @@
             }
         },
         methods:{
-            ...mapMutations({
-                open:Do.OPEN_TREE
+            ...mapActions({
+                open:On.LOAD_OPEN_TREE
             })
         }
     }

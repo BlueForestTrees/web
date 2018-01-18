@@ -1,17 +1,14 @@
-import {Do} from "../const/do";
-import {On} from "../const/on";
+import Do from "../const/do";
+import On from "../const/on";
 import rest from "../services/rest";
 import units from "../services/units";
-import {Dial} from "../const/dial";
 
 export default {
     [On.MOUNT_APP]: async ({commit, dispatch}) => {
         dispatch(On.LOAD_UNITS);
 
-         await dispatch(On.OPEN_TREE, {_id: "5a5b9e8ef0cd7a63cbf236be"});
-         //await dispatch(On.OPEN_COMPARE_TO, {_id: "5a5b9e6bf0cd7a63cbf236bd"});
-        //commit(Do.SHOW_DIALOG,Dial.COMPARE_TO);
-        //commit(Do.SHOW_DIALOG, Dial.FACET);
+         await dispatch(On.LOAD_OPEN_TREE, {_id: "5a60cf60d662ff69ce8c8de8"});
+         // await dispatch(On.LOAD_OPEN_COMPARE_TO, {_id: "5a5b9e6bf0cd7a63cbf236bd"});
 
     },
 
@@ -28,42 +25,40 @@ export default {
 
     [On.CREATE_AND_OPEN_TREE]: async ({dispatch}, {name}) => {
         const tree = await dispatch(On.CREATE_TRUNK, name);
-        return dispatch(On.OPEN_TREE, tree);
+        return dispatch(On.LOAD_OPEN_TREE, tree);
     },
     [On.EXCEPTION]: ({}, e) => {
         console.error(e);
         throw e;
     },
     [On.CLONE_OPEN_TREE]: async ({dispatch}, tree) => {
-        console.log(tree);
         const clone = await dispatch(On.CLONE_TREE, tree);
-        return await dispatch(On.OPEN_TREE, clone);
+        return await dispatch(On.LOAD_OPEN_TREE, clone);
     },
     [On.CLONE_TREE]: async ({}, {_id}) => {
           return await rest.cloneTree(_id);
     },
-    [On.OPEN_TREE]: async ({dispatch, commit}, trunk) => {
-
+    [On.LOAD_TREE]: async ({}, {_id})=>{
         let tree = null;
         try {
-            tree = await rest.get(trunk._id);
+            tree = await rest.get(_id);
         } catch (e) {
             dispatch(On.EXCEPTION, e);
         }
-
-        commit(Do.CLOSE_TREE);
-        commit(Do.OPEN_TREE, tree);
-
         return tree;
     },
-    [On.OPEN_COMPARE_TO]: async ({commit}, trunk) => {
-        commit(Do.OPEN_COMPARE_TO, await rest.get(trunk._id));
+    [On.LOAD_OPEN_TREE]: async ({dispatch, commit}, tree) => {
+        const loadedTree = await dispatch(On.LOAD_TREE, tree);
+
+        commit(Do.CLOSE_TREE);
+        commit(Do.OPEN_TREE, loadedTree);
+
+        return loadedTree;
+    },
+    [On.LOAD_OPEN_COMPARE_TO]: async ({commit, dispatch}, tree) => {
+        commit(Do.OPEN_COMPARE_TO, await dispatch(On.LOAD_TREE, tree));
     },
 
-    [On.CREATE_SEED]: async ({commit, dispatch, getters}, seed) => {
-        await rest.link({trunkId: getters.seed._id, rootId: seed._id});
-        commit(Do.ADD_SEED, {root: getters.seed, seed: await rest.get(seed._id)});
-    },
 
     [On.CREATE_TRUNK_THEN_SEED]: async ({state, dispatch, commit}, name) => {
         const seed = await dispatch(On.CREATE_TRUNK, name);
@@ -73,6 +68,15 @@ export default {
     [On.CREATE_TRUNK]: async ({commit, state, dispatch}, name) => {
         return await rest.cancreate({name});
     },
+    [On.CREATE_SEED]: async ({commit, dispatch, getters}, seed) => {
+        await rest.link({trunkId: getters.seed._id, rootId: seed._id});
+        commit(Do.ADD_SEED, {root: getters.seed, seed: await dispatch(On.LOAD_TREE, seed)});
+    },
+
+
+
+
+
 
     [On.PATH_CLICK]: ({commit, dispatch}, idx) => {
         commit(Do.CHANGE_PATH_INDEX, idx);
@@ -80,6 +84,13 @@ export default {
     },
     [On.PATH_LINK_CLICK]: ({commit, dispatch}, link) => {
         commit(Do.UPDATE_LINK_EDIT, link);
+    },
+    [On.CLEAR_LINK_EDIT]: ({commit}) => {
+        commit(Do.UPDATE_LINK_EDIT, null);
+    },
+    [On.ROOT_CLICK]: ({commit, dispatch}, root) => {
+        commit(Do.ADD_TO_PATH, root);
+        dispatch(On.PATH_CHANGED);
     },
     [On.PATH_CHANGED]: ({commit, state, dispatch}) => {
         if (state.linkEdit) {
@@ -92,13 +103,6 @@ export default {
                 dispatch(On.CLEAR_LINK_EDIT);
             }
         }
-    },
-    [On.CLEAR_LINK_EDIT]: ({commit}) => {
-        commit(Do.UPDATE_LINK_EDIT, null);
-    },
-    [On.ROOT_CLICK]: ({commit, dispatch}, root) => {
-        commit(Do.ADD_TO_PATH, root);
-        dispatch(On.PATH_CHANGED);
     },
     [On.LINK_CHANGED]: async ({dispatch, commit, getters}, {trunk, root, trunkQt, rootQt}) => {
         await dispatch(On.UPSERT_LINK, {trunkId: trunk._id, rootId: root._id, trunkQt, rootQt});

@@ -71,7 +71,7 @@
 <script>
     import {mapActions, mapState} from 'vuex';
     import UnitGrid from "../common/UnitGrid";
-    import {On} from "../../const/on";
+    import On from "../../const/on";
     import {toQtUnit} from "../../services/mapper";
 
     export default {

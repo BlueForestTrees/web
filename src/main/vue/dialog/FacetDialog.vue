@@ -61,7 +61,7 @@
 
 <script>
     import {Dial} from "../../const/dial";
-    import {On} from "../../const/on";
+    import On from "../../const/on";
     import {mapActions, mapState} from "vuex";
     import MainDialog from "./MainDialog";
     import UnitGrid from "../common/UnitGrid";

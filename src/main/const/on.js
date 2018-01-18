@@ -1,4 +1,4 @@
-export const On = {
+export default {
     ADD_FACET: "addFacet",
     CLEAR_LINK_EDIT: "onClearLinkEdit",
     CLONE_TREE:"cloneTree",
@@ -14,9 +14,10 @@ export const On = {
     FOCUS_ON_SEARCH: "focusOnSearch",
     LINK_CHANGED: 'onLinkChanged',
     LOAD_UNITS: 'loadUnits',
+    LOAD_OPEN_TREE: 'loadOpenTree',
+    LOAD_TREE: 'loadTree',
     MOUNT_APP: 'mountApp',
-    OPEN_TREE: 'onOpenTree',
-    OPEN_COMPARE_TO: 'openCompareTo',
+    LOAD_OPEN_COMPARE_TO: 'loadOpenCompareTo',
     RENAME_TREE: 'renameTree',
     UPDATE_ADDING_SEED_CLICK: 'onUpdateAddingSeedClick',
     UPDATE_SEARCH_TERM: "updateSearchTerm",
