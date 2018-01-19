@@ -13,7 +13,7 @@
         </v-toolbar>
 
 
-        <div v-if="qt.editing" style="margin-top: 1em;margin-left: 1em">
+        <div v-if="qt.editing" class="air">
             <v-layout row>
                 <v-text-field label="quantité unité (ex.: 10g)" autofocus :value="qt.input && (qt.input.qt + qt.input.unit)" @input="qtInput"
                               @keydown.esc.native="qt.editing = false" @keydown.enter.native="validateQuantity"/>
@@ -22,7 +22,7 @@
             </v-layout>
             <unit-grid v-if="qt.input && qt.input.unit" :filter="qt.input && qt.input.unit" :grandeurs="grandeurs" @select="unitInput"/>
         </div>
-        <div v-else-if="tree.quantity" style="margin-top: 1em;margin-left: 1em">
+        <div v-else-if="tree.quantity" class="air">
             <v-layout row align-center>
                 <span style="color:rgba(0,0,0,.54);">Quantité</span>
                 <v-spacer/>
@@ -40,7 +40,7 @@
         </span>
 
 
-        <div v-if="price.editing" style="margin-top: 1em;margin-left: 1em">
+        <div v-if="price.editing" class="air">
             <v-layout row>
                 <v-text-field label="Prix" prefix="€" autofocus :value="tree.price" @input="prixInput"
                               @keydown.esc.native="price.editing = false" @keydown.enter.native="validatePrice"/>
@@ -48,7 +48,7 @@
                 <v-icon right color="red" @click="price.editing = false">clear</v-icon>
             </v-layout>
         </div>
-        <div v-else-if="tree.price" style="margin-top: 1em;margin-left: 1em">
+        <div v-else-if="tree.price" class="air">
             <v-layout row align-center>
                 <span style="color:rgba(0,0,0,.54);">Prix</span>
                 <v-spacer/>

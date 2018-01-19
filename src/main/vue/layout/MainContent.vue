@@ -52,7 +52,7 @@
         background: url(/img/Bleuie.png) no-repeat;
     }
 
-    .fade-enter-active {
+    .fade-quick-enter-active, .fade-enter-active {
         transition: opacity .35s
     }
 
@@ -60,7 +60,7 @@
         transition: opacity .2s
     }
 
-    .fade-enter, .fade-leave-to {
+    .fade-quick-enter, .fade-quick-leave-to, .fade-enter, .fade-leave-to {
         opacity: 0
     }
 </style>

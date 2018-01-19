@@ -81,8 +81,6 @@ export default {
     [On.PATH_LINK_CLICK]: ({commit, dispatch}, link) => {
         commit(Do.UPDATE_LINK_EDIT, link);
     },
-
-
     [On.PATH_CLICK]: ({commit, dispatch}, idx) => {
         commit(Do.CHANGE_PATH_INDEX, idx);
         dispatch(On.PATH_CHANGED);
@@ -131,6 +129,12 @@ export default {
     },
     [On.UPDATE_ADDING_SEED_CLICK]: async ({commit}, value) => {
         commit(Do.UPDATE_ADDING_SEED, value);
+    },
+
+    [On.DELETE_RESSOURCES]: async ({commit}, {tree, ressources}) => {
+        //TODO continue
+        rest.deleteRessources(tree._id, _.map(ressources, "_id"));
+        commit(Do.DELETE_RESSOURCES, {tree, ressources});
     },
     [On.DELETE_FACETS]: async ({commit}, {tree, facets}) => {
         rest.deleteFacets(tree._id, _.map(facets, "_id"));

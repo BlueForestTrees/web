@@ -9,6 +9,7 @@ export default {
     CLEAR_COMPARE_TO: 'clearCompareTo',
     CLOSE_TREE: 'closeTree',
     DELETE_FACETS: 'deleteFacets',
+    DELETE_RESSOURCES: 'deleteRessources',
     HIDE_FACET_DIALOG:'hideFacetDialog',
     RENAME_TREE: 'renameTree',
     SHOW_DIALOG: "showDialog",

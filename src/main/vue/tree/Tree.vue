@@ -52,3 +52,9 @@
         }
     }
 </script>
+
+<style>
+    .air{
+        margin:1em
+    }
+</style>

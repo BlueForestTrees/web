@@ -9,6 +9,7 @@ export default {
     CREATE_TRUNK: 'onCreateTrunk',
     DELETE_FACETS: 'deleteFacets',
     DELETE_TREE: 'deleteTree',
+    DELETE_RESSOURCES: 'deleteRessources',
     EXCEPTION: 'exception',
     FOCUS_ON_SEARCH: "focusOnSearch",
     LINK_CHANGED: 'onLinkChanged',

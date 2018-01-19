@@ -189,6 +189,11 @@ export default {
         if (tree.facets) {
             _.forEach(facets, facet => tree.facets.splice(tree.facets.indexOf(facet), 1));
         }
+    },
+    [Do.DELETE_RESSOURCES]: (state, {tree, ressources}) => {
+        if (tree.facets) {
+            _.forEach(ressources, ressource => tree.ressources.splice(tree.ressources.indexOf(ressource), 1));
+        }
     }
 
 };
