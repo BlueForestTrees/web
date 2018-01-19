@@ -1,6 +1,5 @@
 export default {
     ADD_FACET: "addFacet",
-    CLEAR_LINK_EDIT: "onClearLinkEdit",
     CLONE_TREE:"cloneTree",
     CLONE_OPEN_TREE:"cloneOpenTree",
     CREATE_AND_OPEN_TREE: 'onCreateAndOpenTree',

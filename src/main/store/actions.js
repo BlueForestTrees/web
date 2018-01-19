@@ -78,30 +78,29 @@ export default {
 
 
 
-    [On.PATH_CLICK]: ({commit, dispatch}, idx) => {
-        commit(Do.CHANGE_PATH_INDEX, idx);
-        dispatch(On.PATH_CHANGED);
-    },
     [On.PATH_LINK_CLICK]: ({commit, dispatch}, link) => {
         commit(Do.UPDATE_LINK_EDIT, link);
     },
-    [On.CLEAR_LINK_EDIT]: ({commit}) => {
-        commit(Do.UPDATE_LINK_EDIT, null);
+
+
+    [On.PATH_CLICK]: ({commit, dispatch}, idx) => {
+        commit(Do.CHANGE_PATH_INDEX, idx);
+        dispatch(On.PATH_CHANGED);
     },
     [On.ROOT_CLICK]: ({commit, dispatch}, root) => {
         commit(Do.ADD_TO_PATH, root);
         dispatch(On.PATH_CHANGED);
     },
-    [On.PATH_CHANGED]: ({commit, state, dispatch}) => {
+    [On.PATH_CHANGED]: ({commit, state}) => {
         if (state.linkEdit) {
-            if (state.path.length >= 2) {
-                commit(Do.UPDATE_LINK_EDIT, {
-                    trunk: _.nth(state.path, -2),
-                    root: _.nth(state.path, -1)
-                });
-            } else {
-                dispatch(On.CLEAR_LINK_EDIT);
+
+            let linkEdit = null;
+
+            if (state.path.length > 1) {
+                linkEdit = { trunk: _.nth(state.path, -2), root: _.nth(state.path, -1)};
             }
+
+            commit(Do.UPDATE_LINK_EDIT, linkEdit);
         }
     },
     [On.LINK_CHANGED]: async ({dispatch, commit, getters}, {trunk, root, trunkQt, rootQt}) => {
