@@ -73,68 +73,18 @@ export default {
         commit(Do.ADD_SEED, {root: getters.seed, seed: await dispatch(On.LOAD_TREE, seed)});
     },
 
-
-
-
-
-
-    [On.PATH_LINK_CLICK]: ({commit, dispatch}, link) => {
-        commit(Do.UPDATE_LINK_EDIT, link);
-    },
-    [On.PATH_CLICK]: ({commit, dispatch}, idx) => {
-        commit(Do.CHANGE_PATH_INDEX, idx);
-        dispatch(On.PATH_CHANGED);
-    },
-    [On.ROOT_CLICK]: ({commit, dispatch}, root) => {
-        commit(Do.ADD_TO_PATH, root);
-        dispatch(On.PATH_CHANGED);
-    },
-    [On.PATH_CHANGED]: ({commit, state}) => {
-        if (state.linkEdit) {
-
-            let linkEdit = null;
-
-            if (state.path.length > 1) {
-                linkEdit = { trunk: _.nth(state.path, -2), root: _.nth(state.path, -1)};
-            }
-
-            commit(Do.UPDATE_LINK_EDIT, linkEdit);
-        }
-    },
-    [On.LINK_CHANGED]: async ({dispatch, commit, getters}, {trunk, root, trunkQt, rootQt}) => {
-        await dispatch(On.UPSERT_LINK, {trunkId: trunk._id, rootId: root._id, trunkQt, rootQt});
-
-        if (getters.isCurrentTrunk(trunk)) {
-            commit(Do.UPDATE_QT, {trunk, qt: trunkQt});
-        }
-
-        //si le parent a une quantité, on rafraichit tout l'enfant en proportion.
-        if (trunk.qt) {
-            await dispatch(On.REFRESH_ROOT, {trunk, root: {_id: root._id, qt: rootQt * trunk.qt / trunkQt}});
-        }
-
-        commit(Do.UPDATE_LINK_EDIT, null);
-    },
-    [On.UPSERT_LINK]: async ({}, {trunkId, rootId, trunkQt, rootQt}) => {
-        //pour faire x de a, il faut y de b.
-        await rest.qtUnit({
-            trunk: {_id: trunkId, qt: trunkQt},
-            root: {_id: rootId, qt: rootQt}
-        });
-    },
-    [On.REFRESH_ROOT]: async ({}, {trunk, root}) => {
-        let newRoot = await rest.getQuantified(root.qt, root._id);
-        commit(Do.UPDATE_ROOT, {trunk, root: newRoot});
-        commit(Do.UPDATE_PATH_ITEM, newRoot);
-    },
-    [On.UPDATE_ADDING_SEED_CLICK]: async ({commit}, value) => {
-        commit(Do.UPDATE_ADDING_SEED, value);
+    [On.ADD_RESSOURCE]: async ({commit, dispatch, getters}, seed) => {
+        await rest.link({trunkId: getters.seed._id, rootId: seed._id});
+        commit(Do.ADD_SEED, {root: getters.seed, seed: await dispatch(On.LOAD_TREE, seed)});
     },
 
-    [On.DELETE_RESSOURCES]: async ({commit}, {tree, ressources}) => {
-        //TODO continue
-        rest.deleteRessources(tree._id, _.map(ressources, "_id"));
-        commit(Do.DELETE_RESSOURCES, {tree, ressources});
+
+
+
+
+    [On.DELETE_ROOT]: async ({commit}, {tree, root}) => {
+        rest.deleteRoot(tree._id, root._id);
+        commit(Do.DELETE_ROOT, {tree, root});
     },
     [On.DELETE_FACETS]: async ({commit}, {tree, facets}) => {
         rest.deleteFacets(tree._id, _.map(facets, "_id"));

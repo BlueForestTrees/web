@@ -109,7 +109,6 @@
                 this.close();
             },
             focus(){
-                console.log("focus");
                 this.$refs.nom.focus();
                 this.namepart = null;
                 this.qt = null;

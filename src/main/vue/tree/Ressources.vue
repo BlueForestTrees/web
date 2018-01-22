@@ -13,8 +13,8 @@
                     <v-layout :key="trunk._id" row wrap justify-center align-center>
                         <v-chip v-for="root in trunk.roots" :key="root._id"
                                 outline color="primary" fab dark small
-                                @click="select(pathIndex,root)"
-                                :close="root.selected" @input="deleteRessource(trunk, root)"
+                                @click="select(pathIndex,root)" @blur="unselect(root)" @input="deleteRessource(pathIndex, trunk, root)"
+                                :close="root.selected"
                         >
                             <v-icon left v-if="root.selected" @click="">build</v-icon>
 
@@ -46,30 +46,25 @@
         props: ['tree'],
         data() {
             return {
-                path: [this.tree],
-                selectedRoot: null
+                path: [this.tree]
             }
         },
         methods: {
-            ...mapActions({dispatchDeleteRessources: On.DELETE_RESSOURCES}),
-            updateSelectedRoot(root){
-                if(this.selectedRoot){
-                    this.selectedRoot.selected = false;
-                }
-                this.selectedRoot = root;
-                this.selectedRoot.selected = true;
-            },
+            ...mapActions({dispatchDeleteRessources: On.DELETE_ROOT}),
             select(pathIndex, root) {
                 this.path.splice(pathIndex + 1);
                 this.path.push(root);
-                this.updateSelectedRoot(root);
+                root.selected = true;
+            },
+            unselect(root){
+                root.selected = false;
             },
             addRessourceTo (ressource){
                 console.log("add to ", ressource);
             },
-            deleteRessource(tree, ressource){
-                console.log("delete", tree, ressource);
-                this.dispatchDeleteRessources({tree, ressources:[ressource]});
+            deleteRessource(pathIndex, tree, root){
+                this.dispatchDeleteRessources({tree, root});
+                this.path.splice(pathIndex+1);
             }
         }
     }

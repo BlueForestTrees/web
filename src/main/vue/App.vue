@@ -7,12 +7,12 @@
             <bar :drawer.sync="drawer" />
             <left-menu :drawer.sync="drawer"/>
             <main-content/>
-            <floating-button/>
+            <Bottom-right-btns/>
             <!--<main-footer/>-->
 
             <facet-dialog :tree="tree"/>
             <facet-entry-dialog :visible="facetEntryDialog"/>
-            <trunk-dialog />
+            <create-trunk-dialog />
             <lookup-tree-dialog/>
 
         </v-app>
@@ -23,10 +23,10 @@
 
     import LeftMenu from './layout/LeftMenu';
     import Bar from "./layout/Bar";
-    import FloatingButton from "./layout/FloatingButton";
+    import BottomRightBtns from "./layout/BottomRightBtns";
     import MainContent from "./layout/MainContent";
     import MainFooter from "./layout/MainFooter";
-    import TrunkDialog from "./dialog/TrunkDialog";
+    import CreateTrunkDialog from "./dialog/CreateTrunkDialog";
     import {mapState} from 'vuex';
     import FacetEntryDialog from "./dialog/FacetEntryDialog";
     import On from "../const/on";
@@ -61,7 +61,7 @@
             Test,
             LookupTreeDialog,
             Lookup,
-            FacetEntryDialog,TrunkDialog,MainFooter, MainContent, FloatingButton, Bar, LeftMenu
+            FacetEntryDialog,CreateTrunkDialog,MainFooter, MainContent, BottomRightBtns, Bar, LeftMenu
         },
         mounted: async function(){
             this.$store.dispatch(On.MOUNT_APP);

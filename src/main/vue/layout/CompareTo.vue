@@ -94,6 +94,7 @@
                 }
             },
             isValid(axis) {
+                console.log(axis.coef, isFinite(axis.coef));
                 return isFinite(axis.coef);
             },
             swapLeftRight(){

@@ -50,9 +50,6 @@ export default {
         cleanDialog(state, dialog);
         updateDialogVisibility(state, {dialog, visible: true});
     },
-    [Do.UPDATE_DIALOG_FIELD]: (state, {dialog, data}) => {
-        updateDialogField(state, {dialog, data});
-    },
     [Do.UPDATE_DIALOG_DATA]: (state, {dialog, data}) => {
         updateDialog(state, {dialog, data});
     },
@@ -64,20 +61,11 @@ export default {
     },
 
 
-    [Do.UPDATE_TERM]: (state, value) => {
-        state.search.term = value;
-    },
-    [Do.UPDATE]: (state, {data, key, value}) => {
-        Vue.set(data, key, value);
-    },
+
+
+
     [Do.CLEAR_RESULTS]: state => {
         state.search.results = [];
-    },
-    [Do.UPDATE_RESULTS]: (state, value) => {
-        state.search.results = value;
-    },
-    [Do.UPDATE_SEARCHING]: (state, value) => {
-        state.search.searching = value;
     },
     [Do.CLEAR_SEARCH]: state => {
         state.search.term = null;
@@ -111,18 +99,6 @@ export default {
         Vue.set(state, "tree", right);
         Vue.set(state, "compareTo", left);
     },
-    [Do.UPDATE_LINK_EDIT]: (state, value) => {
-        state.linkEdit = value;
-    },
-    [Do.UPDATE_ROOT]: (state, {trunk, root}) => {
-        const rootIdx = _.findIndex(trunk.roots, {_id: root._id});
-        if (rootIdx !== NONE) {
-            trunk.roots.splice(rootIdx, 1, root);
-        }
-    },
-    [Do.UPDATE_QT]: (state, {trunk, qt}) => {
-        Vue.set(trunk, "qt", qt);
-    },
     [Do.UPSERT_PRICE]: (state, {tree, price}) => {
         Vue.set(tree, "price", price);
     },
@@ -135,46 +111,6 @@ export default {
 
 
 
-
-
-    [Do.UPDATE_PATH_ITEM]: (state, root) => {
-
-        let idx = _.findIndex(state.path, {_id: root._id});
-
-        state.path.splice(idx, 1, root);
-
-        idx++;
-
-        for (; idx < state.path.length; idx++) {
-            root = _.find(root.roots, {_id: state.path[idx]._id});
-            state.path.splice(idx, 1, root);
-        }
-    },
-    [Do.ADD_TO_PATH]: (state, root) => {
-        state.path.push(root);
-    },
-    [Do.CHANGE_PATH_INDEX]: (state, idx) => {
-        state.path.splice(idx + 1);
-    },
-    [Do.ADD_SEED]: (state, {root, seed}) => {
-        if (!root.roots) {
-            Vue.set(root, 'roots', []);
-        }
-        root.roots.push(seed);
-    },
-
-
-
-
-
-
-
-
-
-
-    [Do.UPDATE_ADDING_SEED]: (state, value) => {
-        state.addingSeed = value;
-    },
 
 
     [Do.ADD_FACET]: (state, {tree, facet}) => {
@@ -190,9 +126,9 @@ export default {
             _.forEach(facets, facet => tree.facets.splice(tree.facets.indexOf(facet), 1));
         }
     },
-    [Do.DELETE_RESSOURCES]: (state, {tree, ressources}) => {
-        if (tree.facets) {
-            _.forEach(ressources, ressource => tree.ressources.splice(tree.ressources.indexOf(ressource), 1));
+    [Do.DELETE_ROOT]: (state, {tree, root}) => {
+        if (tree.roots) {
+            tree.roots.splice(tree.roots.indexOf(root), 1);
         }
     }
 
