@@ -1,11 +1,11 @@
 <template>
     <v-navigation-drawer fixed app v-model="_drawer">
         <v-list dense>
-            <v-list-tile @click="showDialog(Dial.FACET_ENTITY)">
+            <v-list-tile @click="showDialog({dialog:Dial.FACET_ENTITY})">
                 <v-list-tile-action><v-layout row><v-icon>add</v-icon></v-layout></v-list-tile-action>
                 <v-list-tile-content><v-list-tile-title>Créer une caractéristique</v-list-tile-title></v-list-tile-content>
             </v-list-tile>
-            <v-list-tile @click="showDialog(Dial.TRUNK)">
+            <v-list-tile @click="showDialog({dialog:Dial.TRUNK})">
                 <v-list-tile-action><v-layout row><v-icon>add</v-icon></v-layout></v-list-tile-action>
                 <v-list-tile-content><v-list-tile-title>Créer un arbre</v-list-tile-title></v-list-tile-content>
             </v-list-tile>
@@ -50,7 +50,7 @@
         },
         methods: {
             ...mapMutations({
-                "showDialog": Do.SHOW_DIALOG
+                showDialog: Do.SHOW_DIALOG
             }),
             action(name){
                 this[name]();

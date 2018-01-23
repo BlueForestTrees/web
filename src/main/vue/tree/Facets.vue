@@ -54,7 +54,7 @@
             ...mapActions({dispatchDeleteFacets:On.DELETE_FACETS}),
             ...mapMutations([Do.SHOW_DIALOG]),
             openAddFacetDialog(){
-                this.showDialog(Dial.FACET);
+                this.showDialog({dialog:Dial.FACET});
             },
             deleteFacets(){
                 this.dispatchDeleteFacets({tree:this.tree, facets:this.selectedFacets});

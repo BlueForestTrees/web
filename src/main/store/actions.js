@@ -7,7 +7,7 @@ export default {
     [On.MOUNT_APP]: async ({commit, dispatch}) => {
         dispatch(On.LOAD_UNITS);
 
-         await dispatch(On.LOAD_OPEN_TREE, {_id: "5a60cf60d662ff69ce8c8de8"});
+         await dispatch(On.LOAD_OPEN_TREE, {_id: "5a65fcf363e2a32531ed9f9b"});
          // await dispatch(On.LOAD_OPEN_COMPARE_TO, {_id: "5a5b9e6bf0cd7a63cbf236bd"});
 
     },
@@ -38,7 +38,7 @@ export default {
     [On.CLONE_TREE]: async ({}, {_id}) => {
           return await rest.cloneTree(_id);
     },
-    [On.LOAD_TREE]: async ({}, {_id})=>{
+    [On.LOAD_TREE]: async ({dispatch}, {_id})=>{
         let tree = null;
         try {
             tree = await rest.get(_id);
@@ -73,9 +73,10 @@ export default {
         commit(Do.ADD_SEED, {root: getters.seed, seed: await dispatch(On.LOAD_TREE, seed)});
     },
 
-    [On.ADD_RESSOURCE]: async ({commit, dispatch, getters}, seed) => {
-        await rest.link({trunkId: getters.seed._id, rootId: seed._id});
-        commit(Do.ADD_SEED, {root: getters.seed, seed: await dispatch(On.LOAD_TREE, seed)});
+    [On.ADD_RESSOURCE]: async ({commit, dispatch}, {parent,child}) => {
+        await rest.link({trunkId: parent._id, rootId: child._id});
+
+        commit(Do.ADD_SEED, {root: parent, seed: await dispatch(On.LOAD_TREE, child)});
     },
 
 
@@ -111,5 +112,9 @@ export default {
     [On.UPSERT_QUANTITY]: async ({commit}, {tree, quantity}) => {
         await rest.upsertQuantity(tree._id, quantity);
         commit(Do.UPSERT_QUANTITY, {tree, quantity});
+    },
+
+    [On.ADD_RESSOURCE_TO]: ({}, parentRessource) => {
+        console.log(On.ADD_RESSOURCE_TO, parentRessource);
     }
 };

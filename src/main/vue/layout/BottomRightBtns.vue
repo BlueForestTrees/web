@@ -27,10 +27,10 @@
                 "close":Do.CLOSE_TREE
             }),
             onAddClick(){
-                this.doShowDialog(Dial.TRUNK);
+                this.doShowDialog({dialog: Dial.TRUNK});
             },
             openOtherTree(){
-                this.doShowDialog(Dial.COMPARE_TO);
+                this.doShowDialog({dialog: Dial.COMPARE_TO});
             }
         },
         computed: {

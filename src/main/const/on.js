@@ -5,6 +5,7 @@ export default {
     CREATE_AND_OPEN_TREE: 'onCreateAndOpenTree',
     CREATE_ADD_RESSOURCE: 'createAddRessource',
     ADD_RESSOURCE: 'addRessource',
+    ADD_RESSOURCE_TO: 'addRessourceTo',
     CREATE_SEED: 'onCreateSeed',
     CREATE_FACET_ENTRY: 'onCreateFacetEntry',
     CREATE_TRUNK_THEN_SEED: 'onCreateTrunkThenSeed',

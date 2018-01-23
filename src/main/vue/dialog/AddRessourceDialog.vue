@@ -1,19 +1,17 @@
 <template>
-    <main-dialog :dialog="Dial.TRUNK" @focus="$refs.nom.focus()" @esc="close" @enter="validate" ref="dialog">
+    <main-dialog :dialog="Dial.RESSOURCE" @focus="$refs.nom.focus()" @esc="close" @enter="validate" ref="dialog">
         <template slot-scope="dialog">
             <v-card>
                 <v-card-title class="grey lighten-4 py-4 title">
-                    Créer une ressource
+                    Ajouter des ressources à {{dialog.data.parentRessource && dialog.data.parentRessource.name}}
                 </v-card-title>
                 <v-card-text>
-                        <v-flex xs12 align-center justify-space-between>
-                            <v-layout align-center>
-                                <v-avatar size="40px" class="mr-3">
-                                    <v-icon>bookmark</v-icon>
-                                </v-avatar>
-                                <v-text-field ref="nom" placeholder="Nom" :value="dialog.data.name" @input="updateName"/>
-                            </v-layout>
-                        </v-flex>
+
+                    <v-chip v-for="(ressource,idx) in ressources" :key="ressource._id" close @input="unselect(idx)">
+                        {{ressource.name}}
+                    </v-chip>
+
+                    <lookup @select="select" cancreate/>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer/>
@@ -30,26 +28,31 @@
     import On from "../../const/on";
     import {mapActions} from "vuex";
     import {Dial} from "../../const/dial";
+    import Lookup from "../common/Lookup";
 
     export default {
         data() {
             return {
-                Dial: Dial
+                Dial: Dial,
+                ressources: []
             }
         },
-        components: {MainDialog},
+        components: {
+            Lookup,
+            MainDialog},
         props: ['data'],
         methods: {
             ...mapActions({
-                "addRessource": On.ADD_RESSOURCE,
-                "createAddRessource": On.CREATE_ADD_RESSOURCE
+                "addRessource": On.ADD_RESSOURCE
             }),
-            validate() {
-                this.createAndOpen({name: this.$refs.dialog.data.name});
-                this.$refs.dialog.close();
+            select(ressource){
+                this.ressources.push(ressource);
             },
-            updateName: async function (value) {
-                this.$refs.dialog.data = {name: value};
+            unselect(idx){
+                this.ressources.splice(idx,1);
+            },
+            validate() {
+                this.addRessource(this.dialog.data.parentRessource, this.ressource);
             },
             close: function () {
                 this.$refs.dialog.close();

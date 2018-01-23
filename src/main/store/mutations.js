@@ -46,8 +46,14 @@ export default {
     [Do.SHOW_FACET_ENTRY_DIALOG]: state => {
         state.dialogs2.facetEntryDialog.visible = true;
     },
-    [Do.SHOW_DIALOG]: (state, dialog) => {
-        cleanDialog(state, dialog);
+    [Do.SHOW_DIALOG]: (state, {dialog, data}) => {
+
+        if(!data) {
+            cleanDialog(state, dialog);
+        }else{
+            updateDialog(state, {dialog, data});
+        }
+
         updateDialogVisibility(state, {dialog, visible: true});
     },
     [Do.UPDATE_DIALOG_DATA]: (state, {dialog, data}) => {
