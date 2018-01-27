@@ -20,6 +20,5 @@ export default {
     UPDATE_DIALOG_VISIBILITY: 'updateDialogVisibility',
     UPDATE_DIALOG_DATA: 'updateDialogData',
     UPDATE_GRANDEURS: "UPDATE_GRANDEURS",
-    UPSERT_QUANTITY: 'upsertQuantity',
-    UPSERT_PRICE: 'upsertPrice'
+    UPSERT_QUANTITY: 'upsertQuantity'
 };

@@ -39,32 +39,6 @@
             </v-btn>
         </span>
 
-
-        <div v-if="price.editing" class="air">
-            <v-layout row>
-                <v-text-field label="Prix" prefix="€" autofocus :value="tree.price" @input="prixInput"
-                              @keydown.esc.native="price.editing = false" @keydown.enter.native="validatePrice"/>
-                <v-icon right color="green" @click="validatePrice">done</v-icon>
-                <v-icon right color="red" @click="price.editing = false">clear</v-icon>
-            </v-layout>
-        </div>
-        <div v-else-if="tree.price" class="air">
-            <v-layout row align-center>
-                <span style="color:rgba(0,0,0,.54);">Prix</span>
-                <v-spacer/>
-                <span>{{tree.price}}€</span>
-                <v-spacer/>
-                <v-btn fab small outline @click="price.editing = true" color="primary">
-                  <v-icon>edit</v-icon>
-                </v-btn>
-            </v-layout>
-        </div>
-        <span v-else>
-            <v-btn @click="price.editing = true" color="primary">
-                Définir le prix<v-icon right>edit</v-icon>
-            </v-btn>
-        </span>
-
     </v-card>
 </template>
 
@@ -91,11 +65,6 @@
                     valued: false,
                     input: null
                 },
-                price: {
-                    editing: false,
-                    valued: false,
-                    input: null
-                },
                 qtUnitTyped: null
             }
         },
@@ -111,20 +80,13 @@
                 this.renameTree({tree:this.tree, name:this.name.input.trim()});
                 this.unactivateRemaning();
             },
-            ...mapActions([On.UPSERT_PRICE, On.UPSERT_QUANTITY, On.RENAME_TREE]),
+            ...mapActions([On.UPSERT_QUANTITY, On.RENAME_TREE]),
             qtInput(value) {
                  this.qt.input = toQtUnit(value);
             },
             unitInput(value){
                 this.qt.input.unit = value.shortname;
                 this.validateQuantity();
-            },
-            prixInput(value) {
-                this.price.input = parseFloat(value.replace(',','.'));
-            },
-            validatePrice() {
-                this.upsertPrice({tree: this.tree, price: this.price.input});
-                this.price.editing = false;
             },
             validateQuantity() {
                 this.upsertQuantity({tree: this.tree, quantity: this.qt.input});

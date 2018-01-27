@@ -23,6 +23,5 @@ export default {
     RENAME_TREE: 'renameTree',
     SEARCH: 'onSearch',
     SEARCH_FACET_ENTRY: 'searchFacetEntry',
-    UPSERT_PRICE: "upsertPrice",
     UPSERT_QUANTITY: "upsertQuantity"
 };

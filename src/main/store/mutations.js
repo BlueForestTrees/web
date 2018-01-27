@@ -105,9 +105,6 @@ export default {
         Vue.set(state, "tree", right);
         Vue.set(state, "compareTo", left);
     },
-    [Do.UPSERT_PRICE]: (state, {tree, price}) => {
-        Vue.set(tree, "price", price);
-    },
     [Do.UPSERT_QUANTITY]: (state, {tree, quantity}) => {
         Vue.set(tree, "quantity", quantity);
     },

@@ -105,10 +105,6 @@ export default {
     [On.FOCUS_ON_SEARCH]: () => {
         console.log("focus on search");
     },
-    [On.UPSERT_PRICE]: async ({commit}, {tree, price}) => {
-        await rest.upsertPrice(tree._id, price);
-        commit(Do.UPSERT_PRICE, {tree, price});
-    },
     [On.UPSERT_QUANTITY]: async ({commit}, {tree, quantity}) => {
         await rest.upsertQuantity(tree._id, quantity);
         commit(Do.UPSERT_QUANTITY, {tree, quantity});

@@ -16,7 +16,6 @@ export default {
     renameTree: (_id,name) => api.put(`api/trunk/${_id}`, {name}),
     searchFacetEntry: namepart => api.get(`api/facetEntries?q=${namepart}`),
     search: name => api.get(`api/trunks?q=${name}`),
-    upsertPrice: (treeId, price) => api.post(`api/trunk/price`, {treeId, price}),
     upsertQuantity: (treeId, quantity) => api.post(`api/trunk/quantity`, {treeId, quantity}),
     grandeurs: () => api.get('api/grandeurs')
 }
