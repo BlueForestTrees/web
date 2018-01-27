@@ -10,10 +10,7 @@
 
 
             <v-flex xs4 d-flex>
-                <v-layout column>
-                    <impacts/>
-                    <dechets/>
-                </v-layout>
+                    <externalites/>
             </v-flex>
 
             <v-flex xs12 d-flex><ressources :tree="tree"/></v-flex>
@@ -30,8 +27,7 @@
     import {mapState} from 'vuex';
     import Facets from "./Facets";
     import Branches from "./Branches";
-    import Impacts from "./Impacts";
-    import Dechets from "./Dechets";
+    import Externalites from "./Externalites";
     import BilanRessources from "./BilanRessources";
     import Trunk from "./Trunk";
     import Ressources from "./Ressources";
@@ -41,8 +37,7 @@
             Ressources,
             Trunk,
             BilanRessources,
-            Impacts,
-            Dechets,
+            Externalites,
             Branches,
             Facets
         },
