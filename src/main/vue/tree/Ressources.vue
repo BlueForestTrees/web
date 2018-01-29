@@ -43,12 +43,13 @@
             }
         },
         methods: {
-            ...mapActions({dispatchDeleteRessources: On.DELETE_ROOT}),
+            ...mapActions({dispatchDeleteRessources: On.DELETE_ROOT, dispatchLoadRoots: On.LOAD_ROOTS}),
             ...mapMutations({showDialog: Do.SHOW_DIALOG}),
             select(pathIndex, root) {
                 this.path.splice(pathIndex + 1);
                 this.path.push(root);
                 root.selected = true;
+                this.dispatchLoadRoots(root);
             },
             unselect(root) {
                 root.selected = false;

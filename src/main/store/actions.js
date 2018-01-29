@@ -7,14 +7,14 @@ export default {
     [On.MOUNT_APP]: async ({commit, dispatch}) => {
         dispatch(On.LOAD_UNITS);
 
-         await dispatch(On.LOAD_OPEN_TREE, {_id: "5a65fcf363e2a32531ed9f9b"});
-         // await dispatch(On.LOAD_OPEN_COMPARE_TO, {_id: "5a5b9e6bf0cd7a63cbf236bd"});
+        await dispatch(On.LOAD_OPEN_TRUNK, {_id: "5a6a03c03e77667641d2d2c3"});
+        // await dispatch(On.LOAD_OPEN_COMPARE_TO, {_id: "5a5b9e6bf0cd7a63cbf236bd"});
 
     },
 
-    [On.RENAME_TREE]: async ({commit}, {tree, name}) => {
-        await rest.renameTree(tree._id, name);
-        commit(Do.RENAME_TREE, {tree, name});
+    [On.RENAME_TRUNK]: async ({commit}, {trunk, name}) => {
+        await rest.renameTrunk(trunk._id, name);
+        commit(Do.RENAME_TRUNK, {trunk, name});
     },
 
     [On.LOAD_UNITS]: async ({commit}) => {
@@ -23,77 +23,64 @@ export default {
 
     [On.SEARCH]: async ({commit}, term) => await rest.search(term),
 
-    [On.CREATE_AND_OPEN_TREE]: async ({dispatch}, {name}) => {
-        const tree = await dispatch(On.CREATE_TRUNK, name);
-        return dispatch(On.LOAD_OPEN_TREE, tree);
+    [On.CREATE_AND_OPEN_TRUNK]: async ({dispatch}, {name}) => {
+        dispatch(On.LOAD_OPEN_TRUNK, await dispatch(On.CREATE_TRUNK, name));
     },
     [On.EXCEPTION]: ({}, e) => {
         console.error(e);
         throw e;
     },
     [On.CLONE_OPEN_TREE]: async ({dispatch}, tree) => {
-        const clone = await dispatch(On.CLONE_TREE, tree);
-        return await dispatch(On.LOAD_OPEN_TREE, clone);
+        dispatch(On.LOAD_OPEN_TRUNK, await dispatch(On.CLONE_TREE, tree));
     },
     [On.CLONE_TREE]: async ({}, {_id}) => {
-          return await rest.cloneTree(_id);
+        return await rest.cloneTree(_id);
     },
-    [On.LOAD_TREE]: async ({dispatch}, {_id})=>{
+    [On.LOAD_TRUNK]: async ({dispatch}, {_id}) => {
         let tree = null;
         try {
-            tree = await rest.get(_id);
+            tree = await rest.getTrunk(_id);
         } catch (e) {
             dispatch(On.EXCEPTION, e);
         }
         return tree;
     },
-    [On.LOAD_OPEN_TREE]: async ({dispatch, commit}, tree) => {
-        const loadedTree = await dispatch(On.LOAD_TREE, tree);
-
-        commit(Do.CLOSE_TREE);
-        commit(Do.OPEN_TREE, loadedTree);
-
-        return loadedTree;
+    [On.LOAD_OPEN_TRUNK]: async ({dispatch, commit, state}, treeToLoad) => {
+        commit(Do.CLOSE_TRUNK);
+        commit(Do.INIT_TREE, {tree: state.tree, treeToLoad});
+        dispatch(On.LOAD_TRUNK, treeToLoad).then(trunk => commit(Do.SET_TRUNK, {tree: state.tree, trunk}));
+        dispatch(On.LOAD_FACETS, treeToLoad).then(facets => commit(Do.ADD_FACETS, {tree: state.tree, facets}));
+        dispatch(On.LOAD_ROOTS, treeToLoad).then(roots => commit(Do.ADD_ROOTS, {tree: state.tree, roots}));
     },
     [On.LOAD_OPEN_COMPARE_TO]: async ({commit, dispatch}, tree) => {
-        commit(Do.OPEN_COMPARE_TO, await dispatch(On.LOAD_TREE, tree));
-    },
-
-
-    [On.CREATE_TRUNK_THEN_SEED]: async ({state, dispatch, commit}, name) => {
-        const seed = await dispatch(On.CREATE_TRUNK, name);
-        await dispatch(On.CREATE_SEED, seed);
+        commit(Do.OPEN_COMPARE_TO, await dispatch(On.LOAD_TRUNK, tree));
     },
 
     [On.CREATE_TRUNK]: async ({commit, state, dispatch}, name) => {
         return await rest.cancreate({name});
     },
-    [On.CREATE_SEED]: async ({commit, dispatch, getters}, seed) => {
-        await rest.link({trunkId: getters.seed._id, rootId: seed._id});
-        commit(Do.ADD_SEED, {root: getters.seed, seed: await dispatch(On.LOAD_TREE, seed)});
+
+    [On.ADD_ROOTS]: async ({commit}, {tree, roots}) => {
+        await Promise.all(_.map(roots, root => rest.linkRoot(tree._id, root._id)));
+        commit(Do.ADD_ROOTS, {tree, roots});
     },
-
-    [On.ADD_RESSOURCE]: async ({commit, dispatch}, {parent,child}) => {
-        await rest.link({trunkId: parent._id, rootId: child._id});
-
-        commit(Do.ADD_SEED, {root: parent, seed: await dispatch(On.LOAD_TREE, child)});
+    [On.LOAD_FACETS]: async ({commit}, trunk) => {
+        return rest.getFacets(trunk._id);
     },
-
-
-
-
-
+    [On.LOAD_ROOTS]: async ({commit}, trunk) => {
+        return rest.getRoots(trunk._id);
+    },
     [On.DELETE_ROOT]: async ({commit}, {tree, root}) => {
         rest.deleteRoot(tree._id, root._id);
         commit(Do.DELETE_ROOT, {tree, root});
     },
-    [On.DELETE_FACETS]: async ({commit}, {tree, facets}) => {
-        rest.deleteFacets(tree._id, _.map(facets, "_id"));
-        commit(Do.DELETE_FACETS, {tree, facets});
+    [On.DELETE_FACETS]: async ({commit}, {facets, toDelete}) => {
+        rest.deleteFacets(facets._id, _.map(toDelete, "_id"));
+        commit(Do.DELETE_FACETS, {tree: facets, toDelete});
     },
     [On.DELETE_TREE]: async ({commit}, tree) => {
         await rest.deleteTree(tree._id);
-        commit(Do.CLOSE_TREE);
+        commit(Do.CLOSE_TRUNK);
     },
     [On.ADD_FACET]: async ({commit}, {tree, facet}) => {
         rest.addFacet(tree._id, facet);
@@ -105,9 +92,9 @@ export default {
     [On.FOCUS_ON_SEARCH]: () => {
         console.log("focus on search");
     },
-    [On.UPSERT_QUANTITY]: async ({commit}, {tree, quantity}) => {
-        await rest.upsertQuantity(tree._id, quantity);
-        commit(Do.UPSERT_QUANTITY, {tree, quantity});
+    [On.UPSERT_QUANTITY]: async ({commit}, {trunk, quantity}) => {
+        await rest.upsertQuantity(trunk._id, quantity);
+        commit(Do.UPSERT_QUANTITY, {trunk, quantity});
     },
 
     [On.ADD_RESSOURCE_TO]: ({}, parentRessource) => {

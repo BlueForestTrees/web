@@ -2,19 +2,22 @@
     <div id="app">
         <v-app id="blueforest" light @keydown.ctrl.space.native="focusOnSearch">
 
-            <corner :text="'DEV'"/>
+            <corner :text="'BlueForest v0.0.1'"/>
 
-            <bar :drawer.sync="drawer" />
+            <bar :drawer.sync="drawer"/>
             <left-menu :drawer.sync="drawer"/>
-            <main-content/>
+
+            <blueforest/>
+
             <Bottom-right-btns/>
+
             <!--<main-footer/>-->
 
-            <facet-dialog :tree="tree"/>
-            <facet-entry-dialog :visible="facetEntryDialog"/>
-            <create-trunk-dialog />
-            <lookup-tree-dialog/>
 
+            <facet-dialog/>
+            <facet-entry-dialog/>
+            <create-trunk-dialog/>
+            <lookup-tree-dialog/>
             <add-ressource-dialog/>
 
         </v-app>
@@ -26,10 +29,9 @@
     import LeftMenu from './layout/LeftMenu';
     import Bar from "./layout/Bar";
     import BottomRightBtns from "./layout/BottomRightBtns";
-    import MainContent from "./layout/MainContent";
+    import Blueforest from "./layout/BlueForest";
     import MainFooter from "./layout/MainFooter";
     import CreateTrunkDialog from "./dialog/CreateTrunkDialog";
-    import {mapState} from 'vuex';
     import FacetEntryDialog from "./dialog/FacetEntryDialog";
     import On from "../const/on";
     import {mapActions} from "vuex";
@@ -41,13 +43,6 @@
     import AddRessourceDialog from "./dialog/AddRessourceDialog";
 
     export default {
-        computed: {
-            ...mapState({
-                "trunkDialog": state => state.dialogs.trunk,
-                "facetEntryDialog":state=>state.dialogs2.facetEntryDialog.visible,
-                "tree":state=>state.tree
-            })
-        },
         watch: {
             "drawer": function (value) {
                 this.drawer = value;
@@ -59,19 +54,20 @@
             }
         },
         components: {
+            Blueforest,
             AddRessourceDialog,
             Corner,
             FacetDialog,
             Test,
             LookupTreeDialog,
             Lookup,
-            FacetEntryDialog,CreateTrunkDialog,MainFooter, MainContent, BottomRightBtns, Bar, LeftMenu
+            FacetEntryDialog, CreateTrunkDialog, MainFooter, BottomRightBtns, Bar, LeftMenu
         },
-        mounted: async function(){
+        mounted: async function () {
             this.$store.dispatch(On.MOUNT_APP);
         },
         methods: {
-            ...mapActions({focusOnSearch:On.FOCUS_ON_SEARCH})
+            ...mapActions({focusOnSearch: On.FOCUS_ON_SEARCH})
         }
     }
 </script>

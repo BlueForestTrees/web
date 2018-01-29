@@ -1,9 +1,9 @@
 <template>
-    <main-dialog :dialog="Dial.RESSOURCE" @focus="$refs.nom.focus()" @esc="close" @enter="validate" ref="dialog">
+    <main-dialog :dialog="Dial.RESSOURCE" @focus="$refs.lookup.focus()" @esc="close" @enter="validate" ref="dialog">
         <template slot-scope="dialog">
             <v-card>
                 <v-card-title class="grey lighten-4 py-4 title">
-                    Ajouter des ressources à {{dialog.data.parentRessource && dialog.data.parentRessource.name}}
+                    Ajouter des ressource
                 </v-card-title>
                 <v-card-text>
 
@@ -11,7 +11,7 @@
                         {{ressource.name}}
                     </v-chip>
 
-                    <lookup @select="select" cancreate/>
+                    <lookup @select="select" cancreate ref="lookup"/>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer/>
@@ -34,7 +34,8 @@
         data() {
             return {
                 Dial: Dial,
-                ressources: []
+                ressources: [],
+                editing:false
             }
         },
         components: {
@@ -43,7 +44,7 @@
         props: ['data'],
         methods: {
             ...mapActions({
-                "addRessource": On.ADD_RESSOURCE
+                addRessources: On.ADD_ROOTS
             }),
             select(ressource){
                 this.ressources.push(ressource);
@@ -52,7 +53,8 @@
                 this.ressources.splice(idx,1);
             },
             validate() {
-                this.addRessource(this.dialog.data.parentRessource, this.ressource);
+                this.addRessources({tree:this.$refs.dialog.data.parentRessource, roots:this.ressources});
+                this.close();
             },
             close: function () {
                 this.$refs.dialog.close();

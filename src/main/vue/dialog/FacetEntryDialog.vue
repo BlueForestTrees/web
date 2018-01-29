@@ -1,5 +1,5 @@
 <template>
-    <main-dialog :dialog="Dial.FACET_ENTITY" ref="dialog"
+    <main-dialog :dialog="Dial.FACET_ENTRY" ref="dialog"
                  @focus="$refs.nom.focus()" @validate="validate" @esc="close" @enter="validate">
         <template slot-scope="props">
 

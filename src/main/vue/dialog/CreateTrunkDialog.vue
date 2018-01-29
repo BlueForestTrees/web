@@ -41,7 +41,7 @@
         props: ['data'],
         methods: {
             ...mapActions({
-                "createAndOpen": On.CREATE_AND_OPEN_TREE
+                createAndOpen: On.CREATE_AND_OPEN_TRUNK
             }),
             validate() {
                 this.createAndOpen({name: this.$refs.dialog.data.name});

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import {NONE} from "../services/const";
 import Do from "../const/do";
-import {createDialog} from "./state"
+import {createDialog, tree} from "./state"
 
 const updateDialogVisibility = (state, {dialog, visible}) => {
     if (state.dialogs[dialog]) {
@@ -48,9 +48,9 @@ export default {
     },
     [Do.SHOW_DIALOG]: (state, {dialog, data}) => {
 
-        if(!data) {
+        if (!data) {
             cleanDialog(state, dialog);
-        }else{
+        } else {
             updateDialog(state, {dialog, data});
         }
 
@@ -67,9 +67,6 @@ export default {
     },
 
 
-
-
-
     [Do.CLEAR_RESULTS]: state => {
         state.search.results = [];
     },
@@ -79,23 +76,24 @@ export default {
     },
 
 
-
-
     [Do.OPEN_COMPARE_TO]: (state, value) => {
         state.compareTo = value;
     },
     [Do.CLEAR_COMPARE_TO]: (state) => {
         state.compareTo = null;
     },
-    [Do.OPEN_TREE]: (state, value) => {
-        state.tree = value;
+    [Do.SET_TRUNK]: (state, {tree, trunk}) => {
+        Vue.set(tree, "trunk", trunk);
     },
-    [Do.RENAME_TREE]: (state, {tree, name}) => {
-        Vue.set(tree, "name", name);
+    [Do.INIT_TREE]: (state, {tree, treeToLoad}) => {
+        Vue.set(tree, "_id", treeToLoad._id);
     },
-    [Do.CLOSE_TREE]: (state) => {
+    [Do.RENAME_TRUNK]: (state, rename) => {
+        Vue.set(rename.trunk, "name", rename.name);
+    },
+    [Do.CLOSE_TRUNK]: (state) => {
         state.compareTo = null;
-        state.tree = null;
+        state.tree = tree();
     },
 
     [Do.SWAP_LEFT_RIGHT]: state => {
@@ -105,16 +103,25 @@ export default {
         Vue.set(state, "tree", right);
         Vue.set(state, "compareTo", left);
     },
-    [Do.UPSERT_QUANTITY]: (state, {tree, quantity}) => {
-        Vue.set(tree, "quantity", quantity);
+    [Do.UPSERT_QUANTITY]: (state, {trunk, quantity}) => {
+        Vue.set(trunk, "quantity", quantity);
     },
 
 
-
-
-
-
-
+    [Do.ADD_FACETS]: (state, {tree, facets}) => {
+        if (!tree.facets) {
+            Vue.set(tree, "facets", facets);
+        } else {
+            tree.facets.facets.push(facets.facets);
+        }
+    },
+    [Do.ADD_ROOTS]: (state, {tree, roots}) => {
+        if (!tree.roots) {
+            Vue.set(tree, "roots", roots);
+        } else {
+            tree.roots.push(roots.roots);
+        }
+    },
 
     [Do.ADD_FACET]: (state, {tree, facet}) => {
         if (!tree.facets) {
@@ -124,9 +131,9 @@ export default {
         }
     },
 
-    [Do.DELETE_FACETS]: (state, {tree, facets}) => {
+    [Do.DELETE_FACETS]: (state, {tree, toDelete}) => {
         if (tree.facets) {
-            _.forEach(facets, facet => tree.facets.splice(tree.facets.indexOf(facet), 1));
+            _.forEach(toDelete, facet => tree.facets.splice(tree.facets.indexOf(facet), 1));
         }
     },
     [Do.DELETE_ROOT]: (state, {tree, root}) => {

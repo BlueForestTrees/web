@@ -1,25 +1,20 @@
 <template>
+        <v-container grid-list-md text-xs-center>
+            <v-layout row wrap>
 
-    <v-container grid-list-md text-xs-center>
-        <v-layout row wrap>
+                <v-flex xs12 d-flex><branches/></v-flex>
 
-            <v-flex xs12 d-flex><branches/></v-flex>
+                <v-flex xs4 d-flex><facets :facets="tree.facets"/></v-flex>
+                <v-flex xs4 d-flex><trunk :trunk="tree.trunk"/></v-flex>
 
-            <v-flex xs4 d-flex><facets :tree="tree"/></v-flex>
-            <v-flex xs4 d-flex><trunk :tree="tree"/></v-flex>
+                <v-flex xs4 d-flex><externalites/></v-flex>
 
+                <v-flex xs12 d-flex><ressources v-if="tree.roots" :tree="tree.roots"/></v-flex>
 
-            <v-flex xs4 d-flex>
-                    <externalites/>
-            </v-flex>
+                <!--<v-flex xs12 d-flex><bilan-ressources :tree="tree"/></v-flex>-->
 
-            <v-flex xs12 d-flex><ressources :tree="tree"/></v-flex>
-
-            <v-flex xs12 d-flex><bilan-ressources :tree="tree"/></v-flex>
-
-        </v-layout>
-    </v-container>
-
+            </v-layout>
+        </v-container>
 
 </template>
 
@@ -49,7 +44,7 @@
 </script>
 
 <style>
-    .air{
-        margin:1em
+    .air {
+        margin: 1em
     }
 </style>

@@ -1,7 +1,7 @@
 <template>
     <v-navigation-drawer fixed app v-model="_drawer">
         <v-list dense>
-            <v-list-tile @click="showDialog({dialog:Dial.FACET_ENTITY})">
+            <v-list-tile @click="showDialog({dialog:Dial.FACET_ENTRY})">
                 <v-list-tile-action><v-layout row><v-icon>add</v-icon></v-layout></v-list-tile-action>
                 <v-list-tile-content><v-list-tile-title>Créer une caractéristique</v-list-tile-title></v-list-tile-content>
             </v-list-tile>

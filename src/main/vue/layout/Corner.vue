@@ -1,5 +1,5 @@
 <template>
-    <div class="corner-ribbon top-right sticky red">{{text}}</div>
+    <div class="corner-ribbon bottom-left sticky red">{{text}}</div>
 </template>
 
 <script>
