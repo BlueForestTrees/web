@@ -38,9 +38,7 @@
                 editing:false
             }
         },
-        components: {
-            Lookup,
-            MainDialog},
+        components: {Lookup,MainDialog},
         props: ['data'],
         methods: {
             ...mapActions({
