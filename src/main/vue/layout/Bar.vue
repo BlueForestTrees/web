@@ -48,7 +48,7 @@
         },
         methods:{
             ...mapActions({
-                open:On.LOAD_OPEN_TRUNK
+                open:On.LOAD_OPEN_TREE
             })
         }
     }

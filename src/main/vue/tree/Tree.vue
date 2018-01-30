@@ -9,7 +9,7 @@
 
                 <v-flex xs4 d-flex><externalites/></v-flex>
 
-                <v-flex xs12 d-flex><ressources v-if="tree.roots" :tree="tree.roots"/></v-flex>
+                <v-flex xs12 d-flex><ressources v-if="tree" :tree="tree"/></v-flex>
 
                 <!--<v-flex xs12 d-flex><bilan-ressources :tree="tree"/></v-flex>-->
 

@@ -32,6 +32,14 @@ const cleanDialog = (state, dialog) => {
 
 
 export default {
+    [Do.CLOSE_TREE]: (state) => {
+        state.compareTo = null;
+        state.tree = tree();
+    },
+    [Do.INIT_TREE]: (state, {tree, _id}) => {
+        Vue.set(tree, "_id", _id);
+    },
+
 
     [Do.UPDATE_GRANDEURS]: (state, grandeurs) => {
         state.grandeurs = grandeurs;
@@ -82,18 +90,8 @@ export default {
     [Do.CLEAR_COMPARE_TO]: (state) => {
         state.compareTo = null;
     },
-    [Do.SET_TRUNK]: (state, {tree, trunk}) => {
-        Vue.set(tree, "trunk", trunk);
-    },
-    [Do.INIT_TREE]: (state, {tree, treeToLoad}) => {
-        Vue.set(tree, "_id", treeToLoad._id);
-    },
     [Do.RENAME_TRUNK]: (state, rename) => {
         Vue.set(rename.trunk, "name", rename.name);
-    },
-    [Do.CLOSE_TRUNK]: (state) => {
-        state.compareTo = null;
-        state.tree = tree();
     },
 
     [Do.SWAP_LEFT_RIGHT]: state => {
@@ -112,15 +110,17 @@ export default {
         if (!tree.facets) {
             Vue.set(tree, "facets", facets);
         } else {
-            tree.facets.facets.push(facets.facets);
+            tree.facets.facets.push(facets);
         }
     },
+    [Do.SET_TRUNK]: (state, {tree, trunk}) => {
+        Vue.set(tree, "trunk", trunk);
+    },
+    [Do.SET_ROOTS]: (state, {tree, roots}) => {
+        Vue.set(tree, "roots", roots);
+    },
     [Do.ADD_ROOTS]: (state, {tree, roots}) => {
-        if (!tree.roots) {
-            Vue.set(tree, "roots", roots);
-        } else {
-            tree.roots.push(roots.roots);
-        }
+        tree.roots.push(...roots);
     },
 
     [Do.ADD_FACET]: (state, {tree, facet}) => {
@@ -138,7 +138,7 @@ export default {
     },
     [Do.DELETE_ROOT]: (state, {tree, root}) => {
         if (tree.roots) {
-            tree.roots.splice(tree.roots.indexOf(root), 1);
+            tree.roots.items.splice(tree.roots.items.indexOf(root), 1);
         }
     }
 

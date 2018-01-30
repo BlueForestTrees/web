@@ -25,6 +25,6 @@ export default {
     //DE TOUT
     grandeurs: () => api.get('api/grandeurs'),
     createFacetEntry: facet => api.post('api/facetEntry', facet),
-    deleteFacets: (treeId, facetIds) => api.post('api/facets/deletions', {treeId, facetIds}),
+    deleteFacets: (treeId, facetIds) => api.post('api/facets/deletion', {treeId, facetIds}),
     searchFacetEntry: namepart => api.get(`api/facetEntries?q=${namepart}`)
 }
