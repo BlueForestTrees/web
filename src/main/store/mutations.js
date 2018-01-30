@@ -120,7 +120,7 @@ export default {
         Vue.set(tree, "roots", roots);
     },
     [Do.ADD_ROOTS]: (state, {tree, roots}) => {
-        tree.roots.push(...roots);
+        tree.roots.items.push(...roots);
     },
 
     [Do.ADD_FACET]: (state, {tree, facet}) => {

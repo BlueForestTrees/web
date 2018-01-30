@@ -11,10 +11,8 @@
             <template v-for="(trunk,pathIndex) in path" v-if="trunk.roots">
                     <v-layout :key="trunk._id" row wrap justify-center align-center>
                         <v-chip v-for="root in trunk.roots.items" :key="root._id"
-                                outline color="primary" fab dark large
-                                @click="select(pathIndex,root)" @blur="unselect(root)"
-                                @input="deleteRessource(pathIndex, trunk, root)"
-                                :close="root.selected">
+                                 large  color="primary" :text-color="(root.selected || inPath(root))?'primary':'white'" text-bold :outline="root.selected || inPath(root)"
+                                @click="select(pathIndex,root)" @blur="unselect(root)" @input="deleteRessource(pathIndex, trunk, root)" :close="root.selected">
                             <v-icon left v-if="root.selected" @click="">build</v-icon>
                             {{root.name}}
                         </v-chip>
@@ -61,6 +59,9 @@
             deleteRessource(pathIndex, tree, root) {
                 this.dispatchDeleteRessources({tree, root});
                 this.path.splice(pathIndex + 1);
+            },
+            inPath(tree){
+                return this.path.indexOf(tree) > -1;
             }
         }
     }

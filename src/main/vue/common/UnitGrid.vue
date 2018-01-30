@@ -5,7 +5,10 @@
             <v-container fluid grid-list-sm>
                 <v-layout row wrap>
                     <v-chip v-for="unit in units" :key="unit.shortname" v-if="unitMatch(unit, filter)"
-                            fab dark small @click="select(unit)" color="primary" text-color="white">{{unit.shortname || "pas d'unité"}}</v-chip>
+                            @click="select(unit)"
+                            fab dark small color="primary" text-color="white">
+                        {{unit.shortname || "pas d'unité"}}
+                    </v-chip>
                 </v-layout>
             </v-container>
         </span>
