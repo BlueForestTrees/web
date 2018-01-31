@@ -84,9 +84,6 @@ export default {
     },
 
 
-    [Do.OPEN_COMPARE_TO]: (state, value) => {
-        state.compareTo = value;
-    },
     [Do.CLEAR_COMPARE_TO]: (state) => {
         state.compareTo = null;
     },
@@ -114,8 +111,10 @@ export default {
         }
     },
     [Do.SET_TRUNK]: (state, {tree, trunk}) => {
-        Vue.set(tree, "name", trunk.name);
         Vue.set(tree, "trunk", trunk);
+    },
+    [Do.OPEN_COMPARE_TO]: (state, value) => {
+        state.compareTo = value;
     },
     [Do.SET_ROOTS]: (state, {tree, roots}) => {
         Vue.set(tree, "roots", roots);

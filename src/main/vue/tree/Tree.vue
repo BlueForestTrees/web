@@ -11,7 +11,7 @@
 
                 <v-flex xs12 d-flex><ressources v-if="tree" :tree="tree"/></v-flex>
 
-                <!--<v-flex xs12 d-flex><bilan-ressources :tree="tree"/></v-flex>-->
+                <v-flex xs12 d-flex><bilan-ressources :tree="tree"/></v-flex>
 
             </v-layout>
         </v-container>

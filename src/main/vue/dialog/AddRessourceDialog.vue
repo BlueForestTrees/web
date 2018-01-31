@@ -41,7 +41,7 @@
         components: {Lookup, MainDialog},
         methods: {
             ...mapActions({
-                addRessources: On.ADD_ROOTS
+                dispatchAddRessources: On.ADD_ROOTS
             }),
             select(root) {
                 this.roots.push(root);
@@ -50,8 +50,10 @@
                 this.roots.splice(idx, 1);
             },
             validate() {
-                const tree = this.$refs.dialog.data.parentRessource;
-                this.addRessources({tree, _id: tree._id, roots: this.roots});
+                this.dispatchAddRessources({
+                    tree: this.$refs.dialog.data.parentRessource,
+                    roots: this.roots
+                });
                 this.close();
             },
             close: function () {

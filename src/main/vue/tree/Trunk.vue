@@ -40,7 +40,7 @@
             </span>
         </v-card>
     </transition>
-    <span v-else>chargement</span>
+    <span v-else><loading/></span>
 </template>
 
 <script>
@@ -48,9 +48,12 @@
     import UnitGrid from "../common/UnitGrid";
     import On from "../../const/on";
     import {toQtUnit} from "../../services/mapper";
+    import Loading from "../common/Loading";
 
     export default {
-        components: {UnitGrid},
+        components: {
+            Loading,
+            UnitGrid},
         props: ['trunk'],
         computed: {
             ...mapState(['grandeurs'])

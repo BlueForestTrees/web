@@ -1,65 +1,28 @@
-import Do from "../const/do";
-import On from "../const/on";
-import rest from "../services/rest";
-import units from "../services/units";
+import Do from "../../const/do";
+import On from "../../const/on";
+import rest from "../../services/rest";
+import _ from 'lodash';
 
 export default {
-    [On.MOUNT_APP]: async ({commit, dispatch}) => {
-        dispatch(On.LOAD_UNITS);
-        await dispatch(On.LOAD_OPEN_TREE, {_id: "5a6a03c03e77667641d2d2c3"});
-    },
-    [On.LOAD_UNITS]: async ({commit}) => {
-        commit(Do.UPDATE_GRANDEURS, await units.load());
-    },
-
-
     [On.CREATE_AND_OPEN_TREE]: async ({dispatch}, {name}) => {
         dispatch(On.LOAD_OPEN_TREE, await dispatch(On.CREATE_TRUNK, name));
     },
     [On.CLONE_OPEN_TREE]: async ({dispatch}, tree) => {
         dispatch(On.LOAD_OPEN_TREE, await dispatch(On.CLONE_TREE, tree));
     },
-    [On.LOAD_OPEN_TREE]: async ({commit, state}, {_id}) => {
-        commit(Do.CLOSE_TREE);
-        commit(Do.INIT_TREE, {tree: state.tree, _id});
-        rest.getTrunk(_id).then(trunk => commit(Do.SET_TRUNK, {tree: state.tree, trunk}));
-        rest.getFacets(_id).then(facets => commit(Do.ADD_FACETS, {tree: state.tree, facets}));
-        rest.getRoots(_id).then(roots => commit(Do.SET_ROOTS, {tree: state.tree, roots}));
+    [On.LOAD_OPEN_COMPARE_TO]: async ({commit, dispatch}, tree) => {
+        commit(Do.OPEN_COMPARE_TO, await dispatch(On.LOAD_TRUNK, tree));
     },
-
-
-
-    [On.LOAD_TRUNK]: async ({}, {_id}) => {
-        return rest.getTrunk(_id);
-    },
-    [On.LOAD_FACETS]: async ({}, trunk) => {
-        return rest.getFacets(trunk._id);
-    },
-    [On.LOAD_ROOTS]: async ({commit}, tree) => {
-        await rest.getRoots(tree._id).then(roots=>commit(Do.SET_ROOTS, {tree, roots}));
-    },
-
-
-
-
 
     [On.RENAME_TRUNK]: async ({commit}, {trunk, name}) => {
         await rest.renameTrunk(trunk._id, name);
         commit(Do.RENAME_TRUNK, {trunk, name});
     },
 
-
     [On.SEARCH]: async ({commit}, term) => await rest.search(term),
 
-    [On.EXCEPTION]: ({}, e) => {
-        console.error(e);
-        throw e;
-    },
     [On.CLONE_TREE]: async ({}, {_id}) => {
         return rest.cloneTree(_id);
-    },
-    [On.LOAD_OPEN_COMPARE_TO]: async ({commit, dispatch}, tree) => {
-        commit(Do.OPEN_COMPARE_TO, await dispatch(On.LOAD_TRUNK, tree));
     },
 
     [On.CREATE_TRUNK]: async ({commit, state, dispatch}, name) => {

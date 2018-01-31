@@ -21,6 +21,7 @@ export default {
     LOAD_ROOTS: 'loadRoots',
     MOUNT_APP: 'mountApp',
     LOAD_OPEN_COMPARE_TO: 'loadOpenCompareTo',
+    POPULATE_ROOTS: "populateRoots",
     RENAME_TRUNK: 'renameTrunk',
     SEARCH: 'onSearch',
     SEARCH_FACET_ENTRY: 'searchFacetEntry',
