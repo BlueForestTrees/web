@@ -139,7 +139,6 @@ export default {
     [Do.DELETE_ROOT]: (state, {tree, root}) => {
         if (tree.roots) {
             tree.roots.items.splice(tree.roots.items.indexOf(root), 1);
-            tree.roots.items.splice(tree.roots.items.indexOf(root), 1);
         }
     }
 
