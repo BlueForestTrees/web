@@ -114,6 +114,7 @@ export default {
         }
     },
     [Do.SET_TRUNK]: (state, {tree, trunk}) => {
+        Vue.set(tree, "name", trunk.name);
         Vue.set(tree, "trunk", trunk);
     },
     [Do.SET_ROOTS]: (state, {tree, roots}) => {

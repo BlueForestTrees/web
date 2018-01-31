@@ -1,17 +1,15 @@
 <template>
-    <main-dialog :dialog="Dial.RESSOURCE" @focus="$refs.lookup.focus()" @esc="close" @enter="validate" ref="dialog">
+    <main-dialog :dialog="Dial.CONFIGURE_ROOT" @focus="" @esc="close" @enter="validate" ref="dialog">
         <template slot-scope="dialog">
             <v-card>
                 <v-card-title class="grey lighten-4 py-4 title">
-                    Ajouter des ressource
+                    Configurer une ressource
                 </v-card-title>
                 <v-card-text>
-
-                    <v-chip v-for="(root,idx) in roots" :key="root._id" close @input="unselect(idx)">
-                        {{root.name}}
-                    </v-chip>
-
-                    <lookup @select="select" cancreate ref="lookup"/>
+                    <v-layout row>
+                        <span>Pour avoir</span>{{trunk.name}}
+                        <span>Il faut</span>{{root.name}}
+                    </v-layout>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer/>
@@ -31,27 +29,27 @@
     import Lookup from "../common/Lookup";
 
     export default {
+        name:'configure-root-dialog',
         data() {
             return {
-                Dial: Dial,
-                roots: [],
-                editing: false
+                Dial: Dial
+            }
+        },
+        computed:{
+            trunk: function() {
+                return "rr";//this.$refs.dialog.data.trunk
+            },
+            root: function() {
+                return "tt";//this.$refs.dialog.data.root
             }
         },
         components: {Lookup, MainDialog},
         methods: {
             ...mapActions({
-                addRessources: On.ADD_ROOTS
+
             }),
-            select(root) {
-                this.roots.push(root);
-            },
-            unselect(idx) {
-                this.roots.splice(idx, 1);
-            },
             validate() {
-                const tree = this.$refs.dialog.data.parentRessource;
-                this.addRessources({tree, _id: tree._id, roots: this.roots});
+                //TODO
                 this.close();
             },
             close: function () {

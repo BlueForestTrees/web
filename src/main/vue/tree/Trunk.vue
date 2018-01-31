@@ -29,7 +29,7 @@
                     <span>{{trunk.quantity.qt}}{{trunk.quantity.unit}}</span>
                     <v-spacer/>
                     <v-btn fab small outline @click="editingQt" color="primary">
-                        <v-icon>edit</v-icon>
+                        <v-icon>build</v-icon>
                     </v-btn>
                 </v-layout>
             </div>

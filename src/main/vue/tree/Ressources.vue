@@ -8,21 +8,38 @@
         </v-toolbar>
 
         <span class="air" v-if="tree.roots">
-            <template v-for="(trunk,pathIndex) in path" v-if="trunk.roots">
-                    <v-layout :key="trunk._id" row wrap justify-center align-center>
-                        <v-chip v-for="root in trunk.roots.items" :key="root._id"
-                                 large  color="primary" :text-color="(root.selected || inPath(root))?'primary':'white'" text-bold :outline="root.selected || inPath(root)"
-                                @click="select(pathIndex,root)" @blur="unselect(root)" @input="deleteRessource(pathIndex, trunk, root)" :close="root.selected">
-                            <v-icon left v-if="root.selected" @click="">build</v-icon>
-                            {{root.name}}
+
+            <v-layout row wrap justify-center align-center>
+                <v-breadcrumbs id="ressource_stack">
+                  <v-icon slot="divider">keyboard_arrow_up</v-icon>
+                  <v-breadcrumbs-item v-for="(trunk,pathIndex) in path" :key="trunk._id" v-if="trunk.roots">
+                      <span @click="select(pathIndex,trunk)">{{ trunk.name }}</span>
+                  </v-breadcrumbs-item>
+                </v-breadcrumbs>
+            </v-layout>
+
+            <v-layout v-if="last.roots" row wrap justify-center align-center>
+                <template v-for="root in last.roots.items">
+                    <span :key="root._id">
+                        <v-chip
+                                large color="primary"
+                                text-color="white"
+                                @click="select(path.length, root)"
+                        >
+                                {{root.name}}
+                                <v-icon right v-if="root.selected"
+                                        fab small
+                                        @click="configure(trunk, root)">
+                                    build
+                            </v-icon>
                         </v-chip>
+                    </span>
+                </template>
+                <v-btn outline color="primary" fab small @click="addRessourceTo(last)">
+                    <v-icon>add</v-icon>
+                </v-btn>
+            </v-layout>
 
-                        <v-btn outline color="primary" fab small @click="addRessourceTo(path[pathIndex])">
-                            <v-icon>add</v-icon>
-                        </v-btn>
-
-                    </v-layout>
-            </template>
         </span>
     </v-card>
 
@@ -41,28 +58,38 @@
                 path: [this.tree]
             }
         },
+        computed: {
+            last: function () {
+                return _.last(this.path);
+            }
+        },
         methods: {
             ...mapActions({dispatchDeleteRessources: On.DELETE_ROOT, dispatchLoadRoots: On.LOAD_ROOTS}),
             ...mapMutations({showDialog: Do.SHOW_DIALOG}),
-            async select(pathIndex, root) {
-                this.path.splice(pathIndex + 1);
+            select(pathIndex, root) {
+                this.path.splice(pathIndex);
                 this.path.push(root);
-                root.selected = true;
                 this.dispatchLoadRoots(root);
-            },
-            unselect(root) {
-                root.selected = false;
             },
             addRessourceTo(ressource) {
                 this.showDialog({dialog: Dial.RESSOURCE, data: {parentRessource: ressource}});
             },
-            deleteRessource(pathIndex, tree, root) {
-                this.dispatchDeleteRessources({tree, root});
-                this.path.splice(pathIndex + 1);
-            },
-            inPath(tree){
+            inPath(tree) {
                 return this.path.indexOf(tree) > -1;
+            },
+            configure(trunk, root) {
+                this.showDialog({dialog: Dial.CONFIGURE_ROOT, data: {trunk, root}});
             }
+            // deleteRessource(pathIndex, tree, root) {
+            //     this.dispatchDeleteRessources({tree, root});
+            //     this.path.splice(pathIndex + 1);
+            // },
         }
     }
 </script>
+
+<style>
+    #ressource_stack{
+        flex-direction: column;
+    }
+</style>

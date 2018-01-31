@@ -19,6 +19,7 @@
             <create-trunk-dialog/>
             <lookup-tree-dialog/>
             <add-ressource-dialog/>
+            <configure-root-dialog/>
 
         </v-app>
     </div>
@@ -41,6 +42,7 @@
     import FacetDialog from "./dialog/FacetDialog";
     import Corner from "./layout/Corner";
     import AddRessourceDialog from "./dialog/AddRessourceDialog";
+    import ConfigureRootDialog from "./dialog/ConfigureRootDialog";
 
     export default {
         watch: {
@@ -54,6 +56,7 @@
             }
         },
         components: {
+            ConfigureRootDialog,
             Blueforest,
             AddRessourceDialog,
             Corner,

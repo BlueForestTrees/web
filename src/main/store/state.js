@@ -10,7 +10,8 @@ const dialogFactory = {
     [Dial.FACET_ENTRY]: () => ({qt: null, unit: null, name: null}),
     [Dial.COMPARE_TO]: () => ({name: null}),
     [Dial.FACET]: () => ({name: null}),
-    [Dial.RESSOURCE]: () => ({parentRessource: null})
+    [Dial.RESSOURCE]: () => ({parentRessource: null}),
+    [Dial.CONFIGURE_ROOT]: () => ({trunk:null,root:null})
 };
 
 export const createDialog = name => (dialogFactory[name] && dialogFactory[name]()) || (console.warn(`state.js il manque dialogFactory['${name}']`) || {});
