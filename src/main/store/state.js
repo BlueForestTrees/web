@@ -20,7 +20,7 @@ const dialogs = () => _.reduce(Dial, (dials, key) => {
     return dials;
 }, {});
 
-export const tree = () => ({_id: null, trunk: null, roots: null, facets: null});
+export const tree = () => ({_id: null, trunk: null, selection: null, facets: null});
 
 export default {
 

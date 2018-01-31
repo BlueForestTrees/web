@@ -2,10 +2,11 @@ import Do from "../../const/do";
 import On from "../../const/on";
 import rest from "../../services/rest";
 import _ from 'lodash';
+import {trunky, trunkyAll} from "../../services/mapper";
 
 export default {
     [On.CREATE_AND_OPEN_TREE]: async ({dispatch}, {name}) => {
-        dispatch(On.LOAD_OPEN_TREE, await dispatch(On.CREATE_TRUNK, name));
+        dispatch(On.LOAD_OPEN_TREE, await dispatch(On.CREATE_TREE, name));
     },
     [On.CLONE_OPEN_TREE]: async ({dispatch}, tree) => {
         dispatch(On.LOAD_OPEN_TREE, await dispatch(On.CLONE_TREE, tree));
@@ -19,20 +20,16 @@ export default {
         commit(Do.RENAME_TRUNK, {trunk, name});
     },
 
-    [On.SEARCH]: async ({commit}, term) => await rest.search(term),
+    [On.SEARCH_TREE]: async ({commit}, term) => trunkyAll(await rest.search(term)),
 
     [On.CLONE_TREE]: async ({}, {_id}) => {
-        return rest.cloneTree(_id);
+        return rest.cloneTrunk(_id);
     },
 
-    [On.CREATE_TRUNK]: async ({commit, state, dispatch}, name) => {
-        return rest.cancreate({name});
+    [On.CREATE_TREE]: async ({commit, state, dispatch}, name) => {
+        return trunky(await rest.createTrunk({name}));
     },
 
-    [On.ADD_ROOTS]: async ({commit}, {tree, roots}) => {
-        await Promise.all(_.map(roots, root => rest.linkRoot(tree._id, root._id)));
-        commit(Do.ADD_ROOTS, {tree, roots});
-    },
     [On.DELETE_ROOT]: async ({commit}, {tree, root}) => {
         await rest.deleteRoot(tree._id, root._id);
         commit(Do.DELETE_ROOT, {tree, root});
@@ -42,7 +39,7 @@ export default {
         commit(Do.DELETE_FACETS, {tree: facets, toDelete});
     },
     [On.DELETE_TREE]: async ({commit}, tree) => {
-        await rest.deleteTree(tree._id);
+        await rest.deleteTrunk(tree._id);
         commit(Do.CLOSE_TREE);
     },
     [On.ADD_FACET]: async ({commit}, {tree, facet}) => {

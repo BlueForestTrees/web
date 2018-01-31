@@ -6,11 +6,11 @@
 
         <transition name="fade">
             <v-list v-if="allowCreate || hasResults">
-                <v-list-tile v-for="item in results" :key="item._id" @click="select(item)">
+                <v-list-tile v-for="tree in searchResults" :key="tree._id" @click="select(tree)">
                     <v-list-tile-avatar>
                         <v-icon>assignment</v-icon>
                     </v-list-tile-avatar>
-                    <v-list-tile-title>{{ item.name }}</v-list-tile-title>
+                    <v-list-tile-title>{{ tree.trunk.name }}</v-list-tile-title>
                 </v-list-tile>
                 <v-divider v-if="allowCreate && hasResults"/>
                 <v-list-tile v-if="allowCreate" @click="create(term)">
@@ -27,28 +27,29 @@
 <script>
     import {mapActions} from 'vuex';
     import On from "../../const/on";
+    import {trunky} from "../../services/mapper";
 
     export default {
         props: {cancreate: Boolean},
         data() {
             return {
                 term: null,
-                results: null,
+                searchResults: null,
                 searching: null
             }
         },
         computed: {
             searchOccur: function () {
-                return this.term && !this.searching && !!this.results
+                return this.term && !this.searching && !!this.searchResults
             },
             noResults: function () {
-                return _.isEmpty(this.results)
+                return _.isEmpty(this.searchResults)
             },
             hasResults: function () {
                 return !!(this.searchOccur && !this.noResults)
             },
             exactMatch: function () {
-                return !!_.find(this.results, {name: this.term})
+                return !!_.find(this.searchResults, {name: this.term})
             },
             allowCreate: function () {
                 return this.cancreate && !!(this.searchOccur && (this.noResults || !this.exactMatch))
@@ -56,8 +57,8 @@
         },
         methods: {
             ...mapActions({
-                dispatchSearch: On.SEARCH,
-                dispatchCreate: On.CREATE_TRUNK
+                dispatchSearch: On.SEARCH_TREE,
+                dispatchCreateTree: On.CREATE_TREE
             }),
             focus() {
                 this.$refs.termInput.focus();
@@ -67,23 +68,23 @@
                 if (value) {
                     this.searching = true;
                     try {
-                        this.results = await this.dispatchSearch(value);
+                        this.searchResults = await this.dispatchSearch(value);
                     } finally {
                         this.searching = false;
                     }
                 }
             },
-            select(item) {
-                this.$emit('select', item);
+            select(tree) {
+                this.$emit('select', tree);
                 this.clearSearch();
             },
             clearSearch() {
                 this.term = null;
-                this.results = null;
+                this.searchResults = null;
                 this.searching = null;
             },
             create: async function (term) {
-                this.select(await this.dispatchCreate(term));
+                this.select(await this.dispatchCreateTree(term));
             }
         }
     }

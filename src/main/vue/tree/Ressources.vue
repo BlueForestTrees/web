@@ -70,9 +70,9 @@
             addRessourceTo(ressource) {
                 this.showDialog({dialog: Dial.RESSOURCE, data: {parentRessource: ressource}});
             },
-            inPath(tree) {
-                return this.path.indexOf(tree) > -1;
-            },
+            // inPath(tree) {
+            //     return this.path.indexOf(tree) > -1;
+            // },
             /*configure(trunk, root) {
                 this.showDialog({dialog: Dial.CONFIGURE_ROOT, data: {trunk, root}});
             }*/

@@ -7,10 +7,9 @@
                 </v-card-title>
                 <v-card-text>
 
-                    <v-chip v-for="(root,idx) in roots" :key="root._id" close @input="unselect(idx)">
-                        {{root.name}}
+                    <v-chip v-for="(tree,idx) in selection" :key="tree._id" close @input="unselect(idx)">
+                        {{tree.trunk.name}}
                     </v-chip>
-
                     <lookup @select="select" cancreate ref="lookup"/>
                 </v-card-text>
                 <v-card-actions>
@@ -34,7 +33,7 @@
         data() {
             return {
                 Dial: Dial,
-                roots: [],
+                selection: [],
                 editing: false
             }
         },
@@ -43,16 +42,16 @@
             ...mapActions({
                 dispatchAddRessources: On.ADD_ROOTS
             }),
-            select(root) {
-                this.roots.push(root);
+            select(tree) {
+                this.selection.push(tree);
             },
             unselect(idx) {
-                this.roots.splice(idx, 1);
+                this.selection.splice(idx, 1);
             },
             validate() {
                 this.dispatchAddRessources({
                     tree: this.$refs.dialog.data.parentRessource,
-                    roots: this.roots
+                    roots: this.selection
                 });
                 this.close();
             },

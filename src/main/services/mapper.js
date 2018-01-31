@@ -1,9 +1,12 @@
 export const tank = trunk => _.values(addAllSeeds(trunk, {}));
 export const format = v => v < 10 ? Math.floor(v * 100) / 100 : Math.floor(v * 10) / 10;
 
+export const trunkyAll = items => _.map(items, trunky);
+export const trunky = trunk => ({_id: trunk._id, trunk});
+
 const addAllSeeds = (trunk, tank) => {
-    _.forEach(trunk.roots, seed => {
-        if (_.isEmpty(seed.roots)) {
+    _.forEach(trunk.selection, seed => {
+        if (_.isEmpty(seed.selection)) {
             let tankEntry = tank[seed._id] || {_id: seed._id, name: seed.name, qt: 0};
             tankEntry.qt += seed.qt;
             tank[seed._id] = tankEntry;

@@ -3,6 +3,7 @@ import rest from "../../services/rest";
 import _ from 'lodash';
 import Do from "../../const/do";
 import units from "../../services/units";
+import {trunkyAll} from "../../services/mapper";
 
 export default {
 
@@ -31,7 +32,12 @@ export default {
         return rest.getRoots(_id)
             .then(roots => ({
                 ..._.omit(roots, "items"),
-                items: _.map(roots.items, trunk => ({_id: trunk._id, trunk}))
+                items: trunkyAll(roots.items)
             }));
+    },
+
+    [On.ADD_ROOTS]: async ({commit}, {tree, roots}) => {
+        await Promise.all(_.map(roots, root => rest.linkRoot(tree._id, root._id)));
+        commit(Do.ADD_ROOTS, {tree, roots});
     }
 };

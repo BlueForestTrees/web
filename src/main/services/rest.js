@@ -14,9 +14,9 @@ export default {
     search: name => api.get(`api/trunks?q=${name}`),
 
     //TRUNK
-    cancreate: trunk => api.post('api/trunk', trunk),
-    deleteTree: trunkId => api.del(`api/trunk/${trunkId}`),
-    cloneTree: trunkId => api.post(`api/trunk?sourceId=${trunkId}`),
+    createTrunk: trunk => api.post('api/trunk', trunk),
+    deleteTrunk: trunkId => api.del(`api/trunk/${trunkId}`),
+    cloneTrunk: trunkId => api.post(`api/trunk?sourceId=${trunkId}`),
     getTrunk: _id => api.get(`api/trunk/${_id}`),
     renameTrunk: (_id,name) => api.put(`api/trunk/${_id}`, {name}),
     upsertQuantity: (treeId, quantity) => api.put(`api/trunk/${treeId}`, {quantity}),

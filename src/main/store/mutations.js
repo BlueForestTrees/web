@@ -76,11 +76,11 @@ export default {
 
 
     [Do.CLEAR_RESULTS]: state => {
-        state.search.results = [];
+        state.search.searchResults = [];
     },
     [Do.CLEAR_SEARCH]: state => {
         state.search.term = null;
-        state.search.results = null;
+        state.search.searchResults = null;
     },
 
 
@@ -116,10 +116,10 @@ export default {
     [Do.OPEN_COMPARE_TO]: (state, value) => {
         state.compareTo = value;
     },
-    [Do.SET_ROOTS]: (state, {tree, roots}) => {
+    [Do.SET_ROOTS]: ({}, {tree, roots}) => {
         Vue.set(tree, "roots", roots);
     },
-    [Do.ADD_ROOTS]: (state, {tree, roots}) => {
+    [Do.ADD_ROOTS]: ({}, {tree, roots}) => {
         tree.roots.items.push(...roots);
     },
 
@@ -138,6 +138,7 @@ export default {
     },
     [Do.DELETE_ROOT]: (state, {tree, root}) => {
         if (tree.roots) {
+            tree.roots.items.splice(tree.roots.items.indexOf(root), 1);
             tree.roots.items.splice(tree.roots.items.indexOf(root), 1);
         }
     }

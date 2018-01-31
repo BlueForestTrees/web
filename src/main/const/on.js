@@ -8,7 +8,7 @@ export default {
     CREATE_ADD_RESSOURCE: 'createAddRessource',
     CREATE_FACET_ENTRY: 'onCreateFacetEntry',
     CREATE_TRUNK_THEN_SEED: 'onCreateTrunkThenSeed',
-    CREATE_TRUNK: 'onCreateTrunk',
+    CREATE_TREE: 'onCreateTree',
     DELETE_FACETS: 'deleteFacets',
     DELETE_TREE: 'deleteTree',
     DELETE_ROOT: 'deleteRessources',
@@ -23,7 +23,7 @@ export default {
     LOAD_OPEN_COMPARE_TO: 'loadOpenCompareTo',
     POPULATE_ROOTS: "populateRoots",
     RENAME_TRUNK: 'renameTrunk',
-    SEARCH: 'onSearch',
+    SEARCH_TREE: 'searchTree',
     SEARCH_FACET_ENTRY: 'searchFacetEntry',
     UPSERT_QUANTITY: "upsertQuantity"
 };
