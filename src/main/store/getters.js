@@ -1,5 +1,9 @@
 import _ from 'lodash';
 
+const throwDialogNotFound = dialog => {
+    throw new ReferenceError(`state not found : state.dialogs['${dialog}']`);
+};
+
 export default {
     prix: () => (tree) => _.find(tree.facetEntries, {name: "prix"}),
     qt: () => (tree) => _.find(tree.facetEntries, {name: "quantité"}),
@@ -26,5 +30,20 @@ export default {
             unit: u,
             name: n || null
         };
-    }
+    },
+
+    dialog : state => dialog => {
+        return state.dialogs[dialog] || throwDialogNotFound(dialog);
+    },
+
+    dialogData: (state, getters) => dialog => {
+        return getters.dialog(dialog).data;
+    },
+
+    dialogVisible: (state, getters) => dialog => {
+        return getters.dialog(dialog).visible;
+    },
+
+    unitlongname: (state) => unitshortname => state.units.
+
 };

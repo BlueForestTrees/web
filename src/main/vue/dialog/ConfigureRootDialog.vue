@@ -1,15 +1,28 @@
 <template>
     <main-dialog :dialog="Dial.CONFIGURE_ROOT" @focus="" @esc="close" @enter="validate" ref="dialog">
-        <template slot-scope="dialog">
+        <template v-if="visible" slot-scope="dialog">
             <v-card>
                 <v-card-title class="grey lighten-4 py-4 title">
                     Configurer une ressource
                 </v-card-title>
                 <v-card-text>
-                    <v-layout row>
-                        <span>Pour avoir</span>{{trunk.name}}
-                        <span>Il faut</span>{{root.name}}
-                    </v-layout>
+                    <v-container grid-list-md text-xs-center>
+                        <v-layout row>
+                            <v-flex xs12>
+                                {{tree.trunk.quantity.qt}}{{unitlongname(tree.trunk.quantity.unit)}} {{tree.trunk.name}}
+                            </v-flex>
+                        </v-layout>
+                        <v-layout row>
+                            <v-flex xs12>
+                                <v-icon>keyboard_arrow_up</v-icon>
+                            </v-flex>
+                        </v-layout>
+                        <v-layout row>
+                            <v-flex xs12>
+                                {{root.trunk.quantity.qt}}{{unitlongname(root.trunk.quantity.unit)}} {{root.trunk.name}}
+                            </v-flex>
+                        </v-layout>
+                    </v-container>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer/>
@@ -23,31 +36,35 @@
 
 <script>
     import MainDialog from "./MainDialog";
-    import On from "../../const/on";
-    import {mapActions} from "vuex";
+    import {mapActions, mapGetters} from "vuex";
     import {Dial} from "../../const/dial";
     import Lookup from "../common/Lookup";
 
     export default {
-        name:'configure-root-dialog',
+        name: 'configure-root-dialog',
         data() {
             return {
                 Dial: Dial
             }
         },
-        computed:{
-            trunk: function() {
-                return "rr";//this.$refs.dialog.data.trunk
+        computed: {
+            ...mapGetters(['dialogData', 'dialogVisible']),
+            visible: function () {
+                return this.dialogVisible(Dial.CONFIGURE_ROOT);
             },
-            root: function() {
-                return "tt";//this.$refs.dialog.data.root
+            dialog: function () {
+                return this.dialogData(Dial.CONFIGURE_ROOT)
+            },
+            tree: function () {
+                return this.dialog.tree;
+            },
+            root: function () {
+                return this.dialog.root;
             }
         },
         components: {Lookup, MainDialog},
         methods: {
-            ...mapActions({
-
-            }),
+            ...mapActions({}),
             validate() {
                 //TODO
                 this.close();

@@ -26,7 +26,13 @@
                             {{root.trunk.name}}
                     </v-chip>
                 </template>
-                <v-btn outline color="primary" fab small @click="addRessourceTo(last)">
+                <v-btn v-if="this.beforeLast" outline color="primary" fab small @click="configureLast">
+                    <v-icon>build</v-icon>
+                </v-btn>
+                <v-btn outline color="primary" fab small @click="deleteLast">
+                    <v-icon>delete</v-icon>
+                </v-btn>
+                <v-btn outline color="primary" fab small @click="addRessourceToLast">
                     <v-icon>add</v-icon>
                 </v-btn>
             </v-layout>
@@ -56,30 +62,39 @@
         },
         computed: {
             last: function () {
-                return _.last(this.path);
+                return this.path[this.path.length - 1];
+            },
+            beforeLast: function () {
+                if (this.path.length > 1)
+                    return this.path[this.path.length - 2];
+                else
+                    return null;
             }
         },
         methods: {
-            ...mapActions({dispatchDeleteRessources: On.DELETE_ROOT, dispatchPopulateRoots:On.POPULATE_ROOTS}),
+            ...mapActions({dispatchDeleteRessources: On.DELETE_ROOT, dispatchPopulateRoots: On.POPULATE_ROOTS}),
             ...mapMutations({showDialog: Do.SHOW_DIALOG}),
             select(pathIndex, tree) {
                 this.path.splice(pathIndex);
                 this.path.push(tree);
                 this.dispatchPopulateRoots(tree);
             },
-            addRessourceTo(ressource) {
-                this.showDialog({dialog: Dial.RESSOURCE, data: {parentRessource: ressource}});
+            addRessourceToLast() {
+                this.showDialog({dialog: Dial.RESSOURCE, data: {parentRessource: this.last}});
             },
-            // inPath(tree) {
-            //     return this.path.indexOf(tree) > -1;
-            // },
-            /*configure(trunk, root) {
-                this.showDialog({dialog: Dial.CONFIGURE_ROOT, data: {trunk, root}});
-            }*/
-            // deleteRessource(pathIndex, tree, root) {
-            //     this.dispatchDeleteRessources({tree, root});
-            //     this.path.splice(pathIndex + 1);
-            // },
+            configureLast() {
+                this.showDialog({dialog: Dial.CONFIGURE_ROOT, data: {
+                        tree: this.beforeLast,
+                        root: this.last
+                    }});
+            },
+            deleteLast() {
+                this.dispatchDeleteRessources({
+                    tree: this.beforeLast,
+                    root: this.last
+                });
+                this.path.splice(-1, 1);
+            },
         }
     }
 </script>

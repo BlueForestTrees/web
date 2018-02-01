@@ -1,4 +1,3 @@
-export const tank = trunk => _.values(addAllSeeds(trunk, {}));
 export const format = v => v < 10 ? Math.floor(v * 100) / 100 : Math.floor(v * 10) / 10;
 
 export const trunkyAll = items => _.map(items, trunky);
