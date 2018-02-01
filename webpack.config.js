@@ -4,7 +4,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 
 const conf = {
-    entry: './src/main/main.js',
+    entry: './src/main/index.js',
 
     output: {
         filename: '[name].bundle.js',
@@ -29,6 +29,7 @@ const conf = {
         new HtmlWebpackPlugin({template: './src/main/index.html', inject: 'body', hash: 'true'}),
         new CopyWebpackPlugin([{ from: './src/img', to: 'img'}]),
     ],
+
     devServer: {
         port: 8079,
         host: '0.0.0.0',
@@ -36,8 +37,10 @@ const conf = {
             '/api/*': {target: 'http://localhost:8080'},
             '/adminapi/*': {target: 'http://localhost:8080'}
         },
+        contentBase: path.resolve(__dirname, 'dist'),
         quiet: true
     },
+
     node: {
         // prevent webpack from injecting useless setImmediate polyfill because Vue
         // source contains it (although only uses it if it's native).

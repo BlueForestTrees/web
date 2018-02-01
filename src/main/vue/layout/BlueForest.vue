@@ -13,6 +13,11 @@
                     <compare-to v-if="comparing" :leftTree="tree" :rightTree="compareTo"/>
                 </transition>
 
+
+
+
+
+
             </v-layout>
         </v-container>
     </v-content>

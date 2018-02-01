@@ -19,8 +19,7 @@
                     <v-icon right color="green" @click="validateQuantity">done</v-icon>
                     <v-icon right color="red" @click="qt.editing = false">clear</v-icon>
                 </v-layout>
-                <unit-grid v-if="qt.input && qt.input.unit" :filter="qt.input && qt.input.unit" :grandeurs="grandeurs"
-                           @select="unitInput"/>
+                <unit-grid v-if="qt.input && qt.input.unit" :filter="qt.input && qt.input.unit" @select="unitInput"/>
             </div>
             <div v-else-if="trunk.quantity" class="air">
                 <v-layout row align-center>
@@ -55,9 +54,6 @@
             Loading,
             UnitGrid},
         props: ['trunk'],
-        computed: {
-            ...mapState(['grandeurs'])
-        },
         data() {
             return {
                 name: {

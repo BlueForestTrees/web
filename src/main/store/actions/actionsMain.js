@@ -49,9 +49,6 @@ export default {
     [On.CREATE_FACET_ENTRY]: async ({}, {name, grandeur}) => rest.createFacetEntry({name, grandeur}),
 
     [On.SEARCH_FACET_ENTRY]: async ({}, {namepart}) => rest.searchFacetEntry(namepart),
-    [On.FOCUS_ON_SEARCH]: () => {
-        console.log("focus on search");
-    },
     [On.UPSERT_QUANTITY]: async ({commit}, {trunk, quantity}) => {
         await rest.upsertQuantity(trunk._id, quantity);
         commit(Do.UPSERT_QUANTITY, {trunk, quantity});

@@ -1,6 +1,6 @@
 <template>
-    <main-dialog :dialog="Dial.CONFIGURE_ROOT" @focus="" @esc="close" @enter="validate" ref="dialog">
-        <template v-if="visible" slot-scope="dialog">
+    <main-dialog :dialog="Dial.CONFIGURE_ROOT" @focus="" @esc="close" @enter="validate" ref="dialog" @show="show">
+        <template>
             <v-card>
                 <v-card-title class="grey lighten-4 py-4 title">
                     Configurer une ressource
@@ -9,7 +9,8 @@
                     <v-container grid-list-md text-xs-center>
                         <v-layout row>
                             <v-flex xs12>
-                                {{tree.trunk.quantity.qt}}{{unitlongname(tree.trunk.quantity.unit)}} {{tree.trunk.name}}
+                                <inplace-edit :initial="initialParent.qt" @ok="parentQt" @ko=""/>
+                                <inplace-unit-edit :initial="initialParent.unit" @ok="parentUnit" samegrandeur/> de {{initialParent.name}}
                             </v-flex>
                         </v-layout>
                         <v-layout row>
@@ -19,7 +20,8 @@
                         </v-layout>
                         <v-layout row>
                             <v-flex xs12>
-                                {{root.trunk.quantity.qt}}{{unitlongname(root.trunk.quantity.unit)}} {{root.trunk.name}}
+                                <inplace-edit :initial="initialChild.qt" @ok="childQt" @ko=""/>
+                                <inplace-unit-edit :initial="initialChild.unit" @ok="childUnit" samegrandeur/> de {{initialChild.name}}
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -36,41 +38,54 @@
 
 <script>
     import MainDialog from "./MainDialog";
-    import {mapActions, mapGetters} from "vuex";
+    import {mapGetters} from "vuex";
     import {Dial} from "../../const/dial";
     import Lookup from "../common/Lookup";
+    import InplaceEdit from "../common/InplaceEdit";
+    import InplaceUnitEdit from "../common/InplaceUnitEdit";
 
     export default {
         name: 'configure-root-dialog',
+        props: ['parent', 'child'],
         data() {
             return {
+                initialParent: {_id: null, qt: null, unit: null, name: null},
+                initialChild: {_id: null, qt: null, unit: null, name: null},
                 Dial: Dial
             }
         },
-        computed: {
-            ...mapGetters(['dialogData', 'dialogVisible']),
-            visible: function () {
-                return this.dialogVisible(Dial.CONFIGURE_ROOT);
-            },
-            dialog: function () {
-                return this.dialogData(Dial.CONFIGURE_ROOT)
-            },
-            tree: function () {
-                return this.dialog.tree;
-            },
-            root: function () {
-                return this.dialog.root;
-            }
+        components: {
+            InplaceUnitEdit,
+            InplaceEdit, Lookup, MainDialog
         },
-        components: {Lookup, MainDialog},
         methods: {
-            ...mapActions({}),
             validate() {
-                //TODO
                 this.close();
             },
             close: function () {
                 this.$refs.dialog.close();
+            },
+            parentQt(value) {
+                this.initialParent.qt = value;
+            },
+            parentUnit(unit) {
+                this.initialParent.unit = unit.shortname;
+            },
+            childQt(value) {
+                this.initialChild.qt = value;
+            },
+            childUnit(unit) {
+                this.initialChild.unit = unit.shortname;
+            },
+            show() {
+                this.map(this.parent, this.initialParent);
+                this.map(this.child, this.initialChild);
+            },
+            map(tree, initial) {
+                initial._id = tree._id;
+                initial.qt = tree.trunk.quantity.qt;
+                initial.unit = tree.trunk.quantity.unit;
+                initial.name = tree.trunk.name;
             }
         }
     }

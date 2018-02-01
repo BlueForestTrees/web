@@ -44,6 +44,7 @@
         watch: {
             visible(visible) {
                 if (visible) {
+                    this.$emit('show');
                     this.$nextTick(()=>this.$emit('focus'));
                 }
             }

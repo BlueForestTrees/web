@@ -1,6 +1,8 @@
 <template>
     <v-card>
 
+        <configure-root-dialog :parent="beforeLast" :child="last"/>
+
         <v-toolbar>
             <v-toolbar-title>Ressources</v-toolbar-title>
             <v-spacer/>
@@ -51,9 +53,12 @@
     import {Dial} from "../../const/dial";
     import Do from "../../const/do";
     import Loading from "../common/Loading";
+    import ConfigureRootDialog from "../dialog/ConfigureRootDialog";
 
     export default {
-        components: {Loading},
+        components: {
+            ConfigureRootDialog,
+            Loading},
         props: ['tree'],
         data() {
             return {
@@ -83,10 +88,7 @@
                 this.showDialog({dialog: Dial.RESSOURCE, data: {parentRessource: this.last}});
             },
             configureLast() {
-                this.showDialog({dialog: Dial.CONFIGURE_ROOT, data: {
-                        tree: this.beforeLast,
-                        root: this.last
-                    }});
+                this.showDialog({dialog: Dial.CONFIGURE_ROOT});
             },
             deleteLast() {
                 this.dispatchDeleteRessources({

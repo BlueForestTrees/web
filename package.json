@@ -7,7 +7,6 @@
   "license": "MIT",
   "scripts": {
     "dev-web": "webpack-dev-server --inline --progress",
-    "prod-web": "webpack-dev-server --inline --progress --public blueforest.org:8079",
     "build-web": "webpack"
   },
   "devDependencies": {

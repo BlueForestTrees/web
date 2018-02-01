@@ -13,7 +13,6 @@ export default {
     DELETE_TREE: 'deleteTree',
     DELETE_ROOT: 'deleteRessources',
     EXCEPTION: 'exception',
-    FOCUS_ON_SEARCH: "focusOnSearch",
     LOAD_FACETS: 'loadFacets',
     LOAD_UNITS: 'loadUnits',
     LOAD_OPEN_TREE: 'loadOpenTree',
