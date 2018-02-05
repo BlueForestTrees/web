@@ -1,6 +1,5 @@
 <template>
     <v-card class="grid" style="padding:1em;">
-        grandeurs : {{_grandeurs}}
         <span v-for="(units,name) in _grandeurs" :key="name" v-if="unitsMatch(units, filter)">
             <v-subheader>{{name}}</v-subheader>
             <v-container fluid grid-list-sm>
