@@ -63,17 +63,6 @@
         },
         methods: {
             ...mapActions({dispatchConfigureRoot: On.CONFIGURE_ROOT}),
-            async ok() {
-                await this.dispatchConfigureRoot({
-                    trunk: this.trunk,
-                    root: this.root,
-                    config: {
-                        trunk: this.trunkConfig,
-                        root: this.rootConfig
-                    }
-                });
-                this.close();
-            },
             close: function () {
                 this.$refs.dialog.close();
             },
@@ -94,10 +83,20 @@
                 this.initConfig(this.rootConfig, this.root);
             },
             initConfig(config, tree) {
-                config._id = tree._id;
-                config.qt = tree.trunk.quantity.qt;
-                config.unit = tree.trunk.quantity.unit;
+                config.qt = tree.trunk.quantity && tree.trunk.quantity.qt;
+                config.unit = tree.trunk.quantity && tree.trunk.quantity.unit;
                 config.name = tree.trunk.name;
+            },
+            async ok() {
+                await this.dispatchConfigureRoot({
+                    trunk: this.trunk,
+                    root: this.root,
+                    config: {
+                        trunk: {_id: this.trunk._id, quantity: this.trunkConfig},
+                        root: {_id: this.root._id, quantity: this.rootConfig}
+                    }
+                });
+                this.close();
             }
         }
     }

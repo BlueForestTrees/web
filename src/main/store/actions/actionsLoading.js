@@ -42,8 +42,6 @@ export default {
     },
 
     [On.CONFIGURE_ROOT]: ({},{trunk, root, config})=>{
-
-        console.log(trunk, root, config);
-
+        rest.putRoot(config.trunk, config.root);
     }
 };

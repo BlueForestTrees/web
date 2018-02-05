@@ -1,5 +1,5 @@
 <template>
-    <span v-if="!editing" @click="edit">{{initial}}</span>
+    <span v-if="!editing" @click="edit">{{initial || '?'}}</span>
     <v-layout v-else row>
         <v-text-field autofocus auto-grow
                       :value="initial"

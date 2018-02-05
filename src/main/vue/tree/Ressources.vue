@@ -15,7 +15,7 @@
                 <v-breadcrumbs id="ressource_stack">
                   <v-icon slot="divider">keyboard_arrow_up</v-icon>
                   <v-breadcrumbs-item v-for="(tree,pathIndex) in path" :key="tree._id" v-if="tree.trunk">
-                      <span @click="select(pathIndex,tree)">{{ tree.trunk.name }}</span>
+                      <span @click="select(pathIndex,tree)"><qt-unit-name :trunk="tree.trunk"/></span>
                   </v-breadcrumbs-item>
                 </v-breadcrumbs>
             </v-layout>
@@ -54,9 +54,11 @@
     import Do from "../../const/do";
     import Loading from "../common/Loading";
     import ConfigureRootDialog from "../dialog/ConfigureRootDialog";
+    import QtUnitName from "../common/QtUnitName";
 
     export default {
         components: {
+            QtUnitName,
             ConfigureRootDialog,
             Loading},
         props: ['tree'],
