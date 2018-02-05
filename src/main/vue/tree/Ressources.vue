@@ -2,6 +2,7 @@
     <v-card>
 
         <configure-root-dialog :trunk="beforeLast" :root="last"/>
+        <add-ressource-dialog :tree="last"/>
 
         <v-toolbar>
             <v-toolbar-title>Ressources</v-toolbar-title>
@@ -9,40 +10,14 @@
             <v-icon @click="" style="cursor: pointer">add</v-icon>
         </v-toolbar>
 
-        <span class="air">
-
-            <v-layout row wrap justify-center align-center>
-                <v-breadcrumbs id="ressource_stack">
-                  <v-icon slot="divider">keyboard_arrow_up</v-icon>
-                  <v-breadcrumbs-item v-for="(tree,pathIndex) in path" :key="tree._id" v-if="tree.trunk">
-                      <span @click="select(pathIndex,tree)"><qt-unit-name :trunk="tree.trunk"/></span>
-                  </v-breadcrumbs-item>
-                </v-breadcrumbs>
+        <v-container grid-list-md text-xs-center v-if="last.trunk">
+            <v-layout row>
+                <v-flex>
+                    <ressource-bar :path="path" @delete="deleteLast" @select="select"/>
+                    <ressource-list :last="last" @select="select(path.length, $event)" @add="addRessourceToLast"/>
+                </v-flex>
             </v-layout>
-
-            <v-layout v-if="last.roots" row wrap justify-center align-center>
-                <template v-for="root in last.roots.items">
-                    <v-chip :key="root._id"
-                            large color="primary" text-color="white"
-                            @click="select(path.length, root)">
-                            {{root.trunk.name}}
-                    </v-chip>
-                </template>
-                <v-btn v-if="this.beforeLast" outline color="primary" fab small @click="configureLast">
-                    <v-icon>build</v-icon>
-                </v-btn>
-                <v-btn outline color="primary" fab small @click="deleteLast">
-                    <v-icon>delete</v-icon>
-                </v-btn>
-                <v-btn outline color="primary" fab small @click="addRessourceToLast">
-                    <v-icon>add</v-icon>
-                </v-btn>
-            </v-layout>
-            <v-layout v-else row wrap justify-center align-center>
-                <loading/>
-            </v-layout>
-
-        </span>
+        </v-container>
     </v-card>
 
 </template>
@@ -50,17 +25,20 @@
 <script>
     import On from "../../const/on";
     import {mapActions, mapMutations} from 'vuex';
-    import {Dial} from "../../const/dial";
     import Do from "../../const/do";
-    import Loading from "../common/Loading";
     import ConfigureRootDialog from "../dialog/ConfigureRootDialog";
-    import QtUnitName from "../common/QtUnitName";
+    import AddRessourceDialog from "../dialog/AddRessourceDialog";
+    import RessourceBar from "../common/RessourceBar";
+    import RessourceList from "../common/RessourceList";
+    import {Dial} from "../../const/dial";
 
     export default {
         components: {
-            QtUnitName,
-            ConfigureRootDialog,
-            Loading},
+            RessourceList,
+            RessourceBar,
+            AddRessourceDialog,
+            ConfigureRootDialog
+        },
         props: ['tree'],
         data() {
             return {
@@ -86,12 +64,6 @@
                 this.path.push(tree);
                 this.dispatchPopulateRoots(tree);
             },
-            addRessourceToLast() {
-                this.showDialog({dialog: Dial.RESSOURCE, data: {parentRessource: this.last}});
-            },
-            configureLast() {
-                this.showDialog({dialog: Dial.CONFIGURE_ROOT});
-            },
             deleteLast() {
                 this.dispatchDeleteRessources({
                     tree: this.beforeLast,
@@ -99,12 +71,9 @@
                 });
                 this.path.splice(-1, 1);
             },
+            addRessourceToLast() {
+                this.showDialog({dialog: Dial.RESSOURCE, data: {parentRessource: this.last}});
+            }
         }
     }
 </script>
-
-<style>
-    #ressource_stack {
-        flex-direction: column;
-    }
-</style>

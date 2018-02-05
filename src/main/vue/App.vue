@@ -13,7 +13,6 @@
             <facet-entry-dialog/>
             <create-trunk-dialog/>
             <lookup-tree-dialog/>
-            <add-ressource-dialog/>
 
         </v-app>
     </div>
@@ -33,7 +32,6 @@
     import LookupTreeDialog from "./dialog/CompareToDialog";
     import Test from "./Test";
     import Corner from "./layout/Corner";
-    import AddRessourceDialog from "./dialog/AddRessourceDialog";
     import FacetDialog from "./dialog/FacetDialog";
 
     export default {
@@ -48,7 +46,7 @@
             }
         },
         components: {
-            FacetDialog,Blueforest,AddRessourceDialog,Corner,Test,LookupTreeDialog,Lookup,FacetEntryDialog, CreateTrunkDialog, MainFooter, BottomRightBtns, Bar, LeftMenu
+            FacetDialog,Blueforest,Corner,Test,LookupTreeDialog,Lookup,FacetEntryDialog, CreateTrunkDialog, MainFooter, BottomRightBtns, Bar, LeftMenu
         },
         mounted: async function () {
             await this.$store.dispatch(On.MOUNT_APP);

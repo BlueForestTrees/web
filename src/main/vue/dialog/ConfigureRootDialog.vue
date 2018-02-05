@@ -16,7 +16,7 @@
                         </v-layout>
                         <v-layout row>
                             <v-flex xs12>
-                                <v-icon>keyboard_arrow_up</v-icon>
+                                <v-icon large>keyboard_arrow_up</v-icon>
                             </v-flex>
                         </v-layout>
                         <v-layout row>
@@ -30,7 +30,7 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer/>
-                    <v-btn flat color="primary" @click="close">Annuler</v-btn>
+                    <v-btn flat @click="close">Annuler</v-btn>
                     <v-btn flat @click="ok">Ok</v-btn>
                 </v-card-actions>
             </v-card>

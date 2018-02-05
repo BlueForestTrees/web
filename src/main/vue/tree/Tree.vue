@@ -3,14 +3,10 @@
             <v-layout row wrap>
 
                 <v-flex xs12 d-flex><branches/></v-flex>
-
                 <v-flex xs4 d-flex><facets :facets="tree.facets"/></v-flex>
                 <v-flex xs4 d-flex><trunk :trunk="tree.trunk"/></v-flex>
-
                 <v-flex xs4 d-flex><externalites/></v-flex>
-
-                <v-flex xs12 d-flex><ressources v-if="tree" :tree="tree"/></v-flex>
-
+                <v-flex xs12 d-flex><ressources :tree="tree"/></v-flex>
                 <v-flex xs12 d-flex><bilan-ressources :tree="tree"/></v-flex>
 
             </v-layout>
