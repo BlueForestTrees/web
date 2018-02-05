@@ -52,9 +52,5 @@ export default {
     [On.UPSERT_QUANTITY]: async ({commit}, {trunk, quantity}) => {
         await rest.upsertQuantity(trunk._id, quantity);
         commit(Do.UPSERT_QUANTITY, {trunk, quantity});
-    },
-
-    [On.ADD_RESSOURCE_TO]: ({}, parentRessource) => {
-        console.log(On.ADD_RESSOURCE_TO, parentRessource);
     }
 };

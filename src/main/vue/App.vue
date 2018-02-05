@@ -9,7 +9,6 @@
 
             <main-footer/>
 
-
             <facet-dialog/>
             <facet-entry-dialog/>
             <create-trunk-dialog/>
@@ -36,7 +35,6 @@
     import Corner from "./layout/Corner";
     import AddRessourceDialog from "./dialog/AddRessourceDialog";
     import FacetDialog from "./dialog/FacetDialog";
-    import {mapGetters} from 'vuex';
 
     export default {
         watch: {
@@ -54,9 +52,6 @@
         },
         mounted: async function () {
             await this.$store.dispatch(On.MOUNT_APP);
-        },
-        methods:{
-            ...mapGetters(['dialog'])
         }
     }
 </script>

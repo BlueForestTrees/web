@@ -1,7 +1,7 @@
 <template>
     <v-card>
 
-        <configure-root-dialog :parent="beforeLast" :child="last"/>
+        <configure-root-dialog :trunk="beforeLast" :root="last"/>
 
         <v-toolbar>
             <v-toolbar-title>Ressources</v-toolbar-title>

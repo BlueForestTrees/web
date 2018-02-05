@@ -1,31 +1,50 @@
 <template>
-    <v-card class="grid" style="padding:1em;">
-        <span v-for="(units,name) in _grandeurs" :key="name" v-if="unitsMatch(units, filter)">
-            <v-subheader>{{name}}</v-subheader>
-            <v-container fluid grid-list-sm>
+
+    <span>
+        <v-layout row wrap v-if="grandeur">
+            <v-chip v-for="unit in grandeur" :key="unit.shortname" v-if="unitMatch(unit, filter)"
+                    @click="select(unit)"
+                    fab dark small color="primary" text-color="white">
+                {{unit.shortname || "pas d'unité"}}
+            </v-chip>
+        </v-layout>
+        <v-layout v-else row wrap>
+            <span v-for="(units,name) in stateGrandeurs" :key="name" v-if="unitsMatch(units, filter)">
+                <v-subheader>{{name}}</v-subheader>
                 <v-layout row wrap>
-                    <v-chip v-for="unit in units" :key="unit.shortname" v-if="unitMatch(unit, filter)"
-                            @click="select(unit)"
-                            fab dark small color="primary" text-color="white">
-                        {{unit.shortname || "pas d'unité"}}
-                    </v-chip>
+                <v-chip v-for="unit in units" :key="unit.shortname" v-if="unitMatch(unit, filter)"
+                        @click="select(unit)"
+                        fab dark small color="primary" text-color="white">
+                {{unit.shortname || "pas d'unité"}}
+                </v-chip>
                 </v-layout>
-            </v-container>
-        </span>
-    </v-card>
+            </span>
+        </v-layout>
+    </span>
+
+
 </template>
 
 <script>
 
     import {mapState} from 'vuex';
+    import {mapGetters} from 'vuex';
 
     export default {
-        props: ['filter', 'grandeurs'],
+        props: {
+            filter: {}, unit: {},
+            samegrandeur: {
+                type: Boolean
+            }
+        },
         computed: {
-            _grandeurs : function (){
-                return this.grandeurs || this.stateGrandeurs;
+            grandeur: function () {
+                if (this.unit && this.samegrandeur) {
+                    return this.unitGrandeur(this.unit);
+                }
             },
-            ...mapState({stateGrandeurs: 'grandeurs'}),
+            ...mapGetters({unitGrandeur: 'grandeurOfUnitShortname'}),
+            ...mapState({stateGrandeurs: 'grandeurs'})
         },
         methods: {
             unitsMatch(units, filter) {

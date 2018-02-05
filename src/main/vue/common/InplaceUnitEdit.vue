@@ -1,40 +1,28 @@
 <template>
-    <span v-if="!editing" @click="edit">{{initial}}</span>
-    <v-layout v-else row>
-        <unit-grid v-if="editing" :grandeurs="grandeurs" @select="ok"/>
-    </v-layout>
+    <v-menu v-model="editing">
+        <span @click="edit" slot="activator">{{initial || '?'}}</span>
+        <v-card>
+            <v-card-text>
+                <unit-grid :unit="initial" samegrandeur @select="ok"/>
+            </v-card-text>
+        </v-card>
+    </v-menu>
 </template>
 
 
 <script>
     import UnitGrid from "./UnitGrid";
-    import {mapState} from 'vuex';
-    import {mapGetters} from 'vuex';
 
     export default {
         components: {UnitGrid},
         name: 'inplace-unit-edit',
-        props: {
-            initial: {
-                type: String
-            },
-            samegrandeur: {
-                type: Boolean
-            }
-        },
+        props: ['initial'],
         data: function () {
             return {
                 editing: false
             }
         },
-        computed: {
-            ...mapState({stateGrandeurs: 'grandeurs'}),
-            grandeurs: function () {
-                return this.samegrandeur ? this.grandeur(this.initial) : this.stateGrandeurs;
-            }
-        },
         methods: {
-            ...mapGetters(['grandeur']),
             edit: function () {
                 this.editing = true;
             },
@@ -42,7 +30,7 @@
                 this.editing = false;
                 this.$emit("ok", unit);
             },
-            ko: function () {
+            close: function () {
                 this.editing = false;
                 this.$emit("ko");
             }

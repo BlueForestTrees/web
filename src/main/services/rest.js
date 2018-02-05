@@ -3,8 +3,8 @@ import api from './api'
 export default {
     //ROOT
     getRoots: _id => api.get(`api/root/${_id}`),
-    postRoot: (trunk, root) => api.post(`api/root`,{trunk, root}),
-    linkRoot: (trunkId, rootId) => api.post(`api/root`,{trunk:{_id:trunkId},root:{_id:rootId}}),
+    putRoot: (trunk, root) => api.post(`api/root`,{trunk, root}),
+    postRoot: (trunkId, rootId) => api.post(`api/root`,{trunk:{_id:trunkId},root:{_id:rootId}}),
     deleteRoot: (treeId, rootId) => api.del(`api/root/${treeId}/${rootId}`),
 
     //FACETS

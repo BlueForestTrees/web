@@ -1,7 +1,6 @@
 export default {
     ADD_FACET: "addFacet",
     ADD_ROOTS: 'addRoots',
-    ADD_RESSOURCE_TO: 'addRessourceTo',
     CLONE_TREE:"cloneTree",
     CLONE_OPEN_TREE:"cloneOpenTree",
     CREATE_AND_OPEN_TREE: 'onCreateAndOpenTree',
@@ -24,5 +23,6 @@ export default {
     RENAME_TRUNK: 'renameTrunk',
     SEARCH_TREE: 'searchTree',
     SEARCH_FACET_ENTRY: 'searchFacetEntry',
-    UPSERT_QUANTITY: "upsertQuantity"
+    UPSERT_QUANTITY: "upsertQuantity",
+    CONFIGURE_ROOT: "configureRoot"
 };
