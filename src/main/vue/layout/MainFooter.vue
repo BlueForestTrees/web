@@ -1,15 +1,9 @@
 <template>
     <v-footer color="blue darken-3" class="white--text" app>
         <span>Blueforest Trees</span>
+        <a class="github-button" href="https://github.com/slimee/trees" data-size="large" aria-label="Participer sur GitHub">Participer sur GitHub</a>
         <v-spacer></v-spacer>
-
-        <v-btn round outline text-color="white">
-            Participer au développement
-        </v-btn>
-
         <href a="http://github.com/slimee/trees"></href>
-
-        <span>&copy; 2017</span>
     </v-footer>
 </template>
 
