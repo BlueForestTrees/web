@@ -11,7 +11,7 @@
 
             <Bottom-right-btns/>
 
-            <!--<main-footer/>-->
+            <main-footer/>
 
 
             <facet-dialog/>
