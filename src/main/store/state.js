@@ -23,9 +23,7 @@ const dialogs = () => _.reduce(Dial, (dials, key) => {
 export const tree = () => ({_id: null, trunk: null, selection: null, facets: null});
 
 export default {
-
-    tree: tree(),
-
+    tree: null,
     compareTo: null,
     labelsGrandeurs: null,
     grandeurs: null,

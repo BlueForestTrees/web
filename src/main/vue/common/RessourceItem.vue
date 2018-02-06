@@ -2,10 +2,15 @@
     <v-chip color="primary" text-color="white" @click="select" @blur="unselect">
         <v-icon v-if="buttons"
                 left color="white"
+                @click.stop="$emit('load')">
+            keyboard_arrow_up
+        </v-icon>
+        <qt-unit-name :trunk="item.trunk" />
+        <v-icon v-if="buttons"
+                right color="white"
                 @click.stop="$emit('configure')">
             build
         </v-icon>
-        <qt-unit-name :trunk="item.trunk" />
         <v-icon v-if="buttons"
                 right color="white"
                 @click.stop="$emit('delete')">

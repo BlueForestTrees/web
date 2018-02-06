@@ -1,8 +1,7 @@
 <template>
     <v-card>
-
         <configure-root-dialog :trunk="beforeLast" :root="last"/>
-        <add-ressource-dialog :tree="last"/>
+        <add-ressource-dialog :tree="last" v-if="last"/>
 
         <v-toolbar>
             <v-toolbar-title>Ressources</v-toolbar-title>
@@ -10,16 +9,15 @@
             <v-icon @click="" style="cursor: pointer">add</v-icon>
         </v-toolbar>
 
-        <v-container grid-list-md text-xs-center v-if="last.trunk">
+        <v-container grid-list-md text-xs-center v-if="last && last.trunk">
             <v-layout row>
                 <v-flex>
-                    <ressource-bar :path="path" @delete="deleteLast" @select="select"/>
+                    <ressource-bar :path="path" @delete="deleteLast" @select="select" @load="load"/>
                     <ressource-list :last="last" @select="select(path.length, $event)" @add="addRessourceToLast"/>
                 </v-flex>
             </v-layout>
         </v-container>
     </v-card>
-
 </template>
 
 <script>
@@ -42,12 +40,23 @@
         props: ['tree'],
         data() {
             return {
-                path: [this.tree]
+                path: []
             }
+        },
+        watch: {
+            tree(val) {
+                this.path = [val];
+            }
+        },
+        beforeMount:function(){
+            this.path = [this.tree];
         },
         computed: {
             last: function () {
-                return this.path[this.path.length - 1];
+                if (this.path.length > 0)
+                    return this.path[this.path.length - 1];
+                else
+                    return null;
             },
             beforeLast: function () {
                 if (this.path.length > 1)
@@ -57,7 +66,11 @@
             }
         },
         methods: {
-            ...mapActions({dispatchDeleteRessources: On.DELETE_ROOT, dispatchPopulateRoots: On.POPULATE_ROOTS}),
+            ...mapActions({
+                dispatchDeleteRessources: On.DELETE_ROOT,
+                dispatchPopulateRoots: On.POPULATE_ROOTS,
+                dispatchLoad: On.LOAD_OPEN_TREE
+            }),
             ...mapMutations({showDialog: Do.SHOW_DIALOG}),
             select(pathIndex, tree) {
                 this.path.splice(pathIndex);
@@ -73,6 +86,9 @@
             },
             addRessourceToLast() {
                 this.showDialog({dialog: Dial.RESSOURCE, data: {parentRessource: this.last}});
+            },
+            load(idx, item){
+                this.dispatchLoad(item);
             }
         }
     }

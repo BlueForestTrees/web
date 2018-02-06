@@ -23,6 +23,6 @@ export default {
     RENAME_TRUNK: 'renameTrunk',
     SEARCH_TREE: 'searchTree',
     SEARCH_FACET_ENTRY: 'searchFacetEntry',
-    UPSERT_QUANTITY: "upsertQuantity",
+    PUT_TRUNK_QUANTITY: "putTrunkQuantity",
     CONFIGURE_ROOT: "configureRoot"
 };

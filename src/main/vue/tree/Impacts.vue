@@ -1,7 +1,7 @@
 <template>
     <v-card>
         <v-toolbar>
-            <v-toolbar-title>Externalités</v-toolbar-title>
+            <v-toolbar-title>Impacts</v-toolbar-title>
             <v-spacer/>
             <v-icon @click="" style="cursor: pointer">add</v-icon>
         </v-toolbar>
@@ -13,6 +13,6 @@
 
 <script>
     export default {
-        name: 'externalites'
+        name: 'impacts'
     }
 </script>

@@ -35,10 +35,11 @@ export default {
     },
     [Do.CLOSE_TREE]: (state) => {
         state.compareTo = null;
-        state.tree = tree();
+        state.tree = null;
     },
-    [Do.INIT_TREE]: ({}, {tree, _id}) => {
-        Vue.set(tree, "_id", _id);
+
+    [Do.INIT_TREE]: (state, tree) => {
+        Vue.set(state, "tree", tree);
     },
 
     [Do.SHOW_DIALOG]: (state, {dialog, data}) => {
@@ -84,7 +85,7 @@ export default {
         Vue.set(state, "tree", right);
         Vue.set(state, "compareTo", left);
     },
-    [Do.UPSERT_QUANTITY]: ({}, {trunk, quantity}) => {
+    [Do.PUT_TRUNK_QUANTITY]: ({}, {trunk, quantity}) => {
         Vue.set(trunk, "quantity", quantity);
     },
 
@@ -93,7 +94,7 @@ export default {
         if (!tree.facets) {
             Vue.set(tree, "facets", facets);
         } else {
-            tree.facets.facets.push(facets);
+            tree.facets.items.push(facets);
         }
     },
     [Do.SET_TRUNK]: ({}, {tree, trunk}) => {

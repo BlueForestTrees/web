@@ -7,6 +7,7 @@
                     <ressource-item :item="item"
                                     @configure="configure" @delete="$emit('delete')"
                                     @select="$emit('select',i,item)"
+                                    @load="$emit('load', i, item)"
                                     :selectable="i>0"
                                     :forceSelect="i===path.length-1"/>
                 </v-flex>
