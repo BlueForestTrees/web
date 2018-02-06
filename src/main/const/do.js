@@ -1,12 +1,13 @@
 export default {
     ADD_FACET: "addFacet",
     ADD_ROOTS:'addRoots',
+    SET_ROOTS:'setRoots',
     ADD_FACETS: 'addFacets',
     CLEAR_DIALOG_DATA: 'clearDialogData',
     CLEAR_RESULTS: 'clearResults',
     CLEAR_SEARCH: 'clearSearch',
     CLEAR_COMPARE_TO: 'clearCompareTo',
-    CLOSE_TRUNK: 'closeTrunk',
+    CLOSE_TREE: 'closeTree',
     DELETE_FACETS: 'deleteFacets',
     DELETE_ROOT: 'deleteRoot',
     HIDE_FACET_DIALOG:'hideFacetDialog',
@@ -22,5 +23,5 @@ export default {
     UPDATE_DIALOG_VISIBILITY: 'updateDialogVisibility',
     UPDATE_DIALOG_DATA: 'updateDialogData',
     UPDATE_GRANDEURS: "UPDATE_GRANDEURS",
-    UPSERT_QUANTITY: 'upsertQuantity'
+    PUT_TRUNK_QUANTITY: 'upsertQuantity'
 };

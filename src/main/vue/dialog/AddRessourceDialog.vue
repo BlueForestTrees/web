@@ -1,16 +1,15 @@
 <template>
-    <main-dialog :dialog="Dial.RESSOURCE" @focus="$refs.lookup.focus()" @esc="close" @enter="validate" ref="dialog">
+    <main-dialog v-if="trunk" :dialog="Dial.RESSOURCE" @focus="$refs.lookup.focus()" @esc="close" @enter="validate"
+                 ref="dialog" @show="show">
         <template slot-scope="dialog">
             <v-card>
                 <v-card-title class="grey lighten-4 py-4 title">
-                    Ajouter des ressource
+                    Ajouter à {{trunk.name}}
                 </v-card-title>
                 <v-card-text>
-
-                    <v-chip v-for="(ressource,idx) in ressources" :key="ressource._id" close @input="unselect(idx)">
-                        {{ressource.name}}
+                    <v-chip v-for="(item,idx) in selection" :key="item._id" close @input="unselect(idx)">
+                        {{item.trunk.name}}
                     </v-chip>
-
                     <lookup @select="select" cancreate ref="lookup"/>
                 </v-card-text>
                 <v-card-actions>
@@ -31,28 +30,40 @@
     import Lookup from "../common/Lookup";
 
     export default {
+        name: 'add-ressource-dialog',
+        props: ['tree'],
         data() {
             return {
                 Dial: Dial,
-                ressources: [],
-                editing:false
+                selection: [],
+                editing: false
             }
         },
-        components: {Lookup,MainDialog},
-        props: ['data'],
+        components: {Lookup, MainDialog},
+        computed: {
+            trunk: function () {
+                return this.tree.trunk;
+            }
+        },
         methods: {
             ...mapActions({
-                addRessources: On.ADD_ROOTS
+                dispatchAddRessources: On.ADD_ROOTS
             }),
-            select(ressource){
-                this.ressources.push(ressource);
+            select(ressource) {
+                this.selection.push(ressource);
             },
-            unselect(idx){
-                this.ressources.splice(idx,1);
+            unselect(idx) {
+                this.selection.splice(idx, 1);
             },
             validate() {
-                this.addRessources({tree:this.$refs.dialog.data.parentRessource, roots:this.ressources});
+                this.dispatchAddRessources({
+                    tree: this.tree,
+                    roots: this.selection
+                });
                 this.close();
+            },
+            show() {
+                this.selection = []
             },
             close: function () {
                 this.$refs.dialog.close();

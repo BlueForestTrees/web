@@ -24,7 +24,7 @@
         methods: {
             ...mapMutations({
                 "doShowDialog": Do.SHOW_DIALOG,
-                "close":Do.CLOSE_TRUNK
+                "close":Do.CLOSE_TREE
             }),
             onAddClick(){
                 this.doShowDialog({dialog: Dial.TRUNK});

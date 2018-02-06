@@ -69,7 +69,6 @@
             selectGrandeur(grandeur) {
                 this.grandeur = grandeur;
             },
-            ...mapGetters(['qtUnitName']),
             ...mapActions({"createFacetEntry": On.CREATE_FACET_ENTRY}),
             validate: function () {
                 this.createFacetEntry({name: this.name, grandeur: this.grandeur});

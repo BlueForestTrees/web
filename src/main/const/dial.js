@@ -4,5 +4,6 @@ export const Dial = {
     FACET_ENTRY: "facetEntry",
     FACET: "facet",
     COMPARE_TO: "compareTo",
-    RESSOURCE: "ressource"
+    RESSOURCE: "ressource",
+    CONFIGURE_ROOT:"configureRoot"
 };

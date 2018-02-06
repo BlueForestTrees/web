@@ -13,7 +13,7 @@
                 <v-list-tile-action><v-icon>toll</v-icon></v-list-tile-action>
                 <v-list-tile-content><v-list-tile-title>Cloner {{tree.name}}</v-list-tile-title></v-list-tile-content>
             </v-list-tile>
-            <v-list-tile @click="deleteTree(tree)" v-if="tree">
+            <v-list-tile @click="deleteTrunk(tree)" v-if="tree">
                 <v-list-tile-action><v-icon>deletep</v-icon></v-list-tile-action>
                 <v-list-tile-content><v-list-tile-title>Supprimer {{tree.name}}</v-list-tile-title></v-list-tile-content>
             </v-list-tile>
@@ -55,7 +55,7 @@
             action(name){
                 this[name]();
             },
-            ...mapActions({'deleteTree':On.DELETE_TREE, 'cloneOpenTree':On.CLONE_OPEN_TREE})
+            ...mapActions({"deleteTrunk":On.DELETE_TREE, 'cloneOpenTree':On.CLONE_OPEN_TREE})
         },
         data: () => ({
             Dial:Dial,

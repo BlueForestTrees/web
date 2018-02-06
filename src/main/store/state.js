@@ -10,7 +10,8 @@ const dialogFactory = {
     [Dial.FACET_ENTRY]: () => ({qt: null, unit: null, name: null}),
     [Dial.COMPARE_TO]: () => ({name: null}),
     [Dial.FACET]: () => ({name: null}),
-    [Dial.RESSOURCE]: () => ({parentRessource: null})
+    [Dial.RESSOURCE]: () => ({parentRessource: null}),
+    [Dial.CONFIGURE_ROOT]: () => ({tree: null, root: null})
 };
 
 export const createDialog = name => (dialogFactory[name] && dialogFactory[name]()) || (console.warn(`state.js il manque dialogFactory['${name}']`) || {});
@@ -19,12 +20,10 @@ const dialogs = () => _.reduce(Dial, (dials, key) => {
     return dials;
 }, {});
 
-export const tree = () => ({_id: null, trunk: null, roots: null, facets: null});
+export const tree = () => ({_id: null, trunk: null, selection: null, facets: null});
 
 export default {
-
-    tree: tree(),
-
+    tree: null,
     compareTo: null,
     labelsGrandeurs: null,
     grandeurs: null,

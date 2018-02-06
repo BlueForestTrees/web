@@ -17,15 +17,6 @@ const updateDialog = (state, {dialog, data}) => {
         console.error(`state not found : state.dialogs['${dialog}']`);
     }
 };
-const updateDialogField = (state, {dialog, data}) => {
-    if (state.dialogs[dialog]) {
-        _.forEach(data, (value, key) => {
-            state.dialogs[dialog].data[key] = value;
-        });
-    } else {
-        console.error(`state not found : state.dialogs['${dialog}']`);
-    }
-};
 const cleanDialog = (state, dialog) => {
     updateDialog(state, {dialog, data: createDialog(dialog)});
 };
@@ -42,12 +33,16 @@ export default {
             .keyBy('shortname')
             .value();
     },
-
-    [Do.SHOW_FACET_ENTRY_DIALOG]: state => {
-        state.dialogs2.facetEntryDialog.visible = true;
+    [Do.CLOSE_TREE]: (state) => {
+        state.compareTo = null;
+        state.tree = null;
     },
-    [Do.SHOW_DIALOG]: (state, {dialog, data}) => {
 
+    [Do.INIT_TREE]: (state, tree) => {
+        Vue.set(state, "tree", tree);
+    },
+
+    [Do.SHOW_DIALOG]: (state, {dialog, data}) => {
         if (!data) {
             cleanDialog(state, dialog);
         } else {
@@ -68,32 +63,19 @@ export default {
 
 
     [Do.CLEAR_RESULTS]: state => {
-        state.search.results = [];
+        state.search.searchResults = [];
     },
     [Do.CLEAR_SEARCH]: state => {
         state.search.term = null;
-        state.search.results = null;
+        state.search.searchResults = null;
     },
 
 
-    [Do.OPEN_COMPARE_TO]: (state, value) => {
-        state.compareTo = value;
-    },
     [Do.CLEAR_COMPARE_TO]: (state) => {
         state.compareTo = null;
     },
-    [Do.SET_TRUNK]: (state, {tree, trunk}) => {
-        Vue.set(tree, "trunk", trunk);
-    },
-    [Do.INIT_TREE]: (state, {tree, treeToLoad}) => {
-        Vue.set(tree, "_id", treeToLoad._id);
-    },
     [Do.RENAME_TRUNK]: (state, rename) => {
         Vue.set(rename.trunk, "name", rename.name);
-    },
-    [Do.CLOSE_TRUNK]: (state) => {
-        state.compareTo = null;
-        state.tree = tree();
     },
 
     [Do.SWAP_LEFT_RIGHT]: state => {
@@ -103,27 +85,32 @@ export default {
         Vue.set(state, "tree", right);
         Vue.set(state, "compareTo", left);
     },
-    [Do.UPSERT_QUANTITY]: (state, {trunk, quantity}) => {
+    [Do.PUT_TRUNK_QUANTITY]: ({}, {trunk, quantity}) => {
         Vue.set(trunk, "quantity", quantity);
     },
 
 
-    [Do.ADD_FACETS]: (state, {tree, facets}) => {
+    [Do.ADD_FACETS]: ({}, {tree, facets}) => {
         if (!tree.facets) {
             Vue.set(tree, "facets", facets);
         } else {
-            tree.facets.facets.push(facets.facets);
+            tree.facets.items.push(facets);
         }
     },
-    [Do.ADD_ROOTS]: (state, {tree, roots}) => {
-        if (!tree.roots) {
-            Vue.set(tree, "roots", roots);
-        } else {
-            tree.roots.push(roots.roots);
-        }
+    [Do.SET_TRUNK]: ({}, {tree, trunk}) => {
+        Vue.set(tree, "trunk", trunk);
+    },
+    [Do.OPEN_COMPARE_TO]: (state, value) => {
+        state.compareTo = value;
+    },
+    [Do.SET_ROOTS]: ({}, {tree, roots}) => {
+        Vue.set(tree, "roots", roots);
+    },
+    [Do.ADD_ROOTS]: ({}, {tree, roots}) => {
+        tree.roots.items.push(...roots);
     },
 
-    [Do.ADD_FACET]: (state, {tree, facet}) => {
+    [Do.ADD_FACET]: ({}, {tree, facet}) => {
         if (!tree.facets) {
             Vue.set(tree, "facets", [facet]);
         } else {
@@ -131,14 +118,14 @@ export default {
         }
     },
 
-    [Do.DELETE_FACETS]: (state, {tree, toDelete}) => {
+    [Do.DELETE_FACETS]: ({}, {tree, toDelete}) => {
         if (tree.facets) {
             _.forEach(toDelete, facet => tree.facets.splice(tree.facets.indexOf(facet), 1));
         }
     },
-    [Do.DELETE_ROOT]: (state, {tree, root}) => {
+    [Do.DELETE_ROOT]: ({}, {tree, root}) => {
         if (tree.roots) {
-            tree.roots.splice(tree.roots.indexOf(root), 1);
+            tree.roots.items.splice(tree.roots.items.indexOf(root), 1);
         }
     }
 

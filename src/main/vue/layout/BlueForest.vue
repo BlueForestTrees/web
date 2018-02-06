@@ -6,7 +6,7 @@
                 <div class="logo-back"/>
 
                 <transition name="fade">
-                    <tree v-if="treeing" :tree="tree"/>
+                    <tree v-if="tree" :tree="tree"/>
                 </transition>
 
                 <transition name="fade">
