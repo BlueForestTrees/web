@@ -15,7 +15,7 @@
                     </v-list-tile-action>
                     <v-list-tile-content>
                         <v-list-tile-title>{{facet.name}}</v-list-tile-title>
-                        <v-list-tile-sub-title>{{facet.quantity.qt}}{{facet.quantity.unit}}</v-list-tile-sub-title>
+                        <v-list-tile-sub-title>{{facet.qt}}{{facet.unit}}</v-list-tile-sub-title>
                     </v-list-tile-content>
                     <v-list-tile-action>
                         <transition name="fade">

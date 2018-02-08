@@ -5,5 +5,6 @@ export default {
     qt: () => (tree) => _.find(tree.facetEntries, {name: "quantité"}),
     comparing: (state) => state.tree && state.compareTo,
     unit: state => shortname => state.units[shortname],
-    grandeurOfUnitShortname: (state, getters) => shortname => state.grandeurs[getters.unit(shortname).grandeur]
+    grandeurOfUnitShortname: (state, getters) => shortname => getters.grandeurByName(getters.unit(shortname).grandeur),
+    grandeurByName: (state) => grandeurName => ({[grandeurName]: state.grandeurs[grandeurName]})
 };

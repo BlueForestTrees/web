@@ -11,6 +11,7 @@ export default {
     //FACETS
     getFacets: _id => api.get(`api/facet/${_id}`),
     deleteFacets: (treeId, facetIds) => api.post('api/facet/deletion', {treeId, facetIds}),
+    addFacet: (treeId, facet) => api.post(`api/facet/${treeId}`, {facet}),
 
     //TRUNKS
     search: name => api.get(`api/trunks?q=${name}`),
@@ -22,7 +23,6 @@ export default {
     getTrunk: _id => api.get(`api/trunk/${_id}`),
     renameTrunk: (_id, name) => api.put(`api/trunk/${_id}`, {name}),
     upsertQuantity: (treeId, quantity) => api.put(`api/trunk/${treeId}`, {quantity}),
-    addFacet: (treeId, facet) => api.post('api/trunk/facet', {treeId, facet}),
 
     //GRANDEURS
     grandeurs: () => api.get('api/grandeurs'),

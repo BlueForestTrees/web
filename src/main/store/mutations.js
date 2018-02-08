@@ -111,16 +111,16 @@ export default {
     },
 
     [Do.ADD_FACET]: ({}, {tree, facet}) => {
-        if (!tree.facets) {
-            Vue.set(tree, "facets", [facet]);
+        if (tree.facets) {
+            tree.facets.items.push(facet);
         } else {
-            tree.facets.push(facet);
+            Vue.set(tree, "facets", [facet]);
         }
     },
 
-    [Do.DELETE_FACETS]: ({}, {tree, toDelete}) => {
-        if (tree.facets) {
-            _.forEach(toDelete, facet => tree.facets.splice(tree.facets.indexOf(facet), 1));
+    [Do.DELETE_FACETS]: ({}, {facets, toDelete}) => {
+        if (facets.items) {
+            _.forEach(toDelete, facet => facets.items.splice(facets.items.indexOf(facet), 1));
         }
     },
     [Do.DELETE_ROOT]: ({}, {tree, root}) => {

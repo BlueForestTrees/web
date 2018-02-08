@@ -13,6 +13,8 @@
                     <compare-to v-if="comparing" :leftTree="tree" :rightTree="compareTo"/>
                 </transition>
 
+                <facet-dialog v-if="tree" :tree="tree"/>
+
             </v-layout>
         </v-container>
     </v-content>
@@ -21,12 +23,14 @@
 <script>
     import Tree from "../tree/Tree";
 
-    import {mapState, mapGetters} from 'vuex';
+    import {mapGetters, mapState} from 'vuex';
     import Lookup from "../common/Lookup";
     import CompareTo from "./CompareTo";
+    import FacetDialog from "../dialog/FacetDialog";
 
     export default {
         components: {
+            FacetDialog,
             CompareTo,
             Lookup, Tree
         },

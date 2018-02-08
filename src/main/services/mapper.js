@@ -62,7 +62,7 @@ export const extraireAxePrincipal = (axis, leftTree, rightTree) => {
 const applyCoef = (tree, coef) => {
     tree.quantity.qt *= coef;
     tree.price *= coef;
-    _.each(tree.facets, facet => facet.qt *= coef);
+    _.each(tree.facets.items, facet => facet.qt *= coef);
     return tree;
 };
 
@@ -99,8 +99,8 @@ export const toRadarData = ({leftTree, rightTree}) => {
         return;
     }
 
-    const leftFacets = leftTree.facets;
-    const rightFacets = rightTree.facets;
+    const leftFacets = leftTree.facets.items;
+    const rightFacets = rightTree.facets.items;
 
     const leftNames = _.map(leftFacets, 'name');
     const rightNames = _.map(rightFacets, 'name');
