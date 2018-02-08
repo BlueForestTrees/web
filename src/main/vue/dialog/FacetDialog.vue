@@ -34,7 +34,7 @@
                                 <v-subheader>Entrez une quantité:</v-subheader>
                             </v-flex>
                             <v-flex xs8>
-                                <v-text-field label="quantité (ex.: 10)" v-model="qt"/>
+                                <v-text-field label="quantité (ex.: 10)" v-modessh pi@l="qt"/>
                             </v-flex>
                         </v-layout>
 

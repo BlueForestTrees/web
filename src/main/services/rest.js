@@ -24,8 +24,10 @@ export default {
     upsertQuantity: (treeId, quantity) => api.put(`api/trunk/${treeId}`, {quantity}),
     addFacet: (treeId, facet) => api.post('api/trunk/facet', {treeId, facet}),
 
-    //DE TOUT
+    //GRANDEURS
     grandeurs: () => api.get('api/grandeurs'),
+
+    //FACET ENTRY
     createFacetEntry: facet => api.post('api/facetEntry', facet),
-    searchFacetEntry: namepart => api.get(`api/facetEntries?q=${namepart}`)
+    searchFacetEntry: namepart => api.get(`api/facetEntry?q=${namepart}`)
 }
