@@ -4,6 +4,10 @@ import {trunky, trunkyAll} from "../../services/mapper";
 import rest from "../../services/rest";
 
 export default {
+
+    [On.INVALIDATE_TRUNK]: async ({dispatch, state}) => {
+          return dispatch(On.LOAD_OPEN_TREE,state.tree);
+    },
     [On.LOAD_OPEN_TREE]: async ({commit, state, dispatch}, {_id}) => {
 
         const tree = {_id};
@@ -11,7 +15,8 @@ export default {
         Promise.all([
             dispatch(On.LOAD_TRUNK, {_id})
                 .then(trunk => commit(Do.SET_TRUNK, {tree, trunk}))
-                .then(() => dispatch(On.POPULATE_ROOTS, tree)),
+                .then(() => dispatch(On.POPULATE_ROOTS, tree))
+                .then(() => dispatch(On.LOAD_TANK, tree)),
             dispatch(On.LOAD_FACETS, {_id})
                 .then(facets => commit(Do.ADD_FACETS, {tree, facets}))
         ]).then(() => commit(Do.INIT_TREE, tree));

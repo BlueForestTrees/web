@@ -10,6 +10,7 @@ import facetEntryActions from "./actions/facetEntryActions";
 import rootActions from "./actions/rootActions";
 import treeActions from "./actions/treeActions";
 import trunkActions from "./actions/trunkActions";
+import tankActions from "./actions/tankActions";
 
 
 
@@ -26,7 +27,8 @@ const store = new Vuex.Store({
         ...facetEntryActions,
         ...rootActions,
         ...treeActions,
-        ...trunkActions
+        ...trunkActions,
+        ...tankActions
     }
 });
 

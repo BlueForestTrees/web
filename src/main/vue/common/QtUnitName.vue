@@ -1,12 +1,12 @@
 <template>
     <span>
-        {{ trunk.quantity ? trunk.quantity.qt : '?' }}{{ trunk.quantity ? trunk.quantity.unit : '?'}} {{ trunk.name }}
+        {{ item.quantity ? item.quantity.qt : '?' }}{{ item.quantity ? item.quantity.unit : '?'}} {{ item.name }}
     </span>
 </template>
 
 <script>
     export default {
         name: 'qt-unit-name',
-        props: ['trunk']
+        props: ['item']
     }
 </script>

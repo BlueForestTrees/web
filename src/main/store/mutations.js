@@ -75,7 +75,7 @@ export default {
         state.compareTo = null;
     },
     [Do.RENAME_TRUNK]: (state, rename) => {
-        Vue.set(rename.trunk, "name", rename.name);
+        Vue.set(rename.trunk, "name", rename.newName);
     },
 
     [Do.SWAP_LEFT_RIGHT]: state => {
@@ -105,6 +105,9 @@ export default {
     },
     [Do.SET_ROOTS]: ({}, {tree, roots}) => {
         Vue.set(tree, "roots", roots);
+    },
+    [Do.SET_TANK]: ({}, {tree, tank}) => {
+        Vue.set(tree, "tank", tank);
     },
     [Do.ADD_ROOTS]: ({}, {tree, roots}) => {
         tree.roots.items.push(...roots);

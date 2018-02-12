@@ -170,19 +170,3 @@ export const toRadarData = ({leftTree, rightTree}) => {
 
     return {leftTree:left, rightTree:right};
 };
-
-export const toQtUnit = rawInput => {
-    if (!rawInput)
-        return null;
-    const r = rawInput.match(/^(\d+[.,]?\d*)([a-zA-Z]+)?$/);
-
-    if (r) {
-
-        let q, u;
-        [, q, u] = r;
-
-        return {qt: parseFloat(q.replace(',', '.')), unit: u || ""};
-    } else {
-        return null;
-    }
-};

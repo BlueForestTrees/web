@@ -1,9 +1,12 @@
 import api from './api'
 
 export default {
+    //TANK
+    getTank: (qt, unit, _id) => api.get(`api/tank/${qt}/${unit}/${_id}`),
+
     //ROOT
     getUnquantifiedRoots: (_id) => api.get(`api/root/${_id}`),
-    getQuantifiedRoots: (qt, unit, _id) => api.get(`api/root/${qt}${unit ? '/' + unit : ''}/${_id}`),
+    getQuantifiedRoots: (qt, unit, _id) => api.get(`api/root/${qt}/${unit}/${_id}`),
     putRoot: (trunk, root) => api.put(`api/root`, {trunk, root}),
     postRoot: (trunkId, rootId) => api.post(`api/root`, {trunk: {_id: trunkId}, root: {_id: rootId}}),
     deleteRoot: (treeId, rootId) => api.del(`api/root/${treeId}/${rootId}`),

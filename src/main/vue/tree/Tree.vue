@@ -6,7 +6,7 @@
                 <v-flex xs4 d-flex><trunk :trunk="tree.trunk"/></v-flex>
                 <v-flex xs4 d-flex><impacts/></v-flex>
                 <v-flex xs12 d-flex><ressources :tree="tree"/></v-flex>
-                <v-flex xs12 d-flex><bilan-ressources :tree="tree"/></v-flex>
+                <v-flex xs12 d-flex><tank :tree="tree"/></v-flex>
             </v-layout>
         </v-container>
 </template>
@@ -16,15 +16,15 @@
     import Facets from "./Facets";
     import Branches from "./Branches";
     import Impacts from "./Impacts";
-    import BilanRessources from "./BilanRessources";
     import Trunk from "./Trunk";
     import Ressources from "./Ressources";
+    import Tank from "./Tank";
 
     export default {
         components: {
+            Tank,
             Ressources,
             Trunk,
-            BilanRessources,
             Impacts,
             Branches,
             Facets

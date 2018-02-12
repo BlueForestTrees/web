@@ -2,6 +2,7 @@ export default {
     ADD_FACET: "addFacet",
     ADD_ROOTS:'addRoots',
     SET_ROOTS:'setRoots',
+    SET_TANK: 'setTank',
     ADD_FACETS: 'addFacets',
     CLEAR_DIALOG_DATA: 'clearDialogData',
     CLEAR_RESULTS: 'clearResults',
