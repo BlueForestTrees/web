@@ -9,6 +9,7 @@ export default {
     CLEAR_SEARCH: 'clearSearch',
     CLEAR_COMPARE_TO: 'clearCompareTo',
     CLOSE_TREE: 'closeTree',
+    CLOSE_COMPARE_TO: 'closeCompareTo',
     DELETE_FACETS: 'deleteFacets',
     DELETE_ROOT: 'deleteRoot',
     HIDE_FACET_DIALOG:'hideFacetDialog',

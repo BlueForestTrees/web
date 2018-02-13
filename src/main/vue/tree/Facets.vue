@@ -18,7 +18,7 @@
                         <v-list-tile-sub-title>{{facet.quantity.qt}}{{facet.quantity.unit}}</v-list-tile-sub-title>
                     </v-list-tile-content>
                     <v-list-tile-action>
-                        <transition name="fade">
+                        <transition name="fadeInOut">
                             <v-checkbox v-if="isSelected() || overFacet && overFacet._id === facet._id"
                                         v-model="selectedFacets" :value="facet"/>
                         </transition>
@@ -32,10 +32,9 @@
 
 <script>
     import Do from "../../const/do"
-    import {mapMutations, mapActions} from 'vuex';
+    import {mapActions, mapMutations} from 'vuex';
     import FacetDialog from "../dialog/FacetEntryDialog";
     import {Dial} from "../../const/dial";
-    import {Fly} from "../../const/fly";
     import On from "../../const/on";
 
 
@@ -45,7 +44,7 @@
         },
         data() {
             return {
-                Dial: Dial, Fly: Fly, selectedFacets: [], overFacet: null
+                Dial: Dial, selectedFacets: [], overFacet: null
             }
         },
         props: ['facets'],

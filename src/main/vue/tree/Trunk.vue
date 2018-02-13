@@ -8,7 +8,7 @@
 
         <div class="air">
             <v-layout row align-center>
-                <span style="color:rgba(0,0,0,.54);">Quantité</span>
+                <span style="color:rgba(0,0,0,.54);">{{QUANTITY}}</span>
                 <v-spacer/>
                 <span>
                     <inplace-edit :initial="trunk.quantity.qt" @ok="validateQt"/>
@@ -26,6 +26,7 @@
     import Loading from "../common/Loading";
     import InplaceEdit from "../common/InplaceEdit";
     import InplaceUnitEdit from "../common/InplaceUnitEdit";
+    import {QUANTITY} from "../../const/labels";
 
     export default {
         components: {
@@ -48,6 +49,11 @@
             },
             validateRenaming(newName) {
                 this.renameTrunk({trunk: this.trunk, newName});
+            }
+        },
+        data: function () {
+            return {
+                QUANTITY: QUANTITY
             }
         }
     }

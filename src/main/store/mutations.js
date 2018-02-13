@@ -1,7 +1,6 @@
 import Vue from 'vue'
-import {NONE} from "../services/const";
 import Do from "../const/do";
-import {createDialog, tree} from "./state"
+import {createDialog} from "./state"
 
 const updateDialogVisibility = (state, {dialog, visible}) => {
     if (state.dialogs[dialog]) {
@@ -37,7 +36,9 @@ export default {
         state.compareTo = null;
         state.tree = null;
     },
-
+    [Do.CLOSE_COMPARE_TO]: state => {
+        state.compareTo = null;
+    },
     [Do.INIT_TREE]: (state, tree) => {
         Vue.set(state, "tree", tree);
     },
