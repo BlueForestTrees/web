@@ -88,12 +88,21 @@ export const denorm = tree => ([
 
 export const align = (denorm, coef) => _.forEach(denorm, axis => axis.qt *= coef);
 
-//TODO
 export const separate = (leftAxises, rightAxises) => {
+
+    const leftWithoutQt = _.remove(leftAxises, axis => (_.isNil(axis.qt) || _.isNil(axis.unit)));
+    const rightWithoutQt = _.remove(rightAxises, axis => (_.isNil(axis.qt) || _.isNil(axis.unit)));
+    const leftWithoutRight = _.remove(leftAxises, axis => !_.find(rightAxises, {axis: axis.axis}));
+    const rightWithoutLeft = _.remove(rightAxises, axis => !_.find(leftAxises, {axis: axis.axis}));
+
     return {
-        left: [],
-        common: {left: [], right: []},
-        right: []
+        left: [
+            ...leftWithoutQt, ...leftWithoutRight
+        ],
+        common: {left: leftAxises, right: rightAxises},
+        right: [
+            ...rightWithoutQt, ...rightWithoutLeft
+        ]
     };
 };
 

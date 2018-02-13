@@ -67,7 +67,7 @@
     import Do from "../../const/do";
     import {mapMutations} from 'vuex';
     import {extraireAxisCoef, treeToRadar} from "../../services/mapper";
-    import {radar} from "../../services/d3/radar";
+    import {drawRadar} from "../../services/d3/radar";
 
     export default {
         props: ['leftTree', 'rightTree'],
@@ -102,7 +102,7 @@
                 this.selectAxis(this.axis.name);
             },
             drawRadar() {
-                radar({
+                drawRadar({
                     selectAxis: this.selectAxis,
                     id: ".leftRightRadar",
                     data: [this.radarData.leftTree, this.radarData.rightTree],

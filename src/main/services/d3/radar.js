@@ -3,7 +3,7 @@ import _ from 'lodash';
 import {config} from "./config";
 import {wrap} from "./helper";
 
-export const radar = ({selectAxis, id, data, options, selectedAxis}) => {
+export const drawRadar = ({selectAxis, id, data, options, selectedAxis}) => {
 
     const cfg = config(options);
 

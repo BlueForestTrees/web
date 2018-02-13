@@ -18,6 +18,10 @@
                                 <v-card-text style="height:700px">
                                     <v-layout row style="height: 100%;width: 100%;">
 
+                                        <div class="elevation-1 leftRightRadar" @click.native="axis = $event" style="height: 100%;width: 100%;">
+                                            <v-icon x-large :color="namedColors[0]">label</v-icon>{{leftTree.name}}
+                                            <v-icon x-large :color="namedColors[1]" style="padding-left:0.5em">label</v-icon>{{rightTree.name}}
+                                        </div>
 
                                     </v-layout>
                                 </v-card-text>
@@ -36,52 +40,63 @@
     import {mapGetters, mapMutations} from 'vuex';
     import {QUANTITY} from "../../const/labels";
     import {align, denorm, separate} from "../../services/mapper";
+    import {drawRadar} from "../../services/d3/radar";
 
     export default {
         name: 'compare',
         props: ['leftTree', 'rightTree'],
         methods: {
-            ...mapMutations({"close": Do.CLOSE_COMPARE_TO})
+            ...mapMutations({"close": Do.CLOSE_COMPARE_TO}),
+            changeAxis: function (axis) {
+                this.axis = axis;
+            },
+            draw: function(data){
+                console.log("draw");
+                drawRadar({
+                    selectAxis: this.changeAxis,
+                    id: ".leftRightRadar",
+                    data: [data.common.left, data.common.right],
+                    selectedAxis: this.axis,
+                    options: {color: this.colors}
+                });
+            }
         },
         data: function () {
             return {
-                axis: QUANTITY
+                axis: QUANTITY,
+                namedColors:["cyan darken1","pink darken1"],
+                colors:["#00A0B0", "#CC333F"]
             }
         },
         computed: {
             leftDenorm: function () {
+                console.log("leftDenorm");
                 return denorm(this.leftTree)
             },
             rightDenorm: function () {
+                console.log("rightDenorm");
                 return denorm(this.rightTree)
             },
-            ...mapGetters(['calcCoef']),
             coef: function () {
+                console.log("coef");
                 return this.calcCoef(this.axis, this.leftDenorm, this.rightDenorm);
             },
-            rightAligned: function() {
-                return align(this.rightDenorm, this.coef);
+            ...mapGetters(['calcCoef']),
+            leftAligned: function () {
+                console.log("leftAlign");
+                return this.leftDenorm;
             },
-            separated: function(){
-                return separate(this.leftDenorm, this.rightAligned);
+            rightAligned: function () {
+                console.log("rightAlign");
+                //return align(this.rightDenorm, this.coef);
+                return this.rightDenorm;
+            },
+            separated: function () {
+                console.log("separated");
+                const data = separate(this.leftAligned, this.rightAligned);
+                this.draw(data);
+                return data;
             }
-            /*radarData: function () {
-                return treeToRadar(_.cloneDeep({
-                    axis: this.axis,
-                    leftTree: this.leftTree,
-                    rightTree: this.rightTree
-                }));
-            }*/
-            /*,
-            render: function () {
-                radar({
-                    selectAxis: this.selectAxis,
-                    id: ".leftRightRadar",
-                    data: [this.radarData.leftTree, this.radarData.rightTree],
-                    selectedAxis: this.axis,
-                    options: {color: this.colors}
-                });
-            }*/
         }
     }
 </script>
