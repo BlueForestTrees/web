@@ -8,6 +8,9 @@
                 <v-flex xs12 d-flex><ressources :tree="tree"/></v-flex>
                 <v-flex xs12 d-flex><tank :tree="tree"/></v-flex>
             </v-layout>
+
+            <facet-dialog :tree="tree"/>
+
         </v-container>
 </template>
 
@@ -19,9 +22,11 @@
     import Trunk from "./Trunk";
     import Ressources from "./Ressources";
     import Tank from "./Tank";
+    import FacetDialog from "../dialog/FacetDialog";
 
     export default {
         components: {
+            FacetDialog,
             Tank,
             Ressources,
             Trunk,
@@ -38,6 +43,6 @@
 
 <style>
     .air {
-        margin: 1em
+        margin: 2em
     }
 </style>

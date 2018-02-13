@@ -41,6 +41,9 @@ export default {
     [Do.INIT_TREE]: (state, tree) => {
         Vue.set(state, "tree", tree);
     },
+    [Do.INIT_COMPARE_TO]: (state, compareTo) => {
+        Vue.set(state, "compareTo", compareTo);
+    },
 
     [Do.SHOW_DIALOG]: (state, {dialog, data}) => {
         if (!data) {
@@ -99,9 +102,6 @@ export default {
     },
     [Do.SET_TRUNK]: ({}, {tree, trunk}) => {
         Vue.set(tree, "trunk", trunk);
-    },
-    [Do.OPEN_COMPARE_TO]: (state, value) => {
-        state.compareTo = value;
     },
     [Do.SET_ROOTS]: ({}, {tree, roots}) => {
         Vue.set(tree, "roots", roots);

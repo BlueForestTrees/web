@@ -19,7 +19,7 @@ export default {
     SHOW_OTHER_TREE_DIALOG: "showOtherTreeDialog",
     SWAP_LEFT_RIGHT: 'swapLeftRight',
     SET_TRUNK: 'setTrunk',
-    OPEN_COMPARE_TO: 'openCompareTo',
+    INIT_COMPARE_TO: 'initCompareTo',
     UPDATE_ADDING_SEED: 'updateAddingSeed',
     UPDATE_DIALOG_VISIBILITY: 'updateDialogVisibility',
     UPDATE_DIALOG_DATA: 'updateDialogData',

@@ -20,6 +20,7 @@ export default {
     LOAD_TANK: 'loadTank',
     MOUNT_APP: 'mountApp',
     LOAD_OPEN_COMPARE_TO: 'loadOpenCompareTo',
+    LOAD_TREE: 'loadTree',
     INVALIDATE_TRUNK: 'invalidateTrunk',
     POPULATE_ROOTS: "populateRoots",
     RENAME_TRUNK: 'renameTrunk',

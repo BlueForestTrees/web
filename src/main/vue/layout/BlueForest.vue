@@ -10,10 +10,8 @@
                 </transition>
 
                 <transition name="fade">
-                    <compare-to v-if="comparing" :leftTree="tree" :rightTree="compareTo"/>
+                    <compare-to v-if="tree && compareTo" :leftTree="tree" :rightTree="compareTo"/>
                 </transition>
-
-                <facet-dialog v-if="tree" :tree="tree"/>
 
             </v-layout>
         </v-container>
@@ -23,20 +21,17 @@
 <script>
     import Tree from "../tree/Tree";
 
-    import {mapGetters, mapState} from 'vuex';
+    import {mapState} from 'vuex';
     import Lookup from "../common/Lookup";
     import CompareTo from "./CompareTo";
-    import FacetDialog from "../dialog/FacetDialog";
 
     export default {
         components: {
-            FacetDialog,
             CompareTo,
             Lookup, Tree
         },
         computed: {
-            ...mapState(['tree', 'compareTo']),
-            ...mapGetters(['treeing', 'comparing'])
+            ...mapState(['tree', 'compareTo'])
         },
         methods: {}
     }

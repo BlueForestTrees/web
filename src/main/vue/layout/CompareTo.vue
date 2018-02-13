@@ -72,7 +72,7 @@
         props: ['leftTree', 'rightTree'],
         data() {
             return {
-                defaultAxis: "Nombre",
+                defaultAxis: "Prix",
                 axis: {name: null, coef: NaN},
                 leftHeader: [{text: this.leftTree.name}, {text: 'qt'}, {text: 'unit'}, {text: 'coef'}],
                 rightHeader: [{text: this.rightTree.name}, {text: 'qt'}, {text: 'unit'}, {text: 'coef'}],
@@ -94,7 +94,6 @@
                 }
             },
             isValid(axis) {
-                console.log(axis.coef, isFinite(axis.coef));
                 return isFinite(axis.coef);
             },
             swapLeftRight(){
