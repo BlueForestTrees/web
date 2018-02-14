@@ -53,9 +53,10 @@
             ...mapMutations({"close": Do.CLOSE_COMPARE_TO}),
             changeAxis: function (axis) {
                 this.axis = axis;
+                this.draw(this.separated);
+                //TODO ajouter les lefts et right sur les cotés.
             },
             draw: function (data) {
-                console.log("draw");
                 drawRadar({
                     selectAxis: this.changeAxis,
                     id: ".leftRightRadar",
@@ -74,45 +75,30 @@
         },
         computed: {
             leftDenorm: function () {
-                console.log("leftDenorm");
                 return denorm(this.leftTree)
             },
             rightDenorm: function () {
-                console.log("rightDenorm");
                 return denorm(this.rightTree)
             },
             ...mapGetters(['calcCoef']),
 
             coef: function () {
-                console.log("coef");
                 return this.calcCoef(this.axis, this.leftDenorm, this.rightDenorm);
             },
             leftAligned: function () {
-                console.log("leftAlign");
                 return this.leftDenorm;
             },
             rightAligned: function () {
-                console.log("rightAlign");
                 return align(this.rightDenorm, this.coef);
             },
             separated: function () {
-                console.log("separated");
                 const data = separate(this.leftAligned, this.rightAligned);
-                console.log("ratio");
                 applyRatio(data.common, qt => this.$store.getters.baseQt(qt));
                 return data;
             },
         },
         mounted: function () {
-            console.log("mounted");
             this.draw(this.separated);
         }
-        // ,
-        // watch: {
-        //     separated: function (data) {
-        //         console.log("watch");
-        //         this.draw(data);
-        //     }
-        // }
     }
 </script>

@@ -117,7 +117,7 @@ export const drawRadar = ({selectAxis, id, data, options, selectedAxis}) => {
     const axisLabel = axis => axis !== selectedAxis ?
         axis
         :
-        `${axis}: ${_.find(data[0], {axis}).qt}${_.find(data[0], {axis}).unit}`;
+        `${axis}: ${format(_.find(data[0], {axis}).qt)}${_.find(data[0], {axis}).unit}`;
     //Append the labels at each axis
     axis.append("text")
         .attr("class", "legend")
@@ -199,7 +199,7 @@ export const drawRadar = ({selectAxis, id, data, options, selectedAxis}) => {
         .enter().append("g")
         .attr("class", "radarCircleWrapper");
 
-    const overPoint = d => `${d.tree}: ${d.qt}${d.unit} ${d.axis}`;
+    const overPoint = d => `${d.tree}: ${format(d.qt)}${d.unit} ${d.axis}`;
 
 //Append a set of invisible circles on top for the mouseover pop-up
     blobCircleWrapper.selectAll(".radarInvisibleCircle")
