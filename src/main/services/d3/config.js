@@ -6,7 +6,7 @@ export const config = options => {
             h: 450,				//Height of the circle
         margin: {top: 100, right: 100, bottom: 100, left: 100}, //The margins of the SVG
         levels: 4,				//How many levels or inner circles should there be drawn
-        maxCoef: 1, 			//What is the coef that the biggest circle will represent
+        maxRatio: 1, 			//What is the coef that the biggest circle will represent
         labelFactor: 1.20, 	//How much farther than the radius of the outer circle should the labels be placed
         wrapWidth: 60, 		//The number of pixels after which a label needs to be given a new line
         opacityArea: 0.35, 	//The opacity of the area of the blob

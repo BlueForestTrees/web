@@ -95,14 +95,16 @@
                 const facet = {
                     _id: this.selectedFacetEntry._id,
                     name: this.selectedFacetEntry.name,
-                    qt: parseFloat(this.qt.replace(',','.')),
-                    unit: this.unit.shortname
+                    quantity: {
+                        qt: parseFloat(this.qt.replace(',', '.')),
+                        unit: this.unit.shortname
+                    }
                 };
 
-                this.dispatchAddFacet({tree:this.tree, facet});
+                this.dispatchAddFacet({tree: this.tree, facet});
                 this.close();
             },
-            focus(){
+            focus() {
                 this.$refs.nom.focus();
                 this.namepart = null;
                 this.qt = null;

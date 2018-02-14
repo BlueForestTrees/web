@@ -88,18 +88,36 @@ export const denorm = tree => ([
 
 export const align = (denorm, coef) => _.forEach(denorm, axis => axis.qt *= coef);
 
+export const applyRatio = ({left, right},baseQtFct) => {
+
+    _.forEach(left, leftAxis => {
+        const rightAxis = _.find(right, {type: leftAxis.type, axis: leftAxis.axis});
+
+        const leftBaseQt = baseQtFct(leftAxis);
+        const rightBaseQt = baseQtFct(rightAxis);
+
+        leftAxis.ratio = relativeTo1(leftBaseQt, rightBaseQt);
+        rightAxis.ratio = relativeTo1(rightBaseQt, leftBaseQt);
+
+    });
+
+    return {left, right};
+};
+
 export const separate = (leftAxises, rightAxises) => {
 
     const leftWithoutQt = _.remove(leftAxises, axis => (_.isNil(axis.qt) || _.isNil(axis.unit)));
     const rightWithoutQt = _.remove(rightAxises, axis => (_.isNil(axis.qt) || _.isNil(axis.unit)));
     const leftWithoutRight = _.remove(leftAxises, axis => !_.find(rightAxises, {axis: axis.axis}));
     const rightWithoutLeft = _.remove(rightAxises, axis => !_.find(leftAxises, {axis: axis.axis}));
+    const commonLeft = leftAxises;
+    const commonRight = rightAxises;
 
     return {
         left: [
             ...leftWithoutQt, ...leftWithoutRight
         ],
-        common: {left: leftAxises, right: rightAxises},
+        common: {left: commonLeft, right: commonRight},
         right: [
             ...rightWithoutQt, ...rightWithoutLeft
         ]

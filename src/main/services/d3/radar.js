@@ -2,19 +2,20 @@ import * as d3 from 'd3';
 import _ from 'lodash';
 import {config} from "./config";
 import {wrap} from "./helper";
+import {format} from "../mapper";
 
 export const drawRadar = ({selectAxis, id, data, options, selectedAxis}) => {
 
     const cfg = config(options);
 
     //If the supplied maxValue is smaller than the actual one, replace by the max in the data
-    var maxValue = Math.max(cfg.maxCoef, d3.max(data, function (i) {
+    var maxValue = Math.max(cfg.maxRatio, d3.max(data, function (i) {
         return d3.max(i.map(function (o) {
-            return o.coef;
+            return o.ratio;
         }))
     }));
 
-    var axisNames = _.map(data[0], 'name'),        //Names of each axis
+    var axisNames = _.map(data[0], 'axis'),        //Names of each axis
         total = axisNames.length,					//The number of different axes
         radius = Math.min(cfg.w / 2, cfg.h / 2), 	//Radius of the outermost circle
         angleSlice = Math.PI * 2 / total;		//The width in radians of each "slice"
@@ -73,16 +74,20 @@ export const drawRadar = ({selectAxis, id, data, options, selectedAxis}) => {
         .style("filter", "url(#glow)");
 
     //Text indicating at what % each level is
-    // axisGrid.selectAll(".axisLabel")
-    //     .data(d3.range(1,(cfg.levels+1)).reverse())
-    //     .enter().append("text")
-    //     .attr("class", "axisLabel")
-    //     .attr("x", 4)
-    //     .attr("y", function(d){return -d*radius/cfg.levels;})
-    //     .attr("dy", "0.4em")
-    //     .style("font-size", "10px")
-    //     .attr("fill", "#737373")
-    //     .text(function(d,i) { return Format(maxValue * d/cfg.levels); });
+    axisGrid.selectAll(".axisLabel")
+        .data(d3.range(1, (cfg.levels + 1)).reverse())
+        .enter().append("text")
+        .attr("class", "axisLabel")
+        .attr("x", 4)
+        .attr("y", function (d) {
+            return -d * radius / cfg.levels;
+        })
+        .attr("dy", "0.4em")
+        .style("font-size", "10px")
+        .attr("fill", "#737373")
+        .text(function (d, i) {
+            return format(maxValue * d / cfg.levels);
+        });
 
     /////////////////////////////////////////////////////////
     //////////////////// Draw the axes //////////////////////
@@ -108,10 +113,11 @@ export const drawRadar = ({selectAxis, id, data, options, selectedAxis}) => {
         .style("stroke", "white")
         .style("stroke-width", "2px");
 
-    const axisLabel = name =>
-        name !== selectedAxis ? name :
-            `${name}: ${_.find(data[0], {name}).qt}${_.find(data[0], {name}).unit}`;
 
+    const axisLabel = axis => axis !== selectedAxis ?
+        axis
+        :
+        `${axis}: ${_.find(data[0], {axis}).qt}${_.find(data[0], {axis}).unit}`;
     //Append the labels at each axis
     axis.append("text")
         .attr("class", "legend")
@@ -132,6 +138,7 @@ export const drawRadar = ({selectAxis, id, data, options, selectedAxis}) => {
         })
         .call(wrap, cfg.wrapWidth);
 
+
     /////////////////////////////////////////////////////////
     ///////////// Draw the radar chart blobs ////////////////
     /////////////////////////////////////////////////////////
@@ -140,7 +147,7 @@ export const drawRadar = ({selectAxis, id, data, options, selectedAxis}) => {
     var radarLine = d3.lineRadial()
         .curve(d3.curveCardinalClosed)
         .radius(function (d) {
-            return rScale(d.coef);
+            return rScale(d.ratio);
         })
         .angle(function (d, i) {
             return i * angleSlice;
@@ -164,34 +171,6 @@ export const drawRadar = ({selectAxis, id, data, options, selectedAxis}) => {
         })
         .style("fill-opacity", cfg.opacityArea);
 
-
-// .on('mouseover', function (d,i){
-//     //Dim all blobs
-//     d3.selectAll(".radarArea")
-//         .transition().duration(200)
-//         .style("fill-opacity", 0.1);
-//     //Bring back the hovered over blob
-//     d3.select(this)
-//         .transition().duration(200)
-//         .style("fill-opacity", 0.7);
-// })
-// .on('mouseout', function(){
-//     //Bring back all blobs
-//     d3.selectAll(".radarArea")
-//         .transition().duration(200)
-//         .style("fill-opacity", cfg.opacityArea);
-// });
-
-//Create the outlines
-// blobWrapper.append("path")
-//     .attr("class", "radarStroke")
-//     .attr("d", function(d,i) { return radarLine(d); })
-//     .style("stroke-width", cfg.strokeWidth + "px")
-//     .style("stroke", function(d,i) { return cfg.color(i); })
-//     .style("fill", "none")
-//     .style("filter" , "url(#glow)");
-
-
 ///////////////////////////////////////////////////////
 ////// Append circles + invisible circles for tooltip /
 ///////////////////////////////////////////////////////
@@ -204,10 +183,10 @@ export const drawRadar = ({selectAxis, id, data, options, selectedAxis}) => {
         .attr("class", "radarCircle")
         .attr("r", cfg.dotRadius)
         .attr("cx", function (d, i) {
-            return rScale(d.coef) * Math.cos(angleSlice * i - Math.PI / 2);
+            return rScale(d.ratio) * Math.cos(angleSlice * i - Math.PI / 2);
         })
         .attr("cy", function (d, i) {
-            return rScale(d.coef) * Math.sin(angleSlice * i - Math.PI / 2);
+            return rScale(d.ratio) * Math.sin(angleSlice * i - Math.PI / 2);
         })
         .style("fill", function (d, i, j) {
             return 0;
@@ -220,7 +199,7 @@ export const drawRadar = ({selectAxis, id, data, options, selectedAxis}) => {
         .enter().append("g")
         .attr("class", "radarCircleWrapper");
 
-    const overPoint = d => `${d.axis}: ${d.qt}${d.unit} ${d.name}`;
+    const overPoint = d => `${d.tree}: ${d.qt}${d.unit} ${d.axis}`;
 
 //Append a set of invisible circles on top for the mouseover pop-up
     blobCircleWrapper.selectAll(".radarInvisibleCircle")
@@ -231,10 +210,10 @@ export const drawRadar = ({selectAxis, id, data, options, selectedAxis}) => {
         .attr("class", "radarInvisibleCircle")
         .attr("r", cfg.dotRadius * 6)
         .attr("cx", function (d, i) {
-            return rScale(d.coef) * Math.cos(angleSlice * i - Math.PI / 2);
+            return rScale(d.ratio) * Math.cos(angleSlice * i - Math.PI / 2);
         })
         .attr("cy", function (d, i) {
-            return rScale(d.coef) * Math.sin(angleSlice * i - Math.PI / 2);
+            return rScale(d.ratio) * Math.sin(angleSlice * i - Math.PI / 2);
         })
         .style("fill", "none")
         .style("pointer-events", "all")

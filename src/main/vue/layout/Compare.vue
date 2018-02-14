@@ -18,9 +18,13 @@
                                 <v-card-text style="height:700px">
                                     <v-layout row style="height: 100%;width: 100%;">
 
-                                        <div class="elevation-1 leftRightRadar" @click.native="axis = $event" style="height: 100%;width: 100%;">
-                                            <v-icon x-large :color="namedColors[0]">label</v-icon>{{leftTree.name}}
-                                            <v-icon x-large :color="namedColors[1]" style="padding-left:0.5em">label</v-icon>{{rightTree.name}}
+                                        <div class="elevation-1 leftRightRadar" @click.native="axis = $event"
+                                             style="height: 100%;width: 100%;">
+                                            <v-icon x-large :color="namedColors[0]">label</v-icon>
+                                            {{leftTree.trunk.name}}
+                                            <v-icon x-large :color="namedColors[1]" style="padding-left:0.5em">label
+                                            </v-icon>
+                                            {{rightTree.trunk.name}}
                                         </div>
 
                                     </v-layout>
@@ -39,7 +43,7 @@
     import Do from "../../const/do";
     import {mapGetters, mapMutations} from 'vuex';
     import {QUANTITY} from "../../const/labels";
-    import {align, denorm, separate} from "../../services/mapper";
+    import {align, applyRatio, denorm, separate} from "../../services/mapper";
     import {drawRadar} from "../../services/d3/radar";
 
     export default {
@@ -50,7 +54,7 @@
             changeAxis: function (axis) {
                 this.axis = axis;
             },
-            draw: function(data){
+            draw: function (data) {
                 console.log("draw");
                 drawRadar({
                     selectAxis: this.changeAxis,
@@ -64,8 +68,8 @@
         data: function () {
             return {
                 axis: QUANTITY,
-                namedColors:["cyan darken1","pink darken1"],
-                colors:["#00A0B0", "#CC333F"]
+                namedColors: ["cyan darken1", "pink darken1"],
+                colors: ["#00A0B0", "#CC333F"]
             }
         },
         computed: {
@@ -77,26 +81,38 @@
                 console.log("rightDenorm");
                 return denorm(this.rightTree)
             },
+            ...mapGetters(['calcCoef']),
+
             coef: function () {
                 console.log("coef");
                 return this.calcCoef(this.axis, this.leftDenorm, this.rightDenorm);
             },
-            ...mapGetters(['calcCoef']),
             leftAligned: function () {
                 console.log("leftAlign");
                 return this.leftDenorm;
             },
             rightAligned: function () {
                 console.log("rightAlign");
-                //return align(this.rightDenorm, this.coef);
-                return this.rightDenorm;
+                return align(this.rightDenorm, this.coef);
             },
             separated: function () {
                 console.log("separated");
                 const data = separate(this.leftAligned, this.rightAligned);
-                this.draw(data);
+                console.log("ratio");
+                applyRatio(data.common, qt => this.$store.getters.baseQt(qt));
                 return data;
-            }
+            },
+        },
+        mounted: function () {
+            console.log("mounted");
+            this.draw(this.separated);
         }
+        // ,
+        // watch: {
+        //     separated: function (data) {
+        //         console.log("watch");
+        //         this.draw(data);
+        //     }
+        // }
     }
 </script>
