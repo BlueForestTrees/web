@@ -4,7 +4,7 @@
             <v-flex>
                 <v-toolbar color="pink" dark>
                     <v-toolbar-side-icon/>
-                    <v-toolbar-title>Comparer {{leftTree.trunk.name}} avec {{rightTree.trunk.name}}</v-toolbar-title>
+                    <v-toolbar-title>Comparer</v-toolbar-title>
                     <v-spacer/>
                     <v-btn @click="close" icon>
                         <v-icon large>highlight_off</v-icon>
@@ -18,14 +18,43 @@
                                 <v-card-text style="height:700px">
                                     <v-layout row style="height: 100%;width: 100%;">
 
-                                        <div class="elevation-1 leftRightRadar" @click.native="axis = $event"
-                                             style="height: 100%;width: 100%;">
-                                            <v-icon x-large :color="namedColors[0]">label</v-icon>
-                                            {{leftTree.trunk.name}}
-                                            <v-icon x-large :color="namedColors[1]" style="padding-left:0.5em">label
-                                            </v-icon>
-                                            {{rightTree.trunk.name}}
-                                        </div>
+                                        <v-card>
+                                            <v-card-title><h4>
+                                                <v-icon x-large :color="namedColors[0]">lens</v-icon>uniquement {{leftTree.trunk.name}}
+                                            </h4></v-card-title>
+                                            <v-divider/>
+                                            <v-list dense>
+                                                <v-list-tile v-for="leftOnlyAxis in separated.left" :key="leftOnlyAxis.axis">
+                                                    <v-list-tile-content>
+                                                        <qt-unit-name :axis="leftOnlyAxis"/>
+                                                    </v-list-tile-content>
+                                                </v-list-tile>
+                                            </v-list>
+                                        </v-card>
+
+
+                                        <v-card>
+                                            <v-card-title><h4>
+                                                <v-icon x-large :color="namedColors[1]">lens</v-icon>uniquement {{rightTree.trunk.name}}
+                                            </h4></v-card-title>
+                                            <v-divider/>
+                                            <v-list dense>
+                                                <v-list-tile v-for="rightOnlyAxis in separated.right" :key="rightOnlyAxis.axis">
+                                                    <v-list-tile-content>
+                                                        <qt-unit-name :axis="rightOnlyAxis"/>
+                                                    </v-list-tile-content>
+                                                </v-list-tile>
+                                            </v-list>
+                                        </v-card>
+                                        <v-card style="height: 100%;width: 100%;">
+                                            <v-card-title>
+                                                <v-flex><h4>
+                                                    {{leftTree.trunk.name}}<v-icon x-large :color="namedColors[0]" style="padding-right: 2em">lens</v-icon>
+                                                    {{rightTree.trunk.name}}<v-icon x-large :color="namedColors[1]">lens</v-icon>
+                                                </h4></v-flex>
+                                            </v-card-title>
+                                            <div class="leftRightRadar" @click.native="axis = $event" style="height: 100%;width: 100%;"/>
+                                        </v-card>
 
                                     </v-layout>
                                 </v-card-text>
@@ -45,8 +74,10 @@
     import {QUANTITY} from "../../const/labels";
     import {align, applyRatio, denorm, separate} from "../../services/mapper";
     import {drawRadar} from "../../services/d3/radar";
+    import QtUnitName from "../common/QtUnitName";
 
     export default {
+        components: {QtUnitName},
         name: 'compare',
         props: ['leftTree', 'rightTree'],
         methods: {
