@@ -6,19 +6,18 @@ import {trunkyAll} from "../../services/mapper";
 
 export default {
 
-    [On.POPULATE_ROOTS]: ({dispatch, commit}, tree) => {
-        return dispatch(On.LOAD_ROOTS, tree.trunk)
-            .then(roots => commit(Do.SET_ROOTS, {tree, roots}));
-        },
-    [On.LOAD_ROOTS]: ({}, {quantity, _id}) => {
-        let qt = quantity && quantity.qt;
-        let unit = quantity && quantity.unit;
-        let roots = qt ? rest.getQuantifiedRoots(qt, unit, _id) : rest.getUnquantifiedRoots(_id);
+    [On.LOAD_ROOTS]: ({commit}, tree) => {
 
-        return roots.then(roots => ({
-            ..._.omit(roots, "items"),
-            items: trunkyAll(roots.items)
-        }));
+        let qt = tree.trunk.quantity && tree.trunk.quantity.qt;
+        let unit = tree.trunk.quantity && tree.trunk.quantity.unit;
+        let loadRoots = (qt && unit) ? rest.getQuantifiedRoots(qt, unit, tree._id) : rest.getUnquantifiedRoots(tree._id);
+
+        return loadRoots
+            .then(roots => ({
+                ..._.omit(roots, "items"),
+                items: trunkyAll(roots.items)
+            }))
+            .then(roots => commit(Do.SET_ROOTS, {tree, roots}));
     },
 
     [On.ADD_ROOTS]: async ({commit}, {tree, roots}) => {

@@ -1,6 +1,8 @@
 import _ from 'lodash';
 import {QUANTITY} from "../const/labels";
 
+export const hasQuantity = trunk => trunk.quantity && trunk.quantity.qt && trunk.quantity.unit;
+
 export const format = v => v < 10 ? Math.floor(v * 100) / 100 : Math.floor(v * 10) / 10;
 
 export const trunkyAll = items => _.map(items, trunky);
@@ -88,7 +90,7 @@ export const denorm = tree => ([
 
 export const align = (denorm, coef) => _.forEach(denorm, axis => axis.qt *= coef);
 
-export const applyRatio = ({left, right},baseQtFct) => {
+export const applyRatio = ({left, right}, baseQtFct) => {
 
     _.forEach(left, leftAxis => {
         const rightAxis = _.find(right, {type: leftAxis.type, axis: leftAxis.axis});
@@ -108,8 +110,10 @@ export const separate = (leftAxises, rightAxises) => {
 
     const leftWithoutQt = _.remove(leftAxises, axis => (_.isNil(axis.qt) || _.isNil(axis.unit)));
     const rightWithoutQt = _.remove(rightAxises, axis => (_.isNil(axis.qt) || _.isNil(axis.unit)));
+
     const leftWithoutRight = _.remove(leftAxises, axis => !_.find(rightAxises, {axis: axis.axis}));
     const rightWithoutLeft = _.remove(rightAxises, axis => !_.find(leftAxises, {axis: axis.axis}));
+
     const commonLeft = leftAxises;
     const commonRight = rightAxises;
 

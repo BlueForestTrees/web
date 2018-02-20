@@ -1,6 +1,6 @@
 <template>
     <v-menu v-model="editing">
-        <span @click="edit" slot="activator">{{initial || '?'}}</span>
+        <span @click="edit" slot="activator">{{initial || 'unit?'}}</span>
         <v-card>
             <v-card-text>
                 <unit-grid :unit="initial" samegrandeur @select="ok"/>

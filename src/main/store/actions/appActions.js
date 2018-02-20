@@ -5,8 +5,8 @@ import units from "../../services/units";
 export default {
     [On.MOUNT_APP]: async ({dispatch}) => {
         await dispatch(On.LOAD_UNITS);
-        await dispatch(On.LOAD_OPEN_TREE, {_id: "aaaaaaaaaaaaaaaaaaaaaaaa"});
-        await dispatch(On.LOAD_OPEN_COMPARE_TO, {_id: "bbbbbbbbbbbbbbbbbbbbbbbb"});
+        /*await dispatch(On.LOAD_OPEN_TREE, {_id: "aaaaaaaaaaaaaaaaaaaaaaaa"});
+        await dispatch(On.LOAD_OPEN_COMPARE_TO, {_id: "bbbbbbbbbbbbbbbbbbbbbbbb"});*/
     },
     [On.EXCEPTION]: ({}, e) => {
         console.error(e);

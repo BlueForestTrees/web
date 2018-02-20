@@ -18,43 +18,20 @@
                                 <v-card-text style="height:700px">
                                     <v-layout row style="height: 100%;width: 100%;">
 
-                                        <v-card>
-                                            <v-card-title><h4>
-                                                <v-icon x-large :color="namedColors[0]">lens</v-icon>uniquement {{leftTree.trunk.name}}
-                                            </h4></v-card-title>
-                                            <v-divider/>
-                                            <v-list dense>
-                                                <v-list-tile v-for="leftOnlyAxis in separated.left" :key="leftOnlyAxis.axis">
-                                                    <v-list-tile-content>
-                                                        <qt-unit-name :axis="leftOnlyAxis"/>
-                                                    </v-list-tile-content>
-                                                </v-list-tile>
-                                            </v-list>
-                                        </v-card>
+                                        <axis-list :axises="separated.left" :name="leftTree.trunk.name" :color="namedColors[0]"/>
 
-
-                                        <v-card>
-                                            <v-card-title><h4>
-                                                <v-icon x-large :color="namedColors[1]">lens</v-icon>uniquement {{rightTree.trunk.name}}
-                                            </h4></v-card-title>
-                                            <v-divider/>
-                                            <v-list dense>
-                                                <v-list-tile v-for="rightOnlyAxis in separated.right" :key="rightOnlyAxis.axis">
-                                                    <v-list-tile-content>
-                                                        <qt-unit-name :axis="rightOnlyAxis"/>
-                                                    </v-list-tile-content>
-                                                </v-list-tile>
-                                            </v-list>
-                                        </v-card>
                                         <v-card style="height: 100%;width: 100%;">
                                             <v-card-title>
-                                                <v-flex><h4>
-                                                    {{leftTree.trunk.name}}<v-icon x-large :color="namedColors[0]" style="padding-right: 2em">lens</v-icon>
-                                                    {{rightTree.trunk.name}}<v-icon x-large :color="namedColors[1]">lens</v-icon>
+                                                <v-flex><h4 class="no-wrap">
+                                                    <span class="leftAir">{{leftTree.trunk.name}}</span><v-icon x-large :color="namedColors[0]" class="rightAir">lens</v-icon>
+                                                    <span>{{rightTree.trunk.name}}</span><v-icon x-large :color="namedColors[1]" class="rightAir">lens</v-icon>
                                                 </h4></v-flex>
                                             </v-card-title>
+                                            <v-divider/>
                                             <div class="leftRightRadar" @click.native="axis = $event" style="height: 100%;width: 100%;"/>
                                         </v-card>
+
+                                        <axis-list :axises="separated.right" :name="rightTree.trunk.name" :color="namedColors[1]"/>
 
                                     </v-layout>
                                 </v-card-text>
@@ -74,10 +51,13 @@
     import {QUANTITY} from "../../const/labels";
     import {align, applyRatio, denorm, separate} from "../../services/mapper";
     import {drawRadar} from "../../services/d3/radar";
-    import QtUnitName from "../common/QtUnitName";
+    import AxisList from "../common/AxisList";
+    import _ from 'lodash';
 
     export default {
-        components: {QtUnitName},
+        components: {
+            AxisList
+        },
         name: 'compare',
         props: ['leftTree', 'rightTree'],
         methods: {
@@ -85,7 +65,6 @@
             changeAxis: function (axis) {
                 this.axis = axis;
                 this.draw(this.separated);
-                //TODO ajouter les lefts et right sur les cotés.
             },
             draw: function (data) {
                 drawRadar({
@@ -106,24 +85,30 @@
         },
         computed: {
             leftDenorm: function () {
+                console.log("leftDenorm");
                 return denorm(this.leftTree)
             },
             rightDenorm: function () {
+                console.log("rightDenorm");
                 return denorm(this.rightTree)
             },
             ...mapGetters(['calcCoef']),
 
             coef: function () {
+                console.log("coef");
                 return this.calcCoef(this.axis, this.leftDenorm, this.rightDenorm);
             },
             leftAligned: function () {
+                console.log("leftAligned");
                 return this.leftDenorm;
             },
             rightAligned: function () {
-                return align(this.rightDenorm, this.coef);
+                console.log("rightAligned");
+                return align(_.cloneDeep(this.rightDenorm), this.coef);
             },
             separated: function () {
-                const data = separate(this.leftAligned, this.rightAligned);
+                console.log("separated");
+                const data = separate(_.cloneDeep(this.leftAligned), _.cloneDeep(this.rightAligned));
                 applyRatio(data.common, qt => this.$store.getters.baseQt(qt));
                 return data;
             },
@@ -133,3 +118,17 @@
         }
     }
 </script>
+
+<style>
+    .no-wrap{
+        flex: 0 0 auto;
+    }
+
+    .rightAir{
+        padding-right: 2em
+    }
+
+    .leftAir{
+        padding-left: 2em
+    }
+</style>

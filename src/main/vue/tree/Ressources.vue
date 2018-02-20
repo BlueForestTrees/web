@@ -68,14 +68,14 @@
         methods: {
             ...mapActions({
                 dispatchDeleteRessources: On.DELETE_ROOT,
-                dispatchPopulateRoots: On.POPULATE_ROOTS,
+                dispatchLoadRoots: On.LOAD_ROOTS,
                 dispatchLoad: On.LOAD_OPEN_TREE
             }),
             ...mapMutations({showDialog: Do.SHOW_DIALOG}),
             select(pathIndex, tree) {
                 this.path.splice(pathIndex);
                 this.path.push(tree);
-                this.dispatchPopulateRoots(tree);
+                this.dispatchLoadRoots(tree);
             },
             deleteLast() {
                 this.dispatchDeleteRessources({

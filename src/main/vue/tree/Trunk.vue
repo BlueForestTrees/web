@@ -11,8 +11,8 @@
                 <span style="color:rgba(0,0,0,.54);">{{QUANTITY}}</span>
                 <v-spacer/>
                 <span>
-                    <inplace-edit :initial="trunk.quantity.qt" @ok="validateQt"/>
-                    <inplace-unit-edit :initial="trunk.quantity.unit" @ok="validateUnit"/>
+                    <inplace-edit :initial="trunk.quantity && trunk.quantity.qt" @ok="validateQt"/>
+                    <inplace-unit-edit :initial="trunk.quantity && trunk.quantity.unit" @ok="validateUnit"/>
                 </span>
             </v-layout>
         </div>
@@ -42,10 +42,12 @@
                 renameTrunk: On.RENAME_TRUNK
             }),
             validateQt(newQt) {
-                this.putQuantity({trunk: this.trunk, quantity: {qt: newQt, unit: this.trunk.quantity.unit}});
+                const unit = (this.trunk.quantity && this.trunk.quantity.unit) || null;
+                this.putQuantity({trunk: this.trunk, quantity: {qt: newQt, unit}});
             },
             validateUnit(newUnit) {
-                this.putQuantity({trunk: this.trunk, quantity: {qt: this.trunk.quantity.qt, unit: newUnit.shortname}});
+                const qt = (this.trunk.quantity && this.trunk.quantity.qt) || 1;
+                this.putQuantity({trunk: this.trunk, quantity: {qt, unit: newUnit.shortname}});
             },
             validateRenaming(newName) {
                 this.renameTrunk({trunk: this.trunk, newName});

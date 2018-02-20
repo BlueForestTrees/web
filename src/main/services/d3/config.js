@@ -2,9 +2,8 @@ import * as d3 from "d3";
 
 export const config = options => {
     const def = {
-        w: 450,				//Width of the circle
-            h: 450,				//Height of the circle
-        margin: {top: 100, right: 100, bottom: 100, left: 100}, //The margins of the SVG
+        w: 500,				//Width of the circle
+        h: 500,				//Height of the circle
         levels: 4,				//How many levels or inner circles should there be drawn
         maxRatio: 1, 			//What is the coef that the biggest circle will represent
         labelFactor: 1.20, 	//How much farther than the radius of the outer circle should the labels be placed

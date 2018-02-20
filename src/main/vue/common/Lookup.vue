@@ -57,7 +57,7 @@
         methods: {
             ...mapActions({
                 dispatchSearch: On.SEARCH_TREE,
-                dispatchCreateTree: On.CREATE_TREE
+                dispatchCreateTree: On.CREATE_TRUNK
             }),
             focus() {
                 this.$refs.termInput.focus();

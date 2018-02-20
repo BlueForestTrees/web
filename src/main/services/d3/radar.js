@@ -36,10 +36,11 @@ export const drawRadar = ({selectAxis, id, data, options, selectedAxis}) => {
     var svg = d3.select(id).append("svg")
         .attr("width", "100%")
         .attr("height", "100%")
-        .attr("class", "radar" + id);
+        .attr("class", "radar" + id)
+        .attr("viewBox", "-100 -50 700 700");
     //Append a g element
     var g = svg.append("g")
-        .attr("transform", "translate(" + (cfg.w / 2 + cfg.margin.left) + "," + (cfg.h / 2 + cfg.margin.top) + ")");
+        .attr("transform", "translate(" + (cfg.w / 2) + "," + (cfg.h / 2) + ")");
 
     /////////////////////////////////////////////////////////
     ////////// Glow filter for some extra pizzazz ///////////

@@ -1,7 +1,7 @@
 <template>
     <v-card>
         <v-toolbar>
-            <v-toolbar-title>Bilan Ressources</v-toolbar-title>
+            <v-toolbar-title>Equivalence</v-toolbar-title>
             <v-spacer/>
             <v-icon @click="" style="cursor: pointer">add</v-icon>
         </v-toolbar>

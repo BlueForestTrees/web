@@ -15,9 +15,8 @@ export default {
     [On.LOAD_TREE]: async ({commit, state, dispatch}, {_id}) => {
         const tree = {_id};
         await Promise.all([
-            dispatch(On.LOAD_TRUNK, {_id})
-                .then(trunk => commit(Do.SET_TRUNK, {tree, trunk}))
-                .then(() => dispatch(On.POPULATE_ROOTS, tree))
+            dispatch(On.LOAD_TRUNK, tree)
+                .then(() => dispatch(On.LOAD_ROOTS, tree))
                 .then(() => dispatch(On.LOAD_TANK, tree)),
             dispatch(On.LOAD_FACETS, {_id})
                 .then(facets => commit(Do.ADD_FACETS, {tree, facets}))
@@ -25,7 +24,7 @@ export default {
         return tree;
     },
     [On.CREATE_AND_OPEN_TREE]: async ({dispatch}, {name}) => {
-        dispatch(On.LOAD_OPEN_TREE, await dispatch(On.CREATE_TREE, name));
+        dispatch(On.LOAD_OPEN_TREE, await dispatch(On.CREATE_TRUNK, name));
     },
     [On.CLONE_OPEN_TREE]: async ({dispatch}, tree) => {
         dispatch(On.LOAD_OPEN_TREE, await dispatch(On.CLONE_TREE, tree));
@@ -33,16 +32,10 @@ export default {
 
     [On.SEARCH_TREE]: async ({commit}, term) => trunkyAll(await rest.search(term)),
 
-    [On.CLONE_TREE]: async ({}, {_id}) => {
-        return rest.cloneTrunk(_id);
-    },
+    [On.CLONE_TREE]: ({dispatch}, {_id}) => dispatch(On.CLONE_TRUNK, _id),
 
-    [On.CREATE_TREE]: async ({commit, state, dispatch}, name) => {
-        return trunky(await rest.createTrunk({name}));
-    },
-    [On.DELETE_TREE]: async ({commit}, tree) => {
-        await rest.deleteTrunk(tree._id);
-        commit(Do.CLOSE_TREE);
-    }
+    [On.DELETE_TREE]: ({commit}, tree) =>
+        rest.deleteTrunk(tree._id)
+            .then(() => commit(Do.CLOSE_TREE))
 
 }
