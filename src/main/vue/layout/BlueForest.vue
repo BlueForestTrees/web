@@ -5,12 +5,12 @@
 
                 <div class="logo-back"/>
 
-                <transition name="fade">
-                    <tree v-if="tree" :tree="tree"/>
+                <transition name="fadeInOut">
+                    <tree v-if="tree && !compareTo" :tree="tree"/>
                 </transition>
 
-                <transition name="fade">
-                    <compare-to v-if="comparing" :leftTree="tree" :rightTree="compareTo"/>
+                <transition name="fadeInOut">
+                    <compare v-if="tree && compareTo" :leftTree="tree" :rightTree="compareTo"/>
                 </transition>
 
             </v-layout>
@@ -21,18 +21,17 @@
 <script>
     import Tree from "../tree/Tree";
 
-    import {mapState, mapGetters} from 'vuex';
+    import {mapState} from 'vuex';
     import Lookup from "../common/Lookup";
-    import CompareTo from "./CompareTo";
+    import Compare from "./Compare";
 
     export default {
         components: {
-            CompareTo,
+            Compare,
             Lookup, Tree
         },
         computed: {
-            ...mapState(['tree', 'compareTo']),
-            ...mapGetters(['treeing', 'comparing'])
+            ...mapState(['tree', 'compareTo'])
         },
         methods: {}
     }
@@ -52,15 +51,15 @@
         background: url(/img/Bleuie.png) no-repeat;
     }
 
-    .fade-quick-enter-active, .fade-enter-active {
+    .fadeInOut-quick-enter-active, .fadeInOut-enter-active {
         transition: opacity .35s
     }
 
-    .fade-leave-active {
+    .fadeInOut-leave-active {
         transition: opacity .2s
     }
 
-    .fade-quick-enter, .fade-quick-leave-to, .fade-enter, .fade-leave-to {
+    .fadeInOut-quick-enter, .fadeInOut-quick-leave-to, .fadeInOut-enter, .fadeInOut-leave-to {
         opacity: 0
     }
 </style>

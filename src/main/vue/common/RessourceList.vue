@@ -5,7 +5,7 @@
                 <v-chip :key="root._id"
                         color="primary" text-color="white"
                         @click="$emit('select', root)">
-                    <qt-unit-name :trunk="root.trunk"/>
+                    <qt-unit-name :item="root.trunk"/>
                 </v-chip>
             </template>
 

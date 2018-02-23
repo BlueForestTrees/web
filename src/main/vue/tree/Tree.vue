@@ -4,10 +4,14 @@
                 <v-flex xs12 d-flex><branches/></v-flex>
                 <v-flex xs4 d-flex><facets :facets="tree.facets"/></v-flex>
                 <v-flex xs4 d-flex><trunk :trunk="tree.trunk"/></v-flex>
-                <v-flex xs4 d-flex><impacts/></v-flex>
+                <v-flex xs4 d-flex><impacts :impacts="tree.impacts"/></v-flex>
+                <v-flex xs12 d-flex><tank :tree="tree"/></v-flex>
                 <v-flex xs12 d-flex><ressources :tree="tree"/></v-flex>
-                <v-flex xs12 d-flex><bilan-ressources :tree="tree"/></v-flex>
             </v-layout>
+
+            <facet-dialog :tree="tree"/>
+            <impact-dialog :tree="tree"/>
+
         </v-container>
 </template>
 
@@ -15,17 +19,21 @@
     import {mapState} from 'vuex';
     import Facets from "./Facets";
     import Branches from "./Branches";
-    import Impacts from "./Impacts";
-    import BilanRessources from "./BilanRessources";
     import Trunk from "./Trunk";
     import Ressources from "./Ressources";
+    import Tank from "./Tank";
+    import FacetDialog from "../dialog/FacetDialog";
+    import Impacts from "./Impacts";
+    import ImpactDialog from "../dialog/ImpactDialog";
 
     export default {
         components: {
+            ImpactDialog,
+            Impacts,
+            FacetDialog,
+            Tank,
             Ressources,
             Trunk,
-            BilanRessources,
-            Impacts,
             Branches,
             Facets
         },
@@ -38,6 +46,6 @@
 
 <style>
     .air {
-        margin: 1em
+        margin: 2em
     }
 </style>

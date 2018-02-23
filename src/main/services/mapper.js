@@ -1,3 +1,8 @@
+import _ from 'lodash';
+import {QUANTITY} from "../const/labels";
+
+export const hasQuantity = trunk => trunk.quantity && trunk.quantity.qt && trunk.quantity.unit;
+
 export const format = v => v < 10 ? Math.floor(v * 100) / 100 : Math.floor(v * 10) / 10;
 
 export const trunkyAll = items => _.map(items, trunky);
@@ -14,12 +19,6 @@ const addAllSeeds = (trunk, tank) => {
         }
     });
     return tank;
-};
-
-
-const baseValueByAxis = {
-    "Prix": tree => ({qt:tree.price,unit:"€"}),
-    "Poids": tree => ({qt:tree.quantity.qt,unit:tree.quantity.unit})
 };
 
 const facetUnit = (tree, name) => {
@@ -40,38 +39,94 @@ const facetQt = (tree, name) => {
     }
 };
 
-export const extraireAxePrincipal = (axis, leftTree, rightTree) => {
+export const extraireAxisCoef = (name, leftTree, rightTree) => {
     let coef = null;
-    let qt = 69;
-    let unit = "mmk";
+    let qt = null;
+    let unit = null;
 
-    if (baseValueByAxis[axis]) {
+    const baseValueByAxis = {
+        "Prix": tree => ({qt: tree.price, unit: "€"}),
+        "Poids": tree => ({qt: tree.quantity.qt, unit: tree.quantity.unit})
+    };
+
+    if (baseValueByAxis[name]) {
         //c'est une base
-        coef = baseValueByAxis[axis](leftTree).qt / baseValueByAxis[axis](rightTree).qt;
-        qt = Math.max(baseValueByAxis[axis](leftTree).qt,baseValueByAxis[axis](rightTree).qt);
-        unit = baseValueByAxis[axis](leftTree).unit;
+        coef = baseValueByAxis[name](leftTree).qt / baseValueByAxis[name](rightTree).qt;
+        qt = Math.max(baseValueByAxis[name](leftTree).qt, baseValueByAxis[name](rightTree).qt);
+        unit = baseValueByAxis[name](leftTree).unit;
     } else {
         //c'est une facet
-        coef = facetQt(leftTree, axis) / facetQt(rightTree, axis);
-        qt = Math.max(facetQt(leftTree, axis), facetQt(rightTree, axis));
-        unit = facetUnit(leftTree, axis);
+        coef = facetQt(leftTree, name) / facetQt(rightTree, name);
+        qt = Math.max(facetQt(leftTree, name), facetQt(rightTree, name));
+        unit = facetUnit(leftTree, name);
     }
-    return {name:axis, coef, qt, unit};
-};
-
-const applyCoef = (tree, coef) => {
-    tree.quantity.qt *= coef;
-    tree.price *= coef;
-    _.each(tree.facets, facet => facet.qt *= coef);
-    return tree;
+    return {name, coef, qt, unit};
 };
 
 
-const relativeTo1 = (first, second) => first > second ? 1 : format(first / second);
+export const denormItem = ({name}, type, items) => _.map(items, item => ({
+    tree: name,
+    type,
+    axis: item.name,
+    qt: item.quantity.qt,
+    unit: item.quantity.unit
+}));
 
+/**
+ * tree =>
+ * [
+ {tree: "leftTreeName", type:"facet", axis: "Prix", qt:20, unit:"€"},
+ {tree: "leftTreeName", type:"trunk", axis: "Quantité", qt:20, unit:"l"},
+ {tree: "leftTreeName", type:"tank", axis: "Eau", qt:5, unit:"mol"},
+ {tree: "leftTreeName", type:"tank", axis: "Elec", qt:12, unit:"mol"},
+ ]
+ * @param tree
+ */
+export const denorm = tree => ([
+    ...denormItem(tree.trunk, "trunk", [{...tree.trunk, name: QUANTITY}]),
+    ...denormItem(tree.trunk, "facet", tree.facets.items),
+    ...denormItem(tree.trunk, "tank", tree.tank.items),
+]);
 
-export const treeToRadar =
-    ({leftTree, rightTree, coef}) => toRadarData({leftTree, rightTree: applyCoef(rightTree, coef)});
+export const align = (denorm, coef) => _.forEach(denorm, axis => axis.qt *= coef);
+
+export const applyRatio = ({left, right}, baseQtFct) => {
+
+    _.forEach(left, leftAxis => {
+        const rightAxis = _.find(right, {type: leftAxis.type, axis: leftAxis.axis});
+
+        const leftBaseQt = baseQtFct(leftAxis);
+        const rightBaseQt = baseQtFct(rightAxis);
+
+        leftAxis.ratio = relativeTo1(leftBaseQt, rightBaseQt);
+        rightAxis.ratio = relativeTo1(rightBaseQt, leftBaseQt);
+
+    });
+
+    return {left, right};
+};
+
+export const separate = (leftAxises, rightAxises) => {
+
+    const leftWithoutQt = _.remove(leftAxises, axis => (_.isNil(axis.qt) || _.isNil(axis.unit)));
+    const rightWithoutQt = _.remove(rightAxises, axis => (_.isNil(axis.qt) || _.isNil(axis.unit)));
+
+    const leftWithoutRight = _.remove(leftAxises, axis => !_.find(rightAxises, {axis: axis.axis}));
+    const rightWithoutLeft = _.remove(rightAxises, axis => !_.find(leftAxises, {axis: axis.axis}));
+
+    const commonLeft = leftAxises;
+    const commonRight = rightAxises;
+
+    return {
+        left: [
+            ...leftWithoutQt, ...leftWithoutRight
+        ],
+        common: {left: commonLeft, right: commonRight},
+        right: [
+            ...rightWithoutQt, ...rightWithoutLeft
+        ]
+    };
+};
 
 /**
  *
@@ -79,16 +134,16 @@ export const treeToRadar =
  * @param rightTree, un arbre
  * @returns  let radarData = [
  [
- {axis: "leftTreeName", name: "Prix", coef: 1, qt:20, unit:"€"},
- {name: "Quantité", coef: 1, qt:20, unit:"l"},
- {name: "Lipides", coef: 1, qt:5, unit:"mol"},
- {name: "Glucides", coef: 1, qt:12, unit:"mol"},
+ {tree: "leftTreeName", name: "Prix", coef: 1, qt:20, unit:"€"},
+ {tree: "leftTreeName", name: "Quantité", coef: 1, qt:20, unit:"l"},
+ {tree: "leftTreeName", name: "Lipides", coef: 1, qt:5, unit:"mol"},
+ {tree: "leftTreeName", name: "Glucides", coef: 1, qt:12, unit:"mol"},
  ],
  [
- {name: "Prix", coef: 0.22, qt:20, unit:"€"},
- {name: "Quantité", coef: 1, qt:20, unit:"l"},
- {name: "Lipides", coef: 0.5, qt:2.5, unit:"mol"},
- {name: "Glucides", coef: 0, qt:0, unit:"mol"},
+ {tree: "rightTreeName", name: "Prix", coef: 0.22, qt:20, unit:"€"},
+ {tree: "rightTreeName", name: "Quantité", coef: 1, qt:20, unit:"l"},
+ {tree: "rightTreeName", name: "Lipides", coef: 0.5, qt:2.5, unit:"mol"},
+ {tree: "rightTreeName", name: "Glucides", coef: 0, qt:0, unit:"mol"},
  ]
  ];
  */
@@ -99,90 +154,89 @@ export const toRadarData = ({leftTree, rightTree}) => {
         return;
     }
 
-    const leftFacets = leftTree.facets;
-    const rightFacets = rightTree.facets;
+    const leftFacets = leftTree.facets.items;
+    const rightFacets = rightTree.facets.items;
 
     const leftNames = _.map(leftFacets, 'name');
     const rightNames = _.map(rightFacets, 'name');
 
+    //FACETS EN COMMUN
     const commonNames = _.intersection(leftNames, rightNames);
-
     const left = _.map(commonNames, name => ({
-        name, coef: relativeTo1(_.find(leftFacets, {name}).qt, _.find(rightFacets, {name}).qt),
+        name,
+        coef: relativeTo1(_.find(leftFacets, {name}).qt, _.find(rightFacets, {name}).qt),
         qt: format(_.find(leftFacets, {name}).qt),
         unit: _.find(leftFacets, {name}).unit,
         axis: leftTree.name
     }));
     const right = _.map(commonNames, name => ({
-        name, coef: relativeTo1(_.find(rightFacets, {name}).qt, _.find(leftFacets, {name}).qt),
+        name,
+        coef: relativeTo1(_.find(rightFacets, {name}).qt, _.find(leftFacets, {name}).qt),
         qt: format(_.find(rightFacets, {name}).qt),
         unit: _.find(rightFacets, {name}).unit,
         axis: rightTree.name
     }));
 
+    //FACETS LEFT SEULEMENT
     const leftFacetsOnly = _.difference(leftNames, rightNames);
     _.forEach(leftFacetsOnly, name => {
         left.push({
-            name, coef: 1,
+            name,
+            coef: 1,
             qt: format(_.find(leftFacets, {name}).qt),
             unit: _.find(leftFacets, {name}).unit,
             axis: leftTree.name
         });
         right.push({
-            name, coef: 0,
+            name,
+            coef: 0,
             qt: 0,
             unit: _.find(leftFacets, {name}).unit,
             axis: rightTree.name,
         });
     });
 
+    //FACETS RIGHT SEULEMENT
     const rightFacetsOnly = _.difference(rightNames, leftNames);
     _.forEach(rightFacetsOnly, name => {
         right.push({
-            name, coef: 1,
+            name,
+            coef: 1,
             qt: format(_.find(rightFacets, {name}).qt),
             unit: _.find(rightFacets, {name}).unit,
             axis: rightTree.name,
         });
         left.push({
-            name, coef: 0,
+            name,
+            coef: 0,
             qt: 0,
             unit: _.find(rightFacets, {name}).unit,
             axis: leftTree.name
         });
     });
 
-
-    _.forEach(baseValueByAxis, (valFct, name) => {
+    //TRUNK ALL
+    const trunkAxis = {
+        [QUANTITY]: tree => ({qt: tree.trunk.quantity.qt, unit: tree.trunk.quantity.unit})
+    };
+    _.forEach(trunkAxis, (valFct, name) => {
         left.push({
-            name, coef: relativeTo1(valFct(leftTree).qt, valFct(rightTree).qt),
+            name,
+            coef: relativeTo1(valFct(leftTree).qt, valFct(rightTree).qt),
             qt: format(valFct(leftTree).qt),
             unit: valFct(leftTree).unit,
             axis: leftTree.name
         });
         right.push({
-            name, coef: relativeTo1(valFct(rightTree).qt, valFct(leftTree).qt),
+            name,
+            coef: relativeTo1(valFct(rightTree).qt, valFct(leftTree).qt),
             qt: format(valFct(rightTree).qt),
             unit: valFct(rightTree).unit,
             axis: rightTree.name
         });
     });
 
-    return {leftTree:left, rightTree:right};
+    return {leftTree: left, rightTree: right};
 };
 
-export const toQtUnit = rawInput => {
-    if (!rawInput)
-        return null;
-    const r = rawInput.match(/^(\d+[.,]?\d*)([a-zA-Z]+)?$/);
-
-    if (r) {
-
-        let q, u;
-        [, q, u] = r;
-
-        return {qt: parseFloat(q.replace(',', '.')), unit: u || ""};
-    } else {
-        return null;
-    }
-};
+const relativeTo1 = (first, second) => first > second ? 1 : format(first / second);

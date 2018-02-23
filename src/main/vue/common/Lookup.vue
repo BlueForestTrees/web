@@ -4,7 +4,7 @@
 
         <v-text-field ref="termInput" @input="search" :value="term" slot="activator" prepend-icon="search" placeholder="Recherche"/>
 
-        <transition name="fade">
+        <transition name="fadeInOut">
             <v-list v-if="allowCreate || hasResults">
                 <v-list-tile v-for="tree in searchResults" :key="tree._id" @click="select(tree)">
                     <v-list-tile-avatar>
@@ -27,7 +27,6 @@
 <script>
     import {mapActions} from 'vuex';
     import On from "../../const/on";
-    import {trunky} from "../../services/mapper";
 
     export default {
         props: {cancreate: Boolean},
@@ -58,7 +57,7 @@
         methods: {
             ...mapActions({
                 dispatchSearch: On.SEARCH_TREE,
-                dispatchCreateTree: On.CREATE_TREE
+                dispatchCreateTree: On.CREATE_TRUNK
             }),
             focus() {
                 this.$refs.termInput.focus();

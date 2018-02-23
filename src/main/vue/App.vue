@@ -9,8 +9,8 @@
 
             <main-footer/>
 
-            <facet-dialog/>
             <facet-entry-dialog/>
+            <impact-entry-dialog/>
             <create-trunk-dialog/>
             <lookup-tree-dialog/>
 
@@ -30,9 +30,8 @@
     import On from "../const/on";
     import Lookup from "./common/Lookup";
     import LookupTreeDialog from "./dialog/CompareToDialog";
-    import Test from "./Test";
     import Corner from "./layout/Corner";
-    import FacetDialog from "./dialog/FacetDialog";
+    import ImpactEntryDialog from "./dialog/ImpactEntryDialog";
 
     export default {
         watch: {
@@ -46,7 +45,8 @@
             }
         },
         components: {
-            FacetDialog,Blueforest,Corner,Test,LookupTreeDialog,Lookup,FacetEntryDialog, CreateTrunkDialog, MainFooter, BottomRightBtns, Bar, LeftMenu
+            ImpactEntryDialog,
+            Blueforest,Corner,LookupTreeDialog,Lookup,FacetEntryDialog, CreateTrunkDialog, MainFooter, BottomRightBtns, Bar, LeftMenu
         },
         mounted: async function () {
             await this.$store.dispatch(On.MOUNT_APP);

@@ -10,7 +10,7 @@ export default {
 
     [On.DELETE_FACETS]: async ({commit}, {facets, toDelete}) => {
         rest.deleteFacets(facets._id, _.map(toDelete, "_id"));
-        commit(Do.DELETE_FACETS, {tree: facets, toDelete});
+        commit(Do.DELETE_FACETS, {facets, toDelete});
     },
     [On.ADD_FACET]: async ({commit}, {tree, facet}) => {
         rest.addFacet(tree._id, facet);

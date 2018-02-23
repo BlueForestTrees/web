@@ -6,7 +6,8 @@
                 <v-toolbar color="pink" dark>
                     <v-toolbar-side-icon/>
                     <v-toolbar-title>
-                        Comparer {{axis.qt}}{{axis.unit}} de {{leftTree.name}} et {{axis.qt}}{{axis.unit}} de {{rightTree.name}}
+                        Comparer
+                        <!--{{axis.qt}}{{axis.unit}} de {{leftTree.name}} et {{axis.qt}}{{axis.unit}} de {{rightTree.name}}-->
                     </v-toolbar-title>
                     <v-spacer/>
                     <v-btn @click="close" icon>
@@ -65,8 +66,8 @@
 <script>
     import Do from "../../const/do";
     import {mapMutations} from 'vuex';
-    import {extraireAxePrincipal, treeToRadar} from "../../services/mapper";
-    import {radar} from "../../services/d3/radar";
+    import {extraireAxisCoef, treeToRadar} from "../../services/mapper";
+    import {drawRadar} from "../../services/d3/radar";
 
     export default {
         props: ['leftTree', 'rightTree'],
@@ -87,14 +88,13 @@
         methods: {
             ...mapMutations({close: Do.CLEAR_COMPARE_TO,commitSwapLeftRight:Do.SWAP_LEFT_RIGHT}),
             selectAxis(name) {
-                const axis = extraireAxePrincipal(name, this.leftTree, this.rightTree);
+                const axis = extraireAxisCoef(name, this.leftTree, this.rightTree);
                 if (this.isValid(axis)) {
                     this.axis = axis;
                     this.drawRadar();
                 }
             },
             isValid(axis) {
-                console.log(axis.coef, isFinite(axis.coef));
                 return isFinite(axis.coef);
             },
             swapLeftRight(){
@@ -102,7 +102,7 @@
                 this.selectAxis(this.axis.name);
             },
             drawRadar() {
-                radar({
+                drawRadar({
                     selectAxis: this.selectAxis,
                     id: ".leftRightRadar",
                     data: [this.radarData.leftTree, this.radarData.rightTree],
@@ -130,7 +130,7 @@
                 get() {
                     const result = [];
 
-                    _.forEach(this.radarData.leftTree,leftAxis=>{
+                    /*_.forEach(this.radarData.leftTree,leftAxis=>{
                         const isMainAxis = this.axis.name === leftAxis.name;
                         const rightAxis = _.find(this.radarData.rightTree,{name:leftAxis.name});
 
@@ -142,7 +142,7 @@
                             rightUnit:rightAxis.unit,
                             rightQt:rightAxis.qt
                         })
-                    });
+                    });*/
 
                     return result;
                 }

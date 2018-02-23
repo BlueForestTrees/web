@@ -5,7 +5,7 @@
                 @click.stop="$emit('load')">
             keyboard_arrow_up
         </v-icon>
-        <qt-unit-name :trunk="item.trunk" />
+        <qt-unit-name :item="item.trunk" />
         <v-icon v-if="buttons"
                 right color="white"
                 @click.stop="$emit('configure')">

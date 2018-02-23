@@ -43,7 +43,7 @@
                                 <v-subheader>Sélectionnez une unité:</v-subheader>
                             </v-flex>
                             <v-flex xs8>
-                                <unit-grid :grandeurs="selectedFacetEntryGrandeur" @select="unit=$event"/>
+                                <unit-grid :grandeur="selectedFacetEntry.grandeur" @select="unit=$event"/>
                             </v-flex>
                         </v-layout>
 
@@ -84,31 +84,27 @@
         },
         props: ['tree'],
         computed: {
-            ...mapState(['grandeurs']),
-            selectedFacetEntryGrandeur: {
-                get() {
-                    return {[this.selectedFacetEntry.grandeur]: this.grandeurs[this.selectedFacetEntry.grandeur]};
-                }
-            }
+            ...mapState(['grandeurs'])
         },
         methods: {
-            ...mapActions({"dispatchSearchFacetEntry": On.SEARCH_FACET_ENTRY, "commitAddFacet": On.ADD_FACET}),
+            ...mapActions({dispatchSearchFacetEntry: On.SEARCH_FACET_ENTRY, dispatchAddFacet: On.ADD_FACET}),
             async namepartChange() {
                 this.facetEntries = await this.dispatchSearchFacetEntry({namepart: this.namepart});
             },
             validate() {
-                const tree = this.tree;
                 const facet = {
                     _id: this.selectedFacetEntry._id,
                     name: this.selectedFacetEntry.name,
-                    qt: parseFloat(this.qt.replace(',','.')),
-                    unit: this.unit.shortname
+                    quantity: {
+                        qt: parseFloat(this.qt.replace(',', '.')),
+                        unit: this.unit.shortname
+                    }
                 };
 
-                this.commitAddFacet({tree, facet});
+                this.dispatchAddFacet({tree: this.tree, facet});
                 this.close();
             },
-            focus(){
+            focus() {
                 this.$refs.nom.focus();
                 this.namepart = null;
                 this.qt = null;

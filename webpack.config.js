@@ -20,7 +20,7 @@ const conf = {
 
     module: {
         rules: [
-            {test: /\.vue$/, loader: 'vue-loader', options: { loaders: {js: 'babel-loader'}}},
+            {test: /\.vue$/, exclude: /node_modules/, loader: 'vue-loader', options: { loaders: {js: 'babel-loader'}}},
             {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'}
         ]
     },
