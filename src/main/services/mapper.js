@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import {QUANTITY} from "../const/labels";
 
-export const hasQuantity = trunk => trunk.quantity && trunk.quantity.qt && trunk.quantity.unit;
+export const hasQuantity = e => e.quantity && e.quantity.qt && e.quantity.unit;
 
 export const format = v => v < 10 ? Math.floor(v * 100) / 100 : Math.floor(v * 10) / 10;
 

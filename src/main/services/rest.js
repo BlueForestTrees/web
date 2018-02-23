@@ -12,6 +12,7 @@ export default {
     deleteRoot: (treeId, rootId) => api.del(`api/root/${treeId}/${rootId}`),
 
     //FACETS
+    getQuantifiedFacets: (qt, unit, _id) => api.get(`api/facet/${qt}/${unit}/${_id}`),
     getFacets: _id => api.get(`api/facet/${_id}`),
     deleteFacets: (treeId, facetIds) => api.post('api/facet/deletion', {treeId, facetIds}),
     addFacet: (treeId, facet) => api.post(`api/facet/${treeId}`, {facet}),

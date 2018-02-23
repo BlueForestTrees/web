@@ -4,9 +4,9 @@ import Do from "../../const/do";
 
 export default {
 
-    [On.LOAD_IMPACTS]: ({}, {_id}) => {
-        return rest.getImpacts(_id);
-    },
+    [On.LOAD_IMPACTS]: ({commit}, tree) =>
+        rest.getImpacts(tree._id)
+            .then(impacts => commit(Do.ADD_IMPACTS, {tree, impacts})),
 
     [On.DELETE_IMPACTS]: async ({commit}, {impacts, toDelete}) => {
         rest.deleteImpacts(impacts._id, _.map(toDelete, "_id"));

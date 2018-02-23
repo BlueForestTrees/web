@@ -14,15 +14,15 @@ export default {
     },
     [On.LOAD_TREE]: async ({commit, state, dispatch}, {_id}) => {
         const tree = {_id};
-        await Promise.all([
-            dispatch(On.LOAD_TRUNK, tree)
-                .then(() => dispatch(On.LOAD_ROOTS, tree))
-                .then(() => dispatch(On.LOAD_TANK, tree)),
-            dispatch(On.LOAD_FACETS, {_id})
-                .then(facets => commit(Do.ADD_FACETS, {tree, facets})),
-            dispatch(On.LOAD_IMPACTS, {_id})
-                .then(impacts => commit(Do.ADD_IMPACTS, {tree, impacts}))
-        ]);
+
+        await dispatch(On.LOAD_TRUNK, tree)
+            .then(() => Promise.all([
+                dispatch(On.LOAD_ROOTS, tree),
+                dispatch(On.LOAD_TANK, tree),
+                dispatch(On.LOAD_FACETS, tree),
+                dispatch(On.LOAD_IMPACTS, tree)
+            ]));
+
         return tree;
     },
     [On.CREATE_AND_OPEN_TREE]: async ({dispatch}, {name}) => {
