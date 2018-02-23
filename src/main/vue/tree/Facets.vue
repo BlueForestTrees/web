@@ -10,9 +10,6 @@
             <template v-for="facet in facets.items">
                 <v-divider/>
                 <v-list-tile :key="facet._id" @mouseover="overFacet = facet" @mouseout="overFacet = null">
-                    <v-list-tile-action>
-                        <v-icon>forward</v-icon>
-                    </v-list-tile-action>
                     <v-list-tile-content>
                         <v-list-tile-title>{{facet.name}}</v-list-tile-title>
                         <v-list-tile-sub-title>{{facet.quantity.qt}}{{facet.quantity.unit}}</v-list-tile-sub-title>
@@ -22,6 +19,9 @@
                             <v-checkbox v-if="isSelected() || overFacet && overFacet._id === facet._id"
                                         v-model="selectedFacets" :value="facet"/>
                         </transition>
+                    </v-list-tile-action>
+                    <v-list-tile-action>
+                        <v-icon>keyboard_arrow_left</v-icon>
                     </v-list-tile-action>
                 </v-list-tile>
             </template>
