@@ -11,6 +11,8 @@ import rootActions from "./actions/rootActions";
 import treeActions from "./actions/treeActions";
 import trunkActions from "./actions/trunkActions";
 import tankActions from "./actions/tankActions";
+import impactActions from "./actions/impactActions";
+import impactEntryActions from "./actions/impactEntryActions";
 
 
 
@@ -25,6 +27,8 @@ const store = new Vuex.Store({
         ...compareToActions,
         ...facetActions,
         ...facetEntryActions,
+        ...impactActions,
+        ...impactEntryActions,
         ...rootActions,
         ...treeActions,
         ...trunkActions,

@@ -16,6 +16,11 @@ export default {
     deleteFacets: (treeId, facetIds) => api.post('api/facet/deletion', {treeId, facetIds}),
     addFacet: (treeId, facet) => api.post(`api/facet/${treeId}`, {facet}),
 
+    //IMPACTS
+    getImpacts: _id => api.get(`api/impact/${_id}`),
+    deleteImpacts: (treeId, impactIds) => api.post('api/impact/deletion', {treeId, impactIds}),
+    addImpact: (treeId, impact) => api.post(`api/impact/${treeId}`, {impact}),
+
     //TRUNKS
     search: name => api.get(`api/trunks?q=${name}`),
 
@@ -32,5 +37,9 @@ export default {
 
     //FACET ENTRY
     createFacetEntry: facet => api.post('api/facetEntry', facet),
-    searchFacetEntry: namepart => api.get(`api/facetEntry?q=${namepart}`)
+    searchFacetEntry: namepart => api.get(`api/facetEntry?q=${namepart}`),
+
+    //IMPACT ENTRY
+    createImpactEntry: impact => api.post('api/impactEntry', impact),
+    searchImpactEntry: namepart => api.get(`api/impactEntry?q=${namepart}`)
 }

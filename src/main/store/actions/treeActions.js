@@ -19,7 +19,9 @@ export default {
                 .then(() => dispatch(On.LOAD_ROOTS, tree))
                 .then(() => dispatch(On.LOAD_TANK, tree)),
             dispatch(On.LOAD_FACETS, {_id})
-                .then(facets => commit(Do.ADD_FACETS, {tree, facets}))
+                .then(facets => commit(Do.ADD_FACETS, {tree, facets})),
+            dispatch(On.LOAD_IMPACTS, {_id})
+                .then(impacts => commit(Do.ADD_IMPACTS, {tree, impacts}))
         ]);
         return tree;
     },

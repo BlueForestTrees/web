@@ -11,6 +11,16 @@
                     <v-list-tile-title>Créer une caractéristique</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
+            <v-list-tile @click="showDialog({dialog:Dial.IMPACT_ENTRY})">
+                <v-list-tile-action>
+                    <v-layout row>
+                        <v-icon>add</v-icon>
+                    </v-layout>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                    <v-list-tile-title>Créer un impact</v-list-tile-title>
+                </v-list-tile-content>
+            </v-list-tile>
             <v-list-tile @click="showDialog({dialog:Dial.TRUNK})">
                 <v-list-tile-action>
                     <v-layout row>
