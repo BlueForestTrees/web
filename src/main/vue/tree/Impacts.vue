@@ -11,7 +11,7 @@
                 <v-divider/>
                 <v-list-tile :key="impact._id" @mouseover="overImpact = impact" @mouseout="overImpact = null">
                     <v-list-tile-action>
-                        <v-icon>forward</v-icon>
+                        <v-icon>keyboard_arrow_right</v-icon>
                     </v-list-tile-action>
                     <v-list-tile-content>
                         <v-list-tile-title>{{impact.name}}</v-list-tile-title>
