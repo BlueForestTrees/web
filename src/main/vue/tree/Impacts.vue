@@ -15,7 +15,9 @@
                     </v-list-tile-action>
                     <v-list-tile-content>
                         <v-list-tile-title>{{impact.name}}</v-list-tile-title>
-                        <v-list-tile-sub-title>{{impact.quantity.qt}}{{impact.quantity.unit}}</v-list-tile-sub-title>
+                        <v-list-tile-sub-title v-if="hasQuantity(impact)">
+                            {{impact.quantity.qt}}{{impact.quantity.unit}}
+                        </v-list-tile-sub-title>
                     </v-list-tile-content>
                     <v-list-tile-action>
                         <transition name="fadeInOut">
@@ -36,7 +38,7 @@
     import ImpactDialog from "../dialog/ImpactEntryDialog";
     import {Dial} from "../../const/dial";
     import On from "../../const/on";
-
+    import {hasQuantity} from "../../services/mapper";
 
     export default {
         components: {
@@ -64,8 +66,9 @@
                 if (!_.isEmpty(this.selectedImpacts)) {
                     this.selectedImpacts = [];
                 }
-            }
-        }
+            },
+            hasQuantity
+        },
     }
 </script>
 
