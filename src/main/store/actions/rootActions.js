@@ -1,5 +1,5 @@
 import On from "../../const/on";
-import rest from "../../services/rest";
+import rest from "../../rest/routes";
 import _ from 'lodash';
 import Do from "../../const/do";
 import {trunkyAll} from "../../services/calculations";

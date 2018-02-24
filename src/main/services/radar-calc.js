@@ -67,6 +67,7 @@ export const denorm = tree => ([
     ...denormItem(tree.trunk, "trunk", [{...tree.trunk, name: QUANTITY}]),
     ...denormItem(tree.trunk, "facet", tree.facets.items),
     ...denormItem(tree.trunk, "tank", tree.tank.items),
+    ...denormItem(tree.trunk, "impacts", tree.impacts.items),
 ]);
 
 export const align = (denorm, coef) => _.forEach(denorm, axis => axis.qt *= coef);

@@ -1,6 +1,6 @@
 import Do from "../../const/do";
 import On from "../../const/on";
-import rest from "../../services/rest";
+import rest from "../../rest/routes";
 import {trunkyAll} from "../../services/calculations";
 
 export default {
