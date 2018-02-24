@@ -1,13 +1,13 @@
 import On from "../../const/on";
 import rest from "../../services/rest";
 import Do from "../../const/do";
-import {hasQuantity} from "../../services/mapper";
+import {hasQuantity} from "../../services/calculations";
 
 export default {
 
     [On.LOAD_IMPACTS]: ({commit}, tree) => (
         hasQuantity(tree.trunk) ?
-            rest.getQuantifiedImpacts(tree.trunk.quantity.qt, tree.trunk.quantity.unit, tree._id)
+            rest.getQuantifiedImpactTank(tree.trunk.quantity.qt, tree.trunk.quantity.unit, tree._id)
             : rest.getImpacts(tree._id)
     ).then(impacts => commit(Do.ADD_IMPACTS, {tree, impacts})),
 

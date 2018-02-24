@@ -2,7 +2,7 @@ import * as d3 from 'd3';
 import _ from 'lodash';
 import {config} from "./config";
 import {wrap} from "./helper";
-import {format} from "../mapper";
+import {format} from "../calculations";
 
 export const drawRadar = ({selectAxis, id, data, options, selectedAxis}) => {
 

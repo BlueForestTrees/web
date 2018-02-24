@@ -17,6 +17,9 @@ export default {
     deleteFacets: (treeId, facetIds) => api.post('api/facet/deletion', {treeId, facetIds}),
     addFacet: (treeId, facet) => api.post(`api/facet/${treeId}`, {facet}),
 
+    //IMPACTS TANK
+    getQuantifiedImpactTank: (qt, unit, _id) => api.get(`api/impacttank/${qt}/${unit}/${_id}`),
+
     //IMPACTS
     getQuantifiedImpacts: (qt, unit, _id) => api.get(`api/impact/${qt}/${unit}/${_id}`),
     getImpacts: _id => api.get(`api/impact/${_id}`),

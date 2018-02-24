@@ -1,5 +1,5 @@
 import chai from 'chai';
-import {align, applyRatio, denorm, separate} from "../../../main/services/mapper";
+import {align, applyRatio, denorm, separate} from "../../../main/services/radar-calc";
 import {withNameIdQuantity} from "../../testPlumbing";
 
 chai.should();

@@ -1,7 +1,7 @@
 import Do from "../../const/do";
 import On from "../../const/on";
-import {trunky, trunkyAll} from "../../services/mapper";
 import rest from "../../services/rest";
+import {trunkyAll} from "../../services/calculations";
 
 export default {
 

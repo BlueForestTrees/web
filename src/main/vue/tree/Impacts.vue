@@ -38,7 +38,7 @@
     import ImpactDialog from "../dialog/ImpactEntryDialog";
     import {Dial} from "../../const/dial";
     import On from "../../const/on";
-    import {hasQuantity} from "../../services/mapper";
+    import {hasQuantity} from "../../services/calculations";
 
     export default {
         components: {

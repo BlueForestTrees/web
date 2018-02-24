@@ -66,7 +66,7 @@
 <script>
     import Do from "../../const/do";
     import {mapMutations} from 'vuex';
-    import {extraireAxisCoef, treeToRadar} from "../../services/mapper";
+    import {extraireAxisCoef, treeToRadar} from "../../services/radar-calc";
     import {drawRadar} from "../../services/d3/radar";
 
     export default {

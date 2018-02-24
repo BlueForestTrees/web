@@ -1,7 +1,7 @@
 import On from "../../const/on";
 import rest from "../../services/rest";
 import Do from "../../const/do";
-import {hasQuantity} from "../../services/mapper";
+import {hasQuantity} from "../../services/calculations";
 
 export default {
 

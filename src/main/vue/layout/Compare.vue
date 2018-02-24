@@ -49,7 +49,7 @@
     import Do from "../../const/do";
     import {mapGetters, mapMutations} from 'vuex';
     import {QUANTITY} from "../../const/labels";
-    import {align, applyRatio, denorm, separate} from "../../services/mapper";
+    import {align, applyRatio, denorm, separate} from "../../services/radar-calc";
     import {drawRadar} from "../../services/d3/radar";
     import AxisList from "../common/AxisList";
     import _ from 'lodash';
@@ -85,29 +85,23 @@
         },
         computed: {
             leftDenorm: function () {
-                console.log("leftDenorm");
                 return denorm(this.leftTree)
             },
             rightDenorm: function () {
-                console.log("rightDenorm");
                 return denorm(this.rightTree)
             },
             ...mapGetters(['calcCoef']),
 
             coef: function () {
-                console.log("coef");
                 return this.calcCoef(this.axis, this.leftDenorm, this.rightDenorm);
             },
             leftAligned: function () {
-                console.log("leftAligned");
                 return this.leftDenorm;
             },
             rightAligned: function () {
-                console.log("rightAligned");
                 return align(_.cloneDeep(this.rightDenorm), this.coef);
             },
             separated: function () {
-                console.log("separated");
                 const data = separate(_.cloneDeep(this.leftAligned), _.cloneDeep(this.rightAligned));
                 applyRatio(data.common, qt => this.$store.getters.baseQt(qt));
                 return data;

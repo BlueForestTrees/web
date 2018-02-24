@@ -9,7 +9,8 @@
 
 <script>
 
-    import {format} from "../../services/mapper";
+
+    import {format} from "../../services/calculations";
 
     export default {
         name: 'qt-unit-name',
@@ -21,7 +22,7 @@
         },
         data: function () {
             return {
-                format: format
+                format
             }
         }
     }
