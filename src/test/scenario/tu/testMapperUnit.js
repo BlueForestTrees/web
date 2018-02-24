@@ -122,6 +122,9 @@ describe('Mapper', function () {
                 },
                 tank: {
                     items: []
+                },
+                impacts: {
+                    items: []
                 }
             };
             const expected = [
