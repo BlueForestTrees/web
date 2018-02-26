@@ -16,7 +16,7 @@
                     <v-list-tile-content>
                         <v-list-tile-title>{{impact.name}}</v-list-tile-title>
                         <v-list-tile-sub-title v-if="hasQuantity(impact)">
-                            {{impact.quantity.qt}}{{impact.quantity.unit}}
+                            <qt-unit :quantity="impact.quantity"/>
                         </v-list-tile-sub-title>
                     </v-list-tile-content>
                     <v-list-tile-action>
@@ -39,9 +39,11 @@
     import {Dial} from "../../const/dial";
     import On from "../../const/on";
     import {hasQuantity} from "../../services/calculations";
+    import QtUnit from "../common/QtUnit";
 
     export default {
         components: {
+            QtUnit,
             ImpactDialog
         },
         data() {

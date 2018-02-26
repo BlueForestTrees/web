@@ -4,7 +4,7 @@ import {withNameIdQuantity} from "../../testPlumbing";
 
 chai.should();
 
-describe('Mapper', function () {
+describe('Radar calc', function () {
 
     describe('applyRatio', function () {
         it('normal applyRatio', function () {
