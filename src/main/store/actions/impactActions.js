@@ -7,7 +7,7 @@ export default {
 
     [On.LOAD_IMPACTS]: ({commit}, tree) => {
         if (hasQuantity(tree.trunk)) {
-            rest.getQuantifiedImpactTank(tree.trunk.quantity.qt, tree.trunk.quantity.unit, tree._id)
+            return rest.getQuantifiedImpactTank(tree.trunk.quantity.qt, tree.trunk.quantity.unit, tree._id)
                 .then(impacts => commit(Do.ADD_IMPACTS, {tree, impacts}))
         }
     },

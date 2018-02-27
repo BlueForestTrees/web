@@ -3,7 +3,7 @@
 </template>
 
 <script>
-    import {bestQuantity} from "../../services/calculations";
+    import {bestQuantity} from "../../services/unitService";
 
     export default {
         name: "qt-unit",
@@ -21,7 +21,6 @@
                     return "qt? unit?";
                 }
             }
-        },
-        bestUnit: bestQuantity
+        }
     }
 </script>

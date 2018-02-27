@@ -17,7 +17,6 @@ export default {
     EXCEPTION: 'exception',
     LOAD_FACETS: 'loadFacets',
     LOAD_IMPACTS: 'loadImpacts',
-    LOAD_UNITS: 'loadUnits',
     LOAD_OPEN_TREE: 'loadOpenTree',
     LOAD_TRUNK: 'loadTrunk',
     LOAD_ROOTS: 'loadRoots',

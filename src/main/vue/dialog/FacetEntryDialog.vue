@@ -46,8 +46,9 @@
 <script>
     import MainDialog from "./MainDialog";
     import On from "../../const/on";
-    import {mapActions, mapGetters, mapState} from "vuex";
+    import {mapActions} from "vuex";
     import {Dial} from "../../const/dial";
+    import {grandeurs} from "../../services/unitService";
 
     export default {
         data() {
@@ -55,16 +56,14 @@
                 Dial: Dial,
                 valid: false,
                 name: null,
-                grandeur: null
+                grandeur: null,
+                grandeurs: grandeurs()
             }
         },
         components: {
             MainDialog
         },
         props: ['data'],
-        computed: {
-            ...mapState({'grandeurs': 'grandeurs'})
-        },
         methods: {
             selectGrandeur(grandeur) {
                 this.grandeur = grandeur;

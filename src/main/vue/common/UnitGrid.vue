@@ -2,7 +2,7 @@
 
     <span>
         <v-layout row wrap>
-            <span v-for="(units,name) in grandeurs" :key="name" v-if="unitsMatch(units, filter)">
+            <span v-for="(units,name) in displayedGrandeurs" :key="name" v-if="unitsMatch(units, filter)">
                 <v-subheader>{{name}}</v-subheader>
                 <v-layout row wrap>
                 <v-chip v-for="unit in units" :key="unit.shortname" v-if="unitMatch(unit, filter)"
@@ -20,8 +20,7 @@
 
 <script>
 
-    import {mapState} from 'vuex';
-    import {mapGetters} from 'vuex';
+    import {grandeurByName, grandeurOfUnitShortname, grandeurs} from "../../services/unitService";
 
     export default {
         props: {
@@ -33,17 +32,15 @@
             }
         },
         computed: {
-            grandeurs: function () {
+            displayedGrandeurs: function () {
                 if (this.unit && this.samegrandeur) {
-                    return this.unitGrandeur(this.unit);
+                    return grandeurOfUnitShortname(this.unit);
                 } else if (this.grandeur) {
-                    return this.grandeurByName(this.grandeur);
+                    return grandeurByName(this.grandeur);
                 } else {
-                    return this.stateGrandeurs;
+                    return grandeurs();
                 }
             },
-            ...mapGetters({unitGrandeur: 'grandeurOfUnitShortname', grandeurByName: 'grandeurByName'}),
-            ...mapState({stateGrandeurs: 'grandeurs'})
         },
         methods: {
             unitsMatch(units, filter) {

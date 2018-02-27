@@ -23,15 +23,6 @@ const cleanDialog = (state, dialog) => {
 
 export default {
 
-    [Do.UPDATE_GRANDEURS]: (state, grandeurs) => {
-        state.grandeurs = grandeurs;
-        state.labelsGrandeurs = Object.keys(grandeurs);
-        state.units = _.chain(grandeurs)
-            .values()
-            .flatten()
-            .keyBy('shortname')
-            .value();
-    },
     [Do.CLOSE_TREE]: (state) => {
         state.compareTo = null;
         state.tree = null;

@@ -29,6 +29,5 @@ export default {
     UPDATE_ADDING_SEED: 'updateAddingSeed',
     UPDATE_DIALOG_VISIBILITY: 'updateDialogVisibility',
     UPDATE_DIALOG_DATA: 'updateDialogData',
-    UPDATE_GRANDEURS: "UPDATE_GRANDEURS",
     PUT_TRUNK_QUANTITY: 'upsertQuantity'
 };

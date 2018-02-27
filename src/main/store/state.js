@@ -27,9 +27,6 @@ export const tree = () => ({_id: null, trunk: null, selection: null, facets: nul
 export default {
     tree: null,
     compareTo: null,
-    labelsGrandeurs: null,
-    grandeurs: null,
-    units: null,
     linkEdit: null,
     addingSeed: false,
     dialogs: dialogs()

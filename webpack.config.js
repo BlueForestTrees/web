@@ -6,6 +6,8 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const conf = {
     entry: './src/main/index.js',
 
+    devtool: 'sourcemap',
+
     output: {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist')
