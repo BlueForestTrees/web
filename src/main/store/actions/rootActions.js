@@ -21,16 +21,16 @@ export default {
     },
 
     [On.ADD_ROOTS]: async ({commit}, {tree, roots}) => {
-        await Promise.all(_.map(roots, root => rest.postRoot(tree._id, root._id)));
+        await Promise.all(_.map(roots, root => rest.postLink(tree._id, root._id)));
         commit(Do.ADD_ROOTS, {tree, roots});
     },
 
     [On.CONFIGURE_ROOT]: ({}, {trunk, root, config}) => {
-        rest.putRoot(config.trunk, config.root);
+        rest.putLink(config.trunk, config.root);
     },
 
     [On.DELETE_ROOT]: async ({commit}, {tree, root}) => {
-        await rest.deleteRoot(tree._id, root._id);
+        await rest.deleteLink(tree._id, root._id);
         commit(Do.DELETE_ROOT, {tree, root});
     }
 };

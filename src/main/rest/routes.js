@@ -4,12 +4,18 @@ export default {
     //TANK
     getTank: (qt, unit, _id) => api.get(`api/tank/${qt}/${unit}/${_id}`),
 
+    //BRANCH
+    getUnquantifiedBranches: (_id) => api.get(`api/branch/${_id}`),
+    getQuantifiedBranches: (qt, unit, _id) => api.get(`api/branch/${qt}/${unit}/${_id}`),
+
     //ROOT
     getUnquantifiedRoots: (_id) => api.get(`api/root/${_id}`),
     getQuantifiedRoots: (qt, unit, _id) => api.get(`api/root/${qt}/${unit}/${_id}`),
-    putRoot: (trunk, root) => api.put(`api/root`, {trunk, root}),
-    postRoot: (trunkId, rootId) => api.post(`api/root`, {trunk: {_id: trunkId}, root: {_id: rootId}}),
-    deleteRoot: (treeId, rootId) => api.del(`api/root/${treeId}/${rootId}`),
+
+    //LINK
+    putLink: (trunk, root) => api.put(`api/link`, {trunk, root}),
+    postLink: (trunkId, rootId) => api.post(`api/link`, {trunk: {_id: trunkId}, root: {_id: rootId}}),
+    deleteLink: (treeId, rootId) => api.del(`api/link/${treeId}/${rootId}`),
 
     //FACETS
     getQuantifiedFacets: (qt, unit, _id) => api.get(`api/facet/${qt}/${unit}/${_id}`),

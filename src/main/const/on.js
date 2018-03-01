@@ -2,9 +2,12 @@ export default {
     ADD_FACET: "addFacet",
     ADD_IMPACT: "addImpact",
     ADD_ROOTS: 'addRoots',
+    ADD_BRANCHES: 'addBranches',
     CLONE_TREE:"cloneTree",
     CLONE_TRUNK: "cloneTrunk",
     CLONE_OPEN_TREE:"cloneOpenTree",
+    CONFIGURE_ROOT: "configureRoot",
+    CONFIGURE_BRANCH: "configureBranch",
     CREATE_AND_OPEN_TREE: 'onCreateAndOpenTree',
     CREATE_ADD_RESSOURCE: 'createAddRessource',
     CREATE_FACET_ENTRY: 'onCreateFacetEntry',
@@ -14,9 +17,11 @@ export default {
     DELETE_IMPACTS: 'deleteImpacts',
     DELETE_TREE: 'deleteTree',
     DELETE_ROOT: 'deleteRessources',
+    DELETE_BRANCH: 'deleteBranch',
     EXCEPTION: 'exception',
     LOAD_FACETS: 'loadFacets',
     LOAD_IMPACTS: 'loadImpacts',
+    LOAD_BRANCHES: 'loadBranches',
     LOAD_OPEN_TREE: 'loadOpenTree',
     LOAD_TRUNK: 'loadTrunk',
     LOAD_ROOTS: 'loadRoots',
@@ -29,6 +34,5 @@ export default {
     SEARCH_TREE: 'searchTree',
     SEARCH_FACET_ENTRY: 'searchFacetEntry',
     SEARCH_IMPACT_ENTRY: 'searchImpactEntry',
-    PUT_TRUNK_QUANTITY: "putTrunkQuantity",
-    CONFIGURE_ROOT: "configureRoot"
+    PUT_TRUNK_QUANTITY: "putTrunkQuantity"
 };

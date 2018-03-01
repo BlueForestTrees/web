@@ -3,6 +3,7 @@ export default {
     ADD_IMPACT: "addImpact",
     ADD_ROOTS:'addRoots',
     SET_ROOTS:'setRoots',
+    SET_BRANCHES:'setBranches',
     SET_TANK: 'setTank',
     ADD_FACETS: 'addFacets',
     ADD_IMPACTS: 'addImpacts',
