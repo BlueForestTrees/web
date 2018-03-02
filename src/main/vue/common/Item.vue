@@ -1,21 +1,20 @@
 <template>
     <v-chip color="primary" text-color="white" @click="select" @blur="unselect">
         <qt-unit-name :item="item.trunk" />
-        <v-icon v-if="buttons"
-                right color="white"
-                @click.stop="$emit('load')">
-            search
-        </v-icon>
-        <v-icon v-if="buttons"
-                right color="white"
-                @click.stop="$emit('configure')">
-            edit
-        </v-icon>
-        <v-icon v-if="buttons"
-                right color="white"
-                @click.stop="$emit('delete')">
-            delete
-        </v-icon>
+        <span v-if="buttons">
+            <v-icon right color="white"
+                    @click.stop="$emit('load')">
+                search
+            </v-icon>
+            <v-icon right color="white"
+                    @click.stop="$emit('configure')">
+                edit
+            </v-icon>
+            <v-icon right color="white"
+                    @click.stop="$emit('delete')">
+                delete
+            </v-icon>
+        </span>
     </v-chip>
 </template>
 
@@ -24,7 +23,7 @@
 
     export default {
         components: {QtUnitName},
-        name:'ressource-item',
+        name:'item',
         props:['item','selectable','forceSelect'],
         data(){
             return {

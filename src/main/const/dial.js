@@ -7,5 +7,6 @@ export const Dial = {
     IMPACT: "impact",
     COMPARE_TO: "compareTo",
     RESSOURCE: "ressource",
+    BRANCH: "branch",
     CONFIGURE_ROOT:"configureRoot"
 };

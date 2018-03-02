@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
+const webpack = require('webpack');
 
 const conf = {
     entry: './src/main/index.js',
@@ -30,6 +31,7 @@ const conf = {
     plugins: [
         new HtmlWebpackPlugin({template: './src/main/index.html', inject: 'body', hash: 'true'}),
         new CopyWebpackPlugin([{ from: './src/img', to: 'img'}]),
+        new webpack.DefinePlugin({'process.env': {NODE_ENV: '"development"'}})
     ],
 
     devServer: {

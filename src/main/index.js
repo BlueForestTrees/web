@@ -7,6 +7,7 @@ import store from './store/store'
 import Vuetify from 'vuetify'
 import _ from 'lodash';
 
+Vue.config.productionTip = false;
 
 Promise
     .all(initialCalls())
@@ -27,7 +28,6 @@ function fetchInitials(datas) {
 
 function initVue() {
     Vue.use(Vuetify);
-    Vue.config.productionTip = false;
 
     new Vue({
         el: '#app',

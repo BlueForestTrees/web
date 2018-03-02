@@ -13,6 +13,7 @@ const dialogFactory = {
     [Dial.FACET]: () => ({name: null}),
     [Dial.IMPACT]: () => ({name: null}),
     [Dial.RESSOURCE]: () => ({parentRessource: null}),
+    [Dial.BRANCH]: () => ({parentBranch: null}),
     [Dial.CONFIGURE_ROOT]: () => ({tree: null, root: null})
 };
 

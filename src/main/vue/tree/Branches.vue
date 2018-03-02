@@ -9,13 +9,9 @@
             <v-icon @click="" style="cursor: pointer">add</v-icon>
         </v-toolbar>
 
-        <v-container grid-list-md text-xs-center v-if="last && last.trunk">
-            <v-layout row>
-                <v-flex>
-                    <ressource-bar :path="path" @delete="deleteLast" @select="select" @load="load"/>
-                    <ressource-list :last="last" @select="select(path.length, $event)" @add="addRessourceToLast"/>
-                </v-flex>
-            </v-layout>
+        <v-container v-if="last && last.trunk">
+            <item-list :dir="last.branches" @select="select(path.length, $event)" @add="addBranchToLast"/>
+            <item-path :path="path" @delete="deleteLast" @select="select" @load="load" up/>
         </v-container>
     </v-card>
 </template>
@@ -24,18 +20,14 @@
     import On from "../../const/on";
     import {mapActions, mapMutations} from 'vuex';
     import Do from "../../const/do";
-    import ConfigureRootDialog from "../dialog/ConfigureRootDialog";
-    import AddRessourceDialog from "../dialog/AddRessourceDialog";
-    import RessourceBar from "../common/RessourceBar";
-    import RessourceList from "../common/RessourceList";
     import {Dial} from "../../const/dial";
+    import ItemList from "../common/ItemList";
+    import ItemPath from "../common/ItemPath";
 
     export default {
         components: {
-            RessourceList,
-            RessourceBar,
-            AddRessourceDialog,
-            ConfigureRootDialog
+            ItemPath,
+            ItemList
         },
         props: ['tree'],
         data() {
@@ -48,7 +40,7 @@
                 this.path = [val];
             }
         },
-        beforeMount:function(){
+        beforeMount: function () {
             this.path = [this.tree];
         },
         computed: {
@@ -84,10 +76,10 @@
                 });
                 this.path.splice(-1, 1);
             },
-            addRessourceToLast() {
-                this.showDialog({dialog: Dial.RESSOURCE, data: {parentRessource: this.last}});
+            addBranchToLast() {
+                this.showDialog({dialog: Dial.BRANCH, data: {parentBranch: this.last}});
             },
-            load(idx, item){
+            load(idx, item) {
                 this.dispatchLoad(item);
             }
         }

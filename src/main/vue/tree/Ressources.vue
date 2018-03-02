@@ -9,13 +9,9 @@
             <v-icon @click="" style="cursor: pointer">add</v-icon>
         </v-toolbar>
 
-        <v-container grid-list-md text-xs-center v-if="last && last.trunk">
-            <v-layout row>
-                <v-flex>
-                    <ressource-bar :path="path" @delete="deleteLast" @select="select" @load="load"/>
-                    <ressource-list :last="last" @select="select(path.length, $event)" @add="addRessourceToLast"/>
-                </v-flex>
-            </v-layout>
+        <v-container V-if="last && last.trunk">
+            <item-path :path="path" @delete="deleteLast" @select="select" @load="load"/>
+            <item-list :dir="last.roots" @select="select(path.length, $event)" @add="addRessourceToLast"/>
         </v-container>
     </v-card>
 </template>
@@ -26,14 +22,14 @@
     import Do from "../../const/do";
     import ConfigureRootDialog from "../dialog/ConfigureRootDialog";
     import AddRessourceDialog from "../dialog/AddRessourceDialog";
-    import RessourceBar from "../common/RessourceBar";
-    import RessourceList from "../common/RessourceList";
     import {Dial} from "../../const/dial";
+    import ItemList from "../common/ItemList";
+    import ItemPath from "../common/ItemPath";
 
     export default {
         components: {
-            RessourceList,
-            RessourceBar,
+            ItemPath,
+            ItemList,
             AddRessourceDialog,
             ConfigureRootDialog
         },
@@ -48,7 +44,7 @@
                 this.path = [val];
             }
         },
-        beforeMount:function(){
+        beforeMount: function () {
             this.path = [this.tree];
         },
         computed: {
@@ -87,7 +83,7 @@
             addRessourceToLast() {
                 this.showDialog({dialog: Dial.RESSOURCE, data: {parentRessource: this.last}});
             },
-            load(idx, item){
+            load(idx, item) {
                 this.dispatchLoad(item);
             }
         }
