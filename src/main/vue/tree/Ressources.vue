@@ -1,8 +1,6 @@
 <template>
     <v-card>
-        <configure-root-dialog :trunk="beforeLast" :root="last"/>
-        <add-ressource-dialog :tree="last" v-if="last"/>
-
+        <configure-link-dialog :trunk="beforeLast" :root="last"/>
         <v-toolbar>
             <v-toolbar-title>Ressources</v-toolbar-title>
             <v-spacer/>
@@ -20,18 +18,19 @@
     import On from "../../const/on";
     import {mapActions, mapMutations} from 'vuex';
     import Do from "../../const/do";
-    import ConfigureRootDialog from "../dialog/ConfigureRootDialog";
-    import AddRessourceDialog from "../dialog/AddRessourceDialog";
+    import ConfigureLinkDialog from "../dialog/ConfigureLinkDialog";
+    import AddRessourceDialog from "../dialog/AddItemDialog";
     import {Dial} from "../../const/dial";
     import ItemList from "../common/ItemList";
     import ItemPath from "../common/ItemPath";
+    import items from "../../const/items";
 
     export default {
         components: {
             ItemPath,
             ItemList,
             AddRessourceDialog,
-            ConfigureRootDialog
+            ConfigureLinkDialog
         },
         props: ['tree'],
         data() {
@@ -81,7 +80,7 @@
                 this.path.splice(-1, 1);
             },
             addRessourceToLast() {
-                this.showDialog({dialog: Dial.RESSOURCE, data: {parentRessource: this.last}});
+                this.showDialog({dialog: Dial.ADD_ITEM, data: {tree: this.last, item: items.ROOT}});
             },
             load(idx, item) {
                 this.dispatchLoad(item);

@@ -20,10 +20,6 @@ export default {
             .then(branches => commit(Do.SET_BRANCHES, {tree, branches}));
     },
 
-    [On.ADD_BRANCHES]: async ({commit}, {tree, branches}) => {
-        await Promise.all(_.map(branches, branch => rest.postLink(tree._id, branch._id)));
-        commit(Do.ADD_BRANCHES, {tree, branches});
-    },
 
     [On.CONFIGURE_BRANCH]: ({}, {trunk, branch, config}) => {
         rest.putLink(config.trunk, config.branch);

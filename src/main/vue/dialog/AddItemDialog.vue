@@ -1,10 +1,10 @@
 <template>
-    <main-dialog v-if="trunk" :dialog="Dial.RESSOURCE" @focus="$refs.lookup.focus()" @esc="close" @enter="validate"
-                 ref="dialog" @show="show">
+    <main-dialog :dialog="Dial.ADD_ITEM" @focus="$refs.lookup.focus()" @esc="close" @enter="validate" ref="dialog"
+                 @show="show">
         <template slot-scope="dialog">
             <v-card>
                 <v-card-title class="grey lighten-4 py-4 title">
-                    Ajouter à {{trunk.name}}
+                    Ajouter
                 </v-card-title>
                 <v-card-text>
                     <v-chip v-for="(item,idx) in selection" :key="item._id" close @input="unselect(idx)">
@@ -28,10 +28,10 @@
     import {mapActions} from "vuex";
     import {Dial} from "../../const/dial";
     import Lookup from "../common/Lookup";
+    import {validateItem} from "../../const/items";
 
     export default {
-        name: 'add-ressource-dialog',
-        props: ['tree'],
+        name: 'add-item-dialog',
         data() {
             return {
                 Dial: Dial,
@@ -41,24 +41,24 @@
         },
         components: {Lookup, MainDialog},
         computed: {
-            trunk: function () {
-                return this.tree.trunk;
+            tree: function () {
+                return this.$refs.dialog.data.tree;
             }
         },
         methods: {
             ...mapActions({
-                dispatchAddRessources: On.ADD_ROOTS
+                dispatchAddLinks: On.ADD_LINKS
             }),
-            select(ressource) {
-                this.selection.push(ressource);
+            select(item) {
+                this.selection.push(item);
             },
             unselect(idx) {
                 this.selection.splice(idx, 1);
             },
             validate() {
-                this.dispatchAddRessources({
+                this.dispatchAddLinks({
                     tree: this.tree,
-                    roots: this.selection
+                    [this.$refs.dialog.data.item]: this.selection
                 });
                 this.close();
             },

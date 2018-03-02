@@ -12,9 +12,9 @@ const dialogFactory = {
     [Dial.COMPARE_TO]: () => ({name: null}),
     [Dial.FACET]: () => ({name: null}),
     [Dial.IMPACT]: () => ({name: null}),
-    [Dial.RESSOURCE]: () => ({parentRessource: null}),
-    [Dial.BRANCH]: () => ({parentBranch: null}),
-    [Dial.CONFIGURE_ROOT]: () => ({tree: null, root: null})
+    [Dial.ADD_ITEM]: () => ({tree: null, item: null}),
+    [Dial.CONFIGURE_BRANCH]: () => ({tree: null, root: null}),
+    [Dial.CONFIGURE_LINK]: () => ({tree: null, root: null})
 };
 
 export const createDialog = name => (dialogFactory[name] && dialogFactory[name]()) || (console.warn(`state.js il manque dialogFactory['${name}']`) || {});

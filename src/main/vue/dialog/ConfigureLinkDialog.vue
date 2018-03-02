@@ -1,5 +1,5 @@
 <template>
-    <main-dialog :dialog="Dial.CONFIGURE_ROOT" @focus="" @esc="close" @enter="ok" ref="dialog" @show="show">
+    <main-dialog :dialog="Dial.CONFIGURE_LINK" @focus="" @esc="close" @enter="ok" ref="dialog" @show="show">
         <template>
             <v-card>
                 <v-card-title class="grey lighten-4 py-4 title">
@@ -48,7 +48,7 @@
     import On from "../../const/on";
 
     export default {
-        name: 'configure-root-dialog',
+        name: 'configure-link-dialog',
         props: ['trunk', 'root'],
         data() {
             return {
@@ -62,7 +62,7 @@
             InplaceEdit, Lookup, MainDialog
         },
         methods: {
-            ...mapActions({dispatchConfigureRoot: On.CONFIGURE_ROOT}),
+            ...mapActions({dispatchConfigureRoot: On.CONFIGURE_LINK}),
             close: function () {
                 this.$refs.dialog.close();
             },

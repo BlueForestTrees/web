@@ -1,7 +1,7 @@
 import On from "../../const/on";
 import rest from "../../rest/routes";
 import Do from "../../const/do";
-import {trunky} from "../../services/radar-calc";
+import {trunky} from "../../services/calculations";
 
 export default {
     [On.CREATE_TRUNK]: async ({commit, state, dispatch}, name) => {

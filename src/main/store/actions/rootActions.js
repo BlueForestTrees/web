@@ -20,12 +20,8 @@ export default {
             .then(roots => commit(Do.SET_ROOTS, {tree, roots}));
     },
 
-    [On.ADD_ROOTS]: async ({commit}, {tree, roots}) => {
-        await Promise.all(_.map(roots, root => rest.postLink(tree._id, root._id)));
-        commit(Do.ADD_ROOTS, {tree, roots});
-    },
 
-    [On.CONFIGURE_ROOT]: ({}, {trunk, root, config}) => {
+    [On.CONFIGURE_LINK]: ({}, {trunk, root, config}) => {
         rest.putLink(config.trunk, config.root);
     },
 

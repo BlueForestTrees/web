@@ -1,7 +1,6 @@
 <template>
     <v-card>
-        <!--<configure-root-dialog :trunk="beforeLast" :root="last"/>-->
-        <!--<add-ressource-dialog :tree="last" v-if="last"/>-->
+        <configure-link-dialog :trunk="beforeLast" :root="last"/>
 
         <v-toolbar>
             <v-toolbar-title>Usages</v-toolbar-title>
@@ -23,9 +22,13 @@
     import {Dial} from "../../const/dial";
     import ItemList from "../common/ItemList";
     import ItemPath from "../common/ItemPath";
+    import ConfigureLinkDialog from "../dialog/ConfigureLinkDialog";
+    import {BRANCH} from "../../const/items";
+    import items from "../../const/items";
 
     export default {
         components: {
+            ConfigureLinkDialog,
             ItemPath,
             ItemList
         },
@@ -77,7 +80,7 @@
                 this.path.splice(-1, 1);
             },
             addBranchToLast() {
-                this.showDialog({dialog: Dial.BRANCH, data: {parentBranch: this.last}});
+                this.showDialog({dialog: Dial.ADD_ITEM, data: {tree: this.last, item: items.BRANCH}});
             },
             load(idx, item) {
                 this.dispatchLoad(item);

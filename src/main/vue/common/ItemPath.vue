@@ -42,7 +42,7 @@
         methods: {
             ...mapMutations({showDialog: Do.SHOW_DIALOG}),
             configure() {
-                this.showDialog({dialog: Dial.CONFIGURE_ROOT});
+                this.showDialog({dialog: Dial.CONFIGURE_LINK});
             },
             ordered(i) {
                 return this.down ? i : this.path.length - i - 1;

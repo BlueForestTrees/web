@@ -1,13 +1,13 @@
 <template>
-    <v-card v-if="impacts">
+    <v-card>
         <v-toolbar>
             <v-toolbar-title>Impacts</v-toolbar-title>
             <v-spacer/>
             <v-icon @click="openAddImpactDialog" style="cursor: pointer">add</v-icon>
             <v-icon @click="deleteImpacts" style="cursor: pointer" v-if="isSelected()">delete</v-icon>
         </v-toolbar>
-        <v-list two-line>
-            <template v-for="impact in impacts.items">
+        <v-list two-line v-if="tree.impacts">
+            <template v-for="impact in tree.impacts.items">
                 <v-divider/>
                 <v-list-tile :key="impact._id" @mouseover="overImpact = impact" @mouseout="overImpact = null">
                     <v-list-tile-action>
@@ -51,7 +51,7 @@
                 Dial: Dial, selectedImpacts: [], overImpact: null
             }
         },
-        props: ['impacts'],
+        props: ['tree'],
         methods: {
             ...mapActions({dispatchDeleteImpacts: On.DELETE_IMPACTS}),
             ...mapMutations([Do.SHOW_DIALOG]),
@@ -59,7 +59,7 @@
                 this.showDialog({dialog: Dial.IMPACT});
             },
             deleteImpacts() {
-                this.dispatchDeleteImpacts({impacts: this.impacts, toDelete: this.selectedImpacts});
+                this.dispatchDeleteImpacts({impacts: this.tree.impacts, toDelete: this.selectedImpacts});
             },
             isSelected() {
                 return !_.isEmpty(this.selectedImpacts);
