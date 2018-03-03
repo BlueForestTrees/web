@@ -1,13 +1,12 @@
 <template>
     <v-layout row wrap justify-center align-center id="ressource_stack">
-        <template v-for="(item,i) in _path">
+        <template v-for="(item,i) in viewPath">
             <v-flex v-if="up">
                 <v-icon large>keyboard_arrow_up</v-icon>
             </v-flex>
             <v-flex>
-                <item :item="item" :selectable="ordered(i)>0" :forceSelect="ordered(i) === _path.length-1"
-                      @configure="configure" @delete="$emit('delete')" @select="select(item,ordered(i))"
-                      @load="load(item, ordered(i))"
+                <item :key="item._id" :item="item" :selectable="isNotTheTrunk(i)" :forceSelect="isTheDeeper(i)"
+                      @configure="configure(i)" @select="select(i)" @load="load(i)" @remove="remove(i)"
                 />
             </v-flex>
             <v-flex v-if="down">
@@ -20,8 +19,9 @@
 <script>
     import {Dial} from "../../const/dial";
     import Do from "../../const/do";
-    import {mapMutations} from 'vuex';
+    import {mapMutations, mapActions} from 'vuex';
     import Item from "./Item";
+    import On from "../../const/on";
 
 
     export default {
@@ -35,23 +35,51 @@
             down: function () {
                 return !this.up;
             },
-            _path: function () {
+            viewPath: function () {
                 return this.down ? this.path : this.path.slice().reverse();
             }
         },
         methods: {
+            ...mapActions({
+                dispatchDeleteLink: On.DELETE_LINK,
+            }),
             ...mapMutations({showDialog: Do.SHOW_DIALOG}),
-            configure() {
-                this.showDialog({dialog: Dial.CONFIGURE_LINK});
-            },
-            ordered(i) {
+            pathIndex(i) {
                 return this.down ? i : this.path.length - i - 1;
             },
-            select(item, i) {
-                this.$emit('select', i, item);
+            pathIndex(i) {
+                return this.down ? i : this.path.length - i - 1;
             },
-            load(item, i) {
-                this.$emit('load', i, item);
+            isNotTheTrunk(i) {
+                return this.pathIndex(i) > 0;
+            },
+            isTheDeeper(i) {
+                return this.pathIndex(i) === this.viewPath.length - 1;
+            },
+            leftRight(i) {
+                return {
+                    left: this.viewPath[this.up ? i : i - 1],
+                    right: this.viewPath[this.up ? i + 1 : i]
+                }
+            },
+            configure(viewIndex) {
+                this.showDialog({
+                    dialog: Dial.CONFIGURE_LINK,
+                    data: this.leftRight(viewIndex)
+                });
+            },
+            select(viewIndex) {
+                const pathIndex = this.pathIndex(viewIndex);
+                this.path.splice(pathIndex + 1);
+                this.$emit('select', this.path[pathIndex]);
+            },
+            load(viewIndex) {
+                this.$emit('load', this.viewPath[viewIndex]);
+            },
+            remove(viewIndex) {
+                this.dispatchDeleteLink(this.leftRight(viewIndex));
+                this.$emit('remove');
+                this.path.splice(this.pathIndex(viewIndex));
             }
         }
     }

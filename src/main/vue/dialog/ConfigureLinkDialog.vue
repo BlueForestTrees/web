@@ -1,17 +1,19 @@
 <template>
-    <main-dialog :dialog="Dial.CONFIGURE_LINK" @focus="" @esc="close" @enter="ok" ref="dialog" @show="show">
+    <main-dialog :dialog="CONFIGURE_LINK" ref="dialog"
+                 @show="show" @enter="ok" @esc="close"
+    >
         <template>
             <v-card>
                 <v-card-title class="grey lighten-4 py-4 title">
-                    Configurer une ressource
+                    Configurer
                 </v-card-title>
                 <v-card-text>
                     <v-container grid-list-md text-xs-center>
                         <v-layout row>
                             <v-flex xs12>
-                                <inplace-edit :initial="trunkConfig.qt" @ok="parentQt" @ko=""/>
-                                <inplace-unit-edit :initial="trunkConfig.unit" @ok="parentUnit" samegrandeur/>
-                                de {{trunkConfig.name}}
+                                <inplace-edit :initial="leftConfig.qt" @ok="parentQt" @ko=""/>
+                                <inplace-unit-edit :initial="leftConfig.unit" @ok="parentUnit" samegrandeur/>
+                                de {{leftConfig.name}}
                             </v-flex>
                         </v-layout>
                         <v-layout row>
@@ -21,9 +23,9 @@
                         </v-layout>
                         <v-layout row>
                             <v-flex xs12>
-                                <inplace-edit :initial="rootConfig.qt" @ok="childQt" @ko=""/>
-                                <inplace-unit-edit :initial="rootConfig.unit" @ok="childUnit" samegrandeur/>
-                                de {{rootConfig.name}}
+                                <inplace-edit :initial="rightConfig.qt" @ok="childQt" @ko=""/>
+                                <inplace-unit-edit :initial="rightConfig.unit" @ok="childUnit" samegrandeur/>
+                                de {{rightConfig.name}}
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -49,55 +51,63 @@
 
     export default {
         name: 'configure-link-dialog',
-        props: ['trunk', 'root'],
+        components: {
+            InplaceUnitEdit, InplaceEdit, Lookup, MainDialog
+        },
         data() {
             return {
-                trunkConfig: {qt: null, unit: null},
-                rootConfig: {qt: null, unit: null},
-                Dial: Dial
+                leftConfig: {qt: null, unit: null, name: null},
+                rightConfig: {qt: null, unit: null, name: null},
+                CONFIGURE_LINK: Dial.CONFIGURE_LINK
             }
         },
-        components: {
-            InplaceUnitEdit,
-            InplaceEdit, Lookup, MainDialog
+        computed: {
+            left: function () {
+                return this.$refs.dialog.data.left;
+            },
+            right: function () {
+                return this.$refs.dialog.data.right;
+            }
         },
         methods: {
-            ...mapActions({dispatchConfigureRoot: On.CONFIGURE_LINK}),
-            close: function () {
-                this.$refs.dialog.close();
-            },
-            parentQt(value) {
-                this.trunkConfig.qt = value;
-            },
-            parentUnit(unit) {
-                this.trunkConfig.unit = unit.shortname;
-            },
-            childQt(value) {
-                this.rootConfig.qt = value;
-            },
-            childUnit(unit) {
-                this.rootConfig.unit = unit.shortname;
-            },
             show() {
-                this.initConfig(this.trunkConfig, this.trunk);
-                this.initConfig(this.rootConfig, this.root);
+                this.initConfig(this.leftConfig, this.left);
+                this.initConfig(this.rightConfig, this.right);
             },
             initConfig(config, tree) {
                 config.qt = tree.trunk.quantity && tree.trunk.quantity.qt;
                 config.unit = tree.trunk.quantity && tree.trunk.quantity.unit;
                 config.name = tree.trunk.name;
             },
+
+            parentQt(value) {
+                this.leftConfig.qt = value;
+            },
+            parentUnit(unit) {
+                this.leftConfig.unit = unit.shortname;
+            },
+            childQt(value) {
+                this.rightConfig.qt = value;
+            },
+            childUnit(unit) {
+                this.rightConfig.unit = unit.shortname;
+            },
+
             async ok() {
-                await this.dispatchConfigureRoot({
-                    trunk: this.trunk,
-                    root: this.root,
+                await this.dispatchConfigureLink({
+                    left: this.left,
+                    right: this.right,
                     config: {
-                        trunk: {_id: this.trunk._id, quantity: this.trunkConfig},
-                        root: {_id: this.root._id, quantity: this.rootConfig}
+                        left: {_id: this.left._id, quantity: this.leftConfig},
+                        right: {_id: this.right._id, quantity: this.rightConfig}
                     }
                 });
                 this.close();
-            }
+            },
+            close: function () {
+                this.$refs.dialog.close();
+            },
+            ...mapActions({dispatchConfigureLink: On.CONFIGURE_LINK})
         }
     }
 </script>

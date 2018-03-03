@@ -20,13 +20,4 @@ export default {
             .then(roots => commit(Do.SET_ROOTS, {tree, roots}));
     },
 
-
-    [On.CONFIGURE_LINK]: ({}, {trunk, root, config}) => {
-        rest.putLink(config.trunk, config.root);
-    },
-
-    [On.DELETE_ROOT]: async ({commit}, {tree, root}) => {
-        await rest.deleteLink(tree._id, root._id);
-        commit(Do.DELETE_ROOT, {tree, root});
-    }
 };

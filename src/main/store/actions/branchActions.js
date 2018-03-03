@@ -18,15 +18,5 @@ export default {
                 items: trunkyAll(branches.items)
             }))
             .then(branches => commit(Do.SET_BRANCHES, {tree, branches}));
-    },
-
-
-    [On.CONFIGURE_BRANCH]: ({}, {trunk, branch, config}) => {
-        rest.putLink(config.trunk, config.branch);
-    },
-
-    [On.DELETE_BRANCH]: async ({commit}, {tree, branch}) => {
-        await rest.deleteLink(tree._id, branch._id);
-        commit(Do.DELETE_BRANCH, {tree, branch});
     }
 };

@@ -1,6 +1,6 @@
 <template>
     <v-card>
-        <configure-link-dialog :trunk="beforeLast" :root="last"/>
+
         <v-toolbar>
             <v-toolbar-title>Ressources</v-toolbar-title>
             <v-spacer/>
@@ -8,9 +8,10 @@
         </v-toolbar>
 
         <v-container V-if="last && last.trunk">
-            <item-path :path="path" @delete="deleteLast" @select="select" @load="load"/>
-            <item-list :dir="last.roots" @select="select(path.length, $event)" @add="addRessourceToLast"/>
+            <item-path :path="path" @select="selectPathItem" @load="dispatchLoadTree"/>
+            <item-list :dir="last.roots" @select="selectListItem" @add="addItemToLast"/>
         </v-container>
+
     </v-card>
 </template>
 
@@ -62,28 +63,20 @@
         },
         methods: {
             ...mapActions({
-                dispatchDeleteRessources: On.DELETE_ROOT,
-                dispatchLoadBranches: On.LOAD_ROOTS,
-                dispatchLoad: On.LOAD_OPEN_TREE
+                dispatchDeleteLink: On.DELETE_LINK,
+                dispatchLoadRoots: On.LOAD_ROOTS,
+                dispatchLoadTree: On.LOAD_OPEN_TREE
             }),
             ...mapMutations({showDialog: Do.SHOW_DIALOG}),
-            select(pathIndex, tree) {
-                this.path.splice(pathIndex);
+            selectPathItem(item) {
+                this.dispatchLoadRoots(item);
+            },
+            selectListItem(tree) {
                 this.path.push(tree);
-                this.dispatchLoadBranches(tree);
+                this.dispatchLoadRoots(tree);
             },
-            deleteLast() {
-                this.dispatchDeleteRessources({
-                    tree: this.beforeLast,
-                    root: this.last
-                });
-                this.path.splice(-1, 1);
-            },
-            addRessourceToLast() {
+            addItemToLast() {
                 this.showDialog({dialog: Dial.ADD_ITEM, data: {tree: this.last, item: items.ROOT}});
-            },
-            load(idx, item) {
-                this.dispatchLoad(item);
             }
         }
     }

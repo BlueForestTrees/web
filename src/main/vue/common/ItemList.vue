@@ -3,7 +3,7 @@
         <template v-for="item in dir.items">
             <v-chip :key="item._id"
                     color="primary" text-color="white"
-                    @click="$emit('select', item)">
+                    @click="select(item)">
                 <qt-unit-name :item="item.trunk"/>
             </v-chip>
         </template>
@@ -29,6 +29,11 @@
             Loading
         },
         name: 'item-list',
-        props: ['dir']
+        props: ['dir'],
+        methods: {
+            select(item) {
+                this.$emit('select', item);
+            }
+        }
     }
 </script>

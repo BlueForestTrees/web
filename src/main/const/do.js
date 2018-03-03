@@ -14,6 +14,7 @@ export default {
     DELETE_FACETS: 'deleteFacets',
     DELETE_IMPACTS: 'deleteImpacts',
     DELETE_ROOT: 'deleteRoot',
+    DELETE_BRANCH: 'deleteBranch',
     HIDE_FACET_DIALOG:'hideFacetDialog',
     HIDE_IMPACT_DIALOG:'hideImpactDialog',
     INIT_TREE: 'initTree',

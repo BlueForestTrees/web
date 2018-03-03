@@ -1,7 +1,5 @@
 <template>
     <v-card>
-        <configure-link-dialog :trunk="beforeLast" :root="last"/>
-
         <v-toolbar>
             <v-toolbar-title>Usages</v-toolbar-title>
             <v-spacer/>
@@ -9,8 +7,8 @@
         </v-toolbar>
 
         <v-container v-if="last && last.trunk">
-            <item-list :dir="last.branches" @select="select(path.length, $event)" @add="addBranchToLast"/>
-            <item-path :path="path" @delete="deleteLast" @select="select" @load="load" up/>
+            <item-list :dir="last.branches" @select="selectListItem" @add="addItemToLast"/>
+            <item-path :path="path" @select="selectPathItem" @load="dispatchLoadTree" up/>
         </v-container>
     </v-card>
 </template>
@@ -62,28 +60,19 @@
         },
         methods: {
             ...mapActions({
-                dispatchDeleteBranch: On.DELETE_BRANCH,
                 dispatchLoadBranches: On.LOAD_BRANCHES,
-                dispatchLoad: On.LOAD_OPEN_TREE
+                dispatchLoadTree: On.LOAD_OPEN_TREE
             }),
             ...mapMutations({showDialog: Do.SHOW_DIALOG}),
-            select(pathIndex, tree) {
-                this.path.splice(pathIndex);
+            selectPathItem(item) {
+                this.dispatchLoadBranches(item);
+            },
+            selectListItem(tree) {
                 this.path.push(tree);
                 this.dispatchLoadBranches(tree);
             },
-            deleteLast() {
-                this.dispatchDeleteBranch({
-                    tree: this.beforeLast,
-                    branch: this.last
-                });
-                this.path.splice(-1, 1);
-            },
-            addBranchToLast() {
+            addItemToLast() {
                 this.showDialog({dialog: Dial.ADD_ITEM, data: {tree: this.last, item: items.BRANCH}});
-            },
-            load(idx, item) {
-                this.dispatchLoad(item);
             }
         }
     }

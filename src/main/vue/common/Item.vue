@@ -11,7 +11,7 @@
                 edit
             </v-icon>
             <v-icon right color="white"
-                    @click.stop="$emit('delete')">
+                    @click.stop="$emit('remove')">
                 delete
             </v-icon>
         </span>
@@ -32,7 +32,7 @@
         },
         computed:{
             buttons:function(){
-                return this.selectable && (this.selected || this.forceSelect);
+                return this.selectable && this.selected;
             }
         },
         methods:{

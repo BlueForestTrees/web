@@ -13,15 +13,15 @@ const dialogFactory = {
     [Dial.FACET]: () => ({name: null}),
     [Dial.IMPACT]: () => ({name: null}),
     [Dial.ADD_ITEM]: () => ({tree: null, item: null}),
-    [Dial.CONFIGURE_BRANCH]: () => ({tree: null, root: null}),
-    [Dial.CONFIGURE_LINK]: () => ({tree: null, root: null})
+    [Dial.CONFIGURE_LINK]: () => ({left: null, right: null})
 };
 
-export const createDialog = name => (dialogFactory[name] && dialogFactory[name]()) || (console.warn(`state.js il manque dialogFactory['${name}']`) || {});
 const dialogs = () => _.reduce(Dial, (dials, key) => {
     dials[key] = dialogStateFromData(createDialog(key));
     return dials;
 }, {});
+
+export const createDialog = name => (dialogFactory[name] && dialogFactory[name]()) || (console.warn(`state.js il manque dialogFactory['${name}']`) || {});
 
 export const tree = () => ({_id: null, trunk: null, selection: null, facets: null});
 

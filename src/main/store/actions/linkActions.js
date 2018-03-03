@@ -17,6 +17,14 @@ export default {
             commit(Do.ADD_BRANCHES, {tree, branches});
         }
 
+    },
+
+    [On.CONFIGURE_LINK]: ({}, {left, right, config}) => rest.putLink(config.left, config.right),
+
+    [On.DELETE_LINK]: async ({commit}, {left, right}) => {
+        await rest.deleteLink(left._id, right._id);
+        commit(Do.DELETE_ROOT, {tree: left, root: right});
+        commit(Do.DELETE_BRANCH, {tree: right, branch: left});
     }
 
 };
