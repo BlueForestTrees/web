@@ -5,7 +5,7 @@
                 <v-icon large>keyboard_arrow_up</v-icon>
             </v-flex>
             <v-flex>
-                <item :key="item._id" :item="item" :selectable="isNotTheTrunk(i)" :forceSelect="isTheDeeper(i)"
+                <item :item="item" :selected="i === selectedViewIndex"
                       @configure="configure(i)" @select="select(i)" @load="load(i)" @remove="remove(i)"
                 />
             </v-flex>
@@ -23,7 +23,6 @@
     import Item from "./Item";
     import On from "../../const/on";
 
-
     export default {
         components: {Item},
         name: 'item-path',
@@ -37,6 +36,13 @@
             },
             viewPath: function () {
                 return this.down ? this.path : this.path.slice().reverse();
+            },
+            selectedViewIndex: function () {
+                if (this.path.length > 1) {
+                    return this.pathIndex(this.path.length - 1);
+                } else {
+                    return -1;
+                }
             }
         },
         methods: {
@@ -46,15 +52,6 @@
             ...mapMutations({showDialog: Do.SHOW_DIALOG}),
             pathIndex(i) {
                 return this.down ? i : this.path.length - i - 1;
-            },
-            pathIndex(i) {
-                return this.down ? i : this.path.length - i - 1;
-            },
-            isNotTheTrunk(i) {
-                return this.pathIndex(i) > 0;
-            },
-            isTheDeeper(i) {
-                return this.pathIndex(i) === this.viewPath.length - 1;
             },
             leftRight(i) {
                 return {

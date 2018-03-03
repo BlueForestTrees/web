@@ -1,7 +1,7 @@
 <template>
-    <v-chip color="primary" text-color="white" @click="select" @blur="unselect">
+    <v-chip color="primary" text-color="white" @click="$emit('select')">
         <qt-unit-name :item="item.trunk" />
-        <span v-if="buttons">
+        <span v-if="selected">
             <v-icon right color="white"
                     @click.stop="$emit('load')">
                 search
@@ -24,25 +24,6 @@
     export default {
         components: {QtUnitName},
         name:'item',
-        props:['item','selectable','forceSelect'],
-        data(){
-            return {
-                selected: false
-            }
-        },
-        computed:{
-            buttons:function(){
-                return this.selectable && this.selected;
-            }
-        },
-        methods:{
-            select:function(){
-                this.selected = true;
-                this.$emit("select")
-            },
-            unselect:function(){
-                this.selected = false;
-            }
-        }
+        props:['item','selected'],
     }
 </script>
