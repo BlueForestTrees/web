@@ -6,6 +6,7 @@ import App from './vue/App'
 import store from './store/store'
 import Vuetify from 'vuetify'
 import _ from 'lodash';
+import colors from 'vuetify/es5/util/colors'
 
 Vue.config.productionTip = false;
 
@@ -27,7 +28,13 @@ function fetchInitials(datas) {
 }
 
 function initVue() {
-    Vue.use(Vuetify);
+    Vue.use(Vuetify,{
+        theme: {
+            primary: colors.blue.darken1, // #E53935
+                secondary: colors.red.lighten4, // #FFCDD2
+                accent: colors.indigo.base // #3F51B5
+        }
+    });
 
     new Vue({
         el: '#app',
