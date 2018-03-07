@@ -6,16 +6,18 @@
                     Créer une ressource
                 </v-card-title>
                 <v-card-text>
-                        <v-flex xs12 align-center justify-space-between>
-                            <v-layout align-center>
-                                <v-avatar size="40px" class="mr-3">
-                                    <v-icon>bookmark</v-icon>
-                                </v-avatar>
-                                <v-form v-model="valid" class="decoValidation">
-                                    <v-text-field ref="nom" placeholder="Nom" :rules="[longueurValidation , spaceValidation]" :value="dialog.data.name" @input="updateName"/>
-                                </v-form>
-                            </v-layout>
-                        </v-flex>
+                    <v-flex xs12 align-center justify-space-between>
+                        <v-layout align-center>
+                            <v-avatar size="40px" class="mr-3">
+                                <v-icon>bookmark</v-icon>
+                            </v-avatar>
+                            <v-form v-model="valid" class="decoValidation">
+                                <v-text-field ref="nom" placeholder="Nom"
+                                              :rules="[longueurValidation]" :value="dialog.data.name"
+                                              @input="updateName"/>
+                            </v-form>
+                        </v-layout>
+                    </v-flex>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer/>
@@ -37,7 +39,7 @@
         data() {
             return {
                 Dial: Dial,
-                valid:false
+                valid: false
             }
         },
         components: {MainDialog},
@@ -57,7 +59,7 @@
                 this.$refs.dialog.close();
             },
 
-            longueurValidation: value => (value && value.trim().length>1)||"2 caractères minimum",
-            }
+            longueurValidation: value => (value && value.trim().length > 1) || "2 caractères minimum",
+        }
     }
 </script>
