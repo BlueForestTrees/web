@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import initial from "./initialService";
-import {bestRound} from "./calculations";
+import {bestRound} from "trees-common/dist";
 
 export const units = () => initial.unitModel.unitsData;
 export const grandeurs = () => initial.unitModel.grandeursData;
