@@ -11,14 +11,16 @@
                                 <v-avatar size="40px" class="mr-3">
                                     <v-icon>bookmark</v-icon>
                                 </v-avatar>
-                                <v-text-field ref="nom" placeholder="Nom" :value="dialog.data.name" @input="updateName"/>
+                                <v-form v-model="valid" class="decoValidation">
+                                    <v-text-field ref="nom" placeholder="Nom" :rules="[longueurValidation , spaceValidation]" :value="dialog.data.name" @input="updateName"/>
+                                </v-form>
                             </v-layout>
                         </v-flex>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer/>
                     <v-btn flat color="primary" @click="close">Annuler</v-btn>
-                    <v-btn flat @click="validate">Ok</v-btn>
+                    <v-btn :disabled="!valid" flat @click="validate">Ok</v-btn>
                 </v-card-actions>
             </v-card>
         </template>
@@ -34,7 +36,8 @@
     export default {
         data() {
             return {
-                Dial: Dial
+                Dial: Dial,
+                valid:false
             }
         },
         components: {MainDialog},
@@ -52,7 +55,9 @@
             },
             close: function () {
                 this.$refs.dialog.close();
+            },
+
+            longueurValidation: value => (value && value.trim().length>1)||"2 caractères minimum",
             }
-        }
     }
 </script>

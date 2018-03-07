@@ -24,19 +24,21 @@ const conf = {
     module: {
         rules: [
             {test: /\.vue$/, exclude: /node_modules/, loader: 'vue-loader', options: { loaders: {js: 'babel-loader'}}},
-            {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'}
+            {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
+            {test: /\.css$/, exclude: /node_modules/, loader: 'css-loader'}
         ]
     },
 
     plugins: [
         new HtmlWebpackPlugin({template: './src/main/index.html', inject: 'body', hash: 'true'}),
         new CopyWebpackPlugin([{ from: './src/img', to: 'img'}]),
+        new CopyWebpackPlugin([{ from: './src/CSS', to: 'CSS'}]),
         new webpack.DefinePlugin({'process.env': {NODE_ENV: '"development"'}})
     ],
 
     devServer: {
         port: 8079,
-        host: '0.0.0.0',
+        host: 'localhost',
         proxy: {
             '/api/*': {target: 'http://localhost:8080'},
             '/adminapi/*': {target: 'http://localhost:8080'}
