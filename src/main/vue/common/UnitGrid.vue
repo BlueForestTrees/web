@@ -20,7 +20,7 @@
 
 <script>
 
-    import {grandeurByName, grandeurOfUnitShortname, grandeurs} from "../../services/unitService";
+    import {grandeurByName, grandeurOfUnitShortname, getGrandeurs} from "trees-common/dist";
 
     export default {
         props: {
@@ -38,7 +38,7 @@
                 } else if (this.grandeur) {
                     return grandeurByName(this.grandeur);
                 } else {
-                    return grandeurs();
+                    return getGrandeurs();
                 }
             },
         },

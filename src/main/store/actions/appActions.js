@@ -2,7 +2,7 @@ import On from "../../const/on";
 
 export default {
     [On.MOUNT_APP]: async ({dispatch}) => {
-        await dispatch(On.LOAD_OPEN_TREE, {_id: "e2e2e2e2e2e2e2e2e2e2e2e2"});
+        //await dispatch(On.LOAD_OPEN_TREE, {_id: "e2e2e2e2e2e2e2e2e2e2e2e2"});
         // await dispatch(On.LOAD_OPEN_COMPARE_TO, {_id: "222222222222222222222222"});
     },
     [On.EXCEPTION]: ({}, e) => {

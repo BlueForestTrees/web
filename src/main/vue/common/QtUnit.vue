@@ -3,7 +3,7 @@
 </template>
 
 <script>
-    import {bestQuantity} from "../../services/unitService";
+    import {bestQuantity} from "trees-common/dist";
 
     export default {
         name: "qt-unit",

@@ -48,7 +48,7 @@
     import On from "../../const/on";
     import {mapActions} from "vuex";
     import {Dial} from "../../const/dial";
-    import {grandeurs} from "../../services/unitService";
+    import {getGrandeurs} from "trees-common/dist";
 
     export default {
         name:'impact-entry-dialog',
@@ -58,7 +58,7 @@
                 valid: false,
                 name: null,
                 grandeur: null,
-                grandeurs:grandeurs()
+                grandeurs:getGrandeurs()
             }
         },
         components: {
