@@ -6107,9 +6107,9 @@ tough-cookie@~2.3.0:
   dependencies:
     punycode "^1.4.1"
 
-trees-common@^1.0.18:
-  version "1.0.18"
-  resolved "https://registry.yarnpkg.com/trees-common/-/trees-common-1.0.18.tgz#ee4d271e0bd887c3a169bbedd405933e8b5d7c93"
+trees-common@^1.0.20:
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/trees-common/-/trees-common-1.0.20.tgz#9f4af3c529c6c0004ba39bdf2f37566adea99faf"
   dependencies:
     fraction.js "^4.0.4"
     lodash "^4.17.5"
