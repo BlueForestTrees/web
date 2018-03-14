@@ -1,7 +1,7 @@
 import On from "../../const/on";
 import rest from "../../rest/routes";
 import Do from "../../const/do";
-import {hasQuantity} from "../../services/calculations";
+import {hasQuantity, idQtFrom} from "../../services/calculations";
 
 export default {
 
@@ -19,7 +19,7 @@ export default {
         },
     [On.ADD_IMPACT]:
         async ({commit}, {tree, impact}) => {
-            rest.addImpact(tree._id, impact);
+            rest.addImpact(idQtFrom(tree.trunk), idQtFrom(impact));
             commit(Do.ADD_IMPACT, {tree, impact});
         }
 }

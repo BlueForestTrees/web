@@ -21,14 +21,14 @@ export default {
     getQuantifiedFacets: (qt, unit, _id) => api.get(`api/facet/${qt}/${unit}/${_id}`),
     getFacets: _id => api.get(`api/facet/${_id}`),
     deleteFacets: (treeId, facetIds) => api.post('api/facet/deletion', {treeId, facetIds}),
-    addFacet: (treeId, facet) => api.post(`api/facet/${treeId}`, {facet}),
+    addFacet: (trunk, facet) => api.post(`api/facet`, {trunk, facet}),
 
     //IMPACTS TANK
     getQuantifiedImpactTank: (qt, unit, _id) => api.get(`api/impacttank/${qt}/${unit}/${_id}`),
 
     //IMPACTS
     deleteImpacts: (treeId, impactIds) => api.post('api/impact/deletion', {treeId, impactIds}),
-    addImpact: (treeId, impact) => api.post(`api/impact/${treeId}`, {impact}),
+    addImpact: (trunk, impact) => api.post(`api/impact`, {trunk, impact}),
 
     //TRUNKS
     search: name => api.get(`api/trunks?q=${name}`),

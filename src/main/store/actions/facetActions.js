@@ -1,7 +1,7 @@
 import On from "../../const/on";
 import rest from "../../rest/routes";
 import Do from "../../const/do";
-import {hasQuantity} from "../../services/calculations";
+import {hasQuantity, idQtFrom} from "../../services/calculations";
 
 export default {
 
@@ -18,7 +18,7 @@ export default {
         },
     [On.ADD_FACET]:
         async ({commit}, {tree, facet}) => {
-            rest.addFacet(tree._id, facet);
+            rest.addFacet(idQtFrom(tree.trunk), idQtFrom(facet));
             commit(Do.ADD_FACET, {tree, facet});
         }
 }
