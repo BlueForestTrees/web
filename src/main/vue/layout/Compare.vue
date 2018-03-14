@@ -62,7 +62,7 @@
     import {drawRadar} from "../../services/d3/radar";
     import AxisList from "../common/AxisList";
     import _ from 'lodash';
-    import {baseQt, calcCoef} from "trees-common/dist";
+    import {baseQt, calcCoef} from "trees-units";
 
     export default {
         components: {

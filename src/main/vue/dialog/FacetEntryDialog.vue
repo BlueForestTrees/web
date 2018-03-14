@@ -48,7 +48,7 @@
     import On from "../../const/on";
     import {mapActions} from "vuex";
     import {Dial} from "../../const/dial";
-    import {getGrandeurs} from "trees-common/dist";
+    import {getGrandeurs} from "trees-units";
 
     export default {
         data() {

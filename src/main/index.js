@@ -3,7 +3,7 @@ import App from './vue/App'
 import store from './store/store'
 import Vuetify from 'vuetify'
 import rest from "./rest/routes";
-import {initUnits} from "trees-common/dist"
+import {initUnits} from "trees-units"
 
 Vue.config.productionTip = false;
 

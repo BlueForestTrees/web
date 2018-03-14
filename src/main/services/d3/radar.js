@@ -3,7 +3,7 @@ import _ from 'lodash';
 import {config} from "./config";
 import {wrap} from "./helper";
 import {format} from "../calculations";
-import {bestQuantity} from "trees-common/dist";
+import {bestQuantity} from "trees-units";
 
 export const drawRadar = ({selectAxis, id, data, options, selectedAxis}) => {
 

@@ -20,7 +20,7 @@
 
 <script>
 
-    import {grandeurByName, grandeurOfUnitShortname, getGrandeurs} from "trees-common/dist";
+    import {grandeurByName, grandeurOfUnitShortname, getGrandeurs} from "trees-units";
 
     export default {
         props: {
