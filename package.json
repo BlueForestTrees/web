@@ -1,6 +1,6 @@
 {
   "env": "web",
-  "version": "0.0.1-SNAPSHOT",
+  "version": "1.0.0",
   "description": "web for trees",
   "main": "index.js",
   "author": "slim",
