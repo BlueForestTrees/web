@@ -32,7 +32,7 @@ const conf = {
     plugins: [
         new HtmlWebpackPlugin({template: './src/main/index.html', inject: 'body', hash: 'true'}),
         new CopyWebpackPlugin([{ from: './src/img', to: 'img'}]),
-        new CopyWebpackPlugin([{ from: './src/CSS', to: 'CSS'}]),
+        new CopyWebpackPlugin([{ from: './src/css', to: 'css'}]),
         new webpack.DefinePlugin({'process.env': {NODE_ENV: '"development"'}})
     ],
 
