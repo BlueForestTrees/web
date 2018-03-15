@@ -13,6 +13,8 @@ import trunkActions from "./actions/trunkActions";
 import tankActions from "./actions/tankActions";
 import impactActions from "./actions/impactActions";
 import impactEntryActions from "./actions/impactEntryActions";
+import branchActions from "./actions/branchActions";
+import linkActions from "./actions/linkActions";
 
 
 
@@ -32,7 +34,9 @@ const store = new Vuex.Store({
         ...rootActions,
         ...treeActions,
         ...trunkActions,
-        ...tankActions
+        ...tankActions,
+        ...branchActions,
+        ...linkActions
     }
 });
 

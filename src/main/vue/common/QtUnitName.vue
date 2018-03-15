@@ -1,17 +1,20 @@
 <template>
     <v-flex class="no-wrap" v-if="item">
-        {{ (quantity && quantity.qt) ? quantity.qt : 'qt?' }}{{ (quantity && quantity.unit) ? quantity.unit : 'unit?'}} {{ item.name }}
+        <qt-unit :quantity="quantity"/> {{ item.name }}
     </v-flex>
     <v-flex class="no-wrap" v-else-if="axis">
-        {{format(axis.qt)}}{{axis.unit}} {{axis.axis}}
+        <qt-unit :quantity="axis"/> {{axis.axis}}
     </v-flex>
 </template>
 
 <script>
 
-    import {format} from "../../services/mapper";
+
+    import {format} from "../../services/calculations";
+    import QtUnit from "./QtUnit";
 
     export default {
+        components: {QtUnit},
         name: 'qt-unit-name',
         props: ['item', 'axis'],
         computed: {
@@ -21,7 +24,7 @@
         },
         data: function () {
             return {
-                format: format
+                format
             }
         }
     }

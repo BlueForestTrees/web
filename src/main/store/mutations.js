@@ -23,15 +23,6 @@ const cleanDialog = (state, dialog) => {
 
 export default {
 
-    [Do.UPDATE_GRANDEURS]: (state, grandeurs) => {
-        state.grandeurs = grandeurs;
-        state.labelsGrandeurs = Object.keys(grandeurs);
-        state.units = _.chain(grandeurs)
-            .values()
-            .flatten()
-            .keyBy('shortname')
-            .value();
-    },
     [Do.CLOSE_TREE]: (state) => {
         state.compareTo = null;
         state.tree = null;
@@ -108,11 +99,17 @@ export default {
     [Do.SET_ROOTS]: ({}, {tree, roots}) => {
         Vue.set(tree, "roots", roots);
     },
+    [Do.SET_BRANCHES]: ({}, {tree, branches}) => {
+        Vue.set(tree, "branches", branches);
+    },
     [Do.SET_TANK]: ({}, {tree, tank}) => {
         Vue.set(tree, "tank", tank);
     },
     [Do.ADD_ROOTS]: ({}, {tree, roots}) => {
         tree.roots.items.push(...roots);
+    },
+    [Do.ADD_BRANCHES]: ({}, {tree, branches}) => {
+        tree.branches.items.push(...branches);
     },
 
     [Do.ADD_FACET]: ({}, {tree, facet}) => {
@@ -122,6 +119,7 @@ export default {
             Vue.set(tree, "facets", [facet]);
         }
     },
+
 
     [Do.DELETE_FACETS]: ({}, {facets, toDelete}) => {
         if (facets.items) {
@@ -133,6 +131,11 @@ export default {
     [Do.DELETE_ROOT]: ({}, {tree, root}) => {
         if (tree.roots) {
             tree.roots.items.splice(tree.roots.items.indexOf(root), 1);
+        }
+    },
+    [Do.DELETE_BRANCH]: ({}, {tree, root}) => {
+        if (tree.branches) {
+            tree.branches.items.splice(tree.branches.items.indexOf(root), 1);
         }
     },
 

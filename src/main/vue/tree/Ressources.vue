@@ -1,7 +1,5 @@
 <template>
     <v-card>
-        <configure-root-dialog :trunk="beforeLast" :root="last"/>
-        <add-ressource-dialog :tree="last" v-if="last"/>
 
         <v-toolbar>
             <v-toolbar-title>Ressources</v-toolbar-title>
@@ -9,14 +7,11 @@
             <v-icon @click="" style="cursor: pointer">add</v-icon>
         </v-toolbar>
 
-        <v-container grid-list-md text-xs-center v-if="last && last.trunk">
-            <v-layout row>
-                <v-flex>
-                    <ressource-bar :path="path" @delete="deleteLast" @select="select" @load="load"/>
-                    <ressource-list :last="last" @select="select(path.length, $event)" @add="addRessourceToLast"/>
-                </v-flex>
-            </v-layout>
+        <v-container V-if="last && last.trunk">
+            <item-path :path="path" @select="selectPathItem" @load="dispatchLoadTree"/>
+            <item-list :dir="last.roots" @select="selectListItem" @add="addItemToLast"/>
         </v-container>
+
     </v-card>
 </template>
 
@@ -24,18 +19,19 @@
     import On from "../../const/on";
     import {mapActions, mapMutations} from 'vuex';
     import Do from "../../const/do";
-    import ConfigureRootDialog from "../dialog/ConfigureRootDialog";
-    import AddRessourceDialog from "../dialog/AddRessourceDialog";
-    import RessourceBar from "../common/RessourceBar";
-    import RessourceList from "../common/RessourceList";
+    import ConfigureLinkDialog from "../dialog/ConfigureLinkDialog";
+    import AddRessourceDialog from "../dialog/AddItemDialog";
     import {Dial} from "../../const/dial";
+    import ItemList from "../common/ItemList";
+    import ItemPath from "../common/ItemPath";
+    import items from "../../const/items";
 
     export default {
         components: {
-            RessourceList,
-            RessourceBar,
+            ItemPath,
+            ItemList,
             AddRessourceDialog,
-            ConfigureRootDialog
+            ConfigureLinkDialog
         },
         props: ['tree'],
         data() {
@@ -48,7 +44,7 @@
                 this.path = [val];
             }
         },
-        beforeMount:function(){
+        beforeMount: function () {
             this.path = [this.tree];
         },
         computed: {
@@ -67,28 +63,20 @@
         },
         methods: {
             ...mapActions({
-                dispatchDeleteRessources: On.DELETE_ROOT,
+                dispatchDeleteLink: On.DELETE_LINK,
                 dispatchLoadRoots: On.LOAD_ROOTS,
-                dispatchLoad: On.LOAD_OPEN_TREE
+                dispatchLoadTree: On.LOAD_OPEN_TREE
             }),
             ...mapMutations({showDialog: Do.SHOW_DIALOG}),
-            select(pathIndex, tree) {
-                this.path.splice(pathIndex);
+            selectPathItem(item) {
+                this.dispatchLoadRoots(item);
+            },
+            selectListItem(tree) {
                 this.path.push(tree);
                 this.dispatchLoadRoots(tree);
             },
-            deleteLast() {
-                this.dispatchDeleteRessources({
-                    tree: this.beforeLast,
-                    root: this.last
-                });
-                this.path.splice(-1, 1);
-            },
-            addRessourceToLast() {
-                this.showDialog({dialog: Dial.RESSOURCE, data: {parentRessource: this.last}});
-            },
-            load(idx, item){
-                this.dispatchLoad(item);
+            addItemToLast() {
+                this.showDialog({dialog: Dial.ADD_ITEM, data: {tree: this.last, item: items.ROOT}});
             }
         }
     }

@@ -1,7 +1,7 @@
 import On from "../../const/on";
-import rest from "../../services/rest";
+import rest from "../../rest/routes";
 import Do from "../../const/do";
-import {trunky} from "../../services/mapper";
+import {trunky} from "../../services/calculations";
 
 export default {
     [On.CREATE_TRUNK]: async ({commit, state, dispatch}, name) => {

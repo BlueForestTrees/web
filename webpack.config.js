@@ -2,9 +2,12 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
+const webpack = require('webpack');
 
 const conf = {
     entry: './src/main/index.js',
+
+    devtool: 'sourcemap',
 
     output: {
         filename: '[name].bundle.js',
@@ -21,18 +24,21 @@ const conf = {
     module: {
         rules: [
             {test: /\.vue$/, exclude: /node_modules/, loader: 'vue-loader', options: { loaders: {js: 'babel-loader'}}},
-            {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'}
+            {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
+            {test: /\.css$/, exclude: /node_modules/, loader: 'css-loader'}
         ]
     },
 
     plugins: [
         new HtmlWebpackPlugin({template: './src/main/index.html', inject: 'body', hash: 'true'}),
         new CopyWebpackPlugin([{ from: './src/img', to: 'img'}]),
+        new CopyWebpackPlugin([{ from: './src/css', to: 'css'}]),
+        new webpack.DefinePlugin({'process.env': {NODE_ENV: '"development"'}})
     ],
 
     devServer: {
         port: 8079,
-        host: '0.0.0.0',
+        host: 'localhost',
         proxy: {
             '/api/*': {target: 'http://localhost:8080'},
             '/adminapi/*': {target: 'http://localhost:8080'}

@@ -1,4 +1,4 @@
-import {baseUrl} from './const';
+import {baseUrl} from '../const/const';
 import req from 'request-promise-lite';
 
 const url = (path) => {

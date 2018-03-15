@@ -1,6 +1,6 @@
 <template>
     <v-dialog width="800px" v-model="visible" @keydown.esc="$emit('esc')" @keydown.ctrl.enter="$emit('enter')">
-            <slot :data="data" ref="content"/>
+        <slot :data="data" ref="content"/>
     </v-dialog>
 </template>
 
@@ -11,7 +11,7 @@
     export default {
         props: ['dialog'],
         methods: {
-            close: function (){
+            close: function () {
                 this.visible = false;
             },
             ...mapMutations({
@@ -42,10 +42,10 @@
             }
         },
         watch: {
-            visible(visible) {
-                if (visible) {
+            visible(value, oldValue) {
+                if (value) {
                     this.$emit('show');
-                    this.$nextTick(()=>this.$emit('focus'));
+                    this.$nextTick(() => this.$emit('focus'));
                 }
             }
         }

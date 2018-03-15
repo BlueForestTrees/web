@@ -1,7 +1,7 @@
 import Do from "../../const/do";
 import On from "../../const/on";
-import {trunky, trunkyAll} from "../../services/mapper";
-import rest from "../../services/rest";
+import rest from "../../rest/routes";
+import {trunkyAll} from "../../services/calculations";
 
 export default {
 
@@ -14,15 +14,16 @@ export default {
     },
     [On.LOAD_TREE]: async ({commit, state, dispatch}, {_id}) => {
         const tree = {_id};
-        await Promise.all([
-            dispatch(On.LOAD_TRUNK, tree)
-                .then(() => dispatch(On.LOAD_ROOTS, tree))
-                .then(() => dispatch(On.LOAD_TANK, tree)),
-            dispatch(On.LOAD_FACETS, {_id})
-                .then(facets => commit(Do.ADD_FACETS, {tree, facets})),
-            dispatch(On.LOAD_IMPACTS, {_id})
-                .then(impacts => commit(Do.ADD_IMPACTS, {tree, impacts}))
-        ]);
+
+        await dispatch(On.LOAD_TRUNK, tree)
+            .then(() => Promise.all([
+                dispatch(On.LOAD_ROOTS, tree),
+                dispatch(On.LOAD_TANK, tree),
+                dispatch(On.LOAD_FACETS, tree),
+                dispatch(On.LOAD_IMPACTS, tree),
+                dispatch(On.LOAD_BRANCHES, tree)
+            ]));
+
         return tree;
     },
     [On.CREATE_AND_OPEN_TREE]: async ({dispatch}, {name}) => {

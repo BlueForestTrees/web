@@ -1,6 +1,6 @@
 {
   "env": "web",
-  "version": "0.0.1-SNAPSHOT",
+  "version": "1.0.0",
   "description": "web for trees",
   "main": "index.js",
   "author": "slim",
@@ -8,7 +8,8 @@
   "scripts": {
     "dev-web": "webpack-dev-server --inline --progress",
     "build-web": "webpack",
-    "test-web": "NODE_ENV=test mocha --exit $(find src/test -name '*.js') --require babel-register"
+    "test-web": "NODE_ENV=test mocha --exit $(find src/test -name '*.js') --require babel-register",
+    "upgrade-units": "yarn upgrade -L trees-units"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -33,15 +34,16 @@
     "vue-loader": "^13.5.0",
     "vue-style-loader": "^3.0.3",
     "vue-template-compiler": "^2.5.9",
-    "webpack-dev-server": "^2.9.7",
     "webpack": "^3.10.0",
-    "webpack-cli": "^1.5.3"
+    "webpack-cli": "^1.5.3",
+    "webpack-dev-server": "^2.9.7"
   },
   "dependencies": {
     "@material/button": "^0.26.0",
     "d3": "^4.12.2",
     "lodash": "^4.17.4",
     "request-promise-lite": "^0.12.0",
+    "trees-units": "^1.0.0",
     "vue": "^2.5.13",
     "vuetify": "1.0.0-beta.4",
     "vuex": "^3.0.1",

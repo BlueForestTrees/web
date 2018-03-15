@@ -12,7 +12,9 @@
                 <v-list-tile :key="facet._id" @mouseover="overFacet = facet" @mouseout="overFacet = null">
                     <v-list-tile-content>
                         <v-list-tile-title>{{facet.name}}</v-list-tile-title>
-                        <v-list-tile-sub-title>{{facet.quantity.qt}}{{facet.quantity.unit}}</v-list-tile-sub-title>
+                        <v-list-tile-sub-title v-if="hasQuantity(facet)">
+                            <qt-unit :quantity="facet.quantity"/>
+                        </v-list-tile-sub-title>
                     </v-list-tile-content>
                     <v-list-tile-action>
                         <transition name="fadeInOut">
@@ -36,10 +38,12 @@
     import FacetDialog from "../dialog/FacetEntryDialog";
     import {Dial} from "../../const/dial";
     import On from "../../const/on";
-
+    import {hasQuantity} from "../../services/calculations";
+    import QtUnit from "../common/QtUnit";
 
     export default {
         components: {
+            QtUnit,
             FacetDialog
         },
         data() {
@@ -64,7 +68,8 @@
                 if (!_.isEmpty(this.selectedFacets)) {
                     this.selectedFacets = [];
                 }
-            }
+            },
+            hasQuantity
         }
     }
 </script>

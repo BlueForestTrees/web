@@ -12,24 +12,22 @@ const dialogFactory = {
     [Dial.COMPARE_TO]: () => ({name: null}),
     [Dial.FACET]: () => ({name: null}),
     [Dial.IMPACT]: () => ({name: null}),
-    [Dial.RESSOURCE]: () => ({parentRessource: null}),
-    [Dial.CONFIGURE_ROOT]: () => ({tree: null, root: null})
+    [Dial.ADD_ITEM]: () => ({tree: null, item: null}),
+    [Dial.CONFIGURE_LINK]: () => ({left: null, right: null})
 };
 
-export const createDialog = name => (dialogFactory[name] && dialogFactory[name]()) || (console.warn(`state.js il manque dialogFactory['${name}']`) || {});
 const dialogs = () => _.reduce(Dial, (dials, key) => {
     dials[key] = dialogStateFromData(createDialog(key));
     return dials;
 }, {});
+
+export const createDialog = name => (dialogFactory[name] && dialogFactory[name]()) || (console.warn(`state.js il manque dialogFactory['${name}']`) || {});
 
 export const tree = () => ({_id: null, trunk: null, selection: null, facets: null});
 
 export default {
     tree: null,
     compareTo: null,
-    labelsGrandeurs: null,
-    grandeurs: null,
-    units: null,
     linkEdit: null,
     addingSeed: false,
     dialogs: dialogs()

@@ -1,10 +1,10 @@
 import chai from 'chai';
-import {align, applyRatio, denorm, separate} from "../../../main/services/mapper";
+import {align, applyRatio, denorm, separate} from "../../../main/services/radar-calc";
 import {withNameIdQuantity} from "../../testPlumbing";
 
 chai.should();
 
-describe('Mapper', function () {
+describe('Radar calc', function () {
 
     describe('applyRatio', function () {
         it('normal applyRatio', function () {
@@ -122,6 +122,9 @@ describe('Mapper', function () {
                 },
                 tank: {
                     items: []
+                },
+                impacts: {
+                    items: []
                 }
             };
             const expected = [
@@ -144,6 +147,9 @@ describe('Mapper', function () {
                 },
                 tank: {
                     items: [withNameIdQuantity("eau", "b", 3, "L"), withNameIdQuantity("elec", "c", 2, "L")]
+                },
+                impacts: {
+                    items: [withNameIdQuantity("co2", "d", 3, "kg"), withNameIdQuantity("poison", "e", 4, "L")]
                 }
             };
             const expected = [
@@ -176,6 +182,18 @@ describe('Mapper', function () {
                     "axis": "elec",
                     "qt": 2,
                     "type": "tank",
+                    "unit": "L"
+                }, {
+                    "tree": "Skate",
+                    "axis": "co2",
+                    "qt": 3,
+                    "type": "impacts",
+                    "unit": "kg"
+                }, {
+                    "tree": "Skate",
+                    "axis": "poison",
+                    "qt": 4,
+                    "type": "impacts",
                     "unit": "L"
                 }
             ];

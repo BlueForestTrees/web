@@ -1,5 +1,5 @@
 <template>
-    <main-dialog :dialog="Dial.IMPACT_ENTRY" ref="dialog"
+    <main-dialog :dialog="IMPACT_ENTRY" ref="dialog"
                  @focus="$refs.nom.focus()" @validate="validate" @esc="close" @enter="validate">
         <template slot-scope="props">
 
@@ -46,26 +46,25 @@
 <script>
     import MainDialog from "./MainDialog";
     import On from "../../const/on";
-    import {mapActions, mapGetters, mapState} from "vuex";
+    import {mapActions} from "vuex";
     import {Dial} from "../../const/dial";
+    import {getGrandeurs} from "trees-units";
 
     export default {
         name:'impact-entry-dialog',
         data() {
             return {
-                Dial: Dial,
+                IMPACT_ENTRY: Dial.IMPACT_ENTRY,
                 valid: false,
                 name: null,
-                grandeur: null
+                grandeur: null,
+                grandeurs:getGrandeurs()
             }
         },
         components: {
             MainDialog
         },
         props: ['data'],
-        computed: {
-            ...mapState({'grandeurs': 'grandeurs'})
-        },
         methods: {
             selectGrandeur(grandeur) {
                 this.grandeur = grandeur;

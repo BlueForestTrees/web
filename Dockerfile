@@ -1,18 +1,15 @@
 FROM node:alpine AS trees-web
 
-RUN mkdir -p /build/front/workdir
-COPY . /build/front/workdir
-WORKDIR /build/front/workdir
+RUN mkdir -p /build/trees-web
+COPY . /build/trees-web
+WORKDIR /build/trees-web
 
-ARG NODE_ENV
-ENV NODE_ENV $NODE_ENV
+ARG PORT
+ENV PORT $PORT
 RUN npm install
 RUN npm run build
 
 FROM tobi312/rpi-apache2
-#FROM hypriot/rpi-busybox-httpd
-#FROM httpd:alpine
-#COPY ./httpd.conf /usr/local/apache2/conf/httpd.conf
-COPY --from=trees-web /build/front/dist/ /var/www
+COPY --from=trees-web /build/dist/ /var/www
 COPY ./000-default.conf /etc/apache2/sites-available
 COPY ./mods-available /etc/apache2/mods-enabled
