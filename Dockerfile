@@ -1,3 +1,4 @@
+#!/bin/bash
 FROM node:alpine AS trees-web
 
 RUN mkdir -p /build/trees-web
