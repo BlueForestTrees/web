@@ -63,7 +63,7 @@ const conf = {
 
 conf.plugins.push(new FriendlyErrorsPlugin({
     compilationSuccessInfo: {
-        messages: [`Running here: http://${conf.devServer.host}:${conf.devServer.port}`],
+        messages: [`Running here: http://${conf.devServer.host}:${conf.devServer.PORT}`],
     }
 }));
 
