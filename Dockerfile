@@ -1,8 +1,8 @@
 FROM node:alpine AS web-builder
 
 RUN mkdir -p /build
-COPY package*.json ./build/
-COPY src/ ./build/src
+COPY package*.json /build/
+COPY src/ /build/src
 
 WORKDIR /build
 RUN npm install
