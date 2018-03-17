@@ -1,13 +1,9 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
-const webpack = require('webpack');
 
 const conf = {
     entry: './src/main/index.js',
-
-    devtool: 'sourcemap',
 
     output: {
         filename: '[name].bundle.js',
@@ -23,7 +19,7 @@ const conf = {
 
     module: {
         rules: [
-            {test: /\.vue$/, exclude: /node_modules/, loader: 'vue-loader', options: { loaders: {js: 'babel-loader'}}},
+            {test: /\.vue$/, exclude: /node_modules/, loader: 'vue-loader', options: {loaders: {js: 'babel-loader'}}},
             {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
             {test: /\.css$/, exclude: /node_modules/, loader: 'css-loader'}
         ]
@@ -31,40 +27,18 @@ const conf = {
 
     plugins: [
         new HtmlWebpackPlugin({template: './src/main/index.html', inject: 'body', hash: 'true'}),
-        new CopyWebpackPlugin([{ from: './src/img', to: 'img'}]),
-        new CopyWebpackPlugin([{ from: './src/css', to: 'css'}]),
-        new webpack.DefinePlugin({'process.env': {NODE_ENV: '"development"'}})
+        new CopyWebpackPlugin([{from: './src/img', to: 'img'}]),
+        new CopyWebpackPlugin([{from: './src/css', to: 'css'}])
     ],
 
     devServer: {
-        port: 8079,
-        host: 'localhost',
+        host: 'localhost', port: 8079,
         proxy: {
             '/api/*': {target: 'http://localhost:8080'},
             '/adminapi/*': {target: 'http://localhost:8080'}
         },
-        contentBase: path.resolve(__dirname, 'dist'),
-        quiet: true
-    },
-
-    node: {
-        // prevent webpack from injecting useless setImmediate polyfill because Vue
-        // source contains it (although only uses it if it's native).
-        setImmediate: false,
-        // prevent webpack from injecting mocks to Node native modules
-        // that does not make sense for the client
-        dgram: 'empty',
-        fs: 'empty',
-        net: 'empty',
-        tls: 'empty',
-        child_process: 'empty'
+        contentBase: path.resolve(__dirname, 'dist'), quiet: true
     }
 };
-
-conf.plugins.push(new FriendlyErrorsPlugin({
-    compilationSuccessInfo: {
-        messages: [`Running here: http://${conf.devServer.host}:${conf.devServer.PORT}`],
-    }
-}));
 
 module.exports = conf;
