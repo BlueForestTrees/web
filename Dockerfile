@@ -3,6 +3,7 @@ FROM node:alpine AS web-builder
 RUN mkdir -p build
 WORKDIR build
 COPY package*.json ./
+COPY webpack.config.js ./
 COPY src/ ./src
 
 RUN npm install
