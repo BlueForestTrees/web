@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import mutations from './mutations';
 import state from './state';
 import getters from './getters';
 import appActions from "./actions/appActions";
@@ -15,6 +14,15 @@ import impactActions from "./actions/impactActions";
 import impactEntryActions from "./actions/impactEntryActions";
 import branchActions from "./actions/branchActions";
 import linkActions from "./actions/linkActions";
+import branchMutations from "./mutation/branchMutations";
+import compareToMutations from "./mutation/compareToMutations";
+import dialogMutations from "./mutation/dialogMutations";
+import facetMutation from "./mutation/facetMutation";
+import impactMutations from "./mutation/impactMutations";
+import tankMutations from "./mutation/tankMutations";
+import treeMutations from "./mutation/treeMutations";
+import trunkMutations from "./mutation/trunkMutations";
+import rootMutations from "./mutation/rootMutations";
 
 
 
@@ -23,7 +31,17 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
     state,
     getters,
-    mutations,
+    mutations:{
+        ...branchMutations,
+        ...compareToMutations,
+        ...dialogMutations,
+        ...facetMutation,
+        ...impactMutations,
+        ...rootMutations,
+        ...tankMutations,
+        ...treeMutations,
+        ...trunkMutations
+    },
     actions: {
         ...appActions,
         ...compareToActions,
