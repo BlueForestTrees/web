@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import Do from "../../const/do";
 
 export default {

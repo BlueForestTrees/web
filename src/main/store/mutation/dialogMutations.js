@@ -1,4 +1,6 @@
 import Do from "../../const/do";
+import {createDialog} from "../state";
+
 
 const updateDialogVisibility = (state, {dialog, visible}) => {
     if (state.dialogs[dialog]) {
