@@ -6,7 +6,7 @@
   "author": "slim",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --progress",
+    "start": "webpack-serve",
     "build": "webpack --mode production",
     "test": "NODE_ENV=test mocha --exit $(find src/test -name '*.js') --require babel-register",
     "upgrade-units": "yarn upgrade -L trees-units"
@@ -32,7 +32,7 @@
     "webpack": "^4.1.1",
     "webpack-bundle-size-analyzer": "^2.7.0",
     "webpack-cli": "^2.0.12",
-    "webpack-dev-server": "^3.1.1"
+    "webpack-serve": "^0.2.0"
   },
   "dependencies": {
     "@material/button": "^0.26.0",
@@ -66,6 +66,15 @@
     "env": {
       "test": {
         "plugins": []
+      }
+    }
+  },
+  "serve": {
+    "host": "localhost",
+    "port": "8079",
+    "proxy": {
+      "/api": {
+        "target": "http://localhost:8080"
       }
     }
   }

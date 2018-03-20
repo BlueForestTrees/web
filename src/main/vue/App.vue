@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <v-app id="blueforest" light>
-            <corner :text="'BlueForest v0.0.1'"/>
+            <corner :text="cornerText"/>
             <bar :drawer.sync="drawer"/>
             <left-menu :drawer.sync="drawer"/>
             <blueforest/>
@@ -32,6 +32,7 @@
     import LookupTreeDialog from "./dialog/CompareToDialog";
     import Corner from "./layout/Corner";
     import ImpactEntryDialog from "./dialog/ImpactEntryDialog";
+    import ENV from "../env";
 
     export default {
         watch: {
@@ -41,12 +42,13 @@
         },
         data: function () {
             return {
-                drawer: false
+                drawer: false,
+                cornerText: "BlueForest v" + ENV.VERSION,
             }
         },
         components: {
             ImpactEntryDialog,
-            Blueforest,Corner,LookupTreeDialog,Lookup,FacetEntryDialog, CreateTrunkDialog, MainFooter, BottomRightBtns, Bar, LeftMenu
+            Blueforest, Corner, LookupTreeDialog, Lookup, FacetEntryDialog, CreateTrunkDialog, MainFooter, BottomRightBtns, Bar, LeftMenu
         },
         mounted: async function () {
             await this.$store.dispatch(On.MOUNT_APP);

@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const webpack = require('webpack');
 
 const conf = {
     entry: './src/main/index.js',
@@ -28,17 +29,11 @@ const conf = {
     plugins: [
         new HtmlWebpackPlugin({template: './src/main/index.html', inject: 'body', hash: 'true'}),
         new CopyWebpackPlugin([{from: './src/img', to: 'img'}]),
-        new CopyWebpackPlugin([{from: './src/css', to: 'css'}])
-    ],
-
-    devServer: {
-        host: 'localhost', port: 8079,
-        proxy: {
-            '/api/*': {target: 'http://localhost:8080'},
-            '/adminapi/*': {target: 'http://localhost:8080'}
-        },
-        contentBase: path.resolve(__dirname, 'dist'), quiet: true
-    }
+        new CopyWebpackPlugin([{from: './src/css', to: 'css'}]),
+        new webpack.DefinePlugin({
+            VERSION: JSON.stringify(require("./package.json").version)
+        })
+    ]
 };
 
 module.exports = conf;
