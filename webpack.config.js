@@ -4,6 +4,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 const convert = require('koa-connect');
 const proxy = require('http-proxy-middleware');
+const Visualizer = require('webpack-visualizer-plugin');
 
 const conf = {
     entry: './src/main/index.js',
@@ -34,14 +35,9 @@ const conf = {
         new CopyWebpackPlugin([{from: './src/css', to: 'css'}]),
         new webpack.DefinePlugin({
             VERSION: JSON.stringify(require("./package.json").version)
-        })
-    ],
-
-    serve: {
-        add: (app, middleware, options) => {
-            app.use(convert(proxy('/api', { target: 'http://localhost:8080' })));
-        }
-    }
+        }),
+        new Visualizer()
+    ]
 };
 
 module.exports = conf;
