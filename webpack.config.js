@@ -1,6 +1,9 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const webpack = require('webpack');
+const convert = require('koa-connect');
+const proxy = require('http-proxy-middleware');
 
 const conf = {
     entry: './src/main/index.js',
@@ -28,16 +31,16 @@ const conf = {
     plugins: [
         new HtmlWebpackPlugin({template: './src/main/index.html', inject: 'body', hash: 'true'}),
         new CopyWebpackPlugin([{from: './src/img', to: 'img'}]),
-        new CopyWebpackPlugin([{from: './src/css', to: 'css'}])
+        new CopyWebpackPlugin([{from: './src/css', to: 'css'}]),
+        new webpack.DefinePlugin({
+            VERSION: JSON.stringify(require("./package.json").version)
+        })
     ],
 
-    devServer: {
-        host: 'localhost', port: 8079,
-        proxy: {
-            '/api/*': {target: 'http://localhost:8080'},
-            '/adminapi/*': {target: 'http://localhost:8080'}
-        },
-        contentBase: path.resolve(__dirname, 'dist'), quiet: true
+    serve: {
+        add: (app, middleware, options) => {
+            app.use(convert(proxy('/api', { target: 'http://localhost:8080' })));
+        }
     }
 };
 
