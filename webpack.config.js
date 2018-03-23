@@ -2,6 +2,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
+const convert = require('koa-connect');
+const proxy = require('http-proxy-middleware');
 
 const conf = {
     entry: './src/main/index.js',
@@ -33,7 +35,13 @@ const conf = {
         new webpack.DefinePlugin({
             VERSION: JSON.stringify(require("./package.json").version)
         })
-    ]
+    ],
+
+    serve: {
+        add: (app, middleware, options) => {
+            app.use(convert(proxy('/api', { target: 'http://localhost:8080' })));
+        }
+    }
 };
 
 module.exports = conf;
