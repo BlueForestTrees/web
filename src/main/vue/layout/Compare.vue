@@ -4,7 +4,7 @@
             <v-flex>
                 <v-toolbar color="pink" dark>
                     <v-toolbar-side-icon/>
-                    <v-toolbar-title>Comparer</v-toolbar-title>
+                    <v-toolbar-title>Comparer à {{axis}} égal(e)</v-toolbar-title>
                     <v-spacer/>
                     <v-btn @click="close" icon>
                         <v-icon large>highlight_off</v-icon>
