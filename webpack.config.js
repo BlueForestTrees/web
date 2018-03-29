@@ -37,7 +37,13 @@ const conf = {
             VERSION: JSON.stringify(require("./package.json").version)
         }),
         new Visualizer()
-    ]
+    ],
+
+    serve: {
+        add: (app, middleware, options) => {
+            app.use(convert(proxy('/api', {target: 'http://localhost:8080'})));
+        }
+    }
 };
 
 module.exports = conf;
