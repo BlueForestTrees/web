@@ -5,7 +5,6 @@ const ENV = {
     NODE_ENV: process.env.NODE_ENV
 };
 
-debug({ENV});
-
+debug(`BlueForest v.${ENV.VERSION} - ${ENV.NODE_ENV}`);
 
 export default ENV;
