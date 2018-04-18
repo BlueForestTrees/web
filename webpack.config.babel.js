@@ -1,3 +1,4 @@
+import path from 'path'
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import webpack from 'webpack';
@@ -39,7 +40,11 @@ if (conf.mode === "development") {
 }
 
 if (conf.mode === "production") {
-    conf.plugins.push(new Visualizer());
+    conf.plugins.push(new Visualizer({filename: '../visualizer/statistics.html'}));
+    conf.output = {
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'dist/blueforest.org')
+    };
 }
 
 module.exports = conf;
