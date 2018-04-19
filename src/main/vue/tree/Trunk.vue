@@ -1,39 +1,30 @@
 <template>
-    <v-card>
-        <v-toolbar>
-            <v-toolbar-title style="width:100%">
-                <inplace-edit :initial="trunk.name" @ok="validateRenaming"/>
-            </v-toolbar-title>
-        </v-toolbar>
-
-        <div class="air">
-            <v-layout row align-center>
-                <span style="color:rgba(0,0,0,.54);">{{QUANTITY}}</span>
-                <v-spacer/>
-                <span>
-                    <inplace-edit :initial="trunk.quantity && trunk.quantity.qt" @ok="validateQt"/>
-                    <inplace-unit-edit :initial="trunk.quantity && trunk.quantity.unit" @ok="validateUnit"/>
-                </span>
-            </v-layout>
-        </div>
-    </v-card>
+    <v-list two-line>
+        <v-list-tile avatar @click="">
+            <v-list-tile-content>
+                <v-list-tile-title>Quantité</v-list-tile-title>
+                <v-list-tile-sub-title>
+                    <qt-unit :quantity="trunk.quantity"/>
+                </v-list-tile-sub-title>
+            </v-list-tile-content>
+            <v-list-tile-action>
+                <v-btn icon ripple>
+                    <v-icon color="grey lighten-1">info</v-icon>
+                </v-btn>
+            </v-list-tile-action>
+        </v-list-tile>
+    </v-list>
 </template>
 
 <script>
     import {mapActions} from 'vuex';
-    import UnitGrid from "../common/UnitGrid";
     import On from "../../const/on";
-    import Loading from "../common/Loading";
-    import InplaceEdit from "../common/InplaceEdit";
-    import InplaceUnitEdit from "../common/InplaceUnitEdit";
     import {QUANTITY} from "../../const/labels";
+    import QtUnit from "../common/QtUnit";
 
     export default {
         components: {
-            InplaceUnitEdit,
-            InplaceEdit,
-            Loading,
-            UnitGrid
+            QtUnit
         },
         props: ['trunk'],
         methods: {

@@ -19,7 +19,7 @@ const conf = {
         rules: [
             {test: /\.vue$/, exclude: /node_modules/, use: 'vue-loader'},
             {test: /\.js$/, exclude: /node_modules/, use: 'babel-loader'},
-            {test: /\.scss$/, exclude: /node_modules/, use: [{loader: "style-loader"}, {loader: "css-loader"}, {loader: "sass-loader"}]}
+            {test: /\.css$/, exclude: /node_modules/, use: 'css-loader'}
         ]
     },
     plugins: [

@@ -1,5 +1,5 @@
 import On from "../../const/on";
-import rest from "../../rest/routes";
+import api from "../../rest/api";
 import Do from "../../const/do";
 import {hasQuantity} from "../../services/calculations";
 
@@ -9,7 +9,7 @@ export default {
             const qt = tree.trunk.quantity.qt;
             const unit = tree.trunk.quantity.unit;
             const _id = tree.trunk._id;
-            return rest.getTank(qt, unit, _id)
+            return api.getTank(qt, unit, _id)
                 .then(tank => commit(Do.SET_TANK, {tree, tank}));
         }
     }

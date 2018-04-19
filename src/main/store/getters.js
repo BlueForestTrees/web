@@ -1,6 +1,7 @@
-import _ from 'lodash';
+import {find} from 'lodash';
 
 export default {
-    prix: () => (tree) => _.find(tree.facetEntries, {name: "prix"}),
-    qt: () => (tree) => _.find(tree.facetEntries, {name: "quantité"}),
+    prix: () => (tree) => find(tree.facetEntries, {name: "prix"}),
+    qt: () => (tree) => find(tree.facetEntries, {name: "quantité"}),
+    title: (state) => state.tree && state.tree.trunk.name
 };

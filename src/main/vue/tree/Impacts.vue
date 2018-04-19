@@ -1,35 +1,23 @@
 <template>
-    <v-card>
-        <v-toolbar>
-            <v-toolbar-title>Impacts</v-toolbar-title>
-            <v-spacer/>
-            <v-icon @click="openAddImpactDialog" style="cursor: pointer">add</v-icon>
-            <v-icon @click="deleteImpacts" style="cursor: pointer" v-if="isSelected()">delete</v-icon>
-        </v-toolbar>
-        <v-list two-line v-if="tree.impacts">
-            <template v-for="impact in tree.impacts.items">
-                <v-divider/>
-                <v-list-tile :key="impact._id" @mouseover="overImpact = impact" @mouseout="overImpact = null">
-                    <v-list-tile-action>
-                        <v-icon>keyboard_arrow_right</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-content>
-                        <v-list-tile-title>{{impact.name}}</v-list-tile-title>
-                        <v-list-tile-sub-title v-if="hasQuantity(impact)">
-                            <qt-unit :quantity="impact.quantity"/>
-                        </v-list-tile-sub-title>
-                    </v-list-tile-content>
-                    <v-list-tile-action>
-                        <transition name="fadeInOut">
-                            <v-checkbox v-if="isSelected() || overImpact && overImpact._id === impact._id"
-                                        v-model="selectedImpacts" :value="impact"/>
-                        </transition>
-                    </v-list-tile-action>
-                </v-list-tile>
-            </template>
+    <v-list two-line>
+        <v-icon @click="openAddImpactDialog" style="cursor: pointer">add</v-icon>
+        <v-icon @click="deleteImpacts" style="cursor: pointer" v-if="isSelected()">delete</v-icon>
+        <template v-for="item in items">
             <v-divider/>
-        </v-list>
-    </v-card>
+            <v-list-tile :key="item._id" @mouseover="overImpact = item" @mouseout="overImpact = null">
+                <v-list-tile-content>
+                    <v-list-tile-title>{{item.name}}</v-list-tile-title>
+                    <v-list-tile-sub-title v-if="hasQuantity(item)">
+                        <qt-unit :quantity="item.quantity"/>
+                    </v-list-tile-sub-title>
+                </v-list-tile-content>
+                <v-list-tile-action>
+                    <v-checkbox v-if="isSelected() || overImpact && overImpact._id === item._id" v-model="selectedImpacts" :value="item"/>
+                </v-list-tile-action>
+            </v-list-tile>
+        </template>
+        <v-divider/>
+    </v-list>
 </template>
 
 <script>
@@ -40,6 +28,7 @@
     import On from "../../const/on";
     import {hasQuantity} from "../../services/calculations";
     import QtUnit from "../common/QtUnit";
+    import {isEmpty} from 'lodash';
 
     export default {
         components: {
@@ -51,7 +40,12 @@
                 Dial: Dial, selectedImpacts: [], overImpact: null
             }
         },
-        props: ['tree'],
+        props: ['impacts'],
+        computed: {
+            items: function () {
+                return this.impacts && this.impacts.items;
+            }
+        },
         methods: {
             ...mapActions({dispatchDeleteImpacts: On.DELETE_IMPACTS}),
             ...mapMutations([Do.SHOW_DIALOG]),
@@ -62,10 +56,10 @@
                 this.dispatchDeleteImpacts({impacts: this.tree.impacts, toDelete: this.selectedImpacts});
             },
             isSelected() {
-                return !_.isEmpty(this.selectedImpacts);
+                return !isEmpty(this.selectedImpacts);
             },
             clearSelection() {
-                if (!_.isEmpty(this.selectedImpacts)) {
+                if (!isEmpty(this.selectedImpacts)) {
                     this.selectedImpacts = [];
                 }
             },

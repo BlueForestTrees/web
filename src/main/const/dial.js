@@ -7,5 +7,6 @@ export const Dial = {
     IMPACT: "impact",
     COMPARE_TO: "compareTo",
     ADD_ITEM: "addItem",
-    CONFIGURE_LINK: "configureLink"
+    CONFIGURE_LINK: "configureLink",
+    SEARCH: "search"
 };

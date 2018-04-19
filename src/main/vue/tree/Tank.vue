@@ -1,38 +1,34 @@
 <template>
-    <v-card>
-        <v-toolbar>
-            <v-toolbar-title>Bilan Ressources</v-toolbar-title>
-            <v-spacer/>
-            <v-icon @click="" style="cursor: pointer">add</v-icon>
-        </v-toolbar>
-
-        <v-container grid-list-md text-xs-center v-if="tank">
-            <v-layout row>
-                <v-flex>
-                    <template v-for="item in tank.items">
-                        <v-chip :key="item._id"
-                                color="primary" text-color="white">
-                            <qt-unit-name :item="item"/>
-                        </v-chip>
-                    </template>
-                </v-flex>
-            </v-layout>
-        </v-container>
-
-    </v-card>
-
+    <v-list two-line>
+        <template v-for="item in items">
+            <v-divider/>
+            <v-list-tile avatar :key="item.name" @click="">
+                <v-list-tile-content>
+                    <v-list-tile-title>{{ item.name }}</v-list-tile-title>
+                    <v-list-tile-sub-title>
+                        <qt-unit :quantity="item.quantity"/>
+                    </v-list-tile-sub-title>
+                </v-list-tile-content>
+                <v-list-tile-action>
+                    <v-btn icon ripple>
+                        <v-icon color="grey lighten-1">info</v-icon>
+                    </v-btn>
+                </v-list-tile-action>
+            </v-list-tile>
+        </template>
+    </v-list>
 </template>
 
 <script>
-    import QtUnitName from "../common/QtUnitName";
+    import QtUnit from "../common/QtUnit";
 
     export default {
-        components: {QtUnitName},
+        components: {QtUnit},
         name: 'tank',
-        props: ["tree"],
+        props: ["tank"],
         computed: {
-            tank: function () {
-                return this.tree.tank;
+            items: function () {
+                return this.tank && this.tank.items;
             }
         }
     }

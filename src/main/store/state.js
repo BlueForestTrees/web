@@ -13,7 +13,8 @@ const dialogFactory = {
     [Dial.FACET]: () => ({name: null}),
     [Dial.IMPACT]: () => ({name: null}),
     [Dial.ADD_ITEM]: () => ({tree: null, item: null}),
-    [Dial.CONFIGURE_LINK]: () => ({left: null, right: null})
+    [Dial.CONFIGURE_LINK]: () => ({left: null, right: null}),
+    [Dial.SEARCH]: () => ({}),
 };
 
 const dialogs = () => _.reduce(Dial, (dials, key) => {

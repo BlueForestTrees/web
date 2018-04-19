@@ -1,16 +1,23 @@
 <template>
-    <v-card>
-        <v-toolbar>
-            <v-toolbar-title>Usages</v-toolbar-title>
-            <v-spacer/>
-            <v-icon @click="" style="cursor: pointer">add</v-icon>
-        </v-toolbar>
-
-        <v-container v-if="last && last.trunk">
-            <item-list :dir="last.branches" @select="selectListItem" @add="addItemToLast"/>
-            <item-path :path="path" @select="selectPathItem" @load="dispatchLoadTree" up/>
-        </v-container>
-    </v-card>
+    <v-list two-line>
+        <v-icon @click="addItem" style="cursor: pointer">add</v-icon>
+        <template v-for="item in items">
+            <v-divider/>
+            <v-list-tile avatar :key="item.trunk.name" @click="">
+                <v-list-tile-content>
+                    <v-list-tile-title>{{ item.trunk.name }}</v-list-tile-title>
+                    <v-list-tile-sub-title>
+                        <qt-unit :quantity="item.trunk.quantity"/>
+                    </v-list-tile-sub-title>
+                </v-list-tile-content>
+                <v-list-tile-action>
+                    <v-btn icon ripple>
+                        <v-icon color="grey lighten-1">info</v-icon>
+                    </v-btn>
+                </v-list-tile-action>
+            </v-list-tile>
+        </template>
+    </v-list>
 </template>
 
 <script>
@@ -18,44 +25,17 @@
     import {mapActions, mapMutations} from 'vuex';
     import Do from "../../const/do";
     import {Dial} from "../../const/dial";
-    import ItemList from "../common/ItemList";
-    import ItemPath from "../common/ItemPath";
-    import ConfigureLinkDialog from "../dialog/ConfigureLinkDialog";
-    import {BRANCH} from "../../const/items";
     import items from "../../const/items";
+    import QtUnit from "../common/QtUnit";
 
     export default {
         components: {
-            ConfigureLinkDialog,
-            ItemPath,
-            ItemList
+            QtUnit
         },
         props: ['tree'],
-        data() {
-            return {
-                path: []
-            }
-        },
-        watch: {
-            tree(val) {
-                this.path = [val];
-            }
-        },
-        beforeMount: function () {
-            this.path = [this.tree];
-        },
         computed: {
-            last: function () {
-                if (this.path.length > 0)
-                    return this.path[this.path.length - 1];
-                else
-                    return null;
-            },
-            beforeLast: function () {
-                if (this.path.length > 1)
-                    return this.path[this.path.length - 2];
-                else
-                    return null;
+            items: function () {
+                return this.tree && this.tree.branches && this.tree.branches.items;
             }
         },
         methods: {
@@ -64,15 +44,8 @@
                 dispatchLoadTree: On.LOAD_OPEN_TREE
             }),
             ...mapMutations({showDialog: Do.SHOW_DIALOG}),
-            selectPathItem(item) {
-                this.dispatchLoadBranches(item);
-            },
-            selectListItem(tree) {
-                this.path.push(tree);
-                this.dispatchLoadBranches(tree);
-            },
-            addItemToLast() {
-                this.showDialog({dialog: Dial.ADD_ITEM, data: {tree: this.last, item: items.BRANCH}});
+            addItem() {
+                this.showDialog({dialog: Dial.ADD_ITEM, data: {tree: this.tree, item: items.BRANCH}});
             }
         }
     }

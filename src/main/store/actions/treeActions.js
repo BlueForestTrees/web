@@ -1,6 +1,6 @@
 import Do from "../../const/do";
 import On from "../../const/on";
-import rest from "../../rest/routes";
+import api from "../../rest/api";
 import {trunkyAll} from "../../services/calculations";
 
 export default {
@@ -33,12 +33,12 @@ export default {
         dispatch(On.LOAD_OPEN_TREE, await dispatch(On.CLONE_TREE, tree));
     },
 
-    [On.SEARCH_TREE]: async ({commit}, term) => trunkyAll(await rest.search(term)),
+    [On.SEARCH_TREE]: async ({commit}, term) => trunkyAll(await api.search(term)),
 
     [On.CLONE_TREE]: ({dispatch}, {_id}) => dispatch(On.CLONE_TRUNK, _id),
 
     [On.DELETE_TREE]: ({commit}, tree) =>
-        rest.deleteTrunk(tree._id)
+        api.deleteTrunk(tree._id)
             .then(() => commit(Do.CLOSE_TREE))
 
 }

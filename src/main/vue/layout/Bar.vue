@@ -2,25 +2,15 @@
     <v-toolbar app dark fixed clipped color="blue darken-3">
 
         <v-toolbar-title :style="$vuetify.breakpoint.smAndUp ? 'width: 300px; min-width: 250px' : 'min-width: 72px'" class="ml-0 pl-3">
-            <v-toolbar-side-icon @click.stop="_drawer = !_drawer">
-            </v-toolbar-side-icon>
-            <span class="hidden-xs-only">BlueForest Trees</span>
+            <v-toolbar-side-icon @click.stop="_drawer = !_drawer"/>
+            <span class="hidden-xs-only">{{title}}</span>
         </v-toolbar-title>
 
-        <lookup @select="open" cancreate style="max-width: 500px; min-width: 128px"/>
-
         <div class="d-flex align-center" style="margin-left: auto">
-            <v-btn icon>
-                <v-icon>apps</v-icon>
+            <v-btn icon large @click="showSearch">
+                <v-icon>search</v-icon>
             </v-btn>
-            <v-btn icon>
-                <v-icon>notifications</v-icon>
-            </v-btn>
-            <v-btn icon large>
-                <v-avatar size="32px" tile>
-                    <img src="https://vuetifyjs.com/static/doc-images/logo.svg" alt="Vuetify">
-                </v-avatar>
-            </v-btn>
+            <v-avatar size="32px" tile><img src="img/logo-rond.svg" alt="BlueForest"></v-avatar>
         </div>
     </v-toolbar>
 </template>
@@ -28,13 +18,14 @@
 <script>
     import Lookup from "../common/Lookup";
     import MainDialog from "../dialog/MainDialog";
-    import {mapActions} from "vuex";
-    import On from "../../const/on";
+    import {mapGetters} from "vuex";
+    import {Dial} from "../../const/dial";
 
     export default {
         components: {
             MainDialog,
-            Lookup},
+            Lookup
+        },
         props: ['drawer'],
         computed: {
             _drawer: {
@@ -44,12 +35,13 @@
                 set: function (value) {
                     this.$emit('update:drawer', value);
                 }
-            }
+            },
+            ...mapGetters(['title'])
         },
-        methods:{
-            ...mapActions({
-                open:On.LOAD_OPEN_TREE
-            })
+        methods: {
+            showSearch: function () {
+                this.showDialog({dialog: Dial.SEARCH});
+            }
         }
     }
 </script>

@@ -1,24 +1,24 @@
 import On from "../../const/on";
-import rest from "../../rest/routes";
+import api from "../../rest/api";
 import Do from "../../const/do";
 import {trunky} from "../../services/calculations";
 
 export default {
     [On.CREATE_TRUNK]: async ({commit, state, dispatch}, name) => {
-        return trunky(await rest.createTrunk({name}));
+        return trunky(await api.createTrunk({name}));
     },
     [On.LOAD_TRUNK]: ({commit}, tree) => {
-        return rest.getTrunk(tree._id)
+        return api.getTrunk(tree._id)
             .then(trunk => commit(Do.SET_TRUNK, {tree, trunk}));
     },
     [On.RENAME_TRUNK]: async ({commit}, {trunk, newName}) => {
-        await rest.renameTrunk(trunk._id, newName);
+        await api.renameTrunk(trunk._id, newName);
         commit(Do.RENAME_TRUNK, {trunk, newName});
     },
     [On.PUT_TRUNK_QUANTITY]: ({commit, dispatch}, {trunk, quantity}) => {
-        rest.upsertQuantity(trunk._id, quantity)
+        api.upsertQuantity(trunk._id, quantity)
             .then(() => commit(Do.PUT_TRUNK_QUANTITY, {trunk, quantity}))
             .then(() => dispatch(On.INVALIDATE_TRUNK));
     },
-    [On.CLONE_TRUNK]: ({}, _id) => rest.cloneTrunk(_id)
+    [On.CLONE_TRUNK]: ({}, _id) => api.cloneTrunk(_id)
 }

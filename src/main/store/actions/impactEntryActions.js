@@ -1,9 +1,9 @@
 import On from "../../const/on";
-import rest from "../../rest/routes";
+import api from "../../rest/api";
 
 export default {
 
-    [On.CREATE_IMPACT_ENTRY]: async ({}, {name, grandeur}) => rest.createImpactEntry({name, grandeur}),
+    [On.CREATE_IMPACT_ENTRY]: async ({}, {name, grandeur}) => api.createImpactEntry({name, grandeur}),
 
-    [On.SEARCH_IMPACT_ENTRY]: async ({}, {namepart}) => rest.searchImpactEntry(namepart)
+    [On.SEARCH_IMPACT_ENTRY]: async ({}, {namepart}) => api.searchImpactEntry(namepart)
 }

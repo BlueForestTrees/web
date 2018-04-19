@@ -1,35 +1,23 @@
 <template>
-    <v-card v-if="facets">
-        <v-toolbar>
-            <v-toolbar-title>Propriétés</v-toolbar-title>
-            <v-spacer/>
-            <v-icon @click="openAddFacetDialog" style="cursor: pointer">add</v-icon>
-            <v-icon @click="deleteFacets" style="cursor: pointer" v-if="isSelected()">delete</v-icon>
-        </v-toolbar>
-        <v-list two-line>
-            <template v-for="facet in facets.items">
-                <v-divider/>
-                <v-list-tile :key="facet._id" @mouseover="overFacet = facet" @mouseout="overFacet = null">
-                    <v-list-tile-content>
-                        <v-list-tile-title>{{facet.name}}</v-list-tile-title>
-                        <v-list-tile-sub-title v-if="hasQuantity(facet)">
-                            <qt-unit :quantity="facet.quantity"/>
-                        </v-list-tile-sub-title>
-                    </v-list-tile-content>
-                    <v-list-tile-action>
-                        <transition name="fadeInOut">
-                            <v-checkbox v-if="isSelected() || overFacet && overFacet._id === facet._id"
-                                        v-model="selectedFacets" :value="facet"/>
-                        </transition>
-                    </v-list-tile-action>
-                    <v-list-tile-action>
-                        <v-icon>keyboard_arrow_left</v-icon>
-                    </v-list-tile-action>
-                </v-list-tile>
-            </template>
+    <v-list two-line>
+        <v-icon @click="openAddFacetDialog" style="cursor: pointer">add</v-icon>
+        <v-icon @click="deleteFacets" style="cursor: pointer" v-if="isSelected()">delete</v-icon>
+        <template v-for="item in items">
             <v-divider/>
-        </v-list>
-    </v-card>
+            <v-list-tile :key="item._id" @mouseover="overFacet = item" @mouseout="overFacet = null">
+                <v-list-tile-content>
+                    <v-list-tile-title>{{item.name}}</v-list-tile-title>
+                    <v-list-tile-sub-title v-if="hasQuantity(item)">
+                        <qt-unit :quantity="item.quantity"/>
+                    </v-list-tile-sub-title>
+                </v-list-tile-content>
+                <v-list-tile-action>
+                    <v-checkbox v-if="isSelected() || overFacet && overFacet._id === item._id" v-model="selectedFacets" :value="item"/>
+                </v-list-tile-action>
+            </v-list-tile>
+        </template>
+        <v-divider/>
+    </v-list>
 </template>
 
 <script>
@@ -52,6 +40,11 @@
             }
         },
         props: ['facets'],
+        computed: {
+            items: function () {
+                return this.facets && this.facets.items;
+            }
+        },
         methods: {
             ...mapActions({dispatchDeleteFacets: On.DELETE_FACETS}),
             ...mapMutations([Do.SHOW_DIALOG]),
