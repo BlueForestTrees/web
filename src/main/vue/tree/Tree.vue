@@ -30,9 +30,11 @@
     import ImpactDialog from "../dialog/ImpactDialog";
     import AddItemDialog from "../dialog/AddItemDialog";
     import ConfigureLinkDialog from "../dialog/ConfigureLinkDialog";
+    import NewList from "./NewList";
 
     export default {
         components: {
+            NewList,
             ConfigureLinkDialog,
             AddItemDialog,
             ImpactDialog,
@@ -50,9 +52,3 @@
         }
     }
 </script>
-
-<style>
-    .air {
-        margin: 2em
-    }
-</style>
