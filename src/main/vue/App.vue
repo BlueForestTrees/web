@@ -7,8 +7,6 @@
             <blueforest/>
             <Bottom-right-btns/>
 
-            <main-footer/>
-
             <facet-entry-dialog/>
             <impact-entry-dialog/>
             <create-trunk-dialog/>
@@ -24,7 +22,6 @@
     import Bar from "./layout/Bar";
     import BottomRightBtns from "./layout/BottomRightBtns";
     import Blueforest from "./layout/BlueForest";
-    import MainFooter from "./layout/MainFooter";
     import CreateTrunkDialog from "./dialog/CreateTrunkDialog";
     import FacetEntryDialog from "./dialog/FacetEntryDialog";
     import On from "../const/on";
@@ -48,7 +45,7 @@
         },
         components: {
             ImpactEntryDialog,
-            Blueforest, Corner, LookupTreeDialog, Lookup, FacetEntryDialog, CreateTrunkDialog, MainFooter, BottomRightBtns, Bar, LeftMenu
+            Blueforest, Corner, LookupTreeDialog, Lookup, FacetEntryDialog, CreateTrunkDialog, BottomRightBtns, Bar, LeftMenu
         },
         mounted: async function () {
             await this.$store.dispatch(On.MOUNT_APP);

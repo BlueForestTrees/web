@@ -33,10 +33,3 @@
         }
     }
 </script>
-
-<style>
-    .btn--bottom:not(.btn--absolute) {
-
-        bottom: 50px;
-    }
-</style>

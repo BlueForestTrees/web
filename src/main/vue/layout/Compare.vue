@@ -121,17 +121,3 @@
         }
     }
 </script>
-
-<style>
-    .no-wrap {
-        flex: 0 0 auto;
-    }
-
-    .rightAir {
-        padding-right: 2em
-    }
-
-    .leftAir {
-        padding-left: 2em
-    }
-</style>

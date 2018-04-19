@@ -50,8 +50,3 @@
 
     }
 </script>
-
-
-<style>
-
-</style>

@@ -81,9 +81,3 @@
         }
     }
 </script>
-
-<style>
-    #ressource_stack {
-        flex-direction: column;
-    }
-</style>

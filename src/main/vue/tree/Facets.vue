@@ -73,11 +73,3 @@
         }
     }
 </script>
-
-<style>
-    .list {
-        padding: 0px;
-    }
-
-
-</style>
