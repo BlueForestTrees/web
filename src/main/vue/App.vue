@@ -2,8 +2,8 @@
     <div id="app">
         <v-app id="blueforest" light>
             <corner :text="cornerText"/>
-            <bar :drawer.sync="drawer"/>
-            <left-menu :drawer.sync="drawer"/>
+            <bar/>
+            <left-menu/>
             <blueforest/>
             <Bottom-right-btns/>
 
@@ -11,6 +11,7 @@
             <impact-entry-dialog/>
             <create-trunk-dialog/>
             <lookup-tree-dialog/>
+            <search-dialog/>
 
         </v-app>
     </div>
@@ -30,20 +31,16 @@
     import Corner from "./layout/Corner";
     import ImpactEntryDialog from "./dialog/ImpactEntryDialog";
     import ENV from "../env";
+    import SearchDialog from "./dialog/SearchDialog";
 
     export default {
-        watch: {
-            "drawer": function (value) {
-                this.drawer = value;
-            },
-        },
         data: function () {
             return {
-                drawer: false,
                 cornerText: "BlueForest v" + ENV.VERSION,
             }
         },
         components: {
+            SearchDialog,
             ImpactEntryDialog,
             Blueforest, Corner, LookupTreeDialog, Lookup, FacetEntryDialog, CreateTrunkDialog, BottomRightBtns, Bar, LeftMenu
         },

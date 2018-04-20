@@ -1,8 +1,8 @@
 <template>
-    <v-toolbar app dark fixed clipped color="blue darken-3">
+    <v-toolbar app dark clipped color="blue darken-3">
 
         <v-toolbar-title :style="$vuetify.breakpoint.smAndUp ? 'width: 300px; min-width: 250px' : 'min-width: 72px'" class="ml-0 pl-3">
-            <v-toolbar-side-icon @click.stop="_drawer = !_drawer"/>
+            <v-toolbar-side-icon @click.stop="nav.leftMenuVisible = !nav.leftMenuVisible"/>
             <span class="hidden-xs-only">{{title}}</span>
         </v-toolbar-title>
 
@@ -18,27 +18,24 @@
 <script>
     import Lookup from "../common/Lookup";
     import MainDialog from "../dialog/MainDialog";
-    import {mapGetters} from "vuex";
+    import {mapGetters, mapMutations, mapState} from "vuex";
     import {Dial} from "../../const/dial";
+    import Do from "../../const/do";
 
     export default {
         components: {
             MainDialog,
             Lookup
         },
-        props: ['drawer'],
         computed: {
-            _drawer: {
-                get: function () {
-                    return this.drawer;
-                },
-                set: function (value) {
-                    this.$emit('update:drawer', value);
-                }
-            },
+            ...mapState(['nav']),
             ...mapGetters(['title'])
         },
         methods: {
+            ...mapMutations([Do.SHOW_DIALOG]),
+            ...mapMutations({
+                commitVisible: Do.UPDATE_DIALOG_VISIBILITY
+            }),
             showSearch: function () {
                 this.showDialog({dialog: Dial.SEARCH});
             }

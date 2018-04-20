@@ -1,5 +1,5 @@
 <template>
-    <v-navigation-drawer fixed app v-model="_drawer">
+    <v-navigation-drawer fixed app v-model="nav.leftMenuVisible">
         <v-list dense>
             <v-list-tile @click="showDialog({dialog:Dial.FACET_ENTRY})">
                 <v-list-tile-action>
@@ -79,22 +79,13 @@
 
 <script>
     import Do from "../../const/do";
-    import {mapMutations, mapState, mapActions} from "vuex";
+    import {mapActions, mapMutations, mapState} from "vuex";
     import {Dial} from "../../const/dial";
     import On from "../../const/on";
 
     export default {
-        props: ['drawer'],
         computed: {
-            _drawer: {
-                get: function () {
-                    return this.drawer;
-                },
-                set: function (value) {
-                    this.$emit('update:drawer', value);
-                }
-            },
-            ...mapState(['tree'])
+            ...mapState(['tree', 'nav'])
         },
         methods: {
             ...mapMutations({

@@ -31,5 +31,6 @@ export default {
     compareTo: null,
     linkEdit: null,
     addingSeed: false,
-    dialogs: dialogs()
+    dialogs: dialogs(),
+    nav: {leftMenuVisible: false}
 };

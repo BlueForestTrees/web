@@ -2,12 +2,12 @@
         <v-container grid-list-md text-xs-center>
 
             <v-layout row>
-                <v-flex xs4 d-flex><ressources :tree="tree"/></v-flex>
+                <!--<v-flex xs4 d-flex><ressources :tree="tree"/></v-flex>-->
                 <v-flex xs4 d-flex><trunk :trunk="tree.trunk"/></v-flex>
-                <v-flex xs4 d-flex><facets :facets="tree.facets"/></v-flex>
-                <v-flex xs4 d-flex><branches :tree="tree"/></v-flex>
-                <v-flex xs4 d-flex><impacts :impacts="tree.impacts"/></v-flex>
-                <v-flex xs4 d-flex><tank :tank="tree.tank"/></v-flex>
+                <!--<v-flex xs4 d-flex><facets :facets="tree.facets"/></v-flex>-->
+                <!--<v-flex xs4 d-flex><branches :tree="tree"/></v-flex>-->
+                <!--<v-flex xs4 d-flex><impacts :impacts="tree.impacts"/></v-flex>-->
+                <!--<v-flex xs4 d-flex><tank :tank="tree.tank"/></v-flex>-->
             </v-layout>
 
             <facet-dialog :tree="tree"/>
