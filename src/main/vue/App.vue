@@ -1,11 +1,11 @@
 <template>
     <div id="app">
-        <v-app id="blueforest" light>
-            <corner :text="cornerText"/>
-            <bar/>
+        <v-app light v-touch="{left: swipeLeft,right: swipeRight}">
             <left-menu/>
+            <bar/>
             <blueforest/>
             <Bottom-right-btns/>
+            <corner :text="cornerText"/>
 
             <facet-entry-dialog/>
             <impact-entry-dialog/>
@@ -32,6 +32,7 @@
     import ImpactEntryDialog from "./dialog/ImpactEntryDialog";
     import ENV from "../env";
     import SearchDialog from "./dialog/SearchDialog";
+    import {mapActions} from "vuex";
 
     export default {
         data: function () {
@@ -42,10 +43,21 @@
         components: {
             SearchDialog,
             ImpactEntryDialog,
-            Blueforest, Corner, LookupTreeDialog, Lookup, FacetEntryDialog, CreateTrunkDialog, BottomRightBtns, Bar, LeftMenu
+            Blueforest,
+            Corner,
+            LookupTreeDialog,
+            Lookup,
+            FacetEntryDialog,
+            CreateTrunkDialog,
+            BottomRightBtns,
+            Bar,
+            LeftMenu
         },
         mounted: async function () {
             await this.$store.dispatch(On.MOUNT_APP);
+        },
+        methods: {
+            ...mapActions({swipeLeft: On.SWIPE_LEFT, swipeRight: On.SWIPE_RIGHT})
         }
     }
 </script>

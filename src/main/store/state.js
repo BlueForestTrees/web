@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import {reduce} from 'lodash';
 import {Dial} from "../const/dial";
 
 const dialogStateFromData = (data) => ({
@@ -17,7 +17,7 @@ const dialogFactory = {
     [Dial.SEARCH]: () => ({}),
 };
 
-const dialogs = () => _.reduce(Dial, (dials, key) => {
+const dialogs = () => reduce(Dial, (dials, key) => {
     dials[key] = dialogStateFromData(createDialog(key));
     return dials;
 }, {});
@@ -32,5 +32,5 @@ export default {
     linkEdit: null,
     addingSeed: false,
     dialogs: dialogs(),
-    nav: {leftMenuVisible: false}
+    nav: {leftMenuVisible: false, tabs: null}
 };

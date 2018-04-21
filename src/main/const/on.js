@@ -2,9 +2,9 @@ export default {
     ADD_FACET: "addFacet",
     ADD_IMPACT: "addImpact",
     ADD_LINKS: 'addLinks',
-    CLONE_TREE:"cloneTree",
+    CLONE_TREE: "cloneTree",
     CLONE_TRUNK: "cloneTrunk",
-    CLONE_OPEN_TREE:"cloneOpenTree",
+    CLONE_OPEN_TREE: "cloneOpenTree",
     CONFIGURE_LINK: "configureLink",
     CREATE_AND_OPEN_TREE: 'onCreateAndOpenTree',
     CREATE_ADD_RESSOURCE: 'createAddRessource',
@@ -31,5 +31,7 @@ export default {
     SEARCH_TREE: 'searchTree',
     SEARCH_FACET_ENTRY: 'searchFacetEntry',
     SEARCH_IMPACT_ENTRY: 'searchImpactEntry',
+    SWIPE_RIGHT: 'SWIPE_RIGHT',
+    SWIPE_LEFT: 'SWIPE_LEFT',
     PUT_TRUNK_QUANTITY: "putTrunkQuantity"
 };

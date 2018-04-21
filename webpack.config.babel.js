@@ -3,6 +3,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import webpack from 'webpack';
 import Visualizer from 'webpack-visualizer-plugin';
+import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
 
 const NODE_ENV = process.env.NODE_ENV;
 
@@ -28,6 +29,7 @@ const conf = {
         new webpack.DefinePlugin({
             VERSION: JSON.stringify(require("./package.json").version)
         }),
+        new LodashModuleReplacementPlugin,
     ],
 };
 

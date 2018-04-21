@@ -1,9 +1,9 @@
-import _ from 'lodash';
+import {find, map, forEach, isNil, remove} from 'lodash';
 import {QUANTITY} from "../const/labels";
 import {format} from "./calculations";
 
 const facetUnit = (tree, name) => {
-    const facet = _.find(tree.facets, {name});
+    const facet = find(tree.facets, {name});
     if (facet) {
         return facet.unit;
     } else {
@@ -12,7 +12,7 @@ const facetUnit = (tree, name) => {
 };
 
 const facetQt = (tree, name) => {
-    const facet = _.find(tree.facets, {name});
+    const facet = find(tree.facets, {name});
     if (facet) {
         return facet.qt;
     } else {
@@ -45,7 +45,7 @@ export const extraireAxisCoef = (name, leftTree, rightTree) => {
 };
 
 
-export const denormItem = ({name}, type, items) => _.map(items, item => ({
+export const denormItem = ({name}, type, items) => map(items, item => ({
     tree: name,
     type,
     axis: item.name,
@@ -70,12 +70,12 @@ export const denorm = tree => ([
     ...denormItem(tree.trunk, "impacts", tree.impacts.items),
 ]);
 
-export const align = (denorm, coef) => _.forEach(denorm, axis => axis.qt *= coef);
+export const align = (denorm, coef) => forEach(denorm, axis => axis.qt *= coef);
 
 export const applyRatio = ({left, right}, baseQtFct) => {
 
-    _.forEach(left, leftAxis => {
-        const rightAxis = _.find(right, {type: leftAxis.type, axis: leftAxis.axis});
+    forEach(left, leftAxis => {
+        const rightAxis = find(right, {type: leftAxis.type, axis: leftAxis.axis});
 
         const leftBaseQt = baseQtFct(leftAxis);
         const rightBaseQt = baseQtFct(rightAxis);
@@ -90,11 +90,11 @@ export const applyRatio = ({left, right}, baseQtFct) => {
 
 export const separate = (leftAxises, rightAxises) => {
 
-    const leftWithoutQt = _.remove(leftAxises, axis => (_.isNil(axis.qt) || _.isNil(axis.unit)));
-    const rightWithoutQt = _.remove(rightAxises, axis => (_.isNil(axis.qt) || _.isNil(axis.unit)));
+    const leftWithoutQt = remove(leftAxises, axis => (isNil(axis.qt) || isNil(axis.unit)));
+    const rightWithoutQt = remove(rightAxises, axis => (isNil(axis.qt) || isNil(axis.unit)));
 
-    const leftWithoutRight = _.remove(leftAxises, axis => !_.find(rightAxises, {axis: axis.axis}));
-    const rightWithoutLeft = _.remove(rightAxises, axis => !_.find(leftAxises, {axis: axis.axis}));
+    const leftWithoutRight = remove(leftAxises, axis => !find(rightAxises, {axis: axis.axis}));
+    const rightWithoutLeft = remove(rightAxises, axis => !find(leftAxises, {axis: axis.axis}));
 
     const commonLeft = leftAxises;
     const commonRight = rightAxises;

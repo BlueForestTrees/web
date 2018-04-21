@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import _ from 'lodash';
+import {find, map} from 'lodash';
 import {config} from "./config";
 import {wrap} from "./helper";
 import {format} from "../calculations";
@@ -16,7 +16,7 @@ export const drawRadar = ({selectAxis, id, data, options, selectedAxis}) => {
         }))
     }));
 
-    var axisNames = _.map(data[0], 'axis'),        //Names of each axis
+    var axisNames = map(data[0], 'axis'),        //Names of each axis
         total = axisNames.length,					//The number of different axes
         radius = Math.min(cfg.w / 2, cfg.h / 2), 	//Radius of the outermost circle
         angleSlice = Math.PI * 2 / total;		//The width in radians of each "slice"
@@ -119,7 +119,7 @@ export const drawRadar = ({selectAxis, id, data, options, selectedAxis}) => {
     const axisLabel = axis => axis !== selectedAxis ?
         axis
         :
-        `${axis}: ${bestQuantity(_.find(data[0], {axis})).qt}${bestQuantity(_.find(data[0], {axis})).unit}`;
+        `${axis}: ${bestQuantity(find(data[0], {axis})).qt}${bestQuantity(find(data[0], {axis})).unit}`;
     //Append the labels at each axis
     axis.append("text")
         .attr("class", "legend")

@@ -61,7 +61,7 @@
     import {align, applyRatio, denorm, separate} from "../../services/radar-calc";
     import {drawRadar} from "../../services/d3/radar";
     import AxisList from "../common/AxisList";
-    import _ from 'lodash';
+    import {cloneDeep} from 'lodash';
     import {baseQt, calcCoef} from "trees-units";
 
     export default {
@@ -108,10 +108,10 @@
                 return this.leftDenorm;
             },
             rightAligned: function () {
-                return align(_.cloneDeep(this.rightDenorm), this.coef);
+                return align(cloneDeep(this.rightDenorm), this.coef);
             },
             separated: function () {
-                const data = separate(_.cloneDeep(this.leftAligned), _.cloneDeep(this.rightAligned));
+                const data = separate(cloneDeep(this.leftAligned), cloneDeep(this.rightAligned));
                 applyRatio(data.common, baseQt);
                 return data;
             },

@@ -1,6 +1,6 @@
 import On from "../../const/on";
 import api from "../../rest/api";
-import _ from 'lodash';
+import {omit} from 'lodash';
 import Do from "../../const/do";
 import {trunkyAll} from "../../services/calculations";
 
@@ -14,7 +14,7 @@ export default {
 
         return loadBranches
             .then(branches => ({
-                ..._.omit(branches, "items"),
+                ...omit(branches, "items"),
                 items: trunkyAll(branches.items)
             }))
             .then(branches => commit(Do.SET_BRANCHES, {tree, branches}));

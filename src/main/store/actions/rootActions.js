@@ -1,6 +1,6 @@
 import On from "../../const/on";
 import api from "../../rest/api";
-import _ from 'lodash';
+import {omit} from 'lodash';
 import Do from "../../const/do";
 import {trunkyAll} from "../../services/calculations";
 
@@ -14,7 +14,7 @@ export default {
 
         return loadRoots
             .then(roots => ({
-                ..._.omit(roots, "items"),
+                ...omit(roots, "items"),
                 items: trunkyAll(roots.items)
             }))
             .then(roots => commit(Do.SET_ROOTS, {tree, roots}));
