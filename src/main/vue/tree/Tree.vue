@@ -16,10 +16,9 @@
             <v-tab-item><branches :tree="tree"/></v-tab-item>
         </v-tabs>
 
-        <facet-dialog :tree="tree"/>
-        <impact-dialog :tree="tree"/>
-        <add-item-dialog/>
-        <configure-link-dialog/>
+        <!--<facet-dialog :tree="tree"/>-->
+        <!--<impact-dialog :tree="tree"/>-->
+        <!--<configure-link-dialog/>-->
     </v-container>
 
 </template>
@@ -34,13 +33,13 @@
     import FacetDialog from "../dialog/FacetDialog";
     import Impacts from "./Impacts";
     import ImpactDialog from "../dialog/ImpactDialog";
-    import AddItemDialog from "../dialog/AddItemDialog";
     import ConfigureLinkDialog from "../dialog/ConfigureLinkDialog";
+    import CreateDialog from "../dialog/CreateDialog";
 
     export default {
         components: {
+            CreateDialog,
             ConfigureLinkDialog,
-            AddItemDialog,
             ImpactDialog,
             Impacts,
             FacetDialog,

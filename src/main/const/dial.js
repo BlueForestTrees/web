@@ -6,7 +6,9 @@ export const Dial = {
     FACET: "facet",
     IMPACT: "impact",
     COMPARE_TO: "compareTo",
-    ADD_ITEM: "addItem",
+    ADD_RESSOURCE: "addRessource",
+    ADD_USAGE: "addUsage",
     CONFIGURE_LINK: "configureLink",
-    SEARCH: "search"
+    SEARCH: "search",
+    CREATE: "create",
 };

@@ -7,6 +7,7 @@
             <Bottom-right-btns/>
             <corner :text="cornerText"/>
 
+            <create-dialog/>
             <facet-entry-dialog/>
             <impact-entry-dialog/>
             <create-trunk-dialog/>
@@ -33,6 +34,7 @@
     import ENV from "../env";
     import SearchDialog from "./dialog/SearchDialog";
     import {mapActions} from "vuex";
+    import CreateDialog from "./dialog/CreateDialog";
 
     export default {
         data: function () {
@@ -41,6 +43,7 @@
             }
         },
         components: {
+            CreateDialog,
             SearchDialog,
             ImpactEntryDialog,
             Blueforest,

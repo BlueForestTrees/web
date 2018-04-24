@@ -1,6 +1,18 @@
 <template>
-    <v-dialog width="800px" v-model="visible" @keydown.esc="$emit('esc')" @keydown.ctrl.enter="$emit('enter')">
-        <slot :data="data" ref="content"/>
+    <v-dialog width="800px" v-model="visible" fullscreen transition="dialog-bottom-transition" :overlay="false" scrollable @keydown.esc="$emit('esc')" @keydown.ctrl.enter="$emit('enter')">
+        <v-card tile>
+            <v-toolbar card dark color="primary">
+                <v-icon>{{icon}}</v-icon>
+                <v-toolbar-title>{{title}}</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-toolbar-items>
+                    <v-btn icon @click.native="visible = false" dark>
+                        <v-icon>close</v-icon>
+                    </v-btn>
+                </v-toolbar-items>
+            </v-toolbar>
+            <slot :data="data" ref="content"/>
+        </v-card>
     </v-dialog>
 </template>
 
@@ -9,7 +21,7 @@
     import {mapMutations} from "vuex";
 
     export default {
-        props: ['dialog'],
+        props: ['dialog', 'title', 'icon'],
         methods: {
             close: function () {
                 this.visible = false;

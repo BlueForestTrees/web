@@ -1,6 +1,7 @@
 <template>
     <v-list two-line>
-        <v-icon @click="openAddImpactDialog" style="cursor: pointer">add</v-icon>
+        <v-subheader>Impacts<v-spacer/>
+            <v-btn icon ripple><v-icon color="grey lighten-1">info</v-icon></v-btn></v-subheader>
         <v-icon @click="deleteImpacts" style="cursor: pointer" v-if="isSelected()">delete</v-icon>
         <template v-for="item in items">
             <v-divider/>

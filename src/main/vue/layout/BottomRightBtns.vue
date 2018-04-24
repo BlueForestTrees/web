@@ -1,11 +1,11 @@
 <template>
 
     <span>
-        <!--<v-btn v-if="!tree" fab bottom right color="pink" dark fixed @click.stop="onAddClick" class="floating-bar">-->
-            <!--<v-icon>add</v-icon>-->
-        <!--</v-btn>-->
+        <v-btn fab bottom right color="pink" dark fixed @click.stop="onAddClick" class="floating-bar">
+            <v-icon>add</v-icon>
+        </v-btn>
         <!--<v-btn v-else-if="!compareTo" fab bottom right color="pink" dark fixed @click.stop="openOtherTree" class="floating-bar">-->
-            <!--<v-icon x-large>settings_ethernet</v-icon>-->
+        <!--<v-icon x-large>settings_ethernet</v-icon>-->
         <!--</v-btn>-->
     </span>
 
@@ -21,10 +21,10 @@
             ...mapMutations({
                 "doShowDialog": Do.SHOW_DIALOG
             }),
-            onAddClick(){
+            onAddClick() {
                 this.doShowDialog({dialog: Dial.TRUNK});
             },
-            openOtherTree(){
+            openOtherTree() {
                 this.doShowDialog({dialog: Dial.COMPARE_TO});
             }
         },

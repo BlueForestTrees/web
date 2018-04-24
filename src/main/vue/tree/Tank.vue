@@ -1,5 +1,7 @@
 <template>
     <v-list two-line>
+        <v-subheader>Bilan Ressources<v-spacer/>
+            <v-btn icon ripple><v-icon color="grey lighten-1">info</v-icon></v-btn></v-subheader>
         <template v-for="item in items">
             <v-divider/>
             <v-list-tile avatar :key="item.name" @click="">
@@ -9,11 +11,6 @@
                         <qt-unit :quantity="item.quantity"/>
                     </v-list-tile-sub-title>
                 </v-list-tile-content>
-                <v-list-tile-action>
-                    <v-btn icon ripple>
-                        <v-icon color="grey lighten-1">info</v-icon>
-                    </v-btn>
-                </v-list-tile-action>
             </v-list-tile>
         </template>
     </v-list>

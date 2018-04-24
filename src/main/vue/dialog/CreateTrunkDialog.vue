@@ -1,30 +1,25 @@
 <template>
-    <main-dialog :dialog="Dial.TRUNK" @focus="$refs.nom.focus()" @esc="close" @enter="validate" ref="dialog">
+    <main-dialog :dialog="Dial.TRUNK" @focus="$refs.nom.focus()" :title="'Créer une ressource'" @esc="close" @enter="validate" ref="dialog">
         <template slot-scope="dialog">
-            <v-card>
-                <v-card-title class="grey lighten-4 py-4 title">
-                    Créer une ressource
-                </v-card-title>
-                <v-card-text>
-                    <v-flex xs12 align-center justify-space-between>
-                        <v-layout align-center>
-                            <v-avatar size="40px" class="mr-3">
-                                <v-icon>bookmark</v-icon>
-                            </v-avatar>
-                            <v-form v-model="valid" class="decoValidation">
-                                <v-text-field ref="nom" placeholder="Nom"
-                                              :rules="[longueurValidation]" :value="dialog.data.name"
-                                              @input="updateName"/>
-                            </v-form>
-                        </v-layout>
-                    </v-flex>
-                </v-card-text>
-                <v-card-actions>
-                    <v-spacer/>
-                    <v-btn flat color="primary" @click="close">Annuler</v-btn>
-                    <v-btn :disabled="!valid" flat @click="validate">Ok</v-btn>
-                </v-card-actions>
-            </v-card>
+            <v-card-text>
+                <v-flex xs12 align-center justify-space-between>
+                    <v-layout align-center>
+                        <v-avatar size="40px" class="mr-3">
+                            <v-icon>bookmark</v-icon>
+                        </v-avatar>
+                        <v-form v-model="valid" class="decoValidation">
+                            <v-text-field ref="nom" placeholder="Nom"
+                                          :rules="[longueurValidation]" :value="dialog.data.name"
+                                          @input="updateName"/>
+                        </v-form>
+                    </v-layout>
+                </v-flex>
+            </v-card-text>
+            <v-card-actions>
+                <v-spacer/>
+                <v-btn flat color="primary" @click="close">Annuler</v-btn>
+                <v-btn :disabled="!valid" flat @click="validate">Ok</v-btn>
+            </v-card-actions>
         </template>
     </main-dialog>
 </template>

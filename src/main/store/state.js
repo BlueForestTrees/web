@@ -12,9 +12,11 @@ const dialogFactory = {
     [Dial.COMPARE_TO]: () => ({name: null}),
     [Dial.FACET]: () => ({name: null}),
     [Dial.IMPACT]: () => ({name: null}),
-    [Dial.ADD_ITEM]: () => ({tree: null, item: null}),
+    [Dial.ADD_RESSOURCE]: () => ({tree: null}),
+    [Dial.ADD_USAGE]: () => ({tree: null}),
     [Dial.CONFIGURE_LINK]: () => ({left: null, right: null}),
     [Dial.SEARCH]: () => ({}),
+    [Dial.CREATE]: () => ({}),
 };
 
 const dialogs = () => reduce(Dial, (dials, key) => {

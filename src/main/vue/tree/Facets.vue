@@ -1,7 +1,9 @@
 <template>
     <v-list two-line>
-        <v-icon @click="openAddFacetDialog" style="cursor: pointer">add</v-icon>
-        <v-icon @click="deleteFacets" style="cursor: pointer" v-if="isSelected()">delete</v-icon>
+        <v-subheader>Propriétés<v-spacer/>
+            <v-icon @click="deleteFacets" style="cursor: pointer" v-if="isSelected()">delete</v-icon>
+            <v-icon color="grey lighten-1">info</v-icon>
+        </v-subheader>
         <template v-for="item in items">
             <v-divider/>
             <v-list-tile :key="item._id" @mouseover="overFacet = item" @mouseout="overFacet = null">
@@ -28,6 +30,7 @@
     import On from "../../const/on";
     import {hasQuantity} from "../../services/calculations";
     import QtUnit from "../common/QtUnit";
+    import {isEmpty} from 'lodash';
 
     export default {
         components: {
@@ -55,10 +58,10 @@
                 this.dispatchDeleteFacets({facets: this.facets, toDelete: this.selectedFacets});
             },
             isSelected() {
-                return !_.isEmpty(this.selectedFacets);
+                return !isEmpty(this.selectedFacets);
             },
             clearSelection() {
-                if (!_.isEmpty(this.selectedFacets)) {
+                if (!isEmpty(this.selectedFacets)) {
                     this.selectedFacets = [];
                 }
             },

@@ -1,6 +1,14 @@
 <template>
     <v-list two-line>
-        <v-icon @click="addItem" style="cursor: pointer">add</v-icon>
+        <v-subheader>Usages
+            <v-spacer/>
+            <v-btn icon @click="addItem">
+                <v-icon>add</v-icon>
+            </v-btn>
+            <v-btn icon ripple>
+                <v-icon color="grey lighten-1">info</v-icon>
+            </v-btn>
+        </v-subheader>
         <template v-for="item in items">
             <v-divider/>
             <v-list-tile avatar :key="item.trunk.name" @click="">
@@ -10,13 +18,9 @@
                         <qt-unit :quantity="item.trunk.quantity"/>
                     </v-list-tile-sub-title>
                 </v-list-tile-content>
-                <v-list-tile-action>
-                    <v-btn icon ripple>
-                        <v-icon color="grey lighten-1">info</v-icon>
-                    </v-btn>
-                </v-list-tile-action>
             </v-list-tile>
         </template>
+        <add-usage-dialog/>
     </v-list>
 </template>
 
@@ -25,11 +29,12 @@
     import {mapActions, mapMutations} from 'vuex';
     import Do from "../../const/do";
     import {Dial} from "../../const/dial";
-    import items from "../../const/items";
     import QtUnit from "../common/QtUnit";
+    import AddUsageDialog from "../dialog/AddUsageDialog";
 
     export default {
         components: {
+            AddUsageDialog,
             QtUnit
         },
         props: ['tree'],
@@ -45,7 +50,7 @@
             }),
             ...mapMutations({showDialog: Do.SHOW_DIALOG}),
             addItem() {
-                this.showDialog({dialog: Dial.ADD_ITEM, data: {tree: this.tree, item: items.BRANCH}});
+                this.showDialog({dialog: Dial.ADD_USAGE, data: {tree: this.tree}});
             }
         }
     }

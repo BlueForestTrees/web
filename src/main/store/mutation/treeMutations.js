@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import Do from "../../const/do";
 
 
@@ -11,7 +10,8 @@ export default {
         state.compareTo = null;
     },
     [Do.INIT_TREE]: (state, tree) => {
-        Vue.set(state, "tree", tree);
+        state.tree = tree;
+        state.nav.tabs = "2";
     },
 
 
