@@ -5,7 +5,6 @@
             <bar/>
             <blueforest/>
             <Bottom-right-btns/>
-            <corner :text="cornerText"/>
 
             <create-dialog/>
             <facet-entry-dialog/>
@@ -29,7 +28,6 @@
     import On from "../const/on";
     import Lookup from "./common/Lookup";
     import LookupTreeDialog from "./dialog/CompareToDialog";
-    import Corner from "./layout/Corner";
     import ImpactEntryDialog from "./dialog/ImpactEntryDialog";
     import ENV from "../env";
     import SearchDialog from "./dialog/SearchDialog";
@@ -47,7 +45,6 @@
             SearchDialog,
             ImpactEntryDialog,
             Blueforest,
-            Corner,
             LookupTreeDialog,
             Lookup,
             FacetEntryDialog,

@@ -2,6 +2,7 @@
     <v-list two-line>
         <v-subheader>Propriétés<v-spacer/>
             <v-icon @click="deleteFacets" style="cursor: pointer" v-if="isSelected()">delete</v-icon>
+            <v-btn icon @click="addItem"><v-icon>add</v-icon></v-btn>
             <v-icon color="grey lighten-1">info</v-icon>
         </v-subheader>
         <template v-for="item in items">
@@ -19,6 +20,7 @@
             </v-list-tile>
         </template>
         <v-divider/>
+        <add-facet-dialog/>
     </v-list>
 </template>
 
@@ -31,9 +33,11 @@
     import {hasQuantity} from "../../services/calculations";
     import QtUnit from "../common/QtUnit";
     import {isEmpty} from 'lodash';
+    import AddFacetDialog from "../dialog/AddFacetDialog";
 
     export default {
         components: {
+            AddFacetDialog,
             QtUnit,
             FacetDialog
         },
@@ -51,7 +55,7 @@
         methods: {
             ...mapActions({dispatchDeleteFacets: On.DELETE_FACETS}),
             ...mapMutations([Do.SHOW_DIALOG]),
-            openAddFacetDialog() {
+            addItem() {
                 this.showDialog({dialog: Dial.FACET});
             },
             deleteFacets() {

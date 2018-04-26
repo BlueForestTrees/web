@@ -16,7 +16,6 @@
             <v-tab-item><branches :tree="tree"/></v-tab-item>
         </v-tabs>
 
-        <!--<facet-dialog :tree="tree"/>-->
         <!--<impact-dialog :tree="tree"/>-->
         <!--<configure-link-dialog/>-->
     </v-container>
@@ -30,7 +29,6 @@
     import Trunk from "./Trunk";
     import Ressources from "./Ressources";
     import Tank from "./Tank";
-    import FacetDialog from "../dialog/FacetDialog";
     import Impacts from "./Impacts";
     import ImpactDialog from "../dialog/ImpactDialog";
     import ConfigureLinkDialog from "../dialog/ConfigureLinkDialog";
@@ -42,7 +40,6 @@
             ConfigureLinkDialog,
             ImpactDialog,
             Impacts,
-            FacetDialog,
             Tank,
             Ressources,
             Trunk,
