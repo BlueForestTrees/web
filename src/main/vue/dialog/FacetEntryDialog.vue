@@ -1,35 +1,16 @@
 <template>
-    <main-dialog :dialog="Dial.FACET_ENTRY" ref="dialog"
-                 @focus="$refs.nom.focus()" @validate="validate" @esc="close" @enter="validate">
+    <main-dialog :dialog="Dial.FACET_ENTRY" ref="dialog" :title="'Nouveau type de propriété'" :icon="'add'"
+                 @esc="close" @enter="validate" @focus="clear">
         <template slot-scope="props">
-
             <v-card>
-                <v-card-title class="grey lighten-4 py-4 title">
-                    Créer une caractéristique
-                </v-card-title>
                 <v-card-text>
                     <v-container fluid>
                         <v-layout row>
-                            <v-flex xs4>
-                                <v-subheader>Comment cela s'appelle-t-il?</v-subheader>
-                            </v-flex>
-                            <v-flex xs8>
-                                <v-text-field label="Nom" ref="nom" v-model="name"/>
-                            </v-flex>
+                            <v-text-field label="Nom du type de propriété" required v-model="name"/>
                         </v-layout>
-
                         <v-layout row>
-                            <v-flex xs4>
-                                <v-subheader>C'est un(e): {{grandeur}}</v-subheader>
-                            </v-flex>
-                            <v-flex xs8>
-                                <v-chip v-for="(units,key) in grandeurs" :key="key" @click="grandeur = key"
-                                        fab dark small color="primary" text-color="white">
-                                    {{key}}
-                                </v-chip>
-                            </v-flex>
+                            <grandeur-select v-model="grandeur"/>
                         </v-layout>
-
                     </v-container>
                 </v-card-text>
                 <v-card-actions>
@@ -48,7 +29,7 @@
     import On from "../../const/on";
     import {mapActions} from "vuex";
     import {Dial} from "../../const/dial";
-    import {getGrandeurs} from "trees-units";
+    import GrandeurSelect from "../common/GrandeurSelect";
 
     export default {
         data() {
@@ -56,25 +37,26 @@
                 Dial: Dial,
                 valid: false,
                 name: null,
-                grandeur: null,
-                grandeurs: getGrandeurs()
+                grandeur: null
             }
         },
         components: {
+            GrandeurSelect,
             MainDialog
         },
         props: ['data'],
         methods: {
-            selectGrandeur(grandeur) {
-                this.grandeur = grandeur;
-            },
             ...mapActions({"createFacetEntry": On.CREATE_FACET_ENTRY}),
             validate: function () {
-                this.createFacetEntry({name: this.name, grandeur: this.grandeur});
+                this.createFacetEntry({name: this.name, grandeur: this.grandeur.key});
                 this.close();
             },
             close: function () {
                 this.$refs.dialog.close();
+            },
+            clear: function () {
+                this.name = null;
+                this.grandeur = null;
             }
         }
     }

@@ -1,7 +1,7 @@
 <template>
     <v-container grid-list-md text-xs-center>
 
-        <v-tabs v-model="nav.tabs">
+        <v-tabs v-model="nav.treeTabIdx">
             <v-tab ripple>Bilan</v-tab>
             <v-tab ripple>Ressources</v-tab>
             <v-tab ripple>Description</v-tab>

@@ -11,7 +11,7 @@ export default {
     },
     [Do.INIT_TREE]: (state, tree) => {
         state.tree = tree;
-        state.nav.tabs = "2";
+        state.nav.treeTabIdx = "3";
     },
 
 

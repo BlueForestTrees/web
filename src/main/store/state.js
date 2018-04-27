@@ -34,5 +34,5 @@ export default {
     linkEdit: null,
     addingSeed: false,
     dialogs: dialogs(),
-    nav: {leftMenuVisible: false, tabs: null}
+    nav: {leftMenuVisible: false, treeTabIdx: null}
 };

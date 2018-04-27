@@ -7,12 +7,15 @@
                     <v-container fluid>
 
                         <v-layout row>
-
-                            <v-select label="Nom de la propriété..." item-text="name" autocomplete required
-                                      :items="facetEntries" :search-input.sync="search" :loading="loading"
-                                      v-model="select"
+                            <v-select
+                                    label="Async items"
+                                    autocomplete chips required
+                                    :loading="loading"
+                                    :items="autocompleteItems"
+                                    :search-input.sync="itemNamepart"
+                                    v-model="selectedItem"
+                                    item-text="name"
                             ></v-select>
-
                         </v-layout>
 
                         <v-layout row>
@@ -20,7 +23,6 @@
                         </v-layout>
 
                         <v-layout row>
-                            <grandeur-select v-model="grandeur"/>
                             <unit-select v-model="unit" :grandeur="grandeur"/>
                         </v-layout>
 
@@ -39,12 +41,13 @@
 <script>
     import {Dial} from "../../const/dial";
     import On from "../../const/on";
-    import {mapActions, mapState} from "vuex";
+    import {mapActions} from "vuex";
     import MainDialog from "./MainDialog";
     import UnitGrid from "../common/UnitGrid";
     import GrandeurSelect from "../common/GrandeurSelect";
     import UnitSelect from "../common/UnitSelect";
 
+    import {getGrandeur} from 'trees-units'
 
     export default {
         name: 'add-facet-dialog',
@@ -57,51 +60,63 @@
         data() {
             return {
                 Dial: Dial,
-                namepart: null,
-                facetEntries: [],
-                qt: null,
-                unit: null,
 
-                grandeur: null,
-
+                itemNamepart: null,
+                autocompleteItems: [],
                 loading: false,
-                search: null,
-                select: []
+                selectedItem: null,
+
+                qt: null,
+                unit: null
             }
         },
         props: ['tree'],
         computed: {
-            ...mapState(['grandeurs'])
+            grandeur: function () {
+                return this.selectedItem && this.selectedItem.grandeur && getGrandeur(this.selectedItem.grandeur);
+            }
         },
         watch: {
-            search(val) {
-                this.doSearch(val)
+            itemNamepart(val) {
+                this.loading = true;
+                this.searchFacetEntry(val);
+                this.loading = false;
             }
         },
         methods: {
             ...mapActions({dispatchSearchFacetEntry: On.SEARCH_FACET_ENTRY, dispatchAddFacet: On.ADD_FACET}),
-            async doSearch(namepart) {
-                if (!namepart) {
-                    this.facetEntries = [];
-                }
-                this.facetEntries = await this.dispatchSearchFacetEntry({namepart});
+            async searchFacetEntry(namepart) {
+                this.autocompleteItems = namepart ?
+                    mapIdToKey(await this.dispatchSearchFacetEntry({namepart}))
+                    :
+                    [];
             },
             validate() {
-                const facet = {
-                    _id: this.selectedFacetEntry._id,
-                    name: this.selectedFacetEntry.name,
-                    quantity: {
-                        qt: parseFloat(this.qt.replace(',', '.')),
-                        unit: this.unit.shortname
-                    }
-                };
-
-                this.dispatchAddFacet({tree: this.tree, facet});
-                this.close();
+                // const facet = {
+                //     _id: this.selectedFacetEntry._id,
+                //     name: this.selectedFacetEntry.name,
+                //     quantity: {
+                //         qt: parseFloat(this.qt.replace(',', '.')),
+                //         unit: this.unit.shortname
+                //     }
+                // };
+                //
+                // this.dispatchAddFacet({tree: this.tree, facet});
+                // this.close();
             },
             close() {
                 this.$refs.dialog.close();
             }
         }
+    }
+
+    const mapIdToKey = items => {
+        if (!items) return [];
+        const nb = items.length;
+        for (let i = 0; i < nb; i++) {
+            const item = items[i];
+            item.key = item._id;
+        }
+        return items;
     }
 </script>
