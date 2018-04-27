@@ -1,30 +1,24 @@
 <template>
     <main-dialog :dialog="Dial.FACET" ref="dialog" :title="'Nouvelle propriété'" :icon="'add'"
-                 @esc="close" @enter="validate">
+                 @esc="close" @enter="validate" @focus="clear">
         <template slot-scope="props">
             <v-card>
                 <v-card-text>
                     <v-container fluid>
 
-                        <v-layout row>
+                        <v-form v-model="valid" v-on:submit.prevent="">
                             <v-select
-                                    label="Async items"
-                                    autocomplete chips required
+                                    label="Nom..."
+                                    autocomplete chips required cache-items
                                     :loading="loading"
                                     :items="autocompleteItems"
                                     :search-input.sync="itemNamepart"
-                                    v-model="selectedItem"
-                                    item-text="name"
+                                    v-model="selectedItemId"
+                                    item-text="name" item-value="_id"
                             ></v-select>
-                        </v-layout>
-
-                        <v-layout row>
-                            <v-text-field label="Quantité... (ex.: 10)" v-model="qt"/>
-                        </v-layout>
-
-                        <v-layout row>
+                            <v-text-field label="Quantité... (ex.: 10)" v-model="qt" :rules="[required, isNumber]"/>
                             <unit-select v-model="unit" :grandeur="grandeur"/>
-                        </v-layout>
+                        </v-form>
 
                     </v-container>
                 </v-card-text>
@@ -48,6 +42,8 @@
     import UnitSelect from "../common/UnitSelect";
 
     import {getGrandeur} from 'trees-units'
+    import {isNumber, required} from "../../services/rules";
+    import {find} from 'lodash';
 
     export default {
         name: 'add-facet-dialog',
@@ -64,17 +60,22 @@
                 itemNamepart: null,
                 autocompleteItems: [],
                 loading: false,
-                selectedItem: null,
+                selectedItemId: null,
 
                 qt: null,
-                unit: null
+                unit: null,
+
+                valid: false
             }
         },
         props: ['tree'],
         computed: {
             grandeur: function () {
-                return this.selectedItem && this.selectedItem.grandeur && getGrandeur(this.selectedItem.grandeur);
-            }
+                return this.selectedItem && getGrandeur(this.selectedItem && this.selectedItem.grandeur);
+            },
+            selectedItem: function () {
+                return this.selectedItemId && find(this.autocompleteItems, {_id: this.selectedItemId});
+            },
         },
         watch: {
             itemNamepart(val) {
@@ -85,38 +86,33 @@
         },
         methods: {
             ...mapActions({dispatchSearchFacetEntry: On.SEARCH_FACET_ENTRY, dispatchAddFacet: On.ADD_FACET}),
+            clear: function () {
+                this.unit = this.qt = this.selectedItemId = this.itemNamepart = null;
+                this.autocompleteItems = [];
+            },
             async searchFacetEntry(namepart) {
-                this.autocompleteItems = namepart ?
-                    mapIdToKey(await this.dispatchSearchFacetEntry({namepart}))
-                    :
-                    [];
+                if (namepart)
+                    this.autocompleteItems = await this.dispatchSearchFacetEntry({namepart});
             },
             validate() {
-                // const facet = {
-                //     _id: this.selectedFacetEntry._id,
-                //     name: this.selectedFacetEntry.name,
-                //     quantity: {
-                //         qt: parseFloat(this.qt.replace(',', '.')),
-                //         unit: this.unit.shortname
-                //     }
-                // };
-                //
-                // this.dispatchAddFacet({tree: this.tree, facet});
-                // this.close();
+                if (this.valid) {
+                    const facet = {
+                        _id: this.selectedItem._id,
+                        name: this.selectedItem.name,
+                        quantity: {
+                            qt: parseFloat(this.qt.replace(',', '.')),
+                            unit: this.unit.shortname
+                        }
+                    };
+
+                    this.dispatchAddFacet({tree: this.tree, facet});
+                    this.close();
+                }
             },
             close() {
                 this.$refs.dialog.close();
-            }
+            },
+            required, isNumber
         }
-    }
-
-    const mapIdToKey = items => {
-        if (!items) return [];
-        const nb = items.length;
-        for (let i = 0; i < nb; i++) {
-            const item = items[i];
-            item.key = item._id;
-        }
-        return items;
     }
 </script>

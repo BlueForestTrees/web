@@ -1,8 +1,11 @@
 <template>
     <v-list two-line>
-        <v-subheader>Propriétés<v-spacer/>
+        <v-subheader>Propriétés
+            <v-spacer/>
             <v-icon @click="deleteFacets" style="cursor: pointer" v-if="isSelected()">delete</v-icon>
-            <v-btn icon @click="addItem"><v-icon>add</v-icon></v-btn>
+            <v-btn icon @click="addItem">
+                <v-icon>add</v-icon>
+            </v-btn>
             <v-icon color="grey lighten-1">info</v-icon>
         </v-subheader>
         <template v-for="item in items">
@@ -20,7 +23,7 @@
             </v-list-tile>
         </template>
         <v-divider/>
-        <add-facet-dialog/>
+        <add-facet-dialog :tree="tree"/>
     </v-list>
 </template>
 
@@ -46,10 +49,13 @@
                 Dial: Dial, selectedFacets: [], overFacet: null
             }
         },
-        props: ['facets'],
+        props: ['tree'],
         computed: {
             items: function () {
                 return this.facets && this.facets.items;
+            },
+            facets: function () {
+                return this.tree && this.tree.facets
             }
         },
         methods: {

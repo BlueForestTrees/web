@@ -15,6 +15,8 @@
 </template>
 
 <script>
+    import {isNumber, required} from "../../services/rules";
+
     export default {
         name: 'inplace-edit',
         props: ['initial'],
@@ -43,8 +45,7 @@
                 this.$emit("ko");
             },
 
-            required: (value) => !!value || 'Required.',
-            isNumber: (value) => /^(\d*\.)?\d+$/.test(value) || 'Entrer un nombre.'
+            required, isNumber
 
         },
 

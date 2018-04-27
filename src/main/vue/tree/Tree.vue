@@ -11,7 +11,7 @@
             <v-tab-item><tank :tank="tree.tank"/></v-tab-item>
             <v-tab-item><ressources :tree="tree"/></v-tab-item>
             <v-tab-item><trunk :trunk="tree.trunk"/></v-tab-item>
-            <v-tab-item><facets :facets="tree.facets"/></v-tab-item>
+            <v-tab-item><facets :tree="tree"/></v-tab-item>
             <v-tab-item><impacts :impacts="tree.impacts"/></v-tab-item>
             <v-tab-item><branches :tree="tree"/></v-tab-item>
         </v-tabs>
