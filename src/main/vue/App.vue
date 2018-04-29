@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <v-app light v-touch="{left: swipeLeft,right: swipeRight}">
+        <v-app light>
             <left-menu/>
             <bar/>
             <blueforest/>
@@ -55,9 +55,6 @@
         },
         mounted: async function () {
             await this.$store.dispatch(On.MOUNT_APP);
-        },
-        methods: {
-            ...mapActions({swipeLeft: On.SWIPE_LEFT, swipeRight: On.SWIPE_RIGHT})
         }
     }
 </script>

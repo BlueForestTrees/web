@@ -1,14 +1,9 @@
 <template>
-    <main-dialog :dialog="Dial.FACET" ref="dialog" :title="'Nouvelle propriété'" @esc="close" @enter="validate" @focus="focus">
+    <main-dialog :dialog="Dial.ADD_FACET" ref="dialog" :title="'Nouvelle propriété'" @esc="close" @enter="validate" @focus="focus">
         <template slot-scope="props">
             <v-card-text>
 
-                <v-select
-                        label="Destination..." required disabled
-                        item-text="qtUnitName" item-value="qtUnitName"
-                        v-model="treeItem[0]"
-                        :items="treeItem"
-                ></v-select>
+                <destination :tree="tree"/>
 
                 <v-form v-model="valid" v-on:submit.prevent="" ref="form">
                     <v-select
@@ -42,11 +37,12 @@
     import {getGrandeur} from 'trees-units'
     import {isNumber, required} from "../../services/rules";
     import {find} from 'lodash';
-    import {qtUnitName} from "../../services/calculations";
+    import Destination from "../common/Destination";
 
     export default {
         name: 'add-facet-dialog',
         components: {
+            Destination,
             UnitSelect,
             GrandeurSelect,
             UnitGrid,
@@ -74,9 +70,6 @@
             },
             selectedItem: function () {
                 return this.selectedItemId && find(this.autocompleteItems, {_id: this.selectedItemId});
-            },
-            treeItem: function () {
-                return [{qtUnitName: qtUnitName(this.tree.trunk)}];
             }
         },
         watch: {

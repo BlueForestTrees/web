@@ -10,7 +10,7 @@ const dialogFactory = {
     [Dial.FACET_ENTRY]: () => ({qt: null, unit: null, name: null}),
     [Dial.IMPACT_ENTRY]: () => ({qt: null, unit: null, name: null}),
     [Dial.COMPARE_TO]: () => ({name: null}),
-    [Dial.FACET]: () => ({name: null}),
+    [Dial.ADD_FACET]: () => ({name: null}),
     [Dial.IMPACT]: () => ({name: null}),
     [Dial.ADD_RESSOURCE]: () => ({tree: null}),
     [Dial.ADD_USAGE]: () => ({tree: null}),
@@ -34,5 +34,5 @@ export default {
     linkEdit: null,
     addingSeed: false,
     dialogs: dialogs(),
-    nav: {leftMenuVisible: false, treeTabIdx: null}
+    nav: {leftMenuVisible: false, treeTabIdx: "1"}
 };

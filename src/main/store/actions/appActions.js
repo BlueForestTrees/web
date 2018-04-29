@@ -8,11 +8,5 @@ export default {
     [On.EXCEPTION]: ({}, e) => {
         console.error(e);
         throw e;
-    },
-    [On.SWIPE_LEFT]: ({commit}) => {
-
-    },
-    [On.SWIPE_LEFT]: ({commit}) => {
-
     }
 };
