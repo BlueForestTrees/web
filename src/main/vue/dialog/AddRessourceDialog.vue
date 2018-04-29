@@ -12,10 +12,13 @@
                         :items="autocompleteItems"
                         :search-input.sync="itemNamepart"
                         v-model="selectedItemId"
-                        item-text="name" item-value="_id"
+                        item-text="trunk.name" item-value="_id"
+                        :rules="[required, notIn]"
                 />
 
-                <!--<lookup @select="select" cancreate ref="lookup"/>-->
+                <v-text-field type="number" label="Quantité... (ex.: 10)" v-model="qt" :rules="[required, isNumber]"/>
+                <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]"/>
+
             </v-card-text>
         </template>
     </main-dialog>
@@ -29,6 +32,9 @@
     import Lookup from "../common/Lookup";
     import Destination from "../common/Destination";
     import {find} from 'lodash';
+    import {isNumber, required} from "../../services/rules";
+    import {getGrandeur} from 'trees-units'
+    import UnitSelect from "../common/UnitSelect";
 
     export default {
         name: 'add-ressource-dialog',
@@ -40,11 +46,16 @@
                 itemNamepart: null,
                 loading: false,
                 selectedItemId: null,
+                qt: null,
+                unit: null,
             }
         },
-        components: {Destination, Lookup, MainDialog},
+        components: {UnitSelect, Destination, Lookup, MainDialog},
         computed: {
             ...mapState({tree: state => state.dialogs.addRessource.data.tree}),
+            grandeur: function () {
+                return this.selectedItem && getGrandeur(this.selectedItem && this.selectedItem.grandeur);
+            },
             selectedItem: function () {
                 return this.selectedItemId && find(this.autocompleteItems, {_id: this.selectedItemId});
             }
@@ -60,12 +71,6 @@
                 if (namepart)
                     this.autocompleteItems = await this.dispatchSearchTree({namepart});
             },
-            // select(item) {
-            //     this.selection.push(item);
-            // },
-            // unselect(idx) {
-            //     this.selection.splice(idx, 1);
-            // },
             validate() {
                 // this.dispatchAddLinks({
                 //     tree: this.tree,
@@ -74,17 +79,21 @@
                 this.close();
             },
             focus() {
-                // this.selection = []
+
             },
             close: function () {
-                // this.$refs.dialog.close();
-            // },
-            // watch: {
-                // itemNamepart(val) {
-                    // this.loading = true;
-                    // this.searchRessource(val);
-                    // this.loading = false;
-                // }
+                this.$refs.dialog.close();
+            },
+            required, isNumber,
+            notIn() {
+                return !find(this.tree.roots.items, {_id: this.selectedItemId}) || "Déjà utilisé";
+            }
+        },
+        watch: {
+            itemNamepart(val) {
+                this.loading = true;
+                this.searchRessource(val);
+                this.loading = false;
             }
         }
     }
