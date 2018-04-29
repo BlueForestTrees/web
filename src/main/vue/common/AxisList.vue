@@ -7,7 +7,7 @@
         <v-list dense>
             <v-list-tile v-for="axis in axises" :key="axis.axis">
                 <v-list-tile-content>
-                    <qt-unit-name :axis="axis"/>
+                    <qt-unit-name-label :axis="axis"/>
                 </v-list-tile-content>
             </v-list-tile>
         </v-list>
@@ -15,11 +15,11 @@
 </template>
 
 <script>
-    import QtUnitName from "./QtUnitName";
 
+    import QtUnitNameLabel from "./QtUnitNameLabel";
     export default {
-        components: {QtUnitName},
         name:'axis-list',
+        components: {QtUnitNameLabel},
         props:['name', 'axises', 'color']
     }
 </script>

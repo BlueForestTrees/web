@@ -22,11 +22,10 @@
     import {mapActions, mapState} from "vuex";
     import Lookup from "../common/Lookup";
     import On from "../../const/on";
-    import QtUnit from "../common/QtUnit";
 
     export default {
         name: "create-dialog",
-        components: {QtUnit, Lookup},
+        components: {Lookup},
         props: ['film'],
         data() {
             return {

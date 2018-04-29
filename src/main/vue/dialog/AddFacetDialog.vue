@@ -1,33 +1,31 @@
 <template>
-    <main-dialog :dialog="Dial.FACET" ref="dialog" :title="'Nouvelle propriété'" :icon="'add'"
-                 @esc="close" @enter="validate" @focus="clear">
+    <main-dialog :dialog="Dial.FACET" ref="dialog" :title="'Nouvelle propriété'" @esc="close" @enter="validate" @focus="focus">
         <template slot-scope="props">
-            <v-card>
-                <v-card-text>
-                    <v-container fluid>
+            <v-card-text>
 
-                        <v-form v-model="valid" v-on:submit.prevent="">
-                            <v-select
-                                    label="Nom..."
-                                    autocomplete chips required cache-items
-                                    :loading="loading"
-                                    :items="autocompleteItems"
-                                    :search-input.sync="itemNamepart"
-                                    v-model="selectedItemId"
-                                    item-text="name" item-value="_id"
-                            ></v-select>
-                            <v-text-field label="Quantité... (ex.: 10)" v-model="qt" :rules="[required, isNumber]"/>
-                            <unit-select v-model="unit" :grandeur="grandeur"/>
-                        </v-form>
+                <v-select
+                        label="Destination..." required disabled
+                        item-text="qtUnitName" item-value="qtUnitName"
+                        v-model="treeItem[0]"
+                        :items="treeItem"
+                ></v-select>
 
-                    </v-container>
-                </v-card-text>
-                <v-card-actions>
-                    <v-spacer/>
-                    <v-btn flat color="primary" @click="close">Annuler</v-btn>
-                    <v-btn flat @click="validate">Ok</v-btn>
-                </v-card-actions>
-            </v-card>
+                <v-form v-model="valid" v-on:submit.prevent="" ref="form">
+                    <v-select
+                            label="Nom..."
+                            autocomplete chips required cache-items
+                            :loading="loading"
+                            :items="autocompleteItems"
+                            :search-input.sync="itemNamepart"
+                            v-model="selectedItemId"
+                            item-text="name" item-value="_id"
+                            :rules="[required, notIn]"
+                    ></v-select>
+                    <v-text-field type="number" label="Quantité... (ex.: 10)" v-model="qt" :rules="[required, isNumber]"/>
+                    <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]"/>
+                </v-form>
+
+            </v-card-text>
         </template>
     </main-dialog>
 </template>
@@ -44,6 +42,7 @@
     import {getGrandeur} from 'trees-units'
     import {isNumber, required} from "../../services/rules";
     import {find} from 'lodash';
+    import {qtUnitName} from "../../services/calculations";
 
     export default {
         name: 'add-facet-dialog',
@@ -76,6 +75,9 @@
             selectedItem: function () {
                 return this.selectedItemId && find(this.autocompleteItems, {_id: this.selectedItemId});
             },
+            treeItem: function () {
+                return [{qtUnitName: qtUnitName(this.tree.trunk)}];
+            }
         },
         watch: {
             itemNamepart(val) {
@@ -86,15 +88,17 @@
         },
         methods: {
             ...mapActions({dispatchSearchFacetEntry: On.SEARCH_FACET_ENTRY, dispatchAddFacet: On.ADD_FACET}),
-            clear: function () {
-                this.unit = this.qt = this.selectedItemId = this.itemNamepart = null;
+            focus: function () {
+                this.$refs.form.reset();
                 this.autocompleteItems = [];
+
             },
             async searchFacetEntry(namepart) {
                 if (namepart)
                     this.autocompleteItems = await this.dispatchSearchFacetEntry({namepart});
             },
             validate() {
+                this.$refs.form.validate();
                 if (this.valid) {
                     const facet = {
                         _id: this.selectedItem._id,
@@ -112,7 +116,10 @@
             close() {
                 this.$refs.dialog.close();
             },
-            required, isNumber
+            required, isNumber,
+            notIn() {
+                return !find(this.tree.facets.items, {_id: this.selectedItemId}) || "Déjà utilisé";
+            }
         }
     }
 </script>

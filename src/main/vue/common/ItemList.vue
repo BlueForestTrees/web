@@ -4,7 +4,7 @@
             <v-chip :key="item._id"
                     color="primary" text-color="white"
                     @click="select(item)">
-                <qt-unit-name :item="item.trunk"/>
+                <qt-unit-name-label :item="item.trunk"/>
             </v-chip>
         </template>
 
@@ -21,7 +21,7 @@
 
 <script>
     import Loading from "./Loading";
-    import QtUnitName from "./QtUnitName";
+    import QtUnitName from "QtUnitNameLabel";
 
     export default {
         components: {

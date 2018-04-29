@@ -1,6 +1,6 @@
 <template>
     <main-dialog :dialog="Dial.FACET_ENTRY" ref="dialog" :title="'Nouveau type de propriété'" :icon="'add'"
-                 @esc="close" @enter="validate" @focus="clear">
+                 @esc="close" @enter="validate" @focus="focus">
         <template slot-scope="props">
             <v-card>
                 <v-card-text>
@@ -54,7 +54,7 @@
             close: function () {
                 this.$refs.dialog.close();
             },
-            clear: function () {
+            focus: function () {
                 this.name = null;
                 this.grandeur = null;
             }

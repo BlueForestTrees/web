@@ -1,5 +1,5 @@
 <template>
-    <v-container grid-list-md text-xs-center>
+    <v-container>
 
         <v-tabs v-model="nav.treeTabIdx">
             <v-tab ripple>Bilan</v-tab>
@@ -52,3 +52,13 @@
         }
     }
 </script>
+
+<style>
+    .container{
+        padding:0px;
+    }
+    .invisible{
+        border: black;
+        background-color: transparent;
+    }
+</style>

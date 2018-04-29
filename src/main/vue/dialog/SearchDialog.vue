@@ -13,7 +13,7 @@
             </v-toolbar>
             <v-card-text>
                 <v-layout column>
-                    <v-text-field ref="searchInput" autofocus :value="term" @input="search" placeholder="nom, auteur, type, etc."/>
+                    <v-text-field ref="searchInput" autofocus type="search" :value="term" @input="search" placeholder="nom, auteur, type, etc."/>
                     <v-list two-line>
                         <template v-for="item in searchResults">
                             <v-divider/>

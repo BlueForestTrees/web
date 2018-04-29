@@ -1,6 +1,6 @@
 <template>
     <v-chip color="primary" text-color="white" @click="$emit('select')">
-        <qt-unit-name :item="item.trunk" />
+        <qt-unit-name-label :item="item.trunk" />
         <span v-if="selected">
             <v-icon right color="white"
                     @click.stop="$emit('load')">
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-    import QtUnitName from "./QtUnitName";
+    import QtUnitName from "QtUnitNameLabel";
 
     export default {
         components: {QtUnitName},

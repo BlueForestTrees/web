@@ -1,18 +1,24 @@
 <template>
-    <v-select label="Unité..." item-text="name" required
-              :items="items" :value="value" @input="v => $emit('input',v)"
+    <v-select
+            label="Unité..." item-text="name" required
+            :items="items" :value="value" @input="v => $emit('input',v)" :rules="rules"
     />
 </template>
 
 <script>
-    import {getUnits} from "trees-units";
-
     export default {
         name: 'unit-select',
-        props: ['value', 'grandeur'],
+        props: ['value', 'grandeur', 'rules'],
         computed: {
             items: function () {
-                return this.grandeur && this.grandeur.units || Object.values(getUnits())
+                return this.grandeur && this.grandeur.units || []
+            }
+        },
+        watch: {
+            grandeur: function (g) {
+                if (g && g.key === "Nomb") {
+                    this.$emit('input', this.grandeur.units[0]);
+                }
             }
         }
     }
