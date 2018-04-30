@@ -35,9 +35,11 @@
     import {isNumber, required} from "../../services/rules";
     import {getGrandeur} from 'trees-units'
     import UnitSelect from "../common/UnitSelect";
+    import closable from "../mixin/Closable";
 
     export default {
         name: 'add-ressource-dialog',
+        mixins: [closable],
         data() {
             return {
                 Dial: Dial,
@@ -72,17 +74,14 @@
                     this.autocompleteItems = await this.dispatchSearchTree({namepart});
             },
             validate() {
-                // this.dispatchAddLinks({
-                //     tree: this.tree,
-                //     roots: this.selection
-                // });
+                this.dispatchAddLinks({
+                    tree: this.tree,
+                    roots: this.selection
+                });
                 this.close();
             },
             focus() {
 
-            },
-            close: function () {
-                this.$refs.dialog.close();
             },
             required, isNumber,
             notIn() {
@@ -92,7 +91,7 @@
         watch: {
             itemNamepart(val) {
                 this.loading = true;
-                this.searchRessource(val);
+                val && this.searchRessource(val);
                 this.loading = false;
             }
         }

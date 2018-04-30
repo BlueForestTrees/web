@@ -22,13 +22,13 @@
                 </v-list-tile-content>
             </v-list-tile>
         </template>
-        <add-ressource-dialog/>
+        <add-ressource-dialog v-if="dialogVisible"/>
     </v-list>
 </template>
 
 <script>
     import On from "../../const/on";
-    import {mapActions, mapMutations} from 'vuex';
+    import {mapActions, mapMutations, mapState} from 'vuex';
     import Do from "../../const/do";
     import {Dial} from "../../const/dial";
     import QtUnit from "../common/QtUnit";
@@ -42,8 +42,9 @@
         props: ['tree'],
         computed: {
             items: function () {
-                return this.tree && this.tree.roots && this.tree.roots.items;
-            }
+                return this.tree.roots.items;
+            },
+            ...mapState({dialogVisible: state => state.dialogs.addRessource.visible})
         },
         methods: {
             ...mapActions({

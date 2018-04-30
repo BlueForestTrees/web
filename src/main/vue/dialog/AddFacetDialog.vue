@@ -38,9 +38,11 @@
     import {isNumber, required} from "../../services/rules";
     import {find} from 'lodash';
     import Destination from "../common/Destination";
+    import closable from "../mixin/Closable";
 
     export default {
         name: 'add-facet-dialog',
+        mixins: [closable],
         components: {
             Destination,
             UnitSelect,
@@ -105,9 +107,6 @@
                     this.dispatchAddFacet({tree: this.tree, facet});
                     this.close();
                 }
-            },
-            close() {
-                this.$refs.dialog.close();
             },
             required, isNumber,
             notIn() {
