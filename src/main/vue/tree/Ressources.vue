@@ -22,7 +22,7 @@
                 </v-list-tile-content>
             </v-list-tile>
         </template>
-        <add-ressource-dialog v-if="dialogVisible"/>
+        <add-ressource-dialog/>
     </v-list>
 </template>
 

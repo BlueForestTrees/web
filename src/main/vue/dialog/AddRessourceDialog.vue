@@ -1,5 +1,5 @@
 <template>
-    <main-dialog :dialog="Dial.ADD_RESSOURCE" ref="dialog" :title="'Nouvelle ressource'"
+    <main-dialog :dialog="Dial.ADD_RESSOURCE" ref="dialog" :title="'Nouvelle utilisation de ressource'"
                  @esc="close" @enter="validate" @focus="focus">
         <template slot-scope="dialog">
             <v-card-text>
@@ -85,7 +85,7 @@
             },
             required, isNumber,
             notIn() {
-                return !find(this.tree.roots.items, {_id: this.selectedItemId}) || "Déjà utilisé";
+                return this.tree && !find(this.tree.roots.items, {_id: this.selectedItemId}) || "Déjà utilisé";
             }
         },
         watch: {

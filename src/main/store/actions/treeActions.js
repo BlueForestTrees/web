@@ -26,8 +26,8 @@ export default {
 
         return tree;
     },
-    [On.CREATE_AND_OPEN_TREE]: async ({dispatch}, {name}) => {
-        dispatch(On.LOAD_OPEN_TREE, await dispatch(On.CREATE_TRUNK, name));
+    [On.CREATE_AND_OPEN_TREE]: async ({dispatch}, {name, grandeur}) => {
+        dispatch(On.LOAD_OPEN_TREE, await dispatch(On.CREATE_TRUNK, {name, grandeur}));
     },
     [On.CLONE_OPEN_TREE]: async ({dispatch}, tree) => {
         dispatch(On.LOAD_OPEN_TREE, await dispatch(On.CLONE_TREE, tree));

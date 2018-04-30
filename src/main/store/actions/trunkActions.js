@@ -4,8 +4,8 @@ import Do from "../../const/do";
 import {trunky} from "../../services/calculations";
 
 export default {
-    [On.CREATE_TRUNK]: async ({commit, state, dispatch}, name) => {
-        return trunky(await api.createTrunk({name}));
+    [On.CREATE_TRUNK]: async ({commit, state, dispatch}, {name, grandeur}) => {
+        return trunky(await api.createTrunk({name, grandeur}));
     },
     [On.LOAD_TRUNK]: ({commit}, tree) => {
         return api.getTrunk(tree._id)

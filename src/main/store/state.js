@@ -6,7 +6,7 @@ const dialogStateFromData = (data) => ({
     data: data
 });
 const dialogFactory = {
-    [Dial.TRUNK]: () => ({name: null}),
+    [Dial.CREATE_TREE]: () => ({}),
     [Dial.FACET_ENTRY]: () => ({qt: null, unit: null, name: null}),
     [Dial.IMPACT_ENTRY]: () => ({qt: null, unit: null, name: null}),
     [Dial.COMPARE_TO]: () => ({name: null}),

@@ -21,7 +21,7 @@
                     <v-list-tile-title>Créer un impact</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
-            <v-list-tile @click="showDialog({dialog:Dial.TRUNK})">
+            <v-list-tile @click="showDialog({dialog:Dial.CREATE_TREE})">
                 <v-list-tile-action>
                     <v-layout row>
                         <v-icon>add</v-icon>
