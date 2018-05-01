@@ -1,14 +1,14 @@
 <template>
-    <v-dialog width="800px" v-model="visible" fullscreen transition="dialog-bottom-transition" :overlay="false" scrollable @keydown.esc="$emit('esc',data)" @keydown.ctrl.enter="$emit('enter',data)">
+    <v-dialog width="800px" v-model="visible" fullscreen transition="dialog-bottom-transition" :overlay="false" scrollable @keydown.esc="$emit('esc',data)" @keydown.enter="$emit('enter',data)">
         <v-card tile>
-        <v-toolbar card dark color="primary">
-            <v-btn icon @click.native="visible = false" dark>
-                <v-icon large>clear</v-icon>
-            </v-btn>
-            <v-toolbar-title>{{title}}</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-icon>{{icon}}</v-icon>
-        </v-toolbar>
+            <v-toolbar card dark color="primary">
+                <v-btn icon @click.native="visible = false" dark>
+                    <v-icon large>clear</v-icon>
+                </v-btn>
+                <v-toolbar-title>{{title}}</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-icon>{{icon}}</v-icon>
+            </v-toolbar>
             <slot :data="data" ref="content"/>
             <v-card-actions>
                 <v-btn block @click="$emit('enter', data)" large color="green">
@@ -59,7 +59,6 @@
         watch: {
             visible(value) {
                 if (value) {
-                    this.$emit('show');
                     this.$nextTick(() => this.$emit('focus'));
                 }
             }

@@ -1,22 +1,24 @@
 <template>
-    <main-dialog :dialog="Dial.ADD_USAGE" ref="dialog" :title="'Ajouter un usage'" :icon="'add'"
-                 @focus="$refs.lookup.focus()" @esc="close" @enter="validate" @show="show">
-        <template slot-scope="dialog">
-            <v-card-title primary-title>
-                {{subtitle}}
-            </v-card-title>
-            <v-card-text>
-                <v-chip v-for="(item,idx) in selection" :key="item._id" close @input="unselect(idx)">
-                    {{item.trunk.name}}
-                </v-chip>
-                <lookup @select="select" cancreate ref="lookup"/>
-            </v-card-text>
-            <v-card-actions>
-                <v-spacer/>
-                <v-btn flat color="primary" @click="close">Annuler</v-btn>
-                <v-btn flat @click="validate">Ok</v-btn>
-            </v-card-actions>
-        </template>
+    <main-dialog :dialog="Dial.ADD_USAGE" :title="'Nouvel usage'"
+                 @esc="close" @enter="validate" @focus="focus"
+    >
+        <v-card-text v-if="tree">
+            <destination :tree="tree"/>
+            <v-form v-model="valid" v-on:submit.prevent="" ref="form">
+                <v-select
+                        label="Nom..."
+                        autocomplete required cache-items
+                        :loading="loading"
+                        :items="autocompleteItems"
+                        :search-input.sync="itemNamepart"
+                        v-model="selectedItemId"
+                        item-text="trunk.name" item-value="_id"
+                        :rules="[required, notIn]"
+                ></v-select>
+                <v-text-field type="number" label="Quantité... (ex.: 10)" v-model="qt" :rules="[required, isNumber]"/>
+                <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]"/>
+            </v-form>
+        </v-card-text>
     </main-dialog>
 </template>
 
@@ -25,52 +27,68 @@
     import On from "../../const/on";
     import {mapActions, mapState} from "vuex";
     import {Dial} from "../../const/dial";
-    import Lookup from "../common/Lookup";
+    import Destination from "../common/Destination";
+    import {isNumber, required} from "../../services/rules";
+    import closable from "../mixin/Closable";
+    import UnitSelect from "../common/UnitSelect";
 
     export default {
         name: 'add-usage-dialog',
+        mixins: [closable],
         data() {
             return {
-                Dial: Dial,
-                selection: [],
-                editing: false
+                Dial,
+
+                itemNamepart: null,
+                autocompleteItems: [],
+                loading: false,
+                selectedItemId: null,
+
+                qt: null,
+                unit: null,
+
+                valid: false
             }
         },
-        components: {Lookup, MainDialog},
+        components: {UnitSelect, Destination, MainDialog},
         computed: {
-            tree: function () {
-                return this.$refs.dialog.data.tree;
+            ...mapState({tree: state => state.dialogs[Dial.ADD_USAGE].data.tree}),
+            grandeur: function () {
+                return this.selectedItem && getGrandeur(this.selectedItem && this.selectedItem.grandeur);
             },
-            title: function () {
-                return "Ajouter";
-            },
-            ...mapState({tree: state => state.dialogs.addUsage.data.tree}),
-            subtitle: function () {
-                return "Ajouter un usage pour " + (this.tree && this.tree.trunk.name);
+            selectedItem: function () {
+                return this.selectedItemId && find(this.autocompleteItems, {_id: this.selectedItemId});
+            }
+        },
+        watch: {
+            itemNamepart(val) {
+                this.loading = true;
+                this.search(val);
+                this.loading = false;
             }
         },
         methods: {
             ...mapActions({
+                dispatchSearch: On.SEARCH_TREE,
                 dispatchAddLinks: On.ADD_LINKS
             }),
-            select(item) {
-                this.selection.push(item);
-            },
-            unselect(idx) {
-                this.selection.splice(idx, 1);
-            },
             validate() {
-                this.dispatchAddLinks({
-                    tree: this.tree,
-                    branches: this.selection
-                });
+                //TODO business action
+                // this.dispatchAddLinks({
+                //     tree: this.tree,
+                //     branches: this.selection
+                // });
                 this.close();
             },
-            show() {
-                this.selection = []
+            focus() {
+
             },
-            close: function () {
-                this.$refs.dialog.close();
+            async search(term) {
+                if (term)
+                    this.autocompleteItems = await this.dispatchSearch({term});
+            },
+            required, isNumber, notIn() {
+                return !find(this.tree.branches.items, {_id: this.selectedItemId}) || "Déjà utilisé";
             }
         }
     }

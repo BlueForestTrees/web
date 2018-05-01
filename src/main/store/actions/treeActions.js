@@ -33,7 +33,7 @@ export default {
         dispatch(On.LOAD_OPEN_TREE, await dispatch(On.CLONE_TREE, tree));
     },
 
-    [On.SEARCH_TREE]: async ({commit}, term) => trunkyAll(await api.search(term)),
+    [On.SEARCH_TREE]: async ({commit}, {term}) => trunkyAll(await api.search(term)),
 
     [On.CLONE_TREE]: ({dispatch}, {_id}) => dispatch(On.CLONE_TRUNK, _id),
 

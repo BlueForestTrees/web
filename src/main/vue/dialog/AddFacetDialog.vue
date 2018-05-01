@@ -1,34 +1,34 @@
 <template>
-    <main-dialog :dialog="Dial.ADD_FACET" ref="dialog" :title="'Nouvelle propriété'" @esc="close" @enter="validate" @focus="focus">
-        <template slot-scope="props">
-            <v-card-text>
+    <main-dialog :dialog="Dial.ADD_FACET" :title="'Nouvelle propriété'"
+                 @esc="close" @enter="validate" @focus="focus"
+    >
+        <v-card-text v-if="tree">
 
-                <destination :tree="tree"/>
+            <destination :tree="tree"/>
 
-                <v-form v-model="valid" v-on:submit.prevent="" ref="form">
-                    <v-select
-                            label="Nom..."
-                            autocomplete chips required cache-items
-                            :loading="loading"
-                            :items="autocompleteItems"
-                            :search-input.sync="itemNamepart"
-                            v-model="selectedItemId"
-                            item-text="name" item-value="_id"
-                            :rules="[required, notIn]"
-                    ></v-select>
-                    <v-text-field type="number" label="Quantité... (ex.: 10)" v-model="qt" :rules="[required, isNumber]"/>
-                    <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]"/>
-                </v-form>
+            <v-form v-model="valid" v-on:submit.prevent="" ref="form">
+                <v-select
+                        label="Nom..."
+                        autocomplete chips required cache-items
+                        :loading="loading"
+                        :items="autocompleteItems"
+                        :search-input.sync="itemNamepart"
+                        v-model="selectedItemId"
+                        item-text="name" item-value="_id"
+                        :rules="[required, notIn]"
+                ></v-select>
+                <v-text-field type="number" label="Quantité... (ex.: 10)" v-model="qt" :rules="[required, isNumber]"/>
+                <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]"/>
+            </v-form>
 
-            </v-card-text>
-        </template>
+        </v-card-text>
     </main-dialog>
 </template>
 
 <script>
     import {Dial} from "../../const/dial";
     import On from "../../const/on";
-    import {mapActions} from "vuex";
+    import {mapActions, mapState} from "vuex";
     import MainDialog from "./MainDialog";
     import UnitGrid from "../common/UnitGrid";
     import GrandeurSelect from "../common/GrandeurSelect";
@@ -65,8 +65,8 @@
                 valid: false
             }
         },
-        props: ['tree'],
         computed: {
+            ...mapState({tree: state => state.dialogs[Dial.ADD_FACET].data.tree}),
             grandeur: function () {
                 return this.selectedItem && getGrandeur(this.selectedItem && this.selectedItem.grandeur);
             },
@@ -77,20 +77,19 @@
         watch: {
             itemNamepart(val) {
                 this.loading = true;
-                this.searchFacetEntry(val);
+                this.search(val);
                 this.loading = false;
             }
         },
         methods: {
-            ...mapActions({dispatchSearchFacetEntry: On.SEARCH_FACET_ENTRY, dispatchAddFacet: On.ADD_FACET}),
+            ...mapActions({dispatchSearch: On.SEARCH_FACET_ENTRY, dispatchAddFacet: On.ADD_FACET}),
             focus: function () {
                 this.$refs.form.reset();
                 this.autocompleteItems = [];
-
             },
-            async searchFacetEntry(namepart) {
+            async search(namepart) {
                 if (namepart)
-                    this.autocompleteItems = await this.dispatchSearchFacetEntry({namepart});
+                    this.autocompleteItems = await this.dispatchSearch({namepart});
             },
             validate() {
                 this.$refs.form.validate();

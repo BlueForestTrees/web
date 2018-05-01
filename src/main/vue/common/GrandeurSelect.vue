@@ -1,6 +1,7 @@
 ﻿<template>
     <v-select label="Grandeur..." item-text="label" required
-              :items="items" :value="value" @input="v => $emit('input',v)"
+              :items="getGrandeurs()" :value="value" @input="v => $emit('input',v)"
+              :disabled="disabled"
     />
 </template>
 
@@ -9,11 +10,9 @@
 
     export default {
         name: 'grandeur-select',
-        props: ['value'],
-        data: function () {
-            return {
-                items: getGrandeurs()
-            }
+        props: ['value', 'disabled'],
+        methods: {
+            getGrandeurs
         }
     }
 </script>

@@ -1,26 +1,24 @@
 <template>
     <main-dialog :dialog="Dial.ADD_RESSOURCE" ref="dialog" :title="'Nouvelle utilisation de ressource'"
                  @esc="close" @enter="validate" @focus="focus">
-        <template slot-scope="dialog">
-            <v-card-text>
-                <destination :tree="tree"/>
+        <v-card-text>
+            <destination :tree="tree"/>
 
-                <v-select
-                        label="Nom..."
-                        autocomplete chips required cache-items
-                        :loading="loading"
-                        :items="autocompleteItems"
-                        :search-input.sync="itemNamepart"
-                        v-model="selectedItemId"
-                        item-text="trunk.name" item-value="_id"
-                        :rules="[required, notIn]"
-                />
+            <v-select
+                    label="Nom..."
+                    autocomplete chips required cache-items
+                    :loading="loading"
+                    :items="autocompleteItems"
+                    :search-input.sync="itemNamepart"
+                    v-model="selectedItemId"
+                    item-text="trunk.name" item-value="_id"
+                    :rules="[required, notIn]"
+            />
 
-                <v-text-field type="number" label="Quantité... (ex.: 10)" v-model="qt" :rules="[required, isNumber]"/>
-                <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]"/>
+            <v-text-field type="number" label="Quantité... (ex.: 10)" v-model="qt" :rules="[required, isNumber]"/>
+            <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]"/>
 
-            </v-card-text>
-        </template>
+        </v-card-text>
     </main-dialog>
 </template>
 
@@ -69,9 +67,9 @@
             ...mapActions({
                 dispatchSearchTree: On.SEARCH_TREE
             }),
-            async searchRessource(namepart) {
-                if (namepart)
-                    this.autocompleteItems = await this.dispatchSearchTree({namepart});
+            async searchRessource(term) {
+                if (term)
+                    this.autocompleteItems = await this.dispatchSearchTree({term});
             },
             validate() {
                 this.dispatchAddLinks({

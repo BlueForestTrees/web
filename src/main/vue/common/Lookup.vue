@@ -67,7 +67,7 @@
                 if (value) {
                     this.searching = true;
                     try {
-                        this.searchResults = await this.dispatchSearch(value);
+                        this.searchResults = await this.dispatchSearch({term:value});
                     } finally {
                         this.searching = false;
                     }
