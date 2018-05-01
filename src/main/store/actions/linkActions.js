@@ -19,7 +19,21 @@ export default {
 
     },
 
-    [On.CONFIGURE_LINK]: ({}, {left, right, config}) => api.putLink(config.left, config.right),
+    [On.ADD_LINK]: async ({commit}, {tree, root, branch}) => {
+
+        if (root) {
+            await api.postLink(tree._id, root._id);
+            commit(Do.ADD_ROOTS, {tree, roots: [root]});
+        }
+
+        if (branch) {
+            await api.postLink(branch._id, tree._id);
+            commit(Do.ADD_BRANCHES, {tree, branches: [branch]});
+        }
+
+    },
+
+    [On.CONFIGURE_LINK]: ({}, {left, right}) => api.putLink(left, right),
 
     [On.DELETE_LINK]: async ({commit}, {left, right}) => {
         await api.deleteLink(left._id, right._id);

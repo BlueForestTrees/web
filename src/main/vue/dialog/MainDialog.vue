@@ -1,5 +1,8 @@
 <template>
-    <v-dialog width="800px" v-model="visible" fullscreen transition="dialog-bottom-transition" :overlay="false" scrollable @keydown.esc="$emit('esc',data)" @keydown.enter="$emit('enter',data)">
+    <v-dialog v-model="visible" fullscreen transition="dialog-bottom-transition" scrollable
+              :overlay="false"
+              @keydown.esc="$emit('esc',data)" @keydown.enter="$emit('enter',data)"
+    >
         <v-card tile>
             <v-toolbar card dark color="primary">
                 <v-btn icon @click.native="visible = false" dark>

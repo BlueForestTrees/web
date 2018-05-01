@@ -2,6 +2,7 @@ export default {
     ADD_FACET: "addFacet",
     ADD_IMPACT: "addImpact",
     ADD_LINKS: 'addLinks',
+    ADD_LINK: 'addLink',
     CLONE_TREE: "cloneTree",
     CLONE_TRUNK: "cloneTrunk",
     CLONE_OPEN_TREE: "cloneOpenTree",

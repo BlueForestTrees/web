@@ -1,5 +1,5 @@
 <template>
-    <main-dialog :dialog="Dial.ADD_USAGE" :title="'Nouvel usage'"
+    <main-dialog :dialog="Dial.ADD_USAGE" :title="'Nouvel usage'" ref="dialog"
                  @esc="close" @enter="validate" @focus="focus"
     >
         <v-card-text v-if="tree">
@@ -31,6 +31,8 @@
     import {isNumber, required} from "../../services/rules";
     import closable from "../mixin/Closable";
     import UnitSelect from "../common/UnitSelect";
+    import {getGrandeur} from "trees-units";
+    import {find} from 'lodash';
 
     export default {
         name: 'add-usage-dialog',
@@ -54,7 +56,7 @@
         computed: {
             ...mapState({tree: state => state.dialogs[Dial.ADD_USAGE].data.tree}),
             grandeur: function () {
-                return this.selectedItem && getGrandeur(this.selectedItem && this.selectedItem.grandeur);
+                return this.selectedItem && getGrandeur(this.selectedItem && this.selectedItem.trunk.grandeur);
             },
             selectedItem: function () {
                 return this.selectedItemId && find(this.autocompleteItems, {_id: this.selectedItemId});
@@ -70,14 +72,15 @@
         methods: {
             ...mapActions({
                 dispatchSearch: On.SEARCH_TREE,
-                dispatchAddLinks: On.ADD_LINKS
+                dispatchAddUsage: On.ADD_LINK,
+                dispatchConfigureLink: On.CONFIGURE_LINK
             }),
-            validate() {
-                //TODO business action
-                // this.dispatchAddLinks({
-                //     tree: this.tree,
-                //     branches: this.selection
-                // });
+            async validate() {
+                await this.dispatchAddUsage({tree: this.tree, branch: this.selectedItem});
+                await this.dispatchConfigureLink({
+                    left: {_id: this.tree._id, quantity: this.tree.trunk.quantity},
+                    right: {_id: this.selectedItemId, quantity: {qt: this.qt, unit: this.unit.shortname}}
+                });
                 this.close();
             },
             focus() {
