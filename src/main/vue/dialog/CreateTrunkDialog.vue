@@ -5,6 +5,8 @@
                 <v-form v-model="valid" v-on:submit.prevent="" ref="form">
                     <v-text-field ref="nom" label="Nom" :rules="[length2min]" v-model="name"/>
                     <grandeur-select v-model="grandeur"/>
+                    <v-text-field type="number" label="Quantité... (ex.: 10)" v-model="qt" :rules="[required, isNumber]"/>
+                    <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]"/>
                 </v-form>
             </v-card-text>
         </template>

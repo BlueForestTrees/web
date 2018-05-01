@@ -10,5 +10,6 @@ export const Dial = {
     ADD_USAGE: "addUsage",
     CONFIGURE_LINK: "configureLink",
     SEARCH: "search",
+    SET_QT_UNIT: "setQtUnit",
     CREATE: "create",
 };

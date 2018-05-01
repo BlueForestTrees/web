@@ -56,7 +56,7 @@
         computed: {
             ...mapState({tree: state => state.dialogs.addRessource.data.tree}),
             grandeur: function () {
-                return this.selectedItem && getGrandeur(this.selectedItem && this.selectedItem.grandeur);
+                return this.selectedItem && getGrandeur(this.selectedItem.grandeur);
             },
             selectedItem: function () {
                 return this.selectedItemId && find(this.autocompleteItems, {_id: this.selectedItemId});

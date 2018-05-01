@@ -6,7 +6,6 @@
             <blueforest/>
             <Bottom-right-btns/>
 
-            <create-dialog/>
             <facet-entry-dialog/>
             <impact-entry-dialog/>
             <create-trunk-dialog/>
@@ -31,8 +30,6 @@
     import ImpactEntryDialog from "./dialog/ImpactEntryDialog";
     import ENV from "../env";
     import SearchDialog from "./dialog/SearchDialog";
-    import {mapActions} from "vuex";
-    import CreateDialog from "./dialog/CreateDialog";
 
     export default {
         data: function () {
@@ -41,7 +38,6 @@
             }
         },
         components: {
-            CreateDialog,
             SearchDialog,
             ImpactEntryDialog,
             Blueforest,

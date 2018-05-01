@@ -17,6 +17,7 @@ const dialogFactory = {
     [Dial.CONFIGURE_LINK]: () => ({left: null, right: null}),
     [Dial.SEARCH]: () => ({}),
     [Dial.CREATE]: () => ({}),
+    [Dial.SET_QT_UNIT]: () => ({}),
 };
 
 const dialogs = () => reduce(Dial, (dials, key) => {

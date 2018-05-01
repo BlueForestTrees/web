@@ -10,7 +10,7 @@
             <v-tab ripple>Utilisations</v-tab>
             <v-tab-item><tank :tank="tree.tank"/></v-tab-item>
             <v-tab-item><ressources :tree="tree"/></v-tab-item>
-            <v-tab-item><trunk :trunk="tree.trunk"/></v-tab-item>
+            <v-tab-item><trunk :tree="tree"/></v-tab-item>
             <v-tab-item><facets :tree="tree"/></v-tab-item>
             <v-tab-item><impacts :impacts="tree.impacts"/></v-tab-item>
             <v-tab-item><branches :tree="tree"/></v-tab-item>
@@ -32,11 +32,9 @@
     import Impacts from "./Impacts";
     import ImpactDialog from "../dialog/ImpactDialog";
     import ConfigureLinkDialog from "../dialog/ConfigureLinkDialog";
-    import CreateDialog from "../dialog/CreateDialog";
 
     export default {
         components: {
-            CreateDialog,
             ConfigureLinkDialog,
             ImpactDialog,
             Impacts,

@@ -9,51 +9,40 @@
         <v-list-tile avatar @click="">
             <v-list-tile-content>
                 <v-list-tile-title>Nom</v-list-tile-title>
-                <v-list-tile-sub-title>{{trunk.name}}</v-list-tile-sub-title>
+                <v-list-tile-sub-title>{{tree.trunk.name}}</v-list-tile-sub-title>
             </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile @click="">
+        <v-list-tile @click="showSetQtUnitDialog">
             <v-list-tile-content>
                 <v-list-tile-title>Quantité de référence</v-list-tile-title>
                 <v-list-tile-sub-title>
-                    <qt-unit :quantity="trunk.quantity"/>
+                    <qt-unit :quantity="tree.trunk.quantity"/>
                 </v-list-tile-sub-title>
             </v-list-tile-content>
         </v-list-tile>
+        <set-qt-unit-dialog/>
     </v-list>
 </template>
 
 <script>
-    import {mapActions} from 'vuex';
-    import On from "../../const/on";
-    import {QUANTITY} from "../../const/labels";
+    import {mapMutations} from 'vuex';
     import QtUnit from "../common/QtUnit";
+    import UnitSelect from "../common/UnitSelect";
+    import SetQtUnitDialog from "../dialog/SetQtUnitDialog";
+    import Do from "../../const/do";
+    import {Dial} from "../../const/dial";
 
     export default {
         components: {
+            SetQtUnitDialog,
+            UnitSelect,
             QtUnit
         },
-        props: ['trunk'],
+        props: ['tree'],
         methods: {
-            ...mapActions({
-                putQuantity: On.PUT_TRUNK_QUANTITY,
-                renameTrunk: On.RENAME_TRUNK
-            }),
-            validateQt(newQt) {
-                const unit = (this.trunk.quantity && this.trunk.quantity.unit) || null;
-                this.putQuantity({trunk: this.trunk, quantity: {qt: newQt, unit}});
-            },
-            validateUnit(newUnit) {
-                const qt = (this.trunk.quantity && this.trunk.quantity.qt) || 1;
-                this.putQuantity({trunk: this.trunk, quantity: {qt, unit: newUnit.shortname}});
-            },
-            validateRenaming(newName) {
-                this.renameTrunk({trunk: this.trunk, newName});
-            }
-        },
-        data: function () {
-            return {
-                QUANTITY: QUANTITY
+            ...mapMutations({showDialog: Do.SHOW_DIALOG}),
+            showSetQtUnitDialog() {
+                this.showDialog({dialog: Dial.SET_QT_UNIT, data: {tree: this.tree}});
             }
         }
     }
