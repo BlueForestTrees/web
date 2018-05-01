@@ -4,36 +4,11 @@ import {map} from 'lodash';
 import Do from "../../const/do";
 
 export default {
-
-    [On.ADD_LINKS]: async ({commit}, {tree, roots, branches}) => {
-
-        if (roots) {
-            await Promise.all(map(roots, root => api.postLink(tree._id, root._id)));
-            commit(Do.ADD_ROOTS, {tree, roots});
-        }
-
-        if (branches) {
-            await Promise.all(map(branches, branch => api.postLink(branch._id, tree._id)));
-            commit(Do.ADD_BRANCHES, {tree, branches});
-        }
-
+    [On.LINK]: async ({commit}, {trunk, root}) => {
+        await api.putLink(trunk, root);
+        commit(Do.ADD_ROOTS, {tree: trunk, roots: [root]});
+        commit(Do.ADD_BRANCHES, {tree: root, branches: [trunk]});
     },
-
-    [On.ADD_LINK]: async ({commit}, {tree, root, branch}) => {
-
-        if (root) {
-            await api.postLink(tree._id, root._id);
-            commit(Do.ADD_ROOTS, {tree, roots: [root]});
-        }
-
-        if (branch) {
-            await api.postLink(branch._id, tree._id);
-            commit(Do.ADD_BRANCHES, {tree, branches: [branch]});
-        }
-
-    },
-
-    [On.CONFIGURE_LINK]: ({}, {left, right}) => api.putLink(left, right),
 
     [On.DELETE_LINK]: async ({commit}, {left, right}) => {
         await api.deleteLink(left._id, right._id);

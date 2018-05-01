@@ -72,16 +72,17 @@
         methods: {
             ...mapActions({
                 dispatchSearch: On.SEARCH_TREE,
-                dispatchAddUsage: On.ADD_LINK,
-                dispatchConfigureLink: On.CONFIGURE_LINK
+                dispatchLink: On.LINK
             }),
             async validate() {
-                await this.dispatchAddUsage({tree: this.tree, branch: this.selectedItem});
-                await this.dispatchConfigureLink({
-                    left: {_id: this.tree._id, quantity: this.tree.trunk.quantity},
-                    right: {_id: this.selectedItemId, quantity: {qt: this.qt, unit: this.unit.shortname}}
-                });
-                this.close();
+                this.$refs.form.validate();
+                if (this.valid) {
+                    await this.dispatchLink({
+                        trunk: {_id: this.selectedItemId, quantity: {qt: this.qt, unit: this.unit.shortname}},
+                        root: {_id: this.tree._id, quantity: this.tree.trunk.quantity}
+                    });
+                    this.close();
+                }
             },
             focus() {
 

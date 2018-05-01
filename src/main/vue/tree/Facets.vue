@@ -2,7 +2,7 @@
     <v-list two-line>
         <v-subheader>Propriétés
             <v-spacer/>
-            <v-icon @click="deleteFacets" style="cursor: pointer" v-if="isSelected()">delete</v-icon>
+            <v-icon @click="deleteItems" style="cursor: pointer" v-if="selectionNotEmpty()">delete</v-icon>
             <v-btn icon @click="addItem">
                 <v-icon>add</v-icon>
             </v-btn>
@@ -10,7 +10,7 @@
         </v-subheader>
         <template v-for="item in items">
             <v-divider/>
-            <v-list-tile :key="item._id" @mouseover="overFacet = item" @mouseout="overFacet = null">
+            <v-list-tile :key="item._id" @mouseover="overItem = item" @mouseout="overItem = null">
                 <v-list-tile-content>
                     <v-list-tile-title>{{item.name}}</v-list-tile-title>
                     <v-list-tile-sub-title v-if="hasQuantity(item)">
@@ -18,7 +18,7 @@
                     </v-list-tile-sub-title>
                 </v-list-tile-content>
                 <v-list-tile-action>
-                    <v-checkbox v-if="isSelected() || overFacet && overFacet._id === item._id" v-model="selectedFacets" :value="item"/>
+                    <v-checkbox v-if="selectionNotEmpty() || overItem && overItem._id === item._id" v-model="selection" :value="item"/>
                 </v-list-tile-action>
             </v-list-tile>
         </template>
@@ -46,7 +46,9 @@
         },
         data() {
             return {
-                Dial: Dial, selectedFacets: [], overFacet: null
+                Dial: Dial,
+
+                selection: [], overItem: null
             }
         },
         props: ['tree'],
@@ -62,19 +64,23 @@
             ...mapActions({dispatchDeleteFacets: On.DELETE_FACETS}),
             ...mapMutations([Do.SHOW_DIALOG]),
             addItem() {
-                this.showDialog({dialog: Dial.ADD_FACET, tree: this.tree});
+                this.showDialog({dialog: Dial.ADD_FACET, data: {tree: this.tree}});
             },
-            deleteFacets() {
-                this.dispatchDeleteFacets({facets: this.facets, toDelete: this.selectedFacets});
+
+
+            deleteItems() {
+                this.dispatchDeleteFacets({facets: this.facets, toDelete: this.selection});
             },
-            isSelected() {
-                return !isEmpty(this.selectedFacets);
+            selectionNotEmpty() {
+                return !isEmpty(this.selection);
             },
             clearSelection() {
-                if (!isEmpty(this.selectedFacets)) {
-                    this.selectedFacets = [];
+                if (!isEmpty(this.selection)) {
+                    this.selection = [];
                 }
             },
+
+
             hasQuantity
         }
     }

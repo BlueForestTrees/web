@@ -1,61 +1,24 @@
 <template>
-    <main-dialog :dialog="Dial.IMPACT" @focus="focus" @esc="close" @entre="validate" ref="dialog">
-        <template slot-scope="props">
-            <v-card>
-                <v-card-title class="grey lighten-4 py-4 title">
-                    Ajouter à {{tree && tree.name}}: {{qt}}{{unit && unit.shortname}}
-                </v-card-title>
-                <v-card-text>
-                    <v-container fluid>
-                        <v-layout row>
-                            <v-flex xs4>
-                                <v-subheader>Comment cela s'appelle-t-il?</v-subheader>
-                            </v-flex>
-                            <v-flex xs8>
-                                <v-text-field label="Nom" ref="nom" v-model="namepart" @input="namepartChange"/>
-                            </v-flex>
-                        </v-layout>
-
-                        <v-layout row>
-                            <v-flex xs4>
-                                <v-subheader>Sélectionnez une caractéristique:</v-subheader>
-                            </v-flex>
-                            <v-flex xs8>
-                                <v-chip v-for="impactEntry in impactEntries" :key="impactEntry._id"
-                                        @click="selectedImpactEntry = impactEntry"
-                                        fab dark small color="primary" text-color="white">
-                                    {{impactEntry.name}}
-                                </v-chip>
-                            </v-flex>
-                        </v-layout>
-
-                        <v-layout row>
-                            <v-flex xs4>
-                                <v-subheader>Entrez une quantité:</v-subheader>
-                            </v-flex>
-                            <v-flex xs8>
-                                <v-text-field label="quantité (ex.: 10)" v-model="qt"/>
-                            </v-flex>
-                        </v-layout>
-
-                        <v-layout row v-if="selectedImpactEntry">
-                            <v-flex xs4>
-                                <v-subheader>Sélectionnez une unité:</v-subheader>
-                            </v-flex>
-                            <v-flex xs8>
-                                <unit-grid :grandeur="selectedImpactEntry.grandeur" @select="unit=$event"/>
-                            </v-flex>
-                        </v-layout>
-
-                    </v-container>
-                </v-card-text>
-                <v-card-actions>
-                    <v-spacer/>
-                    <v-btn flat color="primary" @click="close">Annuler</v-btn>
-                    <v-btn flat @click="validate">Ok</v-btn>
-                </v-card-actions>
-            </v-card>
-        </template>
+    <main-dialog :dialog="Dial.IMPACT" :title="'Nouvel impact'" ref="dialog"
+                 @esc="close" @enter="validate" @focus="focus"
+    >
+        <v-card-text v-if="tree">
+            <destination :tree="tree"/>
+            <v-form v-model="valid" v-on:submit.prevent="" ref="form">
+                <v-select
+                        label="Nom..."
+                        autocomplete required cache-items
+                        :loading="loading"
+                        :items="autocompleteItems"
+                        :search-input.sync="itemNamepart"
+                        v-model="selectedItemId"
+                        item-text="name" item-value="_id"
+                        :rules="[required, notIn]"
+                ></v-select>
+                <v-text-field type="number" label="Quantité... (ex.: 10)" v-model="qt" :rules="[required, isNumber]"/>
+                <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]"/>
+            </v-form>
+        </v-card-text>
     </main-dialog>
 </template>
 
@@ -65,54 +28,77 @@
     import {mapActions, mapState} from "vuex";
     import MainDialog from "./MainDialog";
     import UnitGrid from "../common/UnitGrid";
-
+    import {getGrandeur} from "trees-units";
+    import closable from "../mixin/Closable";
+    import {isNumber, required} from "../../services/rules";
+    import {find} from 'lodash';
+    import Destination from "../common/Destination";
+    import UnitSelect from "../common/UnitSelect";
 
     export default {
+        name: 'impact-dialog',
+        mixins: [closable],
         components: {
+            UnitSelect,
+            Destination,
             UnitGrid,
             MainDialog
         },
         data() {
             return {
-                Dial: Dial,
-                namepart: null,
-                impactEntries: null,
-                selectedImpactEntry: null,
+                Dial,
+
+                itemNamepart: null,
+                autocompleteItems: [],
+                loading: false,
+                selectedItemId: null,
+
                 qt: null,
-                unit: null
+                unit: null,
+
+                valid: false
             }
         },
-        props: ['tree'],
         computed: {
-            ...mapState(['grandeurs'])
+            ...mapState({tree: state => state.dialogs[Dial.IMPACT].data.tree}),
+            grandeur: function () {
+                return this.selectedItem && getGrandeur(this.selectedItem && this.selectedItem.grandeur);
+            },
+            selectedItem: function () {
+                return this.selectedItemId && find(this.autocompleteItems, {_id: this.selectedItemId});
+            }
+        },
+        watch: {
+            itemNamepart(val) {
+                this.loading = true;
+                this.search(val);
+                this.loading = false;
+            }
         },
         methods: {
-            ...mapActions({dispatchSearchImpactEntry: On.SEARCH_IMPACT_ENTRY, dispatchAddImpact: On.ADD_IMPACT}),
-            async namepartChange() {
-                this.impactEntries = await this.dispatchSearchImpactEntry({namepart: this.namepart});
+            ...mapActions({dispatchSearch: On.SEARCH_IMPACT_ENTRY, dispatchAddImpact: On.ADD_IMPACT}),
+            async search(term) {
+                if (term)
+                    this.autocompleteItems = await this.dispatchSearch({term});
             },
-            validate() {
-                const impact = {
-                    _id: this.selectedImpactEntry._id,
-                    name: this.selectedImpactEntry.name,
-                    quantity: {
-                        qt: parseFloat(this.qt.replace(',', '.')),
-                        unit: this.unit.shortname
-                    }
-                };
-
-                this.dispatchAddImpact({tree: this.tree, impact});
-                this.close();
+            async validate() {
+                this.$refs.form.validate();
+                if (this.valid) {
+                    await this.dispatchAddImpact({
+                        tree: this.tree,
+                        impact: {
+                            _id: this.selectedItemId, name: this.selectedItem.name,
+                            quantity: {qt: this.qt, unit: this.unit.shortname}
+                        }
+                    });
+                    this.close();
+                }
             },
             focus() {
-                this.$refs.nom.focus();
-                this.namepart = null;
-                this.qt = null;
-                this.unit = null;
-                this.selectedImpactEntry = null;
+
             },
-            close() {
-                this.$refs.dialog.close();
+            required, isNumber, notIn() {
+                return !find(this.tree.impacts.items, {_id: this.selectedItemId}) || "Déjà utilisé";
             }
         }
     }

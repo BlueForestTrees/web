@@ -14,7 +14,7 @@ export default {
 
     [On.DELETE_IMPACTS]:
         ({commit}, {impacts, toDelete}) => {
-            api.deleteImpacts(impacts._id, _.map(toDelete, "_id"));
+            api.deleteItems(impacts._id, _.map(toDelete, "_id"));
             commit(Do.DELETE_IMPACTS, {impacts, toDelete});
         },
     [On.ADD_IMPACT]:

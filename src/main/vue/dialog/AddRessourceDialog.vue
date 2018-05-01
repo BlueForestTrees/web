@@ -62,7 +62,7 @@
         },
         methods: {
             ...mapActions({
-                dispatchAddLinks: On.ADD_LINKS
+                dispatchLink: On.LINK
             }),
             ...mapActions({
                 dispatchSearchTree: On.SEARCH_TREE
@@ -72,9 +72,9 @@
                     this.autocompleteItems = await this.dispatchSearchTree({term});
             },
             validate() {
-                this.dispatchAddLinks({
-                    tree: this.tree,
-                    roots: this.selection
+                this.dispatchLink({
+                    trunk: this.tree,
+                    root: this.selection
                 });
                 this.close();
             },

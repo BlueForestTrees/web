@@ -12,12 +12,11 @@
             <v-tab-item><ressources :tree="tree"/></v-tab-item>
             <v-tab-item><trunk :tree="tree"/></v-tab-item>
             <v-tab-item><facets :tree="tree"/></v-tab-item>
-            <v-tab-item><impacts :impacts="tree.impacts"/></v-tab-item>
+            <v-tab-item><impacts :tree="tree"/></v-tab-item>
             <v-tab-item><branches :tree="tree"/></v-tab-item>
         </v-tabs>
 
         <!--<impact-dialog :tree="tree"/>-->
-        <!--<configure-link-dialog/>-->
     </v-container>
 
 </template>
@@ -31,11 +30,9 @@
     import Tank from "./Tank";
     import Impacts from "./Impacts";
     import ImpactDialog from "../dialog/ImpactDialog";
-    import ConfigureLinkDialog from "../dialog/ConfigureLinkDialog";
 
     export default {
         components: {
-            ConfigureLinkDialog,
             ImpactDialog,
             Impacts,
             Tank,

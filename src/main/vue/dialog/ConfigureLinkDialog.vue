@@ -58,7 +58,7 @@
             return {
                 leftConfig: {qt: null, unit: null, name: null},
                 rightConfig: {qt: null, unit: null, name: null},
-                CONFIGURE_LINK: Dial.CONFIGURE_LINK
+                LINK: Dial.CONFIGURE_LINK
             }
         },
         computed: {
@@ -107,7 +107,7 @@
             close: function () {
                 this.$refs.dialog.close();
             },
-            ...mapActions({dispatchConfigureLink: On.CONFIGURE_LINK})
+            ...mapActions({dispatchConfigureLink: On.LINK})
         }
     }
 </script>

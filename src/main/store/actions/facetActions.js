@@ -13,7 +13,7 @@ export default {
 
     [On.DELETE_FACETS]:
         ({commit}, {facets, toDelete}) => {
-            api.deleteFacets(facets._id, _.map(toDelete, "_id"));
+            api.deleteItems(facets._id, _.map(toDelete, "_id"));
             commit(Do.DELETE_FACETS, {facets, toDelete});
         },
     [On.ADD_FACET]:

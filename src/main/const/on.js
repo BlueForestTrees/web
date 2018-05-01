@@ -1,12 +1,10 @@
 export default {
     ADD_FACET: "addFacet",
     ADD_IMPACT: "addImpact",
-    ADD_LINKS: 'addLinks',
-    ADD_LINK: 'addLink',
     CLONE_TREE: "cloneTree",
     CLONE_TRUNK: "cloneTrunk",
     CLONE_OPEN_TREE: "cloneOpenTree",
-    CONFIGURE_LINK: "configureLink",
+    LINK: "link",
     CREATE_AND_OPEN_TREE: 'onCreateAndOpenTree',
     CREATE_ADD_RESSOURCE: 'createAddRessource',
     CREATE_FACET_ENTRY: 'onCreateFacetEntry',
