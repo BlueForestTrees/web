@@ -1,5 +1,5 @@
 <template>
-    <main-dialog :dialog="Dial.ADD_FACET" :title="'Nouvelle propriété'"
+    <main-dialog :dialog="Dial.ADD_FACET" :title="'Nouvelle propriété'" ref="dialog"
                  @esc="close" @enter="validate" @focus="focus"
     >
         <v-card-text v-if="tree">
@@ -8,8 +8,8 @@
 
             <v-form v-model="valid" v-on:submit.prevent="" ref="form">
                 <v-select
-                        label="Nom..."
-                        autocomplete chips required cache-items
+                        label="Nom..." ref="nom"
+                        autocomplete required cache-items
                         :loading="loading"
                         :items="autocompleteItems"
                         :search-input.sync="itemNamepart"
@@ -52,7 +52,7 @@
         },
         data() {
             return {
-                Dial: Dial,
+                Dial,
 
                 itemNamepart: null,
                 autocompleteItems: [],
@@ -86,6 +86,7 @@
             focus: function () {
                 this.$refs.form.reset();
                 this.autocompleteItems = [];
+                this.$nextTick(() => this.$refs.nom.focus());
             },
             async search(namepart) {
                 if (namepart)

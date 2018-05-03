@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <v-app light>
+        <v-app light @keypress.native.ctrl.right="moveTab(1)" @keydown.native.ctrl.left="moveTab(-1)">
             <left-menu/>
             <bar/>
             <blueforest/>

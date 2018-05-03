@@ -11,7 +11,7 @@ export const qtUnit = item => {
     if (item.quantity) {
         if (item.quantity.qt && item.quantity.unit) {
             const best = bestQuantity(item.quantity);
-            return `${best.qt}${best.unit}`;
+            return `${best.qt}${best.unit !== 'count' ? best.unit : ''}`;
         } else {
             return item.quantity.qt || "qt?" + item.quantity.unit || "unit?";
         }

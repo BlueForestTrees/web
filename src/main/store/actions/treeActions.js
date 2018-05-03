@@ -21,6 +21,7 @@ export default {
                 dispatch(On.LOAD_TANK, tree),
                 dispatch(On.LOAD_FACETS, tree),
                 dispatch(On.LOAD_IMPACTS, tree),
+                dispatch(On.LOAD_IMPACTS_TANK, tree),
                 dispatch(On.LOAD_BRANCHES, tree)
             ]));
 

@@ -5,6 +5,7 @@ export default {
     ADD_ROOTS:'addRoots',
     ADD_FACETS: 'addFacets',
     ADD_IMPACTS: 'addImpacts',
+    ADD_IMPACTS_TANK: 'addImpactsTank',
     CLEAR_DIALOG_DATA: 'clearDialogData',
     CLEAR_RESULTS: 'clearResults',
     CLEAR_SEARCH: 'clearSearch',

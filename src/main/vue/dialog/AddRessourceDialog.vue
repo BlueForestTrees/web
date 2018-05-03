@@ -4,20 +4,21 @@
         <v-card-text>
             <destination :tree="tree"/>
 
-            <v-select
-                    label="Nom..."
-                    autocomplete chips required cache-items
-                    :loading="loading"
-                    :items="autocompleteItems"
-                    :search-input.sync="itemNamepart"
-                    v-model="selectedItemId"
-                    item-text="trunk.name" item-value="_id"
-                    :rules="[required, notIn]"
-            />
+            <v-form v-model="valid" v-on:submit.prevent="" ref="form">
+                <v-select
+                        label="Nom..." ref="nom"
+                        autocomplete required cache-items
+                        :loading="loading"
+                        :items="autocompleteItems"
+                        :search-input.sync="itemNamepart"
+                        v-model="selectedItemId"
+                        item-text="trunk.name" item-value="_id"
+                        :rules="[required, notIn]"
+                />
 
-            <v-text-field type="number" label="Quantité... (ex.: 10)" v-model="qt" :rules="[required, isNumber]"/>
-            <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]"/>
-
+                <v-text-field type="number" label="Quantité... (ex.: 10)" v-model="qt" :rules="[required, isNumber]"/>
+                <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]"/>
+            </v-form>
         </v-card-text>
     </main-dialog>
 </template>
@@ -41,20 +42,20 @@
         data() {
             return {
                 Dial: Dial,
-                selection: [],
                 autocompleteItems: [],
                 itemNamepart: null,
                 loading: false,
                 selectedItemId: null,
                 qt: null,
                 unit: null,
+                valid: false
             }
         },
         components: {UnitSelect, Destination, Lookup, MainDialog},
         computed: {
             ...mapState({tree: state => state.dialogs.addRessource.data.tree}),
             grandeur: function () {
-                return this.selectedItem && getGrandeur(this.selectedItem.grandeur);
+                return this.selectedItem && getGrandeur(this.selectedItem.trunk.grandeur);
             },
             selectedItem: function () {
                 return this.selectedItemId && find(this.autocompleteItems, {_id: this.selectedItemId});
@@ -71,15 +72,17 @@
                 if (term)
                     this.autocompleteItems = await this.dispatchSearchTree({term});
             },
-            validate() {
-                this.dispatchLink({
-                    trunk: this.tree,
-                    root: this.selection
+            async validate() {
+                await this.dispatchLink({
+                    trunk: {_id: this.tree._id, quantity: this.tree.trunk.quantity},
+                    root: {_id: this.selectedItemId, quantity: {qt: this.qt, unit: this.unit.shortname}}
                 });
                 this.close();
             },
             focus() {
-
+                this.$refs.form.reset();
+                this.autocompleteItems = [];
+                this.$nextTick(() => this.$refs.nom.focus());
             },
             required, isNumber,
             notIn() {

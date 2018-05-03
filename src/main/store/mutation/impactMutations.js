@@ -4,6 +4,13 @@ import Do from "../../const/do";
 
 export default {
 
+    [Do.ADD_IMPACTS_TANK]: ({}, {tree, impactsTank}) => {
+        if (!tree.impactsTank) {
+            Vue.set(tree, "impactsTank", impactsTank);
+        } else {
+            tree.impactsTank.items.push(impactsTank);
+        }
+    },
     [Do.ADD_IMPACTS]: ({}, {tree, impacts}) => {
         if (!tree.impacts) {
             Vue.set(tree, "impacts", impacts);

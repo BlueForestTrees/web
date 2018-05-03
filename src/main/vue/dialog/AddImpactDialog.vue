@@ -6,7 +6,7 @@
             <destination :tree="tree"/>
             <v-form v-model="valid" v-on:submit.prevent="" ref="form">
                 <v-select
-                        label="Nom..."
+                        label="Nom..." ref="nom"
                         autocomplete required cache-items
                         :loading="loading"
                         :items="autocompleteItems"
@@ -36,7 +36,7 @@
     import UnitSelect from "../common/UnitSelect";
 
     export default {
-        name: 'impact-dialog',
+        name: 'add-impact-dialog',
         mixins: [closable],
         components: {
             UnitSelect,
@@ -95,7 +95,9 @@
                 }
             },
             focus() {
-
+                this.$refs.form.reset();
+                this.autocompleteItems = [];
+                this.$nextTick(() => this.$refs.nom.focus());
             },
             required, isNumber, notIn() {
                 return !find(this.tree.impacts.items, {_id: this.selectedItemId}) || "Déjà utilisé";

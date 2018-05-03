@@ -5,9 +5,16 @@ import {hasQuantity, idQtFrom} from "../../services/calculations";
 
 export default {
 
-    [On.LOAD_IMPACTS]: ({commit}, tree) => {
+    [On.LOAD_IMPACTS_TANK]: ({commit}, tree) => {
         if (hasQuantity(tree.trunk)) {
             return api.getQuantifiedImpactTank(tree.trunk.quantity.qt, tree.trunk.quantity.unit, tree._id)
+                .then(impactsTank => commit(Do.ADD_IMPACTS_TANK, {tree, impactsTank}))
+        }
+    },
+
+    [On.LOAD_IMPACTS]: ({commit}, tree) => {
+        if (hasQuantity(tree.trunk)) {
+            return api.getQuantifiedImpact(tree.trunk.quantity.qt, tree.trunk.quantity.unit, tree._id)
                 .then(impacts => commit(Do.ADD_IMPACTS, {tree, impacts}))
         }
     },

@@ -1,5 +1,5 @@
 <template>
-    <main-dialog :dialog="Dial.CREATE_TREE" @focus="$refs.nom.focus()" :title="'Nouveau produit/service'" @esc="close" @enter="validate" ref="dialog">
+    <main-dialog :dialog="Dial.CREATE_TREE" @focus="focus" :title="'Nouveau produit/service'" @esc="close" @enter="validate" ref="dialog">
         <v-card-text>
             <v-form v-model="valid" v-on:submit.prevent="" ref="form">
                 <v-text-field ref="nom" label="Nom" :rules="[length2min]" v-model="name"/>
@@ -42,6 +42,10 @@
                 this.close();
             },
             length2min: value => (value && value.trim().length > 1) || "2 caractères minimum",
+            focus() {
+                this.$refs.form.reset();
+                this.$nextTick(() => this.$refs.nom.focus());
+            }
         }
     }
 </script>

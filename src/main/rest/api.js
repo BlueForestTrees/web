@@ -27,6 +27,7 @@ export default {
     getQuantifiedImpactTank: (qt, unit, _id) => get(`api/impacttank/${qt}/${unit}/${_id}`),
 
     //IMPACTS
+    getQuantifiedImpact: (qt, unit, _id) => get(`api/impact/${qt}/${unit}/${_id}`),
     deleteItems: (treeId, impactIds) => post('api/impact/deletion', {treeId, impactIds}),
     addImpact: (trunk, impact) => post(`api/impact`, {trunk, impact}),
 

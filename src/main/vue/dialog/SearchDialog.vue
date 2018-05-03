@@ -1,108 +1,73 @@
 <template>
-    <v-dialog v-model="visible" fullscreen transition="dialog-bottom-transition" :overlay="false" scrollable>
-        <v-card tile>
-            <v-toolbar card dark color="primary">
-                <v-icon>search</v-icon>
-                <v-toolbar-title>Recherche</v-toolbar-title>
-                <v-spacer></v-spacer>
-                <v-toolbar-items>
-                    <v-btn icon @click.native="visible = false" dark>
-                        <v-icon>close</v-icon>
-                    </v-btn>
-                </v-toolbar-items>
-            </v-toolbar>
-            <v-card-text>
-                <v-layout column>
-                    <v-text-field ref="searchInput" autofocus type="search" :value="term" @input="search" placeholder="nom, auteur, type, etc."/>
-                    <v-list two-line>
-                        <template v-for="item in searchResults">
-                            <v-divider/>
-                            <v-list-tile avatar :key="item.trunk.name" @click="select(item)">
-                                <v-list-tile-content>
-                                    <v-list-tile-title>{{ item.trunk.name }}</v-list-tile-title>
-                                    <v-list-tile-sub-title>
-                                        <qt-unit :quantity="item.trunk.quantity"/>
-                                    </v-list-tile-sub-title>
-                                </v-list-tile-content>
-                                <v-list-tile-action>
-                                    <v-btn icon ripple>
-                                        <v-icon color="grey lighten-1">info</v-icon>
-                                    </v-btn>
-                                </v-list-tile-action>
-                            </v-list-tile>
-                        </template>
-                    </v-list>
-                </v-layout>
-            </v-card-text>
+    <main-dialog :dialog="Dial.SEARCH" :title="'Recherche'" ref="dialog"
+                 @esc="close" @enter="validate" @focus="focus"
+    >
+        <v-form v-model="valid" v-on:submit.prevent="" ref="form">
+            <v-select
+                    label="Nom..." ref="nom"
+                    autocomplete required cache-items
+                    :loading="loading"
+                    :items="autocompleteItems"
+                    :search-input.sync="itemNamepart"
+                    v-model="selectedItemId"
+                    item-text="trunk.name" item-value="_id"
+                    :rules="[required]"
+            ></v-select>
+        </v-form>
 
-        </v-card>
-    </v-dialog>
+    </main-dialog>
 </template>
 <script>
-    import {mapActions, mapState} from "vuex";
-    import Lookup from "../common/Lookup";
+    import {mapActions} from "vuex";
     import On from "../../const/on";
-    import QtUnit from "../common/QtUnit";
+    import {Dial} from "../../const/dial";
+    import closable from "../mixin/Closable";
+    import {required} from "../../services/rules";
+    import MainDialog from "./MainDialog";
 
     export default {
         name: "search-dialog",
-        components: {QtUnit, Lookup},
-        props: ['film'],
+        components: {MainDialog},
+        mixins: [closable],
         data() {
             return {
-                term: null,
-                searchResults: null,
-                searching: null
+                Dial,
+                itemNamepart: null,
+                autocompleteItems: [],
+                loading: false,
+                selectedItemId: null,
+                valid: false
             }
         },
-        computed: {
-            ...mapState({nav: 'nav'}),
-            visible: {
-                get: function () {
-                    return this.$store.state.dialogs.search.visible;
-                },
-                set: function (value) {
-                    this.$store.state.dialogs.search.visible = value;
-                }
+        watch: {
+            itemNamepart(val) {
+                this.loading = true;
+                this.search(val);
+                this.loading = false;
             }
         },
         methods: {
             ...mapActions({
                 dispatchSearch: On.SEARCH_TREE,
-                dispatchCreateTree: On.CREATE_TRUNK,
-                open: On.LOAD_OPEN_TREE
+                dispatchOpen: On.LOAD_OPEN_TREE
             }),
             focus() {
-                this.$refs.searchInput.focus();
+                this.$refs.form.reset();
+                this.autocompleteItems = [];
             },
-            async search(value) {
-                this.term = value;
-                if (value) {
-                    this.searching = true;
-                    try {
-                        this.searchResults = await this.dispatchSearch({term:value});
-                    } finally {
-                        this.searching = false;
-                    }
+            async search(term) {
+                if (term) {
+                    this.autocompleteItems = await this.dispatchSearch({term});
                 }
             },
-            select(tree) {
-                this.open(tree);
-                this.visible = false;
-                this.clearSearch();
-            },
-            clearSearch() {
-                this.term = null;
-                this.searchResults = null;
-                this.searching = null;
-            }
-        },
-        watch: {
-            visible(value) {
-                if (value) {
-                    this.$nextTick(this.focus);
+            validate() {
+                this.$refs.form.validate();
+                if (this.valid) {
+                    this.dispatchOpen({_id: this.selectedItemId});
+                    this.close();
                 }
-            }
+            },
+            required
         }
     }
 </script>

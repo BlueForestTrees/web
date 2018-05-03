@@ -23,25 +23,25 @@
             </v-list-tile>
         </template>
         <v-divider/>
-        <impact-dialog/>
+        <add-impact-dialog/>
     </v-list>
 </template>
 
 <script>
     import Do from "../../const/do"
     import {mapActions, mapMutations} from 'vuex';
-    import ImpactDialog from "../dialog/ImpactDialog";
     import {Dial} from "../../const/dial";
     import On from "../../const/on";
     import {hasQuantity} from "../../services/calculations";
     import QtUnit from "../common/QtUnit";
     import {isEmpty} from 'lodash';
+    import AddImpactDialog from "../dialog/AddImpactDialog";
 //TODO suppression d'impact bug
 
     export default {
         components: {
+            AddImpactDialog,
             QtUnit,
-            ImpactDialog
         },
         data() {
             return {
