@@ -2,13 +2,14 @@
     <v-list two-line>
         <v-subheader>Bilan Impacts
             <v-spacer/>
-            <v-btn icon ripple>
-                <v-icon color="grey lighten-1">info</v-icon>
-            </v-btn>
+            <v-tooltip top>
+                <span slot="activator"><v-icon color="grey lighten-1">info</v-icon></span>
+                <span>"BILAN IMPACTS" : C'est la somme des impacts du produit/service avec le "bilan impacts" des ressources.</span>
+            </v-tooltip>
         </v-subheader>
         <template v-for="item in items">
             <v-divider/>
-            <v-list-tile avatar :key="item.name" @click="">
+            <v-list-tile avatar :key="item.name">
                 <v-list-tile-content>
                     <v-list-tile-title>{{ item.name }}</v-list-tile-title>
                     <v-list-tile-sub-title v-if="hasQuantity(item)">

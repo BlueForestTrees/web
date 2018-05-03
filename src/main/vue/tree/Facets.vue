@@ -3,14 +3,15 @@
         <v-subheader>Propriétés
             <v-spacer/>
             <v-icon @click="deleteItems" style="cursor: pointer" v-if="selectionNotEmpty()">delete</v-icon>
-            <v-btn icon @click="addItem">
-                <v-icon>add</v-icon>
-            </v-btn>
-            <v-icon color="grey lighten-1">info</v-icon>
+            <v-icon @click="addItem" style="cursor: pointer">add</v-icon>
+            <v-tooltip top>
+                <span slot="activator"><v-icon color="grey lighten-1">info</v-icon></span>
+                <span>"PROPRIETES" : Ce sont les attributs comme le prix, les apports nutritionnels, les dimensions, etc.</span>
+            </v-tooltip>
         </v-subheader>
         <template v-for="item in items">
             <v-divider/>
-            <v-list-tile :key="item._id" @mouseover="overItem = item" @mouseout="overItem = null">
+            <v-list-tile :key="item._id">
                 <v-list-tile-content>
                     <v-list-tile-title>{{item.name}}</v-list-tile-title>
                     <v-list-tile-sub-title v-if="hasQuantity(item)">
@@ -18,7 +19,7 @@
                     </v-list-tile-sub-title>
                 </v-list-tile-content>
                 <v-list-tile-action>
-                    <v-checkbox v-if="selectionNotEmpty() || overItem && overItem._id === item._id" v-model="selection" :value="item"/>
+                    <v-checkbox v-model="selection" :value="item"/>
                 </v-list-tile-action>
             </v-list-tile>
         </template>
@@ -35,8 +36,8 @@
     import On from "../../const/on";
     import {hasQuantity} from "../../services/calculations";
     import QtUnit from "../common/QtUnit";
-    import {isEmpty} from 'lodash';
     import AddFacetDialog from "../dialog/AddFacetDialog";
+    import selectable from "../mixin/Selectable";
 
     export default {
         components: {
@@ -46,11 +47,10 @@
         },
         data() {
             return {
-                Dial: Dial,
-
-                selection: [], overItem: null
+                Dial: Dial
             }
         },
+        mixins: [selectable],
         props: ['tree'],
         computed: {
             items: function () {
@@ -66,21 +66,9 @@
             addItem() {
                 this.showDialog({dialog: Dial.ADD_FACET, data: {tree: this.tree}});
             },
-
-
             deleteItems() {
                 this.dispatchDeleteFacets({facets: this.facets, toDelete: this.selection});
             },
-            selectionNotEmpty() {
-                return !isEmpty(this.selection);
-            },
-            clearSelection() {
-                if (!isEmpty(this.selection)) {
-                    this.selection = [];
-                }
-            },
-
-
             hasQuantity
         }
     }

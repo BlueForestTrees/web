@@ -1,12 +1,6 @@
 <template>
     <v-list two-line>
-        <v-subheader>Description
-            <v-spacer/>
-            <v-btn icon ripple>
-                <v-icon color="grey lighten-1">info</v-icon>
-            </v-btn>
-        </v-subheader>
-        <v-list-tile avatar @click="">
+        <v-list-tile avatar>
             <v-list-tile-content>
                 <v-list-tile-title>Nom</v-list-tile-title>
                 <v-list-tile-sub-title>{{tree.trunk.name}}</v-list-tile-sub-title>

@@ -1,10 +1,11 @@
 <template>
     <v-container>
 
+        <trunk :tree="tree"/>
+        <v-divider/>
         <v-tabs v-model="nav.treeTabIdx">
             <v-tab ripple>Bilan Ressources</v-tab>
             <v-tab ripple>Ressources</v-tab>
-            <v-tab ripple>Description</v-tab>
             <v-tab ripple>Propriétés</v-tab>
             <v-tab ripple>Impacts</v-tab>
             <v-tab ripple>Bilan Impacts</v-tab>
@@ -14,9 +15,6 @@
             </v-tab-item>
             <v-tab-item>
                 <ressources :tree="tree"/>
-            </v-tab-item>
-            <v-tab-item>
-                <trunk :tree="tree"/>
             </v-tab-item>
             <v-tab-item>
                 <facets :tree="tree"/>

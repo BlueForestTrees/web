@@ -7,9 +7,12 @@
         </v-toolbar-title>
 
         <div class="d-flex align-center" style="margin-left: auto">
-            <v-btn icon large @click="showSearch">
-                <v-icon>search</v-icon>
-            </v-btn>
+
+            <v-tooltip top>
+                <span slot="activator"><v-btn icon large @click="showCompare"><v-icon>timeline</v-icon></v-btn></span>
+                <span>"COMPARATIF" : Comparer les bilans ressources, bilans impacts et les propriétés de plusieurs produits/service</span>
+            </v-tooltip>
+            <v-btn icon large @click="showSearch"><v-icon>search</v-icon></v-btn>
             <v-avatar size="32px" tile><img src="img/logo-rond.svg" alt="BlueForest"></v-avatar>
         </div>
     </v-toolbar>
@@ -37,6 +40,9 @@
             }),
             showSearch: function () {
                 this.showDialog({dialog: Dial.SEARCH});
+            },
+            showCompare: function () {
+                this.showDialog({dialog: Dial.COMPARE_TO});
             }
         }
     }
