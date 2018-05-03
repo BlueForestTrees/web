@@ -26,6 +26,7 @@ const conf = {
     plugins: [
         new HtmlWebpackPlugin({template: './src/main/index.html', inject: 'body', hash: 'true'}),
         new CopyWebpackPlugin([{from: './src/img', to: 'img'}]),
+        new CopyWebpackPlugin([{from: './src/browserconfig.xml', to: '.'}]),
         new webpack.DefinePlugin({
             VERSION: JSON.stringify(require("./package.json").version)
         }),
