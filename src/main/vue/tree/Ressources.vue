@@ -7,7 +7,7 @@
             <v-icon @click="addItem" style="cursor: pointer">add</v-icon>
             <v-tooltip top>
                 <span slot="activator"><v-icon color="grey lighten-1">info</v-icon></span>
-                <span>"RESSOURCES" : Ce sont les éléments qui ont été utilisés.<br>Il y en a 3 types : Energie, travail, matière première, mais aussi autre élément.</span>
+                <span>RESSOURCES : Ce sont les éléments qui ont été utilisés.<br>Il y en a 3 types : Energie, travail, matière première, mais aussi autre élément.</span>
             </v-tooltip>
         </v-subheader>
         <template v-for="item in items">

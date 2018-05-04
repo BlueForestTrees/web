@@ -6,7 +6,7 @@
             <v-icon @click="addItem" style="cursor: pointer">add</v-icon>
             <v-tooltip top>
                 <span slot="activator"><v-icon color="grey lighten-1">info</v-icon></span>
-                <span>"PROPRIETES" : Ce sont les attributs comme le prix, les apports nutritionnels, les dimensions, etc.</span>
+                <span>PROPRIETES : Ce sont les attributs comme le prix, les apports nutritionnels, les dimensions, etc.</span>
             </v-tooltip>
         </v-subheader>
         <template v-for="item in items">

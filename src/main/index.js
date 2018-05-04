@@ -4,6 +4,7 @@ import Vuetify from 'vuetify'
 import api from "./rest/api";
 import {initUnits} from "trees-units"
 import store from "./store/store";
+import css from "../css/style.css";
 
 Vue.config.productionTip = false;
 Vue.use(Vuetify);

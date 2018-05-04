@@ -13,7 +13,7 @@
                 <v-icon>{{icon}}</v-icon>
             </v-toolbar>
             <slot :data="data" ref="content"/>
-            <v-card-actions>
+            <v-card-actions v-if="!noaction">
                 <v-btn block @click="$emit('enter', data)" large color="green">
                     <v-icon x-large color="white">check</v-icon>
                 </v-btn>
@@ -27,7 +27,7 @@
     import {mapMutations} from "vuex";
 
     export default {
-        props: ['dialog', 'title', 'icon'],
+        props: {dialog: String, title: String, icon: String, noaction: Boolean},
         methods: {
             close: function () {
                 this.visible = false;

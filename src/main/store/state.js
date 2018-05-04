@@ -9,7 +9,6 @@ const dialogFactory = {
     [Dial.CREATE_TREE]: () => ({}),
     [Dial.FACET_ENTRY]: () => ({qt: null, unit: null, name: null}),
     [Dial.IMPACT_ENTRY]: () => ({qt: null, unit: null, name: null}),
-    [Dial.COMPARE_TO]: () => ({name: null}),
     [Dial.ADD_FACET]: () => ({name: null}),
     [Dial.IMPACT]: () => ({tree: null}),
     [Dial.ADD_RESSOURCE]: () => ({tree: null}),

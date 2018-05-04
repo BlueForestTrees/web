@@ -6,7 +6,7 @@
             <v-icon @click="addItem" style="cursor: pointer">add</v-icon>
             <v-tooltip top>
                 <span slot="activator"><v-icon color="grey lighten-1">info</v-icon></span>
-                <span>"UTILISATIONS" : Ce sont les produits ou services que l'on pourra obtenir.</span>
+                <span>UTILISATIONS : Ce sont les produits ou services que l'on pourra obtenir.</span>
             </v-tooltip>
         </v-subheader>
         <template v-for="item in items">

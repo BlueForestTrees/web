@@ -6,7 +6,7 @@
             <v-icon @click="addItem" style="cursor: pointer">add</v-icon>
             <v-tooltip top>
                 <span slot="activator"><v-icon color="grey lighten-1">info</v-icon></span>
-                <span>"IMPACTS" : Ce sont les déchets, les polutions, etc.</span>
+                <span>IMPACTS : Ce sont les déchets, les polutions, etc.</span>
             </v-tooltip>
 
         </v-subheader>

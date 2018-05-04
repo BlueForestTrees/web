@@ -5,7 +5,7 @@
             <v-icon @click="open" style="cursor: pointer" v-if="oneSelected()">launch</v-icon>
             <v-tooltip top>
                 <span slot="activator"><v-icon color="grey lighten-1">info</v-icon></span>
-                <span>"BILAN RESSOURCES" : Ce sont les éléments qui ont été utilisés par les éléments qui ont été utilisés etc. mais qui n'utilisent rien eux-mêmes.</span>
+                <span>BILAN RESSOURCES : Ce sont les éléments qui ont été utilisés par les éléments qui ont été utilisés etc. mais qui n'utilisent rien eux-mêmes.</span>
             </v-tooltip>
         </v-subheader>
         <template v-for="item in items">

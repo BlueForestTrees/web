@@ -4,7 +4,7 @@
             <v-spacer/>
             <v-tooltip top>
                 <span slot="activator"><v-icon color="grey lighten-1">info</v-icon></span>
-                <span>"BILAN IMPACTS" : C'est la somme des impacts du produit/service avec le "bilan impacts" des ressources.</span>
+                <span>BILAN IMPACTS : C'est la somme des impacts du produit/service avec le "bilan impacts" des ressources.</span>
             </v-tooltip>
         </v-subheader>
         <template v-for="item in items">

@@ -4,6 +4,8 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import webpack from 'webpack';
 import Visualizer from 'webpack-visualizer-plugin';
 import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import { VueLoaderPlugin } from 'vue-loader';
 
 const NODE_ENV = process.env.NODE_ENV;
 
@@ -20,7 +22,7 @@ const conf = {
         rules: [
             {test: /\.vue$/, exclude: /node_modules/, use: 'vue-loader'},
             {test: /\.js$/, exclude: /node_modules/, use: 'babel-loader'},
-            {test: /\.css$/, exclude: /node_modules/, use: 'css-loader'}
+            {test: /\.css$/, use: ExtractTextPlugin.extract({fallback: 'style-loader',use: ['css-loader']})}
         ]
     },
     plugins: [
@@ -30,7 +32,9 @@ const conf = {
         new webpack.DefinePlugin({
             VERSION: JSON.stringify(require("./package.json").version)
         }),
-        new LodashModuleReplacementPlugin,
+        new LodashModuleReplacementPlugin(),
+        new VueLoaderPlugin(),
+        new ExtractTextPlugin("style.css")
     ],
 };
 
@@ -42,7 +46,6 @@ if (conf.mode === "development") {
         }
     }
 }
-
 if (conf.mode === "production") {
     conf.plugins.push(new Visualizer({filename: '../visualizer/statistics.html'}));
     conf.output = {
