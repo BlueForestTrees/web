@@ -2,29 +2,13 @@
     <v-container fluid grid-list-md class="grey lighten-4">
         <v-layout>
 
-            <axis-list :axises="separated.left" :name="leftTree.trunk.name" :color="namedColors[0]"/>
+            <axis-list :axises="commonLeftRightAxises.left" :name="leftTree.trunk.name" :color="namedColors[0]"/>
 
             <v-card style="max-height: 100%;width: 100%;">
-                <v-card-title>
-                    <v-chip close>
-                        <v-avatar>
-                            <v-icon x-large :color="namedColors[0]" class="rightAir">lens</v-icon>
-                        </v-avatar>
-                        <span class="leftAir">{{leftTree.trunk.name}}</span>
-                    </v-chip>
-
-                    <v-chip close>
-                        <v-avatar>
-                            <v-icon x-large :color="namedColors[1]" class="rightAir">lens</v-icon>
-                        </v-avatar>
-                        <span>{{rightTree.trunk.name}}</span>
-                    </v-chip>
-                </v-card-title>
-                <v-divider/>
-                <div class="leftRightRadar" @click.native="axis = $event" style="height: 100%;width: 100%;"/>
+                <div class="leftRightRadar" @click.native="base = $event" style="height: 100%;width: 100%;"/>
             </v-card>
 
-            <axis-list :axises="separated.right" :name="rightTree.trunk.name" :color="namedColors[1]"/>
+            <axis-list :axises="commonLeftRightAxises.right" :name="rightTree.trunk.name" :color="namedColors[1]"/>
 
         </v-layout>
     </v-container>
@@ -34,12 +18,10 @@
 <script>
     import Do from "../../const/do";
     import {mapMutations} from 'vuex';
-    import {QUANTITY} from "../../const/labels";
-    import {align, applyRatio, denorm, separate} from "../../services/radar-calc";
-    import {drawRadar} from "../../services/d3/radar";
+    import {applyCoef, buildAxises, coefToBase, insertRatios, separate} from "../../services/axis";
     import AxisList from "../common/AxisList";
     import {cloneDeep} from 'lodash';
-    import {baseQt, calcCoef} from "trees-units";
+    import {baseQt} from "trees-units";
 
     export default {
         components: {
@@ -49,52 +31,53 @@
         props: ['leftTree', 'rightTree'],
         methods: {
             ...mapMutations({"close": Do.CLOSE_COMPARE_TO}),
-            changeAxis: function (axis) {
-                this.axis = axis;
-                this.draw(this.separated);
-            },
             draw: function (data) {
-                drawRadar({
-                    selectAxis: this.changeAxis,
-                    id: ".leftRightRadar",
-                    data: [data.common.left, data.common.right],
-                    selectedAxis: this.axis,
-                    options: {color: this.colors}
-                });
+                console.log(data);
+                // console.log({
+                //     selectAxis: this.changeAxis,
+                //     id: ".leftRightRadar",
+                //     data: [data.common.left, data.common.right],
+                //     selectedAxis: this.axis,
+                //     options: {color: this.colors}
+                // });
             }
         },
         data: function () {
             return {
-                axis: QUANTITY,
                 namedColors: ["cyan darken1", "pink darken1"],
                 colors: ["#00A0B0", "#CC333F"]
             }
         },
         computed: {
-            leftDenorm: function () {
-                return denorm(this.leftTree)
+            leftAxises: function () {
+                return buildAxises(this.leftTree)
             },
-            rightDenorm: function () {
-                return denorm(this.rightTree)
+            rightAxises: function () {
+                return buildAxises(this.rightTree)
             },
 
-            coef: function () {
-                return calcCoef(this.axis, this.leftDenorm, this.rightDenorm);
-            },
-            leftAligned: function () {
-                return this.leftDenorm;
-            },
-            rightAligned: function () {
-                return align(cloneDeep(this.rightDenorm), this.coef);
-            },
-            separated: function () {
-                const data = separate(cloneDeep(this.leftAligned), cloneDeep(this.rightAligned));
-                applyRatio(data.common, baseQt);
+            commonLeftRightAxises: function () {
+                const data = separate(cloneDeep(this.leftAxisWithCoef), cloneDeep(this.rightAxisWithCoef));
+                insertRatios(data.common, baseQt);
                 return data;
             },
+
+            rightCoef: function () {
+                return coefToBase(this.base, this.rightAxises);
+            },
+            leftCoef: function () {
+                return coefToBase(this.base, this.leftAxises);
+            },
+            leftAxisWithCoef: function () {
+                return applyCoef(cloneDeep(this.leftAxises), this.leftCoef);
+            },
+            rightAxisWithCoef: function () {
+                return applyCoef(cloneDeep(this.rightAxises), this.rightCoef);
+            },
+
         },
         mounted: function () {
-            this.draw(this.separated);
+            this.draw(this.commonLeftRightAxises);
         }
     }
 </script>

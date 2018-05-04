@@ -23,6 +23,7 @@ import tankMutations from "./mutation/tankMutations";
 import treeMutations from "./mutation/treeMutations";
 import trunkMutations from "./mutation/trunkMutations";
 import rootMutations from "./mutation/rootMutations";
+import basketMutations from "./mutation/basketMutations";
 
 
 
@@ -32,6 +33,7 @@ const store = new Vuex.Store({
     state,
     getters,
     mutations:{
+        ...basketMutations,
         ...branchMutations,
         ...compareToMutations,
         ...dialogMutations,

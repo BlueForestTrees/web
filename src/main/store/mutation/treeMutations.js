@@ -9,10 +9,6 @@ export default {
     [Do.CLOSE_COMPARE_TO]: state => {
         state.compareTo = null;
     },
-    [Do.INIT_TREE]: (state, tree) => {
-        state.tree = tree;
-    },
-
 
     [Do.CLEAR_RESULTS]: state => {
         state.search.searchResults = [];

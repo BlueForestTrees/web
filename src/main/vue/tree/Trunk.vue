@@ -5,6 +5,10 @@
                 <v-list-tile-title>Nom</v-list-tile-title>
                 <v-list-tile-sub-title>{{tree.trunk.name}}</v-list-tile-sub-title>
             </v-list-tile-content>
+            <v-spacer/>
+            <v-btn icon @click="closeTree">
+                <v-icon x-large>clear</v-icon>
+            </v-btn>
         </v-list-tile>
         <v-list-tile @click="showSetQtUnitDialog">
             <v-list-tile-content>
@@ -34,7 +38,7 @@
         },
         props: ['tree'],
         methods: {
-            ...mapMutations({showDialog: Do.SHOW_DIALOG}),
+            ...mapMutations({showDialog: Do.SHOW_DIALOG, closeTree: Do.CLOSE_TREE}),
             showSetQtUnitDialog() {
                 this.showDialog({dialog: Dial.SET_QT_UNIT, data: {tree: this.tree}});
             }

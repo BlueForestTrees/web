@@ -29,10 +29,8 @@ export const createDialog = name => (dialogFactory[name] && dialogFactory[name](
 export const tree = () => ({_id: null, trunk: null, selection: null, facets: null});
 
 export default {
-    tree: null,
-    compareTo: null,
-    linkEdit: null,
-    addingSeed: false,
+    basket: [],
+
     dialogs: dialogs(),
     nav: {leftMenuVisible: false, treeTabIdx: "1"}
 };

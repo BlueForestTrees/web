@@ -39,7 +39,6 @@
     import {isEmpty} from 'lodash';
     import AddImpactDialog from "../dialog/AddImpactDialog";
     import selectable from "../mixin/Selectable";
-    //TODO suppression d'impact bug
 
     export default {
         components: {

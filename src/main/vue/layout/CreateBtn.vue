@@ -1,19 +1,21 @@
 <template>
 
-    <span>
-        <v-btn fab bottom right color="pink" dark fixed @click.stop="createTree" class="floating-bar">
-            <v-icon>add</v-icon>
-        </v-btn>
-    </span>
+    <v-btn v-if="basket.length === 0" fab bottom right color="pink" dark fixed @click.stop="createTree" class="floating-bar">
+        <v-icon>add</v-icon>
+    </v-btn>
 
 </template>
 
 <script>
     import Do from "../../const/do";
-    import {mapMutations} from 'vuex';
+    import {mapMutations, mapState} from 'vuex';
     import {Dial} from "../../const/dial";
 
     export default {
+        name: 'create-btn',
+        computed: {
+            ...mapState({basket: state => state.basket})
+        },
         methods: {
             ...mapMutations({
                 doShowDialog: Do.SHOW_DIALOG

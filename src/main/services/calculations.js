@@ -19,4 +19,4 @@ export const qtUnit = item => {
         return "qt? unit?";
     }
 };
-export const qtUnitName = item => `${qtUnit(item)} ${item.name || item.axis}`;
+export const qtUnitName = item => `${qtUnit(item)} ${item.name}`;

@@ -5,9 +5,11 @@
         </h4></v-flex></v-card-title>
         <v-divider/>
         <v-list dense>
-            <v-list-tile v-for="axis in axises" :key="axis.axis">
+            <v-list-tile v-for="axis in axises" :key="axis.base">
                 <v-list-tile-content>
-                    <qt-unit-name-label :axis="axis"/>
+                    <v-flex class="no-wrap">
+                        {{qtUnitName(axis)}}
+                    </v-flex>
                 </v-list-tile-content>
             </v-list-tile>
         </v-list>
@@ -16,10 +18,12 @@
 
 <script>
 
-    import QtUnitNameLabel from "./QtUnitNameLabel";
+    import {qtUnitName} from "../../services/calculations";
     export default {
         name:'axis-list',
-        components: {QtUnitNameLabel},
-        props:['name', 'axises', 'color']
+        props:['name', 'axises', 'color'],
+        methods:{
+            qtUnitName
+        }
     }
 </script>

@@ -10,7 +10,7 @@ export default {
     },
     [On.LOAD_OPEN_TREE]: async ({commit, state, dispatch}, {_id}) => {
         dispatch(On.LOAD_TREE, {_id})
-            .then(tree => commit(Do.INIT_TREE, tree));
+            .then(tree => commit(Do.ADD_TO_BASKET, tree));
     },
     [On.LOAD_TREE]: async ({commit, state, dispatch}, {_id}) => {
         const tree = {_id};

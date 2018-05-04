@@ -1,27 +1,20 @@
 <template>
     <div id="app">
-        <v-app light @keypress.native.ctrl.right="moveTab(1)" @keydown.native.ctrl.left="moveTab(-1)">
+        <v-app light>
             <left-menu/>
             <bar/>
 
             <v-content>
                 <v-container fluid>
-                    <v-layout justify-center align-center>
-
-                        <transition name="fadeInOut">
-                            <tree v-if="tree && !compareTo" :tree="tree"/>
-                        </transition>
-
-                        <transition name="fadeInOut">
-                            <compare v-if="tree && compareTo" :leftTree="tree" :rightTree="compareTo"/>
-                        </transition>
-
+                    <v-layout justify-center align-center column>
+                        <basket/>
+                        <compare v-if="basket.length === 2" :leftTree="basket[0]" :rightTree="basket[1]"/>
+                        <tree v-else-if="basket.length === 1" :tree="basket[0]"/>
                     </v-layout>
                 </v-container>
             </v-content>
 
-            <Bottom-right-btns/>
-
+            <create-btn/>
             <facet-entry-dialog/>
             <impact-entry-dialog/>
             <create-trunk-dialog/>
@@ -35,7 +28,6 @@
 
     import LeftMenu from './layout/LeftMenu';
     import Bar from "./layout/Bar";
-    import BottomRightBtns from "./layout/BottomRightBtns";
     import CreateTrunkDialog from "./dialog/CreateTrunkDialog";
     import FacetEntryDialog from "./dialog/FacetEntryDialog";
     import On from "../const/on";
@@ -46,6 +38,8 @@
     import {mapState} from 'vuex';
     import Tree from "./tree/Tree";
     import Compare from "./layout/Compare";
+    import Basket from "./layout/Basket";
+    import CreateBtn from "./layout/CreateBtn";
 
     export default {
         data: function () {
@@ -54,9 +48,11 @@
             }
         },
         computed: {
-            ...mapState(['tree', 'compareTo'])
+            ...mapState(['basket'])
         },
         components: {
+            CreateBtn,
+            Basket,
             Compare,
             Tree,
             SearchDialog,
@@ -64,7 +60,6 @@
             Lookup,
             FacetEntryDialog,
             CreateTrunkDialog,
-            BottomRightBtns,
             Bar,
             LeftMenu
         },
