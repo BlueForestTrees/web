@@ -1,6 +1,7 @@
-import {baseUrl} from '../const/const';
+import root from 'window-or-global'
 import req from 'request-promise-lite';
 
+const baseUrl = root.location ? root.location.href : 'tests/';
 const url = (path) => baseUrl + path;
 const options = (body) => ({body: body, json: true});
 
