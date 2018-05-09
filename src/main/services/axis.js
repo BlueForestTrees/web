@@ -23,13 +23,14 @@ const buildAxis = ({name}, type, items) => map(items, item => ({
     tree: name,
     type,
     name: item.name,
+    _qt: item.quantity && item.quantity.qt,
     qt: item.quantity && item.quantity.qt,
     unit: item.quantity && item.quantity.unit,
     grandeur: grandeur(item.quantity && item.quantity.unit)
 }));
 
 /** Applique le coef aux quantités */
-export const applyCoef = (axises, coef) => forEach(axises, axis => axis.coef = coef);
+export const applyCoef = (axises, coef) => forEach(axises, axis => axis.qt = axis._qt * coef);
 
 /**
  * Placer les axes dans la bonne zone: commun, left ou right.
@@ -40,8 +41,8 @@ export const applyCoef = (axises, coef) => forEach(axises, axis => axis.coef = c
 export const separate = (leftAxises, rightAxises) => {
 
     //Un axe sans quantité est retiré des axes communs
-    const leftWithoutQt = remove(leftAxises, axis => (isNil(axis.qt) || isNil(axis.unit)));
-    const rightWithoutQt = remove(rightAxises, axis => (isNil(axis.qt) || isNil(axis.unit)));
+    const leftWithoutQt = remove(leftAxises, axis => (isNil(axis._qt) || isNil(axis.unit)));
+    const rightWithoutQt = remove(rightAxises, axis => (isNil(axis._qt) || isNil(axis.unit)));
 
     //Un axe qui n'a pas son équivalent de l'autre côté est retiré des communs
     const leftWithoutRight = remove(leftAxises, axis => !find(rightAxises, {name: axis.name, type: axis.type, grandeur: axis.grandeur}));
@@ -79,13 +80,5 @@ export const insertRatios = ({left, right}, baseQtFunc) => {
     return {left, right};
 };
 const relativeTo1 = (first, second) => first > second ? 1 : format(first / second);
-
-/** calcule le coef entre deux arbres en fonction d'un nom d'item*/
-export const calcCoef = (name, leftAxises, rightAxises) => {
-    const leftAxis = find(leftAxises, {name});
-    const rightAxis = find(rightAxises, {name});
-
-    return qtUnitCoef(leftAxis, rightAxis);
-};
 
 export const coefToBase = (base, axises) => qtUnitCoef(base, find(axises, {name: base.name}));
