@@ -5,7 +5,7 @@
         <v-form v-model="valid" v-on:submit.prevent="" ref="form">
             <v-select
                     label="Nom..." ref="nom"
-                    autocomplete required cache-items
+                    autocomplete required cache-items autofocus
                     :loading="loading"
                     :items="autocompleteItems"
                     :search-input.sync="itemNamepart"
@@ -54,6 +54,7 @@
             focus() {
                 this.$refs.form.reset();
                 this.autocompleteItems = [];
+                this.$nextTick(() => this.$refs.nom.focus());
             },
             async search(term) {
                 if (term) {

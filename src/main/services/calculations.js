@@ -7,16 +7,16 @@ export const format = v => v < 10 ? Math.round(v * 100) / 100 : Math.round(v * 1
 export const trunkyAll = items => map(items, trunky);
 export const trunky = trunk => ({_id: trunk._id, trunk});
 export const idQtFrom = item => ({_id: item._id, quantity: item.quantity});
-export const qtUnit = item => {
-    if (item.quantity) {
-        if (item.quantity.qt && item.quantity.unit) {
-            const best = bestQuantity(item.quantity);
+export const qtUnit = quantity => {
+    if (quantity) {
+        if (quantity.qt && quantity.unit) {
+            const best = bestQuantity(quantity);
             return `${best.qt}${best.unit !== 'count' ? best.unit : ''}`;
         } else {
-            return item.quantity.qt || "qt?" + item.quantity.unit || "unit?";
+            return (quantity.qt || "?") + (quantity.unit || "?");
         }
     } else {
-        return "qt? unit?";
+        return "??";
     }
 };
-export const qtUnitName = item => `${qtUnit(item)} ${item.name}`;
+export const qtUnitName = item => `${qtUnit(item.quantity || item)} ${item.name}`;

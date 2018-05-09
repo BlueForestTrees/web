@@ -14,7 +14,7 @@
             <v-list-tile :key="item._id">
                 <v-list-tile-content>
                     <v-list-tile-title>{{item.name}}</v-list-tile-title>
-                    <v-list-tile-sub-title v-if="hasQuantity(item)">
+                    <v-list-tile-sub-title>
                         <qt-unit :quantity="item.quantity"/>
                     </v-list-tile-sub-title>
                 </v-list-tile-content>

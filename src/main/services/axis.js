@@ -1,6 +1,6 @@
 import {find, forEach, isNil, map, remove} from 'lodash';
 import {format} from "./calculations";
-import {qtUnitCoef, grandeur} from "trees-units";
+import {grandeur, qtUnitCoef} from "trees-units";
 
 /**
  * un arbre en axes.
@@ -25,7 +25,7 @@ const buildAxis = ({name}, type, items) => map(items, item => ({
     name: item.name,
     qt: item.quantity && item.quantity.qt,
     unit: item.quantity && item.quantity.unit,
-    grandeur: grandeur(item.quantity.unit)
+    grandeur: grandeur(item.quantity && item.quantity.unit)
 }));
 
 /** Applique le coef aux quantités */
@@ -88,7 +88,4 @@ export const calcCoef = (name, leftAxises, rightAxises) => {
     return qtUnitCoef(leftAxis, rightAxis);
 };
 
-export const coefToBase = (base, axises) => {
-    const axis = find(axises, {name:base.name});
-    return qtUnitCoef(base.quantity, axis);
-};
+export const coefToBase = (base, axises) => qtUnitCoef(base, find(axises, {name: base.name}));

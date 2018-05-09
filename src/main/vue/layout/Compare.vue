@@ -1,15 +1,17 @@
 <template>
     <v-container fluid grid-list-md class="grey lighten-4">
+        <v-layout v-if="base">
+            <v-flex>
+                Base: {{qtUnitName(this.base)}}
+            </v-flex>
+        </v-layout>
         <v-layout>
+            <axis-list :axises="axises.left" :name="leftTree.trunk.name" :color="namedColors[0]"/>
 
-            <axis-list :axises="commonLeftRightAxises.left" :name="leftTree.trunk.name" :color="namedColors[0]"/>
+            <axis-list :axises="axises.common.left" :name="leftTree.trunk.name" :color="namedColors[0]"/>
+            <axis-list :axises="axises.common.right" :name="rightTree.trunk.name" :color="namedColors[1]"/>
 
-            <v-card style="max-height: 100%;width: 100%;">
-                <div class="leftRightRadar" @click.native="base = $event" style="height: 100%;width: 100%;"/>
-            </v-card>
-
-            <axis-list :axises="commonLeftRightAxises.right" :name="rightTree.trunk.name" :color="namedColors[1]"/>
-
+            <axis-list :axises="axises.right" :name="rightTree.trunk.name" :color="namedColors[1]"/>
         </v-layout>
     </v-container>
 
@@ -18,10 +20,11 @@
 <script>
     import Do from "../../const/do";
     import {mapMutations} from 'vuex';
-    import {applyCoef, buildAxises, coefToBase, insertRatios, separate} from "../../services/axis";
+    import {applyCoef, buildAxises, coefToBase, separate} from "../../services/axis";
     import AxisList from "../common/AxisList";
     import {cloneDeep} from 'lodash';
     import {baseQt} from "trees-units";
+    import {qtUnitName} from "../../services/calculations";
 
     export default {
         components: {
@@ -30,6 +33,7 @@
         name: 'compare',
         props: ['leftTree', 'rightTree'],
         methods: {
+            qtUnitName,
             ...mapMutations({"close": Do.CLOSE_COMPARE_TO}),
             draw: function (data) {
                 console.log(data);
@@ -45,39 +49,37 @@
         data: function () {
             return {
                 namedColors: ["cyan darken1", "pink darken1"],
-                colors: ["#00A0B0", "#CC333F"]
+                colors: ["#00A0B0", "#CC333F"],
+                base: null
             }
         },
         computed: {
-            leftAxises: function () {
-                return buildAxises(this.leftTree)
-            },
-            rightAxises: function () {
-                return buildAxises(this.rightTree)
-            },
+            axises: function () {
+                const data = separate(cloneDeep(buildAxises(this.leftTree)), cloneDeep(buildAxises(this.rightTree)));
+                this.base = data.common.left[0];
 
-            commonLeftRightAxises: function () {
-                const data = separate(cloneDeep(this.leftAxisWithCoef), cloneDeep(this.rightAxisWithCoef));
-                insertRatios(data.common, baseQt);
+                if (this.base) {
+                    const leftCoef = coefToBase(this.base, data.common.left);
+                    if (leftCoef !== 1) {
+                        applyCoef(data.left, leftCoef);
+                        applyCoef(data.common.left, leftCoef);
+                    }
+
+                    const rightCoef = coefToBase(this.base, data.common.right);
+                    if (rightCoef !== 1) {
+                        applyCoef(data.right, rightCoef);
+                        applyCoef(data.common.right, rightCoef);
+                    }
+                }
+
                 return data;
             },
 
-            rightCoef: function () {
-                return coefToBase(this.base, this.rightAxises);
-            },
-            leftCoef: function () {
-                return coefToBase(this.base, this.leftAxises);
-            },
-            leftAxisWithCoef: function () {
-                return applyCoef(cloneDeep(this.leftAxises), this.leftCoef);
-            },
-            rightAxisWithCoef: function () {
-                return applyCoef(cloneDeep(this.rightAxises), this.rightCoef);
-            },
 
+            //insertRatios(data.common, baseQt);
         },
         mounted: function () {
-            this.draw(this.commonLeftRightAxises);
+            this.draw(this.axises);
         }
     }
 </script>

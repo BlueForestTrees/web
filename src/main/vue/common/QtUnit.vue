@@ -11,7 +11,7 @@
         props: ['quantity'],
         computed: {
             value: function () {
-                return qtUnit(this);
+                return qtUnit(this.quantity);
             }
         }
     }
