@@ -22,11 +22,6 @@ html {
   margin: 2em
 }
 
-.btn--bottom:not(.btn--absolute) {
-
-  bottom: 50px;
-}
-
 .no-wrap {
   flex: 0 0 auto;
 }

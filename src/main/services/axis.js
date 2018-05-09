@@ -29,7 +29,7 @@ const buildAxis = ({name}, type, items) => map(items, item => ({
 }));
 
 /** Applique le coef aux quantités */
-export const applyCoef = (axises, coef) => forEach(axises, axis => axis.qt *= coef);
+export const applyCoef = (axises, coef) => forEach(axises, axis => axis.coef = coef);
 
 /**
  * Placer les axes dans la bonne zone: commun, left ou right.

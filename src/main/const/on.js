@@ -24,7 +24,6 @@ export default {
     LOAD_ROOTS: 'loadRoots',
     LOAD_TANK: 'loadTank',
     MOUNT_APP: 'mountApp',
-    LOAD_OPEN_COMPARE_TO: 'loadOpenCompareTo',
     LOAD_TREE: 'loadTree',
     INVALIDATE_TRUNK: 'invalidateTrunk',
     RENAME_TRUNK: 'renameTrunk',

@@ -1,5 +1,6 @@
 //Boites de dialogue
 export const Dial = {
+    COMMENT: 'comment',
     CREATE_TREE: "createTree",
     FACET_ENTRY: "facetEntry",
     IMPACT_ENTRY: "impactEntry",

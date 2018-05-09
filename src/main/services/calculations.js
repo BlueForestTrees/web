@@ -13,10 +13,10 @@ export const qtUnit = quantity => {
             const best = bestQuantity(quantity);
             return `${best.qt}${best.unit !== 'count' ? best.unit : ''}`;
         } else {
-            return (quantity.qt || "?") + (quantity.unit || "?");
+            return (quantity.qt || "?") + (quantity.unit || " ?");
         }
     } else {
         return "??";
     }
 };
-export const qtUnitName = item => `${qtUnit(item.quantity || item)} ${item.name}`;
+export const qtUnitName = item => `${qtUnit(item.quantity || item)} ${item && item.name || '?'}`;

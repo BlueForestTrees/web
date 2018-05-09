@@ -1,6 +1,6 @@
 <template>
     <main-dialog :dialog="Dial.SEARCH" :title="'Recherche'" ref="dialog"
-                 @esc="close" @enter="validate" @focus="focus"
+                 @esc="close" @focus="focus"
     >
         <v-form v-model="valid" v-on:submit.prevent="" ref="form">
             <v-select
@@ -44,6 +44,12 @@
                 this.loading = true;
                 this.search(val);
                 this.loading = false;
+            },
+            selectedItemId(_id) {
+                if (_id) {
+                    this.dispatchOpen({_id});
+                    this.close();
+                }
             }
         },
         methods: {
@@ -59,13 +65,6 @@
             async search(term) {
                 if (term) {
                     this.autocompleteItems = await this.dispatchSearch({term});
-                }
-            },
-            validate() {
-                this.$refs.form.validate();
-                if (this.valid) {
-                    this.dispatchOpen({_id: this.selectedItemId});
-                    this.close();
                 }
             },
             required

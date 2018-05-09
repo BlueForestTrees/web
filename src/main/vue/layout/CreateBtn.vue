@@ -1,6 +1,6 @@
 <template>
 
-    <v-btn v-if="basket.length === 0" fab bottom right color="pink" dark fixed @click.stop="createTree" class="floating-bar">
+    <v-btn v-if="basket.length === 0" fab bottom right color="pink" dark fixed @click.stop="createTree">
         <v-icon>add</v-icon>
     </v-btn>
 

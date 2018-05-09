@@ -1,5 +1,5 @@
 <template>
-    <main-dialog :dialog="Dial.IMPACT" :title="'Nouvel impact'" ref="dialog"
+    <main-dialog :dialog="Dial.IMPACT" title="Nouvel impact" ref="dialog"
                  @esc="close" @enter="validate" @focus="focus"
     >
         <v-card-text v-if="tree">

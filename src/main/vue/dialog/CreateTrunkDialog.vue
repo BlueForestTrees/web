@@ -2,7 +2,7 @@
     <main-dialog :dialog="Dial.CREATE_TREE" @focus="focus" :title="'Nouveau produit/service'" @esc="close" @enter="validate" ref="dialog">
         <v-card-text>
             <v-form v-model="valid" v-on:submit.prevent="" ref="form">
-                <v-text-field ref="nom" label="Nom" :rules="[length2min]" v-model="name"/>
+                <v-text-field ref="nom" label="Nom" :rules="[length2min]" required v-model="name"/>
                 <grandeur-select v-model="grandeur"/>
             </v-form>
         </v-card-text>
@@ -19,6 +19,7 @@
     import UnitSelect from "../common/UnitSelect";
     import {find} from 'lodash';
     import {getGrandeur} from 'trees-units'
+    import {length2min} from "../../services/rules";
 
     export default {
         mixins: [closable],
@@ -41,7 +42,7 @@
                 this.createAndOpen({name: this.name, grandeur: this.grandeur.key});
                 this.close();
             },
-            length2min: value => (value && value.trim().length > 1) || "2 caractères minimum",
+            length2min,
             focus() {
                 this.$refs.form.reset();
                 this.$nextTick(() => this.$refs.nom.focus());

@@ -17,6 +17,7 @@ const dialogFactory = {
     [Dial.SEARCH]: () => ({}),
     [Dial.CREATE]: () => ({}),
     [Dial.SET_QT_UNIT]: () => ({}),
+    [Dial.COMMENT]: () => ({}),
 };
 
 const dialogs = () => reduce(Dial, (dials, key) => {

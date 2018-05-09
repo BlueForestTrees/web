@@ -1,6 +1,15 @@
 <template>
     <v-navigation-drawer fixed app v-model="nav.leftMenuVisible">
         <v-list dense>
+            <v-list-tile @click="showDialog({dialog:Dial.COMMENT})">
+                <v-list-tile-action>
+                    <v-icon>chat_bubble</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                    <v-list-tile-title>Faire un commentaire</v-list-tile-title>
+                </v-list-tile-content>
+                <comment-dialog/>
+            </v-list-tile>
             <v-list-tile @click="showDialog({dialog:Dial.FACET_ENTRY})">
                 <v-list-tile-action>
                     <v-layout row>
@@ -47,22 +56,6 @@
                     <v-list-tile-title>Supprimer {{tree.name}}</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
-            <v-list-tile @click="">
-                <v-list-tile-action>
-                    <v-icon>settings</v-icon>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                    <v-list-tile-title>Paramètres</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile @click="">
-                <v-list-tile-action>
-                    <v-icon>chat_bubble</v-icon>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                    <v-list-tile-title>Faire un commentaire</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
         </v-list>
     </v-navigation-drawer>
 </template>
@@ -72,8 +65,10 @@
     import {mapActions, mapMutations, mapState} from "vuex";
     import {Dial} from "../../const/dial";
     import On from "../../const/on";
+    import CommentDialog from "../dialog/CommentDialog";
 
     export default {
+        components: {CommentDialog},
         computed: {
             ...mapState(['tree', 'nav'])
         },

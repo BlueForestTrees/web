@@ -14,6 +14,7 @@
                         v-model="selectedItemId"
                         item-text="trunk.name" item-value="_id"
                         :rules="[required, notIn]"
+                        taggable
                 />
 
                 <v-text-field type="number" label="Quantité... (ex.: 10)" v-model="qt" :rules="[required, isNumber]"/>

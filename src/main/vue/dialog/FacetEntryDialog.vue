@@ -1,14 +1,10 @@
 <template>
-    <main-dialog :dialog="Dial.FACET_ENTRY" ref="dialog" :title="'Nouveau type de propriété'" :icon="'add'"
+    <main-dialog :dialog="Dial.FACET_ENTRY" ref="dialog" :title="'Nouveau type de propriété'"
                  @esc="close" @enter="validate" @focus="focus">
-        <template slot-scope="props">
-            <v-card>
-                <v-card-text>
-                    <v-text-field label="Nom du type de propriété" required v-model="name"/>
-                    <grandeur-select v-model="grandeur"/>
-                </v-card-text>
-            </v-card>
-        </template>
+        <v-card-text>
+            <v-text-field :rules="[length2min]" label="Nom du type de propriété" required v-model="name"/>
+            <grandeur-select v-model="grandeur"/>
+        </v-card-text>
     </main-dialog>
 </template>
 
@@ -18,6 +14,7 @@
     import {mapActions} from "vuex";
     import {Dial} from "../../const/dial";
     import GrandeurSelect from "../common/GrandeurSelect";
+    import {length2min} from "../../services/rules";
 
     export default {
         data() {
@@ -34,6 +31,7 @@
         },
         props: ['data'],
         methods: {
+            length2min,
             ...mapActions({"createFacetEntry": On.CREATE_FACET_ENTRY}),
             validate: function () {
                 this.createFacetEntry({name: this.name, grandeur: this.grandeur.key});

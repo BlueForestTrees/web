@@ -40,6 +40,6 @@ export default {
 
     [On.DELETE_TREE]: ({commit}, tree) =>
         api.deleteTrunk(tree._id)
-            .then(() => commit(Do.CLOSE_TREE))
+            .then(() => commit(Do.REMOVE_FROM_BASKET, tree))
 
 }
