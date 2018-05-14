@@ -6,7 +6,7 @@
             </h4>
         </v-card-title>
     <v-list dense>
-        <v-list-tile v-if="axises.length > 0" v-for="axis in axises" :key="axis.base">
+        <v-list-tile v-if="axises.length > 0" v-for="axis in axises" :key="axis.name">
             <v-list-tile-content>
                 <v-flex class="no-wrap">{{qtUnitName(axis)}}</v-flex>
             </v-list-tile-content>

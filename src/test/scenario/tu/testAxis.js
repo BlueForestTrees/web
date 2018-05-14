@@ -225,4 +225,10 @@ describe('Axis calculations', function () {
         insertRatios(common, fakeBaseQtFct).should.deep.equal(expected);
     });
 
+    it('complete', function(){
+        const rightTree = {
+
+        } ;
+    });
+
 });

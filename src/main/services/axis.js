@@ -17,7 +17,7 @@ export const buildAxises = tree => ([
     ...buildAxis(tree.trunk, "trunk", [{...tree.trunk, name: "Quantité"}]),
     ...buildAxis(tree.trunk, "facet", tree.facets.items),
     ...buildAxis(tree.trunk, "tank", tree.tank.items),
-    ...buildAxis(tree.trunk, "impacts", tree.impacts.items),
+    ...buildAxis(tree.trunk, "impactsTank", tree.impactsTank.items),
 ]);
 const buildAxis = ({name}, type, items) => map(items, item => ({
     tree: name,
@@ -28,9 +28,6 @@ const buildAxis = ({name}, type, items) => map(items, item => ({
     unit: item.quantity && item.quantity.unit,
     grandeur: grandeur(item.quantity && item.quantity.unit)
 }));
-
-/** Applique le coef aux quantités */
-export const applyCoef = (axises, coef) => forEach(axises, axis => axis.qt = axis._qt * coef);
 
 /**
  * Placer les axes dans la bonne zone: commun, left ou right.
@@ -81,4 +78,23 @@ export const insertRatios = ({left, right}, baseQtFunc) => {
 };
 const relativeTo1 = (first, second) => first > second ? 1 : format(first / second);
 
-export const coefToBase = (base, axises) => qtUnitCoef(base, find(axises, {name: base.name}));
+
+export const applyBase = (base, axises) => {
+    if (base) {
+        const rightCoef = coefToBase(base, axises.common.right);
+        applyCoef(axises.right, rightCoef);
+        applyCoef(axises.common.right, rightCoef);
+
+        const leftCoef = coefToBase(base, axises.common.left);
+        applyCoef(axises.left, leftCoef);
+        applyCoef(axises.common.left, leftCoef);
+    }
+};
+
+/** trouve le coef pour passer de la base vers son axe dans la liste */
+export const coefToBase = (base, axises) => {
+    const axis = find(axises, {name: base.name});
+    return qtUnitCoef(base, {qt: axis._qt, unit: axis.unit});
+};
+/** Applique le coef aux quantités */
+export const applyCoef = (axises, coef) => forEach(axises, axis => axis.qt = axis._qt * coef);
