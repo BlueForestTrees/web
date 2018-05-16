@@ -18,7 +18,7 @@ export default {
     [On.PUT_TRUNK_QUANTITY]: ({commit, dispatch}, {trunk, quantity}) => {
         api.upsertQuantity(trunk._id, quantity)
             .then(() => commit(Do.PUT_TRUNK_QUANTITY, {trunk, quantity}))
-            .then(() => dispatch(On.INVALIDATE_TRUNK));
+            .then(() => dispatch(On.LOAD_OPEN_TREE, trunk));
     },
     [On.CLONE_TRUNK]: ({}, _id) => api.cloneTrunk(_id)
 }

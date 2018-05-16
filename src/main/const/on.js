@@ -25,7 +25,6 @@ export default {
     LOAD_TANK: 'loadTank',
     MOUNT_APP: 'mountApp',
     LOAD_TREE: 'loadTree',
-    INVALIDATE_TRUNK: 'invalidateTrunk',
     RENAME_TRUNK: 'renameTrunk',
     SEARCH_TREE: 'searchTree',
     SEARCH_FACET_ENTRY: 'searchFacetEntry',

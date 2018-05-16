@@ -5,12 +5,10 @@ import {trunkyAll} from "../../services/calculations";
 
 export default {
 
-    [On.INVALIDATE_TRUNK]: async ({dispatch, state}) => {
-        return dispatch(On.LOAD_OPEN_TREE, state.tree);
-    },
-    [On.LOAD_OPEN_TREE]: async ({commit, state, dispatch}, {_id}) => {
-        dispatch(On.LOAD_TREE, {_id})
-            .then(tree => commit(Do.ADD_TO_BASKET, tree));
+    [On.LOAD_OPEN_TREE]: async ({commit, state, dispatch}, treeToLoad) => {
+        const loadedTree = await dispatch(On.LOAD_TREE, treeToLoad);
+        commit(Do.ADD_TO_BASKET, loadedTree);
+        return loadedTree;
     },
     [On.LOAD_TREE]: async ({commit, state, dispatch}, {_id}) => {
         const tree = {_id};
@@ -28,7 +26,7 @@ export default {
         return tree;
     },
     [On.CREATE_AND_OPEN_TREE]: async ({dispatch}, {name, grandeur}) => {
-        dispatch(On.LOAD_OPEN_TREE, await dispatch(On.CREATE_TRUNK, {name, grandeur}));
+        return dispatch(On.LOAD_OPEN_TREE, await dispatch(On.CREATE_TRUNK, {name, grandeur}));
     },
     [On.CLONE_OPEN_TREE]: async ({dispatch}, tree) => {
         dispatch(On.LOAD_OPEN_TREE, await dispatch(On.CLONE_TREE, tree));

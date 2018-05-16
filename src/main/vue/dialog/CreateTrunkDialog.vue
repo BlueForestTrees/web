@@ -12,7 +12,7 @@
 <script>
     import MainDialog from "./MainDialog";
     import On from "../../const/on";
-    import {mapActions} from "vuex";
+    import {mapActions, mapMutations} from "vuex";
     import {Dial} from "../../const/dial";
     import closable from "../mixin/Closable";
     import GrandeurSelect from "../common/GrandeurSelect";
@@ -20,6 +20,7 @@
     import {find} from 'lodash';
     import {getGrandeur} from 'trees-units'
     import {length2min} from "../../services/rules";
+    import Do from "../../const/do";
 
     export default {
         mixins: [closable],
@@ -38,9 +39,13 @@
             ...mapActions({
                 createAndOpen: On.CREATE_AND_OPEN_TREE
             }),
-            validate() {
-                this.createAndOpen({name: this.name, grandeur: this.grandeur.key});
+            ...mapMutations({
+                showDialog: Do.SHOW_DIALOG
+            }),
+            async validate() {
+                const tree = await this.createAndOpen({name: this.name, grandeur: this.grandeur.key});
                 this.close();
+                this.showDialog({dialog: Dial.SET_QT_UNIT, data: {tree}});
             },
             length2min,
             focus() {
