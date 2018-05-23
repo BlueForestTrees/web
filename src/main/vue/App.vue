@@ -7,9 +7,11 @@
             <v-content>
                 <v-container fluid>
                     <v-layout justify-center align-center column>
+                        <v-card style="width: 100%">
                         <basket/>
                         <compare v-if="basket.length === 2" :leftTree="basket[0]" :rightTree="basket[1]"/>
                         <tree v-else-if="basket.length === 1" :tree="basket[0]"/>
+                        </v-card>
                     </v-layout>
                 </v-container>
             </v-content>

@@ -1,18 +1,44 @@
 <template>
     <v-list two-line>
         <v-subheader>
-            Ressources
-            <v-spacer/>
-            <v-icon @click="open" style="cursor: pointer" v-if="oneSelected()">launch</v-icon>
             <v-icon @click="addItem" style="cursor: pointer">add</v-icon>
             <v-tooltip top>
-                <span slot="activator"><v-icon color="grey lighten-1">info</v-icon></span>
-                <span>RESSOURCES : Ce sont les éléments qui ont été utilisés.<br>Il y en a 3 types : Energie, travail, matière première, mais aussi autre élément.</span>
+                <span slot="activator">Ressources</span>
+                <span>Composants, Energie, Travail, Matière première...</span>
             </v-tooltip>
+            <v-spacer/>
+
+            <span><v-icon @click="open" style="cursor: pointer" v-if="oneSelected()">launch</v-icon></span>
+
+            <v-tooltip top>
+                <v-btn-toggle v-model="bilanFlag" slot="activator">
+                    <v-btn flat>
+                        <v-icon>filter_list</v-icon>
+                    </v-btn>
+                </v-btn-toggle>
+                <span>Montrer les ressources primaires</span>
+            </v-tooltip>
+
         </v-subheader>
-        <template v-for="item in items">
+
+        <template v-if="bilan" v-for="item in bilanItems">
             <v-divider/>
-            <v-list-tile avatar :key="item.trunk.name" @click="">
+            <v-list-tile avatar :key="'b'+item.name" @click="">
+                <v-list-tile-content>
+                    <v-list-tile-title>{{ item.name }}</v-list-tile-title>
+                    <v-list-tile-sub-title>
+                        <qt-unit :quantity="item.quantity"/>
+                    </v-list-tile-sub-title>
+                </v-list-tile-content>
+                <v-list-tile-action>
+                    <v-checkbox v-model="selection" :value="item"/>
+                </v-list-tile-action>
+            </v-list-tile>
+        </template>
+
+        <template v-if="!bilan" v-for="item in items">
+            <v-divider/>
+            <v-list-tile avatar :key="'i'+item.trunk.name" @click="">
                 <v-list-tile-content>
                     <v-list-tile-title>{{ item.trunk.name }}</v-list-tile-title>
                     <v-list-tile-sub-title>
@@ -24,6 +50,7 @@
                 </v-list-tile-action>
             </v-list-tile>
         </template>
+
         <add-ressource-dialog/>
     </v-list>
 </template>
@@ -44,10 +71,21 @@
         },
         mixins: [selectable],
         props: ['tree'],
+        data() {
+            return {
+                bilanFlag: null
+            }
+        },
         computed: {
+            bilan: function () {
+                return this.bilanFlag === 0;
+            },
             items: function () {
                 return this.tree.roots.items;
             },
+            bilanItems: function () {
+                return this.tree.tank && this.tree.tank.items;
+            }
         },
         methods: {
             open() {

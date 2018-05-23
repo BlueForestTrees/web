@@ -2,15 +2,15 @@ import On from "../../const/on";
 import api from "../../rest/api";
 import {omit} from 'lodash';
 import Do from "../../const/do";
-import {trunkyAll} from "../../services/calculations";
+import {hasQuantity, trunkyAll} from "../../services/calculations";
 
 export default {
 
     [On.LOAD_ROOTS]: ({commit}, tree) => {
-
-        let qt = tree.trunk.quantity && tree.trunk.quantity.qt;
-        let unit = tree.trunk.quantity && tree.trunk.quantity.unit;
-        let loadRoots = (qt && unit) ? api.getQuantifiedRoots(qt, unit, tree._id) : api.getUnquantifiedRoots(tree._id);
+        const loadRoots = hasQuantity(tree.trunk) ?
+            api.getQuantifiedRoots(tree.trunk.quantity.qt, tree.trunk.quantity.unit, tree._id)
+            :
+            api.getUnquantifiedRoots(tree._id);
 
         return loadRoots
             .then(roots => ({

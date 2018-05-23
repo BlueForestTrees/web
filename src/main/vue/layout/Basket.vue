@@ -1,14 +1,13 @@
 <template>
-    <v-card v-if="basket.length > 0" style="width:100%">
-        <v-card-title>
-            <v-chip close v-for="(item,i) in basket" :key="item._id" @input="remove(item)">
-                <v-avatar>
-                    <v-icon x-large :color="namedColors[i]" class="rightAir">lens</v-icon>
-                </v-avatar>
-                <span>{{item.trunk.name}}</span>
-            </v-chip>
-        </v-card-title>
-    </v-card>
+    <span>
+        <v-chip v-if="basket.length > 0" v-for="(item,i) in basket"
+                close :key="item._id" @input="remove(item)">
+            <v-avatar>
+                <v-icon x-large :color="namedColors[i]" class="rightAir">lens</v-icon>
+            </v-avatar>
+            <span>{{item.trunk.name}}</span>
+        </v-chip>
+    </span>
 </template>
 
 <script>

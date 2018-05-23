@@ -5,11 +5,12 @@ import {hasQuantity, idQtFrom} from "../../services/calculations";
 
 export default {
 
-    [On.LOAD_FACETS]: ({commit}, tree) => (
-        hasQuantity(tree.trunk) ?
-            api.getQuantifiedFacets(tree.trunk.quantity.qt, tree.trunk.quantity.unit, tree._id)
-            : api.getFacets(tree._id)
-    ).then(facets => commit(Do.ADD_FACETS, {tree, facets})),
+    [On.LOAD_FACETS]: ({commit}, tree) =>
+        (hasQuantity(tree.trunk) ?
+                api.getQuantifiedFacets(tree.trunk.quantity.qt, tree.trunk.quantity.unit, tree._id)
+                :
+                api.getFacets(tree._id)
+        ).then(facets => commit(Do.ADD_FACETS, {tree, facets})),
 
     [On.DELETE_FACETS]:
         ({commit}, {facets, toDelete}) => {

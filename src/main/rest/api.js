@@ -39,6 +39,7 @@ export default {
     deleteTrunk: trunkId => del(`api/trunk/${trunkId}`),
     cloneTrunk: trunkId => post(`api/trunk?sourceId=${trunkId}`),
     getTrunk: _id => get(`api/trunk/${_id}`),
+    getQuantifiedTrunk: (qt, unit, _id) => get(`api/trunk/${qt}/${unit}/${_id}`),
     renameTrunk: (_id, name) => put(`api/trunk/${_id}`, {name}),
     upsertQuantity: (treeId, quantity) => put(`api/trunk/${treeId}`, {quantity}),
 

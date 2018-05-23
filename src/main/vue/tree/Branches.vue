@@ -1,13 +1,13 @@
 <template>
     <v-list two-line>
-        <v-subheader>Usages
-            <v-spacer/>
-            <v-icon @click="open" style="cursor: pointer" v-if="oneSelected()">launch</v-icon>
+        <v-subheader>
             <v-icon @click="addItem" style="cursor: pointer">add</v-icon>
             <v-tooltip top>
-                <span slot="activator"><v-icon color="grey lighten-1">info</v-icon></span>
-                <span>UTILISATIONS : Ce sont les produits ou services que l'on pourra obtenir.</span>
+                <span slot="activator">Usages</span>
+                <span>Utilisé pour...</span>
             </v-tooltip>
+            <v-spacer/>
+            <v-icon @click="open" style="cursor: pointer" v-if="oneSelected()">launch</v-icon>
         </v-subheader>
         <template v-for="item in items">
             <v-divider/>

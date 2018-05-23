@@ -33,5 +33,5 @@ export default {
     basket: [],
 
     dialogs: dialogs(),
-    nav: {leftMenuVisible: false, treeTabIdx: "1"}
+    nav: {leftMenuVisible: false}
 };

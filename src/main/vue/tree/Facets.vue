@@ -1,16 +1,26 @@
 <template>
     <v-list two-line>
-        <v-subheader>Propriétés
-            <v-spacer/>
-            <v-icon @click="deleteItems" style="cursor: pointer" v-if="selectionNotEmpty()">delete</v-icon>
+        <v-subheader>
             <v-icon @click="addItem" style="cursor: pointer">add</v-icon>
             <v-tooltip top>
-                <span slot="activator"><v-icon color="grey lighten-1">info</v-icon></span>
-                <span>PROPRIETES : Ce sont les attributs comme le prix, les apports nutritionnels, les dimensions, etc.</span>
+                <span slot="activator">Propriétés</span>
+                <span>Quantité, Prix, Dimensions, etc...</span>
             </v-tooltip>
+            <v-spacer/>
+            <v-icon @click="deleteItems" style="cursor: pointer" v-if="selectionNotEmpty()">delete</v-icon>
         </v-subheader>
+        <v-divider/>
+        <v-list-tile avatar @click="showSetQtUnitDialog">
+            <v-list-tile-content>
+                <v-list-tile-title>Quantité</v-list-tile-title>
+                <v-list-tile-sub-title>
+                    <qt-unit :quantity="tree.trunk.quantity"/>
+                </v-list-tile-sub-title>
+            </v-list-tile-content>
+            <v-spacer/>
+        </v-list-tile>
         <template v-for="item in items">
-            <v-divider/>
+            <set-qt-unit-dialog/>
             <v-list-tile :key="item._id">
                 <v-list-tile-content>
                     <v-list-tile-title>{{item.name}}</v-list-tile-title>
@@ -23,7 +33,6 @@
                 </v-list-tile-action>
             </v-list-tile>
         </template>
-        <v-divider/>
         <add-facet-dialog :tree="tree"/>
     </v-list>
 </template>
@@ -34,7 +43,7 @@
     import FacetDialog from "../dialog/FacetEntryDialog";
     import {Dial} from "../../const/dial";
     import On from "../../const/on";
-    import {hasQuantity} from "../../services/calculations";
+    import {hasQuantity, qtUnitName} from "../../services/calculations";
     import QtUnit from "../common/QtUnit";
     import AddFacetDialog from "../dialog/AddFacetDialog";
     import selectable from "../mixin/Selectable";
@@ -58,9 +67,17 @@
             },
             facets: function () {
                 return this.tree && this.tree.facets
+            },
+            quantity: function () {
+                return qtUnitName({name: "Quantité", ...this.tree.trunk.quantity});
             }
         },
         methods: {
+            qtUnitName,
+            ...mapMutations({showDialog: Do.SHOW_DIALOG}),
+            showSetQtUnitDialog() {
+                this.showDialog({dialog: Dial.SET_QT_UNIT, data: {tree: this.tree}});
+            },
             ...mapActions({dispatchDeleteFacets: On.DELETE_FACETS}),
             ...mapMutations([Do.SHOW_DIALOG]),
             addItem() {
