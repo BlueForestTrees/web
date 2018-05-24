@@ -14,7 +14,6 @@ export default {
             :
             api.getTrunk(tree._id)
                 .then(trunk => commit(Do.SET_TRUNK, {tree, trunk}));
-
     },
     [On.RENAME_TRUNK]: async ({commit}, {trunk, newName}) => {
         await api.renameTrunk(trunk._id, newName);

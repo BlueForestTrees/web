@@ -5,20 +5,21 @@ import {trunkyAll} from "../../services/calculations";
 
 export default {
 
-    [On.LOAD_OPEN_TREE]: async ({commit, state, dispatch}, treeToLoad) => {
-        const loadedTree = await dispatch(On.LOAD_TREE, treeToLoad);
-        commit(Do.ADD_TO_BASKET, loadedTree);
-        return loadedTree;
-    },
-    [On.LOAD_TREE]: async ({commit, state, dispatch}, treeToLoad) => await dispatch(On.LOAD_TRUNK, treeToLoad)
-        .then(() => Promise.all([
-            dispatch(On.LOAD_ROOTS, treeToLoad),
-            dispatch(On.LOAD_TANK, treeToLoad),
-            dispatch(On.LOAD_FACETS, treeToLoad),
-            dispatch(On.LOAD_IMPACTS, treeToLoad),
-            dispatch(On.LOAD_IMPACTS_TANK, treeToLoad),
-            dispatch(On.LOAD_BRANCHES, treeToLoad)
-        ])),
+    [On.LOAD_OPEN_TREE]: async ({commit, state, dispatch}, treeToLoad) =>
+        dispatch(On.LOAD_TREE, treeToLoad)
+            .then(() => commit(Do.ADD_TO_BASKET, treeToLoad)),
+
+    [On.LOAD_TREE]: ({commit, state, dispatch}, treeToLoad) =>
+        dispatch(On.LOAD_TRUNK, treeToLoad)
+            .then(() =>
+                Promise.all([
+                    dispatch(On.LOAD_ROOTS, treeToLoad),
+                    dispatch(On.LOAD_TANK, treeToLoad),
+                    dispatch(On.LOAD_FACETS, treeToLoad),
+                    dispatch(On.LOAD_IMPACTS, treeToLoad),
+                    dispatch(On.LOAD_IMPACTS_TANK, treeToLoad),
+                    dispatch(On.LOAD_BRANCHES, treeToLoad)
+                ])),
     [On.CREATE_AND_OPEN_TREE]: async ({dispatch}, {name, grandeur}) => {
         return dispatch(On.LOAD_OPEN_TREE, await dispatch(On.CREATE_TRUNK, {name, grandeur}));
     },
