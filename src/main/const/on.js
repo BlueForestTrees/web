@@ -26,6 +26,7 @@ export default {
     MOUNT_APP: 'mountApp',
     LOAD_TREE: 'loadTree',
     RENAME_TRUNK: 'renameTrunk',
+    REFRESH_ROOTS: 'refreshRoots',
     SEARCH_TREE: 'searchTree',
     SEARCH_FACET_ENTRY: 'searchFacetEntry',
     SEARCH_IMPACT_ENTRY: 'searchImpactEntry',

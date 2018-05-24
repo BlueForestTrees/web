@@ -1,7 +1,7 @@
 <template>
     <v-list two-line>
         <v-subheader>
-            <v-icon @click="addItem" style="cursor: pointer">add</v-icon>
+            <v-icon @click="showAddImpactDialog" style="cursor: pointer">add</v-icon>
             <v-tooltip top>
                 <span slot="activator">Impacts</span>
                 <span>Déchets, Pollutions, etc.</span>
@@ -88,7 +88,7 @@
         methods: {
             ...mapActions({dispatchDeleteImpacts: On.DELETE_IMPACTS}),
             ...mapMutations([Do.SHOW_DIALOG]),
-            addItem() {
+            showAddImpactDialog() {
                 this.showDialog({dialog: Dial.IMPACT, data: {tree: this.tree}});
             },
 

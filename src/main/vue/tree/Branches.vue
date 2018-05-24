@@ -1,7 +1,7 @@
 <template>
     <v-list two-line>
         <v-subheader>
-            <v-icon @click="addItem" style="cursor: pointer">add</v-icon>
+            <v-icon @click="showAddBranchDialog" style="cursor: pointer">add</v-icon>
             <v-tooltip top>
                 <span slot="activator">Usages</span>
                 <span>Utilisé pour...</span>
@@ -57,7 +57,7 @@
                 this.dispatchOpenItem(this.selection[0]);
             },
             ...mapMutations({showDialog: Do.SHOW_DIALOG}),
-            addItem() {
+            showAddBranchDialog() {
                 this.showDialog({dialog: Dial.ADD_USAGE, data: {tree: this.tree}});
             }
         }

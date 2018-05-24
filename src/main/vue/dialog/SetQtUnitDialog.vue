@@ -30,9 +30,9 @@
         mixins: [closable],
         data: function () {
             return {
-                qt: 35,
-                unit: "m3",
-                name: "doudou",
+                qt: null,
+                unit: null,
+                name: null,
                 valid: null,
                 Dial
             }

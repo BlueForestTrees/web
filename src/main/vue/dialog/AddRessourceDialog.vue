@@ -17,6 +17,8 @@
                         taggable
                 />
 
+                <grandeur-select v-model="grandeur" disabled/>
+
                 <v-text-field type="number" label="Quantité... (ex.: 10)" v-model="qt" :rules="[required, isNumber]"/>
                 <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]"/>
             </v-form>
@@ -36,6 +38,7 @@
     import {getGrandeur} from 'trees-units'
     import UnitSelect from "../common/UnitSelect";
     import closable from "../mixin/Closable";
+    import GrandeurSelect from "../common/GrandeurSelect";
 
     export default {
         name: 'add-ressource-dialog',
@@ -52,11 +55,16 @@
                 valid: false
             }
         },
-        components: {UnitSelect, Destination, Lookup, MainDialog},
+        components: {GrandeurSelect, UnitSelect, Destination, Lookup, MainDialog},
         computed: {
             ...mapState({tree: state => state.dialogs.addRessource.data.tree}),
-            grandeur: function () {
-                return this.selectedItem && getGrandeur(this.selectedItem.trunk.grandeur);
+            grandeur: {
+                get: function () {
+                    return this.selectedItem && getGrandeur(this.selectedItem.trunk.grandeur);
+                },
+                set: function (v) {
+                    // this.selectedItem.trunk.grandeur = v;
+                }
             },
             selectedItem: function () {
                 return this.selectedItemId && find(this.autocompleteItems, {_id: this.selectedItemId});
@@ -64,10 +72,9 @@
         },
         methods: {
             ...mapActions({
-                dispatchLink: On.LINK
-            }),
-            ...mapActions({
-                dispatchSearchTree: On.SEARCH_TREE
+                dispatchSearchTree: On.SEARCH_TREE,
+                dispatchLink: On.LINK,
+                dispatchRefreshRessources: On.LOAD_ROOTS
             }),
             async searchRessource(term) {
                 if (term)
@@ -78,6 +85,7 @@
                     trunk: {_id: this.tree._id, quantity: this.tree.trunk.quantity},
                     root: {_id: this.selectedItemId, quantity: {qt: this.qt, unit: this.unit.shortname}}
                 });
+                this.dispatchRefreshRessources(this.tree);
                 this.close();
             },
             focus() {

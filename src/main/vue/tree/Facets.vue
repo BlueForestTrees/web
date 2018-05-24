@@ -1,7 +1,8 @@
 <template>
     <v-list two-line>
+        <add-facet-dialog :tree="tree"/>
         <v-subheader>
-            <v-icon @click="addItem" style="cursor: pointer">add</v-icon>
+            <v-icon @click="showAddFacetDialog" style="cursor: pointer">add</v-icon>
             <v-tooltip top>
                 <span slot="activator">Propriétés</span>
                 <span>Quantité, Prix, Dimensions, etc...</span>
@@ -10,6 +11,8 @@
             <v-icon @click="deleteItems" style="cursor: pointer" v-if="selectionNotEmpty()">delete</v-icon>
         </v-subheader>
         <v-divider/>
+
+        <set-qt-unit-dialog/>
         <v-list-tile avatar @click="showSetQtUnitDialog">
             <v-list-tile-content>
                 <v-list-tile-title>Quantité</v-list-tile-title>
@@ -19,8 +22,8 @@
             </v-list-tile-content>
             <v-spacer/>
         </v-list-tile>
+
         <template v-for="item in items">
-            <set-qt-unit-dialog/>
             <v-list-tile :key="item._id">
                 <v-list-tile-content>
                     <v-list-tile-title>{{item.name}}</v-list-tile-title>
@@ -33,7 +36,6 @@
                 </v-list-tile-action>
             </v-list-tile>
         </template>
-        <add-facet-dialog :tree="tree"/>
     </v-list>
 </template>
 
@@ -47,9 +49,11 @@
     import QtUnit from "../common/QtUnit";
     import AddFacetDialog from "../dialog/AddFacetDialog";
     import selectable from "../mixin/Selectable";
+    import SetQtUnitDialog from "../dialog/SetQtUnitDialog";
 
     export default {
         components: {
+            SetQtUnitDialog,
             AddFacetDialog,
             QtUnit,
             FacetDialog
@@ -80,7 +84,7 @@
             },
             ...mapActions({dispatchDeleteFacets: On.DELETE_FACETS}),
             ...mapMutations([Do.SHOW_DIALOG]),
-            addItem() {
+            showAddFacetDialog() {
                 this.showDialog({dialog: Dial.ADD_FACET, data: {tree: this.tree}});
             },
             deleteItems() {

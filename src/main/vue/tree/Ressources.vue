@@ -1,7 +1,7 @@
 <template>
     <v-list two-line>
         <v-subheader>
-            <v-icon @click="addItem" style="cursor: pointer">add</v-icon>
+            <v-icon @click="showAddRessourceDialog" style="cursor: pointer">add</v-icon>
             <v-tooltip top>
                 <span slot="activator">Ressources</span>
                 <span>Composants, Energie, Travail, Matière première...</span>
@@ -97,7 +97,7 @@
                 dispatchOpenItem: On.LOAD_OPEN_TREE
             }),
             ...mapMutations({showDialog: Do.SHOW_DIALOG}),
-            addItem() {
+            showAddRessourceDialog() {
                 this.showDialog({dialog: Dial.ADD_RESSOURCE, data: {tree: this.tree}});
             }
         }
