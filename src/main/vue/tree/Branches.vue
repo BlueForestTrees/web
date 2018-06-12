@@ -1,13 +1,13 @@
 <template>
-    <v-list two-line>
+    <v-list two-line v-if="hasItems">
         <v-subheader>
-            <v-icon @click="showAddBranchDialog" style="cursor: pointer">add</v-icon>
             <v-tooltip top>
                 <span slot="activator">Usages</span>
                 <span>Utilisé pour...</span>
             </v-tooltip>
             <v-spacer/>
             <v-icon @click="open" style="cursor: pointer" v-if="oneSelected()">launch</v-icon>
+            <v-icon @click="showAddBranchDialog" style="cursor: pointer">add</v-icon>
         </v-subheader>
         <template v-for="item in items">
             <v-divider/>
@@ -46,7 +46,10 @@
         computed: {
             items: function () {
                 return this.tree && this.tree.branches && this.tree.branches.items;
-            }
+            },
+            hasItems: function () {
+                return this.items && this.items.length && this.items.length > 0;
+            },
         },
         methods: {
             ...mapActions({

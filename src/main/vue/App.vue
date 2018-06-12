@@ -19,8 +19,8 @@
             <create-btn/>
             <facet-entry-dialog/>
             <impact-entry-dialog/>
-            <create-trunk-dialog/>
             <search-dialog/>
+            <add-dialog/>
 
         </v-app>
     </div>
@@ -30,7 +30,6 @@
 
     import LeftMenu from './layout/LeftMenu';
     import Bar from "./layout/Bar";
-    import CreateTrunkDialog from "./dialog/CreateTrunkDialog";
     import FacetEntryDialog from "./dialog/FacetEntryDialog";
     import On from "../const/on";
     import Lookup from "./common/Lookup";
@@ -42,6 +41,7 @@
     import Compare from "./layout/Compare";
     import Basket from "./layout/Basket";
     import CreateBtn from "./layout/CreateBtn";
+    import AddDialog from "./dialog/AddDialog";
 
     export default {
         data: function () {
@@ -53,6 +53,7 @@
             ...mapState(['basket'])
         },
         components: {
+            AddDialog,
             CreateBtn,
             Basket,
             Compare,
@@ -61,7 +62,6 @@
             ImpactEntryDialog,
             Lookup,
             FacetEntryDialog,
-            CreateTrunkDialog,
             Bar,
             LeftMenu
         },

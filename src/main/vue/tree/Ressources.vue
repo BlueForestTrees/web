@@ -1,14 +1,17 @@
 <template>
-    <v-list two-line>
+    <v-list two-line v-if="hasItems">
         <v-subheader>
-            <v-icon @click="showAddRessourceDialog" style="cursor: pointer">add</v-icon>
             <v-tooltip top>
                 <span slot="activator">Ressources</span>
                 <span>Composants, Energie, Travail, Matière première...</span>
             </v-tooltip>
             <v-spacer/>
 
-            <span><v-icon @click="open" style="cursor: pointer" v-if="oneSelected()">launch</v-icon></span>
+
+            <span v-if="!bilan">
+                <v-icon @click="showAddRessourceDialog" style="cursor: pointer">add</v-icon>
+                <v-icon @click="open" style="cursor: pointer" v-if="oneSelected()">launch</v-icon>
+            </span>
 
             <v-tooltip top>
                 <v-btn-toggle v-model="bilanFlag" slot="activator">
@@ -82,6 +85,9 @@
             },
             items: function () {
                 return this.tree.roots.items;
+            },
+            hasItems: function () {
+                return this.items && this.items.length && this.items.length > 0;
             },
             bilanItems: function () {
                 return this.tree.tank && this.tree.tank.items;

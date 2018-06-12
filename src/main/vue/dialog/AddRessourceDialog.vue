@@ -11,13 +11,11 @@
                         :loading="loading"
                         :items="autocompleteItems"
                         :search-input.sync="itemNamepart"
-                        v-model="selectedItemId"
+                        v-model="selectedItem"
                         item-text="trunk.name" item-value="_id"
                         :rules="[required, notIn]"
-                        taggable
+                        return-object
                 />
-
-                <grandeur-select v-model="grandeur" disabled/>
 
                 <v-text-field type="number" label="Quantité... (ex.: 10)" v-model="qt" :rules="[required, isNumber]"/>
                 <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]"/>
@@ -49,7 +47,7 @@
                 autocompleteItems: [],
                 itemNamepart: null,
                 loading: false,
-                selectedItemId: null,
+                selectedItem: null,
                 qt: null,
                 unit: null,
                 valid: false
@@ -60,14 +58,11 @@
             ...mapState({tree: state => state.dialogs.addRessource.data.tree}),
             grandeur: {
                 get: function () {
-                    return this.selectedItem && getGrandeur(this.selectedItem.trunk.grandeur);
+                    return this.selectedItem && this.selectedItem.trunk && getGrandeur(this.selectedItem.trunk.grandeur);
                 },
                 set: function (v) {
                     // this.selectedItem.trunk.grandeur = v;
                 }
-            },
-            selectedItem: function () {
-                return this.selectedItemId && find(this.autocompleteItems, {_id: this.selectedItemId});
             }
         },
         methods: {
@@ -83,7 +78,7 @@
             async validate() {
                 await this.dispatchLink({
                     trunk: {_id: this.tree._id, quantity: this.tree.trunk.quantity},
-                    root: {_id: this.selectedItemId, quantity: {qt: this.qt, unit: this.unit.shortname}}
+                    root: {_id: this.selectedItem._id, quantity: {qt: this.qt, unit: this.unit.shortname}}
                 });
                 this.dispatchRefreshRessources(this.tree);
                 this.close();
@@ -95,7 +90,7 @@
             },
             required, isNumber,
             notIn() {
-                return this.tree && !find(this.tree.roots.items, {_id: this.selectedItemId}) || "Déjà utilisé";
+                return this.selectedItem && this.tree && !find(this.tree.roots.items, {_id: this.selectedItem._id}) || "Déjà utilisé";
             }
         },
         watch: {

@@ -1,21 +1,23 @@
 <template>
-    <v-list two-line>
+    <v-list two-line v-if="hasItems">
         <v-subheader>
-            <v-icon @click="showAddImpactDialog" style="cursor: pointer">add</v-icon>
             <v-tooltip top>
                 <span slot="activator">Impacts</span>
                 <span>Déchets, Pollutions, etc.</span>
             </v-tooltip>
             <v-spacer/>
+            <span v-if="!bilan">
+                <v-icon @click="showAddImpactDialog" style="cursor: pointer">add</v-icon>
+                <v-icon @click="deleteItems" style="cursor: pointer" v-if="selectionNotEmpty()">delete</v-icon>
+            </span>
             <v-tooltip top>
                 <v-btn-toggle v-model="bilanFlag" slot="activator">
-                    <v-btn flat><v-icon>filter_list</v-icon></v-btn>
+                    <v-btn flat>
+                        <v-icon>filter_list</v-icon>
+                    </v-btn>
                 </v-btn-toggle>
                 <span>Montrer le cumul</span>
             </v-tooltip>
-            <span v-if="!bilan">
-                <v-icon @click="deleteItems" style="cursor: pointer" v-if="selectionNotEmpty()">delete</v-icon>
-            </span>
         </v-subheader>
         <template v-if="bilan" v-for="item in bilanItems">
             <v-divider/>
@@ -80,6 +82,9 @@
             },
             items: function () {
                 return this.impacts && this.impacts.items;
+            },
+            hasItems: function () {
+                return this.items && this.items.length && this.items.length > 0;
             },
             impacts: function () {
                 return this.tree && this.tree.impacts;

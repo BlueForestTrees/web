@@ -1,14 +1,14 @@
 <template>
-    <v-list two-line>
+    <v-list two-line v-if="hasItems">
         <add-facet-dialog :tree="tree"/>
         <v-subheader>
-            <v-icon @click="showAddFacetDialog" style="cursor: pointer">add</v-icon>
             <v-tooltip top>
                 <span slot="activator">Propriétés</span>
                 <span>Quantité, Prix, Dimensions, etc...</span>
             </v-tooltip>
             <v-spacer/>
             <v-icon @click="deleteItems" style="cursor: pointer" v-if="selectionNotEmpty()">delete</v-icon>
+            <v-icon @click="showAddFacetDialog" style="cursor: pointer">add</v-icon>
         </v-subheader>
         <v-divider/>
 
@@ -68,6 +68,9 @@
         computed: {
             items: function () {
                 return this.facets && this.facets.items;
+            },
+            hasItems: function () {
+                return this.items && this.items.length && this.items.length > 0;
             },
             facets: function () {
                 return this.tree && this.tree.facets
