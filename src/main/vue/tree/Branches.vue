@@ -1,5 +1,5 @@
 <template>
-    <v-list two-line v-if="hasItems">
+    <v-list v-if="hasItems">
         <v-subheader>
             <v-tooltip top>
                 <span slot="activator">Usages</span>
@@ -7,7 +7,6 @@
             </v-tooltip>
             <v-spacer/>
             <v-icon @click="open" style="cursor: pointer" v-if="oneSelected()">launch</v-icon>
-            <v-icon @click="showAddBranchDialog" style="cursor: pointer">add</v-icon>
         </v-subheader>
         <template v-for="item in items">
             <v-divider/>
@@ -23,22 +22,17 @@
                 </v-list-tile-action>
             </v-list-tile>
         </template>
-        <add-usage-dialog/>
     </v-list>
 </template>
 
 <script>
     import On from "../../const/on";
-    import {mapActions, mapMutations} from 'vuex';
-    import Do from "../../const/do";
-    import {Dial} from "../../const/dial";
+    import {mapActions} from 'vuex';
     import QtUnit from "../common/QtUnit";
-    import AddUsageDialog from "../dialog/AddUsageDialog";
     import selectable from "../mixin/Selectable";
 
     export default {
         components: {
-            AddUsageDialog,
             QtUnit
         },
         props: ['tree'],
@@ -58,10 +52,6 @@
             }),
             open() {
                 this.dispatchOpenItem(this.selection[0]);
-            },
-            ...mapMutations({showDialog: Do.SHOW_DIALOG}),
-            showAddBranchDialog() {
-                this.showDialog({dialog: Dial.ADD_USAGE, data: {tree: this.tree}});
             }
         }
     }

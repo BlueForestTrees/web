@@ -22,6 +22,9 @@ const cleanDialog = (state, dialog) => {
 
 export default {
     [Do.SHOW_DIALOG]: (state, {dialog, data}) => {
+
+        console.log(dialog, data);
+
         if (!data) {
             cleanDialog(state, dialog);
         } else {

@@ -1,5 +1,5 @@
 <template>
-    <v-list two-line v-if="hasItems">
+    <v-list v-if="hasItems">
         <v-subheader>
             <v-tooltip top>
                 <span slot="activator">Impacts</span>
@@ -7,7 +7,6 @@
             </v-tooltip>
             <v-spacer/>
             <span v-if="!bilan">
-                <v-icon @click="showAddImpactDialog" style="cursor: pointer">add</v-icon>
                 <v-icon @click="deleteItems" style="cursor: pointer" v-if="selectionNotEmpty()">delete</v-icon>
             </span>
             <v-tooltip top>
@@ -44,25 +43,20 @@
                 </v-list-tile-content>
             </v-list-tile>
         </template>
-
-        <add-impact-dialog/>
     </v-list>
 </template>
 
 <script>
-    import Do from "../../const/do"
-    import {mapActions, mapMutations} from 'vuex';
+    import {mapActions} from 'vuex';
     import {Dial} from "../../const/dial";
     import On from "../../const/on";
     import {hasQuantity} from "../../services/calculations";
     import QtUnit from "../common/QtUnit";
     import {isEmpty} from 'lodash';
-    import AddImpactDialog from "../dialog/AddImpactDialog";
     import selectable from "../mixin/Selectable";
 
     export default {
         components: {
-            AddImpactDialog,
             QtUnit,
         },
         data() {
@@ -92,10 +86,6 @@
         },
         methods: {
             ...mapActions({dispatchDeleteImpacts: On.DELETE_IMPACTS}),
-            ...mapMutations([Do.SHOW_DIALOG]),
-            showAddImpactDialog() {
-                this.showDialog({dialog: Dial.IMPACT, data: {tree: this.tree}});
-            },
 
             deleteItems() {
                 this.dispatchDeleteImpacts({impacts: this.tree.impacts, toDelete: this.selection});

@@ -1,5 +1,5 @@
 <template>
-    <main-dialog :dialog="Dial.ADD_RESSOURCE" ref="dialog" :title="'Nouvelle utilisation de ressource'"
+    <main-dialog :dialog="Dial.ADD_RESSOURCE" ref="dialog" :title="'Nouvelle ressource'"
                  @esc="close" @enter="validate" @focus="focus">
         <v-card-text>
             <destination :tree="tree"/>

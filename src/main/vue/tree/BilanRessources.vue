@@ -1,5 +1,5 @@
 <template>
-    <v-list two-line>
+    <v-list>
         <v-subheader>Bilan Ressources
             <v-spacer/>
             <v-icon @click="open" style="cursor: pointer" v-if="oneSelected()">launch</v-icon>

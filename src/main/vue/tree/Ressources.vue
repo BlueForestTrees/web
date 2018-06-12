@@ -1,5 +1,5 @@
 <template>
-    <v-list two-line v-if="hasItems">
+    <v-list v-if="hasItems">
         <v-subheader>
             <v-tooltip top>
                 <span slot="activator">Ressources</span>
@@ -7,9 +7,7 @@
             </v-tooltip>
             <v-spacer/>
 
-
             <span v-if="!bilan">
-                <v-icon @click="showAddRessourceDialog" style="cursor: pointer">add</v-icon>
                 <v-icon @click="open" style="cursor: pointer" v-if="oneSelected()">launch</v-icon>
             </span>
 
@@ -53,23 +51,17 @@
                 </v-list-tile-action>
             </v-list-tile>
         </template>
-
-        <add-ressource-dialog/>
     </v-list>
 </template>
 
 <script>
     import On from "../../const/on";
-    import {mapActions, mapMutations} from 'vuex';
-    import Do from "../../const/do";
-    import {Dial} from "../../const/dial";
+    import {mapActions} from 'vuex';
     import QtUnit from "../common/QtUnit";
-    import AddRessourceDialog from "../dialog/AddRessourceDialog";
     import selectable from "../mixin/Selectable";
 
     export default {
         components: {
-            AddRessourceDialog,
             QtUnit
         },
         mixins: [selectable],
@@ -102,10 +94,6 @@
                 dispatchLoadRoots: On.LOAD_ROOTS,
                 dispatchOpenItem: On.LOAD_OPEN_TREE
             }),
-            ...mapMutations({showDialog: Do.SHOW_DIALOG}),
-            showAddRessourceDialog() {
-                this.showDialog({dialog: Dial.ADD_RESSOURCE, data: {tree: this.tree}});
-            }
         }
     }
 </script>

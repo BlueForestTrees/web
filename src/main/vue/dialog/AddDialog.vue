@@ -1,9 +1,14 @@
 <template>
-    <main-dialog :dialog="Dial.ADD" @focus="focus" :title="'Nouveau produit/service'" @esc="close" @enter="validate" ref="dialog">
+    <main-dialog :dialog="Dial.ADD_TRUNK" :title="'Ajouter'" @esc="close" @enter="validate" ref="dialog">
         <v-card-text>
             <v-form v-model="valid" v-on:submit.prevent="" ref="form">
-                <v-text-field ref="nom" label="Nom" :rules="[length2min]" required v-model="name"/>
-                <grandeur-select v-model="grandeur"/>
+                <span v-if="destination">
+                    <destination :tree="destination"/>
+                </span>
+                <span v-else>
+                    <v-text-field ref="nom" label="Nom" :rules="[length2min]" required v-model="name"/>
+                    <grandeur-select v-model="grandeur"/>
+                </span>
             </v-form>
         </v-card-text>
     </main-dialog>
@@ -21,10 +26,13 @@
     import {getGrandeur} from 'trees-units'
     import {length2min} from "../../services/rules";
     import Do from "../../const/do";
+    import Destination from "../common/Destination";
+    import {mapState} from "vuex";
+    import Ressources from "../tree/Ressources";
 
     export default {
         mixins: [closable],
-        components: {UnitSelect, GrandeurSelect, MainDialog},
+        components: {Ressources, Destination, UnitSelect, GrandeurSelect, MainDialog},
         data() {
             return {
                 Dial: Dial,
@@ -34,6 +42,9 @@
                 qt: null,
                 unit: null
             }
+        },
+        computed:{
+            ...mapState({destination: state => state.dialogs[Dial.ADD_TRUNK].data.tree})
         },
         methods: {
             ...mapActions({
@@ -47,11 +58,7 @@
                 this.close();
                 this.showDialog({dialog: Dial.SET_QT_UNIT, data: {tree}});
             },
-            length2min,
-            focus() {
-                this.$refs.form.reset();
-                this.$nextTick(() => this.$refs.nom.focus());
-            }
+            length2min
         }
     }
 </script>

@@ -1,6 +1,5 @@
 <template>
-    <v-list two-line v-if="hasItems">
-        <add-facet-dialog :tree="tree"/>
+    <v-list v-if="hasItems">
         <v-subheader>
             <v-tooltip top>
                 <span slot="activator">Propriétés</span>
@@ -8,7 +7,6 @@
             </v-tooltip>
             <v-spacer/>
             <v-icon @click="deleteItems" style="cursor: pointer" v-if="selectionNotEmpty()">delete</v-icon>
-            <v-icon @click="showAddFacetDialog" style="cursor: pointer">add</v-icon>
         </v-subheader>
         <v-divider/>
 
@@ -47,14 +45,12 @@
     import On from "../../const/on";
     import {hasQuantity, qtUnitName} from "../../services/calculations";
     import QtUnit from "../common/QtUnit";
-    import AddFacetDialog from "../dialog/AddFacetDialog";
     import selectable from "../mixin/Selectable";
     import SetQtUnitDialog from "../dialog/SetQtUnitDialog";
 
     export default {
         components: {
             SetQtUnitDialog,
-            AddFacetDialog,
             QtUnit,
             FacetDialog
         },
@@ -86,10 +82,6 @@
                 this.showDialog({dialog: Dial.SET_QT_UNIT, data: {tree: this.tree}});
             },
             ...mapActions({dispatchDeleteFacets: On.DELETE_FACETS}),
-            ...mapMutations([Do.SHOW_DIALOG]),
-            showAddFacetDialog() {
-                this.showDialog({dialog: Dial.ADD_FACET, data: {tree: this.tree}});
-            },
             deleteItems() {
                 this.dispatchDeleteFacets({facets: this.facets, toDelete: this.selection});
             },

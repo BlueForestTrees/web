@@ -1,5 +1,5 @@
 <template>
-    <main-dialog :dialog="Dial.IMPACT" title="Nouvel impact" ref="dialog"
+    <main-dialog :dialog="Dial.ADD_IMPACT" title="Nouvel impact" ref="dialog"
                  @esc="close" @enter="validate" @focus="focus"
     >
         <v-card-text v-if="tree">
@@ -60,7 +60,7 @@
             }
         },
         computed: {
-            ...mapState({tree: state => state.dialogs[Dial.IMPACT].data.tree}),
+            ...mapState({tree: state => state.dialogs[Dial.ADD_IMPACT].data.tree}),
             grandeur: function () {
                 return this.selectedItem && getGrandeur(this.selectedItem && this.selectedItem.grandeur);
             },

@@ -16,11 +16,16 @@
                 </v-container>
             </v-content>
 
-            <create-btn/>
+            <AddBtn/>
+
             <facet-entry-dialog/>
             <impact-entry-dialog/>
             <search-dialog/>
             <add-dialog/>
+            <add-ressource-dialog/>
+            <add-impact-dialog/>
+            <add-usage-dialog/>
+            <add-facet-dialog/>
 
         </v-app>
     </div>
@@ -40,8 +45,12 @@
     import Tree from "./tree/Tree";
     import Compare from "./layout/Compare";
     import Basket from "./layout/Basket";
-    import CreateBtn from "./layout/CreateBtn";
     import AddDialog from "./dialog/AddDialog";
+    import AddBtn from "./layout/AddBtn";
+    import AddImpactDialog from "./dialog/AddImpactDialog";
+    import AddUsageDialog from "./dialog/AddUsageDialog";
+    import AddFacetDialog from "./dialog/AddFacetDialog";
+    import AddRessourceDialog from "./dialog/AddRessourceDialog";
 
     export default {
         data: function () {
@@ -53,8 +62,12 @@
             ...mapState(['basket'])
         },
         components: {
+            AddRessourceDialog,
+            AddFacetDialog,
+            AddUsageDialog,
+            AddImpactDialog,
+            AddBtn,
             AddDialog,
-            CreateBtn,
             Basket,
             Compare,
             Tree,
