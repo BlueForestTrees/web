@@ -1,9 +1,9 @@
 <template>
-    <v-list v-if="hasItems">
+    <v-list v-if="hasItems" dense>
         <v-subheader>
             <v-tooltip top>
                 <span slot="activator">Ressources</span>
-                <span>Composants, Energie, Travail, Matière première...</span>
+                <span>Energie, travail, matière première, composants.</span>
             </v-tooltip>
             <v-spacer/>
 
@@ -12,43 +12,27 @@
             </span>
 
             <v-tooltip top>
-                <v-btn-toggle v-model="bilanFlag" slot="activator">
-                    <v-btn flat>
-                        <v-icon>filter_list</v-icon>
-                    </v-btn>
-                </v-btn-toggle>
-                <span>Montrer les ressources primaires</span>
+                <v-btn depressed flat icon small @click="switchView" slot="activator">
+                    <v-icon color="grey darken-1">{{bilan ? 'view_stream' : 'view_module'}}</v-icon>
+                </v-btn>
+                <span>{{bilan ? 'Afficher les ressources' : 'Afficher le bilan'}}</span>
             </v-tooltip>
 
         </v-subheader>
 
         <template v-if="bilan" v-for="item in bilanItems">
             <v-divider/>
-            <v-list-tile avatar :key="'b'+item.name" @click="">
-                <v-list-tile-content>
-                    <v-list-tile-title>{{ item.name }}</v-list-tile-title>
-                    <v-list-tile-sub-title>
-                        <qt-unit :quantity="item.quantity"/>
-                    </v-list-tile-sub-title>
-                </v-list-tile-content>
-                <v-list-tile-action>
-                    <v-checkbox v-model="selection" :value="item"/>
-                </v-list-tile-action>
+            <v-list-tile avatar :key="'b'+item.name">
+                <v-icon :style="'color: '+getRandomColor()+';margin-right:0.2em'">lens</v-icon>
+                {{qtUnitName(item) }}
             </v-list-tile>
         </template>
 
         <template v-if="!bilan" v-for="item in items">
             <v-divider/>
-            <v-list-tile avatar :key="'i'+item.trunk.name" @click="">
-                <v-list-tile-content>
-                    <v-list-tile-title>{{ item.trunk.name }}</v-list-tile-title>
-                    <v-list-tile-sub-title>
-                        <qt-unit :quantity="item.trunk.quantity"/>
-                    </v-list-tile-sub-title>
-                </v-list-tile-content>
-                <v-list-tile-action>
-                    <v-checkbox v-model="selection" :value="item"/>
-                </v-list-tile-action>
+            <v-list-tile avatar :key="'i'+item.trunk.name">
+                <v-icon :style="'color: '+getRandomColor()+';margin-right:0.2em'">lens</v-icon>
+                {{qtUnitName(item.trunk) }}
             </v-list-tile>
         </template>
     </v-list>
@@ -59,6 +43,7 @@
     import {mapActions} from 'vuex';
     import QtUnit from "../common/QtUnit";
     import selectable from "../mixin/Selectable";
+    import {getRandomColor, qtUnitName} from "../../services/calculations";
 
     export default {
         components: {
@@ -68,13 +53,10 @@
         props: ['tree'],
         data() {
             return {
-                bilanFlag: null
+                bilan: false
             }
         },
         computed: {
-            bilan: function () {
-                return this.bilanFlag === 0;
-            },
             items: function () {
                 return this.tree.roots.items;
             },
@@ -86,6 +68,9 @@
             }
         },
         methods: {
+            switchView: function () {
+                this.bilan = !this.bilan;
+            },
             open() {
                 this.dispatchOpenItem(this.selection[0]);
             },
@@ -94,6 +79,7 @@
                 dispatchLoadRoots: On.LOAD_ROOTS,
                 dispatchOpenItem: On.LOAD_OPEN_TREE
             }),
+            qtUnitName, getRandomColor
         }
     }
 </script>

@@ -3,9 +3,9 @@
         <v-chip v-if="basket.length > 0" v-for="(item,i) in basket"
                 close :key="item._id" @input="remove(item)">
             <v-avatar>
-                <v-icon x-large :color="namedColors[i]" class="rightAir">lens</v-icon>
+                <v-icon x-large :color="namedColors[i]">lens</v-icon>
             </v-avatar>
-            <span>{{item.trunk.name}}</span>
+            <span>{{qtUnitName(item.trunk)}}</span>
         </v-chip>
     </span>
 </template>
@@ -13,6 +13,7 @@
 <script>
     import {mapMutations, mapState} from "vuex";
     import Do from "../../const/do";
+    import {qtUnitName} from "../../services/calculations";
 
     export default {
         name: 'basket',
@@ -26,7 +27,8 @@
             }
         },
         methods: {
-            ...mapMutations({remove: Do.REMOVE_FROM_BASKET})
+            ...mapMutations({remove: Do.REMOVE_FROM_BASKET}),
+            qtUnitName
         }
     }
 </script>
