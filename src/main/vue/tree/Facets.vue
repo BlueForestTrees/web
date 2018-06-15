@@ -10,12 +10,6 @@
         </v-subheader>
         <v-divider/>
 
-        <set-qt-unit-dialog/>
-        <v-list-tile avatar @click="showSetQtUnitDialog">
-            <v-icon :style="'color: #E6E5E4;margin-right:0.2em'">lens</v-icon>
-            {{qtUnitName(tree.trunk) }}
-        </v-list-tile>
-
         <template v-for="item in items">
             <v-list-tile :key="item._id">
                 <v-icon :style="'color: '+getRandomColor()+';margin-right:0.2em'">lens</v-icon>

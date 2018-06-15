@@ -1,5 +1,5 @@
 ﻿<template>
-    <v-select label="Grandeur..." item-text="label" required
+    <v-select :label="label || 'Grandeur...'" item-text="label" required
               :items="getGrandeurs()" :value="value" @input="v => $emit('input',v)"
               :disabled="disabled"
               :rules="[required]"
@@ -12,7 +12,7 @@
 
     export default {
         name: 'grandeur-select',
-        props: ['value', 'disabled'],
+        props: ['value', 'disabled', 'label'],
         methods: {
             getGrandeurs, required
         }

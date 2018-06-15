@@ -1,9 +1,9 @@
 <template>
     <span>
-        <v-chip v-if="basket.length > 0" v-for="(item,i) in basket"
+        <v-chip v-if="basket.length > 0" v-for="item in basket"
                 close :key="item._id" @input="remove(item)">
             <v-avatar>
-                <v-icon x-large :color="namedColors[i]">lens</v-icon>
+                <v-icon x-large :style="{color:item.trunk.color}">lens</v-icon>
             </v-avatar>
             <span>{{qtUnitName(item.trunk)}}</span>
         </v-chip>
@@ -19,12 +19,6 @@
         name: 'basket',
         computed: {
             ...mapState(['basket'])
-        },
-        data: function () {
-            return {
-                namedColors: ["cyan darken1", "pink darken1"],
-                colors: ["#00A0B0", "#CC333F"]
-            }
         },
         methods: {
             ...mapMutations({remove: Do.REMOVE_FROM_BASKET}),

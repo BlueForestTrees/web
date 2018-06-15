@@ -6,8 +6,9 @@
                     <destination :tree="destination"/>
                 </span>
                 <span v-else>
+                    <color-picker v-model="color"/>
                     <v-text-field ref="nom" label="Nom" :rules="[length2min]" required v-model="name"/>
-                    <grandeur-select v-model="grandeur"/>
+                    <grandeur-select v-model="grandeur" label="La quantité est un(e)..."/>
                 </span>
             </v-form>
         </v-card-text>
@@ -17,7 +18,7 @@
 <script>
     import MainDialog from "./MainDialog";
     import On from "../../const/on";
-    import {mapActions, mapMutations} from "vuex";
+    import {mapActions, mapMutations, mapState} from "vuex";
     import {Dial} from "../../const/dial";
     import closable from "../mixin/Closable";
     import GrandeurSelect from "../common/GrandeurSelect";
@@ -27,23 +28,25 @@
     import {length2min} from "../../services/rules";
     import Do from "../../const/do";
     import Destination from "../common/Destination";
-    import {mapState} from "vuex";
     import Ressources from "../tree/Ressources";
+    import {getRandomColor} from "../../services/calculations";
+    import ColorPicker from "../common/ColorPicker";
 
     export default {
         mixins: [closable],
-        components: {Ressources, Destination, UnitSelect, GrandeurSelect, MainDialog},
+        components: {ColorPicker, Ressources, Destination, UnitSelect, GrandeurSelect, MainDialog},
         data() {
             return {
                 Dial: Dial,
                 valid: false,
+                color: null,
                 name: null,
                 grandeur: null,
                 qt: null,
                 unit: null
             }
         },
-        computed:{
+        computed: {
             ...mapState({destination: state => state.dialogs[Dial.ADD_TRUNK].data.tree})
         },
         methods: {
@@ -54,11 +57,12 @@
                 showDialog: Do.SHOW_DIALOG
             }),
             async validate() {
-                const tree = await this.createAndOpen({name: this.name, grandeur: this.grandeur.key});
+                const tree = await this.createAndOpen({color: this.color, name: this.name, grandeur: this.grandeur.key});
                 this.close();
                 this.showDialog({dialog: Dial.SET_QT_UNIT, data: {tree}});
             },
-            length2min
+
+            length2min, getRandomColor
         }
     }
 </script>
