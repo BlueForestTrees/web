@@ -1,8 +1,8 @@
 <template>
-    <v-list v-if="hasItems">
+    <v-list v-if="hasItems" dense>
         <v-subheader>
             <v-tooltip top>
-                <span slot="activator">Propriétés</span>
+                <h4 slot="activator">PROPRIETE</h4>
                 <span>Quantité, Prix, Dimensions, etc...</span>
             </v-tooltip>
             <v-spacer/>
@@ -12,26 +12,14 @@
 
         <set-qt-unit-dialog/>
         <v-list-tile avatar @click="showSetQtUnitDialog">
-            <v-list-tile-content>
-                <v-list-tile-title>Quantité</v-list-tile-title>
-                <v-list-tile-sub-title>
-                    <qt-unit :quantity="tree.trunk.quantity"/>
-                </v-list-tile-sub-title>
-            </v-list-tile-content>
-            <v-spacer/>
+            <v-icon :style="'color: #E6E5E4;margin-right:0.2em'">lens</v-icon>
+            {{qtUnitName(tree.trunk) }}
         </v-list-tile>
 
         <template v-for="item in items">
             <v-list-tile :key="item._id">
-                <v-list-tile-content>
-                    <v-list-tile-title>{{item.name}}</v-list-tile-title>
-                    <v-list-tile-sub-title>
-                        <qt-unit :quantity="item.quantity"/>
-                    </v-list-tile-sub-title>
-                </v-list-tile-content>
-                <v-list-tile-action>
-                    <v-checkbox v-model="selection" :value="item"/>
-                </v-list-tile-action>
+                <v-icon :style="'color: '+getRandomColor()+';margin-right:0.2em'">lens</v-icon>
+                {{qtUnitName(item) }}
             </v-list-tile>
         </template>
     </v-list>
@@ -43,7 +31,7 @@
     import FacetDialog from "../dialog/FacetEntryDialog";
     import {Dial} from "../../const/dial";
     import On from "../../const/on";
-    import {hasQuantity, qtUnitName} from "../../services/calculations";
+    import {getRandomColor, hasQuantity, qtUnitName} from "../../services/calculations";
     import QtUnit from "../common/QtUnit";
     import selectable from "../mixin/Selectable";
     import SetQtUnitDialog from "../dialog/SetQtUnitDialog";
@@ -85,7 +73,7 @@
             deleteItems() {
                 this.dispatchDeleteFacets({facets: this.facets, toDelete: this.selection});
             },
-            hasQuantity
+            hasQuantity, getRandomColor
         }
     }
 </script>

@@ -1,48 +1,40 @@
 <template>
-    <v-list v-if="hasItems">
+    <v-list v-if="hasItems" dense>
         <v-subheader>
             <v-tooltip top>
-                <span slot="activator">Impacts</span>
+                <h4 slot="activator">IMPACT{{bilan ? ' (bilan)' : ''}}</h4>
                 <span>Déchets, Pollutions, etc.</span>
             </v-tooltip>
             <v-spacer/>
+
             <span v-if="!bilan">
                 <v-icon @click="deleteItems" style="cursor: pointer" v-if="selectionNotEmpty()">delete</v-icon>
             </span>
+
             <v-tooltip top>
-                <v-btn-toggle v-model="bilanFlag" slot="activator">
-                    <v-btn flat>
-                        <v-icon>filter_list</v-icon>
-                    </v-btn>
-                </v-btn-toggle>
-                <span>Montrer le cumul</span>
+                <v-btn depressed flat icon small @click="bilan = !bilan" slot="activator">
+                    <v-icon color="grey darken-1">{{bilan ? 'view_stream' : 'view_module'}}</v-icon>
+                </v-btn>
+                <span>{{bilan ? 'Afficher les impacts' : 'Afficher le bilan'}}</span>
             </v-tooltip>
         </v-subheader>
+
         <template v-if="bilan" v-for="item in bilanItems">
             <v-divider/>
-            <v-list-tile :key="'b'+item._id">
-                <v-list-tile-content>
-                    <v-list-tile-title>{{item.name}}</v-list-tile-title>
-                    <v-list-tile-sub-title v-if="hasQuantity(item)">
-                        <qt-unit :quantity="item.quantity"/>
-                    </v-list-tile-sub-title>
-                </v-list-tile-content>
-                <v-list-tile-action>
-                    <v-checkbox v-model="selection" :value="item"/>
-                </v-list-tile-action>
+            <v-list-tile avatar :key="'b'+item.name">
+                <v-icon :style="'color: '+getRandomColor()+';margin-right:0.2em'">lens</v-icon>
+                {{qtUnitName(item) }}
             </v-list-tile>
         </template>
+
         <template v-if="!bilan" v-for="item in items">
             <v-divider/>
-            <v-list-tile avatar :key="'i'+item._id">
-                <v-list-tile-content>
-                    <v-list-tile-title>{{ item.name }}</v-list-tile-title>
-                    <v-list-tile-sub-title v-if="hasQuantity(item)">
-                        <qt-unit :quantity="item.quantity"/>
-                    </v-list-tile-sub-title>
-                </v-list-tile-content>
+            <v-list-tile avatar :key="'i'+item.name">
+                <v-icon :style="'color: '+getRandomColor()+';margin-right:0.2em'">lens</v-icon>
+                {{qtUnitName(item)}}
             </v-list-tile>
         </template>
+
     </v-list>
 </template>
 
@@ -50,7 +42,7 @@
     import {mapActions} from 'vuex';
     import {Dial} from "../../const/dial";
     import On from "../../const/on";
-    import {hasQuantity} from "../../services/calculations";
+    import {getRandomColor, hasQuantity, qtUnitName} from "../../services/calculations";
     import QtUnit from "../common/QtUnit";
     import {isEmpty} from 'lodash';
     import selectable from "../mixin/Selectable";
@@ -62,23 +54,20 @@
         data() {
             return {
                 Dial,
-                bilanFlag: null
+                bilan: false
             }
         },
         mixins: [selectable],
         props: ['tree'],
         computed: {
-            bilan: function () {
-                return this.bilanFlag === 0;
-            },
-            bilanItems: function () {
-                return this.tree && this.tree.impactsTank && this.tree.impactsTank.items;
-            },
             items: function () {
                 return this.impacts && this.impacts.items;
             },
             hasItems: function () {
                 return this.items && this.items.length && this.items.length > 0;
+            },
+            bilanItems: function () {
+                return this.tree && this.tree.impactsTank && this.tree.impactsTank.items;
             },
             impacts: function () {
                 return this.tree && this.tree.impacts;
@@ -90,7 +79,7 @@
             deleteItems() {
                 this.dispatchDeleteImpacts({impacts: this.tree.impacts, toDelete: this.selection});
             },
-            hasQuantity
+            hasQuantity, getRandomColor, qtUnitName
         },
     }
 </script>

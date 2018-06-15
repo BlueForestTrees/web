@@ -2,26 +2,21 @@
     <v-list v-if="hasItems">
         <v-subheader>
             <v-tooltip top>
-                <span slot="activator">Usages</span>
+                <h4 slot="activator">USAGE</h4>
                 <span>Utilisé pour...</span>
             </v-tooltip>
             <v-spacer/>
             <v-icon @click="open" style="cursor: pointer" v-if="oneSelected()">launch</v-icon>
         </v-subheader>
+
         <template v-for="item in items">
             <v-divider/>
-            <v-list-tile avatar :key="item.trunk.name" @click="">
-                <v-list-tile-content>
-                    <v-list-tile-title>{{ item.trunk.name }}</v-list-tile-title>
-                    <v-list-tile-sub-title>
-                        <qt-unit :quantity="item.trunk.quantity"/>
-                    </v-list-tile-sub-title>
-                </v-list-tile-content>
-                <v-list-tile-action>
-                    <v-checkbox v-model="selection" :value="item"/>
-                </v-list-tile-action>
+            <v-list-tile avatar :key="'i'+item.trunk.name">
+                <v-icon :style="'color: '+getRandomColor()+';margin-right:0.2em'">lens</v-icon>
+                {{qtUnitName(item.trunk) }}
             </v-list-tile>
         </template>
+
     </v-list>
 </template>
 
@@ -30,6 +25,7 @@
     import {mapActions} from 'vuex';
     import QtUnit from "../common/QtUnit";
     import selectable from "../mixin/Selectable";
+    import {getRandomColor, qtUnitName} from "../../services/calculations";
 
     export default {
         components: {
@@ -52,7 +48,8 @@
             }),
             open() {
                 this.dispatchOpenItem(this.selection[0]);
-            }
+            },
+            getRandomColor, qtUnitName
         }
     }
 </script>

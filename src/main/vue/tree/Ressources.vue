@@ -2,7 +2,7 @@
     <v-list v-if="hasItems" dense>
         <v-subheader>
             <v-tooltip top>
-                <span slot="activator">Ressources</span>
+                <h4 slot="activator">RESSOURCE{{bilan ? ' (bilan)' : ''}}</h4>
                 <span>Energie, travail, matière première, composants.</span>
             </v-tooltip>
             <v-spacer/>
@@ -12,7 +12,7 @@
             </span>
 
             <v-tooltip top>
-                <v-btn depressed flat icon small @click="switchView" slot="activator">
+                <v-btn depressed flat icon small @click="bilan = !bilan" slot="activator">
                     <v-icon color="grey darken-1">{{bilan ? 'view_stream' : 'view_module'}}</v-icon>
                 </v-btn>
                 <span>{{bilan ? 'Afficher les ressources' : 'Afficher le bilan'}}</span>
@@ -68,9 +68,6 @@
             }
         },
         methods: {
-            switchView: function () {
-                this.bilan = !this.bilan;
-            },
             open() {
                 this.dispatchOpenItem(this.selection[0]);
             },
