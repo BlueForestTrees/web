@@ -4,7 +4,7 @@ export const Dial = {
     ADD_RESSOURCE: "addRessource",
     ADD_FACET: "addFacet",
     ADD_USAGE: "addUsage",
-    COMMENT: 'comment',
+    FEEDBACK: 'feedback',
     FACET_ENTRY: "facetEntry",
     IMPACT_ENTRY: "impactEntry",
     ADD_IMPACT: "impact",

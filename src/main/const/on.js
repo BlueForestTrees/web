@@ -30,6 +30,7 @@ export default {
     SEARCH_TREE: 'searchTree',
     SEARCH_FACET_ENTRY: 'searchFacetEntry',
     SEARCH_IMPACT_ENTRY: 'searchImpactEntry',
+    SEND_FEEDBACK: 'sendFeedback',
     SWIPE_RIGHT: 'SWIPE_RIGHT',
     SWIPE_LEFT: 'SWIPE_LEFT',
     PUT_TRUNK_QUANTITY: "putTrunkQuantity"

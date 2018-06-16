@@ -1,14 +1,14 @@
 <template>
     <v-navigation-drawer fixed app v-model="nav.leftMenuVisible">
         <v-list dense>
-            <v-list-tile @click="showDialog({dialog:Dial.COMMENT})">
+            <v-list-tile @click="showDialog({dialog:Dial.FEEDBACK})">
                 <v-list-tile-action>
                     <v-icon>chat_bubble</v-icon>
                 </v-list-tile-action>
                 <v-list-tile-content>
                     <v-list-tile-title>Faire un commentaire</v-list-tile-title>
                 </v-list-tile-content>
-                <comment-dialog/>
+                <feedback-dialog/>
             </v-list-tile>
             <v-list-tile @click="showDialog({dialog:Dial.FACET_ENTRY})">
                 <v-list-tile-action>
@@ -28,16 +28,6 @@
                 </v-list-tile-action>
                 <v-list-tile-content>
                     <v-list-tile-title>Créer un impact</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile @click="closeTree" v-if="tree">
-                <v-list-tile-action>
-                    <v-layout row>
-                        <v-icon>close</v-icon>
-                    </v-layout>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                    <v-list-tile-title>Fermer</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
             <v-list-tile @click="cloneOpenTree(tree)" v-if="tree">
@@ -65,21 +55,17 @@
     import {mapActions, mapMutations, mapState} from "vuex";
     import {Dial} from "../../const/dial";
     import On from "../../const/on";
-    import CommentDialog from "../dialog/CommentDialog";
+    import FeedbackDialog from "../dialog/FeeedbackDialog";
 
     export default {
-        components: {CommentDialog},
+        components: {FeedbackDialog},
         computed: {
             ...mapState(['tree', 'nav'])
         },
         methods: {
             ...mapMutations({
-                closeTree: Do.CLOSE_TREE,
                 showDialog: Do.SHOW_DIALOG
             }),
-            action(name) {
-                this[name]();
-            },
             ...mapActions({
                 "deleteTrunk": On.DELETE_TREE,
                 'cloneOpenTree': On.CLONE_OPEN_TREE

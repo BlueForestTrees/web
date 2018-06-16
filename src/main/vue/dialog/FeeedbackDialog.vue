@@ -1,5 +1,5 @@
 <template>
-    <main-dialog :dialog="Dial.COMMENT" :title="'Votre avis compte!'" ref="dialog" icon="add_alert"
+    <main-dialog :dialog="Dial.FEEDBACK" :title="'Votre avis compte!'" ref="dialog" icon="add_alert"
                  @esc="close" @enter="validate" @focus="focus"
     >
         <v-card-text>
@@ -8,6 +8,9 @@
                 <v-text-field type="text" label="commentaire" v-model="message" multi-line required :rules="[rules.required, rules.minlength, rules.maxlength]" counter="250"/>
             </v-form>
         </v-card-text>
+
+        <v-alert :value="!!hasAlert" type="error">Votre message n'a pas été envoyé. Réessayez plus tard.</v-alert>
+
     </main-dialog>
 </template>
 
@@ -15,9 +18,11 @@
     import closable from "../mixin/Closable";
     import {Dial} from "../../const/dial";
     import MainDialog from "./MainDialog";
+    import {mapActions} from "vuex";
+    import On from "../../const/on";
 
     export default {
-        name: 'comment-dialog',
+        name: 'feedback-dialog',
         components: {MainDialog},
         mixins: [closable],
         data: function () {
@@ -35,23 +40,23 @@
                     },
                     minlength: value => !value || value.length >= 10 || "Faites un message plus long s'il vous plaît :)",
                     maxlength: value => !value || value.length <= 250 || "Un peu plus court s'il vous plaît :) :)"
-                }
+                },
+                hasAlert: false
             }
         },
         methods: {
-            validate: function () {
+            ...mapActions({sendFeedback: On.SEND_FEEDBACK}),
+            validate: async function () {
                 this.$refs.form.validate();
                 if (this.valid) {
-                    send({mail: this.mail, message: this.message})
-                        .then(v => {
-                            if (v.n === 1 && v.ok === 1) {
-                                this.close();
-                            }
-                        });
+                    this.sendFeedback({mail: this.mail, message: this.message})
+                        .then(() => this.close())
+                        .catch(() => this.hasAlert = true);
                 }
             },
             focus: function () {
                 this.$refs.form.reset();
+                this.hasAlert = false;
             },
         }
     }

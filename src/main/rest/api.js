@@ -52,5 +52,8 @@ export default {
 
     //IMPACT ENTRY
     createImpactEntry: impact => post('api/impactEntry', impact),
-    searchImpactEntry: namepart => get(`api/impactEntry?q=${namepart}`)
+    searchImpactEntry: namepart => get(`api/impactEntry?q=${namepart}`),
+
+    //FEEDBACK
+    sendFeedback: feedback => post(`api/feedback`, feedback)
 }
