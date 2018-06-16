@@ -3,7 +3,7 @@ import api from "../../rest/api";
 
 export default {
 
-    [On.CREATE_IMPACT_ENTRY]: async ({}, {name, grandeur}) => api.createImpactEntry({name, grandeur}),
+    [On.CREATE_IMPACT_ENTRY]: async ({}, {color, name, grandeur}) => api.createImpactEntry({color, name, grandeur}),
 
     [On.SEARCH_IMPACT_ENTRY]: async ({}, {term}) => api.searchImpactEntry(term)
 }

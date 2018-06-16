@@ -17,10 +17,10 @@
                     </v-layout>
                 </v-list-tile-action>
                 <v-list-tile-content>
-                    <v-list-tile-title>Créer une caractéristique</v-list-tile-title>
+                    <v-list-tile-title>Créer une propriété</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
-            <v-list-tile @click="showDialog({dialog:Dial.IMPACT_ENTRY})">
+            <v-list-tile @click="showDialog({dialog:Dial.ADD_IMPACT_ENTRY})">
                 <v-list-tile-action>
                     <v-layout row>
                         <v-icon>add</v-icon>

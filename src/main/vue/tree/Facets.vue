@@ -22,7 +22,6 @@
 <script>
     import Do from "../../const/do"
     import {mapActions, mapMutations} from 'vuex';
-    import FacetDialog from "../dialog/FacetEntryDialog";
     import {Dial} from "../../const/dial";
     import On from "../../const/on";
     import {getRandomColor, hasQuantity, qtUnitName} from "../../services/calculations";
@@ -34,7 +33,6 @@
         components: {
             SetQtUnitDialog,
             QtUnit,
-            FacetDialog
         },
         data() {
             return {

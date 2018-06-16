@@ -8,7 +8,7 @@ const dialogStateFromData = (data) => ({
 const dialogFactory = {
     [Dial.ADD_TRUNK]: () => ({destination: null}),
     [Dial.FACET_ENTRY]: () => ({qt: null, unit: null, name: null}),
-    [Dial.IMPACT_ENTRY]: () => ({qt: null, unit: null, name: null}),
+    [Dial.ADD_IMPACT_ENTRY]: () => ({qt: null, unit: null, name: null}),
     [Dial.ADD_FACET]: () => ({name: null}),
     [Dial.ADD_IMPACT]: () => ({tree: null}),
     [Dial.ADD_RESSOURCE]: () => ({tree: null}),

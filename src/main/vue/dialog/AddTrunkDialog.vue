@@ -33,6 +33,7 @@
     import ColorPicker from "../common/ColorPicker";
 
     export default {
+        name:'add-trunk-dialog',
         mixins: [closable],
         components: {ColorPicker, Ressources, Destination, UnitSelect, GrandeurSelect, MainDialog},
         data() {
