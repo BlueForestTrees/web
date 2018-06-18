@@ -22,7 +22,7 @@
         <template v-if="bilan" v-for="item in bilanItems">
             <v-divider/>
             <v-list-tile avatar :key="'b'+item.name">
-                <v-icon :style="'color: '+getRandomColor()+';margin-right:0.2em'">lens</v-icon>
+                <v-icon :style="'color: '+item.color+';margin-right:0.2em'">lens</v-icon>
                 {{qtUnitName(item) }}
             </v-list-tile>
         </template>
@@ -30,7 +30,7 @@
         <template v-if="!bilan" v-for="item in items">
             <v-divider/>
             <v-list-tile avatar :key="'i'+item.name">
-                <v-icon :style="'color: '+getRandomColor()+';margin-right:0.2em'">lens</v-icon>
+                <v-icon :style="'color: '+item.color+';margin-right:0.2em'">lens</v-icon>
                 {{qtUnitName(item)}}
             </v-list-tile>
         </template>

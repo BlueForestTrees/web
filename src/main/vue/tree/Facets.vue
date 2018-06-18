@@ -12,7 +12,7 @@
 
         <template v-for="item in items">
             <v-list-tile :key="item._id">
-                <v-icon :style="'color: '+getRandomColor()+';margin-right:0.2em'">lens</v-icon>
+                <v-icon :style="'color: '+item.color+';margin-right:0.2em'">lens</v-icon>
                 {{qtUnitName(item) }}
             </v-list-tile>
         </template>

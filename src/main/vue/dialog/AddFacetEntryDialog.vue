@@ -37,7 +37,7 @@
         props: ['data'],
         methods: {
             length2min,
-            ...mapActions({"createFacetEntry": On.CREATE_FACET_ENTRY}),
+            ...mapActions({createFacetEntry: On.CREATE_FACET_ENTRY}),
             validate: function () {
                 this.createFacetEntry({color: this.color, name: this.name, grandeur: this.grandeur.key});
                 this.close();
