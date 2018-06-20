@@ -1,7 +1,7 @@
 <template>
     <v-layout row>
-        <v-btn x-large fab @click="changeColor" :style="{backgroundColor:color}">
-            <v-icon :color="renewColor">autorenew</v-icon>
+        <v-btn x-large fab @click="randomizeColor" :style="{backgroundColor:color}">
+            <v-icon :color="arrowColor">autorenew</v-icon>
         </v-btn>
         <v-text-field label="Couleur" :rules="[isColor]" required v-model="color"/>
     </v-layout>
@@ -16,26 +16,32 @@
         props: ['value'],
         data: function () {
             return {
-                color: getRandomColor()
+                c: null
             }
         },
         computed: {
-            renewColor: function () {
-                return getLuma(this.color) < 120 ? "white" : "black";
+            color: {
+                get: function () {
+                    if (!this.c) this.c = getRandomColor();
+                    return this.c;
+                },
+                set: function (value) {
+                    this.c = value;
+                    this.emitColorChange();
+                }
+            },
+            arrowColor: function () {
+                return getLuma(this.c) < 120 ? "white" : "black";
             }
         },
         methods: {
-            changeColor: function () {
+            randomizeColor: function () {
                 this.color = getRandomColor();
-                this.emitColorChange();
             },
             emitColorChange: function () {
                 this.$emit('input', this.color);
             },
             required, isColor
-        },
-        mounted: function () {
-            this.emitColorChange();
         }
     }
 </script>

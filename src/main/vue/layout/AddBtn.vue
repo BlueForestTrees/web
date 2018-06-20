@@ -39,7 +39,6 @@
         methods: {
             ...mapMutations([Do.SHOW_DIALOG]),
             show(dialog) {
-                console.log(dialog);
                 this.showDialog({dialog, data: {tree: this.tree}});
             }
         }

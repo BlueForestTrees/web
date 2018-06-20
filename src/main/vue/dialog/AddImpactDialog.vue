@@ -86,10 +86,7 @@
                 if (this.valid) {
                     await this.dispatchAddImpact({
                         tree: this.tree,
-                        impact: {
-                            _id: this.selectedItemId, name: this.selectedItem.name,
-                            quantity: {qt: this.qt, unit: this.unit.shortname}
-                        }
+                        impact: Object.assign({quantity: {qt: this.qt, unit: this.unit.shortname}}, this.selectedItem)
                     });
                     this.close();
                 }

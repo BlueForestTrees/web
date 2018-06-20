@@ -95,14 +95,15 @@
             validate() {
                 this.$refs.form.validate();
                 if (this.valid) {
-                    const facet = {
-                        _id: this.selectedItem._id,
-                        name: this.selectedItem.name,
-                        quantity: {
-                            qt: parseFloat(this.qt.replace(',', '.')),
-                            unit: this.unit.shortname
-                        }
-                    };
+                    const facet = Object.assign(
+                        {
+                            quantity: {
+                                qt: parseFloat(this.qt.replace(',', '.')),
+                                unit: this.unit.shortname
+                            }
+                        },
+                        this.selectedItem
+                    );
 
                     this.dispatchAddFacet({tree: this.tree, facet});
                     this.close();
