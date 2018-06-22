@@ -5,13 +5,10 @@
         <v-form v-model="valid" v-on:submit.prevent="" ref="form">
             <v-select
                     label="Nom..." ref="nom"
-                    autocomplete required cache-items autofocus
-                    :loading="loading"
-                    :items="autocompleteItems"
-                    :search-input.sync="itemNamepart"
+                    autocomplete required autofocus
                     v-model="selectedItemId"
+                    :loading="loading" :items="autocompleteItems" :search-input.sync="itemNamepart" :rules="[required]"
                     item-text="trunk.name" item-value="_id"
-                    :rules="[required]"
             ></v-select>
         </v-form>
 

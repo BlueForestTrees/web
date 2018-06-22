@@ -51,6 +51,7 @@
     "request-promise-lite": "^0.12.0",
     "trees-units": "^1.0.11",
     "vue": "^2.5.16",
+    "vue-swatches": "^1.0.1",
     "vuetify": "^1.0.17",
     "vuex": "^3.0.1",
     "window-or-global": "^1.0.1"

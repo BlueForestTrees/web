@@ -1,25 +1,22 @@
 <template>
-    <v-list v-if="hasItems" dense>
+    <v-list v-if="hasBilanItems" dense>
         <v-subheader>
             <v-tooltip top>
-                <h4 slot="activator">IMPACT{{bilan ? ' (bilan)' : ''}}</h4>
+                <h4 slot="activator">IMPACT{{showBilan || !hasItems ? ' (bilan)' : ''}}</h4>
                 <span>Déchets, Pollutions, etc.</span>
             </v-tooltip>
             <v-spacer/>
 
-            <span v-if="!bilan">
-                <v-icon @click="deleteItems" style="cursor: pointer" v-if="selectionNotEmpty()">delete</v-icon>
-            </span>
-
-            <v-tooltip top>
-                <v-btn depressed flat icon small @click="bilan = !bilan" slot="activator">
-                    <v-icon color="grey darken-1">{{bilan ? 'view_stream' : 'view_module'}}</v-icon>
+            <v-tooltip top v-if="hasItems">
+                <v-btn depressed flat icon small @click="showBilan = !showBilan" slot="activator">
+                    <v-icon color="grey darken-1">{{showBilan ? 'view_stream' : 'view_module'}}</v-icon>
                 </v-btn>
-                <span>{{bilan ? 'Afficher les impacts' : 'Afficher le bilan'}}</span>
+                <span>{{showBilan ? 'Afficher les impacts' : 'Afficher le bilan'}}</span>
             </v-tooltip>
+
         </v-subheader>
 
-        <template v-if="bilan" v-for="item in bilanItems">
+        <template v-if="showBilan || !hasItems" v-for="item in bilanItems">
             <v-divider/>
             <v-list-tile avatar :key="'b'+item.name">
                 <v-icon :style="'color: '+item.color+';margin-right:0.2em'">lens</v-icon>
@@ -27,7 +24,7 @@
             </v-list-tile>
         </template>
 
-        <template v-if="!bilan" v-for="item in items">
+        <template v-else v-for="item in items">
             <v-divider/>
             <v-list-tile avatar :key="'i'+item.name">
                 <v-icon :style="'color: '+item.color+';margin-right:0.2em'">lens</v-icon>
@@ -54,7 +51,7 @@
         data() {
             return {
                 Dial,
-                bilan: false
+                showBilan: false
             }
         },
         mixins: [selectable],
@@ -68,6 +65,9 @@
             },
             bilanItems: function () {
                 return this.tree && this.tree.impactsTank && this.tree.impactsTank.items;
+            },
+            hasBilanItems: function () {
+                return this.bilanItems && this.bilanItems.length && this.bilanItems.length > 0;
             },
             impacts: function () {
                 return this.tree && this.tree.impacts;
