@@ -47,11 +47,12 @@ if (conf.mode === "development") {
     }
 }
 if (conf.mode === "production") {
-    conf.plugins.push(new Visualizer({filename: '../visualizer/statistics.html'}));
     conf.output = {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist/blueforest.org')
+        path: path.resolve(__dirname, 'dist/blueforest.org/static')
     };
+    conf.plugins.push(new Visualizer({filename: '../../visualizer/statistics.html'}));
+    conf.plugins.push(new CopyWebpackPlugin([{from: 'nginx', to: '../nginx/'}]));
 }
 
 module.exports = conf;
