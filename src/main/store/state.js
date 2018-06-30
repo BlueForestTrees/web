@@ -18,6 +18,8 @@ const dialogFactory = {
     [Dial.CREATE]: () => ({}),
     [Dial.SET_QT_UNIT]: () => ({}),
     [Dial.FEEDBACK]: () => ({}),
+    [Dial.SUSCRIBE]: () => ({}),
+    [Dial.LOGIN]: () => ({}),
 };
 
 const dialogs = () => reduce(Dial, (dials, key) => {
@@ -30,8 +32,8 @@ export const createDialog = name => (dialogFactory[name] && dialogFactory[name](
 export const tree = () => ({_id: null, trunk: null, selection: null, facets: null});
 
 export default {
+    token: null,
     basket: [],
-
     dialogs: dialogs(),
     nav: {leftMenuVisible: false}
 };

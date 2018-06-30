@@ -3,9 +3,8 @@ import req from 'request-promise-lite';
 
 const baseUrl = root.location ? root.location.href : 'tests/';
 const url = (path) => baseUrl + path;
-const options = (body) => ({body: body, json: true});
 
-export const get = (path) => req.get(url(path), options());
-export const post = (path, body) => req.post(url(path), options(body));
-export const del = (path) => req.del(url(path));
-export const put = (path, body) => req.put(url(path), options(body));
+export const get = (path, reqOpts) => req.get(url(path), {...reqOpts, json: true});
+export const post = (path, body, reqOpts) => req.post(url(path), {body, ...reqOpts, json: true});
+export const del = (path, reqOpts) => req.del(url(path), {...reqOpts, json: true});
+export const put = (path, body, reqOpts) => req.put(url(path), {body, ...reqOpts, json: true});

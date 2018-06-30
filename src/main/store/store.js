@@ -25,6 +25,8 @@ import trunkMutations from "./mutation/trunkMutations";
 import rootMutations from "./mutation/rootMutations";
 import basketMutations from "./mutation/basketMutations";
 import feedbackActions from "./actions/feedbackActions";
+import authActions from "./actions/authActions";
+import authMutations from "./mutation/authMutations";
 
 
 
@@ -43,7 +45,8 @@ const store = new Vuex.Store({
         ...rootMutations,
         ...tankMutations,
         ...treeMutations,
-        ...trunkMutations
+        ...trunkMutations,
+        ...authMutations
     },
     actions: {
         ...appActions,
@@ -58,7 +61,8 @@ const store = new Vuex.Store({
         ...tankActions,
         ...branchActions,
         ...linkActions,
-        ...feedbackActions
+        ...feedbackActions,
+        ...authActions
     }
 });
 

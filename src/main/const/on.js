@@ -23,6 +23,8 @@ export default {
     LOAD_TRUNK: 'loadTrunk',
     LOAD_ROOTS: 'loadRoots',
     LOAD_TANK: 'loadTank',
+    LOGIN: 'login',
+    LOGOUT: 'logout',
     MOUNT_APP: 'mountApp',
     LOAD_TREE: 'loadTree',
     RENAME_TRUNK: 'renameTrunk',
@@ -32,6 +34,7 @@ export default {
     SEARCH_IMPACT_ENTRY: 'searchImpactEntry',
     SEND_FEEDBACK: 'sendFeedback',
     SWIPE_RIGHT: 'SWIPE_RIGHT',
+    SUSCRIBE: 'SUSCRIBE',
     SWIPE_LEFT: 'SWIPE_LEFT',
     PUT_TRUNK_QUANTITY: "putTrunkQuantity"
 };

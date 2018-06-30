@@ -1,6 +1,8 @@
 //Boites de dialogue
 export const Dial = {
     ADD_TRUNK: 'addTrunk',
+    LOGIN: 'login',
+    SUSCRIBE: 'suscribe',
     ADD_RESSOURCE: "addRessource",
     ADD_FACET: "addFacet",
     ADD_USAGE: "addUsage",

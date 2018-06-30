@@ -5,9 +5,9 @@
             <destination :tree="tree"/>
 
             <v-form v-model="valid" v-on:submit.prevent="" ref="form">
-                <v-select
+                <v-autocomplete
                         label="Nom..." ref="nom"
-                        autocomplete required cache-items
+                        required cache-items
                         :loading="loading"
                         :items="autocompleteItems"
                         :search-input.sync="itemNamepart"

@@ -55,5 +55,9 @@ export default {
     searchImpactEntry: namepart => get(`api/impactEntry?q=${namepart}`),
 
     //FEEDBACK
-    sendFeedback: feedback => post(`api/feedback`, feedback)
+    sendFeedback: feedback => post(`api/feedback`, feedback),
+
+    //AUTH
+    suscribe: ({login, password}) => post(`api/suscribe`, {login, password}),
+    login: ({login, password}) => post(`api/auth`, {login, password}, {resolveWithFullResponse: true})
 }

@@ -7,10 +7,25 @@
 
         <div class="d-flex align-center" style="margin-left: auto">
             <v-tooltip bottom>
-                <span slot="activator"><v-btn icon large @click="showSearch"><v-icon>search</v-icon></v-btn></span>
+                <span slot="activator"><v-btn icon large @click="show(Dial.SEARCH)"><v-icon>search</v-icon></v-btn></span>
                 <span style="pointer-events: none">RECHERCHE</span>
             </v-tooltip>
-            <v-avatar size="32px" tile><img src="img/logo-rond.svg" alt="BlueForest"></v-avatar>
+            <v-menu>
+                <v-avatar slot="activator" size="32px" tile><img src="img/logo-rond.svg" alt="BlueForest"></v-avatar>
+                <v-list>
+                    <v-list>
+                        <v-list-tile v-if="!connected" @click="show(Dial.LOGIN)">
+                            <v-list-tile-title>Connexion</v-list-tile-title>
+                        </v-list-tile>
+                        <v-list-tile v-else @click="logout">
+                            <v-list-tile-title>Déconnexion</v-list-tile-title>
+                        </v-list-tile>
+                        <v-list-tile @click="show(Dial.SUSCRIBE)">
+                            <v-list-tile-title>Inscription</v-list-tile-title>
+                        </v-list-tile>
+                    </v-list>
+                </v-list>
+            </v-menu>
         </div>
     </v-toolbar>
 </template>
@@ -18,28 +33,37 @@
 <script>
     import Lookup from "../common/Lookup";
     import MainDialog from "../dialog/MainDialog";
-    import {mapMutations, mapState} from "vuex";
+    import {mapMutations, mapState, mapGetters, mapActions} from "vuex";
     import {Dial} from "../../const/dial";
     import Do from "../../const/do";
-    import {qtUnitName} from "../../services/calculations";
     import Basket from "./Basket";
+    import On from "../../const/on";
 
     export default {
+        data: function () {
+            return {
+                Dial
+            }
+        },
         components: {
             Basket,
             MainDialog,
             Lookup
         },
         computed: {
-            ...mapState(['nav', 'tree'])
+            ...mapState(['nav', 'tree']),
+            ...mapGetters(['connected'])
         },
         methods: {
-            ...mapMutations([Do.SHOW_DIALOG]),
+            ...mapActions({
+                logout: On.LOGOUT
+            }),
             ...mapMutations({
+                showDialog: Do.SHOW_DIALOG,
                 commitVisible: Do.UPDATE_DIALOG_VISIBILITY
             }),
-            showSearch: function () {
-                this.showDialog({dialog: Dial.SEARCH});
+            show: function (dialog) {
+                this.showDialog({dialog});
             }
         }
     }

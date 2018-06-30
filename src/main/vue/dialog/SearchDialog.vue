@@ -3,13 +3,13 @@
                  @esc="close" @focus="focus"
     >
         <v-form v-model="valid" v-on:submit.prevent="" ref="form">
-            <v-select
+            <v-autocomplete
                     label="Nom..." ref="nom"
-                    autocomplete required autofocus
+                    required autofocus
                     v-model="selectedItemId"
                     :loading="loading" :items="autocompleteItems" :search-input.sync="itemNamepart" :rules="[required]"
                     item-text="trunk.name" item-value="_id"
-            ></v-select>
+            ></v-autocomplete>
         </v-form>
 
     </main-dialog>

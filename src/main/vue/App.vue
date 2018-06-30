@@ -18,6 +18,8 @@
 
             <AddBtn/>
 
+            <suscribe-dialog/>
+            <login-dialog/>
             <add-facet-entry-dialog/>
             <add-impact-entry-dialog/>
             <search-dialog/>
@@ -51,6 +53,8 @@
     import AddFacetEntryDialog from "./dialog/AddFacetEntryDialog";
     import AddTrunkDialog from "./dialog/AddTrunkDialog";
     import AddImpactEntryDialog from "./dialog/AddImpactEntryDialog";
+    import SuscribeDialog from "./dialog/SuscribeDialog";
+    import LoginDialog from "./dialog/LoginDialog";
 
     export default {
         data: function () {
@@ -62,6 +66,8 @@
             ...mapState(['basket'])
         },
         components: {
+            LoginDialog,
+            SuscribeDialog,
             AddImpactEntryDialog,
             AddTrunkDialog,
             AddFacetEntryDialog,

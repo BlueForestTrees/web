@@ -21,6 +21,7 @@ export default {
     SET_ROOTS:'setRoots',
     SET_BRANCHES:'setBranches',
     SET_TANK: 'setTank',
+    SET_TOKEN: 'setToken',
     SET_TRUNK: 'setTrunk',
     SHOW_DIALOG: "showDialog",
     SHOW_FACET_ENTRY_DIALOG: "showFacetEntryDialog",

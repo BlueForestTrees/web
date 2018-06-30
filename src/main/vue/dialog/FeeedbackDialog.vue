@@ -5,7 +5,7 @@
         <v-card-text>
             <v-form v-model="valid" v-on:submit.prevent="validate" ref="form">
                 <v-text-field type="mail" label="mail" v-model="mail" required :rules="[rules.required, rules.email]"/>
-                <v-text-field type="text" label="commentaire" v-model="message" multi-line required :rules="[rules.required, rules.minlength, rules.maxlength]" counter="250"/>
+                <v-textarea type="text" label="commentaire" v-model="message" required :rules="[rules.required, rules.minlength, rules.maxlength]" counter="250"/>
             </v-form>
         </v-card-text>
 
@@ -20,6 +20,7 @@
     import MainDialog from "./MainDialog";
     import {mapActions} from "vuex";
     import On from "../../const/on";
+    import {required} from "../../services/rules";
 
     export default {
         name: 'feedback-dialog',
@@ -33,7 +34,7 @@
                 valid: null,
                 done: false,
                 rules: {
-                    required: (value) => !!value || '',
+                    required,
                     email: (value) => {
                         const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                         return pattern.test(value) || 'c\'est une addresse mail?';
