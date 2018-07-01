@@ -14,14 +14,16 @@
                 <v-avatar slot="activator" size="32px" tile><img src="img/logo-rond.svg" alt="BlueForest"></v-avatar>
                 <v-list>
                     <v-list>
-                        <v-list-tile v-if="!connected" @click="show(Dial.LOGIN)">
-                            <v-list-tile-title>Connexion</v-list-tile-title>
+                        <v-list-tile v-if="!connected">
+                            <v-list-tile-title>
+                                <router-link to="/login">Connection</router-link>
+                            </v-list-tile-title>
                         </v-list-tile>
                         <v-list-tile v-else @click="logout">
                             <v-list-tile-title>Déconnexion</v-list-tile-title>
                         </v-list-tile>
-                        <v-list-tile @click="show(Dial.SUSCRIBE)">
-                            <v-list-tile-title>Inscription</v-list-tile-title>
+                        <v-list-tile>
+                            <router-link to="/suscribe">Inscription</router-link>
                         </v-list-tile>
                     </v-list>
                 </v-list>

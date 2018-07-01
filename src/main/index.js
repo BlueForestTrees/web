@@ -5,6 +5,7 @@ import api from "./rest/api";
 import {initUnits} from "trees-units"
 import store from "./store/store";
 import css from "../css/style.css";
+import router from "./router/router"
 
 Vue.config.productionTip = false;
 Vue.use(Vuetify);
@@ -20,6 +21,7 @@ function startApp() {
 
     new Vue({
         el: '#app',
+        router,
         store,
         components: {App},
         template: '<App/>'
