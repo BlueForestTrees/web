@@ -8,6 +8,7 @@ import Inscription from '../vue/Inscription'
 Vue.use(VueRouter);
 
 export default new VueRouter({
+    mode: 'history',
     routes: [
         {path: GO.ROOT, component: BlueForest},
         {path: GO.LOGIN, component: Login},
