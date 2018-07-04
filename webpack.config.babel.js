@@ -41,6 +41,7 @@ const conf = {
 if (conf.mode === "development") {
     conf.devServer = {
         host: "localhost",
+        historyApiFallback: true,
         proxy: {
             "/api": "http://localhost:8080"
         }

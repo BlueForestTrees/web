@@ -1,7 +1,7 @@
 import root from 'window-or-global'
 import req from 'request-promise-lite';
 
-const baseUrl = root.location ? root.location.href : 'tests/';
+const baseUrl = root.location ? root.location.origin : 'tests/';
 const url = (path) => baseUrl + path;
 
 export const get = (path, reqOpts) => req.get(url(path), {...reqOpts, json: true});
