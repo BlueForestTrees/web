@@ -1,7 +1,7 @@
 <template>
     <span v-if="axises">
         <v-layout row>
-            <v-menu offset-y style="width:100%">
+            <v-menu v-if="axises.common.left.length > 0" offset-y style="width:100%">
                 <v-btn flat block slot="activator">A {{base && base.name}} égal(e)</v-btn>
                 <v-list>
                     <v-list-tile v-for="axis in axises.common.left" :key="axis.name" @click="changeBase(axis)">

@@ -58,7 +58,7 @@
             }),
             async validate() {
                 const tree = await this.createTrunk({color: this.color, name: this.name, grandeur: this.grandeur.key});
-                this.putQuantity({trunk: tree.trunk, quantity: {qt: this.qt, unit: this.unit.shortname}});
+                await this.putQuantity({trunk: tree.trunk, quantity: {qt: this.qt, unit: this.unit.shortname}});
                 this.close();
             },
             focus:function(){

@@ -2,6 +2,7 @@
     <v-select
             label="Unité..." item-text="name" required
             :items="items" :value="value" @input="v => $emit('input',v)" :rules="rules"
+            return-object
     />
 </template>
 
