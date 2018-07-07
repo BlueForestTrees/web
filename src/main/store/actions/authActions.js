@@ -3,6 +3,7 @@ import Do from "../../const/do";
 import api from "../../rest/api";
 
 export default {
+    [On.WANT_SUSCRIBE]: ({}, {mail}) => api.wantSuscribe({mail}),
     [On.SUSCRIBE]: ({}, {login, password}) => api.suscribe({login, password}),
     [On.LOGIN]: async ({commit}, {login, password}) => {
         const response = await api.login({login, password});

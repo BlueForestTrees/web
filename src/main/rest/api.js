@@ -58,6 +58,7 @@ export default {
     sendFeedback: feedback => post(`/api/feedback`, feedback),
 
     //AUTH
+    wantSuscribe: ({mail}) => post(`/api/mail`, {mail}),
     suscribe: ({login, password}) => post(`/api/suscribe`, {login, password}),
     login: ({login, password}) => post(`/api/auth`, {login, password}, {resolveWithFullResponse: true})
 }

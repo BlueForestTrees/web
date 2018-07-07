@@ -34,6 +34,7 @@ export default {
     SEARCH_IMPACT_ENTRY: 'searchImpactEntry',
     SEND_FEEDBACK: 'sendFeedback',
     SWIPE_RIGHT: 'SWIPE_RIGHT',
+    WANT_SUSCRIBE: 'wantSuscribe',
     SUSCRIBE: 'SUSCRIBE',
     SWIPE_LEFT: 'SWIPE_LEFT',
     PUT_TRUNK_QUANTITY: "putTrunkQuantity"
