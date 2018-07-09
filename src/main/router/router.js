@@ -12,9 +12,9 @@ export default new VueRouter({
     mode: 'history',
     base: "/",
     routes: [
-        {path: GO.ROOT, component: BlueForest},
-        {path: GO.LOGIN, component: Login},
-        {path: GO.SUSCRIBE, component: Inscription},
-        {path: GO.CONFIRM, component: Confirmation, props: true}
+        {name: GO.ROOT, path: "/", component: BlueForest},
+        {name: GO.LOGIN, path: "/login", component: Login},
+        {name: GO.SUSCRIBE, path: "/suscribe", component: Inscription},
+        {name: GO.CONFIRM, path: "/confirm/:token", component: Confirmation, props: true}
     ]
 });

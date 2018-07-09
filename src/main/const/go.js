@@ -1,6 +1,6 @@
 export const GO = {
-    ROOT: '/',
-    LOGIN: '/login',
-    SUSCRIBE: '/suscribe',
-    CONFIRM: '/confirm/:token'
+    ROOT: 'root',
+    LOGIN: 'login',
+    SUSCRIBE: 'suscribe',
+    CONFIRM: 'confirm'
 };

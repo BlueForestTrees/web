@@ -16,14 +16,14 @@
                     <v-list>
                         <v-list-tile v-if="!connected">
                             <v-list-tile-title>
-                                <router-link to="/login">Connection</router-link>
+                                <router-link :to="{name:GO.LOGIN}">Connection</router-link>
                             </v-list-tile-title>
                         </v-list-tile>
                         <v-list-tile v-else @click="logout">
                             <v-list-tile-title>Déconnexion</v-list-tile-title>
                         </v-list-tile>
                         <v-list-tile>
-                            <router-link to="/suscribe">Inscription</router-link>
+                            <router-link :to="{name:GO.SUSCRIBE}">Inscription</router-link>
                         </v-list-tile>
                     </v-list>
                 </v-list>
@@ -40,11 +40,12 @@
     import Do from "../../const/do";
     import Basket from "./Basket";
     import On from "../../const/on";
+    import {GO} from "../../const/go";
 
     export default {
         data: function () {
             return {
-                Dial
+                Dial, GO
             }
         },
         components: {

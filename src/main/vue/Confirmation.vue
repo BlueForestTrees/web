@@ -1,11 +1,9 @@
 <template>
     <card>
         <span slot="content">
-            <img style="width:20%;padding-top:1em;padding-left:1em;" src="img/logo.svg">
+            <img style="width:20%;padding-top:1em;padding-left:1em;" src="/img/logo.svg">
             {{token}}
         </span>
-
-
     </card>
 </template>
 
