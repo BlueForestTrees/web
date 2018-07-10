@@ -52,6 +52,7 @@
     "request-promise-lite": "^0.12.0",
     "trees-units": "^1.0.11",
     "vue": "^2.5.16",
+    "vue-infinite-scroll": "^2.0.2",
     "vue-router": "^3.0.1",
     "vue-swatches": "^1.0.1",
     "vuetify": "^1.1.1",

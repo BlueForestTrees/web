@@ -6,11 +6,9 @@
         <v-content>
             <v-container fluid>
                 <v-layout justify-center align-center column>
-                    <v-card style="width: 100%">
-                        <basket/>
-                        <compare v-if="basket.length === 2" :leftTree="basket[0]" :rightTree="basket[1]"/>
-                        <tree v-else-if="basket.length === 1" :tree="basket[0]"/>
-                    </v-card>
+                        <!--<basket/>-->
+                        <router-view></router-view>
+                        <!--<compare v-if="basket.length === 2" :leftTree="basket[0]" :rightTree="basket[1]"/>-->
                 </v-layout>
             </v-container>
         </v-content>
@@ -19,7 +17,6 @@
 
         <add-facet-entry-dialog/>
         <add-impact-entry-dialog/>
-        <search-dialog/>
         <add-trunk-dialog/>
         <add-ressource-dialog/>
         <add-impact-dialog/>
@@ -35,7 +32,6 @@
     import On from "../const/on";
     import Lookup from "./common/Lookup";
     import ENV from "../env";
-    import SearchDialog from "./dialog/SearchDialog";
     import {mapState} from 'vuex';
     import Tree from "./tree/Tree";
     import Compare from "./layout/Compare";
@@ -70,7 +66,6 @@
             Basket,
             Compare,
             Tree,
-            SearchDialog,
             Lookup,
             Bar,
             LeftMenu

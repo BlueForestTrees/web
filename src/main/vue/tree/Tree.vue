@@ -1,10 +1,10 @@
 <template>
-    <span>
+    <v-card style="width: 100%">
         <ressources :tree="tree"/>
         <facets :tree="tree"/>
         <impacts :tree="tree"/>
         <branches :tree="tree"/>
-    </span>
+    </v-card>
 </template>
 
 <script>

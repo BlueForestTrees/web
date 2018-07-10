@@ -2,9 +2,10 @@
     <span>
 
     <v-list v-if="!showBilan && hasItems" dense>
+        <v-divider/>
         <v-subheader>
             <v-tooltip top>
-                <h4 slot="activator">RESSOURCE</h4>
+                <h4 slot="activator">RESSOURCES</h4>
                 <span>Energie, travail, matière première, composants.</span>
             </v-tooltip>
             <v-spacer/>
@@ -13,13 +14,12 @@
                 <v-btn depressed flat icon small @click="showBilan = true" slot="activator">
                     <v-icon color="grey darken-1">view_module</v-icon>
                 </v-btn>
-                <span>Afficher le bilan</span>
+                <span>Afficher le bilan des ressources</span>
             </v-tooltip>
 
         </v-subheader>
 
         <template v-for="item in items">
-            <v-divider/>
             <v-list-tile avatar :key="'i'+item.trunk.name">
                 <v-icon :style="{color:item.trunk.color,marginRight:'0.2em'}">lens</v-icon>
                 {{qtUnitName(item.trunk) }}
@@ -28,9 +28,10 @@
     </v-list>
 
     <v-list v-if="showBilan && hasItems" dense>
+        <v-divider/>
         <v-subheader>
             <v-tooltip top>
-                <h4 slot="activator">RESSOURCE (bilan)</h4>
+                <h4 slot="activator">RESSOURCES (bilan)</h4>
                 <span>Energie, travail, matière première, composants.</span>
             </v-tooltip>
             <v-spacer/>
@@ -45,7 +46,6 @@
         </v-subheader>
 
         <template v-for="item in bilanItems">
-            <v-divider/>
             <v-list-tile avatar :key="'b'+item.name">
                 <v-icon :style="{color:item.color,marginRight:'0.2em'}">lens</v-icon>
                 {{qtUnitName(item) }}

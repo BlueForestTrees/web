@@ -7,20 +7,20 @@
 
         <div class="d-flex align-center" style="margin-left: auto">
             <v-tooltip bottom>
-                <span slot="activator"><v-btn icon large @click="show(Dial.SEARCH)"><v-icon>search</v-icon></v-btn></span>
+                <span slot="activator"><v-btn icon large @click="search"><v-icon>search</v-icon></v-btn></span>
                 <span style="pointer-events: none">RECHERCHE</span>
             </v-tooltip>
             <v-menu>
                 <v-avatar slot="activator" v-if="user" size="32px" :style="{backgroundColor:user.color}"><span
-                        :style="{color:overcolor(user.color)}">SM</span></v-avatar>
+                        :style="{color:overcolor(user.color)}">{{initiales(user.fullname)}}</span></v-avatar>
                 <v-avatar slot="activator" v-else size="32px" tile><img src="img/logo-rond.svg" alt="BlueForest">
                 </v-avatar>
 
                 <v-list two-line v-if="user">
                     <v-list-tile @click="">
                         <v-list-tile-avatar size="64px" style="padding-right: 1em">
-                            <v-avatar slot="activator" size="64px" :style="{backgroundColor:user.color}"><span
-                                    :style="{color:overcolor(user.color)}">SM</span></v-avatar>
+                            <v-avatar slot="activator" size="64px" :style="{backgroundColor:user.color}"><h1
+                                    :style="{color:overcolor(user.color)}">{{initiales(user.fullname)}}</h1></v-avatar>
                         </v-list-tile-avatar>
                         <v-list-tile-content>
                             <v-list-tile-title>{{user.fullname}}</v-list-tile-title>
@@ -32,23 +32,7 @@
                     </v-list-tile>
                 </v-list>
 
-                <v-list v-else>
-                    <v-list-tile>
-                        <v-list-tile-avatar size="64px" style="padding-right: 1em">
-                            <v-avatar size="64px"><img style="width: 64px;height:64px" src="img/logo-rond.svg" alt="BlueForest"></v-avatar>
-                        </v-list-tile-avatar>
-                        <v-list-tile-content>
-                            <v-list-tile-title>invité</v-list-tile-title>
-                            <v-list-tile-sub-title>non connecté</v-list-tile-sub-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
-                    <v-list-tile>
-                        <v-btn outline block class="elevation-0" @click="connect">Connexion</v-btn>
-                    </v-list-tile>
-                    <v-list-tile>
-                        <v-btn outline block class="elevation-0" @click="suscribe">Inscription</v-btn>
-                    </v-list-tile>
-                </v-list>
+                <login-suscribe-list v-else/>
 
             </v-menu>
         </div>
@@ -64,7 +48,8 @@
     import Basket from "./Basket";
     import On from "../../const/on";
     import {GO} from "../../const/go";
-    import {overcolor} from "../../services/calculations";
+    import {initiales, overcolor} from "../../services/calculations";
+    import LoginSuscribeList from "../common/LoginSuscribeList";
 
     export default {
         data: function () {
@@ -73,6 +58,7 @@
             }
         },
         components: {
+            LoginSuscribeList,
             Basket,
             MainDialog,
             Lookup
@@ -81,13 +67,10 @@
             ...mapState(['nav', 'tree', 'user'])
         },
         methods: {
-            suscribe: function () {
-                this.$router.push({name: GO.SUSCRIBE});
+            search: function () {
+                this.$router.push({name: "search"});
             },
-            connect: function () {
-                this.$router.push({name: GO.LOGIN});
-            },
-            overcolor,
+            overcolor, initiales,
             ...mapActions({
                 logout: On.LOGOUT
             }),

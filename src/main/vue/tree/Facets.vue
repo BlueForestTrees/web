@@ -1,14 +1,14 @@
 <template>
     <v-list v-if="hasItems" dense>
+        <v-divider/>
         <v-subheader>
             <v-tooltip top>
-                <h4 slot="activator">PROPRIETE</h4>
+                <h4 slot="activator">PROPRIETES</h4>
                 <span>Quantité, Prix, Dimensions, etc...</span>
             </v-tooltip>
             <v-spacer/>
             <v-icon @click="deleteItems" style="cursor: pointer" v-if="selectionNotEmpty()">delete</v-icon>
         </v-subheader>
-        <v-divider/>
 
         <template v-for="item in items">
             <v-list-tile :key="item._id">

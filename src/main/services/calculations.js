@@ -41,3 +41,12 @@ export const getLuma = value => {
 };
 
 export const overcolor = c => getLuma(c) < 120 ? "white" : "black";
+
+export const initiales = fullname => {
+    const nameSplit = fullname.toUpperCase().split(' ');
+    if (nameSplit.length === 1) {
+        return nameSplit[0] ? nameSplit[0].charAt(0):'?';
+    } else {
+        return nameSplit[0].charAt(0) + nameSplit[1].charAt(0);
+    }
+};

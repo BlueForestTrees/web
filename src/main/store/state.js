@@ -14,7 +14,6 @@ const dialogFactory = {
     [Dial.ADD_RESSOURCE]: () => ({tree: null}),
     [Dial.ADD_USAGE]: () => ({tree: null}),
     [Dial.CONFIGURE_LINK]: () => ({left: null, right: null}),
-    [Dial.SEARCH]: () => ({}),
     [Dial.CREATE]: () => ({}),
     [Dial.SET_QT_UNIT]: () => ({}),
     [Dial.FEEDBACK]: () => ({}),

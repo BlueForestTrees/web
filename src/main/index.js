@@ -6,7 +6,9 @@ import {initUnits} from "trees-units"
 import store from "./store/store";
 import css from "../css/style.css";
 import router from "./router/router"
+import infiniteScroll from 'vue-infinite-scroll'
 
+Vue.use(infiniteScroll);
 Vue.config.productionTip = false;
 Vue.use(Vuetify);
 
