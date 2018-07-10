@@ -1,15 +1,22 @@
 import On from "../../const/on";
 import Do from "../../const/do";
 import api from "../../rest/api";
+import {clearAccessToken, setAccessToken} from "../../rest/auth";
+import decode from 'jwt-decode';
 
 export default {
     [On.WANT_SUSCRIBE]: ({}, {mail}) => api.wantSuscribe({mail}),
-    [On.SUSCRIBE]: ({}, {login, password}) => api.suscribe({login, password}),
-    [On.LOGIN]: async ({commit}, {login, password}) => {
-        const response = await api.login({login, password});
-        commit(Do.SET_TOKEN, response.headers["x-access-token"]);
-    },
+
+    [On.CONFIRM_SUSCRIBE]: async ({commit}, {token, fullname, password}) => auth(commit, await api.confirmSuscribe({token, fullname, password})),
+    [On.LOGIN]: async ({commit}, {mail, password}) => auth(commit, await api.login({mail, password})),
+
     [On.LOGOUT]: async ({commit}) => {
-        commit(Do.SET_TOKEN, null);
+        await clearAccessToken();
+        commit(Do.SET_USER, null);
     }
+};
+
+const auth = async (commit, authRes) => {
+    await setAccessToken(authRes.token);
+    commit(Do.SET_USER, decode(authRes.token).user);
 };

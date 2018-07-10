@@ -35,5 +35,6 @@ export default {
     token: null,
     basket: [],
     dialogs: dialogs(),
-    nav: {leftMenuVisible: false}
+    nav: {leftMenuVisible: false},
+    user:null
 };

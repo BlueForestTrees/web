@@ -15,13 +15,13 @@
                             <v-text-field prepend-icon="mail" type="text" placeholder="vous@exemple.com"
                                           label="Votre adresse e-mail" autocomplete="username"
                                           v-model="mail" required autofocus
-                                          :rules="[mailRequired]" :validate-on-blur="true"
+                                          :rules="[mailRequired, validMail]" :validate-on-blur="true"
                             />
                         </v-form>
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="primary" @click="validate" :disabled="!itsAMail">Suivant<v-icon>navigate_next</v-icon></v-btn>
+                        <v-btn color="primary" @click="validate" :disabled="!valid">Suivant<v-icon>navigate_next</v-icon></v-btn>
                     </v-card-actions>
                 </v-container>
                 <v-container v-else>
@@ -42,6 +42,7 @@
     import {mapActions} from "vuex";
     import On from "../const/on";
     import Card from "./layout/Card";
+    import {mailRequired, validMail} from "../services/rules";
 
     export default {
         components: {Card},
@@ -53,13 +54,9 @@
                 mailSent: false
             }
         },
-        computed: {
-            itsAMail: function () {
-                return this.mail && this.mail.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-            },
-        },
         methods: {
-            mailRequired: value => !!value || 'Veuillez indiquer votre adresse e-mail.',
+            mailRequired,
+            validMail,
             validate: async function () {
                 this.$refs.form.validate();
                 if (this.valid) {

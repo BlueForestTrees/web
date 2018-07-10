@@ -11,7 +11,7 @@
 </template>
 
 <script>
-    import {getLuma, getRandomColor} from "../../services/calculations";
+    import {getLuma, getRandomColor, overcolor} from "../../services/calculations";
     import {isColor, required} from "../../services/rules";
     import Swatches from 'vue-swatches';
 
@@ -38,7 +38,7 @@
                 }
             },
             arrowColor: function () {
-                return getLuma(this.c) < 120 ? "white" : "black";
+                return overcolor(this.c);
             }
         },
         methods: {

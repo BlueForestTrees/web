@@ -35,7 +35,7 @@ export default {
     SEND_FEEDBACK: 'sendFeedback',
     SWIPE_RIGHT: 'SWIPE_RIGHT',
     WANT_SUSCRIBE: 'wantSuscribe',
-    SUSCRIBE: 'SUSCRIBE',
+    CONFIRM_SUSCRIBE: 'CONFIRM_SUSCRIBE',
     SWIPE_LEFT: 'SWIPE_LEFT',
     PUT_TRUNK_QUANTITY: "putTrunkQuantity"
 };

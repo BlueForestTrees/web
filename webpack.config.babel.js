@@ -41,11 +41,14 @@ const conf = {
 if (conf.mode === "development") {
     conf.devServer = {
         host: "localhost",
-        historyApiFallback: true,
+        historyApiFallback: {rewrites: [{from: /.*/, to: '/index.html'}]},
         proxy: {
             "/api": "http://localhost:8080"
         }
-    }
+    };
+    conf.output = {
+        publicPath: "/"
+    };
 }
 if (conf.mode === "production") {
     conf.output = {

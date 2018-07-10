@@ -1,20 +1,20 @@
 <template>
     <card>
         <span slot="content">
-
-            <router-link :to="{name:GO.CONFIRM, params:{token:'zoubidou'}}">/confirm/zoubidou</router-link>
-
             <img src="/img/logo.svg" style="width:20%;padding-left:1em;padding-top:1em;">
             <img src="/img/blue.svg" style="width:20%">
             <img src="/img/forest.svg" style="width:28%">
             <v-card-text>
                 <v-form v-model="valid" v-on:submit.prevent="validate" ref="form">
-                    <v-text-field prepend-icon="mail" name="mail" label="Mail" type="text"
-                                  autocomplete="username" v-model="login" required :rules="[rules.required]"
+                    <v-text-field prepend-icon="mail" name="mail" label="Mail" placeholder="vous@exemple.com" type="text"
+                                  autofocus
+                                  autocomplete="username" v-model="mail" required :rules="[mailRequired, validMail]"
                     ></v-text-field>
-                    <v-text-field prepend-icon="lock" name="password" label="Mot de passe" type="password"
+                    <v-text-field prepend-icon="lock" name="password" label="Mot de passe"
+                                  :append-icon="showPwd ? 'visibility_off' : 'visibility'" :type="showPwd ? 'text' : 'password'" @click:append="showPwd = !showPwd"
                                   autocomplete="current-password" v-model="password" required
-                                  :rules="[rules.required]"></v-text-field>
+                                  :rules="[validPassword]"
+                    ></v-text-field>
                 </v-form>
             </v-card-text>
             <v-card-actions>
@@ -27,34 +27,36 @@
 </template>
 
 <script>
-    import {required} from "../services/rules";
     import {mapActions} from "vuex";
     import On from "../const/on";
     import Card from "./layout/Card";
     import {GO} from "../const/go";
+    import {mailRequired, validMail} from "../services/rules";
 
     export default {
         components: {Card},
         data: function () {
             return {
                 GO,
+                showPwd:false,
                 valid: null,
-                login: null,
-                password: null,
-                rules: {
-                    required
-                }
+                mail: null,
+                password: null
             }
         },
         methods: {
-            ...mapActions({onLogin: On.LOGIN}),
+            validPassword: value => !!value || "Veuillez saisir un mot de passe",
+            mailRequired,
+            validMail,
+            ...mapActions({login: On.LOGIN}),
             validate: async function () {
                 this.$refs.form.validate();
                 if (this.valid) {
                     try {
-                        await this.onLogin({login: this.login, password: this.password});
-                        this.$router.push('/')
+                        await this.login({mail: this.mail, password: this.password});
+                        this.$router.push('/');
                     } catch (e) {
+                        console.error(e);
                         this.password = null;
                     }
                 }

@@ -39,3 +39,5 @@ export const getLuma = value => {
 
     return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 };
+
+export const overcolor = c => getLuma(c) < 120 ? "white" : "black";

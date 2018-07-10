@@ -1,4 +1,5 @@
 import {del, get, post, put} from './rest'
+import {ACCESS_TOKEN_KEY} from "../const/others";
 
 export default {
     //TANK
@@ -59,6 +60,12 @@ export default {
 
     //AUTH
     wantSuscribe: ({mail}) => post(`/api/mail`, {mail}),
-    suscribe: ({login, password}) => post(`/api/suscribe`, {login, password}),
-    login: ({login, password}) => post(`/api/auth`, {login, password}, {resolveWithFullResponse: true})
+    confirmSuscribe: async ({token, fullname, password}) => {
+        const res = await post(`/api/confirm`, {t: token, fullname, password}, {resolveWithFullResponse: true});
+        return {token: res.headers[ACCESS_TOKEN_KEY]};
+    },
+    login: async ({mail, password}) => {
+        const res = await post(`/api/auth`, {mail, password}, {resolveWithFullResponse: true});
+        return {token: res.headers[ACCESS_TOKEN_KEY]};
+    }
 }
