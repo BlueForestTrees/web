@@ -1,10 +1,15 @@
 <template>
-    <v-card style="width: 100%">
-        <ressources :tree="tree"/>
-        <facets :tree="tree"/>
-        <impacts :tree="tree"/>
-        <branches :tree="tree"/>
-    </v-card>
+    <v-container fluid>
+        <v-layout justify-center align-center column>
+            <v-card style="width: 100%">
+                <tree-head :tree="tree"/>
+                <ressources :tree="tree"/>
+                <facets :tree="tree"/>
+                <impacts :tree="tree"/>
+                <branches :tree="tree"/>
+            </v-card>
+        </v-layout>
+    </v-container>
 </template>
 
 <script>
@@ -13,16 +18,36 @@
     import Ressources from "./Ressources";
     import Impacts from "./Impacts";
     import BilanRessources from "./BilanRessources";
+    import {LOAD_OPEN_TREE} from "../../const/on";
+    import {mapActions} from "vuex";
+    import On from "../../const/on";
+    import TreeHead from "./TreeHead";
 
     export default {
         components: {
+            TreeHead,
             BilanRessources,
             Impacts,
             Ressources,
             Branches,
             Facets
         },
-        props: ['tree']
+        props: ['_id'],
+        data: function () {
+            return {
+                tree: null
+            }
+        },
+        created: function () {
+            this.refreshTree();
+        },
+        methods: {
+            refreshTree: function () {
+                this.tree = {_id: this._id};
+                this.dispatchOpenItem(this.tree);
+            },
+            ...mapActions({dispatchOpenItem: On.LOAD_OPEN_TREE})
+        }
     }
 </script>
 

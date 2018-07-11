@@ -14,7 +14,6 @@
                 </v-btn>
                 <span>{{showBilan ? 'Afficher les externalités' : 'Afficher le bilan des externalités'}}</span>
             </v-tooltip>
-
         </v-subheader>
 
         <template v-if="showBilan || !hasItems" v-for="item in bilanItems">
@@ -24,7 +23,7 @@
             </v-list-tile>
         </template>
 
-        <template v-else v-for="item in items">
+        <template v-if="!showBilan && hasItems" v-for="item in items">
             <v-list-tile avatar :key="'i'+item.name">
                 <v-icon :style="'color: '+item.color+';margin-right:0.2em'">lens</v-icon>
                 {{qtUnitName(item)}}
@@ -56,20 +55,21 @@
         mixins: [selectable],
         props: ['tree'],
         computed: {
-            items: function () {
-                return this.impacts && this.impacts.items;
+            impacts: function () {
+                return this.tree && this.tree.impacts;
             },
             hasItems: function () {
                 return this.items && this.items.length && this.items.length > 0;
             },
+            items: function () {
+                return this.impacts && this.impacts.items;
+            },
+
             bilanItems: function () {
                 return this.tree && this.tree.impactsTank && this.tree.impactsTank.items;
             },
             hasBilanItems: function () {
                 return this.bilanItems && this.bilanItems.length && this.bilanItems.length > 0;
-            },
-            impacts: function () {
-                return this.tree && this.tree.impacts;
             }
         },
         methods: {

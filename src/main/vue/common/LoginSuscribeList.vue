@@ -2,7 +2,7 @@
     <v-list>
         <v-list-tile>
             <v-list-tile-avatar size="64px" style="padding-right: 1em">
-                <v-avatar size="64px"><img style="width: 64px;height:64px" src="img/logo-rond.svg" alt="BlueForest"></v-avatar>
+                <v-avatar size="64px"><img style="width: 64px;height:64px" src="/img/logo-rond.svg" alt="BlueForest"></v-avatar>
             </v-list-tile-avatar>
             <v-list-tile-content>
                 <v-list-tile-title>Invité</v-list-tile-title>

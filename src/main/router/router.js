@@ -18,11 +18,13 @@ export default new VueRouter({
             name: GO.ROOT, path: "/", component: BlueForest,
             children: [
                 {
-                    path: "tree",
-                    component: Tree
+                    name: GO.TREE,
+                    path: "tree/:_id",
+                    component: Tree,
+                    props:true
                 },
                 {
-                    name:"search",
+                    name: GO.SEARCH,
                     path: "search",
                     component: Search
                 }

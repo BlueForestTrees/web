@@ -2,16 +2,11 @@
     <span>
         <left-menu/>
         <bar/>
-
         <v-content>
-            <v-container fluid>
-                <v-layout justify-center align-center column>
-                        <!--<basket/>-->
-                        <router-view></router-view>
-                        <!--<compare v-if="basket.length === 2" :leftTree="basket[0]" :rightTree="basket[1]"/>-->
-                </v-layout>
-            </v-container>
+            <router-view></router-view>
         </v-content>
+
+        <!--<compare v-if="basket.length === 2" :leftTree="basket[0]" :rightTree="basket[1]"/>-->
 
         <AddBtn/>
 

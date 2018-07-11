@@ -13,7 +13,7 @@
             <v-menu>
                 <v-avatar slot="activator" v-if="user" size="32px" :style="{backgroundColor:user.color}"><span
                         :style="{color:overcolor(user.color)}">{{initiales(user.fullname)}}</span></v-avatar>
-                <v-avatar slot="activator" v-else size="32px" tile><img src="img/logo-rond.svg" alt="BlueForest">
+                <v-avatar slot="activator" v-else size="32px" tile><img src="/img/logo-rond.svg" alt="BlueForest">
                 </v-avatar>
 
                 <v-list two-line v-if="user">

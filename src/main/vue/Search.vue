@@ -1,16 +1,12 @@
 <template>
     <span>
         <v-text-field
-                label="Nom" ref="nom"
+                label="Nom" autofocus
                 v-model="namePart"
-        />
-        <v-autocomplete
-                label="Propriétaire"
-                v-model="ownerPart"
         />
 
         <v-list>
-            <v-list-tile v-for="item in items" :key="item._id">
+            <v-list-tile v-for="item in items" :key="item._id" @click="open(item)">
                 <v-icon :style="'color: '+item.trunk.color+';margin-right:0.2em'">lens</v-icon>
                 {{item.trunk.name}}
             </v-list-tile>
@@ -22,6 +18,7 @@
     import {Dial} from "../const/dial";
     import On from "../const/on";
     import {mapActions} from "vuex";
+    import {GO} from "../const/go";
 
     export default {
         name: "search",
@@ -30,7 +27,6 @@
                 Dial,
                 busy: false,
                 namePart: null,
-                ownerPart: null,
                 items: null
             }
         },
@@ -38,7 +34,6 @@
             query: function () {
                 return {
                     namePart: this.namePart,
-                    ownerPart: this.ownerPart
                 }
             }
         },
@@ -48,17 +43,12 @@
             }
         },
         methods: {
-            ...mapActions({
-                dispatchSearch: On.SEARCH_TREE,
-                dispatchOpen: On.LOAD_OPEN_TREE
-            }),
-            focus() {
-
-                this.$nextTick(() => this.$refs.nom.focus());
+            open: function (item) {
+                this.$router.push({name: GO.TREE, params: {_id: item._id}});
             },
-            loadMore() {
-                console.log("load more")
-            }
+            ...mapActions({
+                dispatchSearch: On.SEARCH_TREE
+            })
         }
     }
 </script>

@@ -1,5 +1,6 @@
 <template>
     <v-list v-if="hasItems">
+        <v-divider/>
         <v-subheader>
             <v-tooltip top>
                 <h4 slot="activator">USAGE</h4>
@@ -10,7 +11,6 @@
         </v-subheader>
 
         <template v-for="item in items">
-            <v-divider/>
             <v-list-tile avatar :key="'i'+item.trunk.name">
                 <v-icon :style="{color:item.trunk.color,marginRight:'0.2em'}">lens</v-icon>{{qtUnitName(item.trunk) }}
             </v-list-tile>

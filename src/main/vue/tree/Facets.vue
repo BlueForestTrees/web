@@ -11,11 +11,12 @@
         </v-subheader>
 
         <template v-for="item in items">
-            <v-list-tile :key="item._id">
+            <v-list-tile :key="item._id" @click="select(item)" :class="item.selected ? 'selected':''">
                 <v-icon :style="'color: '+item.color+';margin-right:0.2em'">lens</v-icon>
                 {{qtUnitName(item) }}
             </v-list-tile>
         </template>
+
     </v-list>
 </template>
 
@@ -56,7 +57,9 @@
             }
         },
         methods: {
-            qtUnitName,
+            select: function (item) {
+                item.selected = true;
+            },
             ...mapMutations({showDialog: Do.SHOW_DIALOG}),
             showSetQtUnitDialog() {
                 this.showDialog({dialog: Dial.SET_QT_UNIT, data: {tree: this.tree}});
@@ -65,7 +68,13 @@
             deleteItems() {
                 this.dispatchDeleteFacets({facets: this.facets, toDelete: this.selection});
             },
-            hasQuantity, getRandomColor
+            qtUnitName, hasQuantity, getRandomColor
         }
     }
 </script>
+
+<style>
+    .selected {
+        color: #FF0000
+    }
+</style>

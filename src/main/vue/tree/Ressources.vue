@@ -75,13 +75,13 @@
         },
         computed: {
             items: function () {
-                return this.tree.roots.items;
+                return this.tree && this.tree.roots && this.tree.roots.items;
             },
             hasItems: function () {
                 return this.items && this.items.length && this.items.length > 0;
             },
             bilanItems: function () {
-                return this.tree.tank && this.tree.tank.items;
+                return this.tree && this.tree.tank && this.tree.tank.items;
             }
         },
         methods: {
