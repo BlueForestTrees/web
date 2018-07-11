@@ -3,7 +3,6 @@ import Vuex from 'vuex'
 import state from './state';
 import getters from './getters';
 import appActions from "./actions/appActions";
-import compareToActions from "./actions/compareToActions";
 import facetActions from "./actions/facetActions";
 import facetEntryActions from "./actions/facetEntryActions";
 import rootActions from "./actions/rootActions";
@@ -27,6 +26,9 @@ import basketMutations from "./mutation/basketMutations";
 import feedbackActions from "./actions/feedbackActions";
 import authActions from "./actions/authActions";
 import userMutation from "./mutation/userMutation";
+import searchActions from "./actions/searchActions";
+import basketActions from "./actions/basketActions";
+import homeActions from "./actions/homeActions";
 
 
 
@@ -50,7 +52,7 @@ const store = new Vuex.Store({
     },
     actions: {
         ...appActions,
-        ...compareToActions,
+        ...basketActions,
         ...facetActions,
         ...facetEntryActions,
         ...impactActions,
@@ -62,7 +64,9 @@ const store = new Vuex.Store({
         ...branchActions,
         ...linkActions,
         ...feedbackActions,
-        ...authActions
+        ...authActions,
+        ...searchActions,
+        ...homeActions
     }
 });
 

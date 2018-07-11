@@ -1,5 +1,5 @@
 <template>
-    <v-toolbar app dark clipped color="blue darken-3">
+    <v-toolbar app dark clipped color="blue darken-3" class="elevation-1">
 
         <v-toolbar-title>
             <v-toolbar-side-icon @click.stop="nav.leftMenuVisible = !nav.leftMenuVisible"/>

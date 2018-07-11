@@ -2,11 +2,10 @@
     <span>
         <left-menu/>
         <bar/>
+
         <v-content>
             <router-view></router-view>
         </v-content>
-
-        <!--<compare v-if="basket.length === 2" :leftTree="basket[0]" :rightTree="basket[1]"/>-->
 
         <AddBtn/>
 
@@ -29,7 +28,6 @@
     import ENV from "../env";
     import {mapState} from 'vuex';
     import Tree from "./tree/Tree";
-    import Compare from "./layout/Compare";
     import Basket from "./layout/Basket";
     import AddBtn from "./layout/AddBtn";
     import AddImpactDialog from "./dialog/AddImpactDialog";
@@ -59,7 +57,6 @@
             AddImpactDialog,
             AddBtn,
             Basket,
-            Compare,
             Tree,
             Lookup,
             Bar,

@@ -1,8 +1,9 @@
 export const GO = {
     SEARCH:'search',
     TREE: 'tree',
-    ROOT: 'root',
+    HOME: 'home',
     LOGIN: 'login',
     SUSCRIBE: 'suscribe',
-    CONFIRM: 'confirm'
+    CONFIRM: 'confirm',
+    COMPARE:'compare'
 };

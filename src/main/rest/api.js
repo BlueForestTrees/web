@@ -1,5 +1,5 @@
 import {del, get, post, put} from './rest'
-import {ACCESS_TOKEN_KEY} from "../const/others";
+import {ACCESS_TOKEN_KEY} from "../const/headers";
 
 export default {
     //TANK

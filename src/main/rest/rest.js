@@ -1,6 +1,6 @@
 import root from 'window-or-global'
 import req from 'request-promise-lite';
-import {ACCESS_TOKEN_KEY} from "../const/others";
+import {ACCESS_TOKEN_KEY} from "../const/headers";
 import {getAccessToken} from "./auth";
 
 const baseUrl = root.location ? root.location.origin : 'tests/';

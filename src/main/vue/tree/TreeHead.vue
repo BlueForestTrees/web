@@ -9,22 +9,18 @@
             </v-btn>
         </v-list-tile>
     </v-list>
-    <span v-else>
-        fsqdfsdf
-    </span>
 </template>
 <script>
     import {qtUnitName} from "../../services/calculations";
-    import {GO} from "../../const/go";
+    import On from "../../const/on";
+    import {mapActions} from "vuex";
 
     export default {
         name: "tree-head",
         props: ["tree"],
         methods: {
             qtUnitName,
-            close: function () {
-                this.$router.push({name:GO.ROOT});
-            }
+            ...mapActions({close:On.GO_HOME}),
         }
     }
 </script>

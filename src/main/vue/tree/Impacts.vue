@@ -40,7 +40,6 @@
     import {getRandomColor, hasQuantity, qtUnitName} from "../../services/calculations";
     import QtUnit from "../common/QtUnit";
     import {isEmpty} from 'lodash';
-    import selectable from "../mixin/Selectable";
 
     export default {
         components: {
@@ -52,7 +51,7 @@
                 showBilan: false
             }
         },
-        mixins: [selectable],
+
         props: ['tree'],
         computed: {
             impacts: function () {
@@ -75,9 +74,6 @@
         methods: {
             ...mapActions({dispatchDeleteImpacts: On.DELETE_IMPACTS}),
 
-            deleteItems() {
-                this.dispatchDeleteImpacts({impacts: this.tree.impacts, toDelete: this.selection});
-            },
             hasQuantity, getRandomColor, qtUnitName
         },
     }

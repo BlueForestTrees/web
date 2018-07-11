@@ -2,13 +2,26 @@ import Do from "../../const/do";
 import On from "../../const/on";
 import api from "../../rest/api";
 import {trunkyAll} from "../../services/calculations";
+import router from "../../router/router";
+import {GO} from "../../const/go";
+
+//on détecte que l'objet n'est pas complet en se basant arbitrairement sur le champ branches
+const needRefresh = tree => !tree.branches;
 
 export default {
-
-    [On.LOAD_OPEN_TREE]: async ({commit, state, dispatch}, treeToLoad) => {
-        await dispatch(On.LOAD_TREE, treeToLoad);
-        commit(Do.ADD_TO_BASKET, treeToLoad);
-        return treeToLoad;
+    [On.GO_TREE]: ({commit, state}, item) => {
+        router.push({name: GO.TREE, params: {_id: item._id}});
+    },
+    [On.LOAD_OPEN_TREE]: async ({getters, commit, state, dispatch}, treeToLoad) => {
+        const _id = treeToLoad._id;
+        const basketItem = getters.basketItem(_id);
+        if (basketItem && !needRefresh(basketItem)) {
+            return basketItem;
+        } else {
+            await dispatch(On.LOAD_TREE, treeToLoad);
+            commit(Do.ADD_TO_BASKET, treeToLoad);
+            return treeToLoad;
+        }
     },
 
     [On.LOAD_TREE]: ({commit, state, dispatch}, treeToLoad) =>
@@ -37,6 +50,6 @@ export default {
 
     [On.DELETE_TREE]: ({commit}, tree) =>
         api.deleteTrunk(tree._id)
-            .then(() => commit(Do.REMOVE_FROM_BASKET, tree))
+            .then(() => commit(Do.REMOVE_FROM_BASKET, tree)),
 
 }

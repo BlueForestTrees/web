@@ -6,7 +6,7 @@
         />
 
         <v-list>
-            <v-list-tile v-for="item in items" :key="item._id" @click="open(item)">
+            <v-list-tile v-for="item in items" :key="item._id" @click="select(item)">
                 <v-icon :style="'color: '+item.trunk.color+';margin-right:0.2em'">lens</v-icon>
                 {{item.trunk.name}}
             </v-list-tile>
@@ -43,11 +43,9 @@
             }
         },
         methods: {
-            open: function (item) {
-                this.$router.push({name: GO.TREE, params: {_id: item._id}});
-            },
             ...mapActions({
-                dispatchSearch: On.SEARCH_TREE
+                dispatchSearch: On.SEARCH_TREE,
+                select: On.SELECT_SEARCH
             })
         }
     }

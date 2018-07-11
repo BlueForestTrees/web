@@ -7,6 +7,8 @@ import Inscription from '../vue/Inscription'
 import Confirmation from '../vue/Confirmation'
 import Tree from '../vue/tree/Tree'
 import Search from '../vue/Search'
+import Default from '../vue/Default'
+import Compare from '../vue/Compare'
 
 Vue.use(VueRouter);
 
@@ -15,8 +17,13 @@ export default new VueRouter({
     base: "/",
     routes: [
         {
-            name: GO.ROOT, path: "/", component: BlueForest,
+            path: "/", component: BlueForest,
             children: [
+                {
+                    name: GO.HOME,
+                    path: '',
+                    component: Default,
+                },
                 {
                     name: GO.TREE,
                     path: "tree/:_id",
@@ -27,6 +34,12 @@ export default new VueRouter({
                     name: GO.SEARCH,
                     path: "search",
                     component: Search
+                },
+                {
+                    name: GO.COMPARE,
+                    path: "compare/:leftId/:rightId",
+                    component: Compare,
+                    props: true
                 }
             ]
         },

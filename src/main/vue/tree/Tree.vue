@@ -42,9 +42,8 @@
             this.refreshTree();
         },
         methods: {
-            refreshTree: function () {
-                this.tree = {_id: this._id};
-                this.dispatchOpenItem(this.tree);
+            refreshTree: async function () {
+                this.tree = await this.dispatchOpenItem({_id: this._id});
             },
             ...mapActions({dispatchOpenItem: On.LOAD_OPEN_TREE})
         }

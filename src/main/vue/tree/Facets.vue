@@ -6,12 +6,10 @@
                 <h4 slot="activator">PROPRIETES</h4>
                 <span>Quantité, Prix, Dimensions, etc...</span>
             </v-tooltip>
-            <v-spacer/>
-            <v-icon @click="deleteItems" style="cursor: pointer" v-if="selectionNotEmpty()">delete</v-icon>
         </v-subheader>
 
         <template v-for="item in items">
-            <v-list-tile :key="item._id" @click="select(item)" :class="item.selected ? 'selected':''">
+            <v-list-tile :key="item._id" @click="toggleSelect(item)" :class="'active'">
                 <v-icon :style="'color: '+item.color+';margin-right:0.2em'">lens</v-icon>
                 {{qtUnitName(item) }}
             </v-list-tile>
@@ -37,7 +35,8 @@
         },
         data() {
             return {
-                Dial: Dial
+                Dial,
+                selection: []
             }
         },
         mixins: [selectable],
@@ -57,13 +56,7 @@
             }
         },
         methods: {
-            select: function (item) {
-                item.selected = true;
-            },
             ...mapMutations({showDialog: Do.SHOW_DIALOG}),
-            showSetQtUnitDialog() {
-                this.showDialog({dialog: Dial.SET_QT_UNIT, data: {tree: this.tree}});
-            },
             ...mapActions({dispatchDeleteFacets: On.DELETE_FACETS}),
             deleteItems() {
                 this.dispatchDeleteFacets({facets: this.facets, toDelete: this.selection});

@@ -50,14 +50,14 @@
             }
         },
         methods: {
-            ...mapActions({confirm: On.CONFIRM_SUSCRIBE}),
+            ...mapActions({confirm: On.CONFIRM_SUSCRIBE, close:On.GO_HOME}),
             nameRequired: value => !!value || 'Veuillez indiquer votre nom complet.',
             validPassword: value => !!value || "Veuillez choisir un mot de passe",
             validate: async function () {
                 this.$refs.form.validate();
                 if (this.valid) {
                     await this.confirm({token: this.token, fullname: this.fullname, password: this.password});
-                    this.$router.push({name: GO.ROOT})
+                    this.close();
                 }
             }
         },
