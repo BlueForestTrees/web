@@ -1,11 +1,5 @@
 <template>
-    <span>
-        <v-container fluid>
-            <v-layout justify-center align-center column>
-                <basket/>
-            </v-layout>
-        </v-container>
-    </span>
+    <basket/>
 </template>
 
 <script>

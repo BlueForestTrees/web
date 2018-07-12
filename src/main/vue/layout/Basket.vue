@@ -1,5 +1,5 @@
 <template>
-    <v-card style="width: 100%">
+    <v-card>
         <v-card-title primary-title>
             <div class="headline">Panier</div>
         </v-card-title>
@@ -7,17 +7,18 @@
             <div>Votre panier est vide. Faites une recherche.</div>
         </v-card-text>
         <v-container>
-            <v-layout>
-                <v-flex :class="isSelected(item) ? 'elevation-6':''" v-if="basket.length > 0"
-                        v-for="item in basket" :key="item._id" @input="remove(item)">
-                    <v-chip close :style="{backgroundColor:shadeColor(item.trunk.color,0.65)}"
+            <v-layout align-center justify-center>
+                <template v-if="basket.length > 0" v-for="item in basket">
+                    <v-chip :key="item._id" close
+                            :style="{backgroundColor:shadeColor(item.trunk.color,0.65)}"
                             @click="toggleSelect(item)" @input="remove(item)">
                         <v-avatar>
-                            <v-icon x-large :style="{color:item.trunk.color}">lens</v-icon>
+                            <v-icon v-if="isSelected(item)" x-large color="green">check_circle</v-icon>
+                            <v-icon v-else x-large :style="{color:item.trunk.color}">lens</v-icon>
                         </v-avatar>
                         <span>{{qtUnitName(item.trunk)}}</span>
                     </v-chip>
-                </v-flex>
+                </template>
             </v-layout>
         </v-container>
         <v-card-actions>
@@ -49,3 +50,9 @@
         }
     }
 </script>
+
+<style>
+    ::after {
+        content: none;
+    }
+</style>
