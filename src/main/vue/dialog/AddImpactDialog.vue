@@ -5,16 +5,16 @@
         <v-card-text v-if="tree">
             <destination :tree="tree"/>
             <v-form v-model="valid" v-on:submit.prevent="" ref="form">
-                <v-select
+                <v-autocomplete
                         label="Nom..." ref="nom"
-                        autocomplete required cache-items
+                        required cache-items
                         :loading="loading"
                         :items="autocompleteItems"
                         :search-input.sync="itemNamepart"
                         v-model="selectedItemId"
                         item-text="name" item-value="_id"
                         :rules="[required, notIn]"
-                ></v-select>
+                ></v-autocomplete>
                 <v-text-field type="number" label="Quantité... (ex.: 10)" v-model="qt" :rules="[required, isNumber]"/>
                 <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]"/>
             </v-form>

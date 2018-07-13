@@ -29,9 +29,7 @@ const conf = {
         new HtmlWebpackPlugin({template: './src/main/index.html', inject: 'body', hash: 'true'}),
         new CopyWebpackPlugin([{from: './src/img', to: 'img'}]),
         new CopyWebpackPlugin([{from: './src/browserconfig.xml', to: '.'}]),
-        new webpack.DefinePlugin({
-            VERSION: JSON.stringify(require("./package.json").version)
-        }),
+        new webpack.DefinePlugin({VERSION: JSON.stringify(require("./package.json").version)}),
         new LodashModuleReplacementPlugin(),
         new VueLoaderPlugin(),
         new ExtractTextPlugin("style.css")
@@ -53,7 +51,8 @@ if (conf.mode === "development") {
 if (conf.mode === "production") {
     conf.output = {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist/blueforest.org/static')
+        path: path.resolve(__dirname, 'dist/blueforest.org/static'),
+        publicPath : '/'
     };
     conf.plugins.push(new Visualizer({filename: '../../visualizer/statistics.html'}));
     conf.plugins.push(new CopyWebpackPlugin([{from: 'nginx', to: '../nginx/'}]));

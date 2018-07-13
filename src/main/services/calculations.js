@@ -1,5 +1,5 @@
 import {map} from 'lodash';
-import {bestQuantity} from "trees-units";
+import {bestQuantity, unitCoef} from "trees-units";
 
 
 export const hasQuantity = e => e && e.quantity && e.quantity.qt && e.quantity.unit;
@@ -72,3 +72,8 @@ export const range = (min, max) => {
     }
     return array;
 };
+
+export const add = (q1, q2) => ({
+    qt: unitCoef(q1.unit, q2.unit) * q1.qt + q2.qt,
+    unit: q2.unit
+});

@@ -1,9 +1,20 @@
 import Vue from 'vue'
 import Do from "../../const/do";
-
+import {find} from 'lodash';
+import {add} from "../../services/calculations";
 
 export default {
-
+    [Do.ADD_IMPACT]: ({}, {tree, impact}) => {
+        const existing = find(tree.impacts.items, {_id: impact._id});
+        if (existing) {
+            existing.quantity = add(impact.quantity, existing.quantity);
+        } else {
+            tree.impacts.items.push(impact);
+        }
+    },
+    [Do.ADD_IMPACT_TANK]: ({}, {tree, impact}) => {
+        tree.impactsTank.items.push(impact);
+    },
     [Do.ADD_IMPACTS_TANK]: ({}, {tree, impactsTank}) => {
         if (!tree.impactsTank) {
             Vue.set(tree, "impactsTank", impactsTank);
@@ -16,13 +27,6 @@ export default {
             Vue.set(tree, "impacts", impacts);
         } else {
             tree.impacts.items.push(impacts);
-        }
-    },
-    [Do.ADD_IMPACT]: ({}, {tree, impact}) => {
-        if (tree.impacts) {
-            tree.impacts.items.push(impact);
-        } else {
-            Vue.set(tree, "impacts", [impact]);
         }
     },
 

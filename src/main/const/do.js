@@ -6,6 +6,7 @@ export default {
     ADD_FACETS: 'addFacets',
     ADD_IMPACTS: 'addImpacts',
     ADD_IMPACTS_TANK: 'addImpactsTank',
+    ADD_IMPACT_TANK: 'addImpactTank',
     ADD_TO_BASKET: 'addToBasket',
     CLEAR_DIALOG_DATA: 'clearDialogData',
     CLEAR_RESULTS: 'clearResults',

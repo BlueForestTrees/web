@@ -20,13 +20,14 @@ export default {
     },
 
     [On.DELETE_IMPACTS]:
-        ({commit}, {impacts, toDelete}) => {
-            api.deleteItems(impacts._id, _.map(toDelete, "_id"));
+        async ({commit}, {impacts, toDelete}) => {
+            await api.deleteItems(impacts._id, _.map(toDelete, "_id"));
             commit(Do.DELETE_IMPACTS, {impacts, toDelete});
         },
     [On.ADD_IMPACT]:
         async ({commit}, {tree, impact}) => {
-            api.addImpact(idQtFrom(tree.trunk), idQtFrom(impact));
+            await api.addImpact(idQtFrom(tree.trunk), idQtFrom(impact));
             commit(Do.ADD_IMPACT, {tree, impact});
+            commit(Do.ADD_IMPACT_TANK, {tree, impact});
         }
 }

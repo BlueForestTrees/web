@@ -7,7 +7,7 @@
                 <span>Utilisé pour...</span>
             </v-tooltip>
             <v-spacer/>
-            <v-icon @click="open" style="cursor: pointer" v-if="oneSelected()">launch</v-icon>
+            <v-icon @click="open" style="cursor: pointer" v-if="oneSelected">launch</v-icon>
         </v-subheader>
 
         <template v-for="item in items">

@@ -10,6 +10,9 @@
                     </v-card-actions>
                     <v-card-text>
                         <v-form v-model="valid" v-on:submit.prevent="validate" ref="form">
+                            <v-text-field prepend-icon="mail" name="mail" label="Mail" type="text"
+                                          autocomplete="username" v-model="mail" disabled
+                            ></v-text-field>
                             <v-text-field prepend-icon="person" type="text" placeholder="prénom nom"
                                           label="Nom complet"
                                           v-model="fullname" required autofocus
@@ -35,7 +38,7 @@
     import Card from "./layout/Card";
     import On from "../const/on";
     import {mapActions} from 'vuex';
-    import {GO} from "../const/go";
+    import decode from 'jwt-decode';
 
     export default {
         name: 'confirmation',
@@ -46,7 +49,8 @@
                 showPwd: false,
                 valid: null,
                 fullname: null,
-                password: null
+                password: null,
+                mail:null
             }
         },
         methods: {
@@ -61,5 +65,8 @@
                 }
             }
         },
+        mounted: function(){
+            this.mail = decode(this.token).mail;
+        }
     }
 </script>
