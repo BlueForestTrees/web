@@ -15,6 +15,6 @@
     ],
     "theme_color": "#1155cc",
     "background_color": "#1155cc",
-    "start_url": "hhtp://blueforest.org",
+    "start_url": "https://blueforest.org",
     "display": "standalone"
 }

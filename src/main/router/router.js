@@ -8,7 +8,7 @@ import Confirmation from '../vue/Confirmation'
 import Tree from '../vue/tree/Tree'
 import Search from '../vue/Search'
 import Default from '../vue/Default'
-import Compare from '../vue/Compare'
+import Compare from '../vue/compare/Compare'
 
 Vue.use(VueRouter);
 

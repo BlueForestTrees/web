@@ -60,3 +60,15 @@ export const initiales = fullname => {
         return nameSplit[0].charAt(0) + nameSplit[1].charAt(0);
     }
 };
+
+export const rad = deg => deg * (Math.PI / 180);
+export const deg = rad => rad / (Math.PI / 180);
+
+export const range = (min, max) => {
+    let array = [], j = 0;
+    for (let i = min; i <= max; i++) {
+        array[j] = i;
+        j++;
+    }
+    return array;
+};

@@ -1,5 +1,5 @@
 import {del, get, post, put} from './rest'
-import {ACCESS_TOKEN_KEY} from "../const/headers";
+import {X_ACCESS_TOKEN} from "../const/headers";
 
 export default {
     //TANK
@@ -62,10 +62,10 @@ export default {
     wantSuscribe: ({mail}) => post(`/api/mail`, {mail}),
     confirmSuscribe: async ({token, fullname, password}) => {
         const res = await post(`/api/confirm`, {t: token, fullname, password}, {resolveWithFullResponse: true});
-        return {token: res.headers[ACCESS_TOKEN_KEY]};
+        return {token: res.headers[X_ACCESS_TOKEN]};
     },
     login: async ({mail, password}) => {
         const res = await post(`/api/auth`, {mail, password}, {resolveWithFullResponse: true});
-        return {token: res.headers[ACCESS_TOKEN_KEY]};
+        return {token: res.headers[X_ACCESS_TOKEN]};
     }
 }

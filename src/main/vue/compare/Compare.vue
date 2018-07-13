@@ -14,41 +14,41 @@
                 <v-icon x-large color="grey">close</v-icon>
             </v-btn>
         </v-layout>
-        <v-layout row wrap>
-            <v-flex><axis-list :axises="axises.left" :name="leftTree.trunk.name" :color="namedColors[0]"/></v-flex>
-            <v-flex><axis-list :axises="axises.common.left" :name="leftTree.trunk.name" :color="namedColors[0]"/></v-flex>
-            <v-flex><axis-list :axises="axises.common.right" :name="rightTree.trunk.name" :color="namedColors[1]"/></v-flex>
-            <v-flex><axis-list :axises="axises.right" :name="rightTree.trunk.name" :color="namedColors[1]"/></v-flex>
-        </v-layout>
+        <compare-table :axises="axises" :left="left" :right="right" :left-color="leftColor" :rightColor="rightColor"/>
+        <compare-radar :axises="axises" :left="left" :right="right" :left-color="'#00ACC1'" :rightColor="'#D81B60'"/>
     </v-container>
 
 </template>
 
 <script>
-    import {applyBase, buildAxises, separate} from "../services/axis";
-    import AxisList from "./common/AxisList";
+    import {applyBase, buildAxises, updateRatios, separate} from "../../services/axis";
+    import On from "../../const/on";
     import {cloneDeep} from 'lodash';
     import {mapActions} from 'vuex';
-    import On from "../const/on";
+    import CompareTable from "./CompareTable";
+    import CompareRadar from "./CompareRadar";
 
     export default {
         components: {
-            AxisList
+            CompareRadar,
+            CompareTable
         },
         name: 'compare',
         props: ['leftId', 'rightId'],
         data: function () {
             return {
-                leftTree: null,
-                rightTree: null,
-                namedColors: ["cyan darken1", "pink darken1"],
-                colors: ["#00A0B0", "#CC333F"],
+                left: null,
+                right: null,
                 base: null,
-                axises: null
+                axises: null,
+                leftColor: "cyan darken1",
+                rightColor: "pink darken1",
             }
         },
-        created: function () {
-            this.refreshTrees();
+        created: async function () {
+            await this.refreshTrees();
+            this.treesToAxises();
+            this.selectDefaultBase();
         },
         methods: {
             ...mapActions({refreshTree: On.LOAD_OPEN_TREE, close: On.GO_HOME}),
@@ -56,15 +56,14 @@
                 let leftPromise = this.refreshTree({_id: this.leftId});
                 let rightPromise = this.refreshTree({_id: this.rightId});
 
-                this.leftTree = await leftPromise;
-                this.rightTree = await rightPromise;
-                this.refreshView();
+                this.left = await leftPromise;
+                this.right = await rightPromise;
             },
-            refreshView: function () {
-                if (this.leftTree && this.rightTree) {
-                    this.axises = separate(cloneDeep(buildAxises(this.leftTree)), cloneDeep(buildAxises(this.rightTree)));
-                    this.changeBase(this.axises.common.left[0]);
-                }
+            treesToAxises: function () {
+                this.axises = separate(cloneDeep(buildAxises(this.left)), cloneDeep(buildAxises(this.right)));
+            },
+            selectDefaultBase: function () {
+                this.changeBase(this.axises.common.left[0]);
             },
             changeBase(v) {
                 this.base = v;

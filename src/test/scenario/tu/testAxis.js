@@ -1,5 +1,5 @@
 import chai from 'chai';
-import {applyCoef, buildAxises, insertRatios, separate} from "../../../main/services/axis";
+import {applyCoef, buildAxises, updateRatios, separate} from "../../../main/services/axis";
 import {withNameIdQtGrandeur} from "../../testPlumbing";
 import {initUnits} from "trees-units"
 import {loadUnitsData} from "../../../../../api/src/main/service/unit/grandeurService";
@@ -23,7 +23,7 @@ describe('Axis calculations', function () {
             tank: {
                 items: []
             },
-            impacts: {
+            impactsTank: {
                 items: []
             }
         };
@@ -33,6 +33,8 @@ describe('Axis calculations', function () {
                 "name": "Quantité",
                 "_qt": 1,
                 "qt": 1,
+                "baseQt": 1000,
+                "_baseQt": 1000,
                 "type": "trunk",
                 "unit": "kg",
                 "grandeur": "Mass"
@@ -49,7 +51,7 @@ describe('Axis calculations', function () {
             tank: {
                 items: [withNameIdQtGrandeur("eau", "b", 3, "L"), withNameIdQtGrandeur("elec", "c", 2, "L")]
             },
-            impacts: {
+            impactsTank: {
                 items: [withNameIdQtGrandeur("co2", "d", 3, "kg"), withNameIdQtGrandeur("poison", "e", 4, "L")]
             }
         };
@@ -59,6 +61,8 @@ describe('Axis calculations', function () {
                 "name": "Quantité",
                 "_qt": 1,
                 "qt": 1,
+                "baseQt": 1000,
+                "_baseQt": 1000,
                 "tree": "Skate",
                 "type": "trunk",
                 "unit": "kg",
@@ -68,6 +72,8 @@ describe('Axis calculations', function () {
                 "name": "vitamine",
                 "_qt": 1,
                 "qt": 1,
+                "baseQt": 1,
+                "_baseQt": 1,
                 "tree": "Skate",
                 "type": "facet",
                 "unit": "g",
@@ -77,6 +83,8 @@ describe('Axis calculations', function () {
                 "name": "voutamine",
                 "_qt": 7,
                 "qt": 7,
+                "baseQt": 7,
+                "_baseQt": 7,
                 "tree": "Skate",
                 "type": "facet",
                 "unit": "g",
@@ -86,6 +94,8 @@ describe('Axis calculations', function () {
                 "name": "eau",
                 "_qt": 3,
                 "qt": 3,
+                "baseQt": 0.003,
+                "_baseQt": 0.003,
                 "tree": "Skate",
                 "type": "tank",
                 "unit": "L",
@@ -95,6 +105,8 @@ describe('Axis calculations', function () {
                 "name": "elec",
                 "_qt": 2,
                 "qt": 2,
+                "_baseQt": 0.002,
+                "baseQt": 0.002,
                 "tree": "Skate",
                 "type": "tank",
                 "unit": "L",
@@ -104,8 +116,10 @@ describe('Axis calculations', function () {
                 "name": "co2",
                 "_qt": 3,
                 "qt": 3,
+                "_baseQt": 3000,
+                "baseQt": 3000,
                 "tree": "Skate",
-                "type": "impacts",
+                "type": "impactsTank",
                 "unit": "kg"
             },
             {
@@ -113,8 +127,10 @@ describe('Axis calculations', function () {
                 "name": "poison",
                 "_qt": 4,
                 "qt": 4,
+                "_baseQt": 0.004,
+                "baseQt": 0.004,
                 "tree": "Skate",
-                "type": "impacts",
+                "type": "impactsTank",
                 "unit": "L",
             }
         ];
@@ -122,17 +138,17 @@ describe('Axis calculations', function () {
     });
     it('applyCoef', function () {
         const axises = [
-            {tree: "leftTreeName", type: "facet", name: "Prix", _qt: 20, unit: "€"},
-            {tree: "leftTreeName", type: "trunk", name: "Quantité", _qt: 20, unit: "l"},
-            {tree: "leftTreeName", type: "tank", name: "Eau", _qt: 5, unit: "mol"},
-            {tree: "leftTreeName", type: "tank", name: "Elec", _qt: 12, unit: "mol"},
+            {tree: "leftTreeName", type: "facet", name: "Prix", _qt: 20, unit: "€", _baseQt: 4},
+            {tree: "leftTreeName", type: "trunk", name: "Quantité", _qt: 20, unit: "l", _baseQt: 6},
+            {tree: "leftTreeName", type: "tank", name: "Eau", _qt: 5, unit: "mol", _baseQt: 8},
+            {tree: "leftTreeName", type: "tank", name: "Elec", _qt: 12, unit: "mol", _baseQt: 10},
         ];
         const coef = 2;
         const expected = [
-            {tree: "leftTreeName", type: "facet", name: "Prix", qt: 40, _qt: 20, unit: "€"},
-            {tree: "leftTreeName", type: "trunk", name: "Quantité", qt: 40, _qt: 20, unit: "l"},
-            {tree: "leftTreeName", type: "tank", name: "Eau", qt: 10, _qt: 5, unit: "mol"},
-            {tree: "leftTreeName", type: "tank", name: "Elec", qt: 24, _qt: 12, unit: "mol"},
+            {tree: "leftTreeName", type: "facet", name: "Prix", qt: 40, _qt: 20, unit: "€", _baseQt: 4, baseQt: 8},
+            {tree: "leftTreeName", type: "trunk", name: "Quantité", qt: 40, _qt: 20, unit: "l", _baseQt: 6, baseQt: 12},
+            {tree: "leftTreeName", type: "tank", name: "Eau", qt: 10, _qt: 5, unit: "mol", _baseQt: 8, baseQt: 16},
+            {tree: "leftTreeName", type: "tank", name: "Elec", qt: 24, _qt: 12, unit: "mol", _baseQt: 10, baseQt: 20},
         ];
 
         applyCoef(axises, coef).should.deep.equal(expected);
@@ -176,59 +192,42 @@ describe('Axis calculations', function () {
         };
         separate(leftAxises, rightAxises).should.deep.equal(expected);
     });
-    it('insertRatio', function () {
-
-        const fakeBaseQtFct = ({qt, unit}) => {
-            if (qt === 60 || qt === 12 || qt === 30) {
-                return qt;
-            } else if (qt === 1) {
-                return 1 * 60;
-            } else if (qt === 5.5) {
-                return 5.5 * 60 * 60;
-            } else if (qt === 24000) {
-                return 24000 * 0.001;
-            } else if (qt === 330) {
-                return 330 * 60;
+    it('updateRatios', function () {
+        const axises = {
+            common: {
+            left: [
+                {tree: "leftTreeName", type: "trunk", name: "Quantité", qt: 60, unit: "sec", baseQt: 60 * 1},
+                {tree: "leftTreeName", type: "facet", name: "Prix", qt: 60, unit: "sec", baseQt: 60 * 1},
+                {tree: "leftTreeName", type: "tank", name: "Elec", qt: 12, unit: "mol", baseQt: 12 * 1},
+                {tree: "leftTreeName", type: "tank", name: "Eau", qt: 5.5, unit: "h", baseQt: 5.5 * 60 * 60}
+            ],
+            right: [
+                {tree: "rightTreeName", type: "trunk", name: "Quantité", qt: 1, unit: "min", baseQt: 1 * 60},
+                {tree: "rightTreeName", type: "facet", name: "Prix", qt: 30, unit: "sec", baseQt: 30 * 1},
+                {tree: "rightTreeName", type: "tank", name: "Elec", qt: 24000, unit: "mmol", baseQt: 24000 * 0.001},
+                {tree: "rightTreeName", type: "tank", name: "Eau", qt: 330, unit: "min", baseQt: 330 * 60}
+            ]
             }
         };
 
-        const common = {
-            left: [
-                {tree: "leftTreeName", type: "trunk", name: "Quantité", qt: 60, unit: "sec"},
-                {tree: "leftTreeName", type: "facet", name: "Prix", qt: 60, unit: "sec"},
-                {tree: "leftTreeName", type: "tank", name: "Elec", qt: 12, unit: "mol"},
-                {tree: "leftTreeName", type: "tank", name: "Eau", qt: 5.5, unit: "h"}
-            ],
-            right: [
-                {tree: "rightTreeName", type: "trunk", name: "Quantité", qt: 1, unit: "min"},
-                {tree: "rightTreeName", type: "facet", name: "Prix", qt: 30, unit: "sec"},
-                {tree: "rightTreeName", type: "tank", name: "Elec", qt: 24000, unit: "mmol"},
-                {tree: "rightTreeName", type: "tank", name: "Eau", qt: 330, unit: "min"}
-            ]
-        };
-
         const expected = {
-            left: [
-                {tree: "leftTreeName", type: "trunk", name: "Quantité", qt: 60, unit: "sec", ratio: 1},
-                {tree: "leftTreeName", type: "facet", name: "Prix", qt: 60, unit: "sec", ratio: 1},
-                {tree: "leftTreeName", type: "tank", name: "Elec", qt: 12, unit: "mol", ratio: 0.5},
-                {tree: "leftTreeName", type: "tank", name: "Eau", qt: 5.5, unit: "h", ratio: 1}
-            ],
-            right: [
-                {tree: "rightTreeName", type: "trunk", name: "Quantité", qt: 1, unit: "min", ratio: 1},
-                {tree: "rightTreeName", type: "facet", name: "Prix", qt: 30, unit: "sec", ratio: 0.5},
-                {tree: "rightTreeName", type: "tank", name: "Elec", qt: 24000, unit: "mmol", ratio: 1},
-                {tree: "rightTreeName", type: "tank", name: "Eau", qt: 330, unit: "min", ratio: 1}
-            ]
+            common: {
+                left: [
+                    {tree: "leftTreeName", type: "trunk", name: "Quantité", qt: 60, unit: "sec", ratio: 1, "baseQt": 60},
+                    {tree: "leftTreeName", type: "facet", name: "Prix", qt: 60, unit: "sec", ratio: 1, "baseQt": 60},
+                    {tree: "leftTreeName", type: "tank", name: "Elec", qt: 12, unit: "mol", ratio: 0.5, "baseQt": 12},
+                    {tree: "leftTreeName", type: "tank", name: "Eau", qt: 5.5, unit: "h", ratio: 1, "baseQt": 19800}
+                ],
+                right: [
+                    {tree: "rightTreeName", type: "trunk", name: "Quantité", qt: 1, unit: "min", ratio: 1, "baseQt": 60},
+                    {tree: "rightTreeName", type: "facet", name: "Prix", qt: 30, unit: "sec", ratio: 0.5, "baseQt": 30},
+                    {tree: "rightTreeName", type: "tank", name: "Elec", qt: 24000, unit: "mmol", ratio: 1, "baseQt": 24},
+                    {tree: "rightTreeName", type: "tank", name: "Eau", qt: 330, unit: "min", ratio: 1, "baseQt": 19800}
+                ]
+            }
         };
 
-        insertRatios(common, fakeBaseQtFct).should.deep.equal(expected);
-    });
-
-    it('complete', function(){
-        const rightTree = {
-
-        } ;
+        updateRatios(axises).should.deep.equal(expected);
     });
 
 });

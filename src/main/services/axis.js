@@ -1,6 +1,6 @@
 import {find, forEach, isNil, map, remove} from 'lodash';
 import {format} from "./calculations";
-import {grandeur, qtUnitCoef} from "trees-units";
+import {toBaseQuantity,grandeur, qtUnitCoef} from "trees-units";
 
 /**
  * un arbre en axes.
@@ -26,6 +26,8 @@ const buildAxis = ({name}, type, items) => map(items, item => ({
     _qt: item.quantity && item.quantity.qt,
     qt: item.quantity && item.quantity.qt,
     unit: item.quantity && item.quantity.unit,
+    baseQt: item.quantity && toBaseQuantity(item.quantity).qt,
+    _baseQt: item.quantity && toBaseQuantity(item.quantity).qt,
     grandeur: grandeur(item.quantity && item.quantity.unit)
 }));
 
@@ -60,25 +62,6 @@ export const separate = (leftAxises, rightAxises) => {
     };
 };
 
-/** Insère sur chaque axe le ratio de sa quantité de 0 à 1*/
-export const insertRatios = ({left, right}, baseQtFunc) => {
-
-    forEach(left, leftAxis => {
-        const rightAxis = find(right, {type: leftAxis.type, name: leftAxis.name});
-
-        const leftBaseQt = baseQtFunc(leftAxis);
-        const rightBaseQt = baseQtFunc(rightAxis);
-
-        leftAxis.ratio = relativeTo1(leftBaseQt, rightBaseQt);
-        rightAxis.ratio = relativeTo1(rightBaseQt, leftBaseQt);
-
-    });
-
-    return {left, right};
-};
-const relativeTo1 = (first, second) => first > second ? 1 : format(first / second);
-
-
 export const applyBase = (base, axises) => {
     if (base) {
         const rightCoef = coefToBase(base, axises.common.right);
@@ -88,13 +71,28 @@ export const applyBase = (base, axises) => {
         const leftCoef = coefToBase(base, axises.common.left);
         applyCoef(axises.left, leftCoef);
         applyCoef(axises.common.left, leftCoef);
+
+        updateRatios(axises);
     }
 };
 
-/** trouve le coef pour passer de la base vers son axe dans la liste */
 export const coefToBase = (base, axises) => {
     const axis = find(axises, {name: base.name});
     return qtUnitCoef(base, {qt: axis._qt, unit: axis.unit});
 };
-/** Applique le coef aux quantités */
-export const applyCoef = (axises, coef) => forEach(axises, axis => axis.qt = axis._qt * coef);
+export const applyCoef = (axises, coef) => forEach(axises, axis => {
+    axis.qt = axis._qt * coef;
+    axis.baseQt = axis._baseQt * coef;
+});
+
+export const updateRatios = (axises) => {
+
+    forEach(axises.common.left, leftAxis => {
+        const rightAxis = find(axises.common.right, {type: leftAxis.type, name: leftAxis.name});
+        leftAxis.ratio = relativeTo1(leftAxis.baseQt, rightAxis.baseQt);
+        rightAxis.ratio = relativeTo1(rightAxis.baseQt, leftAxis.baseQt);
+    });
+
+    return axises;
+};
+const relativeTo1 = (first, second) => first > second ? 1 : format(first / second);

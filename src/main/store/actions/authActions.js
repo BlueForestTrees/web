@@ -17,6 +17,7 @@ export default {
 };
 
 const auth = async (commit, authRes) => {
+    const user = decode(authRes.token).user;
     await setAccessToken(authRes.token);
-    commit(Do.SET_USER, decode(authRes.token).user);
+    commit(Do.SET_USER, user);
 };
