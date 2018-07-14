@@ -2,21 +2,18 @@ html {
   overflow-y: auto
 }
 
-.fadeInOut-quick-enter-active, .fadeInOut-enter-active {
-  transition: opacity .25s
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+  /* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateY(-40px);
+  opacity: 0;
 }
 
-.fadeInOut-leave-active {
-  transition: opacity .2s
-}
-
-.fadeInOut-quick-enter, .fadeInOut-quick-leave-to, .fadeInOut-enter, .fadeInOut-leave-to {
-  opacity: 0
-}
-
-#ressource_stack {
-  flex-direction: column;
-}
 
 .air {
   margin: 2em

@@ -3,12 +3,12 @@
         <v-card-title primary-title>
             <div class="headline">Panier</div>
         </v-card-title>
-        <v-card-text v-if="basket.length === 0">
+        <v-card-text v-if="items.length === 0">
             <div>Votre panier est vide. Faites une recherche.</div>
         </v-card-text>
         <v-container>
             <v-layout align-center justify-center>
-                <template v-if="basket.length > 0" v-for="item in basket">
+                <template v-if="items.length > 0" v-for="item in items">
                     <v-chip :key="item._id" close
                             :style="{backgroundColor:shadeColor(item.trunk.color,0.65)}"
                             @click="toggleSelect(item)" @input="remove(item)">
@@ -23,8 +23,8 @@
         </v-container>
         <v-card-actions>
             <v-spacer/>
-            <v-btn flat color="primary" :disabled="!oneSelected" @click="consult(oneSelected)">Consulter</v-btn>
-            <v-btn flat color="primary" :disabled="!twoSelected" @click="compare">Comparer</v-btn>
+            <v-btn flat color="primary" v-if="!noItems && oneSelected" @click="consult(oneSelected)">Consulter</v-btn>
+            <v-btn flat color="primary" v-if="!noItems && twoSelected" @click="compare">Comparer</v-btn>
         </v-card-actions>
     </v-card>
 </template>
@@ -41,7 +41,10 @@
         name: 'basket',
         mixins: [selectable],
         computed: {
-            ...mapState(['basket'])
+            ...mapState({items: 'basket'}),
+            noItems: function () {
+                return this.items.length === 0;
+            }
         },
         methods: {
             ...mapActions({compare: On.SELECT_COMPARE, consult: On.GO_TREE}),

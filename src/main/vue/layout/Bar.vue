@@ -6,15 +6,30 @@
         </v-toolbar-title>
 
         <div class="d-flex align-center" style="margin-left: auto">
+
+
+
             <v-tooltip bottom>
-                <span slot="activator"><v-btn icon large @click="search"><v-icon>search</v-icon></v-btn></span>
-                <span style="pointer-events: none">RECHERCHE</span>
+                <span slot="activator"><v-btn icon dense @click="search"><v-icon>search</v-icon></v-btn></span>
+                <span style="pointer-events: none">Recherche</span>
             </v-tooltip>
+
+            <v-menu :close-on-content-click="false">
+                <v-tooltip slot="activator" bottom>
+                    <v-btn slot="activator" icon dense><v-icon>shopping_basket</v-icon></v-btn>
+                    <span style="pointer-events: none">Panier</span>
+                </v-tooltip>
+                <basket/>
+            </v-menu>
+
             <v-menu>
-                <v-avatar slot="activator" v-if="user" size="32px" :style="{backgroundColor:user.color}"><span
-                        :style="{color:overcolor(user.color)}">{{initiales(user.fullname)}}</span></v-avatar>
-                <v-avatar slot="activator" v-else size="32px" tile><img src="/img/logo-rond.svg" alt="BlueForest">
+                <v-avatar v-if="user" slot="activator" size="32px" :style="{backgroundColor:user.color}">
+                    <span :style="{color:overcolor(user.color)}">{{initiales(user.fullname)}}</span>
                 </v-avatar>
+                <v-tooltip v-else slot="activator" bottom>
+                    <v-avatar slot="activator" size="32px" tile><img src="/img/logo-rond.svg" alt="BlueForest"></v-avatar>
+                    <span style="pointer-events: none">Connexion</span>
+                </v-tooltip>
 
                 <v-list two-line v-if="user">
                     <v-list-tile @click="">

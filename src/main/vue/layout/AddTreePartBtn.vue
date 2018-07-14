@@ -1,8 +1,7 @@
 <template>
 
-    <span v-if="user">
-        <v-menu v-if="tree" offset-y>
-            <v-btn fab bottom right color="blue darken-3" dark fixed slot="activator">
+        <v-menu offset-y>
+            <v-btn class="elevation-3"  fab bottom right color="blue darken-3" dark fixed slot="activator">
                 <v-icon>add</v-icon>
             </v-btn>
             <v-list>
@@ -13,7 +12,7 @@
                 <v-divider/>
                 <v-list-tile @click="show(Dial.ADD_IMPACT)">
                     <v-list-tile-avatar><v-icon>keyboard_tab</v-icon></v-list-tile-avatar>
-                    <v-list-tile-title>Impact</v-list-tile-title>
+                    <v-list-tile-title>Externalité</v-list-tile-title>
                 </v-list-tile>
                 <v-divider/>
                 <v-list-tile @click="show(Dial.ADD_FACET)">
@@ -27,38 +26,18 @@
                 </v-list-tile>
             </v-list>
         </v-menu>
-        <v-btn v-else class="elevation-1" fab bottom right color="pink" dark fixed @click.stop="show(Dial.ADD_TRUNK)">
-            <v-icon>add</v-icon>
-        </v-btn>
-    </span>
-    <v-menu v-else offset-y>
-        <v-btn class="elevation-1" fab bottom right color="pink" dark fixed slot="activator">
-            <v-icon>add</v-icon>
-        </v-btn>
-        <v-card>
-            <v-card-title primary-title>Créer un produit/service</v-card-title>
-            <v-divider/>
-            <login-suscribe-list/>
-        </v-card>
-    </v-menu>
 
 </template>
 
 <script>
     import Do from "../../const/do";
-    import {mapMutations, mapState} from 'vuex';
+    import {mapMutations} from 'vuex';
     import {Dial} from "../../const/dial";
-    import LoginSuscribeList from "../common/LoginSuscribeList";
 
     export default {
-        components: {LoginSuscribeList},
+        name:"add-tree-part-btn",
         data: function () {return {Dial}},
-        computed: {
-            ...mapState(['user', 'basket']),
-            tree: function () {
-                return this.basket[0];
-            }
-        },
+        props:['tree'],
         methods: {
             ...mapMutations([Do.SHOW_DIALOG]),
             show(dialog) {

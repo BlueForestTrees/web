@@ -7,7 +7,7 @@ import Inscription from '../vue/Inscription'
 import Confirmation from '../vue/Confirmation'
 import Tree from '../vue/tree/Tree'
 import Search from '../vue/Search'
-import Default from '../vue/Default'
+import Home from '../vue/Home'
 import Compare from '../vue/compare/Compare'
 
 Vue.use(VueRouter);
@@ -22,7 +22,7 @@ export default new VueRouter({
                 {
                     name: GO.HOME,
                     path: '',
-                    component: Default,
+                    component: Home,
                 },
                 {
                     name: GO.TREE,

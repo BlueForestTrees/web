@@ -7,17 +7,23 @@ export default {
         }
     },
     computed: {
+        selectionNotEmpty() {
+            return !isEmpty(this.selection);
+        },
+        selecteds() {
+            return this.selection.length;
+        },
         oneSelected() {
             return this.selectionNotEmpty && this.selection.length === 1 && this.selection[0];
         },
         twoSelected() {
             return this.selectionNotEmpty && this.selection.length === 2 && this.selection;
         },
-        selectionNotEmpty() {
-            return !isEmpty(this.selection);
-        }
     },
     methods: {
+        unselect: function () {
+            this.selection = [];
+        },
         isSelected: function (item) {
             for (let i = 0; i < this.selection.length; i++) {
                 if (item === this.selection[i]) {

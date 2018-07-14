@@ -2,12 +2,9 @@
     <span>
         <left-menu/>
         <bar/>
-
         <v-content>
             <router-view></router-view>
         </v-content>
-
-        <AddBtn/>
 
         <add-facet-entry-dialog/>
         <add-impact-entry-dialog/>
@@ -29,7 +26,6 @@
     import {mapState} from 'vuex';
     import Tree from "./tree/Tree";
     import Basket from "./layout/Basket";
-    import AddBtn from "./layout/AddBtn";
     import AddImpactDialog from "./dialog/AddImpactDialog";
     import AddUsageDialog from "./dialog/AddUsageDialog";
     import AddFacetDialog from "./dialog/AddFacetDialog";
@@ -55,7 +51,6 @@
             AddFacetDialog,
             AddUsageDialog,
             AddImpactDialog,
-            AddBtn,
             Basket,
             Tree,
             Lookup,

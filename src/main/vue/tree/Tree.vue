@@ -7,6 +7,7 @@
                 <facets :tree="tree"/>
                 <impacts :tree="tree"/>
                 <branches :tree="tree"/>
+                <add-tree-part-btn :tree="tree"/>
             </v-card>
         </v-layout>
     </v-container>
@@ -22,9 +23,13 @@
     import {mapActions} from "vuex";
     import On from "../../const/on";
     import TreeHead from "./TreeHead";
+    import AddTreeBtn from "../layout/AddTreeBtn";
+    import AddTreePartBtn from "../layout/AddTreePartBtn";
 
     export default {
         components: {
+            AddTreePartBtn,
+            AddTreeBtn,
             TreeHead,
             BilanRessources,
             Impacts,
