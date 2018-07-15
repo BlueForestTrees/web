@@ -13,7 +13,10 @@ export default {
             }
         }
     },
-    [Do.REMOVE_FROM_BASKET]: (state, item) => {
-        state.basket.splice(state.basket.indexOf(item), 1);
+    [Do.REMOVE_FROM_BASKET]: (state, items) => {
+        for(let i = 0; i < items.length; i++){
+            const item = items[i];
+            state.basket.splice(state.basket.indexOf(item), 1);
+        }
     },
 }

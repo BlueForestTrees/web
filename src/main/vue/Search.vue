@@ -26,7 +26,7 @@
                         <span style="pointer-events: none">Comparer</span>
                     </v-tooltip>
                     <v-tooltip bottom>
-                        <v-btn slot="activator" v-if="manySelected" icon dense @click="addSelectionToBasket"><v-icon>save_alt</v-icon></v-btn>
+                        <v-btn slot="activator" v-if="selecteds" icon dense @click="addSelectionToBasket"><v-icon>save_alt</v-icon></v-btn>
                         <span style="pointer-events: none">Ajouter au panier</span>
                     </v-tooltip>
                     <v-tooltip bottom>
@@ -73,16 +73,14 @@
         },
         methods: {
             addSelectionToBasket: async function () {
-                await this.addToBasket(this.selection);
-                this.snack({text: `${this.selecteds} éléments ajoutés au panier.`});
-                this.unselect();
+                this.addToBasket(this.selection)
+                    .then(this.unselect());
             },
             ...mapActions({
                 compare: On.GO_COMPARE,
                 dispatchSearch: On.SEARCH_TREE,
                 goTree: On.GO_TREE,
-                addToBasket: On.ADD_TO_BASKET,
-                snack: On.SNACKBAR
+                addToBasket: On.ADD_TO_BASKET
             })
         }
     }

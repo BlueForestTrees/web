@@ -48,8 +48,8 @@ export default {
     [On.CLONE_TREE]: ({dispatch}, {_id}) =>
         dispatch(On.CLONE_TRUNK, _id),
 
-    [On.DELETE_TREE]: ({commit}, tree) =>
+    [On.DELETE_TREE]: ({dispatch}, tree) =>
         api.deleteTrunk(tree._id)
-            .then(() => commit(Do.REMOVE_FROM_BASKET, tree)),
+            .then(() => dispatch(On.REMOVE_FROM_BASKET, [tree])),
 
 }

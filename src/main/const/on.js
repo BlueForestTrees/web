@@ -45,6 +45,7 @@ export default {
     SWIPE_RIGHT: 'SWIPE_RIGHT',
     WANT_SUSCRIBE: 'wantSuscribe',
     CONFIRM_SUSCRIBE: 'CONFIRM_SUSCRIBE',
+    REMOVE_FROM_BASKET:'removeFromBasket',
     SWIPE_LEFT: 'SWIPE_LEFT',
     PUT_TRUNK_QUANTITY: "putTrunkQuantity"
 };
