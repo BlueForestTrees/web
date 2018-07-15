@@ -21,17 +21,17 @@
                 <div class="d-flex align-center" style="margin-left: auto">
 
                     <v-tooltip bottom>
-                        <v-btn slot="activator" v-if="oneSelected" icon dense @click="goTree(oneSelected)"><v-icon>launch</v-icon></v-btn>
+                        <v-btn slot="activator" v-if="oneSelected" flat dense @click="goTree(oneSelected)">ouvrir<v-icon>launch</v-icon></v-btn>
                         <span style="pointer-events: none">Ouvrir</span>
                     </v-tooltip>
 
                     <v-tooltip bottom>
-                        <v-btn slot="activator" v-if="twoSelected" icon dense @click="compare(twoSelected)"><v-icon>compare_arrows</v-icon></v-btn>
+                        <v-btn slot="activator" v-if="twoSelected" flat dense @click="compare(twoSelected)">comparer<v-icon>compare_arrows</v-icon></v-btn>
                         <span style="pointer-events: none">Comparer</span>
                     </v-tooltip>
 
                     <v-tooltip bottom>
-                        <v-btn slot="activator" v-if="selectionNotEmpty" icon dense @click="removeSelectedItems"><v-icon>delete_outline</v-icon></v-btn>
+                        <v-btn slot="activator" v-if="selectionNotEmpty" flat dense @click="removeSelectedItems">retirer<v-icon>delete_outline</v-icon></v-btn>
                         <span style="pointer-events: none">Retirer</span>
                     </v-tooltip>
 
