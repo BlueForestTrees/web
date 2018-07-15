@@ -26,6 +26,14 @@ const dialogs = () => reduce(Dial, (dials, key) => {
     return dials;
 }, {});
 
+export const snack = () => ({
+    visible: false,
+    multiline: false,
+    timeout: 3000,
+    vertical: false,
+    text: "this message should be overriden."
+});
+
 export const createDialog = name => (dialogFactory[name] && dialogFactory[name]()) || (console.warn(`state.js il manque dialogFactory['${name}']`) || {});
 
 export const tree = () => ({_id: null, trunk: null, selection: null, facets: null});
@@ -36,5 +44,6 @@ export default {
     activeTree: null,
     dialogs: dialogs(),
     nav: {leftMenuVisible: false},
-    user:null
+    user: null,
+    snack: snack()
 };

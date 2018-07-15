@@ -19,6 +19,9 @@ export default {
         twoSelected() {
             return this.selectionNotEmpty && this.selection.length === 2 && this.selection;
         },
+        manySelected() {
+            return this.selectionNotEmpty && this.selection.length > 2 && this.selection;
+        },
     },
     methods: {
         unselect: function () {

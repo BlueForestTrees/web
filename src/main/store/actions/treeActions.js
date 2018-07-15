@@ -19,7 +19,7 @@ export default {
             return basketItem;
         } else {
             await dispatch(On.LOAD_TREE, treeToLoad);
-            commit(Do.ADD_TO_BASKET, treeToLoad);
+            await dispatch(On.ADD_TO_BASKET, [treeToLoad]);
             return treeToLoad;
         }
     },
@@ -43,7 +43,7 @@ export default {
         dispatch(On.LOAD_OPEN_TREE, await dispatch(On.CLONE_TREE, tree)),
 
     [On.SEARCH_TREE]: async ({commit}, {term}) =>
-        trunkyAll(await api.search(term)),
+        trunkyAll(await api.goSearch(term)),
 
     [On.CLONE_TREE]: ({dispatch}, {_id}) =>
         dispatch(On.CLONE_TRUNK, _id),

@@ -7,27 +7,26 @@
 
         <div class="d-flex align-center" style="margin-left: auto">
 
-
-
             <v-tooltip bottom>
-                <span slot="activator"><v-btn icon dense @click="search"><v-icon>search</v-icon></v-btn></span>
+                <v-btn slot="activator" icon dense @click="goSearch"><v-icon>search</v-icon></v-btn>
                 <span style="pointer-events: none">Recherche</span>
             </v-tooltip>
 
-            <v-menu :close-on-content-click="false">
-                <v-tooltip slot="activator" bottom>
-                    <v-btn slot="activator" icon dense><v-icon>shopping_basket</v-icon></v-btn>
-                    <span style="pointer-events: none">Panier</span>
-                </v-tooltip>
-                <basket/>
-            </v-menu>
+            <v-tooltip bottom>
+                <v-btn slot="activator" icon dense @click="goBasket"><v-icon>shopping_basket</v-icon></v-btn>
+                <span style="pointer-events: none">Panier</span>
+            </v-tooltip>
 
             <v-menu>
                 <v-avatar v-if="user" slot="activator" size="32px" :style="{backgroundColor:user.color}">
                     <span :style="{color:overcolor(user.color)}">{{initiales(user.fullname)}}</span>
                 </v-avatar>
                 <v-tooltip v-else slot="activator" bottom>
-                    <v-avatar slot="activator" size="32px" tile><img src="/img/logo-rond.svg" alt="BlueForest"></v-avatar>
+                    <v-btn slot="activator" icon dense>
+                        <v-avatar size="32px" tile>
+                            <img src="/img/logo-rond.svg" alt="BlueForest">
+                        </v-avatar>
+                    </v-btn>
                     <span style="pointer-events: none">Connexion</span>
                 </v-tooltip>
 
@@ -57,10 +56,9 @@
 <script>
     import Lookup from "../common/Lookup";
     import MainDialog from "../dialog/MainDialog";
-    import {mapMutations, mapState, mapGetters, mapActions} from "vuex";
+    import {mapMutations, mapState, mapActions} from "vuex";
     import {Dial} from "../../const/dial";
     import Do from "../../const/do";
-    import Basket from "./Basket";
     import On from "../../const/on";
     import {GO} from "../../const/go";
     import {initiales, overcolor} from "../../services/calculations";
@@ -74,7 +72,6 @@
         },
         components: {
             LoginSuscribeList,
-            Basket,
             MainDialog,
             Lookup
         },
@@ -82,12 +79,14 @@
             ...mapState(['nav', 'tree', 'user'])
         },
         methods: {
-            search: function () {
+            goSearch: function () {
                 this.$router.push({name: "search"});
             },
             overcolor, initiales,
             ...mapActions({
-                logout: On.LOGOUT
+                logout: On.LOGOUT,
+                goSearch: On.GO_SEARCH,
+                goBasket: On.GO_BASKET,
             }),
             ...mapMutations({
                 showDialog: Do.SHOW_DIALOG,

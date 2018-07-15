@@ -1,11 +1,9 @@
+import {GO} from "../../const/go";
 import On from "../../const/on";
-import Do from "../../const/do";
+import router from "../../router/router";
 
 export default {
-
-    [On.SELECT_SEARCH]: ({dispatch, commit}, searchItem) => {
-        commit(Do.ADD_TO_BASKET, searchItem);
-        dispatch(On.GO_HOME);
+    [On.GO_SEARCH]: ({}) => {
+        router.push({name: GO.SEARCH});
     },
-
 };

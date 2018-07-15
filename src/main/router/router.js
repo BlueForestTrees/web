@@ -8,6 +8,7 @@ import Confirmation from '../vue/Confirmation'
 import Tree from '../vue/tree/Tree'
 import Search from '../vue/Search'
 import Home from '../vue/Home'
+import Basket from '../vue/Basket'
 import Compare from '../vue/compare/Compare'
 
 Vue.use(VueRouter);
@@ -34,6 +35,11 @@ export default new VueRouter({
                     name: GO.SEARCH,
                     path: "search",
                     component: Search
+                },
+                {
+                    name: GO.BASKET,
+                    path: "basket",
+                    component: Basket
                 },
                 {
                     name: GO.COMPARE,

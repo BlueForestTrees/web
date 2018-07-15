@@ -5,9 +5,8 @@
 </template>
 
 <script>
-    import Basket from "./layout/Basket";
     import AddTreeBtn from "./layout/AddTreeBtn";
     export default {
-        components: {AddTreeBtn, Basket}
+        components: {AddTreeBtn}
     }
 </script>

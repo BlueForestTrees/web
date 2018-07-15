@@ -33,7 +33,7 @@ export default {
     addImpact: (trunk, impact) => post(`/api/impact`, {trunk, impact}),
 
     //TRUNKS
-    search: name => get(`/api/trunks?q=${name}`),
+    goSearch: name => get(`/api/trunks?q=${name}`),
 
     //TRUNK
     createTrunk: trunk => post('/api/trunk', trunk),

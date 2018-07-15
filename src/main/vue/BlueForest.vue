@@ -6,6 +6,8 @@
             <router-view></router-view>
         </v-content>
 
+        <snack :snack="snack"/>
+
         <add-facet-entry-dialog/>
         <add-impact-entry-dialog/>
         <add-trunk-dialog/>
@@ -25,7 +27,6 @@
     import ENV from "../env";
     import {mapState} from 'vuex';
     import Tree from "./tree/Tree";
-    import Basket from "./layout/Basket";
     import AddImpactDialog from "./dialog/AddImpactDialog";
     import AddUsageDialog from "./dialog/AddUsageDialog";
     import AddFacetDialog from "./dialog/AddFacetDialog";
@@ -33,6 +34,7 @@
     import AddFacetEntryDialog from "./dialog/AddFacetEntryDialog";
     import AddTrunkDialog from "./dialog/AddTrunkDialog";
     import AddImpactEntryDialog from "./dialog/AddImpactEntryDialog";
+    import Snack from "./layout/snack";
 
     export default {
         data: function () {
@@ -41,9 +43,10 @@
             }
         },
         computed: {
-            ...mapState(['basket'])
+            ...mapState(['basket', 'snack'])
         },
         components: {
+            Snack,
             AddImpactEntryDialog,
             AddTrunkDialog,
             AddFacetEntryDialog,
@@ -51,7 +54,6 @@
             AddFacetDialog,
             AddUsageDialog,
             AddImpactDialog,
-            Basket,
             Tree,
             Lookup,
             Bar,

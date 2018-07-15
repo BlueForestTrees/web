@@ -14,7 +14,6 @@ import impactEntryActions from "./actions/impactEntryActions";
 import branchActions from "./actions/branchActions";
 import linkActions from "./actions/linkActions";
 import branchMutations from "./mutation/branchMutations";
-import compareToMutations from "./mutation/compareToMutations";
 import dialogMutations from "./mutation/dialogMutations";
 import facetMutation from "./mutation/facetMutation";
 import impactMutations from "./mutation/impactMutations";
@@ -29,6 +28,10 @@ import userMutation from "./mutation/userMutation";
 import searchActions from "./actions/searchActions";
 import basketActions from "./actions/basketActions";
 import homeActions from "./actions/homeActions";
+import snackbarActions from "./actions/snackbarActions";
+import snackbarMutations from "./mutation/snackbarMutations";
+import compareMutations from "./mutation/compareMutations";
+import compareActions from "./actions/compareActions";
 
 
 
@@ -40,7 +43,7 @@ const store = new Vuex.Store({
     mutations:{
         ...basketMutations,
         ...branchMutations,
-        ...compareToMutations,
+        ...compareMutations,
         ...dialogMutations,
         ...facetMutation,
         ...impactMutations,
@@ -49,6 +52,7 @@ const store = new Vuex.Store({
         ...treeMutations,
         ...trunkMutations,
         ...userMutation,
+        ...snackbarMutations
     },
     actions: {
         ...appActions,
@@ -65,8 +69,10 @@ const store = new Vuex.Store({
         ...linkActions,
         ...feedbackActions,
         ...authActions,
+        ...snackbarActions,
         ...searchActions,
-        ...homeActions
+        ...homeActions,
+        ...compareActions
     }
 });
 

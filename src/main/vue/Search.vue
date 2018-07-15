@@ -1,11 +1,10 @@
 <template>
     <span>
+        <v-card-title primary-title>
+            <p class="headline" style="padding-right:1em">Recherche</p>
+            <v-text-field label="Filtre" autofocus v-model="namePart"/>
+        </v-card-title>
 
-
-        <v-text-field
-                label="Nom" autofocus
-                v-model="namePart"
-        />
 
         <template>
             <v-list-tile v-for="item in items" :key="item._id" @click="toggleSelect(item)" :style="{background: isSelected(item) ? '#E8F5E9' : '', transition: 'background .2s ease'}">
@@ -16,14 +15,18 @@
         </template>
 
         <transition name="slide-fade">
-            <v-toolbar v-if="selectionNotEmpty" app color="green lighten-2">
+            <v-toolbar v-if="selectionNotEmpty" app dark class="elevation-0" color="green lighten-2">
                 <div class="d-flex align-center" style="margin-left: auto">
                     <v-tooltip bottom>
-                        <v-btn slot="activator" :disabled="!oneSelected" icon dense @click=""><v-icon>launch</v-icon></v-btn>
-                        <span style="pointer-events: none">Consulter</span>
+                        <v-btn slot="activator" v-if="oneSelected" icon dense @click="goTree(oneSelected)"><v-icon>launch</v-icon></v-btn>
+                        <span style="pointer-events: none">Ouvrir</span>
                     </v-tooltip>
                     <v-tooltip bottom>
-                        <v-btn slot="activator" icon dense @click=""><v-icon>save_alt</v-icon></v-btn>
+                        <v-btn slot="activator" v-if="twoSelected" icon dense @click="compare(twoSelected)"><v-icon>compare_arrows</v-icon></v-btn>
+                        <span style="pointer-events: none">Comparer</span>
+                    </v-tooltip>
+                    <v-tooltip bottom>
+                        <v-btn slot="activator" v-if="manySelected" icon dense @click="addSelectionToBasket"><v-icon>save_alt</v-icon></v-btn>
                         <span style="pointer-events: none">Ajouter au panier</span>
                     </v-tooltip>
                     <v-tooltip bottom>
@@ -53,6 +56,9 @@
                 items: null
             }
         },
+        mounted: function () {
+            this.namePart = "";
+        },
         computed: {
             query: function () {
                 return {
@@ -66,9 +72,17 @@
             }
         },
         methods: {
+            addSelectionToBasket: async function () {
+                await this.addToBasket(this.selection);
+                this.snack({text: `${this.selecteds} éléments ajoutés au panier.`});
+                this.unselect();
+            },
             ...mapActions({
+                compare: On.GO_COMPARE,
                 dispatchSearch: On.SEARCH_TREE,
-                select: On.SELECT_SEARCH
+                goTree: On.GO_TREE,
+                addToBasket: On.ADD_TO_BASKET,
+                snack: On.SNACKBAR
             })
         }
     }

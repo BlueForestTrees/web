@@ -62,7 +62,7 @@
             focus() {
                 this.$refs.termInput.focus();
             },
-            async search(value) {
+            async goSearch(value) {
                 this.term = value;
                 if (value) {
                     this.searching = true;

@@ -71,13 +71,13 @@
         watch: {
             itemNamepart(val) {
                 this.loading = true;
-                this.search(val);
+                this.goSearch(val);
                 this.loading = false;
             }
         },
         methods: {
             ...mapActions({dispatchSearch: On.SEARCH_IMPACT_ENTRY, dispatchAddImpact: On.ADD_IMPACT}),
-            async search(term) {
+            async goSearch(term) {
                 if (term)
                     this.autocompleteItems = await this.dispatchSearch({term});
             },

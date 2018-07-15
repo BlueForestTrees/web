@@ -65,7 +65,7 @@
         watch: {
             itemNamepart(val) {
                 this.loading = true;
-                this.search(val);
+                this.goSearch(val);
                 this.loading = false;
             }
         },
@@ -87,7 +87,7 @@
             focus() {
 
             },
-            async search(term) {
+            async goSearch(term) {
                 if (term)
                     this.autocompleteItems = await this.dispatchSearch({term});
             },

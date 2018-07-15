@@ -77,7 +77,7 @@
         watch: {
             itemNamepart(val) {
                 this.loading = true;
-                this.search(val);
+                this.goSearch(val);
                 this.loading = false;
             }
         },
@@ -88,7 +88,7 @@
                 this.autocompleteItems = [];
                 this.$nextTick(() => this.$refs.nom.focus());
             },
-            async search(namepart) {
+            async goSearch(namepart) {
                 if (namepart)
                     this.autocompleteItems = await this.dispatchSearch({namepart});
             },

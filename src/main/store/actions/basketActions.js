@@ -1,9 +1,13 @@
 import router from "../../router/router";
 import {GO} from "../../const/go";
 import On from "../../const/on";
+import Do from "../../const/do";
 
 export default {
-    [On.SELECT_COMPARE]: ({state}) => {
-        router.push({name: GO.COMPARE, params: {leftId: state.basket[0]._id, rightId: state.basket[1]._id}});
+    [On.GO_BASKET]: ({}) => {
+        router.push({name: GO.BASKET});
     },
+    [On.ADD_TO_BASKET]: ({commit}, items) => {
+        commit(Do.ADD_TO_BASKET, items);
+    }
 };

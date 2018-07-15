@@ -27,9 +27,8 @@ export default {
     SHOW_FACET_ENTRY_DIALOG: "showFacetEntryDialog",
     SHOW_IMPACT_ENTRY_DIALOG: "showImpactEntryDialog",
     SHOW_OTHER_TREE_DIALOG: "showOtherTreeDialog",
-    SWAP_LEFT_RIGHT: 'swapLeftRight',
-    INIT_COMPARE_TO: 'initCompareTo',
     UPDATE_DIALOG_VISIBILITY: 'updateDialogVisibility',
     UPDATE_DIALOG_DATA: 'updateDialogData',
+    UPDATE_SNACKBAR:'updateSnackbar',
     PUT_TRUNK_QUANTITY: 'upsertQuantity'
 };
