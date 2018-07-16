@@ -6,6 +6,7 @@ export default {
             selection: []
         }
     },
+    props:['maxSelectionSize'],
     computed: {
         selectionNotEmpty() {
             return !isEmpty(this.selection);
@@ -45,6 +46,9 @@ export default {
             }
             if (!removed) {
                 this.selection.push(item);
+                if (this.maxSelectionSize < this.selection.length) {
+                    this.selection.splice(0, this.selection.length - this.maxSelectionSize);
+                }
             }
         }
     }

@@ -54,7 +54,6 @@
 </template>
 
 <script>
-    import Lookup from "../common/Lookup";
     import MainDialog from "../dialog/MainDialog";
     import {mapMutations, mapState, mapActions} from "vuex";
     import {Dial} from "../../const/dial";
@@ -72,8 +71,7 @@
         },
         components: {
             LoginSuscribeList,
-            MainDialog,
-            Lookup
+            MainDialog
         },
         computed: {
             ...mapState(['nav', 'tree', 'user'])

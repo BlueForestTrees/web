@@ -6,7 +6,6 @@ export default {
     CLONE_TRUNK: "cloneTrunk",
     CLONE_OPEN_TREE: "cloneOpenTree",
     LINK: "link",
-    CREATE_AND_OPEN_TREE: 'onCreateAndOpenTree',
     CREATE_ADD_RESSOURCE: 'createAddRessource',
     CREATE_FACET_ENTRY: 'onCreateFacetEntry',
     CREATE_IMPACT_ENTRY: 'onCreateImpactEntry',

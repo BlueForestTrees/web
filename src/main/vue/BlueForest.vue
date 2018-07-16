@@ -23,7 +23,6 @@
     import LeftMenu from './layout/LeftMenu';
     import Bar from "./layout/Bar";
     import On from "../const/on";
-    import Lookup from "./common/Lookup";
     import ENV from "../env";
     import {mapState} from 'vuex';
     import Tree from "./tree/Tree";
@@ -55,7 +54,6 @@
             AddUsageDialog,
             AddImpactDialog,
             Tree,
-            Lookup,
             Bar,
             LeftMenu
         },

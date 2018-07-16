@@ -1,87 +1,44 @@
 <template>
-    <span>
-        <v-card-title primary-title>
-            <p class="headline" style="padding-right:1em">Recherche</p>
-            <v-text-field label="Filtre" autofocus v-model="namePart"/>
-        </v-card-title>
-
-
-        <template>
-            <v-list-tile v-for="item in items" :key="item._id" @click="toggleSelect(item)" :style="{background: isSelected(item) ? '#E8F5E9' : '', transition: 'background .2s ease'}">
-                <v-icon v-if="isSelected(item)" color="green">check_circle</v-icon>
-                <v-icon v-else :style="'color: '+item.trunk.color+';margin-right:0.2em'">lens</v-icon>
-                {{item.trunk.name}}
-            </v-list-tile>
+    <search-comp>
+        <template slot-scope="{ s }">
+            <v-tooltip bottom>
+                <v-btn slot="activator" v-if="s.oneSelected" flat dense @click="goTree(s.oneSelected)">ouvrir<v-icon>launch</v-icon></v-btn>
+                <span style="pointer-events: none">Ouvrir</span>
+            </v-tooltip>
+            <v-tooltip bottom>
+                <v-btn slot="activator" v-if="s.twoSelected" flat dense @click="compare(s.twoSelected)">comparer<v-icon>compare_arrows</v-icon></v-btn>
+                <span style="pointer-events: none">Comparer</span>
+            </v-tooltip>
+            <v-tooltip bottom>
+                <v-btn slot="activator" v-if="s.selecteds" flat dense @click="addToBasket(s.selection);s.unselect()">panier<v-icon>save_alt</v-icon></v-btn>
+                <span style="pointer-events: none">Ajouter au panier</span>
+            </v-tooltip>
+            <v-tooltip bottom>
+                <span slot="activator"><v-btn icon dense @click="s.unselect()"><v-icon>close</v-icon></v-btn></span>
+                <span style="pointer-events: none">Fermer</span>
+            </v-tooltip>
         </template>
-
-        <transition name="slide-fade">
-            <v-toolbar v-if="selectionNotEmpty" app dark class="elevation-0" color="green lighten-2">
-                <div class="d-flex align-center" style="margin-left: auto">
-                    <v-tooltip bottom>
-                        <v-btn slot="activator" v-if="oneSelected" flat dense @click="goTree(oneSelected)">ouvrir<v-icon>launch</v-icon></v-btn>
-                        <span style="pointer-events: none">Ouvrir</span>
-                    </v-tooltip>
-                    <v-tooltip bottom>
-                        <v-btn slot="activator" v-if="twoSelected" flat dense @click="compare(twoSelected)">comparer<v-icon>compare_arrows</v-icon></v-btn>
-                        <span style="pointer-events: none">Comparer</span>
-                    </v-tooltip>
-                    <v-tooltip bottom>
-                        <v-btn slot="activator" v-if="selecteds" flat dense @click="addSelectionToBasket">panier<v-icon>save_alt</v-icon></v-btn>
-                        <span style="pointer-events: none">Ajouter au panier</span>
-                    </v-tooltip>
-                    <v-tooltip bottom>
-                        <span slot="activator"><v-btn icon dense @click="unselect()"><v-icon>close</v-icon></v-btn></span>
-                        <span style="pointer-events: none">Fermer</span>
-                    </v-tooltip>
-                </div>
-            </v-toolbar>
-        </transition>
-    </span>
+    </search-comp>
 </template>
 
 <script>
-    import {Dial} from "../const/dial";
     import On from "../const/on";
     import {mapActions} from "vuex";
-    import selectable from "./mixin/Selectable";
+    import SearchComp from "./SearchComp";
 
     export default {
         name: "search",
-        mixins: [selectable],
-        data() {
-            return {
-                Dial,
-                busy: false,
-                namePart: null,
-                items: null
-            }
-        },
-        mounted: function () {
-            this.namePart = "";
-        },
-        computed: {
-            query: function () {
-                return {
-                    namePart: this.namePart,
-                }
-            }
-        },
-        watch: {
-            query: async function (q) {
-                this.items = await this.dispatchSearch({term: q.namePart});
-            }
-        },
+        components: {SearchComp},
+
         methods: {
-            addSelectionToBasket: async function () {
-                this.addToBasket(this.selection)
-                    .then(this.unselect());
-            },
             ...mapActions({
                 compare: On.GO_COMPARE,
-                dispatchSearch: On.SEARCH_TREE,
                 goTree: On.GO_TREE,
                 addToBasket: On.ADD_TO_BASKET
             })
-        }
+        },
+        mounted: function () {
+            console.log("search mounted");
+        },
     }
 </script>

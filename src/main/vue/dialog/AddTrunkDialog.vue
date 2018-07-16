@@ -49,7 +49,7 @@
                 goTree: On.GO_TREE
             }),
             async validate() {
-                const tree = await this.createTrunk({color: this.color, name: this.name, grandeur: this.grandeur.key});
+                const tree = await this.createTrunk({color: this.color, name: this.name});
                 await this.putQuantity({trunk: tree.trunk, quantity: {qt: this.qt, unit: this.unit.shortname}});
                 this.close();
                 this.goTree(tree);

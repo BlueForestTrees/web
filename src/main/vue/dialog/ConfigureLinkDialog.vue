@@ -44,7 +44,6 @@
     import MainDialog from "./MainDialog";
     import {mapActions} from "vuex";
     import {Dial} from "../../const/dial";
-    import Lookup from "../common/Lookup";
     import InplaceEdit from "../common/InplaceEdit";
     import InplaceUnitEdit from "../common/InplaceUnitEdit";
     import On from "../../const/on";
@@ -52,7 +51,7 @@
     export default {
         name: 'configure-link-dialog',
         components: {
-            InplaceUnitEdit, InplaceEdit, Lookup, MainDialog
+            InplaceUnitEdit, InplaceEdit, MainDialog
         },
         data() {
             return {
