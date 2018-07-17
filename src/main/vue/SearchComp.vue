@@ -13,9 +13,7 @@
 
         <transition name="slide-fade">
             <v-toolbar v-if="selectionNotEmpty" app dark class="elevation-0" color="green lighten-2">
-                <div class="d-flex align-center" style="margin-left: auto">
-                    <slot :s="this"></slot>
-                </div>
+                <slot :s="this"></slot>
             </v-toolbar>
         </transition>
     </span>

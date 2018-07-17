@@ -1,6 +1,9 @@
 import {isEmpty} from 'lodash';
+import On from "../../const/on";
+import {mapActions} from 'vuex';
 
 export default {
+
     data: function () {
         return {
             selection: []
@@ -50,6 +53,13 @@ export default {
                     this.selection.splice(0, this.selection.length - this.maxSelectionSize);
                 }
             }
-        }
+        },
+        goTree: function (tree) {
+            this.unselect();
+            this.dispatchGoTree(tree);
+        },
+        ...mapActions({
+            dispatchGoTree: On.GO_TREE,
+        })
     }
 }

@@ -43,15 +43,20 @@
                 tree: null
             }
         },
-        created: function () {
-            this.refreshTree();
-        },
         methods: {
             refreshTree: async function () {
                 this.tree = await this.dispatchOpenItem({_id: this._id});
             },
             ...mapActions({dispatchOpenItem: On.LOAD_OPEN_TREE})
-        }
+        },
+        created: function () {
+            this.refreshTree();
+        },
+        watch: {
+            '$route'(to, from) {
+                this.refreshTree();
+            }
+        },
     }
 </script>
 

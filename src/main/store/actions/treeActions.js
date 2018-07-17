@@ -1,11 +1,10 @@
-import Do from "../../const/do";
 import On from "../../const/on";
 import api from "../../rest/api";
 import {trunkyAll} from "../../services/calculations";
 import router from "../../router/router";
 import {GO} from "../../const/go";
 
-//on détecte que l'objet n'est pas complet en se basant arbitrairement sur le champ branches
+//on détecte que l'objet est à charger en se basant arbitrairement sur le champ branches
 const needRefresh = tree => !tree.branches;
 
 export default {

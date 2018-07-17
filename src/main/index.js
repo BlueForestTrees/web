@@ -7,7 +7,9 @@ import store from "./store/store";
 import css from "../css/style.css";
 import router from "./router/router"
 import infiniteScroll from 'vue-infinite-scroll'
+import AsyncComputed from 'vue-async-computed'
 
+Vue.use(AsyncComputed)
 Vue.use(infiniteScroll);
 Vue.config.productionTip = false;
 Vue.use(Vuetify);
