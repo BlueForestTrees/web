@@ -1,16 +1,16 @@
 <template>
     <main-dialog :dialog="Dial.ADD_RESSOURCE" ref="dialog" :title="'Nouvelle ressource'"
-                 @esc="close" @enter="validate" @focus="focus"
-                 :noaction="noaction">
+                 @esc="close" @enter="validateForm" @focus="focus"
+                 :noaction="searching">
         <v-card-text>
             <destination :tree="tree"/>
 
             <v-form v-model="valid" v-on:submit.prevent="" ref="form">
 
-                <search-comp :maxSelectionSize="1">
+                <search-comp v-if="searching" :maxSelectionSize="1">
                     <template slot-scope="{ s }">
                         <v-tooltip bottom>
-                            <v-btn slot="activator" v-if="s.selecteds" flat dense @click="select(s.selection);s.unselect()">
+                            <v-btn slot="activator" v-if="s.selecteds" flat dense @click="validateSearch(s)">
                                 <v-icon>done</v-icon>
                                 Valider
                             </v-btn>
@@ -18,16 +18,27 @@
                         </v-tooltip>
 
                         <v-tooltip bottom>
-                            <span slot="activator"><v-btn icon dense @click="s.unselect()"><v-icon>close</v-icon></v-btn></span>
+                            <span slot="activator"><v-btn icon dense @click="closeSearch(s)"><v-icon>close</v-icon></v-btn></span>
                             <span style="pointer-events: none">Fermer</span>
                         </v-tooltip>
                     </template>
                 </search-comp>
 
-                <span v-if="!noaction">
-                    <v-text-field type="number" label="Quantité... (ex.: 10)" v-model="qt" :rules="[required, isNumber]"/>
-                    <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]"/>
-                </span>
+                <v-card v-else>
+                    <v-card-title>
+                        <v-icon large :style="{color: selectedItem.trunk.color,marginRight:'0.2em'}">lens</v-icon>
+                        {{selectedItem.trunk.name}}
+                        <v-spacer/>
+                        <v-btn icon @click="cancelItem">
+                            <v-icon color="grey darken-2">delete</v-icon>
+                        </v-btn>
+                    </v-card-title>
+                    <v-card-text>
+                        <v-text-field type="number" label="Quantité... (ex.: 10)" v-model="qt" :rules="[required, isNumber]"/>
+                        <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]"/>
+                    </v-card-text>
+                </v-card>
+
             </v-form>
         </v-card-text>
     </main-dialog>
@@ -58,22 +69,40 @@
                 qt: null,
                 unit: null,
                 grandeur: null,
+                searchAgain: false,
                 valid: false
             }
         },
         components: {SearchComp, GrandeurSelect, UnitSelect, Destination, MainDialog},
         computed: {
-            ...mapState({tree: state => state.dialogs.addRessource.data.tree})
+            ...mapState({tree: state => state.dialogs.addRessource.data.tree}),
+            searching: function () {
+                return this.searchAgain || !this.selectedItem;
+            }
         },
         methods: {
+            validateSearch: function (s) {
+                const item = s.selection[0];
+                if (!item.trunk.quantity) {
+                    this.snack({text: "Ressource inutilisable pour le moment (elle ne possède pas de quantité)"});
+                } else {
+                    this.selectedItem = item;
+                    this.searchAgain = false;
+                    s.unselect();
+                }
+            },
+            closeSearch: function (s) {
+                s.unselect();
+            },
+            cancelItem: function () {
+                this.selectedItem = null;
+            },
             ...mapActions({
                 dispatchLink: On.LINK,
-                dispatchRefreshRessources: On.LOAD_ROOTS
+                dispatchRefreshRessources: On.LOAD_ROOTS,
+                snack: On.SNACKBAR
             }),
-            select: function (selection) {
-                this.selectedItem = selection[0];
-            },
-            async validate() {
+            async validateForm() {
                 await this.dispatchLink({
                     trunk: {_id: this.tree._id, quantity: this.tree.trunk.quantity},
                     root: {_id: this.selectedItem._id, quantity: {qt: this.qt, unit: this.unit.shortname}}
@@ -83,21 +112,16 @@
             },
             focus() {
                 this.$refs.form.reset();
+                this.selectedItem = null;
             },
             required, isNumber,
             notIn() {
                 return this.selectedItem && this.tree && !find(this.tree.roots.items, {_id: this.selectedItem._id}) || "Déjà utilisé";
             },
         },
-        mounted: function () {
-            console.log("add ressource mounted");
-        },
         watch: {
             selectedItem(item) {
                 if (item) {
-                    if (!item.trunk.quantity) {
-                        throw new Error("la ressource utilisée n'a pas de quantité")
-                    }
                     this.qt = item.trunk.quantity.qt;
                     this.unit = unit(item.trunk.quantity.unit);
                     this.grandeur = getGrandeur(this.unit.grandeur);

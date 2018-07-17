@@ -37,8 +37,5 @@
                 addToBasket: On.ADD_TO_BASKET
             })
         },
-        mounted: function () {
-            console.log("search mounted");
-        },
     }
 </script>

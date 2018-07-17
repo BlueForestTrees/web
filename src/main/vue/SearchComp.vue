@@ -35,12 +35,20 @@
                 items: null
             }
         },
-        mounted: function () {
-            console.log("searchcomp mounted");
+        computed: {
+            query: function () {
+                return {
+                    term: this.namePart || ""
+                }
+            }
+        },
+        created: function () {
+            this.namePart = "";
         },
         watch: {
-            namePart: async function (q) {
-                this.items = await this.dispatchSearch({term: q || ""});
+            query: function (q) {
+                this.dispatchSearch(q)
+                    .then(items => this.items = items);
             }
         },
         methods: {

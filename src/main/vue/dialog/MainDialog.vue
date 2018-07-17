@@ -5,12 +5,12 @@
     >
         <v-card tile>
             <v-toolbar card dark color="primary">
+                <v-icon>{{icon}}</v-icon>
+                <v-toolbar-title>{{title}}</v-toolbar-title>
+                <v-spacer></v-spacer>
                 <v-btn icon @click.native="visible = false" dark>
                     <v-icon large>clear</v-icon>
                 </v-btn>
-                <v-toolbar-title>{{title}}</v-toolbar-title>
-                <v-spacer></v-spacer>
-                <v-icon>{{icon}}</v-icon>
             </v-toolbar>
             <slot :data="data" ref="content"/>
             <v-card-actions v-if="!noaction">
