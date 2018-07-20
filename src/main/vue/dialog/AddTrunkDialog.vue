@@ -1,12 +1,17 @@
 <template>
-    <main-dialog :dialog="Dial.ADD_TRUNK" :title="'Ajouter'" @esc="close" @enter="validate" ref="dialog" @focus="focus">
+    <main-dialog :dialog="Dial.ADD_TRUNK" :title="'Nouveau Produit/Service'" @esc="close" @enter="validate" ref="dialog" @focus="focus">
         <v-card-text>
             <v-form v-model="valid" v-on:submit.prevent="" ref="form">
                 <color-picker v-model="color"/>
-                <v-text-field ref="nom" label="Nom" :rules="[length2min]" required v-model="name"/>
-                <grandeur-select v-model="grandeur" label="La quantité est un(e)..."/>
-                <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]"/>
-                <v-text-field type="number" label="Quantité... (ex.: 10)" v-model="qt" :rules="[required, isNumber]"/>
+                <v-layout row>
+                    <v-text-field ref="nom" label="Nom" :rules="[length2min]" required v-model="name"/>
+                    <v-switch :label="`Transport (1 t*km)`" v-model="transport"/>
+                </v-layout>
+                <span v-if="!transport">
+                    <grandeur-select v-model="grandeur" label="La quantité est un(e)..."/>
+                    <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]"/>
+                    <v-text-field type="number" label="Quantité... (ex.: 10)" v-model="qt" :rules="[required, isNumber]"/>
+                </span>
             </v-form>
         </v-card-text>
     </main-dialog>
@@ -34,6 +39,7 @@
         data() {
             return {
                 Dial: Dial,
+                transport: false,
                 valid: false,
                 color: null,
                 name: null,
@@ -49,8 +55,14 @@
                 goTree: On.GO_TREE
             }),
             async validate() {
-                const tree = await this.createTrunk({color: this.color, name: this.name});
-                await this.putQuantity({trunk: tree.trunk, quantity: {qt: this.qt, unit: this.unit.shortname}});
+                let tree;
+                if (this.transport) {
+                    tree = await this.createTrunk({color: this.color, name: this.name, type: "TR"});
+                    await this.putQuantity({trunk: tree.trunk, quantity: {qt: 1, unit: "t*km"}});
+                } else {
+                    tree = await this.createTrunk({color: this.color, name: this.name});
+                    await this.putQuantity({trunk: tree.trunk, quantity: {qt: this.qt, unit: this.unit.shortname}});
+                }
                 this.close();
                 this.goTree(tree);
             },

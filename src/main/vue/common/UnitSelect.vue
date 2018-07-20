@@ -12,7 +12,13 @@
         props: ['value', 'grandeur', 'rules'],
         computed: {
             items: function () {
-                return this.grandeur && this.grandeur.units || []
+                if (this.grandeur && this.grandeur.units) {
+                    return this.grandeur.units;
+                } else if (this.value) {
+                    return [this.value];
+                } else {
+                    return [];
+                }
             }
         },
         watch: {

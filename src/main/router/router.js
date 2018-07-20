@@ -6,6 +6,7 @@ import Login from '../vue/Login'
 import Inscription from '../vue/Inscription'
 import Confirmation from '../vue/Confirmation'
 import Tree from '../vue/tree/Tree'
+import Root from '../vue/tree/Root'
 import Search from '../vue/Search'
 import Home from '../vue/Home'
 import Basket from '../vue/Basket'
@@ -26,9 +27,21 @@ export default new VueRouter({
                     component: Home,
                 },
                 {
+                    name: GO.QTREE,
+                    path: "tree/:qt/:unit/:_id",
+                    component: Tree,
+                    props:true
+                },
+                {
                     name: GO.TREE,
                     path: "tree/:_id",
                     component: Tree,
+                    props:true
+                },
+                {
+                    name: GO.ROOT,
+                    path: "root/:treeId/:rootId",
+                    component: Root,
                     props:true
                 },
                 {

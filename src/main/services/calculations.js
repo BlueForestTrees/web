@@ -1,8 +1,10 @@
 import {map} from 'lodash';
-import {bestQuantity, unitCoef} from "trees-units";
+import {bestQuantity, unitCoef, changeUnit} from "trees-units";
 
-
+export const idQtUnit = tree => ({_id: tree._id, qt: tree.trunk.quantity.qt, unit: tree.trunk.quantity.unit});
+export const idQuantity = tree => ({_id: tree._id, quantity: tree.trunk.quantity});
 export const hasQuantity = e => e && e.quantity && e.quantity.qt && e.quantity.unit;
+export const transportQuantity = (masse, distance) => ({qt: changeUnit(masse, "t") * changeUnit(distance, "km"), unit: "t*km"});
 export const format = v => v < 10 ? Math.round(v * 100) / 100 : Math.round(v * 10) / 10;
 export const trunkyAll = items => map(items, trunky);
 export const trunky = trunk => ({_id: trunk._id, trunk});

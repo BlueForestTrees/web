@@ -17,7 +17,6 @@
         <compare-table :axises="axises" :left="left" :right="right" :left-color="leftColor" :rightColor="rightColor"/>
         <compare-radar :axises="axises" :left="left" :right="right" :left-color="'#00ACC1'" :rightColor="'#D81B60'"/>
     </v-container>
-
 </template>
 
 <script>

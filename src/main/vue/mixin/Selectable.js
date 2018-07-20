@@ -1,6 +1,3 @@
-import {isEmpty} from 'lodash';
-import On from "../../const/on";
-import {mapActions} from 'vuex';
 
 export default {
 
@@ -11,20 +8,21 @@ export default {
     },
     props:['maxSelectionSize'],
     computed: {
-        selectionNotEmpty() {
-            return !isEmpty(this.selection);
-        },
-        selecteds() {
+        selectionCount() {
             return this.selection.length;
         },
+
+        anySelected() {
+            return this.selectionCount > 0 && this.selection;
+        },
         oneSelected() {
-            return this.selectionNotEmpty && this.selection.length === 1 && this.selection[0];
+            return this.selectionCount === 1 && this.selection[0];
         },
         twoSelected() {
-            return this.selectionNotEmpty && this.selection.length === 2 && this.selection;
+            return this.selectionCount === 2 && this.selection;
         },
         manySelected() {
-            return this.selectionNotEmpty && this.selection.length > 2 && this.selection;
+            return this.selectionCount > 2 && this.selection;
         },
     },
     methods: {
@@ -53,13 +51,6 @@ export default {
                     this.selection.splice(0, this.selection.length - this.maxSelectionSize);
                 }
             }
-        },
-        goTree: function (tree) {
-            this.unselect();
-            this.dispatchGoTree(tree);
-        },
-        ...mapActions({
-            dispatchGoTree: On.GO_TREE,
-        })
+        }
     }
 }

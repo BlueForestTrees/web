@@ -14,14 +14,13 @@ export default {
     getQuantifiedRoots: (qt, unit, _id) => get(`/api/root/${qt}/${unit}/${_id}`),
 
     //LINK
-    postLink: (trunkId, rootId) => post(`/api/link`, {trunk: {_id: trunkId}, root: {_id: rootId}}),
     putLink: (trunk, root) => put(`/api/link`, {trunk, root}),
     deleteLink: (treeId, rootId) => del(`/api/link/${treeId}/${rootId}`),
 
     //FACETS
     getQuantifiedFacets: (qt, unit, _id) => get(`/api/facet/${qt}/${unit}/${_id}`),
     getFacets: _id => get(`/api/facet/${_id}`),
-    deleteItems: (treeId, facetIds) => post('/api/facet/deletion', {treeId, facetIds}),
+    deleteFacets: (treeId, facetIds) => post('/api/facet/deletion', {treeId, facetIds}),
     addFacet: (trunk, facet) => post(`/api/facet`, {trunk, facet}),
 
     //IMPACTS TANK
@@ -29,11 +28,11 @@ export default {
 
     //IMPACTS
     getQuantifiedImpact: (qt, unit, _id) => get(`/api/impact/${qt}/${unit}/${_id}`),
-    deleteItems: (treeId, impactIds) => post('/api/impact/deletion', {treeId, impactIds}),
+    deleteImpacts: (treeId, impactIds) => post('/api/impact/deletion', {treeId, impactIds}),
     addImpact: (trunk, impact) => post(`/api/impact`, {trunk, impact}),
 
     //TRUNKS
-    goSearch: name => get(`/api/trunks?q=${name}`),
+    goSearch: ({term, type}) => get(`/api/trunks?q=${term}${type ? '&t=' + type : ''}`),
 
     //TRUNK
     createTrunk: trunk => post('/api/trunk', trunk),

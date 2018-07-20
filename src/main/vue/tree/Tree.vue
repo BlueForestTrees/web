@@ -18,7 +18,6 @@
     import Branches from "./Branches";
     import Ressources from "./Ressources";
     import Impacts from "./Impacts";
-    import BilanRessources from "./BilanRessources";
     import {LOAD_OPEN_TREE} from "../../const/on";
     import {mapActions} from "vuex";
     import On from "../../const/on";
@@ -31,30 +30,29 @@
             AddTreePartBtn,
             AddTreeBtn,
             TreeHead,
-            BilanRessources,
             Impacts,
             Ressources,
             Branches,
             Facets
         },
-        props: ['_id'],
+        props: ['_id', 'qt', 'unit'],
         data: function () {
             return {
                 tree: null
             }
         },
         methods: {
-            refreshTree: async function () {
-                this.tree = await this.dispatchOpenItem({_id: this._id});
-            },
-            ...mapActions({dispatchOpenItem: On.LOAD_OPEN_TREE})
+            ...mapActions({dispatchLoad: On.LOAD_IDQTUNIT}),
+            refresh: async function () {
+                this.tree = await this.dispatchLoad({qt: this.qt, unit: this.unit, _id: this._id});
+            }
         },
         created: function () {
-            this.refreshTree();
+            this.refresh();
         },
         watch: {
             '$route'(to, from) {
-                this.refreshTree();
+                this.refresh();
             }
         },
     }

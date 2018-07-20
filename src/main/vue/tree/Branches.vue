@@ -2,7 +2,7 @@
     <v-list v-if="hasItems">
 
         <transition name="slide-fade">
-            <v-toolbar v-if="selectionNotEmpty" app dark class="elevation-0" color="green lighten-2">
+            <v-toolbar v-if="anySelected" app dark class="elevation-0" color="green lighten-2">
                 <v-toolbar-items>
                     <v-tooltip bottom>
                         <v-btn slot="activator" v-if="oneSelected" flat dense @click="goTree(oneSelected)">ouvrir<v-icon>launch</v-icon></v-btn>
@@ -50,13 +50,14 @@
     import QtUnit from "../common/QtUnit";
     import selectable from "../mixin/Selectable";
     import {getRandomColor, qtUnitName} from "../../services/calculations";
+    import goTree from "../mixin/GoTree";
 
     export default {
         components: {
             QtUnit
         },
         props: ['tree'],
-        mixins: [selectable],
+        mixins: [selectable, goTree],
         computed: {
             items: function () {
                 return this.tree && this.tree.branches && this.tree.branches.items;
@@ -66,7 +67,6 @@
             },
         },
         methods: {
-            qtUnitName,
             remove(item) {
                 this.deleteLink({left: item, right: this.tree});
                 this.unselect();
@@ -74,10 +74,10 @@
             ...mapActions({
                 deleteLink: On.DELETE_LINK,
                 dispatchLoadBranches: On.LOAD_BRANCHES,
-                dispatchOpenItem: On.LOAD_OPEN_TREE
+                dispatchLoadTree: On.LOAD_OPEN_TREE
             }),
             open() {
-                this.dispatchOpenItem(this.selection[0]);
+                this.dispatchLoadTree(this.selection[0]);
             },
             getRandomColor, qtUnitName
         }

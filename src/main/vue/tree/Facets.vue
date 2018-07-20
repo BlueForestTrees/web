@@ -26,11 +26,9 @@
     import {getRandomColor, hasQuantity, qtUnitName} from "../../services/calculations";
     import QtUnit from "../common/QtUnit";
     import selectable from "../mixin/Selectable";
-    import SetQtUnitDialog from "../dialog/SetQtUnitDialog";
 
     export default {
         components: {
-            SetQtUnitDialog,
             QtUnit,
         },
         data() {

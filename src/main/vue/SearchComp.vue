@@ -1,8 +1,8 @@
 <template>
-    <span>
+    <span style="width: 100%">
         <v-card-title primary-title>
-            <p class="headline" style="padding-right:1em">Recherche</p>
-            <v-text-field label="Filtre" autofocus v-model="namePart"/>
+            <p style="padding-right:1em">{{label || 'Filtre'}}</p>
+            <v-text-field label="Nom" autofocus v-model="namePart"/>
         </v-card-title>
 
         <v-list-tile v-for="item in items" :key="item._id" @click="toggleSelect(item)" :style="{background: isSelected(item) ? '#E8F5E9' : '', transition: 'background .2s ease'}">
@@ -12,8 +12,10 @@
         </v-list-tile>
 
         <transition name="slide-fade">
-            <v-toolbar v-if="selectionNotEmpty" app dark class="elevation-0" color="green lighten-2">
-                <slot :s="this"></slot>
+            <v-toolbar v-if="!nobar && anySelected" app dark class="elevation-0" color="green lighten-2">
+                <slot :s="this">
+
+                </slot>
             </v-toolbar>
         </transition>
     </span>
@@ -26,6 +28,7 @@
 
     export default {
         name: 'search-comp',
+        props: {label: String, type: String, nobar: Boolean},
         mixins: [selectable],
         data() {
             return {
@@ -36,7 +39,8 @@
         computed: {
             query: function () {
                 return {
-                    term: this.namePart || ""
+                    term: this.namePart || "",
+                    type: this.type
                 }
             }
         },
@@ -44,8 +48,8 @@
             this.namePart = "";
         },
         watch: {
-            query: function (q) {
-                this.dispatchSearch(q)
+            query: function (query) {
+                this.dispatchSearch(query)
                     .then(items => this.items = items);
             }
         },

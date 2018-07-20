@@ -17,9 +17,7 @@
         </v-list-tile>
 
         <transition name="slide-fade">
-            <v-toolbar v-if="selectionNotEmpty" app dark class="elevation-0" color="green lighten-2">
-                <div class="d-flex align-center" style="margin-left: auto">
-
+            <v-toolbar v-if="anySelected" app dark class="elevation-0" color="green lighten-2">
                     <v-tooltip bottom>
                         <v-btn slot="activator" v-if="oneSelected" flat dense @click="goTree(oneSelected)">ouvrir<v-icon>launch</v-icon></v-btn>
                         <span style="pointer-events: none">Ouvrir</span>
@@ -31,16 +29,14 @@
                     </v-tooltip>
 
                     <v-tooltip bottom>
-                        <v-btn slot="activator" v-if="selectionNotEmpty" flat dense @click="removeSelectedItems">retirer<v-icon>delete_outline</v-icon></v-btn>
+                        <v-btn slot="activator" v-if="anySelected" flat dense @click="removeSelectedItems">retirer<v-icon>delete_outline</v-icon></v-btn>
                         <span style="pointer-events: none">Retirer</span>
                     </v-tooltip>
-
+                    <v-spacer/>
                     <v-tooltip bottom>
                         <v-btn slot="activator" icon dense @click="unselect"><v-icon>close</v-icon></v-btn>
                         <span style="pointer-events: none">Fermer</span>
                     </v-tooltip>
-
-                </div>
             </v-toolbar>
         </transition>
 

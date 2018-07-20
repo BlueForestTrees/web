@@ -2,18 +2,18 @@
     <span>
 
     <transition name="slide-fade">
-        <v-toolbar v-if="selectionNotEmpty" app dark class="elevation-0" color="green lighten-2">
+        <v-toolbar v-if="anySelected" app dark class="elevation-0" color="green lighten-2">
             <v-toolbar-items>
                 <v-tooltip bottom>
                     <v-btn slot="activator" v-if="oneSelected" flat @click="goTree(oneSelected)"><span class="hidden-xs-only">ouvrir</span><v-icon>launch</v-icon></v-btn>
                     <span style="pointer-events: none">Ouvrir</span>
                 </v-tooltip>
                 <v-tooltip bottom>
-                    <v-btn slot="activator" v-if="oneSelected" flat @click="goTree(oneSelected)"><span class="hidden-xs-only">modifier</span><v-icon>edit</v-icon></v-btn>
+                    <v-btn slot="activator" v-if="oneSelected" flat @click="goRoot(oneSelected)"><span class="hidden-xs-only">modifier</span><v-icon>edit</v-icon></v-btn>
                     <span style="pointer-events: none">Modifier</span>
                 </v-tooltip>
                 <v-tooltip bottom>
-                    <v-btn slot="activator" v-if="oneSelected" flat @click="remove(oneSelected)"><span class="hidden-xs-only">supprimer</span><v-icon>delete</v-icon></v-btn>
+                    <v-btn slot="activator" v-if="anySelected" flat @click="remove(anySelected)"><span class="hidden-xs-only">supprimer</span><v-icon>delete</v-icon></v-btn>
                     <span style="pointer-events: none">Supprimer</span>
                 </v-tooltip>
             </v-toolbar-items>
@@ -45,7 +45,7 @@
 
         </v-subheader>
 
-        <v-list-tile v-for="item in items" :key="item._id" @click="toggleSelect(item)" :style="{background: isSelected(item) ? '#E8F5E9' : '', transition: 'background .2s ease'}">
+        <v-list-tile v-for="item in items" v-if="!item.trunk.relativeTo" :key="item._id" @click="toggleSelect(item)" :style="{background: isSelected(item) ? '#E8F5E9' : '', transition: 'background .2s ease'}">
             <v-icon v-if="isSelected(item)" color="green">check_circle</v-icon>
             <v-icon v-else :style="'color: '+item.trunk.color+';margin-right:0.2em'">lens</v-icon>
             {{qtUnitName(item.trunk)}}
@@ -85,13 +85,14 @@
     import {mapActions} from 'vuex';
     import QtUnit from "../common/QtUnit";
     import selectable from "../mixin/Selectable";
+    import goTree from "../mixin/GoTree";
     import {getRandomColor, qtUnitName} from "../../services/calculations";
 
     export default {
         components: {
             QtUnit
         },
-        mixins: [selectable],
+        mixins: [selectable, goTree],
         props: ['tree'],
         data() {
             return {
@@ -111,18 +112,25 @@
         },
 
         methods: {
-            remove(item) {
-                this.deleteLink({left: this.tree, right: item});
+            goRoot: function (root) {
+                this.dispatchGoRoot({treeId: this.tree._id, rootId: root._id});
+                this.unselect();
+            },
+            remove(items) {
+                for (let i = 0; i < items.length; i++) {
+                    this.deleteLink({left: this.tree, right: items[i]});
+                }
                 this.unselect();
             },
             open() {
-                this.dispatchOpenItem(this.selection[0]);
+                this.dispatchLoadTree(this.selection[0]);
             },
             ...mapActions({
+                dispatchGoRoot: On.GO_ROOT,
                 deleteLink: On.DELETE_LINK,
                 dispatchDeleteLink: On.DELETE_LINK,
                 dispatchLoadRoots: On.LOAD_ROOTS,
-                dispatchOpenItem: On.LOAD_OPEN_TREE
+                dispatchLoadTree: On.LOAD_OPEN_TREE
             }),
             qtUnitName, getRandomColor
         }

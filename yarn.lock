@@ -6807,9 +6807,9 @@ tough-cookie@~2.3.0, tough-cookie@~2.3.3:
   dependencies:
     punycode "^1.4.1"
 
-trees-units@^1.0.11:
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/trees-units/-/trees-units-1.0.11.tgz#5c84fa6e7239eba49bf4150b3596e7a8bc707d02"
+trees-units@^1.0.38:
+  version "1.0.38"
+  resolved "https://registry.yarnpkg.com/trees-units/-/trees-units-1.0.38.tgz#761200ded2d9e742c946ebe936aecabc6dd9b0d4"
   dependencies:
     fraction.js "^4.0.4"
     lodash "^4.17.5"

@@ -5,18 +5,18 @@
         <v-card-text>
             <destination :tree="tree"/>
 
-            <v-form v-model="valid" v-on:submit.prevent="" ref="form">
+            <v-form v-model="validForm" v-on:submit.prevent="" ref="form">
 
-                <search-comp v-if="searching" :maxSelectionSize="1">
+                <search-comp v-if="searching" maxSelectionSize="1">
                     <template slot-scope="{ s }">
                         <v-tooltip bottom>
-                            <v-btn slot="activator" v-if="s.selecteds" flat dense @click="validateSearch(s)">
+                            <v-btn slot="activator" v-if="s.selectionCount" flat dense @click="validateSearch(s)">
                                 <v-icon>done</v-icon>
                                 Valider
                             </v-btn>
                             <span style="pointer-events: none">Valider</span>
                         </v-tooltip>
-
+                        <v-spacer/>
                         <v-tooltip bottom>
                             <span slot="activator"><v-btn icon dense @click="closeSearch(s)"><v-icon>close</v-icon></v-btn></span>
                             <span style="pointer-events: none">Fermer</span>
@@ -52,7 +52,7 @@
     import Destination from "../common/Destination";
     import {find} from 'lodash';
     import {isNumber, required} from "../../services/rules";
-    import {grandeur, getGrandeur, unit} from 'trees-units'
+    import {getGrandeur, unit} from 'trees-units'
     import UnitSelect from "../common/UnitSelect";
     import closable from "../mixin/Closable";
     import GrandeurSelect from "../common/GrandeurSelect";
@@ -70,7 +70,7 @@
                 unit: null,
                 grandeur: null,
                 searchAgain: false,
-                valid: false
+                validForm: false,
             }
         },
         components: {SearchComp, GrandeurSelect, UnitSelect, Destination, MainDialog},

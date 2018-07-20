@@ -21,7 +21,7 @@ export default {
 
     [On.DELETE_IMPACTS]:
         async ({commit}, {impacts, toDelete}) => {
-            await api.deleteItems(impacts._id, _.map(toDelete, "_id"));
+            await api.deleteImpacts(impacts._id, _.map(toDelete, "_id"));
             commit(Do.DELETE_IMPACTS, {impacts, toDelete});
         },
     [On.ADD_IMPACT]:

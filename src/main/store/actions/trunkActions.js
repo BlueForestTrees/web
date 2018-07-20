@@ -4,8 +4,8 @@ import Do from "../../const/do";
 import {hasQuantity, trunky} from "../../services/calculations";
 
 export default {
-    [On.CREATE_TRUNK]: async ({commit, state, dispatch}, {color, name}) =>
-        trunky(await api.createTrunk({color, name})),
+    [On.CREATE_TRUNK]: async ({commit, state, dispatch}, {color, name, type}) =>
+        trunky(await api.createTrunk({color, name, type})),
 
     [On.LOAD_TRUNK]: ({commit}, tree) => {
         return hasQuantity(tree.trunk) ?

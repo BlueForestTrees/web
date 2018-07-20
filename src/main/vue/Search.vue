@@ -15,7 +15,7 @@
                     <span style="pointer-events: none">Comparer</span>
                 </v-tooltip>
                 <v-tooltip bottom>
-                    <v-btn slot="activator" v-if="s.selecteds" flat dense @click="addToBasket(s.selection);s.unselect()">panier<v-icon>save_alt</v-icon></v-btn>
+                    <v-btn slot="activator" v-if="s.selectionCount" flat dense @click="addToBasket(s.selection);s.unselect()">panier<v-icon>save_alt</v-icon></v-btn>
                     <span style="pointer-events: none">Ajouter au panier</span>
                 </v-tooltip>
             </v-toolbar-items>
