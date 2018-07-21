@@ -42,7 +42,7 @@ export const tree = () => ({_id: null, trunk: null, selection: null, facets: nul
 export default {
     token: null,
     basket: [],
-    activeTree: null,
+    tree: null,
     dialogs: dialogs(),
     nav: {leftMenuVisible: false},
     user: null,

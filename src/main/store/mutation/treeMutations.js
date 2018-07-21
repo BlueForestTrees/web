@@ -2,5 +2,6 @@ import Do from "../../const/do";
 
 
 export default {
-    [Do.SET_ACTIVE_TREE]: (state, tree) => state.activeTree = tree
+    [Do.OPEN_TREE]: (state, tree) => state.tree = tree,
+    [Do.CLOSE_TREE]: state => state.tree = null
 }

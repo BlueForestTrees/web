@@ -50,7 +50,6 @@
     import {mapActions, mapState} from "vuex";
     import {Dial} from "../../const/dial";
     import Destination from "../common/Destination";
-    import {find} from 'lodash';
     import {isNumber, required} from "../../services/rules";
     import {getGrandeur, unit} from 'trees-units'
     import UnitSelect from "../common/UnitSelect";
@@ -116,7 +115,13 @@
             },
             required, isNumber,
             notIn() {
-                return this.selectedItem && this.tree && !find(this.tree.roots.items, {_id: this.selectedItem._id}) || "Déjà utilisé";
+                if (this.selectedItem && this.tree) {
+                    for (let i = 0; i < this.tree.roots.items; i++) {
+                        if (this.tree.roots.items[i]._id === this.selectedItem._id) {
+                            return "Déjà utilisé";
+                        }
+                    }
+                }
             },
         },
         watch: {

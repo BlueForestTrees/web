@@ -1,6 +1,5 @@
 import On from "../../const/on";
 import api from "../../rest/api";
-import {omit} from 'lodash';
 import Do from "../../const/do";
 import {hasQuantity, trunkyAll} from "../../services/calculations";
 import router from "../../router/router";
@@ -18,10 +17,10 @@ export default {
             api.getUnquantifiedRoots(tree._id);
 
         return loadRoots
-            .then(roots => ({
-                ...omit(roots, "items"),
-                items: trunkyAll(roots.items)
-            }))
+            .then(roots => {
+                roots.items = trunkyAll(roots.items);
+                return roots;
+            })
             .then(roots => commit(Do.SET_ROOTS, {tree, roots}));
     },
 

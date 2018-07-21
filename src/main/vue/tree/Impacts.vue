@@ -39,7 +39,6 @@
     import On from "../../const/on";
     import {getRandomColor, hasQuantity, qtUnitName} from "../../services/calculations";
     import QtUnit from "../common/QtUnit";
-    import {isEmpty} from 'lodash';
 
     export default {
         components: {

@@ -3,6 +3,7 @@ import api from "../../rest/api";
 import {idQuantity, transportQuantity, trunkyAll} from "../../services/calculations";
 import router from "../../router/router";
 import {GO} from "../../const/go";
+import Do from "../../const/do";
 
 //on détecte que l'objet est à charger en se basant arbitrairement sur le champ branches
 const needRefresh = (basketTree, requestedTree) => !basketTree.branches;
@@ -18,7 +19,7 @@ export default {
         }
     },
     [On.LOAD_IDQTUNIT]: async ({dispatch}, {_id, qt, unit}) => dispatch(On.LOAD_OPEN_TREE, ({_id, trunk: {quantity: {qt, unit}}})),
-    [On.LOAD_OPEN_TREE]: async ({getters, dispatch}, treeToLoad) => {
+    [On.LOAD_OPEN_TREE]: async ({getters, dispatch, commit}, treeToLoad) => {
         const _id = treeToLoad._id;
         const basketItem = getters.basketItem(_id);
         if (basketItem && !needRefresh(basketItem, treeToLoad)) {
@@ -26,7 +27,7 @@ export default {
         } else {
             await dispatch(On.LOAD_TREE, treeToLoad);
             await dispatch(On.ADD_TO_BASKET, [treeToLoad]);
-            return treeToLoad;
+            commit(Do.OPEN_TREE, treeToLoad);
         }
     },
 

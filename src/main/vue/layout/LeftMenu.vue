@@ -63,12 +63,20 @@
             ...mapState(['tree', 'nav'])
         },
         methods: {
+            deleteTrunk(tree) {
+                this.dispatchDeleteTrunk(tree)
+                    .then(() => this.nav.leftMenuVisible = false)
+                    .then(this.closeTree)
+                    .then(this.goHome)
+            },
             ...mapMutations({
-                showDialog: Do.SHOW_DIALOG
+                showDialog: Do.SHOW_DIALOG,
+                closeTree: Do.CLOSE_TREE
             }),
             ...mapActions({
-                "deleteTrunk": On.DELETE_TREE,
-                'cloneOpenTree': On.CLONE_OPEN_TREE
+                dispatchDeleteTrunk: On.DELETE_TREE,
+                cloneOpenTree: On.CLONE_OPEN_TREE,
+                goHome: On.GO_HOME
             })
         },
         data: () => ({

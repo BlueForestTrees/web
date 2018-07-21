@@ -19,7 +19,7 @@
     import Ressources from "./Ressources";
     import Impacts from "./Impacts";
     import {LOAD_OPEN_TREE} from "../../const/on";
-    import {mapActions} from "vuex";
+    import {mapActions, mapState} from "vuex";
     import On from "../../const/on";
     import TreeHead from "./TreeHead";
     import AddTreeBtn from "../layout/AddTreeBtn";
@@ -36,15 +36,13 @@
             Facets
         },
         props: ['_id', 'qt', 'unit'],
-        data: function () {
-            return {
-                tree: null
-            }
+        computed: {
+            ...mapState(['tree'])
         },
         methods: {
             ...mapActions({dispatchLoad: On.LOAD_IDQTUNIT}),
-            refresh: async function () {
-                this.tree = await this.dispatchLoad({qt: this.qt, unit: this.unit, _id: this._id});
+            refresh: function () {
+                this.dispatchLoad({qt: this.qt, unit: this.unit, _id: this._id});
             }
         },
         created: function () {

@@ -5,9 +5,11 @@ import BlueForest from '../vue/BlueForest'
 import Login from '../vue/Login'
 import Inscription from '../vue/Inscription'
 import Confirmation from '../vue/Confirmation'
-import Tree from '../vue/tree/Tree'
+
 import Root from '../vue/tree/Root'
-import Search from '../vue/Search'
+
+const Tree = () => import('../vue/tree/Tree.vue');
+const Search = () => import('../vue/Search.vue');
 import Home from '../vue/Home'
 import Basket from '../vue/Basket'
 import Compare from '../vue/compare/Compare'

@@ -22,7 +22,6 @@
 <script>
     import {applyBase, buildAxises, separate} from "../../services/axis";
     import On from "../../const/on";
-    import {cloneDeep} from 'lodash';
     import {mapActions} from 'vuex';
     import CompareTable from "./CompareTable";
     import CompareRadar from "./CompareRadar";
@@ -60,14 +59,13 @@
             },
             treesToAxises: function () {
                 try {
-                    this.axises = separate(cloneDeep(buildAxises(this.left)), cloneDeep(buildAxises(this.right)));
+                    this.axises = separate(buildAxises(this.left), buildAxises(this.right));
                 } catch (e) {
                     console.error(e);
                     this.snack({text: "Erreur de calcul, données insuffisantes", color: "red"});
                 }
             },
             selectDefaultBase: function () {
-                console.log(this.axises.common.left[0]);
                 this.changeBase(this.axises.common.left[0]);
             },
             changeBase(v) {
