@@ -1,6 +1,7 @@
 import {find, forEach, isNil, map, remove} from 'lodash';
 import {format} from "./calculations";
 import {toBaseQuantity,grandeur, qtUnitCoef} from "trees-units";
+import Vue from 'vue'
 
 /**
  * un arbre en axes.
@@ -89,8 +90,8 @@ export const updateRatios = (axises) => {
 
     forEach(axises.common.left, leftAxis => {
         const rightAxis = find(axises.common.right, {type: leftAxis.type, name: leftAxis.name});
-        leftAxis.ratio = relativeTo1(leftAxis.baseQt, rightAxis.baseQt);
-        rightAxis.ratio = relativeTo1(rightAxis.baseQt, leftAxis.baseQt);
+        Vue.set(leftAxis, "ratio", relativeTo1(leftAxis.baseQt, rightAxis.baseQt));
+        Vue.set(rightAxis, "ratio", relativeTo1(rightAxis.baseQt, leftAxis.baseQt));
     });
 
     return axises;

@@ -1,14 +1,9 @@
 import chai from 'chai';
-import {applyCoef, buildAxises, updateRatios, separate} from "../../../main/services/axis";
-import {withNameIdQtGrandeur} from "../../testPlumbing";
-import {initUnits} from "trees-units"
-import {loadUnitsData} from "../../../../../api/src/main/service/unit/grandeurService";
+import {applyCoef, buildAxises, updateRatios, separate} from "../../main/services/axis";
+import {withNameIdQtGrandeur} from "../testPlumbing";
+import {init} from "../setup";
 
 chai.should();
-
-const init = async () => {
-    initUnits(await loadUnitsData());
-};
 
 describe('Axis calculations', function () {
 
@@ -229,5 +224,6 @@ describe('Axis calculations', function () {
 
         updateRatios(axises).should.deep.equal(expected);
     });
+
 
 });

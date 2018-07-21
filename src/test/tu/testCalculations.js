@@ -1,13 +1,8 @@
 import chai from 'chai';
-import {initUnits} from "trees-units"
-import {loadUnitsData} from "../../../../../api/src/main/service/unit/grandeurService";
-import {add} from "../../../main/services/calculations";
+import {add} from "../../main/services/calculations";
+import {init} from "../setup";
 
 chai.should();
-
-const init = async () => {
-    initUnits(await loadUnitsData());
-};
 
 describe('Divers calculations', function () {
 

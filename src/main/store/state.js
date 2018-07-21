@@ -31,7 +31,8 @@ export const snack = () => ({
     multiline: false,
     timeout: 3000,
     vertical: false,
-    text: "this message should be overriden."
+    text: "this message should be overriden.",
+    color: "black"
 });
 
 export const createDialog = name => (dialogFactory[name] && dialogFactory[name]()) || (console.warn(`state.js il manque dialogFactory['${name}']`) || {});

@@ -1,10 +1,8 @@
 <template>
-    <span>
         <v-container>
             <v-layout>
                 <v-flex>
                     <v-card>
-
                             <span v-if="commonAxisesCount === 0">
                                 pas d'axes en commun!
                             </span>
@@ -17,15 +15,33 @@
                                     <path :d="`M-100 ${squareAxisY[0]} L-100 100 L100 100 L100 ${squareAxisY[1]} Z`" :fill="rightColor" fill-opacity="0.3" :stroke="rightColor" stroke-width="1" stroke-opacity="0.8"/>
                                     <path stroke="black" stroke-width="1" d="M-100 -110 L-100 105" stroke-opacity="1" stroke-dasharray="2,3,2,2,3"/>
                                     <path stroke="black" stroke-width="1" d="M100 -110 L100 105" stroke-opacity="1" stroke-dasharray="2,3,2,2,3"/>
-                                    <text v-for="(axis,i) in axises.common.left" :x="squareAxisCoord(i,textRatio).x" :y="squareAxisCoord(i,textRatio).y" fill="black" text-anchor="middle" alignment-baseline="central">{{axis.name}}</text>
+                                    <text v-for="(axis,i) in axises.common.left" :x="squareAxisCoord(i,textRatio).x" :y="squareAxisCoord(i,textRatio).y"
+                                          :style="{fill:'#696955'}" text-anchor="middle" alignment-baseline="central">{{axis.name}}</text>
                                 </svg>
                             </span>
                             <span v-else="commonAxisesCount > 2">
-                                <svg viewBox="-200 -200 400 400">
+                                <svg viewBox="-200 -200 400 500">
+                                    <g transform="translate(-197 198)">
+                                        <circle :fill="leftColor" fill-opacity="0.05" :stroke="leftColor" stroke-width="1" stroke-opacity="0.8"
+                                                r="20" cx="30" cy="30"
+                                        />
+                                        <text x="55" y="30" alignment-baseline="central">{{axises.right[0].tree}}</text>
+                                        <circle :fill="rightColor" fill-opacity="0.05" :stroke="rightColor" stroke-width="1" stroke-opacity="0.8"
+                                                r="20" cx="30" cy="80"
+                                        />
+                                        <text x="55" y="80" alignment-baseline="central">{{axises.left[0].tree}}</text>
+                                        <line x1="-10" y1="0" x2="400" y2="0" fill="none" stroke-width="1" :stroke="shadeColor('#000000',0.7)"/>
+                                    </g>
+
                                         <path v-for="i in commonAxisesCount" stroke="grey" stroke-width="0.5" :d="radialLineD(i,1.1)" stroke-opacity="0.6" stroke-dasharray="10,5,5,5,10"/>
-                                        <path :d="radialAxisD(axises.common.left)" :fill="leftColor" fill-opacity="0.3" :stroke="leftColor" stroke-width="1" stroke-opacity="0.8"/>
-                                        <path :d="radialAxisD(axises.common.right)" :fill="rightColor" fill-opacity="0.3" :stroke="rightColor" stroke-width="1" stroke-opacity="0.8"/>
-                                        <text v-for="(axis,i) in axises.common.left" :x="radialAxisCoord(i,textRatio).x" :y="radialAxisCoord(i,textRatio).y" fill="black" text-anchor="middle" alignment-baseline="central">{{axis.name}}</text>
+                                        <path :fill="leftColor" fill-opacity="0.05" :stroke="leftColor" stroke-width="1" stroke-opacity="0.8">
+                                            <animate ref="animLeftLine" attributeName="d" attributeType="XML" :from="previousLeftLine" :to="leftLine" dur=".25s" fill="freeze"/>
+                                        </path>
+                                        <path :fill="rightColor" fill-opacity="0.05" :stroke="rightColor" stroke-width="1" stroke-opacity="0.8">
+                                            <animate ref="animRightLine" attributeName="d" attributeType="XML" :from="previousRightLine" :to="rightLine" dur=".25s" fill="freeze"/>
+                                        </path>
+                                        <text @click="clickedOn(axis)" v-for="(axis,i) in axises.common.left" :x="radialAxisCoord(i,textRatio).x" :y="radialAxisCoord(i,textRatio).y"
+                                              :style="{fill:'#696955',cursor: 'pointer'}" text-anchor="middle" alignment-baseline="central">{{qtUnitName(axis)}}</text>
                                 </svg>
                             </span>
 
@@ -33,11 +49,10 @@
                 </v-flex>
             </v-layout>
         </v-container>
-    </span>
 </template>
 
 <script>
-    import {rad, range} from "../../services/calculations";
+    import {qtUnitName, rad, range, shadeColor} from "../../services/calculations";
     import {bezierCommand} from "./bezier";
 
     export default {
@@ -46,7 +61,19 @@
         data: function () {
             return {
                 taille: 100,
-                textRatio: 1.3
+                textRatio: 1.3,
+                previousLeftLine: null,
+                previousRightLine: null
+            }
+        },
+        watch: {
+            leftLine(c, old) {
+                this.previousLeftLine = old;
+                this.$refs.animLeftLine.beginElement();
+            },
+            rightLine(c, old) {
+                this.previousRightLine = old;
+                this.$refs.animRightLine.beginElement();
             }
         },
         computed: {
@@ -57,9 +84,8 @@
                 return -90;
             },
             angleStep: function () {
-                return this.commonAxisesCount < 5 ? 90 : 360 / this.commonAxisesCount;
+                return 360 / this.commonAxisesCount;
             },
-
             squareAxisY: function () {
                 const ratios = [];
                 for (let i = 0; i < this.commonAxisesCount; i++) {
@@ -69,10 +95,21 @@
                     ratios.push(-this.taille + leftRatio * 2 * this.taille);
                 }
                 return ratios;
+            },
+            leftLine: function () {
+                return this.radialAxisD(this.axises.common.left)
+            },
+            rightLine: function () {
+                return this.radialAxisD(this.axises.common.right)
             }
         },
         methods: {
-            range,
+            range, qtUnitName, shadeColor,
+            clickedOn(axis) {
+                this.$emit('baseChange', axis);
+
+
+            },
             axisAngle: function (i) {
                 return this.angleStart + this.angleStep * i;
             },
