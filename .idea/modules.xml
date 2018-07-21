@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../trees-api/api.iml" filepath="$PROJECT_DIR$/../trees-api/api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../trees-items-service/items-service.iml" filepath="$PROJECT_DIR$/../trees-items-service/items-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../trees-query/query.iml" filepath="$PROJECT_DIR$/../trees-query/query.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../trees-units/units.iml" filepath="$PROJECT_DIR$/../trees-units/units.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/web.iml" filepath="$PROJECT_DIR$/.idea/web.iml" />
     </modules>
   </component>
