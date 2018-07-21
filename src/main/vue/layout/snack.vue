@@ -5,6 +5,7 @@
             :multi-line="snack.multiline"
             :timeout="snack.timeout"
             :vertical="snack.vertical"
+            :color="snack.color"
     >
         {{ snack.text }}
         <v-btn icon flat color="white" @click="close"><v-icon>close</v-icon></v-btn>

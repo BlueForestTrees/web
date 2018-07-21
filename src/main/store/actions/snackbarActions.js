@@ -3,7 +3,7 @@ import Do from "../../const/do";
 import {snack} from "../state";
 
 export default {
-    [On.SNACKBAR]: ({commit}, {text}) => {
-        commit(Do.UPDATE_SNACKBAR, Object.assign(snack(), {visible: true, text}));
+    [On.SNACKBAR]: ({commit}, snackOptions) => {
+        commit(Do.UPDATE_SNACKBAR, Object.assign(snack(), {visible: true, ...snackOptions}));
     }
 }
