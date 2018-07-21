@@ -3,8 +3,13 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../trees-api" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../trees-draw" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../trees-draw-play" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../trees-frontal" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../trees-items-service" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../trees-play" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../trees-query" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../trees-show" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../trees-units" vcs="Git" />
   </component>
 </project>
