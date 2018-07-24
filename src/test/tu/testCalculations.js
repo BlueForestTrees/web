@@ -1,5 +1,5 @@
 import chai from 'chai';
-import {add} from "../../main/services/calculations";
+import {add, objectId} from "../../main/services/calculations";
 import {init} from "../setup";
 
 chai.should();
@@ -16,5 +16,12 @@ describe('Divers calculations', function () {
         add({qt:1000,unit:"g"},{qt:119, unit:"kg"}).should.be.deep.equal({qt:120,unit:"kg"});
     });
 
-
+    it('generate objectIds', function () {
+        const count = 100000;
+        const objs = {};
+        for (let i = 0; i < count; i++) {
+            objs[objectId()] = true;
+        }
+        Object.keys(objs).length.should.equal(count);
+    })
 });

@@ -1,6 +1,7 @@
 import {map} from 'lodash';
 import {bestQuantity, unitCoef, changeUnit} from "trees-units";
 
+export const objectId = () =>  ((new Date().getTime() / 1000 | 0).toString(16) + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, () => Math.random() * 16 | 0).toString(16)).toLowerCase();
 export const idQtUnit = tree => ({_id: tree._id, qt: tree.trunk.quantity.qt, unit: tree.trunk.quantity.unit});
 export const idQuantity = tree => ({_id: tree._id, quantity: tree.trunk.quantity});
 export const hasQuantity = e => e && e.quantity && e.quantity.qt && e.quantity.unit;

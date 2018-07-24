@@ -1,14 +1,13 @@
 import chai from 'chai';
 import {applyCoef, buildAxises, updateRatios, separate} from "../../main/services/axis";
-import {withNameIdQtGrandeur} from "../testPlumbing";
-import {init} from "../setup";
-import api from "../../../../src"; import ENV from "../../../../src/env"; import {cols} from "../../../../src/const/collections";
+import {init, withNameIdQtGrandeur} from "../setup";
+
 
 chai.should();
 
 describe('Axis calculations', function () {
 
-    beforeEach(init(api, ENV, cols));
+    beforeEach(init);
 
     it('minimal buildAxises', function () {
         const tree = {

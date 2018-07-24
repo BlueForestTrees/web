@@ -44,11 +44,13 @@ if (conf.mode === "development") {
             "/api": "http://localhost:8080"
         }
     };
+    conf.devtool = 'eval-source-map';
     conf.output = {
         publicPath: "/"
     };
 }
 if (conf.mode === "production") {
+    conf.devtool = 'source-map';
     conf.output = {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist/blueforest.org/static'),
