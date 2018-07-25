@@ -5,7 +5,7 @@ import {hasQuantity, trunky} from "../../services/calculations";
 
 export default {
     [On.CREATE_TRUNK]: async ({commit, state, dispatch}, {color, name, type}) =>
-        trunky(await api.createTrunk({color, name, type})),
+        trunky(await api.postTrunk({color, name, type})),
 
     [On.LOAD_TRUNK]: ({commit}, tree) => {
         return hasQuantity(tree.trunk) ?
@@ -16,14 +16,14 @@ export default {
                 .then(trunk => commit(Do.SET_TRUNK, {tree, trunk}));
     },
     [On.RENAME_TRUNK]: ({commit}, {trunk, newName}) =>
-        api.renameTrunk(trunk._id, newName)
+        api.putTrunkName(trunk._id, newName)
             .then(() => commit(Do.RENAME_TRUNK, {trunk, newName})),
 
     [On.PUT_TRUNK_QUANTITY]: ({commit, dispatch}, {trunk, quantity}) =>
-        api.upsertQuantity(trunk._id, quantity)
+        api.putTrunkQuantity(trunk._id, quantity)
             .then(() => commit(Do.PUT_TRUNK_QUANTITY, {trunk, quantity}))
             .then(() => dispatch(On.LOAD_OPEN_TREE, trunk)),
 
     [On.CLONE_TRUNK]: ({}, _id) =>
-        api.cloneTrunk(_id)
+        api.postTrunkClone(_id)
 }

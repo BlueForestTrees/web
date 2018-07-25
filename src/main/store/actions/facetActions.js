@@ -19,7 +19,7 @@ export default {
         },
     [On.ADD_FACET]:
         async ({commit}, {tree, facet}) => {
-            api.addFacet(idQtFrom(tree.trunk), idQtFrom(facet));
+            api.putFacet(idQtFrom(tree.trunk), idQtFrom(facet));
             commit(Do.ADD_FACET, {tree, facet});
         }
 }

@@ -16,7 +16,7 @@ Vue.use(Vuetify);
 
 Promise
     .all([
-        api.grandeurs()
+        api.getGrandeurs()
             .then(initUnits)
     ])
     .then(startApp);

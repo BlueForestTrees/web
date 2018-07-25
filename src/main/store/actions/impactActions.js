@@ -26,7 +26,7 @@ export default {
         },
     [On.ADD_IMPACT]:
         async ({commit}, {tree, impact}) => {
-            await api.addImpact(idQtFrom(tree.trunk), idQtFrom(impact));
+            await api.postImpact(idQtFrom(tree.trunk), idQtFrom(impact));
             commit(Do.ADD_IMPACT, {tree, impact});
             commit(Do.ADD_IMPACT_TANK, {tree, impact});
         }

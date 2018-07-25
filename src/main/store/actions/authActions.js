@@ -5,10 +5,10 @@ import {clearAccessToken, setAccessToken} from "../../rest/auth";
 import decode from 'jwt-decode';
 
 export default {
-    [On.WANT_SUSCRIBE]: ({}, {mail}) => api.wantSuscribe({mail}),
+    [On.WANT_SUSCRIBE]: ({}, {mail}) => api.postMail({mail}),
 
-    [On.CONFIRM_SUSCRIBE]: async ({commit}, {token, fullname, password}) => auth(commit, await api.confirmSuscribe({token, fullname, password})),
-    [On.LOGIN]: async ({commit}, {mail, password}) => auth(commit, await api.login({mail, password})),
+    [On.CONFIRM_SUSCRIBE]: async ({commit}, {token, fullname, password}) => auth(commit, await api.postConfirm({token, fullname, password})),
+    [On.LOGIN]: async ({commit}, {mail, password}) => auth(commit, await api.postAuth({mail, password})),
 
     [On.LOGOUT]: async ({commit}) => {
         await clearAccessToken();
