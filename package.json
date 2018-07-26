@@ -56,6 +56,7 @@
     "@material/button": "^0.26.0",
     "@vue/test-utils": "^1.0.0-beta.20",
     "jwt-decode": "^2.2.0",
+    "localforage": "^1.7.2",
     "mocha-webpack": "2.0.0-beta.0",
     "request-promise-lite": "^0.12.0",
     "trees-units": "^1.0.38",

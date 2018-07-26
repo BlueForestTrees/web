@@ -17,14 +17,14 @@
         </v-subheader>
 
         <template v-if="showBilan || !hasItems" v-for="item in bilanItems">
-            <v-list-tile avatar :key="'b'+item.name">
+            <v-list-tile avatar :key="'b'+item._id">
                 <v-icon :style="'color: '+item.color+';margin-right:0.2em'">lens</v-icon>
                 {{qtUnitName(item) }}
             </v-list-tile>
         </template>
 
         <template v-if="!showBilan && hasItems" v-for="item in items">
-            <v-list-tile avatar :key="'i'+item.name">
+            <v-list-tile avatar :key="'i'+item._id">
                 <v-icon :style="'color: '+item.color+';margin-right:0.2em'">lens</v-icon>
                 {{qtUnitName(item)}}
             </v-list-tile>
