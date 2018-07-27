@@ -2,11 +2,11 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../express" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../trees-api" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../trees-db" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../trees-draw" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../trees-draw-play" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../trees-express" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../trees-frontal" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../trees-items-service" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../trees-play" vcs="Git" />
