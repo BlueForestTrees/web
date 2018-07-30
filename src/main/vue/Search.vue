@@ -1,4 +1,6 @@
 <template>
+    <span>
+
     <search-comp>
         <template slot-scope="{ s }">
             <v-toolbar-items>
@@ -28,16 +30,19 @@
             </v-toolbar-items>
         </template>
     </search-comp>
+    <add-tree-btn/>
+    </span>
 </template>
 
 <script>
     import On from "../const/on";
     import {mapActions} from "vuex";
     import SearchComp from "./SearchComp";
+    import AddTreeBtn from "./layout/AddTreeBtn";
 
     export default {
         name: "search",
-        components: {SearchComp},
+        components: {AddTreeBtn, SearchComp},
 
         methods: {
             ...mapActions({
