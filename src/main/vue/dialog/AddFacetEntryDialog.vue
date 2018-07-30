@@ -10,13 +10,13 @@
 </template>
 
 <script>
-    import MainDialog from "./MainDialog";
-    import On from "../../const/on";
-    import {mapActions} from "vuex";
-    import {Dial} from "../../const/dial";
-    import GrandeurSelect from "../common/GrandeurSelect";
-    import {length2min} from "../../services/rules";
-    import ColorPicker from "../common/ColorPicker";
+    import MainDialog from "./MainDialog"
+    import On from "../../const/on"
+    import {mapActions} from "vuex"
+    import {Dial} from "../../const/dial"
+    import GrandeurSelect from "../common/GrandeurSelect"
+    import {length2min} from "../../services/rules"
+    import ColorPicker from "../common/ColorPicker"
 
     export default {
         name: 'add-facet-entry-dialog',
@@ -39,15 +39,15 @@
             length2min,
             ...mapActions({createFacetEntry: On.CREATE_FACET_ENTRY}),
             validate: function () {
-                this.createFacetEntry({color: this.color, name: this.name, grandeur: this.grandeur.key});
-                this.close();
+                this.createFacetEntry({color: this.color, name: this.name, grandeur: this.grandeur.key})
+                this.close()
             },
             close: function () {
-                this.$refs.dialog.close();
+                this.$refs.dialog.close()
             },
             focus: function () {
-                this.name = null;
-                this.grandeur = null;
+                this.name = null
+                this.grandeur = null
             }
         }
     }

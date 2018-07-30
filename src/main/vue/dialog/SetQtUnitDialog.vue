@@ -12,16 +12,16 @@
 </template>
 
 <script>
-    import closable from "../mixin/Closable";
-    import {isNumber, required} from "../../services/rules";
-    import Destination from "../common/Destination";
-    import {mapActions, mapState} from 'vuex';
-    import On from "../../const/on";
-    import {Dial} from "../../const/dial";
+    import closable from "../mixin/Closable"
+    import {isNumber, required} from "../../services/rules"
+    import Destination from "../common/Destination"
+    import {mapActions, mapState} from 'vuex'
+    import On from "../../const/on"
+    import {Dial} from "../../const/dial"
     import {getGrandeur, unit} from 'trees-units'
-    import MainDialog from "./MainDialog";
-    import UnitSelect from "../common/UnitSelect";
-    import GrandeurSelect from "../common/GrandeurSelect";
+    import MainDialog from "./MainDialog"
+    import UnitSelect from "../common/UnitSelect"
+    import GrandeurSelect from "../common/GrandeurSelect"
 
 
     export default {
@@ -40,15 +40,15 @@
         computed: {
             ...mapState({tree: state => state.dialogs.setQtUnit.data.tree}),
             grandeur: function () {
-                return this.tree && getGrandeur(this.tree.trunk.grandeur);
+                return this.tree && getGrandeur(this.tree.trunk.grandeur)
             },
         },
         methods: {
             validate() {
-                this.$refs.form.validate();
+                this.$refs.form.validate()
                 if (this.valid) {
-                    this.putQuantity({trunk: this.tree.trunk, quantity: {qt: this.qt, unit: this.unit.shortname}});
-                    this.close();
+                    this.putQuantity({trunk: this.tree.trunk, quantity: {qt: this.qt, unit: this.unit.shortname}})
+                    this.close()
                 }
             },
             ...mapActions({
@@ -58,9 +58,9 @@
         },
         watch: {
             tree: function (v) {
-                this.qt = v.trunk.quantity && v.trunk.quantity.qt;
-                this.unit = v.trunk.quantity && unit(v.trunk.quantity.unit);
-                this.name = v.trunk.name;
+                this.qt = v.trunk.quantity && v.trunk.quantity.qt
+                this.unit = v.trunk.quantity && unit(v.trunk.quantity.unit)
+                this.name = v.trunk.name
             }
         }
     }

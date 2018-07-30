@@ -1,34 +1,37 @@
-import On from "../../const/on";
-import api from "../../rest/api";
-import {idQuantity, transportQuantity, trunkyAll} from "../../services/calculations";
-import router from "../../router/router";
-import {GO} from "../../const/go";
-import Do from "../../const/do";
+import On from "../../const/on"
+import api from "../../rest/api"
+import {idQuantity, transportQuantity, trunkyAll} from "../../services/calculations"
+import router from "../../router/router"
+import {GO} from "../../const/go"
+import Do from "../../const/do"
 
 //on détecte que l'objet est à charger en se basant arbitrairement sur le champ branches
-const needRefresh = (basketTree, requestedTree) => !basketTree.branches;
+const needRefresh = (basketTree, requestedTree) => !basketTree.branches
 
 export default {
     [On.GO_TREE]: ({commit, state}, {_id, qt, unit, trunk}) => {
         if (qt && unit) {
-            router.push({name: GO.QTREE, params: {_id, qt, unit}});
+            router.push({name: GO.QTREE, params: {_id, qt, unit}})
         } else if (trunk && trunk.quantity) {
-            router.push({name: GO.QTREE, params: {_id, qt: trunk.quantity.qt, unit: trunk.quantity.unit}});
+            router.push({name: GO.QTREE, params: {_id, qt: trunk.quantity.qt, unit: trunk.quantity.unit}})
         } else {
-            router.push({name: GO.TREE, params: {_id}});
+            router.push({name: GO.TREE, params: {_id}})
         }
     },
     [On.LOAD_IDQTUNIT]: async ({dispatch}, {_id, qt, unit}) => dispatch(On.LOAD_OPEN_TREE, ({_id, trunk: {quantity: {qt, unit}}})),
     [On.LOAD_OPEN_TREE]: async ({getters, dispatch, commit}, treeToLoad) => {
-        const _id = treeToLoad._id;
-        const basketItem = getters.basketItem(_id);
+        const _id = treeToLoad._id
+        const basketItem = getters.basketItem(_id)
+        let result = null
         if (basketItem && !needRefresh(basketItem, treeToLoad)) {
-            return basketItem;
+            result = basketItem
         } else {
-            await dispatch(On.LOAD_TREE, treeToLoad);
-            await dispatch(On.ADD_TO_BASKET, [treeToLoad]);
-            commit(Do.OPEN_TREE, treeToLoad);
+            await dispatch(On.LOAD_TREE, treeToLoad)
+            await dispatch(On.ADD_TO_BASKET, [treeToLoad])
+            result = treeToLoad
         }
+        commit(Do.OPEN_TREE, result)
+        return result
     },
 
     [On.LOAD_TREE]: ({commit, state, dispatch}, treeToLoad) =>

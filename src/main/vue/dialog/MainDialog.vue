@@ -23,14 +23,14 @@
 </template>
 
 <script>
-    import Do from "../../const/do";
-    import {mapMutations} from "vuex";
+    import Do from "../../const/do"
+    import {mapMutations} from "vuex"
 
     export default {
         props: {dialog: String, title: String, icon: String, noaction: Boolean},
         methods: {
             close: function () {
-                this.visible = false;
+                this.visible = false
             },
             ...mapMutations({
                 commitData: Do.UPDATE_DIALOG_DATA,
@@ -41,28 +41,28 @@
         computed: {
             data: {
                 get: function () {
-                    return this.$store.state.dialogs[this.dialog].data;
+                    return this.$store.state.dialogs[this.dialog].data
                 },
                 set: function (value) {
-                    this.commitData({dialog: this.dialog, data: value});
+                    this.commitData({dialog: this.dialog, data: value})
                 }
             },
             visible: {
                 get: function () {
-                    return this.$store.state.dialogs[this.dialog].visible;
+                    return this.$store.state.dialogs[this.dialog].visible
                 },
                 set: function (value) {
                     if (value) {
-                        this.commitEmptyData(this.dialog);
+                        this.commitEmptyData(this.dialog)
                     }
-                    this.commitVisible({dialog: this.dialog, visible: value});
+                    this.commitVisible({dialog: this.dialog, visible: value})
                 }
             }
         },
         watch: {
             visible(value) {
                 if (value) {
-                    this.$nextTick(() => this.$emit('focus'));
+                    this.$nextTick(() => this.$emit('focus'))
                 }
             }
         }

@@ -1,4 +1,4 @@
-import {GO} from "../const/go";
+import {GO} from "../const/go"
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import BlueForest from '../vue/BlueForest'
@@ -8,13 +8,13 @@ import Confirmation from '../vue/Confirmation'
 
 import Root from '../vue/tree/Root'
 
-const Tree = () => import('../vue/tree/Tree.vue');
-const Search = () => import('../vue/Search.vue');
+const Tree = () => import('../vue/tree/Tree.vue')
+const Search = () => import('../vue/Search.vue')
 import Home from '../vue/Home'
 import Basket from '../vue/Basket'
 import Compare from '../vue/compare/Compare'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 export default new VueRouter({
     mode: 'history',
@@ -68,4 +68,4 @@ export default new VueRouter({
         {name: GO.SUSCRIBE, path: "/suscribe", component: Inscription},
         {name: GO.CONFIRM, path: "/confirm/:token", component: Confirmation, props: true}
     ]
-});
+})

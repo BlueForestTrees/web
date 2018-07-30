@@ -5,7 +5,7 @@
 </template>
 
 <script>
-    import AddTreeBtn from "./layout/AddTreeBtn";
+    import AddTreeBtn from "./layout/AddTreeBtn"
     export default {
         components: {AddTreeBtn}
     }

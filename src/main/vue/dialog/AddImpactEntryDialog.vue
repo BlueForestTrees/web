@@ -13,14 +13,14 @@
 </template>
 
 <script>
-    import MainDialog from "./MainDialog";
-    import On from "../../const/on";
-    import {mapActions} from "vuex";
-    import {Dial} from "../../const/dial";
-    import GrandeurSelect from "../common/GrandeurSelect";
-    import {length2min} from "../../services/rules";
-    import closable from "../mixin/Closable";
-    import ColorPicker from "../common/ColorPicker";
+    import MainDialog from "./MainDialog"
+    import On from "../../const/on"
+    import {mapActions} from "vuex"
+    import {Dial} from "../../const/dial"
+    import GrandeurSelect from "../common/GrandeurSelect"
+    import {length2min} from "../../services/rules"
+    import closable from "../mixin/Closable"
+    import ColorPicker from "../common/ColorPicker"
 
     export default {
         mixins: [closable],
@@ -44,16 +44,16 @@
             length2min,
             ...mapActions({"createImpactEntry": On.CREATE_IMPACT_ENTRY}),
             validate: function () {
-                this.$refs.form.validate();
+                this.$refs.form.validate()
                 if (this.valid) {
-                    this.createImpactEntry({color:this.color, name: this.name, grandeur: this.grandeur.key});
-                    this.close();
+                    this.createImpactEntry({color:this.color, name: this.name, grandeur: this.grandeur.key})
+                    this.close()
                 }
             },
             focus() {
-                this.name = null;
-                this.grandeur = null;
-                this.$nextTick(() => this.$refs.nom.focus());
+                this.name = null
+                this.grandeur = null
+                this.$nextTick(() => this.$refs.nom.focus())
             }
         }
     }

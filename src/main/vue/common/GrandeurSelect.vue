@@ -8,8 +8,8 @@
 </template>
 
 <script>
-    import {getGrandeurs} from "trees-units";
-    import {required} from "../../services/rules";
+    import {getGrandeurs} from "trees-units"
+    import {required} from "../../services/rules"
 
     export default {
         name: 'grandeur-select',

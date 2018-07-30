@@ -81,12 +81,12 @@
 </template>
 
 <script>
-    import On from "../../const/on";
-    import {mapActions} from 'vuex';
-    import QtUnit from "../common/QtUnit";
-    import selectable from "../mixin/Selectable";
-    import goTree from "../mixin/GoTree";
-    import {getRandomColor, qtUnitName} from "../../services/calculations";
+    import On from "../../const/on"
+    import {mapActions} from 'vuex'
+    import QtUnit from "../common/QtUnit"
+    import selectable from "../mixin/Selectable"
+    import goTree from "../mixin/GoTree"
+    import {getRandomColor, qtUnitName} from "../../services/calculations"
 
     export default {
         components: {
@@ -101,29 +101,29 @@
         },
         computed: {
             items: function () {
-                return this.tree && this.tree.roots && this.tree.roots.items;
+                return this.tree && this.tree.roots && this.tree.roots.items
             },
             hasItems: function () {
-                return this.items && this.items.length && this.items.length > 0;
+                return this.items && this.items.length && this.items.length > 0
             },
             bilanItems: function () {
-                return this.tree && this.tree.tank && this.tree.tank.items;
+                return this.tree && this.tree.tank && this.tree.tank.items
             }
         },
 
         methods: {
             goRoot: function (root) {
-                this.dispatchGoRoot({treeId: this.tree._id, rootId: root._id});
-                this.unselect();
+                this.dispatchGoRoot({treeId: this.tree._id, rootId: root._id})
+                this.unselect()
             },
             remove(items) {
                 for (let i = 0; i < items.length; i++) {
-                    this.deleteLink({left: this.tree, right: items[i]});
+                    this.deleteLink({left: this.tree, right: items[i]})
                 }
-                this.unselect();
+                this.unselect()
             },
             open() {
-                this.dispatchLoadTree(this.selection[0]);
+                this.dispatchLoadTree(this.selection[0])
             },
             ...mapActions({
                 dispatchGoRoot: On.GO_ROOT,

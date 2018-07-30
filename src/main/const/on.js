@@ -50,4 +50,4 @@ export default {
     REMOVE_FROM_BASKET:'removeFromBasket',
     SWIPE_LEFT: 'SWIPE_LEFT',
     PUT_TRUNK_QUANTITY: "putTrunkQuantity"
-};
+}

@@ -35,10 +35,10 @@
 </template>
 
 <script>
-    import Card from "./layout/Card";
-    import On from "../const/on";
-    import {mapActions} from 'vuex';
-    import decode from 'jwt-decode';
+    import Card from "./layout/Card"
+    import On from "../const/on"
+    import {mapActions} from 'vuex'
+    import decode from 'jwt-decode'
 
     export default {
         name: 'confirmation',
@@ -58,15 +58,15 @@
             nameRequired: value => !!value || 'Veuillez indiquer votre nom complet.',
             validPassword: value => !!value || "Veuillez choisir un mot de passe",
             validate: async function () {
-                this.$refs.form.validate();
+                this.$refs.form.validate()
                 if (this.valid) {
-                    await this.confirm({token: this.token, fullname: this.fullname, password: this.password});
-                    this.close();
+                    await this.confirm({token: this.token, fullname: this.fullname, password: this.password})
+                    this.close()
                 }
             }
         },
         mounted: function(){
-            this.mail = decode(this.token).mail;
+            this.mail = decode(this.token).mail
         }
     }
 </script>

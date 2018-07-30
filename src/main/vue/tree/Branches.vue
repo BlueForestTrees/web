@@ -45,12 +45,12 @@
 </template>
 
 <script>
-    import On from "../../const/on";
-    import {mapActions} from 'vuex';
-    import QtUnit from "../common/QtUnit";
-    import selectable from "../mixin/Selectable";
-    import {getRandomColor, qtUnitName} from "../../services/calculations";
-    import goTree from "../mixin/GoTree";
+    import On from "../../const/on"
+    import {mapActions} from 'vuex'
+    import QtUnit from "../common/QtUnit"
+    import selectable from "../mixin/Selectable"
+    import {getRandomColor, qtUnitName} from "../../services/calculations"
+    import goTree from "../mixin/GoTree"
 
     export default {
         components: {
@@ -60,16 +60,16 @@
         mixins: [selectable, goTree],
         computed: {
             items: function () {
-                return this.tree && this.tree.branches && this.tree.branches.items;
+                return this.tree && this.tree.branches && this.tree.branches.items
             },
             hasItems: function () {
-                return this.items && this.items.length && this.items.length > 0;
+                return this.items && this.items.length && this.items.length > 0
             },
         },
         methods: {
             remove(item) {
-                this.deleteLink({left: item, right: this.tree});
-                this.unselect();
+                this.deleteLink({left: item, right: this.tree})
+                this.unselect()
             },
             ...mapActions({
                 deleteLink: On.DELETE_LINK,
@@ -77,7 +77,7 @@
                 dispatchLoadTree: On.LOAD_OPEN_TREE
             }),
             open() {
-                this.dispatchLoadTree(this.selection[0]);
+                this.dispatchLoadTree(this.selection[0])
             },
             getRandomColor, qtUnitName
         }

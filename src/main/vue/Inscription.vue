@@ -39,10 +39,10 @@
 </template>
 
 <script>
-    import {mapActions} from "vuex";
-    import On from "../const/on";
-    import Card from "./layout/Card";
-    import {mailRequired, validMail} from "../services/rules";
+    import {mapActions} from "vuex"
+    import On from "../const/on"
+    import Card from "./layout/Card"
+    import {mailRequired, validMail} from "../services/rules"
 
     export default {
         components: {Card},
@@ -58,10 +58,10 @@
             mailRequired,
             validMail,
             validate: async function () {
-                this.$refs.form.validate();
+                this.$refs.form.validate()
                 if (this.valid) {
-                    await this.wantSuscribe({mail: this.mail});
-                    this.mailSent = true;
+                    await this.wantSuscribe({mail: this.mail})
+                    this.mailSent = true
                 }
             },
             ...mapActions({wantSuscribe: On.WANT_SUSCRIBE})

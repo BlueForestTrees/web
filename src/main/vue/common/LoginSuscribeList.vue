@@ -19,16 +19,16 @@
 </template>
 
 <script>
-    import {GO} from "../../const/go";
+    import {GO} from "../../const/go"
 
     export default{
         name:"login-suscribe-list",
         methods:{
             suscribe: function () {
-                this.$router.push({name: GO.SUSCRIBE});
+                this.$router.push({name: GO.SUSCRIBE})
             },
             connect: function () {
-                this.$router.push({name: GO.LOGIN});
+                this.$router.push({name: GO.LOGIN})
             },
         }
     }

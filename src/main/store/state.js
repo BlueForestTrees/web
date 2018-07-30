@@ -1,10 +1,10 @@
-import {reduce} from 'lodash';
-import {Dial} from "../const/dial";
+import {reduce} from 'lodash'
+import {Dial} from "../const/dial"
 
 const dialogStateFromData = (data) => ({
     visible: false,
     data: data
-});
+})
 const dialogFactory = {
     [Dial.ADD_TRUNK]: () => ({destination: null}),
     [Dial.FACET_ENTRY]: () => ({qt: null, unit: null, name: null}),
@@ -19,12 +19,12 @@ const dialogFactory = {
     [Dial.FEEDBACK]: () => ({}),
     [Dial.SUSCRIBE]: () => ({}),
     [Dial.LOGIN]: () => ({}),
-};
+}
 
 const dialogs = () => reduce(Dial, (dials, key) => {
-    dials[key] = dialogStateFromData(createDialog(key));
-    return dials;
-}, {});
+    dials[key] = dialogStateFromData(createDialog(key))
+    return dials
+}, {})
 
 export const snack = () => ({
     visible: false,
@@ -33,11 +33,11 @@ export const snack = () => ({
     vertical: false,
     text: "this message should be overriden.",
     color: "black"
-});
+})
 
-export const createDialog = name => (dialogFactory[name] && dialogFactory[name]()) || (console.warn(`state.js il manque dialogFactory['${name}']`) || {});
+export const createDialog = name => (dialogFactory[name] && dialogFactory[name]()) || (console.warn(`state.js il manque dialogFactory['${name}']`) || {})
 
-export const tree = () => ({_id: null, trunk: null, selection: null, facets: null});
+export const tree = () => ({_id: null, trunk: null, selection: null, facets: null})
 
 export default {
     token: null,
@@ -47,4 +47,4 @@ export default {
     nav: {leftMenuVisible: false},
     user: null,
     snack: snack()
-};
+}

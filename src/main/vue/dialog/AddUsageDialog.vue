@@ -23,16 +23,16 @@
 </template>
 
 <script>
-    import MainDialog from "./MainDialog";
-    import On from "../../const/on";
-    import {mapActions, mapState} from "vuex";
-    import {Dial} from "../../const/dial";
-    import Destination from "../common/Destination";
-    import {isNumber, required} from "../../services/rules";
-    import closable from "../mixin/Closable";
-    import UnitSelect from "../common/UnitSelect";
-    import {getGrandeur} from "trees-units";
-    import {find} from 'lodash';
+    import MainDialog from "./MainDialog"
+    import On from "../../const/on"
+    import {mapActions, mapState} from "vuex"
+    import {Dial} from "../../const/dial"
+    import Destination from "../common/Destination"
+    import {isNumber, required} from "../../services/rules"
+    import closable from "../mixin/Closable"
+    import UnitSelect from "../common/UnitSelect"
+    import {getGrandeur} from "trees-units"
+    import {find} from 'lodash'
 
     export default {
         name: 'add-usage-dialog',
@@ -56,17 +56,17 @@
         computed: {
             ...mapState({tree: state => state.dialogs[Dial.ADD_USAGE].data.tree}),
             grandeur: function () {
-                return this.selectedItem && getGrandeur(this.selectedItem && this.selectedItem.trunk.grandeur);
+                return this.selectedItem && getGrandeur(this.selectedItem && this.selectedItem.trunk.grandeur)
             },
             selectedItem: function () {
-                return this.selectedItemId && find(this.autocompleteItems, {_id: this.selectedItemId});
+                return this.selectedItemId && find(this.autocompleteItems, {_id: this.selectedItemId})
             }
         },
         watch: {
             itemNamepart(val) {
-                this.loading = true;
-                this.goSearch(val);
-                this.loading = false;
+                this.loading = true
+                this.goSearch(val)
+                this.loading = false
             }
         },
         methods: {
@@ -75,13 +75,13 @@
                 dispatchLink: On.LINK
             }),
             async validate() {
-                this.$refs.form.validate();
+                this.$refs.form.validate()
                 if (this.valid) {
                     await this.dispatchLink({
                         trunk: {_id: this.selectedItemId, quantity: {qt: this.qt, unit: this.unit.shortname}},
                         root: {_id: this.tree._id, quantity: this.tree.trunk.quantity}
-                    });
-                    this.close();
+                    })
+                    this.close()
                 }
             },
             focus() {
@@ -89,10 +89,10 @@
             },
             async goSearch(term) {
                 if (term)
-                    this.autocompleteItems = await this.dispatchSearch({term});
+                    this.autocompleteItems = await this.dispatchSearch({term})
             },
             required, isNumber, notIn() {
-                return !find(this.tree.branches.items, {_id: this.selectedItemId}) || "Déjà utilisé";
+                return !find(this.tree.branches.items, {_id: this.selectedItemId}) || "Déjà utilisé"
             }
         }
     }

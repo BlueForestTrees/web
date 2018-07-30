@@ -1,7 +1,7 @@
-import On from "../../const/on";
-import api from "../../rest/api";
-import Do from "../../const/do";
-import {hasQuantity, idQtFrom} from "../../services/calculations";
+import On from "../../const/on"
+import api from "../../rest/api"
+import Do from "../../const/do"
+import {hasQuantity, idQtFrom} from "../../services/calculations"
 
 export default {
 
@@ -21,13 +21,13 @@ export default {
 
     [On.DELETE_IMPACTS]:
         async ({commit}, {impacts, toDelete}) => {
-            await api.deleteImpacts(impacts._id, _.map(toDelete, "_id"));
-            commit(Do.DELETE_IMPACTS, {impacts, toDelete});
+            await api.deleteImpacts(impacts._id, _.map(toDelete, "_id"))
+            commit(Do.DELETE_IMPACTS, {impacts, toDelete})
         },
     [On.ADD_IMPACT]:
         async ({commit}, {tree, impact}) => {
-            await api.postImpact(idQtFrom(tree.trunk), idQtFrom(impact));
-            commit(Do.ADD_IMPACT, {tree, impact});
-            commit(Do.ADD_IMPACT_TANK, {tree, impact});
+            await api.postImpact(idQtFrom(tree.trunk), idQtFrom(impact))
+            commit(Do.ADD_IMPACT, {tree, impact})
+            commit(Do.ADD_IMPACT_TANK, {tree, impact})
         }
 }

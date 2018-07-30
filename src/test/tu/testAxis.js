@@ -1,13 +1,13 @@
-import chai from 'chai';
-import {applyCoef, buildAxises, updateRatios, separate} from "../../main/services/axis";
-import {init, withNameIdQtGrandeur} from "../setup";
+import chai from 'chai'
+import {applyCoef, buildAxises, updateRatios, separate} from "../../main/services/axis"
+import {init, withNameIdQtGrandeur} from "../setup"
 
 
-chai.should();
+chai.should()
 
 describe('Axis calculations', function () {
 
-    beforeEach(init);
+    beforeEach(init)
 
     it('minimal buildAxises', function () {
         const tree = {
@@ -21,7 +21,7 @@ describe('Axis calculations', function () {
             impactsTank: {
                 items: []
             }
-        };
+        }
         const expected = [
             {
                 "tree": "Skate",
@@ -34,9 +34,9 @@ describe('Axis calculations', function () {
                 "unit": "kg",
                 "grandeur": "Mass"
             }
-        ];
-        buildAxises(tree).should.be.deep.equal(expected);
-    });
+        ]
+        buildAxises(tree).should.be.deep.equal(expected)
+    })
     it('complete buildAxises', function () {
         const tree = {
             trunk: withNameIdQtGrandeur("Skate", "a", 1, "kg"),
@@ -49,7 +49,7 @@ describe('Axis calculations', function () {
             impactsTank: {
                 items: [withNameIdQtGrandeur("co2", "d", 3, "kg"), withNameIdQtGrandeur("poison", "e", 4, "L")]
             }
-        };
+        }
         const expected = [
             {
                 "grandeur": "Mass",
@@ -128,27 +128,27 @@ describe('Axis calculations', function () {
                 "type": "impactsTank",
                 "unit": "L",
             }
-        ];
-        buildAxises(tree).should.be.deep.equal(expected);
-    });
+        ]
+        buildAxises(tree).should.be.deep.equal(expected)
+    })
     it('applyCoef', function () {
         const axises = [
             {tree: "leftTreeName", type: "facet", name: "Prix", _qt: 20, unit: "€", _baseQt: 4},
             {tree: "leftTreeName", type: "trunk", name: "Quantité", _qt: 20, unit: "l", _baseQt: 6},
             {tree: "leftTreeName", type: "tank", name: "Eau", _qt: 5, unit: "mol", _baseQt: 8},
             {tree: "leftTreeName", type: "tank", name: "Elec", _qt: 12, unit: "mol", _baseQt: 10},
-        ];
-        const coef = 2;
+        ]
+        const coef = 2
         const expected = [
             {tree: "leftTreeName", type: "facet", name: "Prix", qt: 40, _qt: 20, unit: "€", _baseQt: 4, baseQt: 8},
             {tree: "leftTreeName", type: "trunk", name: "Quantité", qt: 40, _qt: 20, unit: "l", _baseQt: 6, baseQt: 12},
             {tree: "leftTreeName", type: "tank", name: "Eau", qt: 10, _qt: 5, unit: "mol", _baseQt: 8, baseQt: 16},
             {tree: "leftTreeName", type: "tank", name: "Elec", qt: 24, _qt: 12, unit: "mol", _baseQt: 10, baseQt: 20},
-        ];
+        ]
 
-        applyCoef(axises, coef).should.deep.equal(expected);
+        applyCoef(axises, coef).should.deep.equal(expected)
 
-    });
+    })
     it('separate', function () {
         const leftAxises = [
             {tree: "leftTreeName", type: "trunk", name: "idem", _qt: 20, unit: "kg", grandeur: "Mass"},
@@ -156,14 +156,14 @@ describe('Axis calculations', function () {
             {tree: "leftTreeName", type: "facet", name: "Prix", _qt: null, unit: null, grandeur: null},
             {tree: "leftTreeName", type: "tank", name: "Elec", _qt: 12, unit: "mol", grandeur: "Dens"},
             {tree: "leftTreeName", type: "tank", name: "Eau", _qt: 5, unit: "mol", grandeur: "Dens"}
-        ];
+        ]
         const rightAxises = [
             {tree: "rightTreeName", type: "trunk", name: "idem", _qt: 30, unit: "L", grandeur: "Volu"},
             {tree: "rightTreeName", type: "trunk", name: "Quantité", _qt: 30, unit: "L", grandeur: "Volu"},
             {tree: "rightTreeName", type: "facet", name: "Prix", _qt: 10, unit: "€", grandeur: "Prix"},
             {tree: "rightTreeName", type: "tank", name: "Elec", _qt: null, unit: null, grandeur: null},
             {tree: "rightTreeName", type: "tank", name: "Pétrole", _qt: 12, unit: "mol", grandeur: "Dens"}
-        ];
+        ]
         const expected = {
             left: [
                 {tree: "leftTreeName", type: "facet", name: "Prix", _qt: null, unit: null, grandeur: null},
@@ -184,9 +184,9 @@ describe('Axis calculations', function () {
                 {tree: "rightTreeName", type: "facet", name: "Prix", _qt: 10, unit: "€", grandeur: "Prix"},
                 {tree: "rightTreeName", type: "tank", name: "Pétrole", _qt: 12, unit: "mol", grandeur: "Dens"}
             ]
-        };
-        separate(leftAxises, rightAxises).should.deep.equal(expected);
-    });
+        }
+        separate(leftAxises, rightAxises).should.deep.equal(expected)
+    })
     it('updateRatios', function () {
         const axises = {
             common: {
@@ -203,7 +203,7 @@ describe('Axis calculations', function () {
                 {tree: "rightTreeName", type: "tank", name: "Eau", qt: 330, unit: "min", baseQt: 330 * 60}
             ]
             }
-        };
+        }
 
         const expected = {
             common: {
@@ -220,10 +220,10 @@ describe('Axis calculations', function () {
                     {tree: "rightTreeName", type: "tank", name: "Eau", qt: 330, unit: "min", ratio: 1, "baseQt": 19800}
                 ]
             }
-        };
+        }
 
-        updateRatios(axises).should.deep.equal(expected);
-    });
+        updateRatios(axises).should.deep.equal(expected)
+    })
 
 
-});
+})

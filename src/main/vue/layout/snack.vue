@@ -18,7 +18,7 @@
         props: ['snack'],
         methods: {
             close: function () {
-                this.snack.visible = false;
+                this.snack.visible = false
             }
         }
     }

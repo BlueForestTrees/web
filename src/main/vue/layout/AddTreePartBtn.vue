@@ -29,9 +29,9 @@
 </template>
 
 <script>
-    import Do from "../../const/do";
-    import {mapMutations} from 'vuex';
-    import {Dial} from "../../const/dial";
+    import Do from "../../const/do"
+    import {mapMutations} from 'vuex'
+    import {Dial} from "../../const/dial"
 
     export default {
         name:"add-tree-part-btn",
@@ -40,7 +40,7 @@
         methods: {
             ...mapMutations([Do.SHOW_DIALOG]),
             show(dialog) {
-                this.showDialog({dialog, data: {tree: this.tree}});
+                this.showDialog({dialog, data: {tree: this.tree}})
             }
         }
     }

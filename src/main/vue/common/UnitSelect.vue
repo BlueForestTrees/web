@@ -13,18 +13,18 @@
         computed: {
             items: function () {
                 if (this.grandeur && this.grandeur.units) {
-                    return this.grandeur.units;
+                    return this.grandeur.units
                 } else if (this.value) {
-                    return [this.value];
+                    return [this.value]
                 } else {
-                    return [];
+                    return []
                 }
             }
         },
         watch: {
             grandeur: function (g) {
                 if (g && g.key === "Nomb") {
-                    this.$emit('input', this.grandeur.units[0]);
+                    this.$emit('input', this.grandeur.units[0])
                 }
             }
         }

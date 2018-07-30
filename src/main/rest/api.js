@@ -1,5 +1,5 @@
 import {del, get, paramsOf, post, put} from './rest'
-import {X_ACCESS_TOKEN} from "../const/headers";
+import {X_ACCESS_TOKEN} from "../const/headers"
 
 export default {
     // DIRECT (id qt) (color name) => à stocker. Les get réutilisent le storage
@@ -54,11 +54,11 @@ export default {
 
     postMail: ({mail}) => post(`/api/mail`, {mail}),
     postConfirm: async ({token, fullname, password}) => {
-        const res = await post(`/api/confirm`, {t: token, fullname, password}, {resolveWithFullResponse: true});
-        return {token: res.headers[X_ACCESS_TOKEN]};
+        const res = await post(`/api/confirm`, {t: token, fullname, password}, {resolveWithFullResponse: true})
+        return {token: res.headers[X_ACCESS_TOKEN]}
     },
     postAuth: async ({mail, password}) => {
-        const res = await post(`/api/auth`, {mail, password}, {resolveWithFullResponse: true});
-        return {token: res.headers[X_ACCESS_TOKEN]};
+        const res = await post(`/api/auth`, {mail, password}, {resolveWithFullResponse: true})
+        return {token: res.headers[X_ACCESS_TOKEN]}
     }
 }

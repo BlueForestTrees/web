@@ -26,19 +26,19 @@
 </template>
 
 <script>
-    import {Dial} from "../../const/dial";
-    import On from "../../const/on";
-    import {mapActions, mapState} from "vuex";
-    import MainDialog from "./MainDialog";
-    import UnitGrid from "../common/UnitGrid";
-    import GrandeurSelect from "../common/GrandeurSelect";
-    import UnitSelect from "../common/UnitSelect";
+    import {Dial} from "../../const/dial"
+    import On from "../../const/on"
+    import {mapActions, mapState} from "vuex"
+    import MainDialog from "./MainDialog"
+    import UnitGrid from "../common/UnitGrid"
+    import GrandeurSelect from "../common/GrandeurSelect"
+    import UnitSelect from "../common/UnitSelect"
 
     import {getGrandeur} from 'trees-units'
-    import {isNumber, required} from "../../services/rules";
-    import {find} from 'lodash';
-    import Destination from "../common/Destination";
-    import closable from "../mixin/Closable";
+    import {isNumber, required} from "../../services/rules"
+    import {find} from 'lodash'
+    import Destination from "../common/Destination"
+    import closable from "../mixin/Closable"
 
     export default {
         name: 'add-facet-dialog',
@@ -68,32 +68,32 @@
         computed: {
             ...mapState({tree: state => state.dialogs[Dial.ADD_FACET].data.tree}),
             grandeur: function () {
-                return this.selectedItem && getGrandeur(this.selectedItem && this.selectedItem.grandeur);
+                return this.selectedItem && getGrandeur(this.selectedItem && this.selectedItem.grandeur)
             },
             selectedItem: function () {
-                return this.selectedItemId && find(this.autocompleteItems, {_id: this.selectedItemId});
+                return this.selectedItemId && find(this.autocompleteItems, {_id: this.selectedItemId})
             }
         },
         watch: {
             itemNamepart(val) {
-                this.loading = true;
-                this.goSearch(val);
-                this.loading = false;
+                this.loading = true
+                this.goSearch(val)
+                this.loading = false
             }
         },
         methods: {
             ...mapActions({dispatchSearch: On.SEARCH_FACET_ENTRY, dispatchAddFacet: On.ADD_FACET}),
             focus: function () {
-                this.$refs.form.reset();
-                this.autocompleteItems = [];
-                this.$nextTick(() => this.$refs.nom.focus());
+                this.$refs.form.reset()
+                this.autocompleteItems = []
+                this.$nextTick(() => this.$refs.nom.focus())
             },
             async goSearch(namepart) {
                 if (namepart)
-                    this.autocompleteItems = await this.dispatchSearch({namepart});
+                    this.autocompleteItems = await this.dispatchSearch({namepart})
             },
             validate() {
-                this.$refs.form.validate();
+                this.$refs.form.validate()
                 if (this.valid) {
                     const facet = Object.assign(
                         {
@@ -103,15 +103,15 @@
                             }
                         },
                         this.selectedItem
-                    );
+                    )
 
-                    this.dispatchAddFacet({tree: this.tree, facet});
-                    this.close();
+                    this.dispatchAddFacet({tree: this.tree, facet})
+                    this.close()
                 }
             },
             required, isNumber,
             notIn() {
-                return !find(this.tree.facets.items, {_id: this.selectedItemId}) || "Déjà utilisé";
+                return !find(this.tree.facets.items, {_id: this.selectedItemId}) || "Déjà utilisé"
             }
         }
     }

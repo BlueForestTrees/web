@@ -54,14 +54,14 @@
 </template>
 
 <script>
-    import MainDialog from "../dialog/MainDialog";
-    import {mapMutations, mapState, mapActions} from "vuex";
-    import {Dial} from "../../const/dial";
-    import Do from "../../const/do";
-    import On from "../../const/on";
-    import {GO} from "../../const/go";
-    import {initiales, overcolor} from "../../services/calculations";
-    import LoginSuscribeList from "../common/LoginSuscribeList";
+    import MainDialog from "../dialog/MainDialog"
+    import {mapMutations, mapState, mapActions} from "vuex"
+    import {Dial} from "../../const/dial"
+    import Do from "../../const/do"
+    import On from "../../const/on"
+    import {GO} from "../../const/go"
+    import {initiales, overcolor} from "../../services/calculations"
+    import LoginSuscribeList from "../common/LoginSuscribeList"
 
     export default {
         data: function () {
@@ -78,7 +78,7 @@
         },
         methods: {
             goSearch: function () {
-                this.$router.push({name: "search"});
+                this.$router.push({name: "search"})
             },
             overcolor, initiales,
             ...mapActions({
@@ -91,7 +91,7 @@
                 commitVisible: Do.UPDATE_DIALOG_VISIBILITY
             }),
             show: function (dialog) {
-                this.showDialog({dialog});
+                this.showDialog({dialog})
             }
         }
     }

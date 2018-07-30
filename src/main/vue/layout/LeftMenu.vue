@@ -51,11 +51,11 @@
 </template>
 
 <script>
-    import Do from "../../const/do";
-    import {mapActions, mapMutations, mapState} from "vuex";
-    import {Dial} from "../../const/dial";
-    import On from "../../const/on";
-    import FeedbackDialog from "../dialog/FeeedbackDialog";
+    import Do from "../../const/do"
+    import {mapActions, mapMutations, mapState} from "vuex"
+    import {Dial} from "../../const/dial"
+    import On from "../../const/on"
+    import FeedbackDialog from "../dialog/FeeedbackDialog"
 
     export default {
         components: {FeedbackDialog},

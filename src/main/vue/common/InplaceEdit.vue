@@ -15,7 +15,7 @@
 </template>
 
 <script>
-    import {isNumber, required} from "../../services/rules";
+    import {isNumber, required} from "../../services/rules"
 
     export default {
         name: 'inplace-edit',
@@ -30,19 +30,19 @@
 
         methods: {
             edit: function () {
-                this.editing = true;
+                this.editing = true
             },
             ok: function () {
             if (this.valid) {
-                this.editing = false;
-                this.$emit("ok", this.current);
+                this.editing = false
+                this.$emit("ok", this.current)
                 }
 
             },
             ko: function () {
-                this.editing = false;
-                this.current = this.initial;
-                this.$emit("ko");
+                this.editing = false
+                this.current = this.initial
+                this.$emit("ko")
             },
 
             required, isNumber

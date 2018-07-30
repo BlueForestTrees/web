@@ -22,9 +22,9 @@
 </template>
 
 <script>
-    import selectable from "./mixin/Selectable";
-    import On from "../const/on";
-    import {mapActions} from "vuex";
+    import selectable from "./mixin/Selectable"
+    import On from "../const/on"
+    import {mapActions} from "vuex"
 
     export default {
         name: 'search-comp',
@@ -45,12 +45,12 @@
             }
         },
         created: function () {
-            this.namePart = "";
+            this.namePart = ""
         },
         watch: {
             query: function (query) {
                 this.dispatchSearch(query)
-                    .then(items => this.items = items);
+                    .then(items => this.items = items)
             }
         },
         methods: {

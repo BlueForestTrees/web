@@ -52,8 +52,8 @@
 </template>
 
 <script>
-    import {qtUnitName, rad, range, shadeColor} from "../../services/calculations";
-    import {bezierCommand} from "./bezier";
+    import {qtUnitName, rad, range, shadeColor} from "../../services/calculations"
+    import {bezierCommand} from "./bezier"
 
     export default {
         name: "compare-radar",
@@ -68,84 +68,84 @@
         },
         watch: {
             leftLine(c, old) {
-                this.previousLeftLine = old;
-                this.$refs.animLeftLine.beginElement();
+                this.previousLeftLine = old
+                this.$refs.animLeftLine.beginElement()
             },
             rightLine(c, old) {
-                this.previousRightLine = old;
-                this.$refs.animRightLine.beginElement();
+                this.previousRightLine = old
+                this.$refs.animRightLine.beginElement()
             }
         },
         computed: {
             commonAxisesCount: function () {
-                return this.axises && this.axises.common.left.length && this.axises.common.right.length;
+                return this.axises && this.axises.common.left.length && this.axises.common.right.length
             },
             angleStart: function () {
-                return -90;
+                return -90
             },
             angleStep: function () {
-                return 360 / this.commonAxisesCount;
+                return 360 / this.commonAxisesCount
             },
             squareAxisY: function () {
-                const ratios = [];
+                const ratios = []
                 for (let i = 0; i < this.commonAxisesCount; i++) {
-                    const leftBaseQt = this.axises.common.left[i].baseQt;
-                    const rightBaseQt = this.axises.common.right[i].baseQt;
-                    const leftRatio = leftBaseQt / (leftBaseQt + rightBaseQt);
-                    ratios.push(-this.taille + leftRatio * 2 * this.taille);
+                    const leftBaseQt = this.axises.common.left[i].baseQt
+                    const rightBaseQt = this.axises.common.right[i].baseQt
+                    const leftRatio = leftBaseQt / (leftBaseQt + rightBaseQt)
+                    ratios.push(-this.taille + leftRatio * 2 * this.taille)
                 }
-                return ratios;
+                return ratios
             },
             leftLine: function () {
-                return this.radialAxisD(this.axises.common.left)
+                return this.commonAxisesCount && this.radialAxisD(this.axises.common.left)
             },
             rightLine: function () {
-                return this.radialAxisD(this.axises.common.right)
+                return this.commonAxisesCount && this.radialAxisD(this.axises.common.right)
             }
         },
         methods: {
             range, qtUnitName, shadeColor,
             clickedOn(axis) {
-                this.$emit('baseChange', axis);
+                this.$emit('baseChange', axis)
 
 
             },
             axisAngle: function (i) {
-                return this.angleStart + this.angleStep * i;
+                return this.angleStart + this.angleStep * i
             },
             radialAxisCoord: function (i, ratio) {
-                ratio = ratio || 1;
-                const angle = this.axisAngle(i);
+                ratio = ratio || 1
+                const angle = this.axisAngle(i)
                 return {
                     x: Math.round(Math.cos(rad(angle - 90)) * (this.taille * ratio)),
                     y: Math.round(Math.sin(rad(angle - 90)) * (this.taille * ratio))
-                };
+                }
             },
             radialAxisD: function (a) {
-                const points = [];
+                const points = []
                 for (let i = 0; i < a.length; i++) {
-                    points.push(this.radialAxisCoord(i, a[i].ratio));
+                    points.push(this.radialAxisCoord(i, a[i].ratio))
                 }
-                points.unshift(points[points.length - 1]);
-                points.push(points[1]);
-                const d = [`M${points[0].x} ${points[0].y}`];
+                points.unshift(points[points.length - 1])
+                points.push(points[1])
+                const d = [`M${points[0].x} ${points[0].y}`]
                 for (let i = 1; i < points.length-1; i++) {
-                    d.push(bezierCommand(i, points));
+                    d.push(bezierCommand(i, points))
                 }
-                d.push("z");
-                return d.join(" ");
+                d.push("z")
+                return d.join(" ")
             },
             radialLineD: function (i, ratio) {
-                const p = this.radialAxisCoord(i, ratio);
-                return `M0 0 ${p.x} ${p.y}`;
+                const p = this.radialAxisCoord(i, ratio)
+                return `M0 0 ${p.x} ${p.y}`
             },
 
             squareAxisCoord: function (i, ratio) {
-                ratio = ratio || 1;
+                ratio = ratio || 1
                 return {
                     x: -100 + 2 * i * this.taille,
                     y: -this.taille * ratio
-                };
+                }
             }
         }
     }

@@ -11,9 +11,9 @@
     </v-list>
 </template>
 <script>
-    import {qtUnitName} from "../../services/calculations";
-    import On from "../../const/on";
-    import {mapActions} from "vuex";
+    import {qtUnitName} from "../../services/calculations"
+    import On from "../../const/on"
+    import {mapActions} from "vuex"
 
     export default {
         name: "tree-head",

@@ -5,9 +5,9 @@
 </template>
 
 <script>
-    import {Dial} from "../../const/dial";
-    import Do from "../../const/do";
-    import {mapMutations} from 'vuex';
+    import {Dial} from "../../const/dial"
+    import Do from "../../const/do"
+    import {mapMutations} from 'vuex'
 
     export default {
         name: "add-tree-btn",

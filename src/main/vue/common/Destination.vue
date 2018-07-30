@@ -6,7 +6,7 @@
 </template>
 
 <script>
-    import {qtUnitName} from "../../services/calculations";
+    import {qtUnitName} from "../../services/calculations"
 
     export default {
         name: 'destination',

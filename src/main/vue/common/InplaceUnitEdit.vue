@@ -11,7 +11,7 @@
 
 
 <script>
-    import UnitGrid from "./UnitGrid";
+    import UnitGrid from "./UnitGrid"
 
     export default {
         components: {UnitGrid},
@@ -24,15 +24,15 @@
         },
         methods: {
             edit: function () {
-                this.editing = true;
+                this.editing = true
             },
             ok: function (unit) {
-                this.editing = false;
-                this.$emit("ok", unit);
+                this.editing = false
+                this.$emit("ok", unit)
             },
             close: function () {
-                this.editing = false;
-                this.$emit("ko");
+                this.editing = false
+                this.$emit("ko")
             }
         }
     }

@@ -34,11 +34,11 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex';
-    import {Dial} from "../../const/dial";
-    import On from "../../const/on";
-    import {getRandomColor, hasQuantity, qtUnitName} from "../../services/calculations";
-    import QtUnit from "../common/QtUnit";
+    import {mapActions} from 'vuex'
+    import {Dial} from "../../const/dial"
+    import On from "../../const/on"
+    import {getRandomColor, hasQuantity, qtUnitName} from "../../services/calculations"
+    import QtUnit from "../common/QtUnit"
 
     export default {
         components: {
@@ -54,20 +54,20 @@
         props: ['tree'],
         computed: {
             impacts: function () {
-                return this.tree && this.tree.impacts;
+                return this.tree && this.tree.impacts
             },
             hasItems: function () {
-                return this.items && this.items.length && this.items.length > 0;
+                return this.items && this.items.length && this.items.length > 0
             },
             items: function () {
-                return this.impacts && this.impacts.items;
+                return this.impacts && this.impacts.items
             },
 
             bilanItems: function () {
-                return this.tree && this.tree.impactsTank && this.tree.impactsTank.items;
+                return this.tree && this.tree.impactsTank && this.tree.impactsTank.items
             },
             hasBilanItems: function () {
-                return this.bilanItems && this.bilanItems.length && this.bilanItems.length > 0;
+                return this.bilanItems && this.bilanItems.length && this.bilanItems.length > 0
             }
         },
         methods: {

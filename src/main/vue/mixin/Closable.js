@@ -1,7 +1,7 @@
 export default {
     methods: {
         close() {
-            this.$refs.dialog.close();
+            this.$refs.dialog.close()
         },
     }
 }

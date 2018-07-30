@@ -44,11 +44,11 @@
 </template>
 
 <script>
-    import {mapState} from "vuex";
-    import {mapActions} from "vuex";
-    import {qtUnitName, shadeColor} from "../services/calculations";
-    import On from "../const/on";
-    import selectable from "./mixin/Selectable";
+    import {mapState} from "vuex"
+    import {mapActions} from "vuex"
+    import {qtUnitName, shadeColor} from "../services/calculations"
+    import On from "../const/on"
+    import selectable from "./mixin/Selectable"
 
     export default {
         name: 'basket',
@@ -56,13 +56,13 @@
         computed: {
             ...mapState({items: 'basket'}),
             noItems: function () {
-                return this.items.length === 0;
+                return this.items.length === 0
             }
         },
         methods: {
             removeSelectedItems: function () {
                 this.remove(this.selection)
-                    .then(this.unselect());
+                    .then(this.unselect())
             },
             ...mapActions({goTree: On.GO_TREE, compare: On.GO_COMPARE, remove: On.REMOVE_FROM_BASKET}),
             qtUnitName, shadeColor
@@ -72,6 +72,6 @@
 
 <style>
     ::after {
-        content: none;
+        content: none
     }
 </style>

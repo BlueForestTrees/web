@@ -14,16 +14,16 @@
 </template>
 
 <script>
-    import Facets from "./Facets";
-    import Branches from "./Branches";
-    import Ressources from "./Ressources";
-    import Impacts from "./Impacts";
-    import {LOAD_OPEN_TREE} from "../../const/on";
-    import {mapActions, mapState} from "vuex";
-    import On from "../../const/on";
-    import TreeHead from "./TreeHead";
-    import AddTreeBtn from "../layout/AddTreeBtn";
-    import AddTreePartBtn from "../layout/AddTreePartBtn";
+    import Facets from "./Facets"
+    import Branches from "./Branches"
+    import Ressources from "./Ressources"
+    import Impacts from "./Impacts"
+    import {LOAD_OPEN_TREE} from "../../const/on"
+    import {mapActions, mapState} from "vuex"
+    import On from "../../const/on"
+    import TreeHead from "./TreeHead"
+    import AddTreeBtn from "../layout/AddTreeBtn"
+    import AddTreePartBtn from "../layout/AddTreePartBtn"
 
     export default {
         components: {
@@ -42,15 +42,15 @@
         methods: {
             ...mapActions({dispatchLoad: On.LOAD_IDQTUNIT}),
             refresh: function () {
-                this.dispatchLoad({qt: this.qt, unit: this.unit, _id: this._id});
+                this.dispatchLoad({qt: this.qt, unit: this.unit, _id: this._id})
             }
         },
         created: function () {
-            this.refresh();
+            this.refresh()
         },
         watch: {
             '$route'(to, from) {
-                this.refresh();
+                this.refresh()
             }
         },
     }
@@ -58,6 +58,6 @@
 
 <style>
     .item-card {
-        margin-top: 1em;
+        margin-top: 1em
     }
 </style>

@@ -9,4 +9,4 @@ export const GO = {
     SUSCRIBE: 'suscribe',
     CONFIRM: 'confirm',
     COMPARE:'compare'
-};
+}

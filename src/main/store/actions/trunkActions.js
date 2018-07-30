@@ -1,7 +1,7 @@
-import On from "../../const/on";
-import api from "../../rest/api";
-import Do from "../../const/do";
-import {hasQuantity, trunky} from "../../services/calculations";
+import On from "../../const/on"
+import api from "../../rest/api"
+import Do from "../../const/do"
+import {hasQuantity, trunky} from "../../services/calculations"
 
 export default {
     [On.CREATE_TRUNK]: async ({commit, state, dispatch}, {color, name, type}) =>
@@ -13,7 +13,7 @@ export default {
                 .then(trunk => commit(Do.SET_TRUNK, {tree, trunk}))
             :
             api.getTrunk(tree._id)
-                .then(trunk => commit(Do.SET_TRUNK, {tree, trunk}));
+                .then(trunk => commit(Do.SET_TRUNK, {tree, trunk}))
     },
     [On.RENAME_TRUNK]: ({commit}, {trunk, newName}) =>
         api.putTrunkName(trunk._id, newName)

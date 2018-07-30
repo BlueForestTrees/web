@@ -8,7 +8,7 @@
 </template>
 
 <script>
-    import AxisList from "../common/AxisList";
+    import AxisList from "../common/AxisList"
     export default {
         name: "compare-table",
         components: {AxisList},

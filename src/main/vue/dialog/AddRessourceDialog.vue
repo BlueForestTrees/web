@@ -45,17 +45,17 @@
 </template>
 
 <script>
-    import MainDialog from "./MainDialog";
-    import On from "../../const/on";
-    import {mapActions, mapState} from "vuex";
-    import {Dial} from "../../const/dial";
-    import Destination from "../common/Destination";
-    import {isNumber, required} from "../../services/rules";
+    import MainDialog from "./MainDialog"
+    import On from "../../const/on"
+    import {mapActions, mapState} from "vuex"
+    import {Dial} from "../../const/dial"
+    import Destination from "../common/Destination"
+    import {isNumber, required} from "../../services/rules"
     import {getGrandeur, unit} from 'trees-units'
-    import UnitSelect from "../common/UnitSelect";
-    import closable from "../mixin/Closable";
-    import GrandeurSelect from "../common/GrandeurSelect";
-    import SearchComp from "../SearchComp";
+    import UnitSelect from "../common/UnitSelect"
+    import closable from "../mixin/Closable"
+    import GrandeurSelect from "../common/GrandeurSelect"
+    import SearchComp from "../SearchComp"
 
     export default {
         name: 'add-ressource-dialog',
@@ -76,25 +76,25 @@
         computed: {
             ...mapState({tree: state => state.dialogs.addRessource.data.tree}),
             searching: function () {
-                return this.searchAgain || !this.selectedItem;
+                return this.searchAgain || !this.selectedItem
             }
         },
         methods: {
             validateSearch: function (s) {
-                const item = s.selection[0];
+                const item = s.selection[0]
                 if (!item.trunk.quantity) {
-                    this.snack({text: "Ressource inutilisable pour le moment (elle ne possède pas de quantité)"});
+                    this.snack({text: "Ressource inutilisable pour le moment (elle ne possède pas de quantité)"})
                 } else {
-                    this.selectedItem = item;
-                    this.searchAgain = false;
-                    s.unselect();
+                    this.selectedItem = item
+                    this.searchAgain = false
+                    s.unselect()
                 }
             },
             closeSearch: function (s) {
-                s.unselect();
+                s.unselect()
             },
             cancelItem: function () {
-                this.selectedItem = null;
+                this.selectedItem = null
             },
             ...mapActions({
                 dispatchLink: On.LINK,
@@ -105,20 +105,20 @@
                 await this.dispatchLink({
                     trunk: {_id: this.tree._id, quantity: this.tree.trunk.quantity},
                     root: {_id: this.selectedItem._id, quantity: {qt: this.qt, unit: this.unit.shortname}}
-                });
-                this.dispatchRefreshRessources(this.tree);
-                this.close();
+                })
+                this.dispatchRefreshRessources(this.tree)
+                this.close()
             },
             focus() {
-                this.$refs.form.reset();
-                this.selectedItem = null;
+                this.$refs.form.reset()
+                this.selectedItem = null
             },
             required, isNumber,
             notIn() {
                 if (this.selectedItem && this.tree) {
                     for (let i = 0; i < this.tree.roots.items; i++) {
                         if (this.tree.roots.items[i]._id === this.selectedItem._id) {
-                            return "Déjà utilisé";
+                            return "Déjà utilisé"
                         }
                     }
                 }
@@ -127,13 +127,13 @@
         watch: {
             selectedItem(item) {
                 if (item) {
-                    this.qt = item.trunk.quantity.qt;
-                    this.unit = unit(item.trunk.quantity.unit);
-                    this.grandeur = getGrandeur(this.unit.grandeur);
+                    this.qt = item.trunk.quantity.qt
+                    this.unit = unit(item.trunk.quantity.unit)
+                    this.grandeur = getGrandeur(this.unit.grandeur)
                 } else {
-                    this.qt = null;
-                    this.unit = null;
-                    this.grandeur = null;
+                    this.qt = null
+                    this.unit = null
+                    this.grandeur = null
                 }
             }
         }

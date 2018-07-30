@@ -106,17 +106,17 @@
 
 <script>
 
-    import {mapActions} from "vuex";
-    import On from "../../const/on";
-    import TreeHead from "./TreeHead";
-    import {qtUnit, qtUnitName} from "../../services/calculations";
-    import {find} from "lodash";
+    import {mapActions} from "vuex"
+    import On from "../../const/on"
+    import TreeHead from "./TreeHead"
+    import {qtUnit, qtUnitName} from "../../services/calculations"
+    import {find} from "lodash"
     import {getGrandeur, unit} from 'trees-units'
-    import {isNumber, required} from "../../services/rules";
-    import UnitSelect from "../common/UnitSelect";
-    import SearchComp from "../SearchComp";
-    import selectable from "../mixin/Selectable";
-    import {unit as lookupUnit} from 'trees-units';
+    import {isNumber, required} from "../../services/rules"
+    import UnitSelect from "../common/UnitSelect"
+    import SearchComp from "../SearchComp"
+    import selectable from "../mixin/Selectable"
+    import {unit as lookupUnit} from 'trees-units'
 
 
     export default {
@@ -156,61 +156,61 @@
             }),
             async validateQuantity() {
                 if (this.validQtForm) {
-                    const rootQuantity = {qt: this.qt, unit: this.unit.shortname};
-                    const hasChanges = qtUnit(rootQuantity) !== qtUnit(this.item.trunk.quantity);
+                    const rootQuantity = {qt: this.qt, unit: this.unit.shortname}
+                    const hasChanges = qtUnit(rootQuantity) !== qtUnit(this.item.trunk.quantity)
                     if (hasChanges) {
                         await this.dispatchLink({
                             trunk: {_id: this.tree._id, quantity: this.tree.trunk.quantity},
                             root: {_id: this.item._id, quantity: rootQuantity}
-                        });
+                        })
                     }
-                    this.editQt = false;
+                    this.editQt = false
                 }
             },
             cancelAddingTransport(sel) {
-                sel.unselect();
-                this.addingTransport = false;
+                sel.unselect()
+                this.addingTransport = false
             },
             ajoutTransport() {
                 if (this.transport && this.validTransportForm) {
-                    this.transport.quantity = {qt: this.transportQt, unit: this.transportUnit.shortname};
-                    this.dispatchAddTransport({tree: this.tree, item: this.item, transport: this.transport});
-                    this.addingTransport = false;
-                    this.transport = null;
-                    this.transportQt = null;
+                    this.transport.quantity = {qt: this.transportQt, unit: this.transportUnit.shortname}
+                    this.dispatchAddTransport({tree: this.tree, item: this.item, transport: this.transport})
+                    this.addingTransport = false
+                    this.transport = null
+                    this.transportQt = null
                 }
             },
             remove(items) {
                 for (let i = 0; i < items.length; i++) {
-                    this.dispatchDeleteLink({left: this.tree, right: items[i]});
+                    this.dispatchDeleteLink({left: this.tree, right: items[i]})
                 }
-                this.unselect();
+                this.unselect()
             },
             goTree(tree) {
-                this.dispatchGoTree(tree);
+                this.dispatchGoTree(tree)
             },
             refresh: async function () {
-                this.tree = await this.dispatchLoadTree({_id: this.treeId});
-                this.item = find(this.tree.roots.items, {_id: this.rootId});
+                this.tree = await this.dispatchLoadTree({_id: this.treeId})
+                this.item = find(this.tree.roots.items, {_id: this.rootId})
             },
             qtUnitName, qtUnit, required, isNumber,
         },
         created: function () {
-            this.refresh();
+            this.refresh()
         },
         watch: {
             '$route'(to, from) {
-                this.refresh();
+                this.refresh()
             },
             item(item) {
                 if (item) {
-                    this.qt = item.trunk.quantity.qt;
-                    this.unit = unit(item.trunk.quantity.unit);
-                    this.grandeur = getGrandeur(this.unit.grandeur);
+                    this.qt = item.trunk.quantity.qt
+                    this.unit = unit(item.trunk.quantity.unit)
+                    this.grandeur = getGrandeur(this.unit.grandeur)
                 } else {
-                    this.qt = null;
-                    this.unit = null;
-                    this.grandeur = null;
+                    this.qt = null
+                    this.unit = null
+                    this.grandeur = null
                 }
             }
         }

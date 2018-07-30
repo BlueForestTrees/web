@@ -23,17 +23,17 @@
 </template>
 
 <script>
-    import {Dial} from "../../const/dial";
-    import On from "../../const/on";
-    import {mapActions, mapState} from "vuex";
-    import MainDialog from "./MainDialog";
-    import UnitGrid from "../common/UnitGrid";
-    import {getGrandeur} from "trees-units";
-    import closable from "../mixin/Closable";
-    import {isNumber, required} from "../../services/rules";
-    import {find} from 'lodash';
-    import Destination from "../common/Destination";
-    import UnitSelect from "../common/UnitSelect";
+    import {Dial} from "../../const/dial"
+    import On from "../../const/on"
+    import {mapActions, mapState} from "vuex"
+    import MainDialog from "./MainDialog"
+    import UnitGrid from "../common/UnitGrid"
+    import {getGrandeur} from "trees-units"
+    import closable from "../mixin/Closable"
+    import {isNumber, required} from "../../services/rules"
+    import {find} from 'lodash'
+    import Destination from "../common/Destination"
+    import UnitSelect from "../common/UnitSelect"
 
     export default {
         name: 'add-impact-dialog',
@@ -62,42 +62,42 @@
         computed: {
             ...mapState({tree: state => state.dialogs[Dial.ADD_IMPACT].data.tree}),
             grandeur: function () {
-                return this.selectedItem && getGrandeur(this.selectedItem && this.selectedItem.grandeur);
+                return this.selectedItem && getGrandeur(this.selectedItem && this.selectedItem.grandeur)
             },
             selectedItem: function () {
-                return this.selectedItemId && find(this.autocompleteItems, {_id: this.selectedItemId});
+                return this.selectedItemId && find(this.autocompleteItems, {_id: this.selectedItemId})
             }
         },
         watch: {
             itemNamepart(val) {
-                this.loading = true;
-                this.goSearch(val);
-                this.loading = false;
+                this.loading = true
+                this.goSearch(val)
+                this.loading = false
             }
         },
         methods: {
             ...mapActions({dispatchSearch: On.SEARCH_IMPACT_ENTRY, dispatchAddImpact: On.ADD_IMPACT}),
             async goSearch(term) {
                 if (term)
-                    this.autocompleteItems = await this.dispatchSearch({term});
+                    this.autocompleteItems = await this.dispatchSearch({term})
             },
             async validate() {
-                this.$refs.form.validate();
+                this.$refs.form.validate()
                 if (this.valid) {
                     await this.dispatchAddImpact({
                         tree: this.tree,
                         impact: Object.assign({quantity: {qt: this.qt, unit: this.unit.shortname}}, this.selectedItem)
-                    });
-                    this.close();
+                    })
+                    this.close()
                 }
             },
             focus() {
-                this.$refs.form.reset();
-                this.autocompleteItems = [];
-                this.$nextTick(() => this.$refs.nom.focus());
+                this.$refs.form.reset()
+                this.autocompleteItems = []
+                this.$nextTick(() => this.$refs.nom.focus())
             },
             required, isNumber, notIn() {
-                return !find(this.tree.impacts.items, {_id: this.selectedItemId}) || "Déjà utilisé";
+                return !find(this.tree.impacts.items, {_id: this.selectedItemId}) || "Déjà utilisé"
             }
         }
     }

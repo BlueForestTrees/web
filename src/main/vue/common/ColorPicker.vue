@@ -11,9 +11,9 @@
 </template>
 
 <script>
-    import {getLuma, getRandomColor, overcolor} from "../../services/calculations";
-    import {isColor, required} from "../../services/rules";
-    import Swatches from 'vue-swatches';
+    import {getLuma, getRandomColor, overcolor} from "../../services/calculations"
+    import {isColor, required} from "../../services/rules"
+    import Swatches from 'vue-swatches'
 
     export default {
         name: 'color-picker',
@@ -29,21 +29,21 @@
         computed: {
             color: {
                 get: function () {
-                    if (!this.c) this.c = getRandomColor();
-                    return this.c;
+                    if (!this.c) this.c = getRandomColor()
+                    return this.c
                 },
                 set: function (value) {
-                    this.c = value;
-                    this.emitColorChange();
+                    this.c = value
+                    this.emitColorChange()
                 }
             },
             arrowColor: function () {
-                return overcolor(this.c);
+                return overcolor(this.c)
             }
         },
         methods: {
             emitColorChange: function () {
-                this.$emit('input', this.color);
+                this.$emit('input', this.color)
             },
             required, isColor
         }

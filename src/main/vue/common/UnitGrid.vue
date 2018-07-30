@@ -20,7 +20,7 @@
 
 <script>
 
-    import {grandeurByName, grandeurOfUnitShortname, getGrandeurs} from "trees-units";
+    import {grandeurByName, grandeurOfUnitShortname, getGrandeurs} from "trees-units"
 
     export default {
         props: {
@@ -34,11 +34,11 @@
         computed: {
             displayedGrandeurs: function () {
                 if (this.unit && this.samegrandeur) {
-                    return grandeurOfUnitShortname(this.unit);
+                    return grandeurOfUnitShortname(this.unit)
                 } else if (this.grandeur) {
-                    return grandeurByName(this.grandeur);
+                    return grandeurByName(this.grandeur)
                 } else {
-                    return getGrandeurs();
+                    return getGrandeurs()
                 }
             },
         },
@@ -48,15 +48,15 @@
             },
             unitMatch(unit, filter) {
                 if (_.isNil(filter)) {
-                    return true;
+                    return true
                 } else if (_.isEmpty(filter)) {
-                    return unit.shortname === "";
+                    return unit.shortname === ""
                 } else {
-                    return unit.shortname.toLowerCase().indexOf(filter.toLowerCase()) > -1;
+                    return unit.shortname.toLowerCase().indexOf(filter.toLowerCase()) > -1
                 }
             },
             select(unit) {
-                this.$emit('select', unit);
+                this.$emit('select', unit)
             }
         }
     }

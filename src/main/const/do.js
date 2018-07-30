@@ -32,4 +32,4 @@ export default {
     UPDATE_DIALOG_DATA: 'updateDialogData',
     UPDATE_SNACKBAR:'updateSnackbar',
     PUT_TRUNK_QUANTITY: 'upsertQuantity'
-};
+}

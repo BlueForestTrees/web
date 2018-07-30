@@ -1,5 +1,5 @@
-import On from "../../const/on";
-import api from "../../rest/api";
+import On from "../../const/on"
+import api from "../../rest/api"
 
 export default {
 

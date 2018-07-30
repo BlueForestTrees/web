@@ -1,13 +1,13 @@
 // import {shallowMount, createLocalVue} from '@vue/test-utils'
 // import Compare from '../../main/vue/compare/Compare'
-// import {init} from "../setup";
+// import {init} from "../setup"
 // import Vuex from 'vuex'
-// import On from "../../main/const/on";
-// import {expect} from 'chai';
+// import On from "../../main/const/on"
+// import {expect} from 'chai'
 //
-// const localVue = createLocalVue();
+// const localVue = createLocalVue()
 //
-// localVue.use(Vuex);
+// localVue.use(Vuex)
 //
 // const mockTree = (_id) => ({
 //     left: {
@@ -17,11 +17,11 @@
 //         _id: "RIGHT",
 //         name: "right tree"
 //     }
-// })[_id];
+// })[_id]
 //
 // describe('Axis calculations', function () {
 //
-//     beforeEach(init);
+//     beforeEach(init)
 //
 //     it('test complet', function () {
 //
@@ -37,10 +37,10 @@
 //                 leftId: 'left',
 //                 rightId: 'right'
 //             }
-//         });
+//         })
 //
 //         //wrapper.vm.$data.left
 //
-//     });
+//     })
 //
-// });
+// })

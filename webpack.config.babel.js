@@ -1,13 +1,13 @@
 import path from 'path'
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import CopyWebpackPlugin from 'copy-webpack-plugin';
-import webpack from 'webpack';
-import Visualizer from 'webpack-visualizer-plugin';
-import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import { VueLoaderPlugin } from 'vue-loader';
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import CopyWebpackPlugin from 'copy-webpack-plugin'
+import webpack from 'webpack'
+import Visualizer from 'webpack-visualizer-plugin'
+import LodashModuleReplacementPlugin from 'lodash-webpack-plugin'
+import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import { VueLoaderPlugin } from 'vue-loader'
 
-const NODE_ENV = process.env.NODE_ENV;
+const NODE_ENV = process.env.NODE_ENV
 
 const conf = {
     mode: NODE_ENV,
@@ -34,7 +34,7 @@ const conf = {
         new VueLoaderPlugin(),
         new ExtractTextPlugin("style.css")
     ],
-};
+}
 
 if (conf.mode === "development") {
     conf.devServer = {
@@ -43,21 +43,21 @@ if (conf.mode === "development") {
         proxy: {
             "/api": "http://localhost:8080"
         }
-    };
-    conf.devtool = 'eval-source-map';
+    }
+    conf.devtool = 'eval-source-map'
     conf.output = {
         publicPath: "/"
-    };
+    }
 }
 if (conf.mode === "production") {
-    conf.devtool = 'source-map';
+    conf.devtool = 'source-map'
     conf.output = {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist/blueforest.org/static'),
         publicPath : '/'
-    };
-    conf.plugins.push(new Visualizer({filename: '../../visualizer/statistics.html'}));
-    conf.plugins.push(new CopyWebpackPlugin([{from: 'nginx', to: '../nginx/'}]));
+    }
+    conf.plugins.push(new Visualizer({filename: '../../visualizer/statistics.html'}))
+    conf.plugins.push(new CopyWebpackPlugin([{from: 'nginx', to: '../nginx/'}]))
 }
 
-module.exports = conf;
+module.exports = conf

@@ -20,12 +20,12 @@
 
 <script>
     import Do from "../../const/do"
-    import {mapActions, mapMutations} from 'vuex';
-    import {Dial} from "../../const/dial";
-    import On from "../../const/on";
-    import {getRandomColor, hasQuantity, qtUnitName} from "../../services/calculations";
-    import QtUnit from "../common/QtUnit";
-    import selectable from "../mixin/Selectable";
+    import {mapActions, mapMutations} from 'vuex'
+    import {Dial} from "../../const/dial"
+    import On from "../../const/on"
+    import {getRandomColor, hasQuantity, qtUnitName} from "../../services/calculations"
+    import QtUnit from "../common/QtUnit"
+    import selectable from "../mixin/Selectable"
 
     export default {
         components: {
@@ -41,23 +41,23 @@
         props: ['tree'],
         computed: {
             items: function () {
-                return this.facets && this.facets.items;
+                return this.facets && this.facets.items
             },
             hasItems: function () {
-                return this.items && this.items.length && this.items.length > 0;
+                return this.items && this.items.length && this.items.length > 0
             },
             facets: function () {
                 return this.tree && this.tree.facets
             },
             quantity: function () {
-                return qtUnitName({name: "Quantité", ...this.tree.trunk.quantity});
+                return qtUnitName({name: "Quantité", ...this.tree.trunk.quantity})
             }
         },
         methods: {
             ...mapMutations({showDialog: Do.SHOW_DIALOG}),
             ...mapActions({dispatchDeleteFacets: On.DELETE_FACETS}),
             deleteItems() {
-                this.dispatchDeleteFacets({facets: this.facets, toDelete: this.selection});
+                this.dispatchDeleteFacets({facets: this.facets, toDelete: this.selection})
             },
             qtUnitName, hasQuantity, getRandomColor
         }

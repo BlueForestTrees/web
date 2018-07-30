@@ -13,4 +13,4 @@ export const Dial = {
     CONFIGURE_LINK: "configureLink",
     SET_QT_UNIT: "setQtUnit",
     CREATE: "create",
-};
+}

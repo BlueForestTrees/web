@@ -35,10 +35,10 @@
 </template>
 
 <script>
-    import On from "../const/on";
-    import {mapActions} from "vuex";
-    import SearchComp from "./SearchComp";
-    import AddTreeBtn from "./layout/AddTreeBtn";
+    import On from "../const/on"
+    import {mapActions} from "vuex"
+    import SearchComp from "./SearchComp"
+    import AddTreeBtn from "./layout/AddTreeBtn"
 
     export default {
         name: "search",

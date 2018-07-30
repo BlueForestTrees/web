@@ -27,11 +27,11 @@
 </template>
 
 <script>
-    import {mapActions} from "vuex";
-    import On from "../const/on";
-    import Card from "./layout/Card";
-    import {GO} from "../const/go";
-    import {mailRequired, validMail} from "../services/rules";
+    import {mapActions} from "vuex"
+    import On from "../const/on"
+    import Card from "./layout/Card"
+    import {GO} from "../const/go"
+    import {mailRequired, validMail} from "../services/rules"
 
     export default {
         components: {Card},
@@ -50,14 +50,14 @@
             validMail,
             ...mapActions({login: On.LOGIN}),
             validate: async function () {
-                this.$refs.form.validate();
+                this.$refs.form.validate()
                 if (this.valid) {
                     try {
-                        await this.login({mail: this.mail, password: this.password});
-                        this.$router.push('/');
+                        await this.login({mail: this.mail, password: this.password})
+                        this.$router.push('/')
                     } catch (e) {
-                        console.error(e);
-                        this.password = null;
+                        console.error(e)
+                        this.password = null
                     }
                 }
             },
