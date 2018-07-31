@@ -6,7 +6,6 @@ export default {
             selection: []
         }
     },
-    props:['maxSelectionSize'],
     computed: {
         selectionCount() {
             return this.selection.length

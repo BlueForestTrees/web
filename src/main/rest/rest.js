@@ -4,7 +4,7 @@ import {ACCESS_TOKEN_KEY} from "../const/headers"
 import {getAccessToken} from "./auth"
 
 const baseUrl = root.location ? root.location.origin : 'tests/'
-const url = (path) => baseUrl + path
+export const url = (path) => baseUrl + path
 
 /**
  *

@@ -9,6 +9,7 @@ import router from "./router/router"
 import infiniteScroll from 'vue-infinite-scroll'
 import AsyncComputed from 'vue-async-computed'
 
+
 Vue.use(AsyncComputed)
 Vue.use(infiniteScroll)
 Vue.config.productionTip = false

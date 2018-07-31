@@ -10,6 +10,7 @@ import Root from '../vue/tree/Root'
 
 const Tree = () => import('../vue/tree/Tree.vue')
 const Search = () => import('../vue/Search.vue')
+const ImpactEntries = () => import('../vue/ImpactEntries.vue')
 import Home from '../vue/Home'
 import Basket from '../vue/Basket'
 import Compare from '../vue/compare/Compare'
@@ -50,6 +51,11 @@ export default new VueRouter({
                     name: GO.SEARCH,
                     path: "search",
                     component: Search
+                },
+                {
+                    name: GO.IMPACT_ENTRY,
+                    path: "impactEntries",
+                    component: ImpactEntries
                 },
                 {
                     name: GO.BASKET,

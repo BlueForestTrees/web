@@ -1,5 +1,5 @@
 <template>
-    <main-dialog :dialog="Dial.ADD_IMPACT_ENTRY" title="Nouveau type d'impact" ref="dialog"
+    <main-dialog :dialog="Dial.ADD_IMPACT_ENTRY" title="Nouvelle catégorie d'impact" ref="dialog"
                  @esc="close" @enter="validate" @focus="focus"
     >
         <v-card-text>

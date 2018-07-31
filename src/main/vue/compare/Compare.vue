@@ -1,11 +1,5 @@
 <template>
     <v-container v-if="axises">
-        <v-layout row>
-            <v-spacer/>
-            <v-btn icon flat @click="close">
-                <v-icon x-large color="grey">close</v-icon>
-            </v-btn>
-        </v-layout>
         <compare-radar :axises="axises" :left="left" :right="right" :left-color="'#00ACC1'" :rightColor="'#D81B60'" @baseChange="changeBase"/>
         <compare-table :axises="axises" :left="left" :right="right" :left-color="leftColor" :rightColor="rightColor"/>
     </v-container>
@@ -42,7 +36,7 @@
             this.selectDefaultBase()
         },
         methods: {
-            ...mapActions({refreshTree: On.LOAD_OPEN_TREE, close: On.GO_HOME, snack: On.SNACKBAR}),
+            ...mapActions({refreshTree: On.LOAD_OPEN_TREE, snack: On.SNACKBAR}),
             refreshTrees: async function () {
                 let leftPromise = this.refreshTree({_id: this.leftId})
                 let rightPromise = this.refreshTree({_id: this.rightId})

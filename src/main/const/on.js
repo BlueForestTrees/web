@@ -16,6 +16,7 @@ export default {
     DELETE_TREE: 'deleteTree',
     DELETE_LINK: 'deleteLink',
     EXCEPTION: 'exception',
+    GO_IMPACT_ENTRY: 'goImpactEntry',
     GO_HOME: 'goHome',
     GO_TREE: 'goTree',
     GO_ROOT: 'goRoot',

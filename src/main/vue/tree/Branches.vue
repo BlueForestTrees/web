@@ -5,6 +5,13 @@
             <v-toolbar v-if="anySelected" app dark class="elevation-0" color="green lighten-2">
                 <v-toolbar-items>
                     <v-tooltip bottom>
+                        <v-btn slot="activator" icon dense @click="unselect()"><v-icon>close</v-icon></v-btn>
+                        <span style="pointer-events: none">Fermer</span>
+                    </v-tooltip>
+                </v-toolbar-items>
+                <v-spacer/>
+                <v-toolbar-items>
+                    <v-tooltip bottom>
                         <v-btn slot="activator" v-if="oneSelected" flat dense @click="goTree(oneSelected)">ouvrir<v-icon>launch</v-icon></v-btn>
                         <span style="pointer-events: none">Ouvrir</span>
                     </v-tooltip>
@@ -15,13 +22,6 @@
                     <v-tooltip bottom>
                         <v-btn slot="activator" v-if="oneSelected" flat @click="remove(oneSelected)"><span class="hidden-xs-only">supprimer</span><v-icon>delete</v-icon></v-btn>
                         <span style="pointer-events: none">Supprimer</span>
-                    </v-tooltip>
-                </v-toolbar-items>
-                <v-spacer/>
-                <v-toolbar-items>
-                    <v-tooltip bottom>
-                        <v-btn slot="activator" icon dense @click="unselect()"><v-icon>close</v-icon></v-btn>
-                        <span style="pointer-events: none">Fermer</span>
                     </v-tooltip>
                 </v-toolbar-items>
             </v-toolbar>

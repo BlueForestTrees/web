@@ -25,6 +25,10 @@
 <script>
     import Do from "../../const/do"
     import {mapMutations} from "vuex"
+    import Vue from 'vue'
+    import FileUpload from 'v-file-upload'
+
+    Vue.use(FileUpload)
 
     export default {
         props: {dialog: String, title: String, icon: String, noaction: Boolean},

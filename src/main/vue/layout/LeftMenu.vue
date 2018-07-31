@@ -20,14 +20,14 @@
                     <v-list-tile-title>Créer une propriété</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
-            <v-list-tile @click="showDialog({dialog:Dial.ADD_IMPACT_ENTRY})">
+            <v-list-tile @click="goImpactEntry">
                 <v-list-tile-action>
                     <v-layout row>
                         <v-icon>add</v-icon>
                     </v-layout>
                 </v-list-tile-action>
                 <v-list-tile-content>
-                    <v-list-tile-title>Créer un impact</v-list-tile-title>
+                    <v-list-tile-title>Catégories d'impact</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
             <v-list-tile @click="cloneOpenTree(tree)" v-if="tree">
@@ -76,7 +76,8 @@
             ...mapActions({
                 dispatchDeleteTrunk: On.DELETE_TREE,
                 cloneOpenTree: On.CLONE_OPEN_TREE,
-                goHome: On.GO_HOME
+                goHome: On.GO_HOME,
+                goImpactEntry: On.GO_IMPACT_ENTRY
             })
         },
         data: () => ({

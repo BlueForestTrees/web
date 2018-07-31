@@ -13,6 +13,7 @@
         <add-trunk-dialog/>
         <add-ressource-dialog/>
         <add-impact-dialog/>
+        <import-impact-entry-dialog/>
         <add-usage-dialog/>
         <add-facet-dialog/>
     </span>
@@ -34,6 +35,7 @@
     import AddTrunkDialog from "./dialog/AddTrunkDialog"
     import AddImpactEntryDialog from "./dialog/AddImpactEntryDialog"
     import Snack from "./layout/snack"
+    import ImportImpactEntryDialog from "./dialog/ImportImpactEntryDialog"
 
     export default {
         data: function () {
@@ -45,6 +47,7 @@
             ...mapState(['basket', 'snack'])
         },
         components: {
+            ImportImpactEntryDialog,
             Snack,
             AddImpactEntryDialog,
             AddTrunkDialog,

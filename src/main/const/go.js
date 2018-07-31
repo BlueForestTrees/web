@@ -8,5 +8,6 @@ export const GO = {
     LOGIN: 'login',
     SUSCRIBE: 'suscribe',
     CONFIRM: 'confirm',
-    COMPARE:'compare'
+    COMPARE: 'compare',
+    IMPACT_ENTRY: 'impactEntry'
 }

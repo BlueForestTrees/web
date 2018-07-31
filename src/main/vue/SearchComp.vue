@@ -28,7 +28,7 @@
 
     export default {
         name: 'search-comp',
-        props: {label: String, type: String, nobar: Boolean},
+        props: {label: String, type: String, nobar: Boolean, maxSelectionSize: Number},
         mixins: [selectable],
         data() {
             return {

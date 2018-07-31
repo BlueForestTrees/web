@@ -7,7 +7,7 @@
 
             <v-form v-model="validForm" v-on:submit.prevent="" ref="form">
 
-                <search-comp v-if="searching" maxSelectionSize="1">
+                <search-comp v-if="searching" :maxSelectionSize="1">
                     <template slot-scope="{ s }">
                         <v-tooltip bottom>
                             <v-btn slot="activator" v-if="s.selectionCount" flat dense @click="validateSearch(s)">

@@ -9,6 +9,7 @@ export const Dial = {
     FEEDBACK: 'feedback',
     FACET_ENTRY: "facetEntry",
     ADD_IMPACT_ENTRY: "impactEntry",
+    IMPORT_IMPACT_ENTRY: "importImpactEntry",
     ADD_IMPACT: "impact",
     CONFIGURE_LINK: "configureLink",
     SET_QT_UNIT: "setQtUnit",

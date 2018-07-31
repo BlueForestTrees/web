@@ -17,6 +17,6 @@ export default {
         const count = items.length
         const s = items.length > 1 ? 's' : ''
         commit(Do.REMOVE_FROM_BASKET, items)
-        dispatch(On.SNACKBAR, {text: `${count} élément${s} retiré${s} panier.`})
+        dispatch(On.SNACKBAR, {text: `${count} élément${s} retiré${s} du panier.`})
     }
 }
