@@ -34,7 +34,7 @@
     import GrandeurSelect from "../common/GrandeurSelect"
     import UnitSelect from "../common/UnitSelect"
 
-    import {getGrandeur} from 'trees-units'
+    import {getGrandeur} from 'unit-manip'
     import {isNumber, required} from "../../services/rules"
     import {find} from 'lodash'
     import Destination from "../common/Destination"

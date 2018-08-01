@@ -1,4 +1,4 @@
-import {initUnits} from "trees-units"
+import {initUnits} from "unit-manip"
 import {loadUnitsDataMock} from "./grandeurServiceMock"
 
 require('jsdom-global')()

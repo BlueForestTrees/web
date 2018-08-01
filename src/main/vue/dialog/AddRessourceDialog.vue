@@ -51,7 +51,7 @@
     import {Dial} from "../../const/dial"
     import Destination from "../common/Destination"
     import {isNumber, required} from "../../services/rules"
-    import {getGrandeur, unit} from 'trees-units'
+    import {getGrandeur, unit} from 'unit-manip'
     import UnitSelect from "../common/UnitSelect"
     import closable from "../mixin/Closable"
     import GrandeurSelect from "../common/GrandeurSelect"

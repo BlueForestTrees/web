@@ -26,7 +26,7 @@
     import GrandeurSelect from "../common/GrandeurSelect"
     import UnitSelect from "../common/UnitSelect"
     import {find} from 'lodash'
-    import {getGrandeur} from 'trees-units'
+    import {getGrandeur} from 'unit-manip'
     import {isNumber, length2min, required} from "../../services/rules"
     import Ressources from "../tree/Ressources"
     import {getRandomColor} from "../../services/calculations"

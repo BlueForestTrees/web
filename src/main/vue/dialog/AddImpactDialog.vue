@@ -28,7 +28,7 @@
     import {mapActions, mapState} from "vuex"
     import MainDialog from "./MainDialog"
     import UnitGrid from "../common/UnitGrid"
-    import {getGrandeur} from "trees-units"
+    import {getGrandeur} from "unit-manip"
     import closable from "../mixin/Closable"
     import {isNumber, required} from "../../services/rules"
     import {find} from 'lodash'

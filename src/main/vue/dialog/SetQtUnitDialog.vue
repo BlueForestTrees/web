@@ -18,7 +18,7 @@
     import {mapActions, mapState} from 'vuex'
     import On from "../../const/on"
     import {Dial} from "../../const/dial"
-    import {getGrandeur, unit} from 'trees-units'
+    import {getGrandeur, unit} from 'unit-manip'
     import MainDialog from "./MainDialog"
     import UnitSelect from "../common/UnitSelect"
     import GrandeurSelect from "../common/GrandeurSelect"

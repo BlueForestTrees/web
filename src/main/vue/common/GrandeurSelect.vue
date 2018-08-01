@@ -8,7 +8,7 @@
 </template>
 
 <script>
-    import {getGrandeurs} from "trees-units"
+    import {getGrandeurs} from "unit-manip"
     import {required} from "../../services/rules"
 
     export default {

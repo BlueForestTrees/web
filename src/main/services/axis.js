@@ -1,6 +1,6 @@
 import {find, forEach, isNil, map, remove} from 'lodash'
 import {format} from "./calculations"
-import {toBaseQuantity,grandeur, qtUnitCoef} from "trees-units"
+import {toBaseQuantity,grandeur, qtUnitCoef} from "unit-manip"
 import Vue from 'vue'
 
 /**

@@ -111,12 +111,12 @@
     import TreeHead from "./TreeHead"
     import {qtUnit, qtUnitName} from "../../services/calculations"
     import {find} from "lodash"
-    import {getGrandeur, unit} from 'trees-units'
+    import {getGrandeur, unit} from 'unit-manip'
     import {isNumber, required} from "../../services/rules"
     import UnitSelect from "../common/UnitSelect"
     import SearchComp from "../SearchComp"
     import selectable from "../mixin/Selectable"
-    import {unit as lookupUnit} from 'trees-units'
+    import {unit as lookupUnit} from 'unit-manip'
 
 
     export default {

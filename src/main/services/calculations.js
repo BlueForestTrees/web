@@ -1,5 +1,5 @@
 import {map} from 'lodash'
-import {bestQuantity, unitCoef, changeUnit} from "trees-units"
+import {bestQuantity, unitCoef, changeUnit} from "unit-manip"
 
 export const objectId = () =>  ((new Date().getTime() / 1000 | 0).toString(16) + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, () => Math.random() * 16 | 0).toString(16)).toLowerCase()
 export const idQtUnit = tree => ({_id: tree._id, qt: tree.trunk.quantity.qt, unit: tree.trunk.quantity.unit})
