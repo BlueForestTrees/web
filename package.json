@@ -6,8 +6,7 @@
   "author": "slim",
   "license": "MIT",
   "scripts": {
-    "thestart": "cross-env NODE_ENV=development webpack-serve --port 8079 --config webpack.config.js",
-    "start": "cross-env NODE_ENV=development webpack-dev-server --port 8079 --inline --hot",
+    "start": "cross-env NODE_ENV=development webpack-serve --port 8079 --config webpack.config.js",
     "build": "rimraf dist && cross-env NODE_ENV=production webpack",
     "test": "npm run tu && npm run ti",
     "tu": "cross-env NODE_ENV=development mocha --recursive --require babel-register --exit \"src/test/tu/*.js\"",
