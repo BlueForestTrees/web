@@ -35,7 +35,7 @@
             <v-card-title class="headline">Détails de {{oneSelected.name}}</v-card-title>
               <v-divider/>
             <v-card-text>
-              <v-list-tile v-for="(value, key) in oneSelected.raw">
+              <v-list-tile v-for="(value, key) in oneSelected.raw" :key="key">
                   <p>{{key}}</p><v-spacer/><p>{{value}}</p>
               </v-list-tile>
             </v-card-text>

@@ -1,15 +1,15 @@
-import path from 'path'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
-import CopyWebpackPlugin from 'copy-webpack-plugin'
-import webpack from 'webpack'
-import Visualizer from 'webpack-visualizer-plugin'
-import LodashModuleReplacementPlugin from 'lodash-webpack-plugin'
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import { VueLoaderPlugin } from 'vue-loader'
+var path = require('path')
+var HtmlWebpackPlugin = require('html-webpack-plugin')
+var CopyWebpackPlugin = require('copy-webpack-plugin')
+var webpack = require('webpack')
+var Visualizer = require('webpack-visualizer-plugin')
+var LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var VueLoaderPlugin = require('vue-loader').VueLoaderPlugin
 
-const NODE_ENV = process.env.NODE_ENV
+var NODE_ENV = process.env.NODE_ENV
 
-const conf = {
+var conf = {
     mode: NODE_ENV,
     entry: './src/main/index.js',
     resolve: {
@@ -33,22 +33,27 @@ const conf = {
         new LodashModuleReplacementPlugin(),
         new VueLoaderPlugin(),
         new ExtractTextPlugin("style.css")
-    ],
+    ]
 }
 
 if (conf.mode === "development") {
-    conf.devServer = {
-        host: "localhost",
-        historyApiFallback: {rewrites: [{from: /.*/, to: '/index.html'}]},
-        proxy: {
-            "/api": "http://localhost:8080"
+
+    var convert = require('koa-connect')
+    var history = require('connect-history-api-fallback')
+    var proxy = require('http-proxy-middleware')
+
+    conf.serve = {
+        add: function (app, middleware, options) {
+            app.use(convert(proxy('/api', {target: 'http://localhost:8080'})))
+            app.use(convert(history()))
         }
     }
-    conf.devtool = 'eval-source-map'
     conf.output = {
         publicPath: "/"
     }
+
 }
+
 if (conf.mode === "production") {
     conf.devtool = 'source-map'
     conf.output = {
