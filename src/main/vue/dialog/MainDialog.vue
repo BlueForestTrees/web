@@ -13,6 +13,7 @@
                 </v-btn>
             </v-toolbar>
             <slot :data="data" ref="content"/>
+            <v-spacer/>
             <v-card-actions v-if="!noaction">
                 <v-btn block @click="$emit('enter', data)" large color="green">
                     <v-icon x-large color="white">check</v-icon>

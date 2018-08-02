@@ -1,4 +1,5 @@
 export const GO = {
+    BULK_TRUNK: 'bulkTrunk',
     SEARCH:'search',
     BASKET:'basket',
     ROOT: 'root',

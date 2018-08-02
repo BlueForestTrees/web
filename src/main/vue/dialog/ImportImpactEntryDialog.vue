@@ -4,10 +4,11 @@
     >
         <v-container fill-height fluid>
             <v-layout fill-height align-center>
+                <v-flex><h1>Import de catégories d'impact</h1></v-flex>
                 <v-flex>
-                    <file-upload :url='url' @change="onFileChange"
-                                 btn-label="Choisir un fichier" btn-label-progress="Envoi en cours.."
-                    ></file-upload>
+                    <!--<file-upload :url='url' @change="onFileChange"-->
+                                 <!--btn-label="Choisir un fichier" btn-label-progress="Envoi en cours.."-->
+                    <!--&gt;</file-upload>-->
                 </v-flex>
             </v-layout>
         </v-container>
@@ -45,7 +46,6 @@
                         ${response.upsertions > 0 ? (response.upsertions + " ajouts") : ""}
                     `
                     })
-                    this.close()
                 }
             }
         },

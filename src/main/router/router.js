@@ -9,7 +9,8 @@ import Confirmation from '../vue/Confirmation'
 import Root from '../vue/tree/Root'
 
 const Tree = () => import('../vue/tree/Tree.vue')
-const Search = () => import('../vue/Search.vue')
+const Search = () => import('../vue/Search')
+const ImportProduits = () => import('../vue/ImportProduits')
 const ImpactEntries = () => import('../vue/ImpactEntries.vue')
 import Home from '../vue/Home'
 import Basket from '../vue/Basket'
@@ -66,6 +67,12 @@ export default new VueRouter({
                     name: GO.COMPARE,
                     path: "compare/:leftId/:rightId",
                     component: Compare,
+                    props: true
+                },
+                {
+                    name: GO.BULK_TRUNK,
+                    path: "importProduits",
+                    component: ImportProduits,
                     props: true
                 }
             ]

@@ -18,7 +18,7 @@ export const loadUnitsDataMock = () => Promise.resolve(
             unit("ws", "Watt-Seconde (ws)", 0.23923445),
             unit("cal", "calorie (cal)", 1),
             unit("wh", "Watt-Heure (wh)", 0.23923445 * 3600),
-            unit("kwh", "KiloWatt-Heure (kwh)", 0.23923445 * 3600 * 1000),
+            unit("kWh", "KiloWatt-Heure (kWh)", 0.23923445 * 3600 * 1000),
             unit("kcal", "Kilo-Calorie (kcal)", 1000),
             unit("Mcal", "Mega-calorie (Mcal)", 1000 * 1000)
         ]),

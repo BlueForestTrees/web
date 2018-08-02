@@ -2,8 +2,11 @@ import On from "../../const/on"
 import api from "../../rest/api"
 import Do from "../../const/do"
 import {hasQuantity, trunky} from "../../services/calculations"
+import router from "../../router/router"
+import {GO} from "../../const/go"
 
 export default {
+    [On.GO_BULK_TRUNK]: () => router.push({name: GO.BULK_TRUNK}),
     [On.CREATE_TRUNK]: async ({commit, state, dispatch}, {color, name, type}) =>
         trunky(await api.postTrunk({color, name, type})),
 
