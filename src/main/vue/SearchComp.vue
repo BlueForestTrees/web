@@ -1,5 +1,5 @@
 <template>
-    <span style="width: 100%">
+    <v-list id="scroll-target" v-scroll="onScroll">
         <v-card-title primary-title>
             <p style="padding-right:1em">{{label || 'Filtre'}}</p>
             <v-text-field label="Nom" autofocus v-model="namePart"/>
@@ -18,7 +18,7 @@
                 </slot>
             </v-toolbar>
         </transition>
-    </span>
+    </v-list>
 </template>
 
 <script>
@@ -56,7 +56,10 @@
         methods: {
             ...mapActions({
                 dispatchSearch: On.SEARCH_TREE,
-            })
-        }
+            }),
+            onScroll: function (e) {
+                console.log(e.target.scrollTop)
+            }
+        },
     }
 </script>
