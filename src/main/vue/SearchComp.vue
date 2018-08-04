@@ -1,5 +1,5 @@
 <template>
-    <v-list id="scroll-target" v-scroll="onScroll">
+    <v-list>
         <v-card-title primary-title>
             <p style="padding-right:1em">{{label || 'Filtre'}}</p>
             <v-text-field label="Nom" autofocus v-model="namePart"/>
@@ -18,6 +18,9 @@
                 </slot>
             </v-toolbar>
         </transition>
+
+        <infinite-loading @infinite="getMore"/>
+
     </v-list>
 </template>
 
@@ -25,40 +28,40 @@
     import selectable from "./mixin/Selectable"
     import On from "../const/on"
     import {mapActions} from "vuex"
+    import InfiniteLoading from 'vue-infinite-loading'
 
     export default {
         name: 'search-comp',
         props: {label: String, type: String, nobar: Boolean, maxSelectionSize: Number},
         mixins: [selectable],
+        components: {
+            InfiniteLoading,
+        },
         data() {
             return {
                 namePart: null,
-                items: null
+                items: []
             }
         },
         computed: {
             query: function () {
                 return {
                     term: this.namePart || "",
-                    type: this.type
+                    type: this.type,
+                    ps: 3,
+                    aidx: (this.items && this.items.length > 0) ? this.items[this.items.length - 1]._id : null
                 }
-            }
-        },
-        created: function () {
-            this.namePart = ""
-        },
-        watch: {
-            query: function (query) {
-                this.dispatchSearch(query)
-                    .then(items => this.items = items)
             }
         },
         methods: {
             ...mapActions({
                 dispatchSearch: On.SEARCH_TREE,
             }),
-            onScroll: function (e) {
-                console.log(e.target.scrollTop)
+            getMore: function ($state) {
+                console.log("get more")
+                this.dispatchSearch(this.query)
+                    .then(items => this.items.push.apply(this.items, items))
+                    .then(() => $state.loaded())
             }
         },
     }
