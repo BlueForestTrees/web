@@ -54,7 +54,7 @@
                 return {
                     term: this.namePart || "",
                     type: this.type,
-                    ps: 20,
+                    ps: 30,
                     aidx: (this.items && this.items.length > 0) ? this.items[this.items.length - 1]._id : null
                 }
             }
@@ -80,6 +80,9 @@
                         if (items.length > 0) {
                             this.items.push.apply(this.items, items)
                             $state.loaded()
+                            if (items.length < this.query.ps) {
+                                $state.complete()
+                            }
                         } else {
                             $state.complete()
                         }
