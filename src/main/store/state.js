@@ -1,5 +1,6 @@
 import {reduce} from 'lodash'
 import {Dial} from "../const/dial"
+import ENV from "../env"
 
 const dialogStateFromData = (data) => ({
     visible: false,
@@ -47,5 +48,8 @@ export default {
     dialogs: dialogs(),
     nav: {leftMenuVisible: false},
     user: null,
-    snack: snack()
+    snack: snack(),
+    version: {
+        web: ENV.VERSION
+    }
 }

@@ -2721,9 +2721,9 @@ form-data@~2.3.1:
     combined-stream "1.0.6"
     mime-types "^2.1.12"
 
-fraction.js@^4.0.4:
-  version "4.0.8"
-  resolved "https://registry.yarnpkg.com/fraction.js/-/fraction.js-4.0.8.tgz#e53618112e3b36b348c61a81323173bceb01e418"
+fraction.js@4.0.4:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/fraction.js/-/fraction.js-4.0.4.tgz#04e567110718adf7b52974a10434ab4c67a5183e"
 
 fragment-cache@^0.2.1:
   version "0.2.1"
@@ -4025,7 +4025,7 @@ lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
 
-lodash@^4.0.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.3.0, lodash@~4.17.4:
+lodash@4.17.5, lodash@^4.0.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.3.0, lodash@~4.17.4:
   version "4.17.5"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
 
@@ -6667,12 +6667,12 @@ unique-string@^1.0.0:
   dependencies:
     crypto-random-string "^1.0.0"
 
-unit-manip@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/unit-manip/-/unit-manip-1.0.1.tgz#72e5ab22ae50c2b295170b26eac8fd7310c3ae92"
+unit-manip@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/unit-manip/-/unit-manip-1.0.2.tgz#2956cf59473fa2446c80a148ec4a8256f106284f"
   dependencies:
-    fraction.js "^4.0.4"
-    lodash "^4.17.5"
+    fraction.js "4.0.4"
+    lodash "4.17.5"
 
 unset-value@^1.0.0:
   version "1.0.0"
@@ -6824,10 +6824,6 @@ vue-hot-reload-api@^2.3.0:
 vue-infinite-loading@^2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/vue-infinite-loading/-/vue-infinite-loading-2.3.1.tgz#56f29616bcc95f21fd8a829ce747f30b333e890c"
-
-vue-infinite-scroll@2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/vue-infinite-scroll/-/vue-infinite-scroll-2.0.2.tgz#ca37a91fe92ee0ad3b74acf8682c00917144b711"
 
 vue-loader@15.0.7:
   version "15.0.7"

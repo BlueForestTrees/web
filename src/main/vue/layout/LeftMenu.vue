@@ -52,10 +52,18 @@
             </v-list-tile>
             <v-list-tile @click="deleteTrunk(tree)" v-if="tree">
                 <v-list-tile-action>
-                    <v-icon>deletep</v-icon>
+                    <v-icon>delete</v-icon>
                 </v-list-tile-action>
                 <v-list-tile-content>
                     <v-list-tile-title>Supprimer {{tree.name}}</v-list-tile-title>
+                </v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile>
+                <v-list-tile-action>
+                    <v-icon>build</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                    <v-list-tile-title>v{{version.web}}</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
         </v-list>
@@ -72,7 +80,7 @@
     export default {
         components: {FeedbackDialog},
         computed: {
-            ...mapState(['tree', 'nav'])
+            ...mapState(['tree', 'nav', 'version'])
         },
         methods: {
             deleteTrunk(tree) {

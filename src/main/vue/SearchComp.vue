@@ -8,7 +8,7 @@
         <v-list-tile v-for="item in items" :key="item._id" @click="toggleSelect(item)" :style="{background: isSelected(item) ? '#E8F5E9' : '', transition: 'background .2s ease'}">
             <v-icon v-if="isSelected(item)" color="green">check_circle</v-icon>
             <v-icon v-else :style="'color: '+item.trunk.color+';margin-right:0.2em'">lens</v-icon>
-            {{item.trunk.name}}
+            <v-list-tile-content><v-list-tile-title>{{item.trunk.name}}</v-list-tile-title></v-list-tile-content>
         </v-list-tile>
 
         <transition name="slide-fade">
@@ -51,7 +51,7 @@
                 return {
                     term: this.namePart || "",
                     type: this.type,
-                    ps: 5,
+                    ps: 20,
                     aidx: (this.items && this.items.length > 0) ? this.items[this.items.length - 1]._id : null
                 }
             }

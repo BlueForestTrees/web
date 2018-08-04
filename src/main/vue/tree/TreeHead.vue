@@ -1,10 +1,10 @@
 <template>
-    <v-list v-if="tree">
-        <v-list-tile>
-            <v-icon x-large :style="{color: tree.trunk && tree.trunk.color || 0,marginRight:'0.2em'}">lens</v-icon>
-            <h3 v-if="tree.trunk">{{qtUnitName(tree.trunk)}}</h3>
-        </v-list-tile>
-    </v-list>
+    <v-container>
+        <v-layout raw align-center v-if="tree">
+                <v-icon x-large :style="{color: tree.trunk && tree.trunk.color || 0,marginRight:'0.2em'}">lens</v-icon>
+                <h2 v-html="qtUnitName(tree.trunk)"></h2>
+        </v-layout>
+    </v-container>
 </template>
 <script>
     import {qtUnitName} from "../../services/calculations"
