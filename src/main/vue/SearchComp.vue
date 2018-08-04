@@ -19,8 +19,10 @@
             </v-toolbar>
         </transition>
 
-        <infinite-loading @infinite="getMore"/>
-
+        <infinite-loading ref="iloading" @infinite="getMore" spinner="spiral" :distance="500" style="padding-bottom: 3em">
+            <span slot="no-more">{{items.length}} résultats</span>
+            <span slot="no-results">Pas de résultats</span>
+        </infinite-loading>
     </v-list>
 </template>
 
@@ -29,6 +31,7 @@
     import On from "../const/on"
     import {mapActions} from "vuex"
     import InfiniteLoading from 'vue-infinite-loading'
+    import {debounce} from 'lodash'
 
     export default {
         name: 'search-comp',
@@ -48,21 +51,37 @@
                 return {
                     term: this.namePart || "",
                     type: this.type,
-                    ps: 3,
+                    ps: 5,
                     aidx: (this.items && this.items.length > 0) ? this.items[this.items.length - 1]._id : null
                 }
             }
         },
+        watch: {
+            namePart: function () {
+                this.reset()
+            }
+        },
         methods: {
+            reset: function () {
+                this.items = []
+                this.$nextTick(() => {
+                    this.$refs.iloading.$emit('$InfiniteLoading:reset')
+                })
+            },
             ...mapActions({
                 dispatchSearch: On.SEARCH_TREE,
             }),
-            getMore: function ($state) {
-                console.log("get more")
+            getMore: debounce(function ($state) {
                 this.dispatchSearch(this.query)
-                    .then(items => this.items.push.apply(this.items, items))
-                    .then(() => $state.loaded())
-            }
+                    .then(items => {
+                        if (items.length > 0) {
+                            this.items.push.apply(this.items, items)
+                            $state.loaded()
+                        } else {
+                            $state.complete()
+                        }
+                    })
+            }, 300),
         },
     }
 </script>
