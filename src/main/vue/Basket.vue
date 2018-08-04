@@ -7,14 +7,14 @@
             <div>Votre panier est vide. Faites une recherche.</div>
         </v-card-text>
 
-        <v-list-tile d-flex v-if="items.length > 0" v-for="item in items" :key="item._id"
-                     @click="toggleSelect(item)" :style="{background: isSelected(item) ? '#E8F5E9' : '', transition: 'background .2s ease'}">
-
-                    <v-icon v-if="isSelected(item)" color="green">check_circle</v-icon>
-                    <v-icon v-else :style="'color: '+item.trunk.color+';margin-right:0.2em'">lens</v-icon>
-                    {{item.trunk.name}}
-
-        </v-list-tile>
+        <template v-if="items.length > 0" v-for="item in items">
+            <v-list-tile :key="item._id" @click="toggleSelect(item)" :style="{background: isSelected(item) ? '#E8F5E9' : '', transition: 'background .2s ease'}">
+                <v-icon v-if="isSelected(item)" color="green"  style="margin-right:0.3em">check_circle</v-icon>
+                <v-icon v-else :style="'color: '+item.trunk.color+';margin-right:0.3em'">lens</v-icon>
+                {{item.trunk.name}}
+            </v-list-tile>
+            <v-divider/>
+        </template>
 
         <transition name="slide-fade">
             <v-toolbar v-if="anySelected" app dark class="elevation-0" color="green lighten-2">
