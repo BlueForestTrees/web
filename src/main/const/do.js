@@ -23,7 +23,7 @@ export default {
     SET_BRANCHES:'setBranches',
     SET_TANK: 'setTank',
     SET_TRUNK: 'setTrunk',
-    SET_USER: 'setUser',
+    SET_TOKEN: 'setToken',
     SHOW_DIALOG: "showDialog",
     SHOW_FACET_ENTRY_DIALOG: "showFacetEntryDialog",
     SHOW_IMPACT_ENTRY_DIALOG: "showImpactEntryDialog",

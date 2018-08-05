@@ -41,6 +41,8 @@ export default {
     RENAME_TRUNK: 'renameTrunk',
     REFRESH_ROOTS: 'refreshRoots',
     REFRESH_TREE: 'refreshTree',
+    USER_FROM_STORAGE: 'restoreUserFromStorage',
+    USER_TO_STORAGE: 'userToStorage',
     SEARCH_TREE: 'searchTree',
     SEARCH_FACET_ENTRY: 'searchFacetEntry',
     SEARCH_IMPACT_ENTRY: 'searchImpactEntry',

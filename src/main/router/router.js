@@ -1,20 +1,19 @@
 import {GO} from "../const/go"
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import BlueForest from '../vue/BlueForest'
-import Login from '../vue/Login'
-import Inscription from '../vue/Inscription'
-import Confirmation from '../vue/Confirmation'
 
-import Root from '../vue/tree/Root'
-
+const BlueForest = () => import('../vue/BlueForest')
+const Login = () => import('../vue/Login')
+const Inscription = () => import('../vue/Inscription')
+const Confirmation = () => import('../vue/Confirmation')
+const Root = () => import('../vue/tree/Root')
 const Tree = () => import('../vue/tree/Tree.vue')
 const Search = () => import('../vue/Search')
 const ImportProduits = () => import('../vue/ImportProduits')
 const ImpactEntries = () => import('../vue/ImpactEntries.vue')
-import Home from '../vue/Home'
-import Basket from '../vue/Basket'
-import Compare from '../vue/compare/Compare'
+const Home = () => import('../vue/Home')
+const Basket = () => import('../vue/Basket')
+const Compare = () => import('../vue/compare/Compare')
 
 Vue.use(VueRouter)
 

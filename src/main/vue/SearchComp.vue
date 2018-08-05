@@ -22,7 +22,8 @@
             </v-toolbar>
         </transition>
 
-        <infinite-loading ref="iloading" @infinite="getMore" spinner="spiral" :distance="500" style="padding-bottom: 3em">
+        <v-btn block flat color="primary" v-if="manualMode && items.length" @click="getMoreClick" style="margin-bottom: 3em">Voir plus</v-btn>
+        <infinite-loading v-else ref="iloading" @infinite="getMore" spinner="spiral" :distance="500" style="padding-bottom: 3em">
             <span slot="no-more">{{items.length}} résultats</span>
             <span slot="no-results">Pas de résultats</span>
         </infinite-loading>
@@ -46,7 +47,8 @@
         data() {
             return {
                 namePart: null,
-                items: []
+                items: [],
+                manualMode: true
             }
         },
         computed: {
@@ -65,6 +67,10 @@
             }
         },
         methods: {
+            getMoreClick: function () {
+                this.manualMode = false
+                this.getMore()
+            },
             reset: function () {
                 this.items = []
                 this.$nextTick(() => {
@@ -79,12 +85,12 @@
                     .then(items => {
                         if (items.length > 0) {
                             this.items.push.apply(this.items, items)
-                            $state.loaded()
+                            $state && $state.loaded()
                             if (items.length < this.query.ps) {
-                                $state.complete()
+                                $state && $state.complete()
                             }
                         } else {
-                            $state.complete()
+                            $state && $state.complete()
                         }
                     })
             }, 300),

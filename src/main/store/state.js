@@ -43,11 +43,11 @@ export const tree = () => ({_id: null, trunk: null, selection: null, facets: nul
 
 export default {
     token: null,
+    user: null,
     basket: [],
     tree: null,
     dialogs: dialogs(),
     nav: {leftMenuVisible: false},
-    user: null,
     snack: snack(),
     version: {
         web: ENV.VERSION

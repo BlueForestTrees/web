@@ -1,8 +1,8 @@
 import root from 'window-or-global'
 import req from 'request-promise-lite'
-import {ACCESS_TOKEN_KEY} from "../const/headers"
-import {getAccessToken} from "./auth"
+import {X_ACCESS_TOKEN} from "../const/headers"
 import {isNil} from 'lodash'
+import state from '../store/state'
 
 const baseUrl = root.location ? root.location.origin : 'tests/'
 export const url = (path) => baseUrl + path
@@ -33,7 +33,10 @@ export const paramsOf = params => {
     return "?" + arr.join("&")
 }
 
-export const get = (path, reqOpts) => req.get(url(path), {...reqOpts, json: true, headers: {[ACCESS_TOKEN_KEY]: getAccessToken()}})
-export const post = (path, body, reqOpts) => req.post(url(path), {body, ...reqOpts, json: true, headers: {[ACCESS_TOKEN_KEY]: getAccessToken()}})
-export const del = (path, reqOpts) => req.del(url(path), {...reqOpts, json: true, headers: {[ACCESS_TOKEN_KEY]: getAccessToken()}})
-export const put = (path, body, reqOpts) => req.put(url(path), {body, ...reqOpts, json: true, headers: {[ACCESS_TOKEN_KEY]: getAccessToken()}})
+export const get = (path, reqOpts) => req.get(url(path), {...reqOpts, json: true})
+export const post = (path, body, reqOpts) => {
+    console.log(state.token)
+    return req.post(url(path), {body, ...reqOpts, json: true, headers: {[X_ACCESS_TOKEN]: state.token}})
+}
+export const del = (path, reqOpts) => req.del(url(path), {...reqOpts, json: true, headers: {[X_ACCESS_TOKEN]: state.token}})
+export const put = (path, body, reqOpts) => req.put(url(path), {body, ...reqOpts, json: true, headers: {[X_ACCESS_TOKEN]: state.token}})
