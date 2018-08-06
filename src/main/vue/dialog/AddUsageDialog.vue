@@ -32,7 +32,7 @@
     import closable from "../mixin/Closable"
     import UnitSelect from "../common/UnitSelect"
     import {getGrandeur} from "unit-manip"
-    import {find} from 'lodash'
+    import find from 'lodash.find'
 
     export default {
         name: 'add-usage-dialog',

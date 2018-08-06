@@ -1,7 +1,7 @@
 import root from 'window-or-global'
 import req from 'request-promise-lite'
 import {X_ACCESS_TOKEN} from "../const/headers"
-import {isNil} from 'lodash'
+import isNil from 'lodash.isnil'
 import state from '../store/state'
 
 const baseUrl = root.location ? root.location.origin : 'tests/'

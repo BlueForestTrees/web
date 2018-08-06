@@ -1,6 +1,6 @@
 import On from "../../const/on"
 import api from "../../rest/api"
-import {omit} from 'lodash'
+import omit from 'lodash.omit'
 import Do from "../../const/do"
 import {hasQuantity, trunkyAll} from "../../services/calculations"
 

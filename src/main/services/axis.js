@@ -1,4 +1,8 @@
-import {find, forEach, isNil, map, remove} from 'lodash'
+import find from 'lodash.find'
+import forEach from 'lodash.foreach'
+import isNil from 'lodash.isnil'
+import map from 'lodash.map'
+import remove from 'lodash.remove'
 import {format} from "./calculations"
 import {toBaseQuantity,grandeur, qtUnitCoef} from "unit-manip"
 import Vue from 'vue'

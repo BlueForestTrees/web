@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Do from "../../const/do"
-import {find} from 'lodash'
+import find from 'lodash.find'
 import {add} from "../../services/calculations"
 
 export default {

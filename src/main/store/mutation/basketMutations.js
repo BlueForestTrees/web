@@ -1,5 +1,5 @@
 import Do from "../../const/do"
-import {findIndex} from 'lodash'
+import {findIndex} from 'unit-manip'
 
 export default {
     [Do.ADD_TO_BASKET]: (state, items) => {

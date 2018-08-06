@@ -1,4 +1,4 @@
-import {map} from 'lodash'
+import map from 'lodash.map'
 import {bestQuantity, unitCoef, changeUnit} from "unit-manip"
 
 export const objectId = () =>  ((new Date().getTime() / 1000 | 0).toString(16) + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, () => Math.random() * 16 | 0).toString(16)).toLowerCase()

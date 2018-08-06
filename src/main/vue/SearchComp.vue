@@ -35,7 +35,7 @@
     import On from "../const/on"
     import {mapActions} from "vuex"
     import InfiniteLoading from 'vue-infinite-loading'
-    import {debounce} from 'lodash'
+    import debounce from 'lodash.debounce'
 
     export default {
         name: 'search-comp',

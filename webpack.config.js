@@ -6,6 +6,7 @@ var Visualizer = require('webpack-visualizer-plugin')
 var LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var VueLoaderPlugin = require('vue-loader').VueLoaderPlugin
+var versions = require('./package.json').dependencies
 
 var NODE_ENV = process.env.NODE_ENV
 
@@ -63,6 +64,15 @@ if (conf.mode === "production") {
     }
     conf.plugins.push(new Visualizer({filename: '../../visualizer/statistics.html'}))
     conf.plugins.push(new CopyWebpackPlugin([{from: 'nginx', to: '../nginx/'}]))
+
+    conf.externals = {
+        vue: "vue",
+        vuetify: "vuetify"
+    }
+    const htmlWebpackPlugin = conf.plugins[0]
+    htmlWebpackPlugin.options.scriptVue = "<script src='https://unpkg.com/vue@" + versions.vue + "/dist/vue.min.js'></script>"
+    htmlWebpackPlugin.options.scriptVuetify = "<script src='https://unpkg.com/vuetify@" + versions.vuetify + "/dist/vuetify.min.js'></script>"
+    htmlWebpackPlugin.options.min = ".min"
 }
 
 module.exports = conf

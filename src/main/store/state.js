@@ -1,11 +1,8 @@
-import {reduce} from 'lodash'
 import {Dial} from "../const/dial"
 import ENV from "../env"
 
-const dialogStateFromData = (data) => ({
-    visible: false,
-    data: data
-})
+export const createDialog = name => (dialogFactory[name] && dialogFactory[name]()) || (console.warn(`state.js il manque dialogFactory['${name}']`) || {})
+
 const dialogFactory = {
     [Dial.ADD_TRUNK]: () => ({destination: null}),
     [Dial.FACET_ENTRY]: () => ({qt: null, unit: null, name: null}),
@@ -23,10 +20,14 @@ const dialogFactory = {
     [Dial.IMPORT_IMPACT_ENTRY]: () => ({})
 }
 
-const dialogs = () => reduce(Dial, (dials, key) => {
-    dials[key] = dialogStateFromData(createDialog(key))
+const dialogs = () => {
+    const dialsKeys = Object.keys(Dial)
+    const dials = {}
+    for (let i = 0; i < dialsKeys.length; i++) {
+        dials[Dial[dialsKeys[i]]] = {visible: false, data: createDialog(Dial[dialsKeys[i]])}
+    }
     return dials
-}, {})
+}
 
 export const snack = () => ({
     visible: false,
@@ -37,7 +38,6 @@ export const snack = () => ({
     color: "black"
 })
 
-export const createDialog = name => (dialogFactory[name] && dialogFactory[name]()) || (console.warn(`state.js il manque dialogFactory['${name}']`) || {})
 
 export const tree = () => ({_id: null, trunk: null, selection: null, facets: null})
 

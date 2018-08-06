@@ -31,7 +31,7 @@
     import {getGrandeur} from "unit-manip"
     import closable from "../mixin/Closable"
     import {isNumber, required} from "../../services/rules"
-    import {find} from 'lodash'
+    import find from 'lodash.find'
     import Destination from "../common/Destination"
     import UnitSelect from "../common/UnitSelect"
 

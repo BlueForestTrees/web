@@ -25,7 +25,7 @@
     import closable from "../mixin/Closable"
     import GrandeurSelect from "../common/GrandeurSelect"
     import UnitSelect from "../common/UnitSelect"
-    import {find} from 'lodash'
+    import find from 'lodash.find'
     import {getGrandeur} from 'unit-manip'
     import {isNumber, length2min, required} from "../../services/rules"
     import Ressources from "../tree/Ressources"
