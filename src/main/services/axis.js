@@ -1,7 +1,7 @@
 import find from 'lodash.find'
 import forEach from 'lodash.foreach'
 import isNil from 'lodash.isnil'
-import map from 'lodash.map'
+import {map} from 'unit-manip'
 import remove from 'lodash.remove'
 import {format} from "./calculations"
 import {toBaseQuantity,grandeur, qtUnitCoef} from "unit-manip"

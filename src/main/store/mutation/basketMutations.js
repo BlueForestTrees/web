@@ -5,7 +5,7 @@ export default {
     [Do.ADD_TO_BASKET]: (state, items) => {
         for (let i = 0; i < items.length; i++) {
             const item = items[i]
-            const existingIndex = findIndex(state.basket, {_id: item._id})
+            const existingIndex = findIndex(state.basket, "_id", item._id)
             if (existingIndex >= 0) {
                 state.basket.splice(existingIndex, 1, item)
             } else {

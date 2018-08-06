@@ -2,6 +2,7 @@ import On from "../../const/on"
 import api from "../../rest/api"
 import Do from "../../const/do"
 import {hasQuantity, idQtFrom} from "../../services/calculations"
+import {map} from 'unit-manip'
 
 export default {
 
@@ -21,7 +22,7 @@ export default {
 
     [On.DELETE_IMPACTS]:
         async ({commit}, {impacts, toDelete}) => {
-            await api.deleteImpacts(impacts._id, _.map(toDelete, "_id"))
+            await api.deleteImpacts(impacts._id, map(toDelete, e => e._id))
             commit(Do.DELETE_IMPACTS, {impacts, toDelete})
         },
     [On.ADD_IMPACT]:

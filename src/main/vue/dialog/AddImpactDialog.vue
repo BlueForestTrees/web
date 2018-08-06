@@ -31,7 +31,7 @@
     import {getGrandeur} from "unit-manip"
     import closable from "../mixin/Closable"
     import {isNumber, required} from "../../services/rules"
-    import find from 'lodash.find'
+    import {find} from 'unit-manip'
     import Destination from "../common/Destination"
     import UnitSelect from "../common/UnitSelect"
 
@@ -65,7 +65,7 @@
                 return this.selectedItem && getGrandeur(this.selectedItem && this.selectedItem.grandeur)
             },
             selectedItem: function () {
-                return this.selectedItemId && find(this.autocompleteItems, {_id: this.selectedItemId})
+                return this.selectedItemId && find(this.autocompleteItems, "_id", this.selectedItemId)
             }
         },
         watch: {
@@ -97,7 +97,7 @@
                 this.$nextTick(() => this.$refs.nom.focus())
             },
             required, isNumber, notIn() {
-                return !find(this.tree.impacts.items, {_id: this.selectedItemId}) || "Déjà utilisé"
+                return !find(this.tree.impacts.items, "_id", this.selectedItemId) || "Déjà utilisé"
             }
         }
     }

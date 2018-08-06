@@ -32,7 +32,7 @@
     import closable from "../mixin/Closable"
     import UnitSelect from "../common/UnitSelect"
     import {getGrandeur} from "unit-manip"
-    import find from 'lodash.find'
+    import {find} from 'unit-manip'
 
     export default {
         name: 'add-usage-dialog',
@@ -59,7 +59,7 @@
                 return this.selectedItem && getGrandeur(this.selectedItem && this.selectedItem.trunk.grandeur)
             },
             selectedItem: function () {
-                return this.selectedItemId && find(this.autocompleteItems, {_id: this.selectedItemId})
+                return this.selectedItemId && find(this.autocompleteItems, "_id", this.selectedItemId)
             }
         },
         watch: {
@@ -92,7 +92,7 @@
                     this.autocompleteItems = await this.dispatchSearch({term})
             },
             required, isNumber, notIn() {
-                return !find(this.tree.branches.items, {_id: this.selectedItemId}) || "Déjà utilisé"
+                return !find(this.tree.branches.items, "_id", this.selectedItemId) || "Déjà utilisé"
             }
         }
     }

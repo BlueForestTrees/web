@@ -52,7 +52,6 @@ if (conf.mode === "development") {
     conf.output = {
         publicPath: "/"
     }
-
 }
 
 if (conf.mode === "production") {

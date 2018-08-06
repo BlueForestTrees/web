@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Do from "../../const/do"
-import find from 'lodash.find'
+import {find} from 'unit-manip'
 import {add} from "../../services/calculations"
 
 export default {
     [Do.ADD_IMPACT]: ({}, {tree, impact}) => {
-        const existing = find(tree.impacts.items, {_id: impact._id})
+        const existing = find(tree.impacts.items, "_id", impact._id)
         if (existing) {
             existing.quantity = add(impact.quantity, existing.quantity)
         } else {
