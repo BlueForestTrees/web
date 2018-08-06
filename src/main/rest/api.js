@@ -1,4 +1,4 @@
-import {del, get, arrayOf, post, put, paramsOf} from './rest'
+import {del, get, arrayOf, post, put, paramsOf, postForm, upload} from './rest'
 import {X_ACCESS_TOKEN} from "../const/headers"
 
 export default {
@@ -48,6 +48,9 @@ export default {
     postFacetEntry: facet => post('/api/facetEntry', facet),
     postImpactEntry: impact => post('/api/impactEntry', impact),
     postTrunk: trunk => post('/api/trunk', trunk),
+    postTrunkAdeme: (formData) => upload('/api/trunkBulk/ademe', formData),
+    postImpactEntryAdeme: (formData) => upload('/api/impactEntryBulk/ademe', formData),
+    postImpactAdeme: (formData) => upload('/api/impactBulk/ademe', formData),
     postTrunkClone: trunkId => post(`/api/trunk?sourceId=${trunkId}`),
     postFeedback: feedback => post(`/api/feedback`, feedback),
 

@@ -34,11 +34,11 @@
             <v-list-tile @click="goBulkTrunk">
                 <v-list-tile-action>
                     <v-layout row>
-                        <v-icon>add</v-icon>
+                        <v-icon>vertical_align_top</v-icon>
                     </v-layout>
                 </v-list-tile-action>
                 <v-list-tile-content>
-                    <v-list-tile-title>Import Produits</v-list-tile-title>
+                    <v-list-tile-title>Imports</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
 

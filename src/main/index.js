@@ -6,10 +6,8 @@ import {initUnits} from "unit-manip"
 import store from "./store/store"
 import css from "../css/style.css"
 import router from "./router/router"
-import AsyncComputed from 'vue-async-computed'
 
 
-Vue.use(AsyncComputed)
 Vue.config.productionTip = false
 Vue.use(Vuetify)
 

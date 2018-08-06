@@ -1,9 +1,9 @@
 import On from "../../const/on"
-import api from "../../rest/api"
 import Do from "../../const/do"
 import {hasQuantity, trunky} from "../../services/calculations"
 import router from "../../router/router"
 import {GO} from "../../const/go"
+import api from "../../rest/api"
 
 export default {
     [On.GO_BULK_TRUNK]: () => router.push({name: GO.BULK_TRUNK}),
@@ -28,5 +28,11 @@ export default {
             .then(() => dispatch(On.LOAD_OPEN_TREE, trunk)),
 
     [On.CLONE_TRUNK]: ({}, _id) =>
-        api.postTrunkClone(_id)
+        api.postTrunkClone(_id),
+
+    [On.IMPORT_TRUNK_ADEME]: ({}, file) => {
+        const formData = new FormData(file)
+        formData.append("xlsx.ademe.trunk", file)
+        return api.postTrunkAdeme(formData)
+    }
 }

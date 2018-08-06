@@ -9,7 +9,7 @@ const Confirmation = () => import('../vue/Confirmation')
 const Root = () => import('../vue/tree/Root')
 const Tree = () => import('../vue/tree/Tree.vue')
 const Search = () => import('../vue/Search')
-const ImportProduits = () => import('../vue/ImportProduits')
+const Imports = () => import('../vue/Imports')
 const ImpactEntries = () => import('../vue/ImpactEntries.vue')
 const Home = () => import('../vue/Home')
 const Basket = () => import('../vue/Basket')
@@ -70,8 +70,8 @@ export default new VueRouter({
                 },
                 {
                     name: GO.BULK_TRUNK,
-                    path: "importProduits",
-                    component: ImportProduits,
+                    path: "imports",
+                    component: Imports,
                     props: true
                 }
             ]

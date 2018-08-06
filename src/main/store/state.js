@@ -17,7 +17,6 @@ const dialogFactory = {
     [Dial.FEEDBACK]: () => ({}),
     [Dial.SUSCRIBE]: () => ({}),
     [Dial.LOGIN]: () => ({}),
-    [Dial.IMPORT_IMPACT_ENTRY]: () => ({})
 }
 
 const dialogs = () => {

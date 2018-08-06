@@ -9,5 +9,11 @@ export default {
 
     [On.CREATE_IMPACT_ENTRY]: async ({}, {color, name, grandeur}) => api.postImpactEntry({color, name, grandeur}),
 
-    [On.SEARCH_IMPACT_ENTRY]: async ({}, {term}) => api.searchImpactEntry(term)
+    [On.SEARCH_IMPACT_ENTRY]: async ({}, {term}) => api.searchImpactEntry(term),
+
+    [On.IMPORT_IMPACT_ENTRY_ADEME]: ({}, file) => {
+        const formData = new FormData(file)
+        formData.append("xlsx.ademe.impactEntry", file)
+        return api.postImpactEntryAdeme(formData)
+    }
 }

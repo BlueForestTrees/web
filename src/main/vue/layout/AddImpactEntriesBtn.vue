@@ -10,15 +10,6 @@
                 </v-list-tile-avatar>
                 <v-list-tile-title>Créer une catégorie d'impact</v-list-tile-title>
             </v-list-tile>
-            <v-divider/>
-            <v-list-tile @click="show(Dial.IMPORT_IMPACT_ENTRY)">
-                <v-list-tile-avatar>
-                    <v-icon>keyboard_tab</v-icon>
-                    <v-icon>keyboard_tab</v-icon>
-                </v-list-tile-avatar>
-                <v-list-tile-title>Importer depuis un fichier</v-list-tile-title>
-            </v-list-tile>
-            <v-divider/>
         </v-list>
     </v-menu>
 </template>

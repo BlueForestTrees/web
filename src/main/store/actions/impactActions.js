@@ -30,5 +30,11 @@ export default {
             await api.postImpact(idQtFrom(tree.trunk), idQtFrom(impact))
             commit(Do.ADD_IMPACT, {tree, impact})
             commit(Do.ADD_IMPACT_TANK, {tree, impact})
-        }
+        },
+
+    [On.IMPORT_IMPACT_ADEME]: ({}, file) => {
+        const formData = new FormData(file)
+        formData.append("csv.ademe.impact", file)
+        return api.postImpactAdeme(formData)
+    }
 }

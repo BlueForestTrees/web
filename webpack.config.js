@@ -52,6 +52,10 @@ if (conf.mode === "development") {
     conf.output = {
         publicPath: "/"
     }
+
+    const htmlWebpackPlugin = conf.plugins[0]
+    htmlWebpackPlugin.options.min = ".min"
+    htmlWebpackPlugin.options.versionVuetify = versions.vuetify
 }
 
 if (conf.mode === "production") {
@@ -64,14 +68,16 @@ if (conf.mode === "production") {
     conf.plugins.push(new Visualizer({filename: '../../visualizer/statistics.html'}))
     conf.plugins.push(new CopyWebpackPlugin([{from: 'nginx', to: '../nginx/'}]))
 
-    conf.externals = {
-        vue: "vue",
-        vuetify: "vuetify"
-    }
+    conf.externals = [
+        {vue: {root: "vue", amd: "vue", commonjs2:"vue", commonjs:"vue"}},
+        {vuetify: {root: "vuetify", amd: "vuetify"}}
+    ]
     const htmlWebpackPlugin = conf.plugins[0]
+    htmlWebpackPlugin.options.min = ".min"
+    htmlWebpackPlugin.options.versionVuetify = versions.vuetify
+
     htmlWebpackPlugin.options.scriptVue = "<script src='https://unpkg.com/vue@" + versions.vue + "/dist/vue.min.js'></script>"
     htmlWebpackPlugin.options.scriptVuetify = "<script src='https://unpkg.com/vuetify@" + versions.vuetify + "/dist/vuetify.min.js'></script>"
-    htmlWebpackPlugin.options.min = ".min"
 }
 
 module.exports = conf
