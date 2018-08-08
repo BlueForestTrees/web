@@ -1,8 +1,6 @@
 import {initUnits} from "unit-manip"
 import {loadUnitsDataMock} from "./grandeurServiceMock"
 
-require('jsdom-global')()
-
 export const init = async () => {
     initUnits(await loadUnitsDataMock())
 }
