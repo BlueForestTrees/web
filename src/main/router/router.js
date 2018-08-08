@@ -31,7 +31,7 @@ export default new VueRouter({
                 },
                 {
                     name: GO.QTREE,
-                    path: "tree/:qt/:unit/:_id",
+                    path: "tree/:bqt/:g/:_id",
                     component: Tree,
                     props:true
                 },
