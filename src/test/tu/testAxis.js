@@ -11,7 +11,7 @@ describe('Axis calculations', function () {
 
     it('minimal buildAxises', function () {
         const tree = {
-            trunk: withNameIdQtGrandeur("Skate", "a", 1, "kg"),
+            trunk: withNameIdQtGrandeur("Skate", "a", 1000, "Mass"),
             facets: {
                 items: []
             },
@@ -39,7 +39,7 @@ describe('Axis calculations', function () {
     })
     it('complete buildAxises', function () {
         const tree = {
-            trunk: withNameIdQtGrandeur("Skate", "a", 1, "kg"),
+            trunk: withNameIdQtGrandeur("Skate", "a", 1000, "Mass"),
             facets: {
                 items: [withNameIdQtGrandeur("vitamine", "b", 1, "g"), withNameIdQtGrandeur("voutamine", "d", 7, "g")]
             },
