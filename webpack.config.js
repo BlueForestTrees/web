@@ -62,11 +62,11 @@ if (conf.mode === "production") {
     conf.devtool = 'source-map'
     conf.output = {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist/blueforest.org/static'),
+        path: path.resolve(__dirname, 'dist/blueforest.org/var/www/blueforest.org'),
         publicPath : '/'
     }
-    conf.plugins.push(new Visualizer({filename: '../../visualizer/statistics.html'}))
-    conf.plugins.push(new CopyWebpackPlugin([{from: 'nginx', to: '../nginx/'}]))
+    conf.plugins.push(new Visualizer({filename: '../../../../visualizer/statistics.html'}))
+    conf.plugins.push(new CopyWebpackPlugin([{from: 'nginx', to: '../../../etc/lib/nginx/blueforest.org/'}]))
 
     conf.externals = [
         {vue: {root: "vue", amd: "vue", commonjs2:"vue", commonjs:"vue"}},
