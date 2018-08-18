@@ -8,7 +8,6 @@ export default {
     searchTrunk: ({term, type, aidx, ps}) => get(`/api/trunks${paramsOf({q: term, t: type, aidx, ps})}`),
     //mixin? pour gérer (name color) et (complet)
     getTrunks: _ids => get(`/api/trunk${arrayOf('_ids', _ids)}`),
-    getQuantifiedTrunk: (qt, unit, _id) => get(`/api/trunk/${qt}/${unit}/${_id}`),
     getTrunk: _id => get(`/api/trunk/${_id}`),
     //getImpactEntry
     //getFacetEntry
@@ -23,8 +22,7 @@ export default {
     getTank: (qt, unit, _id) => get(`/api/tank/${qt}/${unit}/${_id}`),
     getUnquantifiedBranches: (_id) => get(`/api/branch/${_id}`),
     getQuantifiedBranches: (qt, unit, _id) => get(`/api/branch/${qt}/${unit}/${_id}`),
-    getUnquantifiedRoots: (_id) => get(`/api/root/${_id}`),
-    getQuantifiedRoots: (qt, unit, _id) => get(`/api/root/${qt}/${unit}/${_id}`),
+    getRoots: (_id) => get(`/api/root/${_id}`),
     getQuantifiedImpactTank: (qt, unit, _id) => get(`/api/impacttank/${qt}/${unit}/${_id}`),
 
 

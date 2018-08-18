@@ -4,7 +4,7 @@ import isNil from 'lodash.isnil'
 import {map} from 'unit-manip'
 import remove from 'lodash.remove'
 import {format} from "./calculations"
-import {toBaseQuantity,grandeur, qtUnitCoef} from "unit-manip"
+import {toBaseQuantity, grandeur, qtUnitCoef} from "unit-manip"
 import Vue from 'vue'
 
 /**
@@ -43,19 +43,19 @@ const buildAxis = ({name}, type, items) => map(items, item => ({
  * @returns {{left: *[], common: {left: *, right: *}, right: *[]}}
  */
 export const separate = (leftAxises, rightAxises) => {
-
+    
     //Un axe sans quantité est retiré des axes communs
     const leftWithoutQt = remove(leftAxises, axis => (isNil(axis._qt) || isNil(axis.unit)))
     const rightWithoutQt = remove(rightAxises, axis => (isNil(axis._qt) || isNil(axis.unit)))
-
+    
     //Un axe qui n'a pas son équivalent de l'autre côté est retiré des communs
     const leftWithoutRight = remove(leftAxises, axis => !find(rightAxises, {name: axis.name, type: axis.type, grandeur: axis.grandeur}))
     const rightWithoutLeft = remove(rightAxises, axis => !find(leftAxises, {name: axis.name, type: axis.type, grandeur: axis.grandeur}))
-
+    
     //Les axes restant sont les axes communs
     const commonLeft = leftAxises
     const commonRight = rightAxises
-
+    
     return {
         left: [
             ...leftWithoutQt, ...leftWithoutRight
@@ -72,11 +72,11 @@ export const applyBase = (base, axises) => {
         const rightCoef = coefToBase(base, axises.common.right)
         applyCoef(axises.right, rightCoef)
         applyCoef(axises.common.right, rightCoef)
-
+        
         const leftCoef = coefToBase(base, axises.common.left)
         applyCoef(axises.left, leftCoef)
         applyCoef(axises.common.left, leftCoef)
-
+        
         updateRatios(axises)
     }
 }
@@ -91,13 +91,13 @@ export const applyCoef = (axises, coef) => forEach(axises, axis => {
 })
 
 export const updateRatios = (axises) => {
-
+    
     forEach(axises.common.left, leftAxis => {
         const rightAxis = find(axises.common.right, {type: leftAxis.type, name: leftAxis.name})
         Vue.set(leftAxis, "ratio", relativeTo1(leftAxis.baseQt, rightAxis.baseQt))
         Vue.set(rightAxis, "ratio", relativeTo1(rightAxis.baseQt, leftAxis.baseQt))
     })
-
+    
     return axises
 }
 const relativeTo1 = (first, second) => first > second ? 1 : format(first / second)

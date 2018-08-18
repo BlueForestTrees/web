@@ -30,14 +30,8 @@ export default new VueRouter({
                     component: Home,
                 },
                 {
-                    name: GO.QTREE,
-                    path: "tree/:bqt/:g/:_id",
-                    component: Tree,
-                    props:true
-                },
-                {
                     name: GO.TREE,
-                    path: "tree/:_id",
+                    path: "tree/:bqt/:_id",
                     component: Tree,
                     props:true
                 },

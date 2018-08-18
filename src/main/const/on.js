@@ -33,7 +33,7 @@ export default {
     LOAD_IMPACTS_TANK: 'loadImpactsTank',
     LOAD_BRANCHES: 'loadBranches',
     LOAD_OPEN_TREE: 'loadOpenTree',
-    LOAD_IDQTUNIT: 'loadIdQtUnit',
+    LOAD_IDBQT: 'loadBqtId',
     LOAD_TRUNK: 'loadTrunk',
     LOAD_ROOTS: 'loadRoots',
     LOAD_TANK: 'loadTank',

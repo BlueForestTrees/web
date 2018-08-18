@@ -1,8 +1,7 @@
-import {map} from 'unit-manip'
-import {bestQuantity, unitCoef, changeUnit} from "unit-manip"
+import {map, bqtGToQtUnit, bestQuantity, unitCoef, changeUnit} from "unit-manip"
 
-export const objectId = () =>  ((new Date().getTime() / 1000 | 0).toString(16) + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, () => Math.random() * 16 | 0).toString(16)).toLowerCase()
-export const idQtUnit = tree => ({_id: tree._id, qt: tree.trunk.quantity.qt, unit: tree.trunk.quantity.unit})
+export const objectId = () => ((new Date().getTime() / 1000 | 0).toString(16) + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, () => Math.random() * 16 | 0).toString(16)).toLowerCase()
+
 export const idQuantity = tree => ({_id: tree._id, quantity: tree.trunk.quantity})
 export const hasQuantity = e => e && e.quantity && e.quantity.qt && e.quantity.unit
 export const transportQuantity = (masse, distance) => ({qt: changeUnit(masse, "t") * changeUnit(distance, "km"), unit: "t*km"})
@@ -10,13 +9,14 @@ export const format = v => v < 10 ? Math.round(v * 100) / 100 : Math.round(v * 1
 export const trunkyAll = items => map(items, trunky)
 export const trunky = trunk => ({_id: trunk._id, trunk})
 export const idQtFrom = item => ({_id: item._id, quantity: item.quantity})
-export const qtUnit = quantity => {
-    if (quantity) {
-        if (quantity.qt && quantity.unit) {
-            const best = bestQuantity(quantity)
+export const qtUnit = bqtG => {
+    if (bqtG) {
+        const qtUnit = bqtGToQtUnit(bqtG)
+        if (qtUnit.qt && qtUnit.unit) {
+            const best = bestQuantity(qtUnit)
             return `${best.qt}${best.unit !== 'count' ? best.unit : ''}`
         } else {
-            return (quantity.qt || "?") + (quantity.unit || " ?")
+            return (qtUnit.qt || "?") + (qtUnit.unit || " ?")
         }
     } else {
         return "??"
@@ -37,9 +37,9 @@ export const getLuma = value => {
     const c = value.substring(1)
     const rgb = parseInt(c, 16)
     const r = (rgb >> 16) & 0xff
-    const g = (rgb >>  8) & 0xff
-    const b = (rgb >>  0) & 0xff
-
+    const g = (rgb >> 8) & 0xff
+    const b = (rgb >> 0) & 0xff
+    
     return 0.2126 * r + 0.7152 * g + 0.0722 * b
 }
 
@@ -58,7 +58,7 @@ export const overcolor = c => getLuma(c) < 120 ? "white" : "black"
 export const initiales = fullname => {
     const nameSplit = fullname.toUpperCase().split(' ')
     if (nameSplit.length === 1) {
-        return nameSplit[0] ? nameSplit[0].charAt(0):'?'
+        return nameSplit[0] ? nameSplit[0].charAt(0) : '?'
     } else {
         return nameSplit[0].charAt(0) + nameSplit[1].charAt(0)
     }
@@ -80,3 +80,10 @@ export const add = (q1, q2) => ({
     qt: unitCoef(q1.unit, q2.unit) * q1.qt + q2.qt,
     unit: q2.unit
 })
+
+export const multiplyBqt = (coef, items) => {
+    for (let i = 0; i < items.length; i++) {
+        items[i].quantity.bqt *= coef
+    }
+    return items
+}

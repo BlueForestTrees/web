@@ -101,7 +101,7 @@
         },
         computed: {
             items: function () {
-                return this.tree && this.tree.roots && this.tree.roots.items
+                return this.tree && this.tree.roots && this.tree.roots
             },
             hasItems: function () {
                 return this.items && this.items.length && this.items.length > 0
@@ -122,6 +122,7 @@
                 }
                 this.unselect()
             },
+
             open() {
                 this.dispatchLoadTree(this.selection[0])
             },

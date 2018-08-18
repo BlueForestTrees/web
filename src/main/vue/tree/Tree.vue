@@ -35,14 +35,14 @@
             Branches,
             Facets
         },
-        props: ['_id', 'qt', 'unit'],
+        props: ['_id', 'bqt'],
         computed: {
             ...mapState(['tree'])
         },
         methods: {
-            ...mapActions({dispatchLoad: On.LOAD_IDQTUNIT}),
+            ...mapActions({dispatchLoad: On.LOAD_IDBQT}),
             refresh: function () {
-                this.dispatchLoad({qt: this.qt, unit: this.unit, _id: this._id})
+                this.dispatchLoad({bqt: this.bqt, _id: this._id})
             }
         },
         created: function () {
