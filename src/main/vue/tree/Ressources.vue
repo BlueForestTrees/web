@@ -1,5 +1,5 @@
 <template>
-    <span>
+    <v-card>
 
     <transition name="slide-fade">
         <v-toolbar v-if="anySelected" app dark class="elevation-0" color="green lighten-2">
@@ -28,7 +28,6 @@
     </transition>
 
     <v-list v-if="!showBilan && hasItems" dense>
-        <v-divider/>
         <v-subheader>
             <v-tooltip top>
                 <h4 slot="activator">RESSOURCES</h4>
@@ -53,7 +52,6 @@
     </v-list>
 
     <v-list v-if="showBilan && hasItems" dense>
-        <v-divider/>
         <v-subheader>
             <v-tooltip top>
                 <h4 slot="activator">RESSOURCES (bilan)</h4>
@@ -77,7 +75,7 @@
             </v-list-tile>
         </template>
     </v-list>
-    </span>
+    </v-card>
 </template>
 
 <script>

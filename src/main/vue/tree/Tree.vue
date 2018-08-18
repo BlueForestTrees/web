@@ -1,14 +1,22 @@
 <template>
-    <v-container fluid>
-        <v-layout justify-center align-center column>
-            <v-card style="width: 100%" v-if="tree && (tree.trunk || tree.roots || tree.branches)">
+    <v-container fluid grid-list-md>
+        <v-layout row wrap>
+            <v-flex xs12>
                 <tree-head :tree="tree"/>
+            </v-flex>
+            <v-flex xs12>
                 <ressources :tree="tree"/>
+            </v-flex>
+            <v-flex xs12>
                 <facets :tree="tree"/>
+            </v-flex>
+            <v-flex xs12>
                 <impacts :tree="tree"/>
+            </v-flex>
+            <v-flex xs12>
                 <branches :tree="tree"/>
-                <add-tree-part-btn :tree="tree"/>
-            </v-card>
+            </v-flex>
+            <add-tree-part-btn :tree="tree"/>
         </v-layout>
     </v-container>
 </template>

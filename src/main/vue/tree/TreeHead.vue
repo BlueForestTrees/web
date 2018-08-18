@@ -1,10 +1,12 @@
 <template>
-    <v-container v-if="trunk">
-        <v-layout raw align-center>
-            <v-icon x-large :style="{color: trunk && trunk.color || 0,marginRight:'0.2em'}">lens</v-icon>
-            <h2 v-html="qtUnitName(trunk)"></h2>
-        </v-layout>
-    </v-container>
+    <v-card>
+        <v-container v-if="trunk">
+            <v-layout raw align-center>
+                <v-icon x-large :style="{color: trunk && trunk.color || 0,marginRight:'0.2em'}">lens</v-icon>
+                <h2 v-html="qtUnitName(trunk)"></h2>
+            </v-layout>
+        </v-container>
+    </v-card>
 </template>
 <script>
     import {qtUnitName} from "../../services/calculations"

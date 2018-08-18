@@ -1,21 +1,21 @@
 <template>
-    <v-list v-if="hasItems" dense>
-        <v-divider/>
-        <v-subheader>
-            <v-tooltip top>
-                <h4 slot="activator">PROPRIETES</h4>
-                <span>Quantité, Prix, Dimensions, etc...</span>
-            </v-tooltip>
-        </v-subheader>
+    <v-card>
+        <v-list dense>
+            <v-subheader>
+                <v-tooltip top>
+                    <h4 slot="activator">PROPRIETES</h4>
+                    <span>Quantité, Prix, Dimensions, etc...</span>
+                </v-tooltip>
+            </v-subheader>
 
-        <template v-for="item in items">
-            <v-list-tile :key="item._id" @click="toggleSelect(item)" :class="'active'">
-                <v-icon :style="'color: '+item.color+';margin-right:0.2em'">lens</v-icon>
-                {{qtUnitName(item) }}
-            </v-list-tile>
-        </template>
-
-    </v-list>
+            <template v-for="item in items">
+                <v-list-tile :key="item._id" @click="toggleSelect(item)" :class="'active'">
+                    <v-icon :style="'color: '+item.color+';margin-right:0.2em'">lens</v-icon>
+                    {{qtUnitName(item) }}
+                </v-list-tile>
+            </template>
+        </v-list>
+    </v-card>
 </template>
 
 <script>
