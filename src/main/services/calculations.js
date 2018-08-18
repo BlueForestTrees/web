@@ -14,9 +14,9 @@ export const qtUnit = bqtG => {
         const qtUnit = bqtGToQtUnit(bqtG)
         if (qtUnit.qt && qtUnit.unit) {
             const best = bestQuantity(qtUnit)
-            return `${best.qt}${best.unit !== 'count' ? best.unit : ''}`
+            return `${best.qt} ${best.unit !== 'count' ? best.unit : ''}`
         } else {
-            return (qtUnit.qt || "?") + (qtUnit.unit || " ?")
+            return `${qtUnit.qt || "?"} ${qtUnit.unit || " ?"}`
         }
     } else {
         return "??"
