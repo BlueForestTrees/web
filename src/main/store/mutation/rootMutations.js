@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import Do from "../../const/do"
-import {multiplyBqt} from "../../services/calculations"
-
 
 export default {
     [Do.SET_ROOTS]: ({}, {tree, roots}) => {

@@ -10,9 +10,8 @@ export default {
     [On.CREATE_TRUNK]: async ({commit, state, dispatch}, {color, name, type}) =>
         trunky(await api.postTrunk({color, name, type})),
     
-    [On.LOAD_TRUNK]: ({commit}, tree) => api.getTrunk(tree._id)
-        .then(trunk => (trunk.quantity.bqt = tree.trunk.quantity.bqt || 1) && trunk)
-        .then(trunk => commit(Do.SET_TRUNK, {tree, trunk})),
+    [On.LOAD_TRUNK]: ({commit}, {bqt, _id}) => api.getTrunk(_id)
+        .then(trunk => (trunk.quantity.bqt = bqt) && trunk),
     
     [On.RENAME_TRUNK]: ({commit}, {trunk, newName}) =>
         api.putTrunkName(trunk._id, newName)
@@ -21,7 +20,7 @@ export default {
     [On.PUT_TRUNK_QUANTITY]: ({commit, dispatch}, {trunk, quantity}) =>
         api.putTrunkQuantity(trunk._id, quantity)
             .then(() => commit(Do.PUT_TRUNK_QUANTITY, {trunk, quantity}))
-            .then(() => dispatch(On.LOAD_OPEN_TREE, trunk)),
+            .then(() => dispatch(On.LOAD_OPEN_TREE, {_id: trunk._id, bqt: trunk.quantity.bqt})),
     
     [On.CLONE_TRUNK]: ({}, _id) =>
         api.postTrunkClone(_id),

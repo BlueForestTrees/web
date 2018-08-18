@@ -1,6 +1,6 @@
 import {map, bqtGToQtUnit, bestQuantity, unitCoef, changeUnit} from "unit-manip"
 
-export const objectId = () => ((new Date().getTime() / 1000 | 0).toString(16) + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, () => Math.random() * 16 | 0).toString(16)).toLowerCase()
+export const createStringObjectId = () => (new Date().getTime() / 1000 | 0).toString(16) + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, () => (Math.random() * 16 | 0).toString(16)).toLowerCase();
 
 export const idQuantity = tree => ({_id: tree._id, quantity: tree.trunk.quantity})
 export const hasQuantity = e => e && e.quantity && e.quantity.qt && e.quantity.unit
@@ -81,7 +81,13 @@ export const add = (q1, q2) => ({
     unit: q2.unit
 })
 
-export const multiplyBqt = (coef, items) => {
+export const multiplyRessourceBqt = (coef, items) => {
+    for (let i = 0; i < items.length; i++) {
+        items[i].trunk.quantity.bqt *= coef
+    }
+    return items
+}
+export const multiplyAspectBqt = (coef, items) => {
     for (let i = 0; i < items.length; i++) {
         items[i].quantity.bqt *= coef
     }

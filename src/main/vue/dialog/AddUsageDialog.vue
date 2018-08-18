@@ -72,12 +72,12 @@
         methods: {
             ...mapActions({
                 dispatchSearch: On.SEARCH_TREE,
-                dispatchLink: On.LINK
+                dispatchCreateLink: On.CREATE_LINK
             }),
             async validate() {
                 this.$refs.form.validate()
                 if (this.valid) {
-                    await this.dispatchLink({
+                    await this.dispatchCreateLink({
                         trunk: {_id: this.selectedItemId, quantity: {qt: this.qt, unit: this.unit.shortname}},
                         root: {_id: this.tree._id, quantity: this.tree.trunk.quantity}
                     })

@@ -5,7 +5,7 @@ import {idQtUnit} from "../../services/calculations"
 export default {
     methods: {
         goTree: function (tree) {
-            this.dispatchGoTree(({_id: tree._id, bqt: tree.trunk.quantity.bqt}))
+            this.dispatchGoTree(tree)
             this.unselect()
         },
         ...mapActions({

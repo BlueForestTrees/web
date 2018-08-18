@@ -149,7 +149,7 @@
             ...mapActions({
                 dispatchLoadTree: On.LOAD_OPEN_TREE,
                 dispatchGoTree: On.GO_TREE,
-                dispatchLink: On.LINK,
+                dispatchCreateLink: On.LINK,
                 dispatchDeleteLink: On.DELETE_LINK,
                 dispatchRefreshRessources: On.LOAD_ROOTS,
                 dispatchAddTransport: On.ADD_TRANSPORT
@@ -159,7 +159,7 @@
                     const rootQuantity = {qt: this.qt, unit: this.unit.shortname}
                     const hasChanges = qtUnit(rootQuantity) !== qtUnit(this.item.trunk.quantity)
                     if (hasChanges) {
-                        await this.dispatchLink({
+                        await this.dispatchCreateLink({
                             trunk: {_id: this.tree._id, quantity: this.tree.trunk.quantity},
                             root: {_id: this.item._id, quantity: rootQuantity}
                         })
@@ -182,7 +182,7 @@
             },
             remove(items) {
                 for (let i = 0; i < items.length; i++) {
-                    this.dispatchDeleteLink({left: this.tree, right: items[i]})
+                    this.dispatchDeleteLink(items[i].linkId)
                 }
                 this.unselect()
             },

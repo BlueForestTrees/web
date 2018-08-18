@@ -1,7 +1,7 @@
 <template>
     <v-container fluid>
         <v-layout justify-center align-center column>
-            <v-card style="width: 100%">
+            <v-card style="width: 100%" v-if="tree && (tree.trunk || tree.roots || tree.branches)">
                 <tree-head :tree="tree"/>
                 <ressources :tree="tree"/>
                 <facets :tree="tree"/>
@@ -36,13 +36,21 @@
             Facets
         },
         props: ['_id', 'bqt'],
+        data: function () {
+            return {
+                loading: false
+            }
+        },
         computed: {
             ...mapState(['tree'])
         },
         methods: {
-            ...mapActions({dispatchLoad: On.LOAD_IDBQT}),
+            ...mapActions({dispatchLoad: On.LOAD_OPEN_TREE, snack: On.SNACKBAR}),
             refresh: function () {
                 this.dispatchLoad({bqt: this.bqt, _id: this._id})
+                    .catch(e => {
+                        this.snack({text: "Cet élement n'existe pas ou plus", color: "red"})
+                    })
             }
         },
         created: function () {

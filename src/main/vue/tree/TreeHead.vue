@@ -1,8 +1,8 @@
 <template>
-    <v-container>
-        <v-layout raw align-center v-if="tree">
-                <v-icon x-large :style="{color: tree.trunk && tree.trunk.color || 0,marginRight:'0.2em'}">lens</v-icon>
-                <h2 v-html="qtUnitName(tree.trunk)"></h2>
+    <v-container v-if="trunk">
+        <v-layout raw align-center>
+            <v-icon x-large :style="{color: trunk && trunk.color || 0,marginRight:'0.2em'}">lens</v-icon>
+            <h2 v-html="qtUnitName(trunk)"></h2>
         </v-layout>
     </v-container>
 </template>
@@ -16,7 +16,12 @@
         props: ["tree"],
         methods: {
             qtUnitName,
-            ...mapActions({close:On.GO_HOME}),
+            ...mapActions({close: On.GO_HOME}),
+        },
+        computed: {
+            trunk: function () {
+                return this.tree && this.tree.trunk
+            }
         }
     }
 </script>

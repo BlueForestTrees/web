@@ -34,7 +34,8 @@
                         </v-btn>
                     </v-card-title>
                     <v-card-text>
-                        <v-text-field type="number" label="Quantité... (ex.: 10)" v-model="qt" :rules="[required, isNumber]"/>
+                        <v-text-field type="number" label="Quantité... (ex.: 10)" v-model="qt"
+                                      :rules="[required, isNumber]"/>
                         <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]"/>
                     </v-card-text>
                 </v-card>
@@ -56,6 +57,8 @@
     import closable from "../mixin/Closable"
     import GrandeurSelect from "../common/GrandeurSelect"
     import SearchComp from "../SearchComp"
+    import {createStringObjectId} from "../../services/calculations"
+    import {bqtGToQtUnit, baseQt} from "unit-manip"
 
     export default {
         name: 'add-ressource-dialog',
@@ -97,14 +100,17 @@
                 this.selectedItem = null
             },
             ...mapActions({
-                dispatchLink: On.LINK,
+                dispatchCreateLink: On.CREATE_LINK,
                 dispatchRefreshRessources: On.LOAD_ROOTS,
                 snack: On.SNACKBAR
             }),
             async validateForm() {
-                await this.dispatchLink({
-                    trunk: {_id: this.tree._id, quantity: this.tree.trunk.quantity},
-                    root: {_id: this.selectedItem._id, quantity: {qt: this.qt, unit: this.unit.shortname}}
+                const bqt = baseQt({qt: this.qt, unit: this.unit.shortname}) / this.tree.trunk.quantity.bqt
+                await this.dispatchCreateLink({
+                    _id: createStringObjectId(),
+                    trunkId: this.tree._id,
+                    rootId: this.selectedItem._id,
+                    bqt
                 })
                 this.dispatchRefreshRessources(this.tree)
                 this.close()
@@ -116,8 +122,8 @@
             required, isNumber,
             notIn() {
                 if (this.selectedItem && this.tree) {
-                    for (let i = 0; i < this.tree.roots.items; i++) {
-                        if (this.tree.roots.items[i]._id === this.selectedItem._id) {
+                    for (let i = 0; i < this.tree.roots; i++) {
+                        if (this.tree.roots[i]._id === this.selectedItem._id) {
                             return "Déjà utilisé"
                         }
                     }
@@ -127,9 +133,11 @@
         watch: {
             selectedItem(item) {
                 if (item) {
-                    this.qt = item.trunk.quantity.qt
-                    this.unit = unit(item.trunk.quantity.unit)
-                    this.grandeur = getGrandeur(this.unit.grandeur)
+                    let bqtG = item.trunk.quantity
+                    const qtUnit = bqtGToQtUnit(bqtG)
+                    this.qt = qtUnit.bqt
+                    this.unit = unit(qtUnit.unit)
+                    this.grandeur = getGrandeur(bqtG.g)
                 } else {
                     this.qt = null
                     this.unit = null

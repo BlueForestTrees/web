@@ -118,20 +118,15 @@
             },
             remove(items) {
                 for (let i = 0; i < items.length; i++) {
-                    this.deleteLink({left: this.tree, right: items[i]})
+                    this.deleteLink(items[i].linkId)
                 }
                 this.unselect()
             },
 
-            open() {
-                this.dispatchLoadTree(this.selection[0])
-            },
             ...mapActions({
                 dispatchGoRoot: On.GO_ROOT,
                 deleteLink: On.DELETE_LINK,
-                dispatchDeleteLink: On.DELETE_LINK,
-                dispatchLoadRoots: On.LOAD_ROOTS,
-                dispatchLoadTree: On.LOAD_OPEN_TREE
+                dispatchLoadRoots: On.LOAD_ROOTS
             }),
             qtUnitName, getRandomColor
         }

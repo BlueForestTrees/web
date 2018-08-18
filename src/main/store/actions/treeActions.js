@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import On from "../../const/on"
 import api from "../../rest/api"
 import {idQuantity, transportQuantity, trunkyAll} from "../../services/calculations"
@@ -6,52 +7,39 @@ import {GO} from "../../const/go"
 import Do from "../../const/do"
 
 //on détecte que l'objet est à charger en se basant arbitrairement sur le champ branches
-const needRefresh = (basketTree, requestedTree) => !basketTree.branches
+const needRefresh = basketTree => !basketTree.branches
 
 export default {
     [On.GO_TREE]: ({commit, state}, tree) => {
-        
-        console.log("GO TREE", tree)
-        
         const _id = tree._id
         const bqt = tree.trunk.quantity.bqt
         return router.push({name: GO.TREE, params: {_id, bqt}})
     },
     
-    [On.LOAD_IDBQT]: async ({dispatch}, {_id, bqt}) => {
-        console.log("LOAD IDBQT", _id, bqt)
-        return dispatch(On.LOAD_OPEN_TREE, ({_id, trunk: {quantity: {bqt}}}))
-    },
-    
-    [On.LOAD_OPEN_TREE]: async ({getters, dispatch, commit}, treeToLoad) => {
-        const _id = treeToLoad._id
+    [On.LOAD_OPEN_TREE]: async ({getters, dispatch, commit}, {_id, bqt}) => {
         const basketItem = getters.basketItem(_id)
-        let result = null
-        if (basketItem && !needRefresh(basketItem, treeToLoad)) {
-            result = basketItem
+        let tree = null
+        if (basketItem && !needRefresh(basketItem)) {
+            tree = basketItem
         } else {
-            await dispatch(On.LOAD_TREE, treeToLoad)
-            await dispatch(On.ADD_TO_BASKET, [treeToLoad])
-            result = treeToLoad
+            tree = await dispatch(On.LOAD_TREE, {_id, bqt})
+            dispatch(On.ADD_TO_BASKET, [tree])
         }
-        commit(Do.OPEN_TREE, result)
-        return result
+        commit(Do.OPEN_TREE, tree)
+        return tree
     },
     
-    [On.LOAD_TREE]: ({commit, state, dispatch}, treeToLoad) =>
-        dispatch(On.LOAD_TRUNK, treeToLoad)
-            .then(() =>
-                Promise.all([
-                    dispatch(On.LOAD_ROOTS, treeToLoad),
-                    // dispatch(On.LOAD_TANK, treeToLoad),
-                    // dispatch(On.LOAD_FACETS, treeToLoad),
-                    // dispatch(On.LOAD_IMPACTS, treeToLoad),
-                    // dispatch(On.LOAD_IMPACTS_TANK, treeToLoad),
-                    // dispatch(On.LOAD_BRANCHES, treeToLoad)
-                ])),
-    
-    [On.CLONE_OPEN_TREE]: async ({dispatch}, tree) =>
-        dispatch(On.LOAD_OPEN_TREE, await dispatch(On.CLONE_TREE, tree)),
+    [On.LOAD_TREE]: ({commit, state, dispatch}, {_id, bqt}) => {
+        const tree = {_id}
+        dispatch(On.LOAD_TRUNK, {_id, bqt}).then(trunk => Vue.set(tree, "trunk", trunk))
+        dispatch(On.LOAD_ROOTS, {_id, bqt}).then(roots => Vue.set(tree, "roots", roots))
+        dispatch(On.LOAD_BRANCHES, {_id, bqt}).then(branches => Vue.set(tree, "branches", branches))
+        dispatch(On.LOAD_IMPACTS, {_id, bqt}).then(impacts => Vue.set(tree, "impacts", impacts))
+        // dispatch(On.LOAD_TANK, treeToLoad)
+        // dispatch(On.LOAD_FACETS, treeToLoad)
+        // dispatch(On.LOAD_IMPACTS_TANK, treeToLoad)
+        return tree
+    },
     
     [On.SEARCH_TREE]: async ({commit}, query) => trunkyAll(await api.searchTrunk(query)),
     

@@ -1,22 +1,10 @@
 import On from "../../const/on"
 import api from "../../rest/api"
 import Do from "../../const/do"
-import {hasQuantity, trunkyAll} from "../../services/calculations"
+import {hasQuantity, multiplyRessourceBqt, trunkyAll} from "../../services/calculations"
 
 export default {
-
-    [On.LOAD_BRANCHES]: ({commit}, tree) => {
-
-        const loadBranches = hasQuantity(tree.trunk) ?
-            api.getQuantifiedBranches(tree.trunk.quantity.qt, tree.trunk.quantity.unit, tree._id)
-            :
-            api.getUnquantifiedBranches(tree._id)
-
-        return loadBranches
-            .then(branches => ({
-                ...branches,
-                items: trunkyAll(branches.items)
-            }))
-            .then(branches => commit(Do.SET_BRANCHES, {tree, branches}))
-    }
+    [On.LOAD_BRANCHES]: ({commit}, {_id, bqt}) =>
+        api.getBranches(_id)
+            .then(branches => multiplyRessourceBqt(bqt, branches))
 }

@@ -60,7 +60,7 @@
         mixins: [selectable, goTree],
         computed: {
             items: function () {
-                return this.tree && this.tree.branches && this.tree.branches.items
+                return this.tree && this.tree.branches
             },
             hasItems: function () {
                 return this.items && this.items.length && this.items.length > 0
@@ -68,17 +68,13 @@
         },
         methods: {
             remove(item) {
-                this.deleteLink({left: item, right: this.tree})
+                this.deleteLink(item.linkId)
                 this.unselect()
             },
             ...mapActions({
                 deleteLink: On.DELETE_LINK,
-                dispatchLoadBranches: On.LOAD_BRANCHES,
-                dispatchLoadTree: On.LOAD_OPEN_TREE
+                dispatchLoadBranches: On.LOAD_BRANCHES
             }),
-            open() {
-                this.dispatchLoadTree(this.selection[0])
-            },
             getRandomColor, qtUnitName
         }
     }

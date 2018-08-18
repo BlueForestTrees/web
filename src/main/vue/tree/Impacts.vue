@@ -1,5 +1,5 @@
 <template>
-    <v-list v-if="hasBilanItems" dense>
+    <v-list dense>
         <v-divider/>
         <v-subheader>
             <v-tooltip top>
@@ -53,14 +53,11 @@
 
         props: ['tree'],
         computed: {
-            impacts: function () {
-                return this.tree && this.tree.impacts
-            },
             hasItems: function () {
                 return this.items && this.items.length && this.items.length > 0
             },
             items: function () {
-                return this.impacts && this.impacts.items
+                return this.tree && this.tree.impacts
             },
 
             bilanItems: function () {
