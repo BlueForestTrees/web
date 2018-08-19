@@ -11,10 +11,10 @@
                             </span>
                             <span v-else-if="commonAxisesCount === 2">
                                 <svg viewBox="-200 -200 400 400">
-                                    <path :d="`M-100 ${squareAxisY[0]} L-100 -100 L100 -100 L100 ${squareAxisY[1]} Z`" :fill="leftColor" fill-opacity="0.3" :stroke="leftColor" stroke-width="1" stroke-opacity="0.8"/>
-                                    <path :d="`M-100 ${squareAxisY[0]} L-100 100 L100 100 L100 ${squareAxisY[1]} Z`" :fill="rightColor" fill-opacity="0.3" :stroke="rightColor" stroke-width="1" stroke-opacity="0.8"/>
-                                    <path stroke="black" stroke-width="1" d="M-100 -110 L-100 105" stroke-opacity="1" stroke-dasharray="2,3,2,2,3"/>
-                                    <path stroke="black" stroke-width="1" d="M100 -110 L100 105" stroke-opacity="1" stroke-dasharray="2,3,2,2,3"/>
+                                    <path :d="`M-100 ${squareAxisY[0]} L-100 -100 L100 -100 L100 ${squareAxisY[1]} Z`" :fill="leftColor" fill-opacity="0.3" :stroke="leftColor" stroke-width="1" stroke-opacity="0.8"></path>
+                                    <path :d="`M-100 ${squareAxisY[0]} L-100 100 L100 100 L100 ${squareAxisY[1]} Z`" :fill="rightColor" fill-opacity="0.3" :stroke="rightColor" stroke-width="1" stroke-opacity="0.8"></path>
+                                    <path stroke="black" stroke-width="1" d="M-100 -110 L-100 105" stroke-opacity="1" stroke-dasharray="2,3,2,2,3"></path>
+                                    <path stroke="black" stroke-width="1" d="M100 -110 L100 105" stroke-opacity="1" stroke-dasharray="2,3,2,2,3"></path>
                                     <text v-for="(axis,i) in axises.common.left" :x="squareAxisCoord(i,textRatio).x" :y="squareAxisCoord(i,textRatio).y"
                                           :style="{fill:'#696955'}" text-anchor="middle" alignment-baseline="central">{{axis.name}}</text>
                                 </svg>
@@ -24,24 +24,27 @@
                                     <g transform="translate(-197 198)">
                                         <circle :fill="leftColor" fill-opacity="0.05" :stroke="leftColor" stroke-width="1" stroke-opacity="0.8"
                                                 r="20" cx="30" cy="30"
-                                        />
+                                        ></circle>
                                         <text x="55" y="30" alignment-baseline="central">{{axises.right[0].tree}}</text>
                                         <circle :fill="rightColor" fill-opacity="0.05" :stroke="rightColor" stroke-width="1" stroke-opacity="0.8"
                                                 r="20" cx="30" cy="80"
-                                        />
+                                        ></circle>
                                         <text x="55" y="80" alignment-baseline="central">{{axises.left[0].tree}}</text>
-                                        <line x1="-10" y1="0" x2="400" y2="0" fill="none" stroke-width="1" :stroke="shadeColor('#000000',0.7)"/>
+                                        <line x1="-10" y1="0" x2="400" y2="0" fill="none" stroke-width="1" :stroke="shadeColor('#000000',0.7)"></line>
                                     </g>
 
-                                        <path v-for="i in commonAxisesCount" stroke="grey" stroke-width="0.5" :d="radialLineD(i,1.1)" stroke-opacity="0.6" stroke-dasharray="10,5,5,5,10"/>
-                                        <path :fill="leftColor" fill-opacity="0.05" :stroke="leftColor" stroke-width="1" stroke-opacity="0.8">
-                                            <animate ref="animLeftLine" attributeName="d" attributeType="XML" :from="previousLeftLine" :to="leftLine" dur=".25s" fill="freeze"/>
-                                        </path>
-                                        <path :fill="rightColor" fill-opacity="0.05" :stroke="rightColor" stroke-width="1" stroke-opacity="0.8">
-                                            <animate ref="animRightLine" attributeName="d" attributeType="XML" :from="previousRightLine" :to="rightLine" dur=".25s" fill="freeze"/>
-                                        </path>
-                                        <text @click="clickedOn(axis)" v-for="(axis,i) in axises.common.left" :x="radialAxisCoord(i,textRatio).x" :y="radialAxisCoord(i,textRatio).y"
-                                              :style="{fill:'#696955',cursor: 'pointer'}" text-anchor="middle" alignment-baseline="central">{{qtUnitName(axis)}}</text>
+                                    <path v-for="i in commonAxisesCount" stroke="grey" stroke-width="0.5" :d="radialLineD(i,1.01)" stroke-opacity="0.3" stroke-dasharray="10,5,5,5,10"></path>
+
+                                    <path :fill="leftColor" fill-opacity="0.05" :stroke="leftColor" stroke-width="1" stroke-opacity="0.8">
+                                        <animate ref="animLeftLine" attributeName="d" attributeType="XML" :from="previousLeftLine" :to="leftLine" dur=".25s" fill="freeze"></animate>
+                                    </path>
+
+                                    <path :fill="rightColor" fill-opacity="0.05" :stroke="rightColor" stroke-width="1" stroke-opacity="0.8">
+                                        <animate ref="animRightLine" attributeName="d" attributeType="XML" :from="previousRightLine" :to="rightLine" dur=".25s" fill="freeze"></animate>
+                                    </path>
+
+                                    <!--<text @click="clickedOn(axis)" v-for="(axis,i) in axises.common.left" :x="radialAxisCoord(i,textRatio).x" :y="radialAxisCoord(i,textRatio).y"-->
+                                          <!--:style="{fill:'#696955',cursor: 'pointer'}" text-anchor="middle" alignment-baseline="central">{{qtUnitName(axis)}}</text>-->
                                 </svg>
                             </span>
 
@@ -121,16 +124,28 @@
                     y: Math.round(Math.sin(rad(angle - 90)) * (this.taille * ratio))
                 }
             },
+            // radialAxisD: function (a) {
+            //     const points = []
+            //     for (let i = 0; i < a.length; i++) {
+            //         points.push(this.radialAxisCoord(i, a[i].ratio))
+            //     }
+            //     points.unshift(points[points.length - 1])
+            //     points.push(points[1])
+            //     const d = [`M${points[0].x} ${points[0].y}`]
+            //     for (let i = 1; i < points.length-1; i++) {
+            //         d.push(bezierCommand(i, points))
+            //     }
+            //     d.push("z")
+            //     return d.join(" ")
+            // },
             radialAxisD: function (a) {
                 const points = []
                 for (let i = 0; i < a.length; i++) {
                     points.push(this.radialAxisCoord(i, a[i].ratio))
                 }
-                points.unshift(points[points.length - 1])
-                points.push(points[1])
                 const d = [`M${points[0].x} ${points[0].y}`]
-                for (let i = 1; i < points.length-1; i++) {
-                    d.push(bezierCommand(i, points))
+                for (let i = 1; i < points.length; i++) {
+                    d.push(`${points[i].x} ${points[i].y}`)
                 }
                 d.push("z")
                 return d.join(" ")

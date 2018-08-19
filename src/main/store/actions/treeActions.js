@@ -29,12 +29,14 @@ export default {
         return tree
     },
     
-    [On.LOAD_TREE]: ({commit, state, dispatch}, {_id, bqt}) => {
+    [On.LOAD_TREE]: ({commit, state, dispatch}, {_id, bqt = 1}) => {
         const tree = {_id}
-        dispatch(On.LOAD_TRUNK, {_id, bqt}).then(trunk => Vue.set(tree, "trunk", trunk))
-        dispatch(On.LOAD_ROOTS, {_id, bqt}).then(roots => Vue.set(tree, "roots", roots))
-        dispatch(On.LOAD_BRANCHES, {_id, bqt}).then(branches => Vue.set(tree, "branches", branches))
-        dispatch(On.LOAD_IMPACTS, {_id, bqt}).then(impacts => Vue.set(tree, "impacts", impacts))
+        tree.promises = {}
+        tree.promises.trunk = dispatch(On.LOAD_TRUNK, {_id, bqt}).then(trunk => Vue.set(tree, "trunk", trunk))
+        tree.promises.roots = dispatch(On.LOAD_ROOTS, {_id, bqt}).then(roots => Vue.set(tree, "roots", roots))
+        tree.promises.branches = dispatch(On.LOAD_BRANCHES, {_id, bqt}).then(branches => Vue.set(tree, "branches", branches))
+        tree.promises.impacts = dispatch(On.LOAD_IMPACTS, {_id, bqt}).then(impacts => Vue.set(tree, "impacts", impacts))
+        tree.promises.all = Promise.all([tree.promises.trunk, tree.promises.roots, tree.promises.branches, tree.promises.impacts])
         // dispatch(On.LOAD_TANK, treeToLoad)
         // dispatch(On.LOAD_FACETS, treeToLoad)
         // dispatch(On.LOAD_IMPACTS_TANK, treeToLoad)

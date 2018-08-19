@@ -40,7 +40,6 @@
                 this.dispatch(this.selectedFile)
                     .then(res => {
                         this.uploading = false
-                        console.log("RES", res)
                         if (res.ok) {
                             this.snack({
                                 text: `

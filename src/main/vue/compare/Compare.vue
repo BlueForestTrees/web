@@ -1,6 +1,7 @@
 <template>
     <v-container v-if="axises">
-        <compare-radar :axises="axises" :left="left" :right="right" :left-color="'#00ACC1'" :rightColor="'#D81B60'" @baseChange="changeBase"/>
+        <compare-radar :axises="axises" :left="left" :right="right" :left-color="'#00ACC1'" :rightColor="'#D81B60'"
+                       @baseChange="changeBase"/>
         <compare-table :axises="axises" :left="left" :right="right" :left-color="leftColor" :rightColor="rightColor"/>
     </v-container>
 </template>
@@ -36,18 +37,17 @@
             this.selectDefaultBase()
         },
         methods: {
-            ...mapActions({refreshTree: On.LOAD_OPEN_TREE, snack: On.SNACKBAR}),
+            ...mapActions({loadTree: On.LOAD_TREE, snack: On.SNACKBAR}),
             refreshTrees: async function () {
-                let leftPromise = this.refreshTree({_id: this.leftId})
-                let rightPromise = this.refreshTree({_id: this.rightId})
-
-                this.left = await leftPromise
-                this.right = await rightPromise
+                this.left = await this.loadTree({_id: this.leftId})
+                this.right = await this.loadTree({_id: this.rightId})
+                await this.left.promises.all
+                await this.right.promises.all
             },
             treesToAxises: function () {
                 if (!hasQuantity(this.left.trunk) || !hasQuantity(this.right.trunk)) {
-                    this.snack({text: "quantités non définies", color: "grey"});
-                    throw "Quantités non définies";
+                    this.snack({text: "quantités non définies", color: "grey"})
+                    throw "Quantités non définies"
                 }
                 try {
                     this.axises = separate(buildAxises(this.left), buildAxises(this.right))

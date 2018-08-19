@@ -32,7 +32,6 @@ describe('Divers calculations', function () {
     
     it('test objectId generation', function () {
         const strObjID = createStringObjectId()
-        console.log(strObjID)
         const objID = new ObjectID(strObjID)
         expect(objID.toString()).to.equals(strObjID)
     })
