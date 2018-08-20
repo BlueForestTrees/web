@@ -1,4 +1,4 @@
-import {map, bqtGToQtUnit, bestQuantity, unitCoef, changeUnit} from "unit-manip"
+import {map, bqtGToQtUnit, bestQuantity, unitCoef, changeUnit, grandeur} from "unit-manip"
 
 export const createStringObjectId = () => (new Date().getTime() / 1000 | 0).toString(16) + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, () => (Math.random() * 16 | 0).toString(16)).toLowerCase();
 
@@ -14,7 +14,7 @@ export const qtUnit = bqtG => {
         const qtUnit = bqtGToQtUnit(bqtG)
         if (qtUnit.qt && qtUnit.unit) {
             const best = bestQuantity(qtUnit)
-            return `${best.qt} ${best.unit !== 'count' ? best.unit : ''}`
+            return `${best.qt} ${grandeur(best.unit).key !== "Nomb" ? best.unit : ''}`
         } else {
             return `${qtUnit.qt || "?"} ${qtUnit.unit || " ?"}`
         }

@@ -24,12 +24,12 @@
                                     <g transform="translate(-197 -200)">
                                         <g :style="{cursor: 'pointer'}" @click="goTree(left)">
                                             <circle :fill="leftColor" fill-opacity="0.05" :stroke="leftColor" stroke-width="1" stroke-opacity="0.8" r="20" cx="30" cy="30"></circle>
-                                            <text x="55" y="30" alignment-baseline="central">{{left.trunk.name}}</text>
+                                            <text x="55" y="30" alignment-baseline="central">{{qtUnitName(left.trunk)}}</text>
                                         </g>
 
                                         <g :style="{cursor: 'pointer'}" @click="goTree(right)">
                                             <circle :fill="rightColor" fill-opacity="0.05" :stroke="rightColor" stroke-width="1" stroke-opacity="0.8" r="20" cx="30" cy="80"></circle>
-                                            <text x="55" y="80" alignment-baseline="central">{{right.trunk.name}}</text>
+                                            <text x="55" y="80" alignment-baseline="central">{{qtUnitName(right.trunk)}}</text>
                                         </g>
 
                                         <text x="200" y="320" alignment-baseline="central" text-anchor="middle" :style="{fill:'#696955'}">{{subtitle}}</text>

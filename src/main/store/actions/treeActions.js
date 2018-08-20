@@ -23,7 +23,6 @@ export default {
             tree = basketItem
         } else {
             tree = await dispatch(On.LOAD_TREE, {_id, bqt})
-            dispatch(On.ADD_TO_BASKET, [tree])
         }
         commit(Do.OPEN_TREE, tree)
         return tree
@@ -40,6 +39,8 @@ export default {
         // dispatch(On.LOAD_TANK, treeToLoad)
         // dispatch(On.LOAD_FACETS, treeToLoad)
         // dispatch(On.LOAD_IMPACTS_TANK, treeToLoad)
+        
+        dispatch(On.ADD_TO_BASKET, [tree])
         return tree
     },
     
