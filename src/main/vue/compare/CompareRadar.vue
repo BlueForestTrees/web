@@ -22,12 +22,15 @@
                                 <svg viewBox="-200 -200 400 500">
                                     <!--Légendes-->
                                     <g transform="translate(-197 -200)">
-                                        <circle :fill="leftColor" fill-opacity="0.05" :stroke="leftColor" stroke-width="1" stroke-opacity="0.8" r="20" cx="30" cy="30"></circle>
-                                        <text x="55" y="30" alignment-baseline="central">{{left.trunk.name}}</text>
+                                        <g :style="{cursor: 'pointer'}" @click="goTree(left)">
+                                            <circle :fill="leftColor" fill-opacity="0.05" :stroke="leftColor" stroke-width="1" stroke-opacity="0.8" r="20" cx="30" cy="30"></circle>
+                                            <text x="55" y="30" alignment-baseline="central">{{left.trunk.name}}</text>
+                                        </g>
 
-
-                                        <circle :fill="rightColor" fill-opacity="0.05" :stroke="rightColor" stroke-width="1" stroke-opacity="0.8" r="20" cx="30" cy="80"></circle>
-                                        <text x="55" y="80" alignment-baseline="central">{{right.trunk.name}}</text>
+                                        <g :style="{cursor: 'pointer'}" @click="goTree(right)">
+                                            <circle :fill="rightColor" fill-opacity="0.05" :stroke="rightColor" stroke-width="1" stroke-opacity="0.8" r="20" cx="30" cy="80"></circle>
+                                            <text x="55" y="80" alignment-baseline="central">{{right.trunk.name}}</text>
+                                        </g>
 
                                         <text x="200" y="320" alignment-baseline="central" text-anchor="middle" :style="{fill:'#696955'}">{{subtitle}}</text>
                                     </g>
@@ -37,10 +40,10 @@
 
                                     <!--Lignes d'axes-->
                                     <path :fill="leftColor" fill-opacity="0.05" :stroke="leftColor" stroke-width="1" stroke-opacity="0.8">
-                                        <animate ref="animLeftLine" attributeName="d" attributeType="XML" :from="previousLeftLine" :to="leftLine" dur=".25s" fill="freeze"></animate>
+                                        <animate ref="animLeftLine" attributeName="d" attributeType="XML" :from="previousLines && previousLines.left" :to="lines.left" dur=".25s" fill="freeze"></animate>
                                     </path>
                                     <path :fill="rightColor" fill-opacity="0.05" :stroke="rightColor" stroke-width="1" stroke-opacity="0.8">
-                                        <animate ref="animRightLine" attributeName="d" attributeType="XML" :from="previousRightLine" :to="rightLine" dur=".25s" fill="freeze"></animate>
+                                        <animate ref="animRightLine" attributeName="d" attributeType="XML" :from="previousLines && previousLines.right" :to="lines.right" dur=".25s" fill="freeze"></animate>
                                     </path>
 
                                     <!--parts cliquables-->
@@ -57,7 +60,8 @@
 
 <script>
     import {qtUnitName, rad, range, shadeColor} from "../../services/calculations"
-    import {bezierCommand} from "./bezier"
+    import On from "../../const/on"
+    import {mapActions} from "vuex"
 
     export default {
         name: "compare-radar",
@@ -66,18 +70,14 @@
             return {
                 taille: 100,
                 textRatio: 1.3,
-                previousLeftLine: null,
-                previousRightLine: null,
-                curI: 3
+                previousLines: null,
+                curI: null
             }
         },
         watch: {
-            leftLine(c, old) {
-                this.previousLeftLine = old
+            lines(c, old) {
+                this.previousLines = old
                 this.$refs.animLeftLine.beginElement()
-            },
-            rightLine(c, old) {
-                this.previousRightLine = old
                 this.$refs.animRightLine.beginElement()
             }
         },
@@ -86,11 +86,11 @@
                 if (this.curI === null) {
                     return "Survolez le graphique"
                 } else {
-                    return this.axises.common.left[this.curI].name
+                    return this.axises.common[this.curI].left.name
                 }
             },
             commonAxisesCount: function () {
-                return this.axises && this.axises.common.left.length && this.axises.common.right.length
+                return this.axises && this.axises.common && this.axises.common.length
             },
             angleStart: function () {
                 return -90
@@ -101,25 +101,19 @@
             squareAxisY: function () {
                 const ratios = []
                 for (let i = 0; i < this.commonAxisesCount; i++) {
-                    const leftBaseQt = this.axises.common.left[i].baseQt
-                    const rightBaseQt = this.axises.common.right[i].baseQt
+                    const leftBaseQt = this.axises.common[i].left.baseQt
+                    const rightBaseQt = this.axises.common[i].right.baseQt
                     const leftRatio = leftBaseQt / (leftBaseQt + rightBaseQt)
                     ratios.push(-this.taille + leftRatio * 2 * this.taille)
                 }
                 return ratios
             },
-            leftLine: function () {
-                return this.commonAxisesCount && this.radialAxisD(this.axises.common.left)
-            },
-            rightLine: function () {
-                return this.commonAxisesCount && this.radialAxisD(this.axises.common.right)
+            lines: function () {
+                return this.commonAxisesCount && this.radialAxisD(this.axises.common)
             }
         },
         methods: {
             range, qtUnitName, shadeColor,
-            clickedOn(axis) {
-                this.$emit('baseChange', axis)
-            },
             axisAngle: function (i) {
                 return this.angleStart + this.angleStep * i
             },
@@ -132,16 +126,22 @@
                 }
             },
             radialAxisD: function (a) {
-                const points = []
-                for (let i = 0; i < a.length; i++) {
-                    points.push(this.radialAxisCoord(i, a[i].ratio))
+                const nbPoints = a.length
+                const leftPoints = []
+                const rightPoints = []
+                for (let i = 0; i < nbPoints; i++) {
+                    leftPoints.push(this.radialAxisCoord(i, a[i].left.ratio))
+                    rightPoints.push(this.radialAxisCoord(i, a[i].right.ratio))
                 }
-                const d = [`M${points[0].x} ${points[0].y}`]
-                for (let i = 1; i < points.length; i++) {
-                    d.push(`${points[i].x} ${points[i].y}`)
+                const ld = [`M${leftPoints[0].x} ${leftPoints[0].y}`]
+                const rd = [`M${rightPoints[0].x} ${rightPoints[0].y}`]
+                for (let i = 1; i < nbPoints; i++) {
+                    ld.push(`${leftPoints[i].x} ${leftPoints[i].y}`)
+                    rd.push(`${rightPoints[i].x} ${rightPoints[i].y}`)
                 }
-                d.push("z")
-                return d.join(" ")
+                ld.push("z")
+                rd.push("z")
+                return {left: ld.join(" "), right: rd.join(" ")}
             },
             radialLineD: function (i, ratio) {
                 const p = this.radialAxisCoord(i, ratio)
@@ -160,7 +160,10 @@
                     x: -100 + 2 * i * this.taille,
                     y: -this.taille * ratio
                 }
-            }
+            },
+            ...mapActions({
+                goTree: On.GO_TREE,
+            })
         }
     }
 </script>

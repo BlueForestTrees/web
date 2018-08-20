@@ -1,5 +1,4 @@
 import find from 'lodash.find'
-import forEach from 'lodash.foreach'
 import isNil from 'lodash.isnil'
 import {map} from 'unit-manip'
 import remove from 'lodash.remove'
@@ -36,7 +35,7 @@ const buildAxis = ({name}, type, items) => map(items, item => ({
  * Placer les axes dans la bonne zone: commun, left ou right.
  * @param leftAxises
  * @param rightAxises
- * @returns {{left: *[], common: {left: *, right: *}, right: *[]}}
+ * @returns {{left: *[], common: [{left: axis, right: axis}], right: *[]}}
  */
 export const separate = (leftAxises, rightAxises) => {
     
@@ -49,14 +48,16 @@ export const separate = (leftAxises, rightAxises) => {
     const rightWithoutLeft = remove(rightAxises, axis => !find(leftAxises, {name: axis.name, type: axis.type, g: axis.g}))
     
     //Les axes restant sont les axes communs
-    const commonLeft = leftAxises
-    const commonRight = rightAxises
+    const common = []
+    for (let i = 0; i < leftAxises.length; i++) {
+        common.push({left: leftAxises[i], right: rightAxises[i]})
+    }
     
     return {
         left: [
             ...leftWithoutQt, ...leftWithoutRight
         ],
-        common: {left: commonLeft, right: commonRight},
+        common,
         right: [
             ...rightWithoutQt, ...rightWithoutLeft
         ]
@@ -70,31 +71,38 @@ export const separate = (leftAxises, rightAxises) => {
  */
 export const applyBase = (base, axises) => {
     if (base) {
-        const rcoef = base._bqt / find(axises.common.right, {name: base.name})._bqt
+        const rcoef = base._bqt / find(axises.common, c => c.right.name === base.name).right._bqt
         applyCoef(rcoef, axises.right)
-        applyCoef(rcoef, axises.common.right)
+        applyCoef(rcoef, axises.common, "right")
         
-        const lcoef = base._bqt / find(axises.common.left, {name: base.name})._bqt
+        const lcoef = base._bqt / find(axises.common, c => c.left.name === base.name).left._bqt
         applyCoef(lcoef, axises.left)
-        applyCoef(lcoef, axises.common.left)
+        applyCoef(lcoef, axises.common, "left")
         
         updateRatios(axises)
+        
+        axises.common.sort((a, b) => a.left.ratio !== b.left.ratio ? a.left.ratio - b.left.ratio : b.right.ratio - a.right.ratio)
     }
 }
-
-export const applyCoef = (coef, items) => {
+export const applyCoef = (coef, items, prop) => {
     for (let i = 0; i < items.length; i++) {
-        items[i].bqt = coef * items[i]._bqt
+        if (prop) {
+            items[i][prop].bqt = coef * items[i][prop]._bqt
+        } else {
+            items[i].bqt = coef * items[i]._bqt
+        }
     }
     return items
 }
 
 export const updateRatios = (axises) => {
-    forEach(axises.common.left, leftAxis => {
-        const rightAxis = find(axises.common.right, {type: leftAxis.type, name: leftAxis.name})
+    for (let i = 0; i < axises.common.length; i++) {
+        const leftAxis = axises.common[i].left
+        const rightAxis = axises.common[i].right
         Vue.set(leftAxis, "ratio", relativeTo1(leftAxis.bqt, rightAxis.bqt))
         Vue.set(rightAxis, "ratio", relativeTo1(rightAxis.bqt, leftAxis.bqt))
-    })
+    }
+    axises.common.sort((a, b) => a.ratio - b.ratio)
     return axises
 }
 const relativeTo1 = (first, second) => first > second ? 1 : format(first / second)

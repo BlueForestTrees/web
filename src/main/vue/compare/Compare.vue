@@ -1,7 +1,7 @@
 <template>
     <v-container v-if="axises">
-        <compare-radar :axises="axises" :left="left" :right="right" :left-color="'#00ACC1'" :rightColor="'#D81B60'" @baseChange="changeBase"/>
-        <compare-table :axises="axises" :left="left" :right="right" :left-color="leftColor" :rightColor="rightColor"/>
+        <compare-radar :axises="axises" :left="left" :right="right" :left-color="'#00ACC1'" :rightColor="'#D81B60'"/>
+        <!--<compare-table :axises="axises" :left="left" :right="right" :left-color="leftColor" :rightColor="rightColor"/>-->
     </v-container>
 </template>
 
@@ -56,7 +56,7 @@
                 }
             },
             selectDefaultBase: function () {
-                this.changeBase(this.axises.common.left[0])
+                this.changeBase(this.axises.common[0].left)
             },
             changeBase(v) {
                 this.base = v
