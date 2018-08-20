@@ -95,7 +95,6 @@ export const updateRatios = (axises) => {
         Vue.set(leftAxis, "ratio", relativeTo1(leftAxis.bqt, rightAxis.bqt))
         Vue.set(rightAxis, "ratio", relativeTo1(rightAxis.bqt, leftAxis.bqt))
     })
-    axises.common.left.sort((a, b) => a.ratio - b.ratio)
     return axises
 }
 const relativeTo1 = (first, second) => first > second ? 1 : format(first / second)

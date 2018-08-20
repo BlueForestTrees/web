@@ -1,7 +1,6 @@
 <template>
     <v-container v-if="axises">
-        <compare-radar :axises="axises" :left="left" :right="right" :left-color="'#00ACC1'" :rightColor="'#D81B60'"
-                       @baseChange="changeBase"/>
+        <compare-radar :axises="axises" :left="left" :right="right" :left-color="'#00ACC1'" :rightColor="'#D81B60'" @baseChange="changeBase"/>
         <compare-table :axises="axises" :left="left" :right="right" :left-color="leftColor" :rightColor="rightColor"/>
     </v-container>
 </template>
