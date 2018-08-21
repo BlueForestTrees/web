@@ -22,7 +22,7 @@
     import {mapActions} from 'vuex'
     import {Dial} from "../../const/dial"
     import On from "../../const/on"
-    import {getRandomColor, hasQuantity, qtUnitName} from "../../services/calculations"
+    import {qtUnitName} from "../../services/calculations"
     import QtUnit from "../common/QtUnit"
 
     export default {
@@ -48,8 +48,7 @@
         },
         methods: {
             ...mapActions({dispatchDeleteImpacts: On.DELETE_IMPACTS}),
-
-            hasQuantity, getRandomColor, qtUnitName
+            qtUnitName
         },
     }
 </script>

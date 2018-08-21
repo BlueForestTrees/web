@@ -30,7 +30,7 @@ export const paramsOf = params => {
             arr.push(Array.isArray(rawValue) ? arrayOf(keys[i], rawValue) : `${keys[i]}=${rawValue}`)
         }
     }
-    return "?" + arr.join("&")
+    return arr.length > 0 ? "?" + arr.join("&") : ""
 }
 
 export const get = (path, reqOpts) => req.get(url(path), {json: true, ...reqOpts})
@@ -42,7 +42,7 @@ export const upload = (path, formData, reqOpts) => {
     let xhr = new XMLHttpRequest()
     xhr.responseType = 'json'
     xhr.open('POST', url(path), true)
-
+    
     //Headers
     if (state.token) {
         xhr.setRequestHeader(X_ACCESS_TOKEN, state.token)
@@ -52,19 +52,19 @@ export const upload = (path, formData, reqOpts) => {
             xhr.setRequestHeader(p, reqOpts.headers[p])
         )
     }
-
+    
     // Events
     if (reqOpts && reqOpts.onProgress) {
         xhr.upload.addEventListener('progress', reqOpts.onProgress, false)
     }
-
+    
     let promise = new Promise((resolve, reject) => {
         xhr.onload = function () {
             xhr.status >= 200 && xhr.status < 400 ? resolve(this.response) : reject(this.response)
         }
         xhr.onerror = event => reject("Une erreur " + event.target.status + " s'est produite")
     })
-
+    
     // Start upload
     xhr.send(formData)
     return promise

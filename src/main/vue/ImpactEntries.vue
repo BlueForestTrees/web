@@ -69,7 +69,7 @@
         computed: {
             query: function () {
                 return {
-                    term: this.namePart || ""
+                    term: this.namePart || undefined
                 }
             }
         },

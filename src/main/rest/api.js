@@ -3,8 +3,8 @@ import {X_ACCESS_TOKEN} from "../const/headers"
 
 export default {
     // DIRECT (id qt) (color name) => à stocker. Les get réutilisent le storage
-    searchFacetEntry: namepart => get(`/api/facetEntry?q=${namepart}`),
-    searchImpactEntry: namepart => get(`/api/impactEntry?q=${namepart}`),
+    searchFacetEntry: namepart => get(`/api/facetEntry${paramsOf({q: namepart})}`),
+    searchImpactEntry: namepart => get(`/api/impactEntry${paramsOf({q: namepart})}`),
     searchTrunk: ({term, type, aidx, ps}) => get(`/api/trunks${paramsOf({q: term, t: type, aidx, ps})}`),
     //mixin? pour gérer (name color) et (complet)
     getTrunks: _ids => get(`/api/trunk${arrayOf('_ids', _ids)}`),
