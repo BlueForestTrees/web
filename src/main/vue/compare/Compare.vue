@@ -1,6 +1,7 @@
 <template>
     <v-container v-if="axises">
         <compare-radar :axises="axises" :left="left" :right="right" :left-color="'#00ACC1'" :rightColor="'#D81B60'"/>
+        <compare-ribbon :axises="axises" :left="left" :right="right" :left-color="'#00ACC1'" :rightColor="'#D81B60'"/>
         <!--<compare-table :axises="axises" :left="left" :right="right" :left-color="leftColor" :rightColor="rightColor"/>-->
     </v-container>
 </template>
@@ -12,11 +13,13 @@
     import CompareTable from "./CompareTable"
     import CompareRadar from "./CompareRadar"
     import {hasQuantity} from "../../services/calculations"
+    import CompareRibbon from "./CompareRibbon"
 
     export default {
         name: 'compare',
         props: ['leftId', 'rightId'],
         components: {
+            CompareRibbon,
             CompareRadar,
             CompareTable
         },

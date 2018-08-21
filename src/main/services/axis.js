@@ -81,7 +81,7 @@ export const applyBase = (base, axises) => {
         
         updateRatios(axises)
         
-        axises.common.sort((a, b) => a.left.ratio !== b.left.ratio ? a.left.ratio - b.left.ratio : b.right.ratio - a.right.ratio)
+        axises.common.sort((a, b) => b.left.ratio - a.left.ratio)
     }
 }
 export const applyCoef = (coef, items, prop) => {
@@ -99,10 +99,9 @@ export const updateRatios = (axises) => {
     for (let i = 0; i < axises.common.length; i++) {
         const leftAxis = axises.common[i].left
         const rightAxis = axises.common[i].right
-        Vue.set(leftAxis, "ratio", relativeTo1(leftAxis.bqt, rightAxis.bqt))
-        Vue.set(rightAxis, "ratio", relativeTo1(rightAxis.bqt, leftAxis.bqt))
+        const sum = leftAxis.bqt + rightAxis.bqt
+        Vue.set(leftAxis, "ratio", leftAxis.bqt / sum)
+        Vue.set(rightAxis, "ratio", rightAxis.bqt / sum)
     }
-    axises.common.sort((a, b) => a.ratio - b.ratio)
     return axises
 }
-const relativeTo1 = (first, second) => first > second ? 1 : format(first / second)

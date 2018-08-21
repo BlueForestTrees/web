@@ -1,8 +1,8 @@
 <template>
-    <v-container>
-        <v-layout>
-            <v-flex>
-                <v-card>
+    <v-card>
+        <v-container>
+            <v-layout>
+                <v-flex>
                     <span v-if="commonAxisesCount === 0">
                         pas d'axes en commun!
                     </span>
@@ -19,7 +19,7 @@
                                 </svg>
                     </span>
                     <span v-else="commonAxisesCount > 2">
-                                <svg viewBox="-200 -200 400 500">
+                                <svg viewBox="-200 -200 400 400">
                                     <!--Légendes-->
                                     <g transform="translate(-197 -200)">
                                         <g :style="{cursor: 'pointer'}" @click="goTree(left)">
@@ -53,10 +53,10 @@
                                 </svg>
                             </span>
 
-                </v-card>
-            </v-flex>
-        </v-layout>
-    </v-container>
+                </v-flex>
+            </v-layout>
+        </v-container>
+    </v-card>
 </template>
 
 <script>
@@ -85,17 +85,17 @@
         },
         computed: {
             curAxis: function () {
-                return this.curI && this.axises.common[this.curI]
+                return Number.isInteger(this.curI) && this.axises.common[this.curI]
             },
             title: function () {
-                if (this.curI === null) {
-                    return "Survolez le graphique"
-                } else {
+                if (this.curAxis) {
                     return this.curAxis.left.name
+                } else {
+                    return "Survolez le graphique"
                 }
             },
             subtitle: function () {
-                if (this.curI !== null) {
+                if (this.curAxis) {
                     const sens = this.curAxis.left.bqt > this.curAxis.right.bqt ?
                         ">" : this.curAxis.left.bqt < this.curAxis.right.bqt ? "<" : "="
                     return `${qtUnit(this.curAxis.left)} ${sens} ${qtUnit(this.curAxis.right)}`
