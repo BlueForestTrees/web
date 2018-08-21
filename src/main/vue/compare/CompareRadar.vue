@@ -32,7 +32,8 @@
                                             <text x="55" y="80" alignment-baseline="central">{{qtUnitName(right.trunk)}}</text>
                                         </g>
 
-                                        <text x="200" y="320" alignment-baseline="central" text-anchor="middle" :style="{fill:'#696955'}">{{subtitle}}</text>
+                                        <text x="200" y="320" alignment-baseline="central" text-anchor="middle" :style="{fill:'#696955'}">{{title}}</text>
+                                        <text x="200" y="335" alignment-baseline="central" text-anchor="middle" :style="{fill:'#696955'}">{{subtitle}}</text>
                                     </g>
 
                                     <!--rayons-->
@@ -59,10 +60,11 @@
 </template>
 
 <script>
-    import {qtUnitName, rad, range, shadeColor} from "../../services/calculations"
+    import {qtUnit, qtUnitName, rad, range, shadeColor} from "../../services/calculations"
     import On from "../../const/on"
     import {mapActions} from "vuex"
-
+    import {bqtGToQtUnit} from "unit-manip"
+    
     export default {
         name: "compare-radar",
         props: ['axises', 'left', 'right', 'leftColor', 'rightColor'],
@@ -82,11 +84,21 @@
             }
         },
         computed: {
-            subtitle: function () {
+            curAxis: function () {
+                return this.curI && this.axises.common[this.curI]
+            },
+            title: function () {
                 if (this.curI === null) {
                     return "Survolez le graphique"
                 } else {
-                    return this.axises.common[this.curI].left.name
+                    return this.curAxis.left.name
+                }
+            },
+            subtitle: function () {
+                if (this.curI !== null) {
+                    const sens = this.curAxis.left.bqt > this.curAxis.right.bqt ?
+                        ">" : this.curAxis.left.bqt < this.curAxis.right.bqt ? "<" : "="
+                    return `${qtUnit(this.curAxis.left)} ${sens} ${qtUnit(this.curAxis.right)}`
                 }
             },
             commonAxisesCount: function () {
@@ -153,7 +165,7 @@
                 const p2 = this.radialAxisCoord(i + tailleTriangle, ratio)
                 return `M0 0 ${p1.x} ${p1.y} ${p2.x} ${p2.y} z`
             },
-
+            
             squareAxisCoord: function (i, ratio) {
                 ratio = ratio || 1
                 return {
