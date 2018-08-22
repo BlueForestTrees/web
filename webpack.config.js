@@ -22,7 +22,7 @@ var conf = {
         rules: [
             {test: /\.vue$/, exclude: /node_modules/, use: 'vue-loader'},
             {test: /\.js$/, exclude: /node_modules/, use: 'babel-loader'},
-            {test: /\.css$/, use: ExtractTextPlugin.extract({fallback: 'style-loader',use: ['css-loader']})}
+            {test: /\.css$/, use: ExtractTextPlugin.extract({fallback: 'style-loader', use: ['css-loader']})}
         ]
     },
     plugins: [
@@ -36,11 +36,11 @@ var conf = {
 }
 
 if (conf.mode === "development") {
-
+    
     var convert = require('koa-connect')
     var history = require('connect-history-api-fallback')
     var proxy = require('http-proxy-middleware')
-
+    
     conf.serve = {
         add: function (app, middleware, options) {
             app.use(convert(proxy('/api', {target: 'http://localhost:8080'})))
@@ -50,32 +50,37 @@ if (conf.mode === "development") {
     conf.output = {
         publicPath: "/"
     }
-
+    
     const htmlWebpackPlugin = conf.plugins[0]
     htmlWebpackPlugin.options.min = ".min"
     htmlWebpackPlugin.options.versionVuetify = versions.vuetify
 }
 
 if (conf.mode === "production") {
-    conf.devtool = 'source-map'
     conf.output = {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist/blueforest.org/var/www/blueforest.org'),
-        publicPath : '/'
+        publicPath: '/'
     }
-    conf.plugins.push(new Visualizer({filename: '../../../../visualizer/statistics.html'}))
-    conf.plugins.push(new CopyWebpackPlugin([{from: 'nginx', to: '../../../etc/lib/nginx/blueforest.org/'}]))
-
-    conf.externals = [
-        {vue: {root: "vue", amd: "vue", commonjs2:"vue", commonjs:"vue"}},
-        {vuetify: {root: "vuetify", amd: "vuetify"}}
-    ]
     const htmlWebpackPlugin = conf.plugins[0]
     htmlWebpackPlugin.options.min = ".min"
     htmlWebpackPlugin.options.versionVuetify = versions.vuetify
-
+    
+    
+    conf.externals = {
+        'vue': 'Vue',
+        'vuetify': 'Vuetify'
+    }
     htmlWebpackPlugin.options.scriptVue = "<script src='https://unpkg.com/vue@" + versions.vue + "/dist/vue.min.js'></script>"
     htmlWebpackPlugin.options.scriptVuetify = "<script src='https://unpkg.com/vuetify@" + versions.vuetify + "/dist/vuetify.min.js'></script>"
+    
+    other()
+    
+}
+
+function other(){
+    conf.plugins.push(new Visualizer({filename: '../../../../visualizer/statistics.html'}))
+    conf.plugins.push(new CopyWebpackPlugin([{from: 'nginx', to: '../../../etc/nginx/blueforest.org/'}]))
 }
 
 module.exports = conf

@@ -23,7 +23,6 @@
     import LeftMenu from './layout/LeftMenu'
     import Bar from "./layout/Bar"
     import On from "../const/on"
-    import ENV from "../env"
     import {mapState} from 'vuex'
     import Tree from "./tree/Tree"
     import AddImpactDialog from "./dialog/AddImpactDialog"
@@ -36,11 +35,6 @@
     import Snack from "./layout/snack"
 
     export default {
-        data: function () {
-            return {
-                cornerText: "BlueForest v" + ENV.VERSION,
-            }
-        },
         computed: {
             ...mapState(['basket', 'snack'])
         },

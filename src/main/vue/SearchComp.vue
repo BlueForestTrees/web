@@ -54,7 +54,7 @@
         computed: {
             query: function () {
                 return {
-                    term: this.namePart || "",
+                    term: this.namePart || undefined,
                     type: this.type,
                     ps: 30,
                     aidx: (this.items && this.items.length > 0) ? this.items[this.items.length - 1]._id : null

@@ -66,7 +66,7 @@
     "lodash.reduce": "4.6.0",
     "lodash.remove": "4.7.0",
     "request-promise-lite": "0.13.1",
-    "unit-manip": "1.0.4",
+    "unit-manip": "1.0.5",
     "vue": "2.5.17",
     "vue-infinite-loading": "2.3.1",
     "vue-router": "3.0.1",
