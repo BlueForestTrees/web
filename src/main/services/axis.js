@@ -18,18 +18,18 @@ import Vue from 'vue'
  */
 export const buildAxises = tree => ([
     ...buildAxis(tree.trunk, "trunk", [{...tree.trunk, name: "Quantité"}]),
-    // ...buildAxis(tree.trunk, "facet", tree.facets),
-    // ...buildAxis(tree.trunk, "tank", tree.tank),
-    ...buildAxis(tree.trunk, "impactsTank", tree.impacts),
+    ...buildAxis(tree.trunk, "facet", tree.facets),
+    ...buildAxis(tree.trunk, "tank", tree.tank),
+    ...buildAxis(tree.trunk, "impactsTank", tree.impactsTank),
 ])
-const buildAxis = ({name}, type, items) => map(items, item => ({
+const buildAxis = ({name}, type, items) => items && map(items, item => ({
     tree: name,
     type,
     name: item.name,
     bqt: item.quantity.bqt,
     _bqt: item.quantity.bqt,
     g: item.quantity.g
-}))
+})) || []
 
 /**
  * Placer les axes dans la bonne zone: commun, left ou right.

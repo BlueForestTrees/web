@@ -13,7 +13,6 @@ export const qtUnit = bqtG => {
     if (bqtG) {
         const qtUnit = bqtGToQtUnit(bqtG)
         if (qtUnit.qt && qtUnit.unit) {
-            console.log("bestQuantity",qtUnit)
             const best = bestQuantity(qtUnit)
             return `${best.qt} ${grandeur(best.unit).key !== "Nomb" ? best.unit : ''}`
         } else {

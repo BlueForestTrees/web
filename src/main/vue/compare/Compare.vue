@@ -1,5 +1,6 @@
 <template>
     <v-container v-if="axises">
+        <span v-if="nothingCommon">Rien à comparer</span>
         <compare-radar :axises="axises" :left="left" :right="right" :left-color="'#00ACC1'" :rightColor="'#D81B60'"/>
         <compare-ribbon :axises="axises" :left="left" :right="right" :left-color="'#00ACC1'" :rightColor="'#D81B60'"/>
         <!--<compare-table :axises="axises" :left="left" :right="right" :left-color="leftColor" :rightColor="rightColor"/>-->
@@ -12,7 +13,6 @@
     import {mapActions} from 'vuex'
     import CompareTable from "./CompareTable"
     import CompareRadar from "./CompareRadar"
-    import {hasQuantity} from "../../services/calculations"
     import CompareRibbon from "./CompareRibbon"
 
     export default {
@@ -31,14 +31,23 @@
                 axises: null,
                 leftColor: "cyan darken1",
                 rightColor: "pink darken1",
+                nothingCommon: false
             }
         },
         created: async function () {
-            await this.refreshTrees()
-            this.treesToAxises()
-            this.selectDefaultBase()
+            this.init()
+        },
+        watch: {
+            '$route'(to, from) {
+                this.refresh()
+            }
         },
         methods: {
+            init: async function () {
+                await this.refreshTrees()
+                this.treesToAxises()
+                this.selectDefaultBase()
+            },
             ...mapActions({loadTree: On.LOAD_TREE, snack: On.SNACKBAR}),
             refreshTrees: async function () {
                 this.left = await this.loadTree({_id: this.leftId})
@@ -47,10 +56,6 @@
                 await this.right.promises.all
             },
             treesToAxises: function () {
-                if (!hasQuantity(this.left.trunk) || !hasQuantity(this.right.trunk)) {
-                    this.snack({text: "quantités non définies", color: "grey"})
-                    throw "Quantités non définies"
-                }
                 try {
                     this.axises = separate(buildAxises(this.left), buildAxises(this.right))
                 } catch (e) {
@@ -59,7 +64,12 @@
                 }
             },
             selectDefaultBase: function () {
-                this.changeBase(this.axises.common[0].left)
+                if (this.axises.common.length > 0) {
+                    this.nothingCommon = false
+                    this.changeBase(this.axises.common[0].left)
+                } else {
+                    this.nothingCommon = true
+                }
             },
             changeBase(v) {
                 this.base = v

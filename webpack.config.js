@@ -1,7 +1,6 @@
 var path = require('path')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
-var webpack = require('webpack')
 var Visualizer = require('webpack-visualizer-plugin')
 var LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
@@ -30,7 +29,6 @@ var conf = {
         new HtmlWebpackPlugin({template: './src/main/index.html', inject: 'body', hash: 'true'}),
         new CopyWebpackPlugin([{from: './src/img', to: 'img'}]),
         new CopyWebpackPlugin([{from: './src/browserconfig.xml', to: '.'}]),
-        new webpack.DefinePlugin({VERSION: JSON.stringify(require("./package.json").version)}),
         new LodashModuleReplacementPlugin(),
         new VueLoaderPlugin(),
         new ExtractTextPlugin("style.css")

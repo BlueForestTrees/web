@@ -35,10 +35,11 @@ export default {
         tree.promises.roots = dispatch(On.LOAD_ROOTS, {_id, bqt}).then(roots => Vue.set(tree, "roots", roots))
         tree.promises.branches = dispatch(On.LOAD_BRANCHES, {_id, bqt}).then(branches => Vue.set(tree, "branches", branches))
         tree.promises.impacts = dispatch(On.LOAD_IMPACTS, {_id, bqt}).then(impacts => Vue.set(tree, "impacts", impacts))
+        tree.promises.impactsTank = dispatch(On.LOAD_IMPACTS_TANK, {_id, bqt}).then(impactsTank => Vue.set(tree, "impactsTank", impactsTank))
         tree.promises.all = Promise.all([tree.promises.trunk, tree.promises.roots, tree.promises.branches, tree.promises.impacts])
         // dispatch(On.LOAD_TANK, treeToLoad)
         // dispatch(On.LOAD_FACETS, treeToLoad)
-        // dispatch(On.LOAD_IMPACTS_TANK, treeToLoad)
+        
         
         dispatch(On.ADD_TO_BASKET, [tree])
         return tree

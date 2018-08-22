@@ -19,9 +19,9 @@ export default {
     getFacets: _id => get(`/api/facet/${_id}`),
     getImpact: _id => get(`/api/impact/${_id}`),
     getTank: (qt, unit, _id) => get(`/api/tank/${qt}/${unit}/${_id}`),
-    getBranches: (_id) => get(`/api/branch/${_id}`),
-    getRoots: (_id) => get(`/api/root/${_id}`),
-    getQuantifiedImpactTank: (qt, unit, _id) => get(`/api/impacttank/${qt}/${unit}/${_id}`),
+    getBranches: _id => get(`/api/branch/${_id}`),
+    getRoots: _id => get(`/api/root/${_id}`),
+    getImpactTank: _id => get(`/api/impacttank/${_id}`),
     
     
     putLink: ({_id, trunkId, rootId, relativeTo, bqt}) => Promise.all([

@@ -14,6 +14,9 @@
                 <impacts :tree="tree"/>
             </v-flex>
             <v-flex xs12>
+                <bilan-impacts :tree="tree"/>
+            </v-flex>
+            <v-flex xs12>
                 <branches :tree="tree"/>
             </v-flex>
             <add-tree-part-btn :tree="tree"/>
@@ -32,9 +35,11 @@
     import TreeHead from "./TreeHead"
     import AddTreeBtn from "../layout/AddTreeBtn"
     import AddTreePartBtn from "../layout/AddTreePartBtn"
+    import BilanImpacts from "./BilanImpacts"
 
     export default {
         components: {
+            BilanImpacts,
             AddTreePartBtn,
             AddTreeBtn,
             TreeHead,

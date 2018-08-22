@@ -13,6 +13,7 @@ describe('Axis calculations', function () {
         const tree = {
             trunk: withNameIdBqtG("Skate", "a", 1000, "Mass"),
             facets: [],
+            impacts: [],
             tank: [],
             impactsTank: []
         }
@@ -176,20 +177,20 @@ describe('Axis calculations', function () {
         const expected = {
             common: [
                 {
-                    left: {tree: "leftTreeName", type: "trunk", name: "Quantité", ratio: 1, bqt: 60 * 1},
-                    right: {tree: "rightTreeName", type: "trunk", name: "Quantité", ratio: 1, bqt: 1 * 60}
+                    left: {tree: "leftTreeName", type: "trunk", name: "Quantité", ratio: 0.5, bqt: 60 * 1},
+                    right: {tree: "rightTreeName", type: "trunk", name: "Quantité", ratio: 0.5, bqt: 1 * 60}
                 },
                 {
-                    left: {tree: "leftTreeName", type: "facet", name: "Prix", ratio: 1, bqt: 60 * 1},
-                    right: {tree: "rightTreeName", type: "facet", name: "Prix", ratio: 0.5, bqt: 30 * 1}
+                    left: {tree: "leftTreeName", type: "facet", name: "Prix", ratio: 0.6666666666666666, bqt: 60 * 1},
+                    right: {tree: "rightTreeName", type: "facet", name: "Prix", ratio: 0.3333333333333333, bqt: 30 * 1}
                 },
                 {
-                    left: {tree: "leftTreeName", type: "tank", name: "Elec", ratio: 0.5, bqt: 12 * 1},
-                    right: {tree: "rightTreeName", type: "tank", name: "Elec", ratio: 1, bqt: 24000 * 0.001}
+                    left: {tree: "leftTreeName", type: "tank", name: "Elec", ratio: 0.3333333333333333, bqt: 12 * 1},
+                    right: {tree: "rightTreeName", type: "tank", name: "Elec", ratio: 0.6666666666666666, bqt: 24000 * 0.001}
                 },
                 {
-                    left: {tree: "leftTreeName", type: "tank", name: "Eau", ratio: 1,bqt: 5.5 * 60 * 60},
-                    right: {tree: "rightTreeName", type: "tank", name: "Eau", ratio: 1,bqt: 330 * 60}
+                    left: {tree: "leftTreeName", type: "tank", name: "Eau", ratio: 0.5,bqt: 5.5 * 60 * 60},
+                    right: {tree: "rightTreeName", type: "tank", name: "Eau", ratio: 0.5,bqt: 330 * 60}
                 }
             ]
         }

@@ -6,12 +6,9 @@ import {map} from 'unit-manip'
 
 export default {
     
-    [On.LOAD_IMPACTS_TANK]: ({commit}, tree) => {
-        if (hasQuantity(tree.trunk)) {
-            return api.getQuantifiedImpactTank(tree.trunk.quantity.qt, tree.trunk.quantity.unit, tree._id)
-                .then(impactsTank => commit(Do.ADD_IMPACTS_TANK, {tree, impactsTank}))
-        }
-    },
+    [On.LOAD_IMPACTS_TANK]: ({commit}, {_id, bqt}) =>
+        api.getImpactTank(_id)
+            .then(impactsTank => multiplyAspectBqt(bqt, impactsTank)),
     
     [On.LOAD_IMPACTS]: ({}, {_id, bqt}) =>
         api.getImpact(_id)

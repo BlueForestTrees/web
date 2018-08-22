@@ -1,5 +1,5 @@
 const ENV = {
-    VERSION,
+    VERSION: "0.2.2",
     NODE_ENV: process.env.NODE_ENV
 }
 

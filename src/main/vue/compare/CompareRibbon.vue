@@ -3,10 +3,17 @@
         <v-container fluid grid-list-md>
             <v-layout row wrap>
                 <v-flex xs3>
-                    <svg :viewBox="viewbox" v-if="lines">
+                    <svg :viewBox="viewbox" v-if="lines" preserveAspectRatio="none" height="100%" width="100%">
                         <path :d="lines.left" :fill="leftColor" fill-opacity="0.05" :stroke="leftColor" stroke-width="1" stroke-opacity="0.5"></path>
                         <path :d="lines.right" :fill="rightColor" fill-opacity="0.05" :stroke="rightColor" stroke-width="1" stroke-opacity="0.5"></path>
                     </svg>
+                </v-flex>
+                <v-flex xs9>
+                    <v-list dense>
+                        <v-list-tile avatar :key="item.left.name" v-for="item in axises.common">
+                            {{item.left.name}}
+                        </v-list-tile>
+                    </v-list>
                 </v-flex>
             </v-layout>
         </v-container>
@@ -15,13 +22,15 @@
 
 <script>
     
+    import {qtUnitName} from "../../services/calculations"
+
     const width = 100
     export default {
         name: "compare-ribbon",
         props: ['axises', 'left', 'right', 'leftColor', 'rightColor'],
         data: function () {
             return {
-                lineHeight: 10
+                lineHeight: 30
             }
         },
         computed: {
@@ -48,6 +57,9 @@
                     return {left: ld.join(" "), right: rd.join(" ")}
                 }
             },
+        },
+        methods:{
+            qtUnitName
         }
     }
 </script>
