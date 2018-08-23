@@ -1,6 +1,7 @@
 var path = require('path')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
+var webpack = require('webpack')
 var Visualizer = require('webpack-visualizer-plugin')
 var LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
@@ -32,7 +33,14 @@ var conf = {
         new LodashModuleReplacementPlugin(),
         new VueLoaderPlugin(),
         new ExtractTextPlugin("style.css")
-    ]
+    ],
+    optimization: {
+        splitChunks: {
+            // Must be specified for HtmlWebpackPlugin to work correctly.
+            // See: https://github.com/jantimon/html-webpack-plugin/issues/882
+            chunks: 'all',
+        }
+    }
 }
 
 if (conf.mode === "development") {
@@ -58,14 +66,12 @@ if (conf.mode === "development") {
 
 if (conf.mode === "production") {
     conf.output = {
-        filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist/blueforest.org/var/www/blueforest.org'),
         publicPath: '/'
     }
     const htmlWebpackPlugin = conf.plugins[0]
     htmlWebpackPlugin.options.min = ".min"
     htmlWebpackPlugin.options.versionVuetify = versions.vuetify
-    
     
     conf.externals = {
         'vue': 'Vue',

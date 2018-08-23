@@ -2,18 +2,24 @@ import {GO} from "../const/go"
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-const BlueForest = () => import('../vue/BlueForest')
-const Login = () => import('../vue/Login')
-const Inscription = () => import('../vue/Inscription')
-const Confirmation = () => import('../vue/Confirmation')
-const Root = () => import('../vue/tree/Root')
-const Tree = () => import('../vue/tree/Tree.vue')
-const Search = () => import('../vue/Search')
-const Imports = () => import('../vue/Imports')
-const ImpactEntries = () => import('../vue/ImpactEntries.vue')
-const Home = () => import('../vue/Home')
-const Basket = () => import('../vue/Basket')
-const Compare = () => import('../vue/compare/Compare')
+//KO
+import Tree from "../vue/tree/Tree"
+//const Tree = () => import(/* webpackChunkName: "module-Tree" */ '../vue/tree/Tree.vue')
+const Basket = () => import (/* webpackChunkName: "module-Basket" */ '../vue/Basket')
+const Imports = () => import(/* webpackChunkName: "module-Imports" */ '../vue/Imports')
+
+//?
+const Root = () => import(/* webpackChunkName: "module-Root" */ '../vue/tree/Root')
+
+//OK
+const BlueForest = () => import(/* webpackChunkName: "module-BF" */ '../vue/BlueForest')
+const Confirmation = () => import(/* webpackChunkName: "module-Confirmation" */ '../vue/Confirmation')
+const Inscription = () => import(/* webpackChunkName: "module-Inscription" */ '../vue/Inscription')
+const Login = () => import(/* webpackChunkName: "module-Login" */ '../vue/Login')
+const Search = () => import(/* webpackChunkName: "module-Search" */ '../vue/Search')
+const ImpactEntries = () => import(/* webpackChunkName: "module-ImpactEntries" */ '../vue/ImpactEntries')
+const Home = () => import(/* webpackChunkName: "module-Home" */ '../vue/Home')
+const Compare = () => import(/* webpackChunkName: "module-Compare" */ '../vue/compare/Compare')
 
 Vue.use(VueRouter)
 
@@ -33,13 +39,13 @@ export default new VueRouter({
                     name: GO.TREE,
                     path: "tree/:bqt/:_id",
                     component: Tree,
-                    props:true
+                    props: true
                 },
                 {
                     name: GO.ROOT,
                     path: "root/:treeId/:rootId",
                     component: Root,
-                    props:true
+                    props: true
                 },
                 {
                     name: GO.SEARCH,

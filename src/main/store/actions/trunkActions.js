@@ -7,8 +7,8 @@ import api from "../../rest/api"
 
 export default {
     [On.GO_BULK_TRUNK]: () => router.push({name: GO.BULK_TRUNK}),
-    [On.CREATE_TRUNK]: async ({commit, state, dispatch}, {color, name, type}) =>
-        trunky(await api.postTrunk({color, name, type})),
+    
+    [On.CREATE_TRUNK]: async ({commit, state, dispatch}, trunk) => api.postTrunk(trunk),
     
     [On.LOAD_TRUNK]: ({commit}, {bqt, _id}) => api.getTrunk(_id)
         .then(trunk => (trunk.quantity.bqt = bqt) && trunk),

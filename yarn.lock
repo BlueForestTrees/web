@@ -6599,9 +6599,9 @@ unique-string@^1.0.0:
   dependencies:
     crypto-random-string "^1.0.0"
 
-unit-manip@1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/unit-manip/-/unit-manip-1.0.5.tgz#5417872ef6aaea2b0e5e35897faae767f3bbb1bd"
+unit-manip@1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/unit-manip/-/unit-manip-1.0.6.tgz#087e512472dc6ec4f2890da145ffbe4290cabbeb"
   dependencies:
     fraction.js "4.0.4"
 
@@ -6955,9 +6955,9 @@ webpack-visualizer-plugin@0.1.11:
     react "^0.14.0"
     react-dom "^0.14.0"
 
-webpack@4.16.3:
-  version "4.16.3"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.16.3.tgz#861be3176d81e7e3d71c66c8acc9bba35588b525"
+webpack@4.17.1:
+  version "4.17.1"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.17.1.tgz#0f026e3d823f3fc604f811ed3ea8f0d9b267fb1e"
   dependencies:
     "@webassemblyjs/ast" "1.5.13"
     "@webassemblyjs/helper-module-context" "1.5.13"

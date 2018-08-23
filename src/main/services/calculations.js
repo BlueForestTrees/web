@@ -1,6 +1,6 @@
 import {map, bqtGToQtUnit, bestQuantity, unitCoef, changeUnit, grandeur} from "unit-manip"
 
-export const createStringObjectId = () => (new Date().getTime() / 1000 | 0).toString(16) + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, () => (Math.random() * 16 | 0).toString(16)).toLowerCase();
+export const createStringObjectId = () => (new Date().getTime() / 1000 | 0).toString(16) + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, () => (Math.random() * 16 | 0).toString(16)).toLowerCase()
 
 export const idQuantity = tree => ({_id: tree._id, quantity: tree.trunk.quantity})
 export const hasQuantity = e => e && e.quantity && e.quantity.bqt && e.quantity.g
