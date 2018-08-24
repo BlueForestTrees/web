@@ -27,7 +27,8 @@ const buildAxis = ({name}, type, items) => items && map(items, item => ({
     name: item.name,
     bqt: item.quantity.bqt,
     _bqt: item.quantity.bqt,
-    g: item.quantity.g
+    g: item.quantity.g,
+    eq: item.quantity.eq
 })) || []
 
 /**
