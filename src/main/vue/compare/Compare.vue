@@ -1,9 +1,7 @@
 <template>
     <v-container v-if="axises">
         <span v-if="nothingCommon">Rien à comparer</span>
-        <compare-radar :axises="axises" :left="left" :right="right" :left-color="'#00ACC1'" :rightColor="'#D81B60'"/>
-        <compare-ribbon :axises="axises" :left="left" :right="right" :left-color="'#00ACC1'" :rightColor="'#D81B60'"/>
-        <!--<compare-table :axises="axises" :left="left" :right="right" :left-color="leftColor" :rightColor="rightColor"/>-->
+        <compare-ribbon :axises="axises" :left="left" :right="right" leftColor="#00ACC1" rightColor="#D81B60"/>
     </v-container>
 </template>
 
@@ -11,17 +9,13 @@
     import {applyBase, buildAxises, separate} from "../../services/axis"
     import On from "../../const/on"
     import {mapActions} from 'vuex'
-    import CompareTable from "./CompareTable"
-    import CompareRadar from "./CompareRadar"
     import CompareRibbon from "./CompareRibbon"
 
     export default {
         name: 'compare',
         props: ['leftId', 'rightId'],
         components: {
-            CompareRibbon,
-            CompareRadar,
-            CompareTable
+            CompareRibbon
         },
         data: function () {
             return {

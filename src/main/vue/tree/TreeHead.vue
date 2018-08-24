@@ -5,7 +5,7 @@
                 <v-icon x-large :style="{color: trunk && trunk.color || 0,marginRight:'0.2em'}">lens</v-icon>
                 <h2 v-html="qtUnitName(trunk)"></h2>
                 <v-spacer/>
-                <v-btn icon flat @click="close">
+                <v-btn icon flat @click="$emit('close')">
                     <v-icon x-large color="grey">close</v-icon>
                 </v-btn>
             </v-layout>
@@ -22,8 +22,7 @@
         name: "tree-head",
         props: ["tree"],
         methods: {
-            qtUnitName,
-            ...mapActions({close: On.GO_HOME}),
+            qtUnitName
         },
         computed: {
             trunk: function () {

@@ -5,8 +5,10 @@ import VueRouter from 'vue-router'
 //KO
 import Tree from "../vue/tree/Tree"
 //const Tree = () => import(/* webpackChunkName: "module-Tree" */ '../vue/tree/Tree.vue')
-const Basket = () => import (/* webpackChunkName: "module-Basket" */ '../vue/Basket')
-const Imports = () => import(/* webpackChunkName: "module-Imports" */ '../vue/Imports')
+import Basket from "../vue/Basket"
+//const Basket = () => import (/* webpackChunkName: "module-Basket" */ '../vue/Basket')
+import Imports from "../vue/Imports"
+//const Imports = () => import(/* webpackChunkName: "module-Imports" */ '../vue/Imports')
 
 //?
 const Root = () => import(/* webpackChunkName: "module-Root" */ '../vue/tree/Root')

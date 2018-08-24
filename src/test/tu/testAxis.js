@@ -9,27 +9,7 @@ describe('Axis calculations', function () {
     
     beforeEach(init)
     
-    it('minimal buildAxises', function () {
-        const tree = {
-            trunk: withNameIdBqtG("Skate", "a", 1000, "Mass"),
-            facets: [],
-            impacts: [],
-            tank: [],
-            impactsTank: []
-        }
-        const expected = [
-            {
-                "tree": "Skate",
-                "name": "Quantité",
-                "type": "trunk",
-                bqt: 1000,
-                "_bqt": 1000,
-                "g": "Mass"
-            }
-        ]
-        buildAxises(tree).should.be.deep.equal(expected)
-    })
-    it('complete buildAxises', function () {
+    it('buildAxises', function () {
         const tree = {
             trunk: withNameIdBqtG("Skate", "a", 1000, "Mass"),
             facets: [withNameIdBqtG("vitamine", "b", 1, "Mass"), withNameIdBqtG("voutamine", "d", 7, "Mass")],
@@ -37,14 +17,6 @@ describe('Axis calculations', function () {
             impactsTank: [withNameIdBqtG("co2", "d", 3, "Mass"), withNameIdBqtG("poison", "e", 4, "Volu")]
         }
         const expected = [
-            {
-                "name": "Quantité",
-                "_bqt": 1000,
-                bqt: 1000,
-                "tree": "Skate",
-                "type": "trunk",
-                "g": "Mass",
-            },
             {
                 "name": "vitamine",
                 "_bqt": 1,
@@ -97,20 +69,23 @@ describe('Axis calculations', function () {
         buildAxises(tree).should.be.deep.equal(expected)
     })
     
+   
     it('separate', function () {
         const leftAxises = [
             {tree: "leftTreeName", type: "trunk", name: "idem", _bqt: 20, g: "Mass"},
             {tree: "leftTreeName", type: "trunk", name: "Quantité", _bqt: 20, g: "Volu"},
             {tree: "leftTreeName", type: "facet", name: "Prix", _bqt: null, g: null},
             {tree: "leftTreeName", type: "tank", name: "Elec", _bqt: 12, g: "Dens"},
-            {tree: "leftTreeName", type: "tank", name: "Eau", _bqt: 5, g: "Dens"}
+            {tree: "leftTreeName", type: "tank", name: "Eau", _bqt: 5, g: "Dens"},
+            {tree: "leftTreeName", type: "impactTank", name: "Bik", _bqt: 0, g: "Mass"}
         ]
         const rightAxises = [
             {tree: "rightTreeName", type: "trunk", name: "idem", _bqt: 30, g: "Volu"},
             {tree: "rightTreeName", type: "trunk", name: "Quantité", _bqt: 30, g: "Volu"},
             {tree: "rightTreeName", type: "facet", name: "Prix", _bqt: 10, g: "Prix"},
             {tree: "rightTreeName", type: "tank", name: "Elec", _bqt: null, g: null},
-            {tree: "rightTreeName", type: "tank", name: "Pétrole", _bqt: 12, g: "Dens"}
+            {tree: "rightTreeName", type: "tank", name: "Pétrole", _bqt: 12, g: "Dens"},
+            {tree: "rightTreeName", type: "impactTank", name: "Bik", _bqt: 0, g: "Mass"}
         ]
         const expected = {
             left: [
@@ -122,6 +97,10 @@ describe('Axis calculations', function () {
             common: [{
                 left: {tree: "leftTreeName", type: "trunk", name: "Quantité", _bqt: 20, g: "Volu"},
                 right: {tree: "rightTreeName", type: "trunk", name: "Quantité", _bqt: 30, g: "Volu"}
+            }],
+            zero: [{
+                left: {tree: "leftTreeName", type: "impactTank", name: "Bik", _bqt: 0, g: "Mass"},
+                right: {tree: "rightTreeName", type: "impactTank", name: "Bik", _bqt: 0, g: "Mass"}
             }],
             right: [
                 {tree: "rightTreeName", type: "tank", name: "Elec", _bqt: null, g: null},
@@ -156,7 +135,7 @@ describe('Axis calculations', function () {
         const axises = {
             common: [
                 {
-                    left: {tree: "leftTreeName", type: "trunk", name: "Quantité", bqt: 60 * 1},
+                    left: {tree: "leftTreeName", type: "trunk", name: "Quantité", bqt: 0},
                     right: {tree: "rightTreeName", type: "trunk", name: "Quantité", bqt: 1 * 60}
                 },
                 {
@@ -177,8 +156,8 @@ describe('Axis calculations', function () {
         const expected = {
             common: [
                 {
-                    left: {tree: "leftTreeName", type: "trunk", name: "Quantité", ratio: 0.5, bqt: 60 * 1},
-                    right: {tree: "rightTreeName", type: "trunk", name: "Quantité", ratio: 0.5, bqt: 1 * 60}
+                    left: {tree: "leftTreeName", type: "trunk", name: "Quantité", ratio: 0, bqt: 0},
+                    right: {tree: "rightTreeName", type: "trunk", name: "Quantité", ratio: 1, bqt: 1 * 60}
                 },
                 {
                     left: {tree: "leftTreeName", type: "facet", name: "Prix", ratio: 0.6666666666666666, bqt: 60 * 1},
@@ -189,8 +168,8 @@ describe('Axis calculations', function () {
                     right: {tree: "rightTreeName", type: "tank", name: "Elec", ratio: 0.6666666666666666, bqt: 24000 * 0.001}
                 },
                 {
-                    left: {tree: "leftTreeName", type: "tank", name: "Eau", ratio: 0.5,bqt: 5.5 * 60 * 60},
-                    right: {tree: "rightTreeName", type: "tank", name: "Eau", ratio: 0.5,bqt: 330 * 60}
+                    left: {tree: "leftTreeName", type: "tank", name: "Eau", ratio: 0.5, bqt: 5.5 * 60 * 60},
+                    right: {tree: "rightTreeName", type: "tank", name: "Eau", ratio: 0.5, bqt: 330 * 60}
                 }
             ]
         }
