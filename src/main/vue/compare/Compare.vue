@@ -1,8 +1,7 @@
 <template>
-    <v-container v-if="axises">
-        <span v-if="nothingCommon">Rien à comparer</span>
-        <compare-ribbon :axises="axises" :left="left" :right="right" leftColor="#00ACC1" rightColor="#D81B60"/>
-    </v-container>
+    <span>
+        <compare-ribbon :axises="axises" :left="left" :right="right"/>
+    </span>
 </template>
 
 <script>
@@ -25,7 +24,6 @@
                 axises: null,
                 leftColor: "cyan darken1",
                 rightColor: "pink darken1",
-                nothingCommon: false
             }
         },
         created: async function () {
@@ -59,10 +57,7 @@
             },
             selectDefaultBase: function () {
                 if (this.axises.common.length > 0) {
-                    this.nothingCommon = false
                     this.changeBase(this.axises.common[0].left)
-                } else {
-                    this.nothingCommon = true
                 }
             },
             changeBase(v) {

@@ -22,7 +22,9 @@ export const qtUnit = bqtG => {
         return "??"
     }
 }
-export const qtUnitName = item => `${qtUnit(item.quantity || item)} ${item && item.name || '?'}`
+export const name = item => removeUseless(item && item.name || '?')
+export const removeUseless = name => name.replace(/\([^)]*\)/,"...")
+export const qtUnitName = item => `${qtUnit(item.quantity || item)} ${name(item)}`
 
 export const getRandomColor = () => {
     const letters = '0123456789ABCDEF'
