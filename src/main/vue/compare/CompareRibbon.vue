@@ -12,10 +12,10 @@
             <g>
                 <template v-for="(axis,i) in axises.common">
                     <!--LISTES DES NOM D'AXES-->
-                    <text alignment-baseline="middle" :x="5+gwidth" :y="(0.5+i)*lineHeight" :style="{fill:textColor}">{{axis.left.name}} {{equiv(axis.left)}}</text>
+                    <text alignment-baseline="middle" :x="5+gwidth" :y="(0.5+i)*lineHeight" :style="{fill:textColor}">{{axis.left.name}}{{curI === i ? (` (${equiv(axis.left)})`) : ""}}</text>
 
                     <!--SELECTION-->
-                    <rect fill="green" x="0" :y="i*lineHeight" :width="gwidth*4" :height="lineHeight" stroke-width="1" stroke-opacity="0.8" :fill-opacity="curI === i ? 0.1 : 0" @click="curI = i" @mouseover="curI = i"></rect>
+                    <rect fill="green" x="0" :y="i*lineHeight" :width="width" :height="lineHeight" stroke-width="1" stroke-opacity="0.8" :fill-opacity="curI === i ? 0.1 : 0" @click="curI = i" @mouseover="curI = i"></rect>
                     <g v-if="curI === i">
                         <text alignment-baseline="middle" :x="border" :y="(0.5+i)*lineHeight" :font-size="9-(1.1*(qtUnit(axis.left).length-9))" :style="{fill:darkTextColor, pointerEvents:'none'}">{{qtUnit(axis.left)}}</text>
                         <text alignment-baseline="middle" text-anchor="end" :x="gwidth-border" :font-size="9-(1.1*(qtUnit(axis.right).length-9))" :y="(0.5+i)*lineHeight" :style="{fill:darkTextColor, pointerEvents:'none'}">{{qtUnit(axis.right)}}</text>
@@ -41,13 +41,13 @@
         components: {TreeHead},
         props: ['axises', 'left', 'right'],
         data: function () {
-            const alpha = 0.85
+            const alpha = 0.7
             const textColor = '#696955'
             return {
                 border: 2,
                 lineHeight: 25,
                 gwidth: 100,
-                width: 400,
+                width: 550,
                 curI: null,
                 leftColor: shadeColor('#00ACC1', alpha),
                 rightColor: shadeColor('#D81B60', alpha),
