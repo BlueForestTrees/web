@@ -90,7 +90,6 @@ export const applyCoef = (coef, items, prop) => {
     for (let i = 0; i < items.length; i++) {
         if (prop) {
             items[i][prop].bqt = coef * items[i][prop]._bqt
-            console.log(prop, items[i][prop].name, items[i][prop]._bqt, coef, items[i][prop].bqt)
         } else {
             items[i].bqt = coef * items[i]._bqt
         }
