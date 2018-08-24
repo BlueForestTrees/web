@@ -76,23 +76,20 @@ export const separate = (leftAxises, rightAxises) => {
  */
 export const applyBase = (base, axises) => {
     if (base) {
-        const rcoef = base._bqt / find(axises.common, c => c.right.name === base.name).right._bqt
+        const rcoef = find(axises.common, c => c.right.name === base.name).right._bqt / base._bqt
         applyCoef(rcoef, axises.right)
         applyCoef(rcoef, axises.common, "right")
         
-        const lcoef = base._bqt / find(axises.common, c => c.left.name === base.name).left._bqt
+        const lcoef = find(axises.common, c => c.left.name === base.name).left._bqt / base._bqt
         applyCoef(lcoef, axises.left)
         applyCoef(lcoef, axises.common, "left")
-        
-        updateRatios(axises)
-        
-        axises.common.sort((a, b) => b.left.ratio - a.left.ratio)
     }
 }
 export const applyCoef = (coef, items, prop) => {
     for (let i = 0; i < items.length; i++) {
         if (prop) {
             items[i][prop].bqt = coef * items[i][prop]._bqt
+            console.log(prop, items[i][prop].name, items[i][prop]._bqt, coef, items[i][prop].bqt)
         } else {
             items[i].bqt = coef * items[i]._bqt
         }
@@ -108,5 +105,6 @@ export const updateRatios = (axises) => {
         Vue.set(leftAxis, "ratio", leftAxis.bqt / sum)
         Vue.set(rightAxis, "ratio", rightAxis.bqt / sum)
     }
+    axises.common.sort((a, b) => b.left.ratio - a.left.ratio)
     return axises
 }

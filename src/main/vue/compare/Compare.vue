@@ -5,7 +5,7 @@
 </template>
 
 <script>
-    import {applyBase, buildAxises, separate} from "../../services/axis"
+    import {applyBase, buildAxises, separate, updateRatios} from "../../services/axis"
     import On from "../../const/on"
     import {mapActions} from 'vuex'
     import CompareRibbon from "./CompareRibbon"
@@ -38,7 +38,7 @@
             init: async function () {
                 await this.refreshTrees()
                 this.treesToAxises()
-                this.selectDefaultBase()
+                // this.selectDefaultBase()
             },
             ...mapActions({loadTree: On.LOAD_TREE, snack: On.SNACKBAR}),
             refreshTrees: async function () {
@@ -50,20 +50,22 @@
             treesToAxises: function () {
                 try {
                     this.axises = separate(buildAxises(this.left), buildAxises(this.right))
+                    updateRatios(this.axises)
                 } catch (e) {
                     this.snack({text: "Erreur de calcul, données insuffisantes", color: "red"})
                     throw e
                 }
             },
-            selectDefaultBase: function () {
-                if (this.axises.common.length > 0) {
-                    this.changeBase(this.axises.common[0].left)
-                }
-            },
-            changeBase(v) {
-                this.base = v
-                applyBase(this.base, this.axises)
-            }
+            // selectDefaultBase: function () {
+            //     if (this.axises.common.length > 0) {
+            //         this.changeBase(this.axises.common[0].left)
+            //     }
+            // },
+            // changeBase(v) {
+            //     this.base = v
+            //     applyBase(this.base, this.axises)
+            //     updateRatios(this.axises)
+            // }
         }
     }
 </script>

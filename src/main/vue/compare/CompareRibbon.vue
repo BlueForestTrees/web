@@ -1,7 +1,7 @@
 <template>
     <v-layout column>
         <TreeHead :tree="left" @close="" :bg-color="leftColor" no-close @nav="goTree(left)" :style="{cursor: 'pointer'}"/>
-        <svg :viewBox="viewbox" v-if="lines">
+        <svg :viewBox="viewbox" v-if="lines" @mouseout="curI = null">
 
             <!--GRAPHIQUE-->
             <g>
@@ -18,8 +18,8 @@
                     <rect fill="green" x="0" :y="i*lineHeight" :width="gwidth*4" :height="lineHeight"
                           stroke-width="1" stroke-opacity="0.8" :fill-opacity="curI === i ? 0.1 : 0" @click="curI = i" @mouseover="curI = i"></rect>
                     <g v-if="curI === i">
-                        <text alignment-baseline="middle" :x="5" :y="(0.5+i)*lineHeight" :font-size="9-(1.1*(qtUnit(axis.left).length-9))" :style="{fill:darkTextColor}">{{qtUnit(axis.left)}}</text>
-                        <text alignment-baseline="middle" text-anchor="end" :x="gwidth-5" :font-size="9-(1.1*(qtUnit(axis.right).length-9))" :y="(0.5+i)*lineHeight" :style="{fill:darkTextColor}">{{qtUnit(axis.right)}}</text>
+                        <text alignment-baseline="middle" :x="border" :y="(0.5+i)*lineHeight" :font-size="9-(1.1*(qtUnit(axis.left).length-9))" :style="{fill:darkTextColor, pointerEvents:'none'}">{{qtUnit(axis.left)}}</text>
+                        <text alignment-baseline="middle" text-anchor="end" :x="gwidth-border" :font-size="9-(1.1*(qtUnit(axis.right).length-9))" :y="(0.5+i)*lineHeight" :style="{fill:darkTextColor, pointerEvents:'none'}">{{qtUnit(axis.right)}}</text>
                     </g>
                 </template>
             </g>
@@ -45,6 +45,7 @@
             const alpha = 0.85
             const textColor = '#696955'
             return {
+                border: 2,
                 lineHeight: 30,
                 gwidth: 100,
                 width: 400,

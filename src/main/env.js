@@ -1,5 +1,7 @@
+import {version} from "../../package.json"
+
 const ENV = {
-    VERSION: "0.2.2",
+    VERSION: version,
     NODE_ENV: process.env.NODE_ENV
 }
 
