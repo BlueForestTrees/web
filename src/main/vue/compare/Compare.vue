@@ -56,16 +56,6 @@
                     throw e
                 }
             },
-            // selectDefaultBase: function () {
-            //     if (this.axises.common.length > 0) {
-            //         this.changeBase(this.axises.common[0].left)
-            //     }
-            // },
-            // changeBase(v) {
-            //     this.base = v
-            //     applyBase(this.base, this.axises)
-            //     updateRatios(this.axises)
-            // }
         }
     }
 </script>
