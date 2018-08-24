@@ -1,7 +1,7 @@
 <template>
-    <span>
-        <compare-ribbon :axises="axises" :left="left" :right="right"/>
-    </span>
+    <v-card>
+            <compare-ribbon :axises="axises" :left="left" :right="right"/>
+    </v-card>
 </template>
 
 <script>

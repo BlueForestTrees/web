@@ -2,7 +2,7 @@
     <span>
         <left-menu/>
         <bar/>
-        <v-content style="padding-top:48px">
+        <v-content>
             <router-view></router-view>
         </v-content>
 

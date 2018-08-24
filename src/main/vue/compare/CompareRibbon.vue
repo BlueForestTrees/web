@@ -2,13 +2,11 @@
     <v-layout column>
         <TreeHead :tree="left" @close="" :bg-color="leftColor" no-close @nav="goTree(left)" :style="{cursor: 'pointer'}"/>
         <svg :viewBox="viewbox" v-if="lines" @mouseout="curI = null">
-
             <!--GRAPHIQUE-->
             <g>
                 <path :d="lines.left" :fill="leftColor"></path>
                 <path :d="lines.right" :fill="rightColor"></path>
             </g>
-
             <g>
                 <template v-for="(axis,i) in axises.common">
                     <!--LISTES DES NOM D'AXES-->
@@ -26,7 +24,6 @@
         <span v-else>Rien à Comparer!</span>
         <TreeHead :tree="right" @close="" :bg-color="rightColor" no-close @nav="goTree(right)" :style="{cursor: 'pointer'}"/>
     </v-layout>
-
 </template>
 
 <script>
