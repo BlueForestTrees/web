@@ -102,7 +102,8 @@
             ...mapActions({
                 dispatchCreateLink: On.CREATE_LINK,
                 dispatchRefreshRessources: On.LOAD_ROOTS,
-                snack: On.SNACKBAR
+                snack: On.SNACKBAR,
+                addToBasket: On.ADD_TO_BASKET
             }),
             async validateForm() {
                 const bqt = baseQt({qt: this.qt, unit: this.unit.shortname}) / this.tree.trunk.quantity.bqt
@@ -112,6 +113,7 @@
                     rootId: this.selectedItem._id,
                     bqt
                 })
+                this.addToBasket([this.tree, this.selectedItem])
                 this.dispatchRefreshRessources(this.tree)
                 this.close()
             },

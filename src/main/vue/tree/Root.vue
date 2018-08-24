@@ -64,7 +64,7 @@
                 <v-card-title v-if="item && item.trunk">
                     <v-btn color="primary" v-if="!transport" block @click="addingTransport = !addingTransport">ajout transport</v-btn>
                     <template v-if="addingTransport">
-                        <search-comp v-if="!transport" :maxSelectionSize="1" type="TR">
+                        <search-comp v-if="!transport" :maxSelectionSize="1">
                             <template slot-scope="{ s }">
                                 <v-tooltip bottom v-if="s.oneSelected">
                                     <v-btn slot="activator" v-if="s.selectionCount" flat dense @click="transport = s.oneSelected">

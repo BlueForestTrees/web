@@ -4,18 +4,17 @@
         <v-toolbar-title>
             <v-toolbar-side-icon @click.stop="nav.leftMenuVisible = !nav.leftMenuVisible"/>
         </v-toolbar-title>
+        <v-tooltip bottom>
+            <v-btn slot="activator" icon dense @click="goSearch"><v-icon>search</v-icon></v-btn>
+            <span style="pointer-events: none">Recherche</span>
+        </v-tooltip>
+
+        <v-tooltip bottom>
+            <v-btn slot="activator" icon dense @click="goBasket"><v-icon>shopping_basket</v-icon></v-btn>
+            <span style="pointer-events: none">Panier</span>
+        </v-tooltip>
 
         <div class="d-flex align-center" style="margin-left: auto">
-
-            <v-tooltip bottom>
-                <v-btn slot="activator" icon dense @click="goSearch"><v-icon>search</v-icon></v-btn>
-                <span style="pointer-events: none">Recherche</span>
-            </v-tooltip>
-
-            <v-tooltip bottom>
-                <v-btn slot="activator" icon dense @click="goBasket"><v-icon>shopping_basket</v-icon></v-btn>
-                <span style="pointer-events: none">Panier</span>
-            </v-tooltip>
 
             <v-menu>
                 <v-avatar v-if="user" slot="activator" size="32px" :style="{backgroundColor:user.color}">

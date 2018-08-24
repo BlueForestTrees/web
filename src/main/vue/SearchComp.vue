@@ -1,5 +1,13 @@
 <template>
     <v-list>
+        <transition name="slide-fade">
+            <v-toolbar v-if="!nobar && anySelected" app dark class="elevation-0" color="green lighten-2">
+                <slot :s="this">
+
+                </slot>
+            </v-toolbar>
+        </transition>
+
         <v-card-title primary-title>
             <p style="padding-right:1em">{{label || 'Filtre'}}</p>
             <v-text-field label="Nom" autofocus v-model="namePart"/>
@@ -8,19 +16,13 @@
         <template v-for="item in items">
             <v-list-tile :key="item._id" @click="toggleSelect(item)" :style="{background: isSelected(item) ? '#E8F5E9' : '', transition: 'background .2s ease'}">
                 <v-icon v-if="isSelected(item)" color="green" style="margin-right:0.3em">check_circle</v-icon>
-                <v-icon v-else :style="'color: '+item.trunk.color+';margin-right:0.3em'">lens</v-icon>
-                <v-list-tile-content><v-list-tile-title>{{item.trunk.name}}</v-list-tile-title></v-list-tile-content>
+                <v-icon v-else :style="'color: '+(item.color || item.trunk.color)+';margin-right:0.3em'">lens</v-icon>
+                <v-list-tile-content>
+                    <v-list-tile-title>{{item.name || item.trunk.name}}</v-list-tile-title>
+                </v-list-tile-content>
             </v-list-tile>
             <v-divider/>
         </template>
-
-        <transition name="slide-fade">
-            <v-toolbar v-if="!nobar && anySelected" app dark class="elevation-0" color="green lighten-2">
-                <slot :s="this">
-
-                </slot>
-            </v-toolbar>
-        </transition>
 
         <v-btn block flat color="primary" v-if="manualMode && items.length" @click="getMoreClick" style="margin-bottom: 3em">Voir plus</v-btn>
         <infinite-loading v-else ref="iloading" @infinite="getMore" spinner="spiral" :distance="500" style="padding-bottom: 3em">
@@ -39,7 +41,7 @@
 
     export default {
         name: 'search-comp',
-        props: {label: String, type: String, nobar: Boolean, maxSelectionSize: Number},
+        props: {label: String, nobar: Boolean, maxSelectionSize: Number, type: {type: String, default: On.SEARCH_TREE}},
         mixins: [selectable],
         components: {
             InfiniteLoading,
@@ -77,9 +79,9 @@
                     this.$refs.iloading.$emit('$InfiniteLoading:reset')
                 })
             },
-            ...mapActions({
-                dispatchSearch: On.SEARCH_TREE,
-            }),
+            dispatchSearch: function (query) {
+                return this.$store.dispatch(this.type, query)
+            },
             getMore: debounce(function ($state) {
                 this.dispatchSearch(this.query)
                     .then(items => {

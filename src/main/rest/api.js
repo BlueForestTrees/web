@@ -46,7 +46,7 @@ export default {
     deleteTrunk: trunkId => del(`/api/trunk/${trunkId}`),
     
     
-    postImpact: (trunk, impact) => post(`/api/impact`, {trunk, impact}),
+    postImpact: (_id, trunkId, impactId, bqt) => post(`/api/impact`, {_id, trunkId, impactId, bqt}),
     postFacetEntry: facet => post('/api/facetEntry', facet),
     postImpactEntry: impact => post('/api/impactEntry', impact),
     postTrunk: trunk => post('/api/trunk', trunk),

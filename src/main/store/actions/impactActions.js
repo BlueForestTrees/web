@@ -19,12 +19,7 @@ export default {
             await api.deleteImpacts(impacts._id, map(toDelete, e => e._id))
             commit(Do.DELETE_IMPACTS, {impacts, toDelete})
         },
-    [On.ADD_IMPACT]:
-        async ({commit}, {tree, impact}) => {
-            await api.postImpact(idQtFrom(tree.trunk), idQtFrom(impact))
-            commit(Do.ADD_IMPACT, {tree, impact})
-            commit(Do.ADD_IMPACT_TANK, {tree, impact})
-        },
+    [On.ADD_IMPACT]: ({commit}, {_id, trunkId, impactId, bqt}) => api.postImpact(_id, trunkId, impactId, bqt),
     
     [On.IMPORT_IMPACT_ADEME]: ({}, file) => {
         const formData = new FormData(file)

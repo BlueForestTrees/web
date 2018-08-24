@@ -12,7 +12,7 @@
             <g>
                 <template v-for="(axis,i) in axises.common">
                     <!--LISTES DES NOM D'AXES-->
-                    <text alignment-baseline="middle" :x="5+gwidth" :y="(0.5+i)*lineHeight" :style="{fill:textColor}">{{axis.left.name}}{{curI === i ? (` (${equiv(axis.left)})`) : ""}}</text>
+                    <text alignment-baseline="middle" :x="5+gwidth" :y="(0.5+i)*lineHeight" :style="{fill:textColor}">{{axis.left.name}} {{curI === i ? equiv(axis.left) : ""}}</text>
 
                     <!--SELECTION-->
                     <rect fill="green" x="0" :y="i*lineHeight" :width="width" :height="lineHeight" stroke-width="1" stroke-opacity="0.8" :fill-opacity="curI === i ? 0.1 : 0" @click="curI = i" @mouseover="curI = i"></rect>

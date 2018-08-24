@@ -1,22 +1,42 @@
 <template>
     <main-dialog :dialog="Dial.ADD_IMPACT" title="Nouvel impact" ref="dialog"
-                 @esc="close" @enter="validate" @focus="focus"
+                 @esc="close" @enter="validate" @focus="focus" :noaction="searching"
     >
         <v-card-text v-if="tree">
             <destination :tree="tree"/>
             <v-form v-model="valid" v-on:submit.prevent="" ref="form">
-                <v-autocomplete
-                        label="Nom..." ref="nom"
-                        required cache-items
-                        :loading="loading"
-                        :items="autocompleteItems"
-                        :search-input.sync="itemNamepart"
-                        v-model="selectedItemId"
-                        item-text="name" item-value="_id"
-                        :rules="[required, notIn]"
-                ></v-autocomplete>
-                <v-text-field type="number" label="Quantité... (ex.: 10)" v-model="qt" :rules="[required, isNumber]"/>
-                <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]"/>
+
+                <search-comp v-if="searching" :maxSelectionSize="1" :type="On.SEARCH_IMPACT_ENTRY">
+                    <template slot-scope="{ s }">
+                        <v-tooltip bottom>
+                            <v-btn slot="activator" v-if="s.selectionCount" flat dense @click="validateSearch(s)">
+                                <v-icon>done</v-icon>
+                                Valider
+                            </v-btn>
+                            <span style="pointer-events: none">Valider</span>
+                        </v-tooltip>
+                        <v-spacer/>
+                        <v-tooltip bottom>
+                            <span slot="activator"><v-btn icon dense @click="closeSearch(s)"><v-icon>close</v-icon></v-btn></span>
+                            <span style="pointer-events: none">Fermer</span>
+                        </v-tooltip>
+                    </template>
+                </search-comp>
+
+                <v-card v-else>
+                    <v-card-title>
+                        <v-icon large :style="{color: selectedItem.color,marginRight:'0.2em'}">lens</v-icon>
+                        {{selectedItem.name}}
+                        <v-spacer/>
+                        <v-btn icon @click="cancelItem">
+                            <v-icon color="grey darken-2">delete</v-icon>
+                        </v-btn>
+                    </v-card-title>
+                    <v-card-text>
+                        <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]"/>
+                        <v-text-field type="number" label="Quantité... (ex.: 10)" v-model="qt" :rules="[required, isNumber]"/>
+                    </v-card-text>
+                </v-card>
             </v-form>
         </v-card-text>
     </main-dialog>
@@ -29,16 +49,20 @@
     import MainDialog from "./MainDialog"
     import UnitGrid from "../common/UnitGrid"
     import {getGrandeur} from "unit-manip"
+    import {bqtGToQtUnit, baseQt} from "unit-manip"
     import closable from "../mixin/Closable"
     import {isNumber, required} from "../../services/rules"
     import {find} from 'unit-manip'
     import Destination from "../common/Destination"
     import UnitSelect from "../common/UnitSelect"
+    import SearchComp from "../SearchComp"
+    import {createStringObjectId} from "../../services/calculations"
 
     export default {
         name: 'add-impact-dialog',
         mixins: [closable],
         components: {
+            SearchComp,
             UnitSelect,
             Destination,
             UnitGrid,
@@ -46,58 +70,62 @@
         },
         data() {
             return {
-                Dial,
-
-                itemNamepart: null,
-                autocompleteItems: [],
-                loading: false,
-                selectedItemId: null,
-
+                Dial, On,
+                searchAgain: false,
+                selectedItem: null,
                 qt: null,
                 unit: null,
-
+                grandeur: null,
                 valid: false
             }
         },
         computed: {
             ...mapState({tree: state => state.dialogs[Dial.ADD_IMPACT].data.tree}),
-            grandeur: function () {
-                return this.selectedItem && getGrandeur(this.selectedItem && this.selectedItem.grandeur)
+            searching: function () {
+                return this.searchAgain || !this.selectedItem
             },
-            selectedItem: function () {
-                return this.selectedItemId && find(this.autocompleteItems, "_id", this.selectedItemId)
-            }
-        },
-        watch: {
-            itemNamepart(val) {
-                this.loading = true
-                this.goSearch(val)
-                this.loading = false
-            }
         },
         methods: {
             ...mapActions({dispatchSearch: On.SEARCH_IMPACT_ENTRY, dispatchAddImpact: On.ADD_IMPACT}),
-            async goSearch(term) {
-                if (term)
-                    this.autocompleteItems = await this.dispatchSearch({term})
+            validateSearch: function (s) {
+                this.selectedItem = s.selection[0]
+                this.searchAgain = false
+                s.unselect()
+            },
+            closeSearch: function (s) {
+                s.unselect()
+            },
+            cancelItem: function () {
+                this.selectedItem = null
             },
             async validate() {
                 this.$refs.form.validate()
                 if (this.valid) {
-                    await this.dispatchAddImpact({
-                        tree: this.tree,
-                        impact: Object.assign({quantity: {qt: this.qt, unit: this.unit.shortname}}, this.selectedItem)
+                    const bqt = baseQt({qt: this.qt, unit: this.unit.shortname}) / this.tree.trunk.quantity.bqt
+                    this.dispatchAddImpact({
+                        _id: createStringObjectId(),
+                        trunkId: this.tree._id,
+                        impactId: this.selectedItem._id,
+                        bqt
                     })
                     this.close()
                 }
             },
             focus() {
                 this.$refs.form.reset()
-                this.autocompleteItems = []
-                this.$nextTick(() => this.$refs.nom.focus())
+                this.selectedItem = null
             },
-            required, isNumber, notIn() {
-                return !find(this.tree.impacts.items, "_id", this.selectedItemId) || "Déjà utilisé"
+            required, isNumber
+        },
+        watch: {
+            selectedItem(item) {
+                if (item) {
+                    this.grandeur = getGrandeur(item.g)
+                } else {
+                    this.qt = null
+                    this.unit = null
+                    this.grandeur = null
+                }
             }
         }
     }

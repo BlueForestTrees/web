@@ -50,22 +50,24 @@ export default {
     [On.CLONE_TREE]: ({dispatch}, {_id}) =>
         dispatch(On.CLONE_TRUNK, _id),
     
-    [On.DELETE_TREE]: ({dispatch}, tree) =>
-        api.deleteTrunk(tree._id)
-            .then(() => dispatch(On.REMOVE_FROM_BASKET, [tree])),
+    [On.DELETE_TREE]: ({dispatch}, tree) => {
+        const promises = {}
+        promises.trunk = api.deleteTrunk(tree._id)
+        dispatch(On.REMOVE_FROM_BASKET, [tree])
+        return promises
+    },
     
-    [On.ADD_TRANSPORT]: async ({dispatch}, {tree, item, transport}) =>
-        await dispatch(On.LINK, {
-            trunk: idQuantity(tree),
-            root: {
-                _id: transport._id,
-                quantity: transportQuantity(tree.trunk.quantity, transport.quantity),
-                relativeTo: ({
-                    _id: item._id,
-                    refqt: tree.trunk.quantity,
-                    disqt: transport.quantity
-                })
-            }
-        })
+    [On.ADD_TRANSPORT]: ({dispatch}, {tree, item, transport}) => dispatch(On.LINK, {
+        trunk: idQuantity(tree),
+        root: {
+            _id: transport._id,
+            quantity: transportQuantity(tree.trunk.quantity, transport.quantity),
+            relativeTo: ({
+                _id: item._id,
+                refqt: tree.trunk.quantity,
+                disqt: transport.quantity
+            })
+        }
+    }),
     
 }

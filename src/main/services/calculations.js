@@ -14,7 +14,7 @@ export const qtUnit = bqtG => {
         const qtUnit = bqtGToQtUnit(bqtG)
         if (qtUnit.qt && qtUnit.unit) {
             const best = bestQuantity(qtUnit)
-            return `${best.qt} ${grandeur(best.unit).key !== "Nomb" ? best.unit : ''}`
+            return `${best.qt} ${grandeur(best.unit) !== "Nomb" ? best.unit : ''}`
         } else {
             return `${qtUnit.qt || "?"} ${qtUnit.unit || " ?"}`
         }
@@ -24,8 +24,8 @@ export const qtUnit = bqtG => {
 }
 export const name = item => removeUseless(item && item.name || '?')
 export const removeUseless = name => name.replace(/\([^)]*\)/, "...")
-export const equiv = item => item.eq ? `éq. ${item.eq}` : ""
-export const qtUnitName = item => `${qtUnit(item.quantity || item)} ${equiv(item.quantity || item)} ${name(item)}`
+export const equiv = item => item.eq ? `(éq. ${item.eq})` : ""
+export const qtUnitName = item => `${qtUnit(item.quantity || item)} ${name(item)} ${equiv(item.quantity || item)}`
 
 export const getRandomColor = () => {
     const letters = '0123456789ABCDEF'

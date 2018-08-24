@@ -9,7 +9,7 @@
 
         <template v-if="items.length > 0" v-for="item in items">
             <v-list-tile :key="item._id" @click="toggleSelect(item)" :style="{background: isSelected(item) ? '#E8F5E9' : '', transition: 'background .2s ease'}">
-                <v-icon v-if="isSelected(item)" color="green"  style="margin-right:0.3em">check_circle</v-icon>
+                <v-icon v-if="isSelected(item)" color="green" style="margin-right:0.3em">check_circle</v-icon>
                 <v-icon v-else :style="'color: '+item.trunk.color+';margin-right:0.3em'">lens</v-icon>
                 {{item.trunk.name}}
             </v-list-tile>
@@ -33,6 +33,10 @@
                         <span style="pointer-events: none">Comparer</span>
                     </v-tooltip>
 
+                    <v-tooltip bottom>
+                        <v-btn slot="activator" v-if="oneSelected" flat dense @click="removeForeverSelectedItem">supprimer<v-icon>delete_forever</v-icon></v-btn>
+                        <span style="pointer-events: none">Supprimer</span>
+                    </v-tooltip>
                     <v-tooltip bottom>
                         <v-btn slot="activator" v-if="anySelected" flat dense @click="removeSelectedItems">retirer<v-icon>delete_outline</v-icon></v-btn>
                         <span style="pointer-events: none">Retirer</span>
@@ -60,11 +64,15 @@
             }
         },
         methods: {
+            removeForeverSelectedItem: function () {
+                this.removeForever(this.oneSelected)
+                    .then(this.unselect())
+            },
             removeSelectedItems: function () {
                 this.remove(this.selection)
                     .then(this.unselect())
             },
-            ...mapActions({goTree: On.GO_TREE, compare: On.GO_COMPARE, remove: On.REMOVE_FROM_BASKET}),
+            ...mapActions({goTree: On.GO_TREE, compare: On.GO_COMPARE, remove: On.REMOVE_FROM_BASKET, removeForever: On.DELETE_TREE}),
             qtUnitName, shadeColor
         }
     }

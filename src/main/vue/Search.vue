@@ -4,13 +4,6 @@
             <template slot-scope="{ s }">
                 <v-toolbar-items>
                     <v-tooltip bottom>
-                        <v-btn slot="activator" icon dense @click="s.unselect()"><v-icon>close</v-icon></v-btn>
-                        <span style="pointer-events: none">Fermer</span>
-                    </v-tooltip>
-                </v-toolbar-items>
-                <v-spacer/>
-                <v-toolbar-items>
-                    <v-tooltip bottom>
                         <v-btn slot="activator" v-if="s.oneSelected" flat dense @click="goTree(s.oneSelected)">ouvrir
                             <v-icon>launch</v-icon>
                         </v-btn>
@@ -27,6 +20,14 @@
                         <span style="pointer-events: none">Ajouter au panier</span>
                     </v-tooltip>
                 </v-toolbar-items>
+                <v-spacer/>
+                <v-toolbar-items>
+                    <v-tooltip bottom>
+                        <v-btn slot="activator" icon dense @click="s.unselect()"><v-icon>close</v-icon></v-btn>
+                        <span style="pointer-events: none">Fermer</span>
+                    </v-tooltip>
+                </v-toolbar-items>
+
             </template>
         </search-comp>
         <add-tree-btn/>
