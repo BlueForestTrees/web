@@ -8,6 +8,12 @@
         </v-container>
         <v-container fluid>
             <v-layout column>
+                <h1>Import de catégories de Produits ADEME</h1>
+                <upload :dispatch="importCategorieAdeme"></upload>
+            </v-layout>
+        </v-container>
+        <v-container fluid>
+            <v-layout column>
                 <h1>Import Produits ADEME</h1>
                 <upload :dispatch="importTrunkAdeme"></upload>
             </v-layout>
@@ -33,6 +39,7 @@
             ...mapActions({
                 importTrunkAdeme: On.IMPORT_TRUNK_ADEME,
                 importImpactAdeme: On.IMPORT_IMPACT_ADEME,
+                importCategorieAdeme: On.IMPORT_CATEGORIE_ADEME,
                 importImpactEntryAdeme: On.IMPORT_IMPACT_ENTRY_ADEME
             }),
         }

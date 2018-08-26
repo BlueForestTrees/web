@@ -5,7 +5,7 @@ export default {
     // DIRECT (id qt) (color name) => à stocker. Les get réutilisent le storage
     searchFacetEntry: namepart => get(`/api/facetEntry${paramsOf({q: namepart})}`),
     searchImpactEntry: namepart => get(`/api/impactEntry${paramsOf({q: namepart})}`),
-    searchTrunk: ({term, type, aidx, ps}) => get(`/api/trunks${paramsOf({q: term, t: type, aidx, ps})}`),
+    searchTrunk: ({term, type, aidx, ps, cat}) => get(`/api/trunks${paramsOf({q: term, t: type, aidx, ps, cat})}`),
     //mixin? pour gérer (name color) et (complet)
     getTrunks: _ids => get(`/api/trunk${arrayOf('_ids', _ids)}`),
     getTrunk: _id => get(`/api/trunk/${_id}`),
@@ -22,6 +22,7 @@ export default {
     getBranches: _id => get(`/api/branch/${_id}`),
     getRoots: _id => get(`/api/root/${_id}`),
     getImpactTank: _id => get(`/api/impacttank/${_id}`),
+    getCategories: pid => get(`/api/categories${paramsOf({pid: pid || null})}`),
     
     
     putLink: ({_id, trunkId, rootId, relativeTo, bqt}) => Promise.all([
@@ -51,6 +52,7 @@ export default {
     postImpactEntry: impact => post('/api/impactEntry', impact),
     postTrunk: trunk => post('/api/trunk', trunk),
     postTrunkAdeme: (formData) => upload('/api/trunkBulk/ademe', formData),
+    postCategorieAdeme: (formData) => upload('/api/categories/bulk/ademe', formData),
     postImpactEntryAdeme: (formData) => upload('/api/impactEntryBulk/ademe', formData),
     postImpactAdeme: (formData) => upload('/api/impactBulk/ademe', formData),
     postTrunkClone: trunkId => post(`/api/trunk?sourceId=${trunkId}`),

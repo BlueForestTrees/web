@@ -51,6 +51,8 @@ if (conf.mode === "development") {
     
     conf.serve = {
         add: function (app, middleware, options) {
+            app.use(convert(proxy('/api/categories', {target: 'http://localhost:8081'})))
+            app.use(convert(proxy('/api/import', {target: 'http://localhost:8082'})))
             app.use(convert(proxy('/api', {target: 'http://localhost:8080'})))
             app.use(convert(history()))
         }

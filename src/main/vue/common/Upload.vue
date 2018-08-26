@@ -42,11 +42,7 @@
                         this.uploading = false
                         if (res.ok) {
                             this.snack({
-                                text: `
-                                    ${res.matches > 0 ? (res.matches + " mises à jour") : ""}
-                                    ${(res.matches > 0 && res.upsertions > 0) ? ", " : ""}
-                                    ${res.upsertions > 0 ? (res.upsertions + " ajouts") : ""}
-                                `
+                                text: res
                             })
                             this.reset()
                         } else {

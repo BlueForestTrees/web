@@ -41,7 +41,7 @@
 
     export default {
         name: 'search-comp',
-        props: {label: String, nobar: Boolean, maxSelectionSize: Number, type: {type: String, default: On.SEARCH_TREE}},
+        props: {label: String, filter: Object, nobar: Boolean, maxSelectionSize: Number, type: {type: String, default: On.SEARCH_TREE}},
         mixins: [selectable],
         components: {
             InfiniteLoading,
@@ -56,8 +56,8 @@
         computed: {
             query: function () {
                 return {
+                    ...this.filter,
                     term: this.namePart || undefined,
-                    type: this.type,
                     ps: 30,
                     aidx: (this.items && this.items.length > 0) ? this.items[this.items.length - 1]._id : null
                 }
@@ -65,6 +65,9 @@
         },
         watch: {
             namePart: function () {
+                this.reset()
+            },
+            filter: function () {
                 this.reset()
             }
         },

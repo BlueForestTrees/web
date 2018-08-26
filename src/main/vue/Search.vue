@@ -1,6 +1,7 @@
 <template>
     <span>
-        <search-comp>
+        <search-cat @select="catChange"/>
+        <search-comp :filter="catFilter">
             <template slot-scope="{ s }">
                 <v-toolbar-items>
                     <v-tooltip bottom>
@@ -39,17 +40,28 @@
     import {mapActions} from "vuex"
     import SearchComp from "./SearchComp"
     import AddTreeBtn from "./layout/AddTreeBtn"
+    import SearchCat from "./SearchCat"
+    import {map} from "unit-manip"
 
     export default {
         name: "search",
-        components: {AddTreeBtn, SearchComp},
-
+        data: function () {
+            return {
+                catFilter: null
+            }
+        },
+        components: {SearchCat, AddTreeBtn, SearchComp},
         methods: {
             ...mapActions({
                 compare: On.GO_COMPARE,
                 goTree: On.GO_TREE,
                 addToBasket: On.ADD_TO_BASKET
-            })
+            }),
+            catChange(cats) {
+                const cat = map(cats, cat => cat._id)
+                this.catFilter = {cat}
+
+            }
         },
     }
 </script>

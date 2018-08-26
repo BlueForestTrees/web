@@ -1,6 +1,5 @@
-
 export default {
-
+    
     data: function () {
         return {
             selection: []
@@ -10,7 +9,7 @@ export default {
         selectionCount() {
             return this.selection.length
         },
-
+        
         anySelected() {
             return this.selectionCount > 0 && this.selection
         },
@@ -23,6 +22,9 @@ export default {
         manySelected() {
             return this.selectionCount > 2 && this.selection
         },
+        lastSelected() {
+            return this.selectionCount > 0 && this.selection[this.selectionCount - 1]
+        }
     },
     methods: {
         unselect: function () {
@@ -35,11 +37,11 @@ export default {
                 }
             }
         },
-        toggleSelect: function (item) {
+        toggleSelect: function (item, opts) {
             let removed = false
             for (let i = 0; i < this.selection.length; i++) {
                 if (item === this.selection[i]) {
-                    this.selection.splice(i, 1)
+                    this.selection.splice(opts.after ? i + 1 : i, opts.after ? 999 : 1)
                     removed = true
                     break
                 }
@@ -50,6 +52,7 @@ export default {
                     this.selection.splice(0, this.selection.length - this.maxSelectionSize)
                 }
             }
+            return !removed
         }
     }
 }
