@@ -1,17 +1,22 @@
 <template>
-    <v-list>
+    <span>
         <transition name="slide-fade">
             <v-toolbar v-if="!nobar && anySelected" app dark class="elevation-0" color="green lighten-2">
                 <slot :s="this">
-
                 </slot>
             </v-toolbar>
         </transition>
 
-        <v-card-title primary-title>
-            <p style="padding-right:1em">{{label || 'Filtre'}}</p>
-            <v-text-field label="Nom" autofocus v-model="namePart"/>
+         <v-card-title primary-title>
+            <div class="subheading">Résultats</div>
         </v-card-title>
+
+        <!--<v-card-title primary-title>-->
+            <!--<div class="subheading">{{label || "Filtre"}}</div>-->
+        <!--</v-card-title>-->
+        <!--<v-text-field label="Nom" autofocus v-model="namePart"/>-->
+        <!--<v-divider/>-->
+        <!--<v-divider/>-->
 
         <template v-for="item in items">
             <v-list-tile :key="item._id" @click="toggleSelect(item)" :style="{background: isSelected(item) ? '#E8F5E9' : '', transition: 'background .2s ease'}">
@@ -29,7 +34,7 @@
             <span slot="no-more">{{items.length}} résultats</span>
             <span slot="no-results">Pas de résultats</span>
         </infinite-loading>
-    </v-list>
+    </span>
 </template>
 
 <script>

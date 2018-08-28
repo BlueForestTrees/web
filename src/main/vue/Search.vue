@@ -1,7 +1,12 @@
 <template>
     <span>
+         <v-card-title primary-title>
+            <div class="headline">Recherche</div>
+        </v-card-title>
+        <v-divider/>
+        <v-divider/>
         <search-cat @select="catChange"/>
-        <search-comp :filter="catFilter">
+        <search-comp :filter="catFilter" label="Par nom">
             <template slot-scope="{ s }">
                 <v-toolbar-items>
                     <v-tooltip bottom>
