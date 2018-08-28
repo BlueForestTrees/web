@@ -1,33 +1,44 @@
 <template>
-    <v-layout column>
-        <TreeHead :tree="left" @close="" :bg-color="leftColor" no-close @nav="goTree(left)" :style="{cursor: 'pointer'}"/>
-        <svg :viewBox="viewbox" v-if="lines" @mouseout="curI = null">
-            <!--GRAPHIQUE-->
-            <g>
-                <path :d="lines.left" :fill="leftColor"></path>
-                <path :d="lines.right" :fill="rightColor"></path>
-            </g>
-            <g>
-                <template v-for="(axis,i) in axises.common">
-                    <!--LISTES DES NOM D'AXES-->
-                    <text alignment-baseline="middle" :x="5+gwidth" :y="(0.5+i)*lineHeight" :style="{fill:textColor}">{{axis.left.name}} {{curI === i ? equiv(axis.left) : ""}}</text>
+    <v-container>
+        <v-card style="max-width: 60em">
+            <v-card-title>
+                <TreeHead :tree="left" @close="" :bg-color="leftColor" no-close no-icon @nav="goTree(left)" :style="{cursor: 'pointer'}"/>
+            </v-card-title>
 
-                    <!-- POINTILLES-->
-                    <line :x1="0" :x2="gwidth" :y1="i*lineHeight" :y2="i*lineHeight" stroke="grey" stroke-width="0.4" stroke-opacity="0.3" stroke-dasharray="5, 10" ></line>
-                    <line :x1="gwidth" :x2="width" :y1="i*lineHeight" :y2="i*lineHeight" stroke="grey" stroke-width="0.4" stroke-opacity="0.3"></line>
-
-                    <!--SELECTION-->
-                    <rect fill="green" x="0" :y="i*lineHeight" :width="width" :height="lineHeight" stroke-width="1" stroke-opacity="0.8" :fill-opacity="curI === i ? 0.1 : 0" @click="curI = i" @mouseover="curI = i"></rect>
-                    <g v-if="curI === i">
-                        <text alignment-baseline="middle" :x="border" :y="(0.5+i)*lineHeight" :font-size="9-(1.1*(qtUnit(axis.left).length-9))" :style="{fill:darkTextColor, pointerEvents:'none'}">{{qtUnit(axis.left)}}</text>
-                        <text alignment-baseline="middle" text-anchor="end" :x="gwidth-border" :font-size="9-(1.1*(qtUnit(axis.right).length-9))" :y="(0.5+i)*lineHeight" :style="{fill:darkTextColor, pointerEvents:'none'}">{{qtUnit(axis.right)}}</text>
+            <v-card-text style="padding-top:0;padding-bottom:0">
+                <svg :viewBox="viewbox" v-if="lines" @mouseout="curI = null" style="min-width: 40em">
+                    <!--GRAPHIQUE-->
+                    <g>
+                        <path :d="lines.left" :fill="leftColor"></path>
+                        <path :d="lines.right" :fill="rightColor"></path>
                     </g>
-                </template>
-            </g>
-        </svg>
-        <span v-else>Rien à Comparer!</span>
-        <TreeHead :tree="right" @close="" :bg-color="rightColor" no-close @nav="goTree(right)" :style="{cursor: 'pointer'}"/>
-    </v-layout>
+                    <g>
+                        <template v-for="(axis,i) in axises.common">
+                            <!--LISTES DES NOM D'AXES-->
+                            <text alignment-baseline="middle" :x="5+gwidth" :y="(0.5+i)*lineHeight" :style="{fill:textColor}">{{axis.left.name}} {{curI === i ? equiv(axis.left) : ""}}</text>
+
+                            <!-- POINTILLES-->
+                            <line :x1="0" :x2="gwidth" :y1="i*lineHeight" :y2="i*lineHeight" stroke="grey" stroke-width="0.4" stroke-opacity="0.3" stroke-dasharray="5, 10" ></line>
+                            <line :x1="gwidth" :x2="width" :y1="i*lineHeight" :y2="i*lineHeight" stroke="grey" stroke-width="0.4" stroke-opacity="0.3"></line>
+
+                            <!--SELECTION-->
+                            <rect fill="green" x="0" :y="i*lineHeight" :width="width" :height="lineHeight" stroke-width="1" stroke-opacity="0.8" :fill-opacity="curI === i ? 0.1 : 0" @click="curI = i" @mouseover="curI = i"></rect>
+                            <g v-if="curI === i">
+                                <text alignment-baseline="middle" :x="border" :y="(0.5+i)*lineHeight" :font-size="9-(1.1*(qtUnit(axis.left).length-9))" :style="{fill:darkTextColor, pointerEvents:'none'}">{{qtUnit(axis.left)}}</text>
+                                <text alignment-baseline="middle" text-anchor="end" :x="gwidth-border" :font-size="9-(1.1*(qtUnit(axis.right).length-9))" :y="(0.5+i)*lineHeight" :style="{fill:darkTextColor, pointerEvents:'none'}">{{qtUnit(axis.right)}}</text>
+                            </g>
+                        </template>
+                    </g>
+                </svg>
+                <span v-else>Chargement...</span>
+            </v-card-text>
+
+            <v-card-title>
+                <TreeHead :tree="right" @close="" :bg-color="rightColor" no-close no-icon @nav="goTree(right)" :style="{cursor: 'pointer'}"/>
+            </v-card-title>
+        </v-card>
+    </v-container>
+
 </template>
 
 <script>
