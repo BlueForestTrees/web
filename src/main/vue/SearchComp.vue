@@ -11,13 +11,6 @@
             <div class="subheading">Résultats</div>
         </v-card-title>
 
-        <!--<v-card-title primary-title>-->
-            <!--<div class="subheading">{{label || "Filtre"}}</div>-->
-        <!--</v-card-title>-->
-        <!--<v-text-field label="Nom" autofocus v-model="namePart"/>-->
-        <!--<v-divider/>-->
-        <!--<v-divider/>-->
-
         <template v-for="item in items">
             <v-list-tile :key="item._id" @click="toggleSelect(item)" :style="{background: isSelected(item) ? '#E8F5E9' : '', transition: 'background .2s ease'}">
                 <v-icon v-if="isSelected(item)" color="green" style="margin-right:0.3em">check_circle</v-icon>
@@ -46,14 +39,13 @@
 
     export default {
         name: 'search-comp',
-        props: {label: String, filter: Object, nobar: Boolean, maxSelectionSize: Number, type: {type: String, default: On.SEARCH_TREE}},
+        props: {filter: Object, nobar: Boolean, maxSelectionSize: Number, type: {type: String, default: On.SEARCH_TREE}},
         mixins: [selectable],
         components: {
             InfiniteLoading,
         },
         data() {
             return {
-                namePart: null,
                 items: [],
                 manualMode: true
             }
@@ -62,7 +54,6 @@
             query: function () {
                 return {
                     ...this.filter,
-                    term: this.namePart || undefined,
                     ps: 30,
                     aidx: (this.items && this.items.length > 0) ? this.items[this.items.length - 1]._id : null
                 }

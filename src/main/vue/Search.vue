@@ -5,8 +5,14 @@
         </v-card-title>
         <v-divider/>
         <v-divider/>
+
         <search-cat @select="catChange"/>
-        <search-comp :filter="catFilter" label="Par nom">
+
+        <expendable title="Nom">
+            <v-text-field label="Nom" autofocus v-model="name"/>
+        </expendable>
+
+        <search-comp :filter="filter" label="Par nom">
             <template slot-scope="{ s }">
                 <v-toolbar-items>
                     <v-tooltip bottom>
@@ -46,15 +52,30 @@
     import SearchComp from "./SearchComp"
     import AddTreeBtn from "./layout/AddTreeBtn"
     import SearchCat from "./SearchCat"
+    import Expendable from "./common/Expendable"
 
     export default {
         name: "search",
         data: function () {
             return {
-                catFilter: null
+                name:null,
+                cats:[]
             }
         },
-        components: {SearchCat, AddTreeBtn, SearchComp},
+        components: {Expendable, SearchCat, AddTreeBtn, SearchComp},
+        computed:{
+            filter(){
+                const cat = {}
+                for(let i = 0; i < this.cats.length; i++){
+                    cat["c"+(i+1)] = this.cats[i]._id
+                }
+                const f = {cat}
+                if(this.name){
+                    f.term = this.name
+                }
+                return f
+            }
+        },
         methods: {
             ...mapActions({
                 compare: On.GO_COMPARE,
@@ -62,11 +83,7 @@
                 addToBasket: On.ADD_TO_BASKET
             }),
             catChange(cats) {
-                const cat = {}
-                for(let i = 0; i < cats.length; i++){
-                    cat["c"+(i+1)] = cats[i]._id
-                }
-                this.catFilter = {cat}
+               this.cats = cats
             }
         },
     }
