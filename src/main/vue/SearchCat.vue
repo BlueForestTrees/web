@@ -9,13 +9,18 @@
         </v-breadcrumbs>
         <v-divider/>
         <v-divider/>
-        <v-list-tile :key="'o'+item._id" v-if="items.length > 0" v-for="item in items"
-                     @click="select(item)"
-                     :style="{background: isSelected(item) ? '#E8F5E9' : '', transition: 'background .2s ease'}">
-            <v-icon v-if="isSelected(item)" color="green" style="margin-right:0.3em">check_circle</v-icon>
-            <v-icon v-else :style="'color: '+item.color+';margin-right:0.3em'">stop</v-icon>
-            {{item.name}}
-        </v-list-tile>
+        <v-container>
+            <v-layout row align-center wrap >
+                <v-flex v-if="items.length > 0" v-for="item in items" @click="select(item)"
+                        :key="'o'+item._id" :style="{background: isSelected(item) ? '#E8F5E9' : '', transition: 'background .2s ease'}">
+                    <v-layout row>
+                        <v-icon v-if="isSelected(item)" color="green" style="margin-right:0.3em">check_circle</v-icon>
+                        <v-icon v-else :style="'color: '+item.color+';margin-right:0.3em'">stop</v-icon>
+                        {{item.name}}
+                    </v-layout>
+            </v-flex>
+            </v-layout>
+        </v-container>
         <v-divider/>
     </span>
 </template>
