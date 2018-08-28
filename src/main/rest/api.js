@@ -5,7 +5,7 @@ export default {
     // DIRECT (id qt) (color name) => à stocker. Les get réutilisent le storage
     searchFacetEntry: namepart => get(`/api/tree/facetEntry${paramsOf({q: namepart})}`),
     searchImpactEntry: namepart => get(`/api/tree/impactEntry${paramsOf({q: namepart})}`),
-    searchTrunk: ({term, type, aidx, ps, cat}) => get(`/api/tree/trunks${paramsOf({q: term, t: type, aidx, ps, cat})}`),
+    searchTrunk: ({term, type, aidx, ps, cat}) => get(`/api/tree/trunks${paramsOf({q: term, t: type, aidx, ps, ...cat})}`),
     //mixin? pour gérer (name color) et (complet)
     getTrunks: _ids => get(`/api/tree/trunk${arrayOf('_ids', _ids)}`),
     getTrunk: _id => get(`/api/tree/trunk/${_id}`),

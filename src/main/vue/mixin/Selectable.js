@@ -37,7 +37,7 @@ export default {
                 }
             }
         },
-        toggleSelect: function (item, opts) {
+        toggleSelect: function (item, opts = {}) {
             let removed = false
             for (let i = 0; i < this.selection.length; i++) {
                 if (item === this.selection[i]) {

@@ -41,7 +41,6 @@
     import SearchComp from "./SearchComp"
     import AddTreeBtn from "./layout/AddTreeBtn"
     import SearchCat from "./SearchCat"
-    import {map} from "unit-manip"
 
     export default {
         name: "search",
@@ -58,9 +57,11 @@
                 addToBasket: On.ADD_TO_BASKET
             }),
             catChange(cats) {
-                const cat = map(cats, cat => cat._id)
+                const cat = {}
+                for(let i = 0; i < cats.length; i++){
+                    cat["c"+(i+1)] = cats[i]._id
+                }
                 this.catFilter = {cat}
-
             }
         },
     }
