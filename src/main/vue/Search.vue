@@ -12,7 +12,7 @@
             <v-text-field label="Nom" autofocus v-model="name"/>
         </expendable>
 
-        <search-comp :filter="filter" label="Par nom">
+        <search-comp :filter="filter">
             <template slot-scope="{ s }">
                 <v-toolbar-items>
                     <v-tooltip bottom>

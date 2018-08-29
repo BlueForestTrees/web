@@ -1,7 +1,7 @@
 <template>
     <span>
 
-        <expendable title="Par catégories">
+        <expendable title="Catégories">
             <v-breadcrumbs style="padding-top: 0;padding-bottom: 0">
               <v-icon slot="divider">arrow_forward_ios</v-icon>
               <v-breadcrumbs-item key="root"><span @click="pathSelect(null)">Tout</span></v-breadcrumbs-item>
@@ -17,7 +17,7 @@
                         <v-layout row align-center>
                             <v-icon v-if="isSelected(item)" color="green" style="margin-right:0.3em">check_circle</v-icon>
                             <v-icon v-else :style="'color: '+item.color">stop</v-icon>
-                            <span style="padding-right:0.5em">{{item.name}}</span>
+                            <a style="padding-right:0.5em">{{item.name}}</a>
                         </v-layout>
                 </v-flex>
                 </v-layout>
