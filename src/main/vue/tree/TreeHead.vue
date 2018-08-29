@@ -23,7 +23,7 @@
         computed: {
             style: function(){
                 return {
-                    backgroundColor:shadeColor(this.bgColor,0.7),
+                    backgroundColor:shadeColor(this.bgColor,0.8),
                     border:'1px',
                     borderStyle: 'solid',
                     borderColor:this.bgColor,

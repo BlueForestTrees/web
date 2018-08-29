@@ -6,11 +6,11 @@
             </v-card-title>
 
             <v-card-text style="padding-top:0;padding-bottom:0">
-                <svg :viewBox="viewbox" v-if="lines" @mouseout="curI = null" style="min-width: 40em">
+                <svg :viewBox="viewbox" v-if="lines" style="min-width: 40em">
                     <!--GRAPHIQUE-->
                     <g>
-                        <path :d="lines.left" :fill="leftColor"></path>
-                        <path :d="lines.right" :fill="rightColor"></path>
+                        <path :d="lines.right" :fill="rightLightColor" :stroke="rightColor" stroke-width="0.4"></path>
+                        <path :d="lines.left" :fill="leftLightColor" :stroke="leftColor" stroke-width="0.4"></path>
                     </g>
                     <g>
                         <template v-for="(axis,i) in axises.common">
@@ -60,11 +60,13 @@
                 lineHeight: 25,
                 gwidth: 100,
                 width: 550,
-                curI: null,
-                leftColor: shadeColor('#00ACC1', alpha),
-                rightColor: shadeColor('#D81B60', alpha),
+                curI: 0,
+                leftColor: '#00ACC1',
+                rightColor: '#D81B60',
+                leftLightColor: shadeColor('#00ACC1', alpha),
+                rightLightColor: shadeColor('#D81B60', alpha),
                 textColor,
-                darkTextColor: shadeColor(textColor, -0.15)
+                darkTextColor: shadeColor(textColor, -0.35)
             }
         },
         computed: {
