@@ -4,24 +4,23 @@ import VueRouter from 'vue-router'
 
 //KO
 import Tree from "../vue/tree/Tree"
-//const Tree = () => import(/* webpackChunkName: "module-Tree" */ '../vue/tree/Tree.vue')
+//const Tree = () => import(/* webpackChunkName: "Tree" */ '../vue/tree/Tree.vue')
 import Basket from "../vue/Basket"
-//const Basket = () => import (/* webpackChunkName: "module-Basket" */ '../vue/Basket')
+//const Basket = () => import (/* webpackChunkName: "Basket" */ '../vue/Basket')
 import Imports from "../vue/Imports"
-//const Imports = () => import(/* webpackChunkName: "module-Imports" */ '../vue/Imports')
-
-//?
-const Root = () => import(/* webpackChunkName: "module-Root" */ '../vue/tree/Root')
+//const Imports = () => import(/* webpackChunkName: "Imports" */ '../vue/Imports')
+import Root from "../vue/tree/Root"
+//const Root = () => import(/* webpackChunkName: "Root" */ '../vue/tree/Root')
 
 //OK
-const BlueForest = () => import(/* webpackChunkName: "module-BF" */ '../vue/BlueForest')
-const Confirmation = () => import(/* webpackChunkName: "module-Confirmation" */ '../vue/Confirmation')
-const Inscription = () => import(/* webpackChunkName: "module-Inscription" */ '../vue/Inscription')
-const Login = () => import(/* webpackChunkName: "module-Login" */ '../vue/Login')
-const Search = () => import(/* webpackChunkName: "module-Search" */ '../vue/Search')
-const ImpactEntries = () => import(/* webpackChunkName: "module-ImpactEntries" */ '../vue/ImpactEntries')
-const Home = () => import(/* webpackChunkName: "module-Home" */ '../vue/Home')
-const Compare = () => import(/* webpackChunkName: "module-Compare" */ '../vue/compare/Compare')
+const BlueForest = () => import(/* webpackChunkName: "BF" */ '../vue/BlueForest')
+const Confirmation = () => import(/* webpackChunkName: "Confirmation" */ '../vue/Confirmation')
+const Inscription = () => import(/* webpackChunkName: "Inscription" */ '../vue/Inscription')
+const Login = () => import(/* webpackChunkName: "Login" */ '../vue/Login')
+const Search = () => import(/* webpackChunkName: "Search" */ '../vue/Search')
+const ImpactEntries = () => import(/* webpackChunkName: "ImpactEntries" */ '../vue/ImpactEntries')
+const Home = () => import(/* webpackChunkName: "Home" */ '../vue/Home')
+const Compare = () => import(/* webpackChunkName: "Compare" */ '../vue/compare/Compare')
 
 Vue.use(VueRouter)
 
