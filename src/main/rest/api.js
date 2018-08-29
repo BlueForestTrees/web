@@ -12,7 +12,7 @@ export default {
     //getImpactEntry
     //getFacetEntry
     
-    getGrandeurs: () => get('/api/grandeurs'),
+    getGrandeurs: () => get('/api/grandeur'),
     
     
     //peupler les (color name) depuis storage, ou lookup.
