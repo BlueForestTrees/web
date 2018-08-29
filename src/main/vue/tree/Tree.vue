@@ -1,9 +1,9 @@
 <template>
     <v-container fluid grid-list-md>
         <v-layout row wrap>
-            <v-flex xs12>
+            <!-- <v-flex xs12>
                 <tree-head :tree="tree" @close="close"/>
-            </v-flex>
+            </v-flex> -->
             <v-flex xs12>
                 <ressources :tree="tree"/>
             </v-flex>
@@ -13,8 +13,11 @@
             <v-flex xs12>
                 <impacts :tree="tree"/>
             </v-flex>
-            <v-flex xs12>
+            <v-flex xs6>
                 <bilan-impacts :tree="tree"/>
+            </v-flex>
+            <v-flex xs6>
+                <tree-svg :tree="tree"/>
             </v-flex>
             <v-flex xs12>
                 <branches :tree="tree"/>
@@ -25,6 +28,7 @@
 </template>
 
 <script>
+    import TreeSvg from "./TreeSvg"
     import Facets from "./Facets"
     import Branches from "./Branches"
     import Ressources from "./Ressources"
@@ -46,7 +50,8 @@
             Impacts,
             Ressources,
             Branches,
-            Facets
+            Facets,
+            TreeSvg
         },
         props: ['_id', 'bqt'],
         data: function () {
