@@ -19,7 +19,7 @@ export default {
             }
             const basketItems = getters.basketArray
             let nbToFind = 2 - dest.length
-            for(let i = 0; i < basketItems.length && nbToFind > 0; i++){
+            for(let i = basketItems.length-1; i >=0  && nbToFind > 0; i--){
                 const item = basketItems[i]
                 if(!find(dest, "_id", item._id)){
                     dest.push(item)
