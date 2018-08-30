@@ -16,20 +16,14 @@
             <template slot-scope="{ s }">
                 <v-toolbar-items>
                     <v-tooltip bottom>
+                        <v-btn slot="activator" v-if="s.selectionCount" flat dense @click="addToBasket(s.selection);s.unselect()">ajouter<v-icon>arrow_right_alt</v-icon><v-icon>shopping_basket</v-icon></v-btn>
+                        <span style="pointer-events: none">Ajouter au panier</span>
+                    </v-tooltip>
+                    <v-tooltip bottom>
                         <v-btn slot="activator" v-if="s.oneSelected" flat dense @click="goTree(s.oneSelected)">ouvrir
-                            <v-icon>launch</v-icon>
+                            <v-icon>category</v-icon>
                         </v-btn>
                         <span style="pointer-events: none">Ouvrir</span>
-                    </v-tooltip>
-                    <v-tooltip bottom>
-                        <v-btn slot="activator" v-if="s.twoSelected" flat dense @click="compare(s.twoSelected)">comparer
-                            <v-icon>compare_arrows</v-icon>
-                        </v-btn>
-                        <span style="pointer-events: none">Comparer</span>
-                    </v-tooltip>
-                    <v-tooltip bottom>
-                        <v-btn slot="activator" v-if="s.selectionCount" flat dense @click="addToBasket(s.selection);s.unselect()">panier<v-icon>save_alt</v-icon></v-btn>
-                        <span style="pointer-events: none">Ajouter au panier</span>
                     </v-tooltip>
                 </v-toolbar-items>
                 <v-spacer/>
@@ -78,7 +72,6 @@
         },
         methods: {
             ...mapActions({
-                compare: On.GO_COMPARE,
                 goTree: On.GO_TREE,
                 addToBasket: On.ADD_TO_BASKET
             }),

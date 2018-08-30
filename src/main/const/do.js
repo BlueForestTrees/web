@@ -10,6 +10,8 @@ export default {
     ADD_TO_BASKET: 'addToBasket',
     CLEAR_DIALOG_DATA: 'clearDialogData',
     CLOSE_TREE: "closeTree",
+    CLOSE_COMPARE_LEFT: "closeCompareLeft",
+    CLOSE_COMPARE_RIGHT: "closeCompareRight",
     DELETE_FACETS: 'deleteFacets',
     DELETE_IMPACTS: 'deleteImpacts',
     DELETE_ROOT: 'deleteRoot',

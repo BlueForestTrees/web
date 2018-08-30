@@ -1,6 +1,12 @@
 <template>
-    <v-container fluid grid-list-md>
-        <v-layout row wrap>
+    <span>
+        <v-card-title primary-title><div class="headline">Composition</div></v-card-title>
+        <v-card-text v-if="loading">Chargement...</v-card-text>
+
+        <v-card-text v-else-if="!tree">
+            <div>Aucun produit ouvert. Faites une recherche.</div>
+        </v-card-text>
+        <v-layout v-else row wrap>
             <v-flex xs12>
                 <v-card>
                     <v-container>
@@ -25,7 +31,7 @@
             </v-flex>
             <add-tree-part-btn :tree="tree"/>
         </v-layout>
-    </v-container>
+    </span>
 </template>
 
 <script>
@@ -64,10 +70,15 @@
         methods: {
             ...mapActions({dispatchLoad: On.LOAD_OPEN_TREE, snack: On.SNACKBAR}),
             refresh: function () {
-                this.dispatchLoad({bqt: this.bqt, _id: this._id})
-                    .catch(e => {
-                        this.snack({text: "Cet élement n'existe pas ou plus", color: "red"})
-                    })
+                if(this.bqt && this._id) {
+                    this.loading = true
+                    this.dispatchLoad({bqt: this.bqt, _id: this._id})
+                        .then(()=>this.loading = false)
+                        .catch(e => {
+                            this.loading = false
+                            this.snack({text: "Cet élement n'existe pas ou plus", color: "red"})
+                        })
+                }
             }
         },
         created: function () {

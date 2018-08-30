@@ -38,7 +38,7 @@
                     <v-toolbar v-if="anySelected" app dark class="elevation-0" color="green lighten-2">
                         <v-toolbar-items>
                             <v-tooltip bottom>
-                                <v-btn slot="activator" v-if="oneSelected" flat @click="goTree(oneSelected)"><span class="hidden-xs-only">ouvrir</span><v-icon>launch</v-icon></v-btn>
+                                <v-btn slot="activator" v-if="oneSelected" flat @click="goTree(oneSelected)"><span class="hidden-xs-only">ouvrir</span><v-icon>category</v-icon></v-btn>
                                 <span style="pointer-events: none">Ouvrir</span>
                             </v-tooltip>
                             <v-tooltip bottom>

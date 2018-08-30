@@ -14,6 +14,16 @@
             <span style="pointer-events: none">Panier</span>
         </v-tooltip>
 
+        <v-tooltip bottom>
+            <v-btn slot="activator" icon dense @click="goTree()"><v-icon>category</v-icon></v-btn>
+            <span style="pointer-events: none">Composition</span>
+        </v-tooltip>
+
+        <v-tooltip bottom>
+            <v-btn slot="activator" icon dense @click="goCompare()"><v-icon>compare_arrows</v-icon></v-btn>
+            <span style="pointer-events: none">Comparaison</span>
+        </v-tooltip>
+
         <div class="d-flex align-center" style="margin-left: auto">
 
             <v-menu>
@@ -84,6 +94,8 @@
                 logout: On.LOGOUT,
                 goSearch: On.GO_SEARCH,
                 goBasket: On.GO_BASKET,
+                goTree: On.GO_TREE,
+                goCompare: On.GO_COMPARE
             }),
             ...mapMutations({
                 showDialog: Do.SHOW_DIALOG,

@@ -1,12 +1,12 @@
 <template>
-    <v-container>
+    <v-container v-if="lines">
         <v-card style="max-width: 60em">
             <v-card-title>
                 <TreeHead :tree="left" @close="" :bg-color="leftColor" no-close no-icon @nav="goTree(left)" :style="{cursor: 'pointer'}"/>
             </v-card-title>
 
             <v-card-text style="padding-top:0;padding-bottom:0">
-                <svg :viewBox="viewbox" v-if="lines" style="min-width: 40em">
+                <svg :viewBox="viewbox" style="min-width: 40em">
                     <!--GRAPHIQUE-->
                     <g>
                         <path :d="lines.right" :fill="rightLightColor" :stroke="rightColor" stroke-width="0.4"></path>
@@ -30,7 +30,6 @@
                         </template>
                     </g>
                 </svg>
-                <span v-else>Chargement...</span>
             </v-card-text>
 
             <v-card-title>

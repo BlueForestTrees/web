@@ -43,6 +43,11 @@ export default new VueRouter({
                     props: true
                 },
                 {
+                    name: GO.TREE_EMPTY,
+                    path: "tree",
+                    component: Tree
+                },
+                {
                     name: GO.ROOT,
                     path: "root/:treeId/:rootId",
                     component: Root,
@@ -62,6 +67,16 @@ export default new VueRouter({
                     name: GO.BASKET,
                     path: "basket",
                     component: Basket
+                },
+                {
+                    name: GO.COMPARE_EMPTY,
+                    path: "compare",
+                    component: Compare
+                },
+                {
+                    name: GO.COMPARE_PARTIAL,
+                    path: "compare/:leftId",
+                    component: Compare
                 },
                 {
                     name: GO.COMPARE,

@@ -43,8 +43,9 @@ export const tree = () => ({_id: null, trunk: null, selection: null, facets: nul
 export default {
     token: null,
     user: null,
-    basket: [],
+    basket: {},
     tree: null,
+    compare: {left:null, right:null, leftAxises:null, rightAxises: null, axis:null},
     dialogs: dialogs(),
     nav: {leftMenuVisible: false},
     snack: snack(),

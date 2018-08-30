@@ -1,13 +1,18 @@
 <template>
-
-            <compare-ribbon :axises="axises" :left="left" :right="right"/>
+    <span>
+        <v-card-title primary-title><div class="headline">Comparaison</div></v-card-title>
+        <v-card-text v-if="loading">Chargement...</v-card-text>
+        <v-card-text v-else-if="!leftId">Aucun produit à comparer. Faites une recherche ou prenez des produits du panier</v-card-text>
+        <v-card-text v-else-if="!rightId">Un seul produit à comparer. Faites une recherche ou prenez des produits du panier</v-card-text>
+        <compare-ribbon v-else :axises="axises" :left="compare.left" :right="compare.right"/>
+    </span>
 
 </template>
 
 <script>
-    import {applyBase, buildAxises, separate, updateRatios} from "../../services/axis"
+    import {buildAxises, separate, updateRatios} from "../../services/axis"
     import On from "../../const/on"
-    import {mapActions} from 'vuex'
+    import {mapState, mapActions} from 'vuex'
     import CompareRibbon from "./CompareRibbon"
 
     export default {
@@ -18,44 +23,44 @@
         },
         data: function () {
             return {
-                left: null,
-                right: null,
                 base: null,
-                axises: null,
                 leftColor: "cyan darken1",
                 rightColor: "pink darken1",
+                loading: false
             }
         },
         created: async function () {
-            this.init()
+            this.refresh()
         },
         watch: {
             '$route'(to, from) {
                 this.refresh()
             }
         },
-        methods: {
-            init: async function () {
-                await this.refreshTrees()
-                this.treesToAxises()
-                // this.selectDefaultBase()
-            },
-            ...mapActions({loadTree: On.LOAD_TREE, snack: On.SNACKBAR}),
-            refreshTrees: async function () {
-                this.left = await this.loadTree({_id: this.leftId})
-                this.right = await this.loadTree({_id: this.rightId})
-                await this.left.promises.all
-                await this.right.promises.all
-            },
-            treesToAxises: function () {
-                try {
-                    this.axises = separate(buildAxises(this.left), buildAxises(this.right))
-                    updateRatios(this.axises)
-                } catch (e) {
-                    this.snack({text: "Erreur de calcul, données insuffisantes", color: "red"})
-                    throw e
+        computed:{
+            ...mapState(['compare']),
+            axises: function(){
+                if(!this.compare.axis) {
+                    if(this.compare.leftAxises && this.compare.rightAxises) {
+                        this.compare.axis = updateRatios(separate(this.compare.leftAxises, this.compare.rightAxises))
+                    }
                 }
-            },
+                return this.compare.axis
+            }
+        },
+        methods: {
+            ...mapActions({loadTree: On.LOAD_TREE, snack: On.SNACKBAR}),
+            refresh: async function(){
+                if(this.leftId) {
+                    this.compare.left = await this.loadTree({_id: this.leftId})
+                    this.compare.left.promises.all.then(() => this.compare.leftAxises = buildAxises(this.compare.left))
+                }
+
+                if(this.rightId) {
+                    this.compare.right = await this.loadTree({_id: this.rightId})
+                    this.compare.right.promises.all.then(() => this.compare.rightAxises = buildAxises(this.compare.right))
+                }
+            }
         }
     }
 </script>

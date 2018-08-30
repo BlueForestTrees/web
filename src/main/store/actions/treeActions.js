@@ -10,14 +10,24 @@ import Do from "../../const/do"
 const needRefresh = basketTree => !basketTree.branches
 
 export default {
-    [On.GO_TREE]: ({commit, state}, tree) => {
-        const _id = tree._id
-        const bqt = tree.trunk.quantity.bqt
-        return router.push({name: GO.TREE, params: {_id, bqt}})
+    [On.GO_TREE]: ({commit, getters}, tree) => {
+        const dest = tree ?
+            {_id : tree._id, bqt : tree.trunk.quantity.bqt}
+            :
+            getters.basketArray[0] ?
+                {_id : getters.basketArray[0]._id, bqt : getters.basketArray[0].trunk.quantity.bqt}
+                :
+                null
+
+        if(dest){
+            return router.push({name: GO.TREE, params: dest})
+        }else{
+            return router.push({name: GO.TREE_EMPTY})
+        }
     },
     
-    [On.LOAD_OPEN_TREE]: async ({getters, dispatch, commit}, {_id, bqt}) => {
-        const basketItem = getters.basketItem(_id)
+    [On.LOAD_OPEN_TREE]: async ({state, dispatch, commit}, {_id, bqt}) => {
+        const basketItem = state.basket[_id]
         let tree = null
         if (basketItem && !needRefresh(basketItem)) {
             tree = basketItem
@@ -39,8 +49,6 @@ export default {
         tree.promises.all = Promise.all([tree.promises.trunk, tree.promises.roots, tree.promises.branches, tree.promises.impacts, tree.promises.impactsTank])
         // dispatch(On.LOAD_TANK, treeToLoad)
         // dispatch(On.LOAD_FACETS, treeToLoad)
-        
-        
         dispatch(On.ADD_TO_BASKET, [tree])
         return tree
     },

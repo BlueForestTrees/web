@@ -16,7 +16,7 @@
                     <v-toolbar-items>
                         <v-tooltip bottom>
                             <v-btn slot="activator" v-if="oneSelected" flat dense @click="goTree(oneSelected)">ouvrir
-                                <v-icon>launch</v-icon>
+                                <v-icon>category</v-icon>
                             </v-btn>
                             <span style="pointer-events: none">Ouvrir</span>
                         </v-tooltip>
