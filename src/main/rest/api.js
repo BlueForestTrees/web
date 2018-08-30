@@ -67,7 +67,7 @@ export default {
         return {token: res.headers[X_ACCESS_TOKEN]}
     },
     postAuth: async ({mail, password}) => {
-        const res = await post(`/api/tree/auth`, {mail, password}, {resolveWithFullResponse: true})
+        const res = await post(`/api/auth`, {mail, password}, {resolveWithFullResponse: true})
         return {token: res.headers[X_ACCESS_TOKEN]}
     }
 }
