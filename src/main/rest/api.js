@@ -58,7 +58,7 @@ export default {
     postImpactAdeme: (formData) => upload('/api/import/ademe/impact', formData),
 
     postTrunkClone: trunkId => post(`/api/tree/trunk?sourceId=${trunkId}`),
-    postFeedback: feedback => post(`/api/tree/feedback`, feedback),
+    postFeedback: feedback => post(`/api/feedback`, feedback),
     
     
     postMail: ({mail}) => post(`/api/tree/mail`, {mail}),
