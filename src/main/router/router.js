@@ -76,7 +76,8 @@ export default new VueRouter({
                 {
                     name: GO.COMPARE_PARTIAL,
                     path: "compare/:leftId",
-                    component: Compare
+                    component: Compare,
+                    props: true
                 },
                 {
                     name: GO.COMPARE,

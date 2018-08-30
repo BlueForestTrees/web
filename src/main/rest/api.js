@@ -1,11 +1,17 @@
 import {del, get, arrayOf, post, put, paramsOf, postForm, upload} from './rest'
 import {X_ACCESS_TOKEN} from "../const/headers"
+import cache from "../services/cache"
+
+const categoriesCache = cache({maxLength:30})
+const searchTrunkCache = cache({maxLength:5})
+
+const cached = async (method, uri, cache) => cache.get(uri) || cache.put(uri, await get(uri))
 
 export default {
     // DIRECT (id qt) (color name) => à stocker. Les get réutilisent le storage
     searchFacetEntry: namepart => get(`/api/tree/facetEntry${paramsOf({q: namepart})}`),
     searchImpactEntry: namepart => get(`/api/tree/impactEntry${paramsOf({q: namepart})}`),
-    searchTrunk: ({term, type, aidx, ps, cat}) => get(`/api/tree/trunks${paramsOf({q: term, t: type, aidx, ps, ...cat})}`),
+    searchTrunk: ({term, type, aidx, ps, cat}) => cached(get, `/api/tree/trunks${paramsOf({q: term, t: type, aidx, ps, ...cat})}`, searchTrunkCache),
     //mixin? pour gérer (name color) et (complet)
     getTrunks: _ids => get(`/api/tree/trunk${arrayOf('_ids', _ids)}`),
     getTrunk: _id => get(`/api/tree/trunk/${_id}`),
@@ -22,7 +28,7 @@ export default {
     getBranches: _id => get(`/api/tree/branch/${_id}`),
     getRoots: _id => get(`/api/tree/root/${_id}`),
     getImpactTank: _id => get(`/api/tree/impacttank/${_id}`),
-    getCategories: pid => get(`/api/categories${paramsOf({pid: pid || null})}`),
+    getCategories: pid => cached(get,`/api/categories${paramsOf({pid: pid || null})}`, categoriesCache),
     
     
     putLink: ({_id, trunkId, rootId, relativeTo, bqt}) => Promise.all([

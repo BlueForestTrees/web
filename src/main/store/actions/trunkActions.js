@@ -1,6 +1,5 @@
 import On from "../../const/on"
 import Do from "../../const/do"
-import {hasQuantity, trunky} from "../../services/calculations"
 import router from "../../router/router"
 import {GO} from "../../const/go"
 import api from "../../rest/api"
