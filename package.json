@@ -1,16 +1,15 @@
 {
   "name": "web-blueforest",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "web for trees",
   "main": "index.js",
   "author": "slim",
   "license": "MIT",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-serve --port 8079 --config webpack.config.js",
-    "build": "rimraf dist && cross-env NODE_ENV=production webpack",
     "test": "cross-env NODE_ENV=development mocha --recursive --require babel-register --exit \"src/test/tu/*.js\"",
-    "upgrade-units": "yarn upgrade -L unit-manip",
-    "yarn": "yarn"
+    "build": "rimraf dist && cross-env NODE_ENV=production webpack",
+    "deploy": "yarn run build && scp -r dist/files/var/www/blueforest.org pi@blueforest.org:/var/www"
   },
   "devDependencies": {
     "@vue/test-utils": "1.0.0-beta.20",
