@@ -7,18 +7,16 @@
             </v-toolbar>
         </transition>
 
-         <v-card-title primary-title>
-            <div class="subheading">Résultats</div>
-        </v-card-title>
-
-        <template v-for="item in items">
-            <v-list-tile :key="item._id" @click="toggleSelect(item)" :style="{background: isSelected(item) ? '#E8F5E9' : '', transition: 'background .2s ease'}">
-                <v-icon v-if="isSelected(item)" color="green" style="margin-right:0.3em">check_circle</v-icon>
-                <v-icon v-else :style="'color: '+(item.color || item.trunk.color)+';margin-right:0.3em'">lens</v-icon>
-                <v-list-tile-content>
-                    <v-list-tile-title>{{item.name || item.trunk.name}}</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
+        <template v-if="items.length > 0" v-for="item in items">
+            <div :key="item._id" @click="toggleSelect(item)" class="v-list__tile" :style="{paddingTop:'8px',paddingBottom:'8px',height:'auto', background: isSelected(item) ? '#E8F5E9' : '', transition: 'background .2s ease'}">
+                <v-layout row>
+                    <v-icon v-if="isSelected(item)" color="green" style="margin-right:0.3em">check_circle</v-icon>
+                    <v-icon v-else :style="'color: '+(item.color || item.trunk.color)+';margin-right:0.3em'">lens</v-icon>
+                    <v-list-tile-content>
+                        {{item.name || item.trunk.name}}
+                    </v-list-tile-content>
+                </v-layout>
+            </div>
             <v-divider/>
         </template>
 

@@ -2,7 +2,11 @@
     <v-container fluid grid-list-md>
         <v-layout row wrap>
             <v-flex xs12>
-                <tree-head :tree="tree" @close="close"/>
+                <v-card>
+                    <v-container>
+                        <tree-head :tree="tree"/>
+                    </v-container>
+                </v-card>
             </v-flex>
             <v-flex xs12>
                 <ressources :tree="tree"/>
@@ -59,7 +63,6 @@
         },
         methods: {
             ...mapActions({dispatchLoad: On.LOAD_OPEN_TREE, snack: On.SNACKBAR}),
-            ...mapActions({close: On.GO_HOME}),
             refresh: function () {
                 this.dispatchLoad({bqt: this.bqt, _id: this._id})
                     .catch(e => {

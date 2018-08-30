@@ -8,11 +8,11 @@
         </v-card-text>
 
         <template v-if="items.length > 0" v-for="item in items">
-            <v-list-tile :key="item._id" @click="toggleSelect(item)" :style="{background: isSelected(item) ? '#E8F5E9' : '', transition: 'background .2s ease'}">
+            <div :key="item._id" @click="toggleSelect(item)" class="v-list__tile" :style="{paddingTop:'8px',paddingBottom:'8px',height:'auto', background: isSelected(item) ? '#E8F5E9' : '', transition: 'background .2s ease'}">
                 <v-icon v-if="isSelected(item)" color="green" style="margin-right:0.3em">check_circle</v-icon>
                 <v-icon v-else :style="'color: '+item.trunk.color+';margin-right:0.3em'">lens</v-icon>
                 {{item.trunk.name}}
-            </v-list-tile>
+            </div>
             <v-divider/>
         </template>
 
@@ -50,7 +50,6 @@
 <script>
     import {mapState} from "vuex"
     import {mapActions} from "vuex"
-    import {qtUnitName, shadeColor} from "../services/calculations"
     import On from "../const/on"
     import selectable from "./mixin/Selectable"
 
@@ -59,9 +58,6 @@
         mixins: [selectable],
         computed: {
             ...mapState({items: 'basket'}),
-            noItems: function () {
-                return this.items.length === 0
-            }
         },
         methods: {
             removeForeverSelectedItem: function () {
@@ -72,8 +68,7 @@
                 this.remove(this.selection)
                     .then(this.unselect())
             },
-            ...mapActions({goTree: On.GO_TREE, compare: On.GO_COMPARE, remove: On.REMOVE_FROM_BASKET, removeForever: On.DELETE_TREE}),
-            qtUnitName, shadeColor
+            ...mapActions({goTree: On.GO_TREE, compare: On.GO_COMPARE, remove: On.REMOVE_FROM_BASKET, removeForever: On.DELETE_TREE})
         }
     }
 </script>
