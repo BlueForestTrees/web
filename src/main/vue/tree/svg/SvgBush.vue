@@ -3,7 +3,7 @@
         <path v-for="(leaf, i, key) in leafs" :key="key" :d="drawBranch(leaf)" fill-opacity="0" stroke="orange" :stroke-width="2"/>        
         <path :d="drawGlobalBush(arrayPath)" fill="green" stroke="green" stroke-width="20" stroke-linejoin="round"/>
         <svg-bush-leaf v-for="(leaf, i, key) in leafs" :key="key" :coor="leaf" :center="center"
-         :widthTrunk="widthTrunk" :colorBase="items[i].color" :textItem="qtUnitName(items[i])"/>
+         :widthTrunk="widthTrunk" :colorBase="items[i].color" :textItem="qtUnitName(items[i])" :paramsBush="paramsBush"/>
     </g>
 </template>
 
@@ -19,7 +19,7 @@
         components: {
             SvgBushLeaf,
         },
-        props: ['tree', 'widthTrunk', 'heightTrunk', 'position'],
+        props: ['tree', 'widthTrunk', 'heightTrunk', 'position', 'paramsBush'],
         computed: {
             center: function() {
                 var objectCenter = {
@@ -38,7 +38,7 @@
                 return this.tree && this.tree.impacts
             },
             leafs: function() {
-                let radius = 30;
+                let radius = this.paramsBush.radiusFullBush;
                 let numNodes = 200;
                 let arrayPourcent = this.arrayPourcent(this.items);
                 let nodes = [], angle, x, y, i, r;
@@ -71,7 +71,7 @@
                 let arrayDist = [];
                 for(let i3 = 0; i3 < array3.length; i3++) {
                     // 2. pour chaque point dessiner un cercle en 6 point.
-                    let radius = array3[i3].r;
+                    let radius = array3[i3].r*2;
                     let numNodesPath = 6;
                     let angle,
                         x,

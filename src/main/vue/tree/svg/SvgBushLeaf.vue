@@ -1,19 +1,19 @@
 <template>
     <g @mouseover="onFocus()" @mouseleave="disFocus()">
-        <ellipse :cx="coor.x" :cy="coor.y" :rx="coor.r" :ry="coor.r" :fill="colorFocus" :opacity="opacity"/>
-        <text :x="coor.x + 10" :y="coor.y" fill="black" :font-size="fontSize">{{ textItem }}</text>
+        <ellipse :cx="coor.x" :cy="coor.y" :rx="coor.r*coef" :ry="coor.r*coef" :fill="colorFocus" :opacity="opacity"/>
     </g>
 </template>
 
 <script>
     export default {
         name: 'svg-bush-leaf',
-        props: ['coor', 'center', 'widthTrunk', 'colorBase', 'textItem'],
+        props: ['coor', 'center', 'widthTrunk', 'colorBase', 'textItem', 'paramsBush'],
         data: function() {
             return {
                 fontSize: 0,
-                colorFocus: "red",
-                opacity: 1,
+                colorFocus: this.paramsBush.colorLeaf,
+                opacity: 0.5,
+                coef: this.paramsBush.radiusCoefEachLeaf,
             }
         },
         methods: {
@@ -24,8 +24,8 @@
             },
             disFocus: function() {
                     this.fontSize = 0
-                    this.colorFocus = this.colorBase
-                    this.opacity = 1         
+                    this.colorFocus = paramsBush.colorLeaf
+                    this.opacity = 0.5         
             },
         },
     } 
