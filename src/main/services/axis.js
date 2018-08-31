@@ -105,6 +105,16 @@ export const updateRatios = (axises) => {
         Vue.set(leftAxis, "ratio", leftAxis.bqt / sum)
         Vue.set(rightAxis, "ratio", rightAxis.bqt / sum)
     }
-    axises.common.sort((a, b) => b.left.ratio - a.left.ratio)
+    //axises.common.sort((a, b) => b.left.ratio - a.left.ratio)
     return axises
+}
+
+export const rightRatio = axises => {
+    let left = 0
+    let right = 0
+    for (let i = 0; i < axises.common.length; i++) {
+        left += axises.common[i].left.bqt
+        right += axises.common[i].right.bqt
+    }
+    return right / (left + right)
 }

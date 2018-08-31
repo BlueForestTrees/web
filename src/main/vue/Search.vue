@@ -25,6 +25,10 @@
                         </v-btn>
                         <span style="pointer-events: none">Ouvrir</span>
                     </v-tooltip>
+                    <v-tooltip bottom>
+                        <v-btn slot="activator" v-if="s.twoSelected" flat dense @click="compare(s.twoSelected)">comparer<v-icon>compare_arrows</v-icon></v-btn>
+                        <span style="pointer-events: none">Comparer</span>
+                    </v-tooltip>
                 </v-toolbar-items>
                 <v-spacer/>
                 <v-toolbar-items>
@@ -73,7 +77,8 @@
         methods: {
             ...mapActions({
                 goTree: On.GO_TREE,
-                addToBasket: On.ADD_TO_BASKET
+                addToBasket: On.ADD_TO_BASKET,
+                compare: On.GO_COMPARE,
             }),
             catChange(cats) {
                this.cats = cats

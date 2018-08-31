@@ -33,10 +33,12 @@ export const paramsOf = params => {
     return arr.length > 0 ? "?" + arr.join("&") : ""
 }
 
+const token = () => state.token && {[X_ACCESS_TOKEN]: state.token} || {}
+
 export const get = (path, reqOpts) => req.get(url(path), {json: true, ...reqOpts})
 export const del = (path, reqOpts) => req.del(url(path), {json: true, headers: {[X_ACCESS_TOKEN]: state.token}, ...reqOpts})
-export const post = (path, body, reqOpts) => req.post(url(path), {body, json: true, headers: {[X_ACCESS_TOKEN]: state.token}, ...reqOpts})
-export const put = (path, body, reqOpts) => req.put(url(path), {body, json: true, headers: {[X_ACCESS_TOKEN]: state.token, ...reqOpts}})
+export const post = (path, body, reqOpts) => req.post(url(path), {body, json: true, headers: {...token(), ...reqOpts}})
+export const put = (path, body, reqOpts) => req.put(url(path), {body, json: true, headers: {...token(), ...reqOpts}})
 
 export const upload = (path, formData, reqOpts) => {
     let xhr = new XMLHttpRequest()
