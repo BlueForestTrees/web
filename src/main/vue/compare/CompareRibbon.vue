@@ -3,7 +3,6 @@
         <v-card style="max-width: 60em">
             <v-card-title>
                 <v-layout row>
-                    <div :style="`border:solid 1px ${leftColor};width: 14em;height:auto;background-color:${leftLightColor};margin-right:0.5em`"></div>
                     <tree-head :tree="left" no-icon @nav="goTree(left)" :style="{cursor: 'pointer'}"/>
                 </v-layout>
             </v-card-title>
@@ -36,13 +35,11 @@
                 <svg v-else :viewBox="viewbox">
                     <circle :cx="width*0.5" :cy="gheight*0.5" :r="gheight*0.5" :fill="leftColor"></circle>
                     <circle :cx="width*0.5" :cy="gheight*0.5" :r="gheight*0.25" fill="none" :stroke="rightColor" :stroke-width="gheight*0.5" :stroke-dasharray="camDashArray" :style="`transform-origin: center;transform:rotate(${camAngle}deg);`"></circle>
-                    <circle :cx="width*0.9" :cy="gheight*0.5" r="10" @click="zoom = true"></circle>
                 </svg>
             </v-card-text>
 
             <v-card-title>
                 <v-layout row>
-                    <div :style="`border:solid 1px ${rightColor};width: 14em;height:auto;background-color:${rightLightColor};margin-right:0.5em`"></div>
                     <tree-head :tree="right" no-icon @nav="goTree(right)" :style="{cursor: 'pointer'}"/>
                 </v-layout>
             </v-card-title>
@@ -62,12 +59,11 @@
     export default {
         name: "compare-ribbon",
         components: {TreeHead},
-        props: ['axises', 'left', 'right'],
+        props: ['axises', 'left', 'right', 'zoom'],
         data: function () {
             const alpha = 0.7
             const textColor = '#696955'
             return {
-                zoom:false,
                 border: 2,
                 lineHeight: 25,
                 gwidth: 100,

@@ -1,10 +1,16 @@
 <template>
     <span>
-        <v-card-title primary-title><div class="headline">Comparaison : Impact sur l'environnement</div></v-card-title>
+        <v-card-title primary-title><div class="headline">Comparaison : Impact sur l'environnement</div><v-spacer/>
+            <v-btn-toggle v-model="zoom">
+              <v-btn>
+                <v-icon>search</v-icon>
+              </v-btn>
+            </v-btn-toggle>
+        </v-card-title>
         <v-card-text v-if="loading">Chargement...</v-card-text>
         <v-card-text v-else-if="!leftId">Aucun produit à comparer. Faites une recherche ou prenez des produits du panier</v-card-text>
         <v-card-text v-else-if="!rightId">Un seul produit à comparer. Faites une recherche ou prenez des produits du panier</v-card-text>
-        <compare-ribbon v-else :axises="axises" :left="compare.left" :right="compare.right"/>
+        <compare-ribbon v-else :axises="axises" :left="compare.left" :right="compare.right" :zoom="zoom===0"/>
     </span>
 
 </template>
@@ -25,6 +31,7 @@
         },
         data: function () {
             return {
+                zoom: false,
                 base: null,
                 leftColor: "cyan darken1",
                 rightColor: "pink darken1",

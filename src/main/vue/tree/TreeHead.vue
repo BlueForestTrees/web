@@ -1,7 +1,7 @@
 <template>
     <v-layout v-if="trunk" raw align-center :style="style" @click="$emit('nav')">
         <v-icon v-if="!noIcon" x-large :style="{color: trunk && trunk.color || 0,marginRight:'0.2em'}">lens</v-icon>
-        <h2 v-html="qtUnitName(trunk)"></h2>
+        <h2 align-center v-html="qtUnitName(trunk)"></h2>
         <v-spacer/>
     </v-layout>
 </template>
