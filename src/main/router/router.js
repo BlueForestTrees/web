@@ -11,6 +11,8 @@ import Imports from "../vue/Imports"
 //const Imports = () => import(/* webpackChunkName: "Imports" */ '../vue/Imports')
 import Root from "../vue/tree/Root"
 //const Root = () => import(/* webpackChunkName: "Root" */ '../vue/tree/Root')
+import Home from "../vue/Home"
+//const Home = () => import(/* webpackChunkName: "Home" */ '../vue/Home')
 
 //OK
 const BlueForest = () => import(/* webpackChunkName: "BF" */ '../vue/BlueForest')
@@ -19,7 +21,6 @@ const Inscription = () => import(/* webpackChunkName: "Inscription" */ '../vue/I
 const Login = () => import(/* webpackChunkName: "Login" */ '../vue/Login')
 const Search = () => import(/* webpackChunkName: "Search" */ '../vue/Search')
 const ImpactEntries = () => import(/* webpackChunkName: "ImpactEntries" */ '../vue/ImpactEntries')
-const Home = () => import(/* webpackChunkName: "Home" */ '../vue/Home')
 const Compare = () => import(/* webpackChunkName: "Compare" */ '../vue/compare/Compare')
 
 Vue.use(VueRouter)
