@@ -4,7 +4,6 @@
             <div class="headline">Recherche</div>
         </v-card-title>
         <v-divider/>
-        <v-divider/>
 
         <search-cat @select="catChange"/>
 
@@ -47,7 +46,6 @@
     import On from "../const/on"
     import {mapActions} from "vuex"
     import SearchComp from "./SearchComp"
-    import AddTreeBtn from "./layout/AddTreeBtn"
     import SearchCat from "./SearchCat"
     import Expendable from "./common/Expendable"
 
@@ -59,7 +57,7 @@
                 cats:[]
             }
         },
-        components: {Expendable, SearchCat, AddTreeBtn, SearchComp},
+        components: {Expendable, SearchCat, SearchComp},
         computed:{
             filter(){
                 const cat = {}
