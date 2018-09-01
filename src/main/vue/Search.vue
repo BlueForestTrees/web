@@ -40,7 +40,6 @@
 
             </template>
         </search-comp>
-        <add-tree-btn/>
     </span>
 </template>
 
