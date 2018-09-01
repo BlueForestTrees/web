@@ -1,7 +1,8 @@
 <template>
     <span>
         <v-card-title primary-title><div class="headline">Panier</div></v-card-title>
-        <v-card-text v-if="items.length === 0">Votre panier est vide. Faites une recherche.</v-card-text>
+        <v-divider/>
+        <v-card-text v-if="items.length === 0">Votre panier est vide. Faites une <span><v-icon @click="goSearch" color="blue">search</v-icon> recherche</span>.</v-card-text>
 
         <template v-if="items.length > 0" v-for="item in items">
             <div :key="item._id" @click="toggleSelect(item)" class="v-list__tile" :style="{paddingTop:'8px',paddingBottom:'8px',height:'auto', background: isSelected(item) ? '#E8F5E9' : '', transition: 'background .2s ease'}">
@@ -24,10 +25,6 @@
                         <span style="pointer-events: none">Comparer</span>
                     </v-tooltip>
 
-                    <v-tooltip bottom>
-                        <v-btn slot="activator" v-if="oneSelected" flat dense @click="removeForeverSelectedItem">supprimer<v-icon>delete_forever</v-icon></v-btn>
-                        <span style="pointer-events: none">Supprimer</span>
-                    </v-tooltip>
                     <v-tooltip bottom>
                         <v-btn slot="activator" v-if="anySelected" flat dense @click="removeSelectedItems"><v-icon>shopping_basket</v-icon><v-icon>arrow_right_alt</v-icon>retirer</v-btn>
                         <span style="pointer-events: none">Retirer</span>
@@ -59,15 +56,11 @@
             }
         },
         methods: {
-            removeForeverSelectedItem: function () {
-                this.removeForever(this.oneSelected)
-                    .then(this.unselect())
-            },
             removeSelectedItems: function () {
                 this.remove(this.selection)
                     .then(this.unselect())
             },
-            ...mapActions({goTree: On.GO_TREE, compare: On.GO_COMPARE, remove: On.REMOVE_FROM_BASKET, removeForever: On.DELETE_TREE})
+            ...mapActions({goTree: On.GO_TREE, compare: On.GO_COMPARE, remove: On.REMOVE_FROM_BASKET, goSearch: On.GO_SEARCH})
         }
     }
 </script>

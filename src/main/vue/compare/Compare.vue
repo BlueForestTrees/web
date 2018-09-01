@@ -1,15 +1,17 @@
 <template>
     <span>
-        <v-card-title primary-title><div class="headline">Comparaison : Impact sur l'environnement</div><v-spacer/>
-            <v-btn-toggle v-model="zoom">
+        <v-card-title primary-title>
+            <div class="headline">Comparaison</div>
+            <v-spacer/>
+            <v-btn-toggle v-model="zoom" v-if="leftId && rightId">
               <v-btn>
                 <v-icon>search</v-icon>
               </v-btn>
             </v-btn-toggle>
         </v-card-title>
         <v-card-text v-if="loading">Chargement...</v-card-text>
-        <v-card-text v-else-if="!leftId">Aucun produit à comparer. Faites une recherche ou prenez des produits du panier</v-card-text>
-        <v-card-text v-else-if="!rightId">Un seul produit à comparer. Faites une recherche ou prenez des produits du panier</v-card-text>
+        <v-card-text v-else-if="!leftId">Aucun produit à comparer.<br> Faites une <span><v-icon @click="goSearch" color="blue">search</v-icon> recherche</span> ou prenez des produits du <span><v-icon @click="goBasket" color="blue">shopping_basket</v-icon> panier</span></v-card-text>
+        <v-card-text v-else-if="!rightId">Un seul produit à comparer.<br> Faites une <span><v-icon @click="goSearch" color="blue">search</v-icon> recherche</span> ou prenez des produits du <span><v-icon @click="goBasket" color="blue">shopping_basket</v-icon> panier</span></v-card-text>
         <compare-ribbon v-else :axises="axises" :left="compare.left" :right="compare.right" :zoom="zoom===0"/>
     </span>
 
@@ -56,7 +58,7 @@
             }
         },
         methods: {
-            ...mapActions({loadTree: On.LOAD_TREE, snack: On.SNACKBAR}),
+            ...mapActions({loadTree: On.LOAD_TREE, snack: On.SNACKBAR, goSearch: On.GO_SEARCH, goBasket: On.GO_BASKET}),
             refresh: async function(){
                 this.compare.axis = null
                 if(this.leftId) {

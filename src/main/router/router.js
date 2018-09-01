@@ -13,13 +13,15 @@ import Root from "../vue/tree/Root"
 //const Root = () => import(/* webpackChunkName: "Root" */ '../vue/tree/Root')
 import Home from "../vue/Home"
 //const Home = () => import(/* webpackChunkName: "Home" */ '../vue/Home')
+import Search from "../vue/Search"
+//const Search = () => import(/* webpackChunkName: "Search" */ '../vue/Search')
+import BlueForest from "../vue/BlueForest"
+//const BlueForest = () => import(/* webpackChunkName: "BF" */ '../vue/BlueForest')
 
 //OK
-const BlueForest = () => import(/* webpackChunkName: "BF" */ '../vue/BlueForest')
 const Confirmation = () => import(/* webpackChunkName: "Confirmation" */ '../vue/Confirmation')
 const Inscription = () => import(/* webpackChunkName: "Inscription" */ '../vue/Inscription')
 const Login = () => import(/* webpackChunkName: "Login" */ '../vue/Login')
-const Search = () => import(/* webpackChunkName: "Search" */ '../vue/Search')
 const ImpactEntries = () => import(/* webpackChunkName: "ImpactEntries" */ '../vue/ImpactEntries')
 const Compare = () => import(/* webpackChunkName: "Compare" */ '../vue/compare/Compare')
 

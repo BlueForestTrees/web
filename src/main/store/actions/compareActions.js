@@ -1,7 +1,6 @@
 import router from "../../router/router"
 import On from "../../const/on"
 import {GO} from "../../const/go"
-import {find} from "unit-manip"
 
 export default {
     [On.GO_COMPARE]: ({state, getters}, trees) => {
@@ -16,15 +15,6 @@ export default {
             }
             if(state.compare.right){
                 dest.push(state.compare.right)
-            }
-            const basketItems = getters.basketArray
-            let nbToFind = 2 - dest.length
-            for(let i = basketItems.length-1; i >=0  && nbToFind > 0; i--){
-                const item = basketItems[i]
-                if(!find(dest, "_id", item._id)){
-                    dest.push(item)
-                    nbToFind--
-                }
             }
         }
 

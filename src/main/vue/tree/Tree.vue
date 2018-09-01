@@ -1,10 +1,11 @@
 <template>
     <span>
         <v-card-title primary-title><div class="headline">Composition</div></v-card-title>
+        <v-divider/>
         <v-card-text v-if="loading">Chargement...</v-card-text>
 
         <v-card-text v-else-if="!tree">
-            <div>Aucun produit ouvert. Faites une recherche.</div>
+            <div>Sélectionnez un produit depuis la <span><v-icon @click="goSearch" color="blue">search</v-icon> recherche</span> ou le <span><v-icon @click="goBasket" color="blue">shopping_basket</v-icon> panier</span></div>
         </v-card-text>
         <v-layout v-else row wrap>
             <v-flex xs12>
@@ -43,7 +44,6 @@
     import {mapActions, mapState} from "vuex"
     import On from "../../const/on"
     import TreeHead from "./TreeHead"
-    import AddTreeBtn from "../layout/AddTreeBtn"
     import AddTreePartBtn from "../layout/AddTreePartBtn"
     import BilanImpacts from "./BilanImpacts"
 
@@ -51,7 +51,6 @@
         components: {
             BilanImpacts,
             AddTreePartBtn,
-            AddTreeBtn,
             TreeHead,
             Impacts,
             Ressources,
@@ -68,7 +67,7 @@
             ...mapState(['tree'])
         },
         methods: {
-            ...mapActions({dispatchLoad: On.LOAD_OPEN_TREE, snack: On.SNACKBAR}),
+            ...mapActions({dispatchLoad: On.LOAD_OPEN_TREE, snack: On.SNACKBAR, goSearch: On.GO_SEARCH, goBasket: On.GO_BASKET}),
             refresh: function () {
                 if(this.bqt && this._id) {
                     this.loading = true

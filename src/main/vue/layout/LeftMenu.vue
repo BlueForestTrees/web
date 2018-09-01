@@ -10,6 +10,15 @@
                 </v-list-tile-content>
                 <feedback-dialog/>
             </v-list-tile>
+            <v-list-tile @click="showDialog({dialog:Dial.ADD_TRUNK})">
+                <v-list-tile-action>
+                    <v-icon>add</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                    <v-list-tile-title>Créer quelque chose</v-list-tile-title>
+                </v-list-tile-content>
+                <feedback-dialog/>
+            </v-list-tile>
             <v-list-tile @click="showDialog({dialog:Dial.FACET_ENTRY})">
                 <v-list-tile-action>
                     <v-layout row>
