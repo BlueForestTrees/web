@@ -32,7 +32,7 @@
     import AddFacetEntryDialog from "./dialog/AddFacetEntryDialog"
     import AddTrunkDialog from "./dialog/AddTrunkDialog"
     import AddImpactEntryDialog from "./dialog/AddImpactEntryDialog"
-    import Snack from "./layout/snack"
+    import Snack from "./layout/Snack"
 
     export default {
         computed: {

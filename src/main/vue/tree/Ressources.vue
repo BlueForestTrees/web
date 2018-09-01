@@ -1,5 +1,5 @@
 <template>
-    <v-card>
+    <span>
 
     <transition name="slide-fade">
         <v-toolbar v-if="anySelected" app dark class="elevation-0" color="green lighten-2">
@@ -75,7 +75,7 @@
             </v-list-tile>
         </template>
     </v-list>
-    </v-card>
+    </span>
 </template>
 
 <script>
