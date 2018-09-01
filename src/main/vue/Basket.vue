@@ -1,12 +1,11 @@
 <template>
     <span>
         <v-card-title primary-title><div class="headline">Panier</div></v-card-title>
-        <v-divider/>
-        <v-card-text v-if="items.length === 0">Votre panier est vide. Faites une <span><v-icon @click="goSearch" color="blue">search</v-icon> recherche</span>.</v-card-text>
+        <v-card-text class="text-md-center" v-if="items.length === 0">Votre panier est vide. <br>Faites une <span><v-icon @click="goSearch" color="blue">search</v-icon> recherche pour trouver des choses à mettre dans le panier.</span></v-card-text>
 
         <template v-if="items.length > 0" v-for="item in items">
-            <div :key="item._id" @click="toggleSelect(item)" class="v-list__tile" :style="{paddingTop:'8px',paddingBottom:'8px',height:'auto', background: isSelected(item) ? '#E8F5E9' : '', transition: 'background .2s ease'}">
-                <v-icon v-if="isSelected(item)" color="green" style="margin-right:0.3em">check_circle</v-icon>
+            <div :key="item._id" @click="toggleSelect(item)" class="v-list__tile" :style="{paddingTop:'8px',paddingBottom:'8px',height:'auto', background: isSelected(item) ? '#D8E9F5' : '', transition: 'background .2s ease'}">
+                <v-icon v-if="isSelected(item)" color="blue" style="margin-right:0.3em">check_circle</v-icon>
                 <v-icon v-else :style="'color: '+item.trunk.color+';margin-right:0.3em'">lens</v-icon>
                 {{item.trunk.name}}
             </div>
@@ -14,7 +13,7 @@
         </template>
 
         <transition name="slide-fade">
-            <v-toolbar v-if="anySelected" app dark class="elevation-0" color="green lighten-2">
+            <v-toolbar v-if="anySelected" app dark class="elevation-0" color="blue">
                     <v-tooltip bottom>
                         <v-btn slot="activator" v-if="oneSelected" flat dense @click="goTree(oneSelected)">ouvrir<v-icon>category</v-icon></v-btn>
                         <span style="pointer-events: none">Ouvrir</span>

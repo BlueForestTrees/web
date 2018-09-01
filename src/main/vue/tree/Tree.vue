@@ -1,11 +1,10 @@
 <template>
     <span>
         <v-card-title primary-title><div class="headline">Composition</div></v-card-title>
-        <v-divider/>
-        <v-card-text v-if="loading">Chargement...</v-card-text>
+        <v-card-text class="text-md-center" v-if="loading">Chargement...</v-card-text>
 
-        <v-card-text v-else-if="!tree">
-            <div>Sélectionnez un produit depuis la <span><v-icon @click="goSearch" color="blue">search</v-icon> recherche</span> ou le <span><v-icon @click="goBasket" color="blue">shopping_basket</v-icon> panier</span></div>
+        <v-card-text v-else-if="!tree" class="text-md-center">
+            <div>Faites une <span><v-icon @click="goSearch" color="blue">search</v-icon> recherche</span> ou prenez un produit du <span><v-icon @click="goBasket" color="blue">shopping_basket</v-icon> panier pour voir sa composition.</span></div>
         </v-card-text>
         <v-layout v-else row wrap>
             <v-flex xs12>

@@ -1,26 +1,26 @@
 <template>
-    <v-toolbar app dark clipped color="blue darken-3" class="elevation-1">
-
-        <v-toolbar-title>
-            <v-toolbar-side-icon @click.stop="nav.leftMenuVisible = !nav.leftMenuVisible"/>
-        </v-toolbar-title>
+    <v-toolbar app class="elevation-5" style="background-color: #FAFAFACC">
         <v-tooltip bottom>
-            <v-btn slot="activator" icon dense @click="goSearch"><v-icon>search</v-icon></v-btn>
+            <v-btn slot="activator" icon dense @click="nav.leftMenuVisible = !nav.leftMenuVisible"><v-icon color="blue">dehaze</v-icon></v-btn>
+            <span style="pointer-events: none">Menu de gauche</span>
+        </v-tooltip>
+        <v-tooltip bottom>
+            <v-btn slot="activator" icon dense @click="goSearch"><v-icon color="blue">search</v-icon></v-btn>
             <span style="pointer-events: none">Recherche</span>
         </v-tooltip>
 
         <v-tooltip bottom>
-            <v-btn slot="activator" icon dense @click="goBasket"><v-icon>shopping_basket</v-icon></v-btn>
+            <v-btn slot="activator" icon dense @click="goBasket"><v-icon color="blue">shopping_basket</v-icon></v-btn>
             <span style="pointer-events: none">Panier</span>
         </v-tooltip>
 
         <v-tooltip bottom>
-            <v-btn slot="activator" icon dense @click="goTree()"><v-icon>category</v-icon></v-btn>
+            <v-btn slot="activator" icon dense @click="goTree()"><v-icon color="blue">category</v-icon></v-btn>
             <span style="pointer-events: none">Composition</span>
         </v-tooltip>
 
         <v-tooltip bottom>
-            <v-btn slot="activator" icon dense @click="goCompare()"><v-icon>compare_arrows</v-icon></v-btn>
+            <v-btn slot="activator" icon dense @click="goCompare()"><v-icon color="blue">compare_arrows</v-icon></v-btn>
             <span style="pointer-events: none">Comparaison</span>
         </v-tooltip>
 

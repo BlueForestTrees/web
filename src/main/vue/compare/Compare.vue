@@ -9,10 +9,9 @@
               </v-btn>
             </v-btn-toggle>
         </v-card-title>
-        <v-card-text v-if="loading">Chargement...</v-card-text>
-        <v-card-text v-else-if="!leftId">Aucun produit à comparer.<br> Faites une <span><v-icon @click="goSearch" color="blue">search</v-icon> recherche</span> ou prenez des produits du <span><v-icon @click="goBasket" color="blue">shopping_basket</v-icon> panier</span></v-card-text>
-        <v-card-text v-else-if="!rightId">Un seul produit à comparer.<br> Faites une <span><v-icon @click="goSearch" color="blue">search</v-icon> recherche</span> ou prenez des produits du <span><v-icon @click="goBasket" color="blue">shopping_basket</v-icon> panier</span></v-card-text>
-        <compare-ribbon v-else :axises="axises" :left="compare.left" :right="compare.right" :zoom="zoom===0"/>
+        <compare-ribbon v-if="leftId && rightId" :axises="axises" :left="compare.left" :right="compare.right" :zoom="zoom===0"/>
+        <v-card-text class="text-md-center" v-else-if="loading">Chargement...</v-card-text>
+        <v-card-text class="text-md-center" v-else="!leftId">Faites une <span><v-icon @click="goSearch" color="blue">search</v-icon> recherche</span> ou prenez des produits du <span><v-icon @click="goBasket" color="blue">shopping_basket</v-icon> panier pour les comparer.</span></v-card-text>
     </span>
 
 </template>
