@@ -1,5 +1,4 @@
 <template>
-    <v-card>
         <v-list dense>
             <v-subheader>
                 <h4 slot="activator">EXTERNALITES</h4>
@@ -12,7 +11,6 @@
                 </v-list-tile>
             </template>
         </v-list>
-    </v-card>
 </template>
 
 <script>

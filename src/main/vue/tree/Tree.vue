@@ -6,13 +6,12 @@
         <v-card-text v-else-if="!tree" class="text-md-center">
             <div>Faites une <span><v-icon @click="goSearch" color="blue">search</v-icon> recherche</span> ou prenez un produit du <span><v-icon @click="goBasket" color="blue">shopping_basket</v-icon> panier pour voir sa composition.</span></div>
         </v-card-text>
-        <v-layout v-else row wrap>
+
+        <v-card v-else row wrap>
             <v-flex xs12>
-                <v-card>
-                    <v-container>
-                        <tree-head :tree="tree"/>
-                    </v-container>
-                </v-card>
+                <v-container>
+                    <tree-head :tree="tree"/>
+                </v-container>
             </v-flex>
             <v-flex xs12>
                 <ressources :tree="tree"/>
@@ -30,7 +29,7 @@
                 <branches :tree="tree"/>
             </v-flex>
             <add-tree-part-btn :tree="tree"/>
-        </v-layout>
+        </v-card>
     </span>
 </template>
 

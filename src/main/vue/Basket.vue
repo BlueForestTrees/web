@@ -9,7 +9,6 @@
                 <v-icon v-else :style="'color: '+item.trunk.color+';margin-right:0.3em'">lens</v-icon>
                 {{item.trunk.name}}
             </div>
-            <v-divider/>
         </template>
 
         <transition name="slide-fade">

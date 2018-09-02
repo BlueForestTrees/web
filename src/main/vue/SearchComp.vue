@@ -1,23 +1,22 @@
 <template>
     <span>
         <transition name="slide-fade">
-            <v-toolbar v-if="!nobar && anySelected" app dark class="elevation-0" color="green lighten-2">
+            <v-toolbar v-if="!nobar && anySelected" app dark class="elevation-0" color="blue">
                 <slot :s="this">
                 </slot>
             </v-toolbar>
         </transition>
 
         <template v-if="items.length > 0" v-for="item in items">
-            <div :key="item._id" @click="toggleSelect(item)" class="v-list__tile" :style="{paddingTop:'8px',paddingBottom:'8px',height:'auto', background: isSelected(item) ? '#E8F5E9' : '', transition: 'background .2s ease'}">
+            <div :key="item._id" @click="toggleSelect(item)" class="v-list__tile" :style="{paddingTop:'8px',paddingBottom:'8px',height:'auto', background: isSelected(item) ? '#D8E9F5' : '', transition: 'background .2s ease'}">
                 <v-layout row>
-                    <v-icon v-if="isSelected(item)" color="green" style="margin-right:0.3em">check_circle</v-icon>
+                    <v-icon v-if="isSelected(item)" color="blue" style="margin-right:0.3em">check_circle</v-icon>
                     <v-icon v-else :style="'color: '+(item.color || item.trunk.color)+';margin-right:0.3em'">lens</v-icon>
                     <v-list-tile-content>
                         {{item.name || item.trunk.name}}
                     </v-list-tile-content>
                 </v-layout>
             </div>
-            <v-divider/>
         </template>
 
         <v-btn block flat color="primary" v-if="manualMode && items.length" @click="getMoreClick" style="margin-bottom: 3em">Voir plus</v-btn>
