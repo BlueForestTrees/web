@@ -1,7 +1,7 @@
 <template>
     <span>
-        <transition name="slide-fade">
-            <v-toolbar v-if="!nobar && anySelected" app dark class="elevation-0" color="blue">
+        <transition name="slide-vertical">
+            <v-toolbar v-if="!nobar && anySelected" app dark class="elevation-5" color="blue">
                 <slot :s="this">
                 </slot>
             </v-toolbar>

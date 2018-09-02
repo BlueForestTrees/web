@@ -24,7 +24,7 @@ export default {
     //peupler les (color name) depuis storage, ou lookup.
     getFacets: _id => get(`/api/tree/facet/${_id}`),
     getImpact: _id => get(`/api/tree/impact/${_id}`),
-    getTank: (qt, unit, _id) => get(`/api/tree/tank/${qt}/${unit}/${_id}`),
+    getTank: (_id) => get(`/api/tree/tank/${_id}`),
     getBranches: _id => get(`/api/tree/branch/${_id}`),
     getRoots: _id => get(`/api/tree/root/${_id}`),
     getImpactTank: _id => get(`/api/tree/impacttank/${_id}`),

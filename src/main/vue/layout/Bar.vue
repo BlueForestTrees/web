@@ -1,26 +1,26 @@
 <template>
-    <v-toolbar app class="elevation-5" style="background-color: #FAFAFACC">
+    <v-toolbar app class="elevation-5" style="background-color: #FAFAFACC" scroll-off-screen :scroll-threshold="150">
         <v-tooltip bottom>
-            <v-btn slot="activator" icon dense @click="nav.leftMenuVisible = !nav.leftMenuVisible"><v-icon color="blue">dehaze</v-icon></v-btn>
+            <v-btn slot="activator" icon dense @click="nav.leftMenuVisible = !nav.leftMenuVisible"><v-icon color="blue darken-3">dehaze</v-icon></v-btn>
             <span style="pointer-events: none">Menu de gauche</span>
         </v-tooltip>
         <v-tooltip bottom>
-            <v-btn slot="activator" icon dense @click="goSearch"><v-icon color="blue">search</v-icon></v-btn>
+            <v-btn slot="activator" icon dense @click="goSearch"><v-icon color="blue darken-3">search</v-icon></v-btn>
             <span style="pointer-events: none">Recherche</span>
         </v-tooltip>
 
         <v-tooltip bottom>
-            <v-btn slot="activator" icon dense @click="goBasket"><v-icon color="blue">shopping_basket</v-icon></v-btn>
+            <v-btn slot="activator" icon dense @click="goBasket"><v-icon color="blue darken-3">shopping_basket</v-icon></v-btn>
             <span style="pointer-events: none">Panier</span>
         </v-tooltip>
 
         <v-tooltip bottom>
-            <v-btn slot="activator" icon dense @click="goTree()"><v-icon color="blue">category</v-icon></v-btn>
+            <v-btn slot="activator" icon dense @click="goTree()"><v-icon color="blue darken-3">category</v-icon></v-btn>
             <span style="pointer-events: none">Composition</span>
         </v-tooltip>
 
         <v-tooltip bottom>
-            <v-btn slot="activator" icon dense @click="goCompare()"><v-icon color="blue">compare_arrows</v-icon></v-btn>
+            <v-btn slot="activator" icon dense @click="goCompare()"><v-icon color="blue darken-3">compare_arrows</v-icon></v-btn>
             <span style="pointer-events: none">Comparaison</span>
         </v-tooltip>
 

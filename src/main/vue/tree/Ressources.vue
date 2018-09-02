@@ -2,14 +2,7 @@
     <span>
 
     <transition name="slide-fade">
-        <v-toolbar v-if="anySelected" app dark class="elevation-0" color="green lighten-2">
-            <v-toolbar-items>
-                <v-tooltip bottom>
-                    <v-btn slot="activator" icon dense @click="unselect()"><v-icon>close</v-icon></v-btn>
-                    <span style="pointer-events: none">Fermer</span>
-                </v-tooltip>
-            </v-toolbar-items>
-            <v-spacer/>
+        <v-toolbar v-if="anySelected" app dark class="elevation-5" color="blue">
             <v-toolbar-items>
                 <v-tooltip bottom>
                     <v-btn slot="activator" v-if="oneSelected" flat @click="goTree(oneSelected)"><span class="hidden-xs-only">ouvrir</span><v-icon>category</v-icon></v-btn>
@@ -20,8 +13,15 @@
                     <span style="pointer-events: none">Modifier</span>
                 </v-tooltip>
                 <v-tooltip bottom>
-                    <v-btn slot="activator" v-if="anySelected" flat @click="remove(anySelected)"><span class="hidden-xs-only">supprimer</span><v-icon>delete</v-icon></v-btn>
+                    <v-btn slot="activator" v-if="anySelected" flat @click="remove(anySelected)"><span class="hidden-xs-only">supprimer</span><v-icon>delete_forever</v-icon></v-btn>
                     <span style="pointer-events: none">Supprimer</span>
+                </v-tooltip>
+            </v-toolbar-items>
+            <v-spacer/>
+            <v-toolbar-items>
+                <v-tooltip bottom>
+                    <v-btn slot="activator" icon dense @click="unselect()"><v-icon>close</v-icon></v-btn>
+                    <span style="pointer-events: none">Fermer</span>
                 </v-tooltip>
             </v-toolbar-items>
         </v-toolbar>
@@ -44,8 +44,8 @@
 
         </v-subheader>
 
-        <v-list-tile v-for="item in items" v-if="!item.trunk.relativeTo" :key="item._id" @click="toggleSelect(item)" :style="{background: isSelected(item) ? '#E8F5E9' : '', transition: 'background .2s ease'}">
-            <v-icon v-if="isSelected(item)" color="green">check_circle</v-icon>
+        <v-list-tile v-for="item in items" v-if="!item.trunk.relativeTo" :key="item._id" @click="toggleSelect(item)" :style="{background: isSelected(item) ? '#D8E9F5' : '', transition: 'background .2s ease'}">
+            <v-icon v-if="isSelected(item)" color="blue">check_circle</v-icon>
             <v-icon v-else :style="'color: '+item.trunk.color+';margin-right:0.2em'">lens</v-icon>
             {{qtUnitName(item.trunk)}}
         </v-list-tile>
@@ -69,9 +69,9 @@
         </v-subheader>
 
         <template v-for="item in bilanItems">
-            <v-list-tile avatar :key="'b'+item.name">
-                <v-icon :style="{color:item.color,marginRight:'0.2em'}">lens</v-icon>
-                {{qtUnitName(item) }}
+            <v-list-tile avatar :key="'b'+item.trunk.name">
+                <v-icon :style="{color:item.trunk.color,marginRight:'0.2em'}">lens</v-icon>
+                {{qtUnitName(item.trunk) }}
             </v-list-tile>
         </template>
     </v-list>
@@ -105,7 +105,7 @@
                 return this.items && this.items.length && this.items.length > 0
             },
             bilanItems: function () {
-                return this.tree && this.tree.tank && this.tree.tank.items
+                return this.tree && this.tree.tank
             }
         },
 

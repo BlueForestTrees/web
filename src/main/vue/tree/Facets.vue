@@ -39,7 +39,7 @@
         props: ['tree'],
         computed: {
             items: function () {
-                return this.facets && this.facets.items
+                return this.facets
             },
             hasItems: function () {
                 return this.items && this.items.length && this.items.length > 0
