@@ -1,13 +1,9 @@
 <template>
         <span>
-            <subheader icon="keyboard_tab" title="EXTERNALITES"/>
-
-            <template v-for="item in items">
-                <v-list-tile avatar :key="item._id">
-                    <v-icon :style="'color: '+item.color+';margin-right:0.2em'">lens</v-icon>
-                    {{qtUnitName(item)}}
-                </v-list-tile>
-            </template>
+            <v-list-tile v-for="item in items" avatar :key="item._id">
+                <v-icon :style="'color: '+item.color+';margin-right:0.2em'">lens</v-icon>
+                {{qtUnitName(item)}}
+            </v-list-tile>
         </span>
 </template>
 

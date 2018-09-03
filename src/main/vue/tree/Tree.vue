@@ -13,34 +13,97 @@
                     <tree-head class="my-2" :tree="tree"/>
                 </v-card>
             </v-layout>
-            <v-layout row wrap mx-2>
+
+            <v-layout hidden-md-and-up>
+                <v-expansion-panel popout>
+              <v-expansion-panel-content>
+                <subheader slot="header" icon="call_merge" title="RESSOURCES"/>
+                <v-card>
+                  <ressources :tree="tree"/>
+                </v-card>
+              </v-expansion-panel-content>
+
+                <v-expansion-panel-content>
+                <subheader slot="header" icon="call_merge" title="BILAN RESSOURCES"/>
+                <v-card>
+                  <bilan-ressources :tree="tree"/>
+                </v-card>
+              </v-expansion-panel-content>
+
+              <v-expansion-panel-content>
+                <subheader slot="header" icon="more_horiz" title="PROPRIETES"/>
+                <v-card>
+                  <bilan-ressources :tree="tree"/>
+                </v-card>
+              </v-expansion-panel-content>
+
+              <v-expansion-panel-content>
+                <subheader slot="header" icon="keyboard_tab" title="EXTERNALITES"/>
+                <v-card>
+                  <impacts :tree="tree"/>
+                </v-card>
+              </v-expansion-panel-content>
+
+              <v-expansion-panel-content>
+                <subheader slot="header" icon="keyboard_tab" title="BILAN EXTERNALITES"/>
+                <v-card>
+                  <bilan-impacts :tree="tree"/>
+                </v-card>
+              </v-expansion-panel-content>
+
+
+              <v-expansion-panel-content>
+                <subheader slot="header" icon="call_split" title="USAGE"/>
+                <v-card>
+                  <branches :tree="tree"/>
+                </v-card>
+              </v-expansion-panel-content>
+
+            </v-expansion-panel>
+            </v-layout>
+
+
+
+            <v-layout row wrap mx-2 hidden-sm-and-down>
                 <v-flex pa-2>
                     <v-card>
+                        <subheader icon="call_merge" title="RESSOURCES"/>
+                        <v-divider/>
                         <ressources :tree="tree"/>
                     </v-card>
                 </v-flex>
                 <v-flex pa-2>
                     <v-card>
+                        <subheader icon="call_merge" title="BILAN RESSOURCES"/>
+                        <v-divider/>
                         <bilan-ressources :tree="tree"/>
                     </v-card>
                 </v-flex>
                 <v-flex pa-2>
                     <v-card>
+                        <subheader icon="more_horiz" title="PROPRIETES"/>
+                        <v-divider/>
                         <facets :tree="tree"/>
                     </v-card>
                 </v-flex>
                 <v-flex pa-2>
                     <v-card>
+                        <subheader icon="keyboard_tab" title="EXTERNALITES"/>
+                        <v-divider/>
                         <impacts :tree="tree"/>
                     </v-card>
                 </v-flex>
                 <v-flex pa-2>
                     <v-card>
+                        <subheader icon="keyboard_tab" title="BILAN EXTERNALITES"/>
+                        <v-divider/>
                         <bilan-impacts :tree="tree"/>
                     </v-card>
                 </v-flex>
                 <v-flex pa-2>
                     <v-card>
+                        <subheader icon="call_split" title="USAGE"/>
+                        <v-divider/>
                         <branches :tree="tree"/>
                     </v-card>
                 </v-flex>
@@ -63,9 +126,11 @@
     import BilanImpacts from "./BilanImpacts"
     import BilanRessources from "./BilanRessources"
     import Hider from "./Hider"
+    import Subheader from "./Subheader"
 
     export default {
         components: {
+            Subheader,
             Hider,
             BilanRessources,
             BilanImpacts,

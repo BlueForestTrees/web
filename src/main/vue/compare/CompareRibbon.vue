@@ -33,8 +33,12 @@
 
             <v-layout row wrap justify-center>
                 <v-card class="mb-1 mt-2 pl-2 pr-3" style="border-radius:2em">
-                    <tree-head :tree="left" class="my-2" @nav="goTree(left)" :style="{cursor: 'pointer'}"/>
-                    <tree-head :tree="right" class="my-2" @nav="goTree(right)" :style="{cursor: 'pointer'}"/>
+                    <v-layout row>
+                        <v-layout column>
+                            <tree-head :tree="left" class="my-2" @nav="goTree(left)" :style="{cursor: 'pointer'}"/>
+                            <tree-head :tree="right" class="my-2" @nav="goTree(right)" :style="{cursor: 'pointer'}"/>
+                        </v-layout>
+                    </v-layout>
                 </v-card>
             </v-layout>
     </v-container>
@@ -63,8 +67,8 @@
                 gwidth: 100,
                 width: 550,
                 curI: 0,
-                leftColor: '#00ACC1',
-                rightColor: '#D81B60',
+                // leftColor: '#00ACC1',
+                // rightColor: '#D81B60',
                 leftLightColor: shadeColor('#00ACC1', alpha),
                 rightLightColor: shadeColor('#D81B60', alpha),
                 textColor,
@@ -72,6 +76,12 @@
             }
         },
         computed: {
+            leftColor:function(){
+                return this.left && this.left.trunk && this.left.trunk.color
+            },
+            rightColor:function(){
+                return this.right && this.right.trunk && this.right.trunk.color
+            },
             rightRatio: function(){
                 return this.axises && rightRatio(this.axises)
             },

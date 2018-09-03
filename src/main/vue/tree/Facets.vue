@@ -1,13 +1,9 @@
 <template>
         <span>
-            <subheader icon="more_horiz" title="PROPRIETES"/>
-
-            <template v-for="item in items">
-                <v-list-tile :key="item._id" @click="toggleSelect(item)" :class="'active'">
-                    <v-icon :style="'color: '+item.color+';margin-right:0.2em'">lens</v-icon>
-                    {{qtUnitName(item) }}
-                </v-list-tile>
-            </template>
+            <v-list-tile v-for="item in items" :key="item._id" @click="toggleSelect(item)" :class="'active'">
+                <v-icon :style="'color: '+item.color+';margin-right:0.2em'">lens</v-icon>
+                {{qtUnitName(item) }}
+            </v-list-tile>
         </span>
 </template>
 
