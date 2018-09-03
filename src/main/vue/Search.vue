@@ -3,13 +3,20 @@
 
         <hider title="Recherche"/>
 
-        <search-cat @select="catChange"/>
-
-        <expendable title="Nom">
-            <v-text-field label="Nom" autofocus v-model="name"/>
-        </expendable>
-
-        <v-divider/>
+        <v-expansion-panel popout>
+            <v-expansion-panel-content>
+                <div slot="header" class="subheading">Catégorie...</div>
+                <v-container>
+                    <search-cat @select="catChange"/>
+                </v-container>
+            </v-expansion-panel-content>
+            <v-expansion-panel-content>
+                <div slot="header" class="subheading">Nom...</div>
+                <v-container>
+                    <v-text-field label="Nom" autofocus v-model="name"/>
+                </v-container>
+            </v-expansion-panel-content>
+        </v-expansion-panel>
 
         <search-comp :filter="filter">
             <template slot-scope="{ s }">

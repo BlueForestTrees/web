@@ -1,7 +1,5 @@
 <template>
     <span>
-
-        <expendable title="Catégories">
             <v-breadcrumbs style="padding-top: 0;padding-bottom: 0">
               <v-icon slot="divider">arrow_forward_ios</v-icon>
               <v-breadcrumbs-item key="root"><span @click="pathSelect(null)">Tout</span></v-breadcrumbs-item>
@@ -22,7 +20,6 @@
                 </v-flex>
                 </v-layout>
             </v-card-text>
-        </expendable>
     </span>
 </template>
 

@@ -1,7 +1,10 @@
 <template>
     <span>
-        <hider title="Comparaison"/>
-        <compare-ribbon v-if="leftId && rightId" :axises="axises" :left="compare.left" :right="compare.right" />
+        <v-layout row justify-center align-center>
+            <hider title="Comparaison"/>
+            <v-flex ml-4 pt-3 xs8 sm5 d-flex><v-select :items="types" v-model="type" item-text="text" item-value="code"></v-select></v-flex>
+        </v-layout>
+        <compare-ribbon v-if="leftId && rightId" :axises="axises" :left="compare.left" :right="compare.right" :leftColor="leftColor" :rightColor="rightColor" />
         <v-card-text class="text-md-center" v-else-if="loading">Chargement...</v-card-text>
         <v-card-text class="text-md-center" v-else="!leftId">Faites une <span><v-icon @click="goSearch" color="blue">search</v-icon> recherche</span> ou prenez des produits du <span><v-icon @click="goBasket" color="blue">shopping_basket</v-icon> panier pour les comparer.</span></v-card-text>
     </span>
@@ -27,9 +30,9 @@
         data: function () {
             return {
                 base: null,
-                leftColor: "cyan darken1",
-                rightColor: "pink darken1",
-                loading: false
+                loading: false,
+                type: 1,
+                types: [{code:1, text:"de l'impact environmental"}]
             }
         },
         created: async function () {
@@ -47,7 +50,13 @@
                     this.compare.axis = updateRatios(separate(this.compare.leftAxises, this.compare.rightAxises))
                 }
                 return this.compare.axis
-            }
+            },
+            leftColor:function(){
+                return this.compare && this.compare.left && this.compare.left.trunk && this.compare.left.trunk.color
+            },
+            rightColor:function(){
+                return this.compare && this.compare.right && this.compare.right.trunk && this.compare.right.trunk.color
+            },
         },
         methods: {
             ...mapActions({loadTree: On.LOAD_TREE, snack: On.SNACKBAR, goSearch: On.GO_SEARCH, goBasket: On.GO_BASKET}),

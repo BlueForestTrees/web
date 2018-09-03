@@ -2,10 +2,11 @@
     <v-container v-if="lines" pt-0>
         <v-card>
             <v-layout row><v-spacer/><v-icon class="mr-1 mt-1" large @click="zoom = !zoom">{{zoom ? 'pie_chart' : 'list'}}</v-icon></v-layout>
-            <svg v-if="zoom" :viewBox="listViewbox" class="ma-4" style="min-width: 40em;min-height:20em">
+            <svg v-if="zoom" :viewBox="listViewbox" class="ma-4" style="min-width: 40em;min-height:20em;">
                 <g>
-                    <path :d="lines.right" :fill="rightLightColor" :stroke="rightColor" stroke-width="0.4"></path>
-                    <path :d="lines.left" :fill="leftLightColor" :stroke="leftColor" stroke-width="0.4"></path>
+                    <!--FORMES-->
+                    <path :d="lines.right" :fill="rightColor"></path>
+                    <path :d="lines.left" :fill="leftColor"></path>
                 </g>
                 <g>
                     <template v-for="(axis,i) in axises.common">
@@ -19,8 +20,8 @@
                         <!--SELECTION-->
                         <rect fill="green" x="0" :y="i*lineHeight" :width="width" :height="lineHeight" stroke-width="1" stroke-opacity="0.8" :fill-opacity="curI === i ? 0.1 : 0" @click="curI = i" @mouseover="curI = i"></rect>
                         <g v-if="curI === i">
-                            <text alignment-baseline="middle" :x="border" :y="(0.5+i)*lineHeight" :font-size="9-(1.1*(qtUnit(axis.left).length-9))" :style="{fill:darkTextColor, pointerEvents:'none'}">{{qtUnit(axis.left)}}</text>
-                            <text alignment-baseline="middle" text-anchor="end" :x="gwidth-border" :font-size="9-(1.1*(qtUnit(axis.right).length-9))" :y="(0.5+i)*lineHeight" :style="{fill:darkTextColor, pointerEvents:'none'}">{{qtUnit(axis.right)}}</text>
+                            <text alignment-baseline="middle" :x="border" :y="(0.5+i)*lineHeight" :font-size="9-(1.1*(qtUnit(axis.left).length-9))" :style="{fill:leftTextColor, pointerEvents:'none'}">{{qtUnit(axis.left)}}</text>
+                            <text alignment-baseline="middle" text-anchor="end" :x="gwidth-border" :font-size="9-(1.1*(qtUnit(axis.right).length-9))" :y="(0.5+i)*lineHeight" :style="{fill:rightTextColor, pointerEvents:'none'}">{{qtUnit(axis.right)}}</text>
                         </g>
                     </template>
                 </g>
@@ -28,26 +29,30 @@
             <svg v-else :viewBox="camViewbox" class="ma-4" style="max-height: 30em">
                 <circle :cx="width*0.5" :cy="width*0.5" :r="width*0.5" :fill="leftColor"></circle>
                 <circle :cx="width*0.5" :cy="width*0.5" :r="width*0.25" fill="none" :stroke="rightColor" :stroke-width="width*0.5" :stroke-dasharray="camDashArray" :style="`transform-origin: center;transform:rotate(${camAngle}deg);`"></circle>
+
+                <text v-if="leftPercent > 5" :x="width*0.5" text-anchor="middle" :y="width*0.2" font-size="25" :style="{fill:leftTextColor}">{{leftPercent}}%</text>
+                <text v-if="rightPercent > 5" :x="width*0.5" text-anchor="middle" :y="width*0.8" font-size="25" :style="{fill:rightTextColor}">{{rightPercent}}%</text>
             </svg>
         </v-card>
 
-            <v-layout row wrap justify-center>
-                <v-card class="mb-1 mt-2 pl-2 pr-3" style="border-radius:2em">
-                    <v-layout row>
-                        <v-layout column>
-                            <tree-head :tree="left" class="my-2" @nav="goTree(left)" :style="{cursor: 'pointer'}"/>
-                            <tree-head :tree="right" class="my-2" @nav="goTree(right)" :style="{cursor: 'pointer'}"/>
-                        </v-layout>
+        <!--LEGENDE-->
+        <v-layout row wrap justify-center>
+            <v-card class="mb-1 mt-2 pl-2 pr-3" style="border-radius:2em">
+                <v-layout row>
+                    <v-layout column>
+                        <tree-head :tree="left" class="my-2" @nav="goTree(left)" :style="{cursor: 'pointer'}"/>
+                        <tree-head :tree="right" class="my-2" @nav="goTree(right)" :style="{cursor: 'pointer'}"/>
                     </v-layout>
-                </v-card>
-            </v-layout>
+                </v-layout>
+            </v-card>
+        </v-layout>
     </v-container>
 
 </template>
 
 <script>
 
-    import {equiv, qtUnit, shadeColor} from "../../services/calculations"
+    import {equiv, getLuma, qtUnit, shadeColor} from "../../services/calculations"
     import TreeHead from "../tree/TreeHead"
     import On from "../../const/on"
     import {mapActions} from "vuex"
@@ -56,7 +61,7 @@
     export default {
         name: "compare-ribbon",
         components: {TreeHead},
-        props: ['axises', 'left', 'right'],
+        props: ['axises', 'left', 'right', 'leftColor', 'rightColor'],
         data: function () {
             const alpha = 0.7
             const textColor = '#696955'
@@ -67,8 +72,6 @@
                 gwidth: 100,
                 width: 550,
                 curI: 0,
-                // leftColor: '#00ACC1',
-                // rightColor: '#D81B60',
                 leftLightColor: shadeColor('#00ACC1', alpha),
                 rightLightColor: shadeColor('#D81B60', alpha),
                 textColor,
@@ -76,11 +79,20 @@
             }
         },
         computed: {
-            leftColor:function(){
-                return this.left && this.left.trunk && this.left.trunk.color
+            leftPercent:function(){
+                return Math.round(this.leftRatio*100)
             },
-            rightColor:function(){
-                return this.right && this.right.trunk && this.right.trunk.color
+            rightPercent:function(){
+                return Math.round(this.rightRatio*100)
+            },
+            leftTextColor:function(){
+                return this.leftColor && getLuma(this.leftColor) < 30 ? "white" : "black"
+            },
+            rightTextColor:function(){
+                return this.rightColor && getLuma(this.rightColor) > 30 ? "white" : "black"
+            },
+            leftRatio: function(){
+                return 1 - this.rightRatio
             },
             rightRatio: function(){
                 return this.axises && rightRatio(this.axises)
@@ -108,11 +120,22 @@
                 if (this.axisCount > 0) {
                     const ld = [`M0 ${this.gheight} L0 0`]
                     const rd = [`M${this.gwidth} ${this.gheight} L${this.gwidth} 0`]
+
+                    let initialPoint = `L${this.axises.common[0].left.ratio * this.gwidth} 0`
+                    ld.push(initialPoint)
+                    rd.push(initialPoint)
+
                     for (let i = 0; i < this.axises.common.length; i++) {
                         let lratio = this.axises.common[i].left.ratio
-                        ld.push(`L${lratio * this.gwidth} ${i * this.lineHeight} L${lratio * this.gwidth} ${(1 + i) * this.lineHeight}`)
-                        rd.push(`L${lratio * this.gwidth} ${i * this.lineHeight} L${lratio * this.gwidth} ${(1 + i) * this.lineHeight}`)
+                        let draw = `L${lratio * this.gwidth} ${(0.5 + i) * this.lineHeight}`
+                        ld.push(draw)
+                        rd.push(draw)
                     }
+
+                    let finalPoint = `L${this.axises.common[this.axises.common.length-1].left.ratio * this.gwidth} ${this.gheight}`
+                    ld.push(finalPoint)
+                    rd.push(finalPoint)
+
                     ld.push("Z")
                     rd.push("Z")
                     return {left: ld.join(" "), right: rd.join(" ")}
