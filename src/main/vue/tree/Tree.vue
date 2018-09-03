@@ -1,35 +1,52 @@
 <template>
     <span>
-        <v-card-title primary-title><div class="headline">Composition</div></v-card-title>
+        <hider title="Composition"/>
         <v-card-text class="text-md-center" v-if="loading">Chargement...</v-card-text>
 
         <v-card-text v-else-if="!tree" class="text-md-center">
             <div>Faites une <span><v-icon @click="goSearch" color="blue">search</v-icon> recherche</span> ou prenez un produit du <span><v-icon @click="goBasket" color="blue">shopping_basket</v-icon> panier pour voir sa composition.</span></div>
         </v-card-text>
 
-        <v-card v-else row wrap>
-            <v-flex xs12>
-                <v-container>
-                    <tree-head :tree="tree"/>
-                </v-container>
-            </v-flex>
-            <v-flex xs12>
-                <ressources :tree="tree"/>
-            </v-flex>
-            <v-flex xs12>
-                <facets :tree="tree"/>
-            </v-flex>
-            <v-flex xs12>
-                <impacts :tree="tree"/>
-            </v-flex>
-            <v-flex xs12>
-                <bilan-impacts :tree="tree"/>
-            </v-flex>
-            <v-flex xs12>
-                <branches :tree="tree"/>
-            </v-flex>
-            <add-tree-part-btn :tree="tree"/>
-        </v-card>
+        <span v-else>
+            <v-layout row wrap justify-center>
+                <v-card class="ma-1 pl-2 pr-3" style="border-radius:2em">
+                    <tree-head class="my-2" :tree="tree"/>
+                </v-card>
+            </v-layout>
+            <v-layout row wrap mx-2>
+                <v-flex pa-2>
+                    <v-card>
+                        <ressources :tree="tree"/>
+                    </v-card>
+                </v-flex>
+                <v-flex pa-2>
+                    <v-card>
+                        <bilan-ressources :tree="tree"/>
+                    </v-card>
+                </v-flex>
+                <v-flex pa-2>
+                    <v-card>
+                        <facets :tree="tree"/>
+                    </v-card>
+                </v-flex>
+                <v-flex pa-2>
+                    <v-card>
+                        <impacts :tree="tree"/>
+                    </v-card>
+                </v-flex>
+                <v-flex pa-2>
+                    <v-card>
+                        <bilan-impacts :tree="tree"/>
+                    </v-card>
+                </v-flex>
+                <v-flex pa-2>
+                    <v-card>
+                        <branches :tree="tree"/>
+                    </v-card>
+                </v-flex>
+            </v-layout>
+        </span>
+        <add-tree-part-btn :tree="tree"/>
     </span>
 </template>
 
@@ -44,9 +61,13 @@
     import TreeHead from "./TreeHead"
     import AddTreePartBtn from "../layout/AddTreePartBtn"
     import BilanImpacts from "./BilanImpacts"
+    import BilanRessources from "./BilanRessources"
+    import Hider from "./Hider"
 
     export default {
         components: {
+            Hider,
+            BilanRessources,
             BilanImpacts,
             AddTreePartBtn,
             TreeHead,
@@ -88,9 +109,3 @@
         },
     }
 </script>
-
-<style>
-    .item-card {
-        margin-top: 1em
-    }
-</style>

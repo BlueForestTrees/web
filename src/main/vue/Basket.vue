@@ -1,15 +1,23 @@
 <template>
     <span>
-        <v-card-title primary-title><div class="headline">Panier</div></v-card-title>
+        <hider title="Panier" />
         <v-card-text class="text-md-center" v-if="items.length === 0">Votre panier est vide. <br>Faites une <span><v-icon @click="goSearch" color="blue">search</v-icon> recherche pour trouver des choses à mettre dans le panier.</span></v-card-text>
 
-        <template v-if="items.length > 0" v-for="item in items">
-            <div :key="item._id" @click="toggleSelect(item)" class="v-list__tile" :style="{paddingTop:'8px',paddingBottom:'8px',height:'auto', background: isSelected(item) ? '#D8E9F5' : '', transition: 'background .2s ease'}">
-                <v-icon v-if="isSelected(item)" color="blue" style="margin-right:0.3em">check_circle</v-icon>
-                <v-icon v-else :style="'color: '+item.trunk.color+';margin-right:0.3em'">lens</v-icon>
-                {{item.trunk.name}}
-            </div>
-        </template>
+        <v-container>
+            <v-layout row wrap justify-center>
+                <template v-if="items.length > 0" v-for="item in items">
+                    <v-card :key="item._id" class="ma-1" :style="{borderRadius: '1.5em',background: isSelected(item) ? '#D8E9F5' : '', transition: 'background .2s ease'}">
+                        <v-container py-2 pr-3 pl-2 @click="toggleSelect(item)" style="cursor: pointer">
+                            <v-layout row align-center  style="pointer-events: none">
+                                <v-icon v-if="isSelected(item)" color="blue" style="margin-right:0.3em">check_circle</v-icon>
+                                <v-icon v-else :style="'color: '+item.trunk.color+';margin-right:0.3em'">lens</v-icon>
+                                {{item.trunk.name}}
+                            </v-layout>
+                        </v-container>
+                    </v-card>
+                </template>
+            </v-layout>
+        </v-container>
 
         <transition name="slide-fade">
             <v-toolbar v-if="anySelected" app dark class="elevation-0" color="blue">
@@ -43,9 +51,11 @@
     import {mapActions} from "vuex"
     import On from "../const/on"
     import selectable from "./mixin/Selectable"
+    import Hider from "./tree/Hider"
 
     export default {
         name: 'basket',
+        components: {Hider},
         mixins: [selectable],
         computed: {
             ...mapState(['basket']),

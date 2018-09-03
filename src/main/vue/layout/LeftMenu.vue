@@ -15,7 +15,7 @@
                     <v-icon>add</v-icon>
                 </v-list-tile-action>
                 <v-list-tile-content>
-                    <v-list-tile-title>Créer quelque chose</v-list-tile-title>
+                    <v-list-tile-title>Créer un produit ou un service</v-list-tile-title>
                 </v-list-tile-content>
                 <feedback-dialog/>
             </v-list-tile>

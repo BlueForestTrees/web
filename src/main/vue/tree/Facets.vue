@@ -1,11 +1,6 @@
 <template>
-        <v-list dense>
-            <v-subheader>
-                <v-tooltip top>
-                    <h4 slot="activator">PROPRIETES</h4>
-                    <span>Quantité, Prix, Dimensions, etc...</span>
-                </v-tooltip>
-            </v-subheader>
+        <span>
+            <subheader icon="more_horiz" title="PROPRIETES"/>
 
             <template v-for="item in items">
                 <v-list-tile :key="item._id" @click="toggleSelect(item)" :class="'active'">
@@ -13,7 +8,7 @@
                     {{qtUnitName(item) }}
                 </v-list-tile>
             </template>
-        </v-list>
+        </span>
 </template>
 
 <script>
@@ -24,9 +19,11 @@
     import {getRandomColor, hasQuantity, qtUnitName} from "../../services/calculations"
     import QtUnit from "../common/QtUnit"
     import selectable from "../mixin/Selectable"
+    import Subheader from "./Subheader"
 
     export default {
         components: {
+            Subheader,
             QtUnit,
         },
         data() {

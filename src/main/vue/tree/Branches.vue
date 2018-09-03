@@ -1,18 +1,8 @@
 <template>
-    <v-card>
-        <v-list dense>
+        <span>
 
             <transition name="slide-fade">
-                <v-toolbar v-if="anySelected" app dark class="elevation-0" color="green lighten-2">
-                    <v-toolbar-items>
-                        <v-tooltip bottom>
-                            <v-btn slot="activator" icon dense @click="unselect()">
-                                <v-icon>close</v-icon>
-                            </v-btn>
-                            <span style="pointer-events: none">Fermer</span>
-                        </v-tooltip>
-                    </v-toolbar-items>
-                    <v-spacer/>
+                <v-toolbar v-if="anySelected" app dark class="elevation-0" color="blue">
                     <v-toolbar-items>
                         <v-tooltip bottom>
                             <v-btn slot="activator" v-if="oneSelected" flat dense @click="goTree(oneSelected)">ouvrir
@@ -34,24 +24,27 @@
                             <span style="pointer-events: none">Supprimer</span>
                         </v-tooltip>
                     </v-toolbar-items>
+                    <v-spacer/>
+                    <v-toolbar-items>
+                        <v-tooltip bottom>
+                            <v-btn slot="activator" icon dense @click="unselect()">
+                                <v-icon>close</v-icon>
+                            </v-btn>
+                            <span style="pointer-events: none">Fermer</span>
+                        </v-tooltip>
+                    </v-toolbar-items>
                 </v-toolbar>
             </transition>
 
-            <v-subheader>
-                <v-tooltip top>
-                    <h4 slot="activator">USAGE</h4>
-                    <span>Utilisé pour...</span>
-                </v-tooltip>
-            </v-subheader>
+            <subheader icon="call_split" title="USAGE"/>
 
-            <v-list-tile v-for="item in items" :key="item._id" @click="toggleSelect(item)" :style="{background: isSelected(item) ? '#E8F5E9' : '', transition: 'background .2s ease'}">
-                <v-icon v-if="isSelected(item)" color="green">check_circle</v-icon>
+            <v-list-tile v-for="item in items" :key="item._id" @click="toggleSelect(item)" :style="{background: isSelected(item) ? '#D8E9F5' : '', transition: 'background .2s ease'}">
+                <v-icon v-if="isSelected(item)" color="blue">check_circle</v-icon>
                 <v-icon v-else :style="'color: '+item.trunk.color+';margin-right:0.2em'">lens</v-icon>
                 {{qtUnitName(item.trunk)}}
             </v-list-tile>
 
-        </v-list>
-    </v-card>
+        </span>
 </template>
 
 <script>
@@ -61,9 +54,11 @@
     import selectable from "../mixin/Selectable"
     import {getRandomColor, qtUnitName} from "../../services/calculations"
     import goTree from "../mixin/GoTree"
+    import Subheader from "./Subheader"
 
     export default {
         components: {
+            Subheader,
             QtUnit
         },
         props: ['tree'],
@@ -78,11 +73,11 @@
         },
         methods: {
             remove(item) {
-                this.deleteLink(item.linkId)
+                this.deleteBranch(item.linkId)
                 this.unselect()
             },
             ...mapActions({
-                deleteLink: On.DELETE_LINK,
+                deleteBranch: On.DELETE_BRANCH,
                 dispatchLoadBranches: On.LOAD_BRANCHES
             }),
             getRandomColor, qtUnitName

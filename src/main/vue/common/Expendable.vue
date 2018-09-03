@@ -11,7 +11,6 @@
             <slot>
             </slot>
         </v-card-text>
-        <v-divider/>
     </span>
 </template>
 

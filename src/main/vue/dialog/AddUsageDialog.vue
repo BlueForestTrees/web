@@ -72,15 +72,13 @@
         methods: {
             ...mapActions({
                 dispatchSearch: On.SEARCH_TREE,
-                dispatchCreateLink: On.CREATE_LINK
+                dispatchCreateBranch: On.CREATE_BRANCH
             }),
             async validate() {
                 this.$refs.form.validate()
                 if (this.valid) {
-                    await this.dispatchCreateLink({
-                        trunk: {_id: this.selectedItemId, quantity: {qt: this.qt, unit: this.unit.shortname}},
-                        root: {_id: this.tree._id, quantity: this.tree.trunk.quantity}
-                    })
+                    const bqt = baseQt({qt: this.qt, unit: this.unit.shortname}) / this.tree.trunk.quantity.bqt
+                    await this.dispatchCreateBranch({trunkId: this.selectedItemId,branchId: this.tree._id,bqt})
                     this.close()
                 }
             },

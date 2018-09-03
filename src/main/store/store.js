@@ -12,7 +12,6 @@ import tankActions from "./actions/tankActions"
 import impactActions from "./actions/impactActions"
 import impactEntryActions from "./actions/impactEntryActions"
 import branchActions from "./actions/branchActions"
-import linkActions from "./actions/linkActions"
 import branchMutations from "./mutation/branchMutations"
 import dialogMutations from "./mutation/dialogMutations"
 import facetMutation from "./mutation/facetMutation"
@@ -68,7 +67,6 @@ const store = new Vuex.Store({
         ...trunkActions,
         ...tankActions,
         ...branchActions,
-        ...linkActions,
         ...feedbackActions,
         ...userActions,
         ...snackbarActions,

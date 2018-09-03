@@ -100,14 +100,14 @@
                 this.selectedItem = null
             },
             ...mapActions({
-                dispatchCreateLink: On.CREATE_LINK,
+                dispatchCreateBranch: On.CREATE_ROOT,
                 dispatchRefreshRessources: On.LOAD_ROOTS,
                 snack: On.SNACKBAR,
                 addToBasket: On.ADD_TO_BASKET
             }),
             async validateForm() {
                 const bqt = baseQt({qt: this.qt, unit: this.unit.shortname}) / this.tree.trunk.quantity.bqt
-                await this.dispatchCreateLink({
+                await this.dispatchCreateBranch({
                     _id: createStringObjectId(),
                     trunkId: this.tree._id,
                     rootId: this.selectedItem._id,

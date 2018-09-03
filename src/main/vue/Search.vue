@@ -1,15 +1,15 @@
 <template>
     <span>
-         <v-card-title primary-title>
-            <div class="headline">Recherche</div>
-        </v-card-title>
-        <v-divider/>
+
+        <hider title="Recherche"/>
 
         <search-cat @select="catChange"/>
 
         <expendable title="Nom">
             <v-text-field label="Nom" autofocus v-model="name"/>
         </expendable>
+
+        <v-divider/>
 
         <search-comp :filter="filter">
             <template slot-scope="{ s }">
@@ -48,6 +48,7 @@
     import SearchComp from "./SearchComp"
     import SearchCat from "./SearchCat"
     import Expendable from "./common/Expendable"
+    import Hider from "./tree/Hider"
 
     export default {
         name: "search",
@@ -57,7 +58,7 @@
                 cats:[]
             }
         },
-        components: {Expendable, SearchCat, SearchComp},
+        components: {Hider, Expendable, SearchCat, SearchComp},
         computed:{
             filter(){
                 const cat = {}

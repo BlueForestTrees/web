@@ -1,15 +1,7 @@
 <template>
     <span>
-        <v-card-title primary-title>
-            <div class="headline">Comparaison</div>
-            <v-spacer/>
-            <v-btn-toggle v-model="zoom" v-if="leftId && rightId">
-              <v-btn>
-                <v-icon>search</v-icon>
-              </v-btn>
-            </v-btn-toggle>
-        </v-card-title>
-        <compare-ribbon v-if="leftId && rightId" :axises="axises" :left="compare.left" :right="compare.right" :zoom="zoom===0"/>
+        <hider title="Comparaison"/>
+        <compare-ribbon v-if="leftId && rightId" :axises="axises" :left="compare.left" :right="compare.right" />
         <v-card-text class="text-md-center" v-else-if="loading">Chargement...</v-card-text>
         <v-card-text class="text-md-center" v-else="!leftId">Faites une <span><v-icon @click="goSearch" color="blue">search</v-icon> recherche</span> ou prenez des produits du <span><v-icon @click="goBasket" color="blue">shopping_basket</v-icon> panier pour les comparer.</span></v-card-text>
     </span>
@@ -22,17 +14,18 @@
     import {mapState, mapActions} from 'vuex'
     import CompareRibbon from "./CompareRibbon"
     import TreeHead from "../tree/TreeHead"
+    import Hider from "../tree/Hider"
 
     export default {
         name: 'compare',
         props: ['leftId', 'rightId'],
         components: {
+            Hider,
             TreeHead,
             CompareRibbon
         },
         data: function () {
             return {
-                zoom: false,
                 base: null,
                 leftColor: "cyan darken1",
                 rightColor: "pink darken1",

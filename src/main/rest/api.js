@@ -29,20 +29,13 @@ export default {
     getRoots: _id => get(`/api/tree/root/${_id}`),
     getImpactTank: _id => get(`/api/tree/impacttank/${_id}`),
     getCategories: pid => cached(get,`/api/categories${paramsOf({pid: pid || null})}`, categoriesCache),
-    
-    
-    putLink: ({_id, trunkId, rootId, relativeTo, bqt}) => Promise.all([
-        put(`/api/tree/root`, {_id, trunkId, rootId, relativeTo, bqt}),
-        put(`/api/tree/branch`, {_id, trunkId: rootId, rootId: trunkId, bqt: 1 / bqt})
-    ]),
-    postLink: ({_id, trunkId, rootId, relativeTo, bqt}) => Promise.all([
-        post(`/api/tree/root`, {_id, trunkId, rootId, relativeTo, bqt}),
-        post(`/api/tree/branch`, {_id, trunkId: rootId, branchId: trunkId, bqt: 1 / bqt})
-    ]),
-    deleteLink: _id => Promise.all([
-        del(`/api/tree/root/${_id}`),
-        del(`/api/tree/branch/${_id}`)
-    ]),
+
+    putBranch: ({_id, trunkId, rootId, relativeTo, bqt}) => put(`/api/tree/branch`, {_id, trunkId, rootId, bqt}),
+    postBranch: ({_id, trunkId, rootId, relativeTo, bqt}) => post(`/api/tree/branch`, {_id, trunkId, rootId, bqt}),
+    deleteBranch: _id => del(`/api/tree/branch/${_id}`),
+    putRoot: ({_id, trunkId, rootId, relativeTo, bqt}) => put(`/api/tree/root`, {_id, trunkId, rootId, relativeTo, bqt}),
+    postRoot: ({_id, trunkId, rootId, relativeTo, bqt}) => post(`/api/tree/root`, {_id, trunkId, rootId, relativeTo, bqt}),
+    deleteRoot: _id => del(`/api/tree/root/${_id}`),
     
     putFacet: (trunk, facet) => post(`/api/tree/facet`, {trunk, facet}),
     putTrunkName: (_id, name) => put(`/api/tree/trunk/${_id}`, {name}),

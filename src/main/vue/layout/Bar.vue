@@ -1,5 +1,5 @@
 <template>
-    <v-toolbar app class="elevation-5" style="background-color: #FAFAFACC" scroll-off-screen :scroll-threshold="150">
+    <v-toolbar app class="elevation-1" style="background-color: #FAFAFACC" scroll-off-screen :scroll-threshold="150">
         <v-tooltip bottom>
             <v-btn slot="activator" icon dense @click="nav.leftMenuVisible = !nav.leftMenuVisible"><v-icon color="blue darken-3">dehaze</v-icon></v-btn>
             <span style="pointer-events: none">Menu de gauche</span>

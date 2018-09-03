@@ -1,8 +1,6 @@
 <template>
-        <v-list dense>
-            <v-subheader>
-                <h4 slot="activator">EXTERNALITES</h4>
-            </v-subheader>
+        <span>
+            <subheader icon="keyboard_tab" title="EXTERNALITES"/>
 
             <template v-for="item in items">
                 <v-list-tile avatar :key="item._id">
@@ -10,7 +8,7 @@
                     {{qtUnitName(item)}}
                 </v-list-tile>
             </template>
-        </v-list>
+        </span>
 </template>
 
 <script>
@@ -19,9 +17,11 @@
     import On from "../../const/on"
     import {qtUnitName} from "../../services/calculations"
     import QtUnit from "../common/QtUnit"
+    import Subheader from "./Subheader"
 
     export default {
         components: {
+            Subheader,
             QtUnit,
         },
         data() {

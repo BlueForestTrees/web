@@ -17,8 +17,8 @@ import Vue from 'vue'
  * @param tree
  */
 export const buildAxises = tree => ([
-    ...buildAxis(tree.trunk, "facet", tree.facets),
-    ...buildAxis(tree.trunk, "tank", tree.tank),
+    // ...buildAxis(tree.trunk, "facet", tree.facets),
+    // ...buildAxis(tree.trunk, "tank", tree.tank),
     ...buildAxis(tree.trunk, "impactsTank", tree.impactsTank),
 ])
 const buildAxis = ({name}, type, items) => items && map(items, item => ({
