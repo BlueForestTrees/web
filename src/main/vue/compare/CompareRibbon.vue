@@ -2,7 +2,7 @@
     <v-container v-if="lines" pt-0>
         <v-card>
             <v-layout row><v-spacer/><v-icon class="mr-1 mt-1" large @click="zoom = !zoom">{{zoom ? 'pie_chart' : 'list'}}</v-icon></v-layout>
-            <svg v-if="zoom" :viewBox="listViewbox" class="ma-4" style="min-width: 40em;min-height:20em;">
+            <svg v-if="zoom" :viewBox="listViewbox" class="ma-4" style="min-width: 40em;min-height:20em;" v-touch="{left: swipeLeft,right: swipeRight}">
                 <g>
                     <!--FORMES-->
                     <path :d="lines.right" :fill="rightColor"></path>
@@ -57,6 +57,7 @@
     import On from "../../const/on"
     import {mapActions} from "vuex"
     import {rightRatio} from "../../services/axis"
+    import Vue from 'vue'
 
     export default {
         name: "compare-ribbon",
@@ -66,6 +67,7 @@
             const alpha = 0.7
             const textColor = '#696955'
             return {
+                gOffset:0,
                 zoom: false,
                 border: 2,
                 lineHeight: 25,
@@ -111,7 +113,7 @@
                 return this.axisCount * this.lineHeight
             },
             listViewbox: function () {
-                return `0 0 ${this.width} ${this.gheight}`
+                return `${this.gOffset} 0 ${this.width} ${this.gheight}`
             },
             camViewbox: function(){
                 return `0 0 ${this.width} ${this.width}`
@@ -144,7 +146,25 @@
         },
         methods: {
             shadeColor, qtUnit, equiv,
-            ...mapActions({goTree: On.GO_TREE})
+            ...mapActions({goTree: On.GO_TREE}),
+            swipeLeft(){
+                const move = () => {
+                    Vue.nextTick(()=>this.gOffset+=10)
+                    if(this.gOffset < 210) {
+                        setTimeout(move, 8)
+                    }
+                }
+                move()
+            },
+            swipeRight(){
+                const move = () => {
+                    Vue.nextTick(()=>this.gOffset-=10)
+                    if(this.gOffset > 0) {
+                        setTimeout(move, 8)
+                    }
+                }
+                move()
+            }
         }
     }
 </script>
