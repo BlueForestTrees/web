@@ -19,8 +19,8 @@
             </div>
         </template>
 
-        <v-btn block flat color="primary" v-if="manualMode && items.length" @click="getMoreClick" style="margin-bottom: 3em">Voir plus</v-btn>
-        <infinite-loading v-else ref="iloading" @infinite="getMore" spinner="spiral" :distance="500" style="padding-bottom: 3em">
+        <v-btn v-if="manualMode && items.length" block flat color="primary" @click="getMoreClick" style="margin-bottom: 3em">Voir plus</v-btn>
+        <infinite-loading v-else-if="ready" ref="iloading" @infinite="getMore" spinner="spiral" :distance="500" style="padding-bottom: 3em">
             <span slot="no-more">{{items.length}} résultats</span>
             <span slot="no-results">Pas de résultats</span>
         </infinite-loading>
@@ -36,7 +36,7 @@
 
     export default {
         name: 'search-comp',
-        props: {filter: Object, nobar: Boolean, maxSelectionSize: Number, type: {type: String, default: On.SEARCH_TREE}},
+        props: {ready: {type:Boolean, default: true}, filter: Object, nobar: Boolean, maxSelectionSize: Number, type: {type: String, default: On.SEARCH_TREE}},
         mixins: [selectable],
         components: {
             InfiniteLoading,
@@ -57,28 +57,23 @@
             }
         },
         watch: {
-            namePart: function () {
-                this.reset()
-            },
             filter: function () {
                 this.reset()
             }
         },
         methods: {
-            getMoreClick: function () {
-                this.manualMode = false
-                this.getMore()
-            },
             reset: function () {
                 this.items = []
                 this.$nextTick(() => {
                     this.$refs.iloading.$emit('$InfiniteLoading:reset')
                 })
             },
-            dispatchSearch: function (query) {
-                return this.$store.dispatch(this.type, query)
+            getMoreClick: function () {
+                this.manualMode = false
+                this.getMore()
             },
             getMore: debounce(function ($state) {
+                console.log("DISPATCH")
                 this.dispatchSearch(this.query)
                     .then(items => {
                         if (items.length > 0) {
@@ -92,6 +87,9 @@
                         }
                     })
             }, 300),
+            dispatchSearch: function (query) {
+                return this.$store.dispatch(this.type, query)
+            },
         },
     }
 </script>

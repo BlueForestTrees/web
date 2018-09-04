@@ -3,22 +3,31 @@
 
         <hider title="Recherche"/>
 
-        <v-expansion-panel popout>
+        <v-expansion-panel popout v-model="panels">
             <v-expansion-panel-content>
-                <div slot="header" class="subheading">Catégorie...</div>
+                <div slot="header" class="subheading">
+                    <span v-if="cats.length > 0">{{cats[cats.length-1].name}}</span>
+                    <span v-else>Catégorie...</span>
+                </div>
                 <v-container>
-                    <search-cat @select="catChange"/>
+                    <search-cat @select="catChange" @ok="panels=null"/>
                 </v-container>
             </v-expansion-panel-content>
             <v-expansion-panel-content>
-                <div slot="header" class="subheading">Nom...</div>
+                <div slot="header" class="subheading">
+                    <span v-if="name && name.length > 0">Nom: {{name}}</span>
+                    <span v-else>Nom...</span>
+                </div>
                 <v-container>
-                    <v-text-field label="Nom" autofocus v-model="name"/>
+                    <v-text-field label="Nom" autofocus v-model="name" @enter="panels=null" clearable v-on:keyup.enter="panels=null"/>
+                    <v-layout>
+                        <v-spacer/>
+                        <v-btn color="primary" @click="panels=null">Ok</v-btn>
+                    </v-layout>
                 </v-container>
             </v-expansion-panel-content>
         </v-expansion-panel>
-
-        <search-comp :filter="filter">
+        <search-comp :filter="filter" :ready="ready">
             <template slot-scope="{ s }">
                 <v-toolbar-items>
                     <v-tooltip bottom>
@@ -43,7 +52,6 @@
                         <span style="pointer-events: none">Fermer</span>
                     </v-tooltip>
                 </v-toolbar-items>
-
             </template>
         </search-comp>
     </span>
@@ -62,7 +70,9 @@
         data: function () {
             return {
                 name:null,
-                cats:[]
+                cats:[],
+                ready: false,
+                panels:[]
             }
         },
         components: {Hider, Expendable, SearchCat, SearchComp},
@@ -71,10 +81,12 @@
                 const cat = {}
                 for(let i = 0; i < this.cats.length; i++){
                     cat["c"+(i+1)] = this.cats[i]._id
+                    this.ready = true
                 }
                 const f = {cat}
                 if(this.name){
                     f.term = this.name
+                    this.ready = true
                 }
                 return f
             }

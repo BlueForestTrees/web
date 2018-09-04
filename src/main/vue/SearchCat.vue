@@ -20,6 +20,10 @@
                 </v-flex>
                 </v-layout>
             </v-card-text>
+        <v-layout>
+            <v-spacer/>
+            <v-btn color="primary" @click="$emit('ok')">Ok</v-btn>
+        </v-layout>
     </span>
 </template>
 
