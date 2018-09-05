@@ -73,7 +73,6 @@
                 this.getMore()
             },
             getMore: debounce(function ($state) {
-                console.log("DISPATCH")
                 this.dispatchSearch(this.query)
                     .then(items => {
                         if (items.length > 0) {

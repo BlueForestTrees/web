@@ -1,6 +1,8 @@
 <template>
     <span>
-        <hider title="Panier" />
+        <v-layout row wrap justify-center align-center class="ma-4">
+            <span class="title">Panier</span>
+        </v-layout>
         <v-card-text class="text-md-center" v-if="items.length === 0">Votre panier est vide. <br>Faites une <span><v-icon @click="goSearch" color="blue">search</v-icon> recherche pour trouver des choses à mettre dans le panier.</span></v-card-text>
 
         <v-container>
@@ -21,6 +23,10 @@
 
         <transition name="slide-fade">
             <v-toolbar v-if="anySelected" app dark class="elevation-0" color="blue">
+                    <v-tooltip bottom>
+                        <v-btn slot="activator" v-if="anySelected" flat dense @click="removeSelectedItems"><v-icon>call_merge</v-icon>Ajouter à</v-btn>
+                        <span style="pointer-events: none">Ajouter à</span>
+                    </v-tooltip>
                     <v-tooltip bottom>
                         <v-btn slot="activator" v-if="oneSelected" flat dense @click="goTree(oneSelected)">ouvrir<v-icon>category</v-icon></v-btn>
                         <span style="pointer-events: none">Ouvrir</span>
@@ -47,21 +53,16 @@
 </template>
 
 <script>
-    import {mapState} from "vuex"
+    import {mapGetters} from "vuex"
     import {mapActions} from "vuex"
     import On from "../const/on"
     import selectable from "./mixin/Selectable"
-    import Hider from "./tree/Hider"
 
     export default {
         name: 'basket',
-        components: {Hider},
         mixins: [selectable],
         computed: {
-            ...mapState(['basket']),
-            items:function(){
-                return this.basket && Object.values(this.basket)
-            }
+            ...mapGetters({items:'basketArray'})
         },
         methods: {
             removeSelectedItems: function () {

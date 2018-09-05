@@ -1,6 +1,9 @@
 <template>
     <span>
-        <hider title="Composition"/>
+        <v-layout row wrap justify-center align-center class="ma-4">
+            <span class="title">Composition{{tree ? ' de':''}}</span>
+            <v-card v-if="tree" class="pl-2 pr-3 py-2 ma-1" style="border-radius:2em"><tree-head :tree="tree"/></v-card>
+        </v-layout>
         <v-card-text class="text-md-center" v-if="loading">Chargement...</v-card-text>
 
         <v-card-text v-else-if="!tree" class="text-md-center">
@@ -8,11 +11,6 @@
         </v-card-text>
 
         <span v-else>
-            <v-layout row wrap justify-center>
-                <v-card class="ma-1 pl-2 pr-3" style="border-radius:2em">
-                    <tree-head class="my-2" :tree="tree"/>
-                </v-card>
-            </v-layout>
 
             <v-layout hidden-md-and-up>
                 <v-expansion-panel popout>

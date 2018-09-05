@@ -17,13 +17,14 @@ import Search from "../vue/Search"
 //const Search = () => import(/* webpackChunkName: "Search" */ '../vue/Search')
 import BlueForest from "../vue/BlueForest"
 //const BlueForest = () => import(/* webpackChunkName: "BF" */ '../vue/BlueForest')
+import Compare from "../vue/compare/Compare"
+//const Compare = () => import(/* webpackChunkName: "Compare" */ '../vue/compare/Compare')
 
 //OK
 const Confirmation = () => import(/* webpackChunkName: "Confirmation" */ '../vue/Confirmation')
 const Inscription = () => import(/* webpackChunkName: "Inscription" */ '../vue/Inscription')
 const Login = () => import(/* webpackChunkName: "Login" */ '../vue/Login')
 const ImpactEntries = () => import(/* webpackChunkName: "ImpactEntries" */ '../vue/ImpactEntries')
-const Compare = () => import(/* webpackChunkName: "Compare" */ '../vue/compare/Compare')
 
 Vue.use(VueRouter)
 

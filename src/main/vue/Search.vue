@@ -1,7 +1,9 @@
 <template>
     <span>
 
-        <hider title="Recherche"/>
+        <v-layout row wrap justify-center align-center class="ma-4">
+            <span class="title">Recherche</span>
+        </v-layout>
 
         <v-expansion-panel popout v-model="panels">
             <v-expansion-panel-content>
