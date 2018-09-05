@@ -1,28 +1,29 @@
 <template>
     <main-dialog :dialog="Dial.ADD_RESSOURCE" ref="dialog" :title="'Nouvelle ressource'"
-                 @esc="close" @enter="validateForm" @focus="focus"
+                 @esc="close" @enter="validateForm"
                  :noaction="searching">
         <v-card-text>
             <destination :tree="tree"/>
 
-            <v-form v-model="validForm" v-on:submit.prevent="" ref="form">
 
-                <search-comp v-if="searching" :maxSelectionSize="1">
-                    <template slot-scope="{ s }">
-                        <v-tooltip bottom>
-                            <v-btn slot="activator" v-if="s.selectionCount" flat dense @click="validateSearch(s)">
-                                <v-icon>done</v-icon>
-                                Valider
-                            </v-btn>
-                            <span style="pointer-events: none">Valider</span>
-                        </v-tooltip>
-                        <v-spacer/>
-                        <v-tooltip bottom>
-                            <span slot="activator"><v-btn icon dense @click="closeSearch(s)"><v-icon>close</v-icon></v-btn></span>
-                            <span style="pointer-events: none">Fermer</span>
-                        </v-tooltip>
-                    </template>
-                </search-comp>
+                <span v-if="searching">
+                    <search-trunk>
+                        <template slot-scope="{ s }">
+                            <v-tooltip bottom>
+                                <v-btn slot="activator" v-if="s.selectionCount" flat dense @click="validateSearch(s)">
+                                    <v-icon>done</v-icon>
+                                    Valider
+                                </v-btn>
+                                <span style="pointer-events: none">Valider</span>
+                            </v-tooltip>
+                            <v-spacer/>
+                            <v-tooltip bottom>
+                                <span slot="activator"><v-btn icon dense @click="closeSearch(s)"><v-icon>close</v-icon></v-btn></span>
+                                <span style="pointer-events: none">Fermer</span>
+                            </v-tooltip>
+                        </template>
+                    </search-trunk>
+                </span>
 
                 <v-card v-else>
                     <v-card-title>
@@ -40,7 +41,6 @@
                     </v-card-text>
                 </v-card>
 
-            </v-form>
         </v-card-text>
     </main-dialog>
 </template>
@@ -59,23 +59,24 @@
     import SearchComp from "../SearchComp"
     import {createStringObjectId} from "../../services/calculations"
     import {bqtGToQtUnit, baseQt} from "unit-manip"
+    import SearchCat from "../SearchCat"
+    import SearchTrunk from "../SearchTrunk"
 
     export default {
         name: 'add-ressource-dialog',
         mixins: [closable],
         data() {
             return {
-                noaction: true,
                 Dial: Dial,
                 selectedItem: null,
                 qt: null,
                 unit: null,
                 grandeur: null,
                 searchAgain: false,
-                validForm: false,
+                panels: []
             }
         },
-        components: {SearchComp, GrandeurSelect, UnitSelect, Destination, MainDialog},
+        components: {SearchTrunk, SearchCat, SearchComp, GrandeurSelect, UnitSelect, Destination, MainDialog},
         computed: {
             ...mapState({tree: state => state.dialogs.addRessource.data.tree}),
             searching: function () {
@@ -116,10 +117,6 @@
                 this.addToBasket([this.tree, this.selectedItem])
                 this.dispatchRefreshRessources(this.tree)
                 this.close()
-            },
-            focus() {
-                this.$refs.form.reset()
-                this.selectedItem = null
             },
             required, isNumber,
             notIn() {

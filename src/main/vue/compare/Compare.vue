@@ -16,13 +16,11 @@
     import {mapState, mapActions} from 'vuex'
     import CompareRibbon from "./CompareRibbon"
     import TreeHead from "../tree/TreeHead"
-    import Hider from "../tree/Hider"
 
     export default {
         name: 'compare',
         props: ['leftId', 'rightId'],
         components: {
-            Hider,
             TreeHead,
             CompareRibbon
         },

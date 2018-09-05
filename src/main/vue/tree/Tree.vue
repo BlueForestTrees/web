@@ -107,7 +107,7 @@
                 </v-flex>
             </v-layout>
         </span>
-        <add-tree-part-btn :tree="tree"/>
+        <add-tree-part-btn v-if="tree" :tree="tree"/>
     </span>
 </template>
 
@@ -123,13 +123,11 @@
     import AddTreePartBtn from "../layout/AddTreePartBtn"
     import BilanImpacts from "./BilanImpacts"
     import BilanRessources from "./BilanRessources"
-    import Hider from "./Hider"
     import Subheader from "./Subheader"
 
     export default {
         components: {
             Subheader,
-            Hider,
             BilanRessources,
             BilanImpacts,
             AddTreePartBtn,

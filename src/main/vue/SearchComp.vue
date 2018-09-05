@@ -6,7 +6,6 @@
                 </slot>
             </v-toolbar>
         </transition>
-
         <template v-if="items.length > 0" v-for="item in items">
             <div :key="item._id" @click="toggleSelect(item)" class="v-list__tile" :style="{paddingTop:'8px',paddingBottom:'8px',height:'auto', background: isSelected(item) ? '#D8E9F5' : '', transition: 'background .2s ease'}">
                 <v-layout row>
@@ -20,7 +19,7 @@
         </template>
 
         <v-btn v-if="manualMode && items.length" block flat color="primary" @click="getMoreClick" style="margin-bottom: 3em">Voir plus</v-btn>
-        <infinite-loading v-else-if="ready" ref="iloading" @infinite="getMore" spinner="spiral" :distance="500" style="padding-bottom: 3em">
+        <infinite-loading v-else-if="ready" ref="iloading" @infinite="loadResults" spinner="spiral" :distance="500" style="padding-bottom: 3em">
             <span slot="no-more">{{items.length}} résultats</span>
             <span slot="no-results">Pas de résultats</span>
         </infinite-loading>
@@ -58,6 +57,7 @@
         },
         watch: {
             filter: function () {
+                console.log("FILTER CHANGE")
                 this.reset()
             }
         },
@@ -70,9 +70,9 @@
             },
             getMoreClick: function () {
                 this.manualMode = false
-                this.getMore()
+                this.loadResults()
             },
-            getMore: debounce(function ($state) {
+            loadResults: debounce(function ($state) {
                 this.dispatchSearch(this.query)
                     .then(items => {
                         if (items.length > 0) {

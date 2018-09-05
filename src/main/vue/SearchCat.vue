@@ -11,9 +11,11 @@
             <v-card-text>
                 <v-layout row align-center wrap>
                     <v-flex v-if="items.length > 0" v-for="item in items" @click="select(item)"
-                            :key="'o'+item._id" :style="{background: isSelected(item) ? '#E8F5E9' : '', transition: 'background .2s ease'}">
+                            :key="'o'+item._id"
+                            :style="{background: isSelected(item) ? '#E8F5E9' : '', transition: 'background .2s ease'}">
                         <v-layout row align-center>
-                            <v-icon v-if="isSelected(item)" color="green" style="margin-right:0.3em">check_circle</v-icon>
+                            <v-icon v-if="isSelected(item)" color="green"
+                                    style="margin-right:0.3em">check_circle</v-icon>
                             <v-icon v-else :style="'color: '+item.color">stop</v-icon>
                             <a style="padding-right:0.5em">{{item.name}}</a>
                         </v-layout>
@@ -37,6 +39,7 @@
         name: "search-cat",
         components: {Expendable},
         mixins: [selectable],
+        props: ['value'],
         data: function () {
             return {
                 items: [],
@@ -65,11 +68,16 @@
                 this.emitSelect()
             },
             emitSelect() {
-                this.$emit("select", this.selection)
+                this.$emit("input", this.selection)
             }
         },
         created: function () {
             this.getCats(null)
+        },
+        watch: {
+            value: function (v) {
+                this.selection = v
+            }
         }
     }
 </script>
