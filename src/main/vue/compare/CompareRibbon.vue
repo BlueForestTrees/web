@@ -2,7 +2,7 @@
     <v-container v-if="lines" pt-0>
         <v-card>
             <v-layout row><v-spacer/><v-icon class="mr-1 mt-1" large @click="zoom = !zoom">{{zoom ? 'pie_chart' : 'list'}}</v-icon></v-layout>
-            <svg v-if="zoom" :viewBox="listViewbox" class="ma-4" style="min-width: 40em;min-height:20em;" v-touch="{left: swipeLeft,right: swipeRight}">
+            <svg v-if="zoom" :viewBox="listViewbox" class="ma-4" style="min-width: 40em;min-height:20em;">
                 <g>
                     <!--FORMES-->
                     <path :d="lines.right" :fill="rightColor"></path>
@@ -27,11 +27,19 @@
                 </g>
             </svg>
             <svg v-else :viewBox="camViewbox" class="ma-4" style="max-height: 30em">
-                <circle :cx="width*0.5" :cy="width*0.5" :r="width*0.5" :fill="leftColor"></circle>
-                <circle :cx="width*0.5" :cy="width*0.5" :r="width*0.25" fill="none" :stroke="rightColor" :stroke-width="width*0.5" :stroke-dasharray="camDashArray" :style="`transform-origin: center;transform:rotate(${camAngle}deg);`"></circle>
 
-                <text v-if="leftPercent > 5" :x="width*0.5" text-anchor="middle" :y="width*0.2" font-size="25" :style="{fill:leftTextColor}">{{leftPercent}}%</text>
-                <text v-if="rightPercent > 5" :x="width*0.5" text-anchor="middle" :y="width*0.8" font-size="25" :style="{fill:rightTextColor}">{{rightPercent}}%</text>
+                <!--CERCLES-->
+                <defs>
+                    <clipPath id="rectRatio">
+                        <rect x="0" y="0" :width="width" :height="width*leftRatio"></rect>
+                    </clipPath>
+                </defs>
+                <circle :cx="width*0.5" :cy="width*0.5" :r="width*0.5" :fill="rightColor"></circle>
+                <circle :cx="width*0.5" :cy="width*0.5" :r="width*0.5" :fill="leftColor" clip-path="url(#rectRatio)"></circle>
+
+                <!--POURCENTAGES-->
+                <text v-if="leftPercent > 5" :x="width*0.5" text-anchor="middle" alignment-baseline="central" :y="width*leftRatio*0.5" font-size="25" :style="{fill:leftTextColor}">{{leftPercent}}%</text>
+                <text v-if="rightPercent > 5" :x="width*0.5" text-anchor="middle" alignment-baseline="central" :y="width - (width*rightRatio*0.5)" font-size="25" :style="{fill:rightTextColor}">{{rightPercent}}%</text>
             </svg>
         </v-card>
 
@@ -67,7 +75,6 @@
             const alpha = 0.7
             const textColor = '#696955'
             return {
-                gOffset:0,
                 zoom: false,
                 border: 2,
                 lineHeight: 25,
@@ -77,7 +84,14 @@
                 leftLightColor: shadeColor('#00ACC1', alpha),
                 rightLightColor: shadeColor('#D81B60', alpha),
                 textColor,
-                darkTextColor: shadeColor(textColor, -0.35)
+                darkTextColor: shadeColor(textColor, -0.35),
+                previousLVB:null
+            }
+        },
+        watch: {
+            listViewbox(c, old) {
+                this.previousLVB = old
+                this.$refs.animListViewbox && this.$refs.animListViewbox.beginElement()
             }
         },
         computed: {
@@ -99,13 +113,6 @@
             rightRatio: function(){
                 return this.axises && rightRatio(this.axises)
             },
-            camAngle: function(){
-                return 90 -180*this.rightRatio
-            },
-            camDashArray: function(){
-                const peri = 0.5 * this.width * Math.PI
-                return `${peri * this.rightRatio} ${peri}`
-            },
             axisCount: function () {
                 return this.axises && this.axises.common && this.axises.common.length
             },
@@ -113,7 +120,7 @@
                 return this.axisCount * this.lineHeight
             },
             listViewbox: function () {
-                return `${this.gOffset} 0 ${this.width} ${this.gheight}`
+                return `0 0 ${this.width} ${this.gheight}`
             },
             camViewbox: function(){
                 return `0 0 ${this.width} ${this.width}`
@@ -146,25 +153,7 @@
         },
         methods: {
             shadeColor, qtUnit, equiv,
-            ...mapActions({goTree: On.GO_TREE}),
-            swipeLeft(){
-                const move = () => {
-                    Vue.nextTick(()=>this.gOffset+=10)
-                    if(this.gOffset < 210) {
-                        setTimeout(move, 8)
-                    }
-                }
-                move()
-            },
-            swipeRight(){
-                const move = () => {
-                    Vue.nextTick(()=>this.gOffset-=10)
-                    if(this.gOffset > 0) {
-                        setTimeout(move, 8)
-                    }
-                }
-                move()
-            }
+            ...mapActions({goTree: On.GO_TREE})
         }
     }
 </script>
