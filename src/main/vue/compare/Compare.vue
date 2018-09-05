@@ -1,9 +1,5 @@
 <template>
     <span>
-        <v-layout column align-center justify-center class="ma-4 px-2">
-            <span class="title">Comparaison</span>
-            <v-select class="title mt-0 pl-2" style="max-width: 16em;margin-bottom:0em" :items="types" v-model="type" item-text="text" item-value="code"></v-select>
-        </v-layout>
         <compare-ribbon v-if="leftId && rightId" :axises="axises" :left="compare.left" :right="compare.right" :leftColor="leftColor" :rightColor="rightColor" />
         <v-card-text class="text-md-center" v-else-if="loading">Chargement...</v-card-text>
         <v-card-text class="text-md-center" v-else="!leftId">Faites une <span><v-icon @click="goSearch" color="blue">search</v-icon> recherche</span> ou prenez des produits du <span><v-icon @click="goBasket" color="blue">shopping_basket</v-icon> panier pour les comparer.</span></v-card-text>

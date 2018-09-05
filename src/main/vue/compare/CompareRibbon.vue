@@ -1,7 +1,11 @@
 <template>
-    <v-container v-if="lines" pt-0>
+    <v-container v-if="lines">
         <v-card>
-            <v-layout row><v-spacer/><v-icon class="mr-1 mt-1" large @click="zoom = !zoom">{{zoom ? 'pie_chart' : 'list'}}</v-icon></v-layout>
+            <v-layout row>
+                <v-select class="title mt-1 ml-1 pl-2" style="max-width: 16em;margin-bottom:0em" :items="types" v-model="type" item-text="text" item-value="code"></v-select>
+                <v-spacer/>
+                <v-icon class="mr-1" x-large @click="zoom = !zoom">{{zoom ? 'pie_chart' : 'list'}}</v-icon>
+            </v-layout>
             <svg v-if="zoom" :viewBox="listViewbox" class="ma-4" style="min-width: 40em;min-height:20em;">
                 <g>
                     <!--FORMES-->
@@ -75,6 +79,8 @@
             const alpha = 0.7
             const textColor = '#696955'
             return {
+                type: 1,
+                types: [{code:1, text:"Impact environmental"}],
                 zoom: false,
                 border: 2,
                 lineHeight: 25,
@@ -157,3 +163,12 @@
         }
     }
 </script>
+<style>
+    /*Juste pour virer les espaces autour de la combo! */
+    div.v-input__slot {
+        margin-bottom: 0em;
+    }
+    div.v-text-field__details {
+        display: none;
+    }
+</style>
