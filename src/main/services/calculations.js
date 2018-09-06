@@ -1,10 +1,10 @@
-import {map, bqtGToQtUnit, bestQuantity, unitCoef, changeUnit, grandeur} from "unit-manip"
+import {map, bqtGToQtUnit, bestQuantity, unitCoef, changeUnit, grandeur, baseQt} from "unit-manip"
 
 export const createStringObjectId = () => (new Date().getTime() / 1000 | 0).toString(16) + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, () => (Math.random() * 16 | 0).toString(16)).toLowerCase()
 
 export const idQuantity = tree => ({_id: tree._id, quantity: tree.trunk.quantity})
 export const hasQuantity = e => e && e.quantity && e.quantity.bqt && e.quantity.g
-export const transportQuantity = (masse, distance) => ({qt: changeUnit(masse, "t") * changeUnit(distance, "km"), unit: "t*km"})
+export const transportQuantity = (masse, distance) => baseQt({qt: changeUnit(masse, "t") * changeUnit(distance, "km"), unit: "t*km"})
 export const format = v => v < 10 ? Math.round(v * 100) / 100 : Math.round(v * 10) / 10
 export const trunkyAll = items => map(items, trunky)
 export const trunky = trunk => ({_id: trunk._id, trunk})

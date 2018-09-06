@@ -2,7 +2,7 @@ export default {
     ADD_BRANCHES:'addBranches',
     ADD_FACET: "addFacet",
     ADD_IMPACT: "addImpact",
-    ADD_ROOTS:'addRoots',
+    ADD_ROOT:'addRoots',
     ADD_FACETS: 'addFacets',
     ADD_IMPACTS: 'addImpacts',
     ADD_IMPACTS_TANK: 'addImpactsTank',

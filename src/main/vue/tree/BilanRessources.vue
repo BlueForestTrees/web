@@ -50,8 +50,7 @@
 
             ...mapActions({
                 dispatchGoRoot: On.GO_ROOT,
-                deleteRoot: On.DELETE_ROOT,
-                dispatchLoadRoots: On.LOAD_ROOTS
+                deleteRoot: On.DELETE_ROOT
             }),
             qtUnitName, getRandomColor
         }

@@ -5,8 +5,8 @@ export default {
     [Do.SET_ROOTS]: ({}, {tree, roots}) => {
         Vue.set(tree, "roots", roots)
     },
-    [Do.ADD_ROOTS]: ({}, {tree, roots}) => {
-        tree.roots.items.push(...roots)
+    [Do.ADD_ROOT]: ({}, {tree, root}) => {
+        tree.roots.push(root)
     },
     
     [Do.DELETE_ROOT]: ({}, {tree, root}) => {

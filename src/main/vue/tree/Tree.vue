@@ -14,17 +14,10 @@
 
             <v-layout hidden-md-and-up>
                 <v-expansion-panel popout>
-              <v-expansion-panel-content>
-                <subheader slot="header" icon="call_merge" title="RESSOURCES"/>
+                    <v-expansion-panel-content>
+                <subheader slot="header" icon="call_split" title="USAGE"/>
                 <v-card>
-                  <ressources :tree="tree"/>
-                </v-card>
-              </v-expansion-panel-content>
-
-                <v-expansion-panel-content>
-                <subheader slot="header" icon="call_merge" title="BILAN RESSOURCES"/>
-                <v-card>
-                  <bilan-ressources :tree="tree"/>
+                  <branches :tree="tree"/>
                 </v-card>
               </v-expansion-panel-content>
 
@@ -48,12 +41,17 @@
                   <bilan-impacts :tree="tree"/>
                 </v-card>
               </v-expansion-panel-content>
-
-
-              <v-expansion-panel-content>
-                <subheader slot="header" icon="call_split" title="USAGE"/>
+                    <v-expansion-panel-content>
+                <subheader slot="header" icon="call_merge" title="RESSOURCES"/>
                 <v-card>
-                  <branches :tree="tree"/>
+                  <ressources :tree="tree"/>
+                </v-card>
+              </v-expansion-panel-content>
+
+                <v-expansion-panel-content>
+                <subheader slot="header" icon="call_merge" title="BILAN RESSOURCES"/>
+                <v-card>
+                  <bilan-ressources :tree="tree"/>
                 </v-card>
               </v-expansion-panel-content>
 

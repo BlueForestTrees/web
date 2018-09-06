@@ -59,7 +59,7 @@ export default {
     SNACKBAR: 'snackbar',
     SWIPE_RIGHT: 'SWIPE_RIGHT',
     WANT_SUSCRIBE: 'wantSuscribe',
-    REMOVE_FROM_BASKET:'removeFromBasket',
+    REMOVE_FROM_BASKET: 'removeFromBasket',
     SWIPE_LEFT: 'SWIPE_LEFT',
     PUT_TRUNK_QUANTITY: "putTrunkQuantity"
 }
