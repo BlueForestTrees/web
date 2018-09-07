@@ -2,6 +2,7 @@ import On from "../../const/on"
 import Do from "../../const/do"
 import api from "../../rest/api"
 import forage from "../../services/forage"
+import {Dial} from "../../const/dial"
 
 export default {
 
@@ -21,9 +22,19 @@ export default {
             saveToken(commit, response.token)
         }),
 
-    [On.LOGOUT]: async ({commit}) => {
+    [On.LOGOUT]: async ({commit, dispatch}) => {
         forage.clearAccessToken()
         commit(Do.SET_TOKEN, null)
+        dispatch(On.GO_HOME)
+    },
+
+    [On.CHECK_AUTH]: ({state, commit}) => {
+        if (state.user) {
+            return true
+        } else {
+            commit(Do.SHOW_DIALOG, {dialog: Dial.CONNECT_TO_CONTINUE})
+            return false
+        }
     }
 }
 

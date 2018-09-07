@@ -16,8 +16,8 @@
 
 <script>
     import {Dial} from "../../const/dial"
-    import Do from "../../const/do"
-    import {mapMutations} from 'vuex'
+    import {mapActions} from 'vuex'
+    import On from "../../const/on"
 
     export default {
         name: "add-impact-entries-btn",
@@ -25,7 +25,7 @@
             return {Dial}
         },
         methods: {
-            ...mapMutations([Do.SHOW_DIALOG]),
+            ...mapActions([On.SHOW_DIALOG]),
             show(dialog) {
                 this.showDialog({dialog, data: {tree: this.tree}})
             }

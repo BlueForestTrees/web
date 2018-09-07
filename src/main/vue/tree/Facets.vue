@@ -45,8 +45,7 @@
             }
         },
         methods: {
-            ...mapMutations({showDialog: Do.SHOW_DIALOG}),
-            ...mapActions({dispatchDeleteFacets: On.DELETE_FACETS}),
+            ...mapActions({showDialog: On.SHOW_DIALOG, dispatchDeleteFacets: On.DELETE_FACETS}),
             deleteItems() {
                 this.dispatchDeleteFacets({facets: this.facets, toDelete: this.selection})
             },

@@ -17,7 +17,7 @@ const updateDialog = (state, {dialog, data}) => {
     }
 }
 const cleanDialog = (state, dialog) => {
-    updateDialog(state, {dialog, data: createDialog(dialog)})
+    updateDialog(state, {dialog, data: createDialog(dialog).data})
 }
 
 export default {

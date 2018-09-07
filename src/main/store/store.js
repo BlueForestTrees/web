@@ -32,6 +32,7 @@ import snackbarMutations from "./mutation/snackbarMutations"
 import compareMutations from "./mutation/compareMutations"
 import compareActions from "./actions/compareActions"
 import categoriesActions from "./actions/categoriesActions"
+import dialogActions from "./actions/dialogActions"
 
 
 
@@ -58,6 +59,7 @@ const store = new Vuex.Store({
         ...appActions,
         ...categoriesActions,
         ...basketActions,
+        ...dialogActions,
         ...facetActions,
         ...facetEntryActions,
         ...impactActions,

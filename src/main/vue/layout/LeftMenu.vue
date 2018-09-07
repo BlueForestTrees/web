@@ -1,5 +1,6 @@
 <template>
     <v-navigation-drawer fixed app v-model="nav.leftMenuVisible">
+
         <v-list dense>
             <v-list-tile @click="showDialog({dialog:Dial.FEEDBACK})">
                 <v-list-tile-action>
@@ -19,46 +20,49 @@
                 </v-list-tile-content>
                 <feedback-dialog/>
             </v-list-tile>
-            <v-list-tile @click="showDialog({dialog:Dial.FACET_ENTRY})">
-                <v-list-tile-action>
-                    <v-layout row>
-                        <v-icon>add</v-icon>
-                    </v-layout>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                    <v-list-tile-title>Créer une propriété</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile @click="goImpactEntry">
-                <v-list-tile-action>
-                    <v-layout row>
-                        <v-icon>add</v-icon>
-                    </v-layout>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                    <v-list-tile-title>Catégories d'impact</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
+            <v-list-group>
+                <v-list-tile slot="activator">
+                    <v-list-tile-action>
+                        <v-icon>build</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <v-list-tile-title>Configuration</v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
 
-            <v-list-tile @click="goBulkTrunk">
-                <v-list-tile-action>
-                    <v-layout row>
-                        <v-icon>vertical_align_top</v-icon>
-                    </v-layout>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                    <v-list-tile-title>Imports</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
+                <v-list-tile @click="showDialog({dialog:Dial.FACET_ENTRY})">
+                    <v-list-tile-action>
+                        <v-layout row>
+                            <v-icon>add</v-icon>
+                        </v-layout>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <v-list-tile-title>Catalogue des propriété</v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+                <v-list-tile @click="goImpactEntry">
+                    <v-list-tile-action>
+                        <v-layout row>
+                            <v-icon>add</v-icon>
+                        </v-layout>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <v-list-tile-title>Catalogue des impacts</v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+                <v-list-tile @click="goBulkTrunk">
+                    <v-list-tile-action>
+                        <v-layout row>
+                            <v-icon>vertical_align_top</v-icon>
+                        </v-layout>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <v-list-tile-title>Imports</v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+            </v-list-group>
 
-            <v-list-tile @click="cloneOpenTree(tree)" v-if="tree">
-                <v-list-tile-action>
-                    <v-icon>toll</v-icon>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                    <v-list-tile-title>Cloner {{tree.name}}</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
+            <v-spacer/>
             <v-list-tile @click="deleteTrunk(tree)" v-if="tree">
                 <v-list-tile-action>
                     <v-icon>delete</v-icon>
@@ -67,15 +71,19 @@
                     <v-list-tile-title>Supprimer {{tree.name}}</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
-            <v-list-tile>
-                <v-list-tile-action>
-                    <v-icon>build</v-icon>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                    <v-list-tile-title>v{{version.web}}</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
         </v-list>
+
+
+        <v-list style="position:absolute;bottom:0em">
+
+            <v-layout ml-2 row align-end>
+                <v-list-tile-action>
+                    <img src="/img/logo.svg" style="height:4em"/>
+                </v-list-tile-action>
+                BlueForest v{{version.web}}
+            </v-layout>
+        </v-list>
+
     </v-navigation-drawer>
 </template>
 
@@ -99,12 +107,11 @@
                     .then(this.goHome)
             },
             ...mapMutations({
-                showDialog: Do.SHOW_DIALOG,
                 closeTree: Do.CLOSE_TREE
             }),
             ...mapActions({
+                showDialog: On.SHOW_DIALOG,
                 dispatchDeleteTrunk: On.DELETE_TREE,
-                cloneOpenTree: On.CLONE_OPEN_TREE,
                 goHome: On.GO_HOME,
                 goImpactEntry: On.GO_IMPACT_ENTRY,
                 goBulkTrunk: On.GO_BULK_TRUNK

@@ -32,9 +32,11 @@
     import {mapActions} from "vuex"
     import On from "../const/on"
     import Upload from "./common/Upload"
+    import Connected from "./mixin/Connected"
 
     export default {
         components: {Upload},
+        mixins: [Connected],
         methods: {
             ...mapActions({
                 importTrunkAdeme: On.IMPORT_TRUNK_ADEME,

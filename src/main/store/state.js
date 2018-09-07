@@ -4,26 +4,27 @@ import ENV from "../env"
 export const createDialog = name => (dialogFactory[name] && dialogFactory[name]()) || (console.warn(`state.js il manque dialogFactory['${name}']`) || {})
 
 const dialogFactory = {
-    [Dial.ADD_TRUNK]: () => ({destination: null}),
-    [Dial.FACET_ENTRY]: () => ({qt: null, unit: null, name: null}),
-    [Dial.ADD_IMPACT_ENTRY]: () => ({qt: null, unit: null, name: null}),
-    [Dial.ADD_FACET]: () => ({name: null}),
-    [Dial.ADD_IMPACT]: () => ({tree: null}),
-    [Dial.ADD_RESSOURCE]: () => ({tree: null}),
-    [Dial.ADD_USAGE]: () => ({tree: null}),
-    [Dial.CONFIGURE_LINK]: () => ({left: null, right: null}),
-    [Dial.CREATE]: () => ({}),
-    [Dial.SET_QT_UNIT]: () => ({}),
-    [Dial.FEEDBACK]: () => ({}),
-    [Dial.SUSCRIBE]: () => ({}),
-    [Dial.LOGIN]: () => ({}),
+    [Dial.ADD_TRUNK]: () => ({visible: false, data: {destination: null}}),
+    [Dial.FACET_ENTRY]: () => ({visible: false, data: {qt: null, unit: null, name: null}}),
+    [Dial.ADD_IMPACT_ENTRY]: () => ({visible: false, data: {qt: null, unit: null, name: null}}),
+    [Dial.ADD_FACET]: () => ({visible: false, data: {name: null}}),
+    [Dial.ADD_IMPACT]: () => ({visible: false, data: {tree: null}}),
+    [Dial.ADD_RESSOURCE]: () => ({visible: false, data: {tree: null}}),
+    [Dial.ADD_USAGE]: () => ({visible: false, data: {tree: null}}),
+    [Dial.CONFIGURE_LINK]: () => ({visible: false, data: {left: null, right: null}}),
+    [Dial.CREATE]: () => ({visible: false, data: {}}),
+    [Dial.SET_QT_UNIT]: () => ({visible: false, data: {}}),
+    [Dial.FEEDBACK]: () => ({noAuth: true, visible: false, data: {}}),
+    [Dial.SUSCRIBE]: () => ({noAuth: true, visible: false, data: {}}),
+    [Dial.LOGIN]: () => ({noAuth: true, visible: false, data: {}}),
+    [Dial.CONNECT_TO_CONTINUE]: () => ({noAuth: true, visible: false, data: {}}),
 }
 
 const dialogs = () => {
     const dialsKeys = Object.keys(Dial)
     const dials = {}
     for (let i = 0; i < dialsKeys.length; i++) {
-        dials[Dial[dialsKeys[i]]] = {visible: false, data: createDialog(Dial[dialsKeys[i]])}
+        dials[Dial[dialsKeys[i]]] = createDialog(Dial[dialsKeys[i]])
     }
     return dials
 }
@@ -43,10 +44,10 @@ export const tree = () => ({_id: null, trunk: null, selection: null, facets: nul
 export default {
     token: null,
     user: null,
-    search:{name:null, cats:[]},
+    search: {name: null, cats: []},
     basket: {},
     tree: null,
-    compare: {left:null, right:null, leftAxises:null, rightAxises: null, axis:null},
+    compare: {left: null, right: null, leftAxises: null, rightAxises: null, axis: null},
     dialogs: dialogs(),
     nav: {leftMenuVisible: false},
     snack: snack(),

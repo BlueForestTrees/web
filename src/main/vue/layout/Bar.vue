@@ -26,20 +26,13 @@
 
         <div class="d-flex align-center" style="margin-left: auto">
 
-            <v-menu>
-                <v-avatar v-if="user" slot="activator" size="32px" :style="{backgroundColor:user.color}">
+
+            <v-menu v-if="user">
+                <v-avatar slot="activator" size="32px" :style="{backgroundColor:user.color}">
                     <span :style="{color:overcolor(user.color)}">{{initiales(user.fullname)}}</span>
                 </v-avatar>
-                <v-tooltip v-else slot="activator" bottom>
-                    <v-btn slot="activator" icon dense>
-                        <v-avatar size="32px" tile>
-                            <img src="/img/logo.svg" alt="BlueForest">
-                        </v-avatar>
-                    </v-btn>
-                    <span style="pointer-events: none">Connexion</span>
-                </v-tooltip>
 
-                <v-list two-line v-if="user">
+                <v-list two-line>
                     <v-list-tile @click="">
                         <v-list-tile-avatar size="64px" style="padding-right: 1em">
                             <v-avatar slot="activator" size="64px" :style="{backgroundColor:user.color}"><h1
@@ -54,9 +47,17 @@
                         <v-btn outline block class="elevation-0" @click="logout" v-if="user">Déconnexion</v-btn>
                     </v-list-tile>
                 </v-list>
-
-                <login-suscribe-list v-else/>
-
+            </v-menu>
+            <v-menu v-else>
+                <v-tooltip slot="activator" bottom>
+                    <v-btn slot="activator" icon dense>
+                        <v-avatar size="32px" tile>
+                            <img src="/img/logo.svg" alt="BlueForest">
+                        </v-avatar>
+                    </v-btn>
+                    <span style="pointer-events: none">Connexion</span>
+                </v-tooltip>
+                <login-suscribe-list />
             </v-menu>
         </div>
     </v-toolbar>
@@ -95,10 +96,10 @@
                 goSearch: On.GO_SEARCH,
                 goBasket: On.GO_BASKET,
                 goTree: On.GO_TREE,
-                goCompare: On.GO_COMPARE
+                goCompare: On.GO_COMPARE,
+                showDialog: On.SHOW_DIALOG
             }),
             ...mapMutations({
-                showDialog: Do.SHOW_DIALOG,
                 commitVisible: Do.UPDATE_DIALOG_VISIBILITY
             }),
             show: function (dialog) {

@@ -29,16 +29,16 @@
 </template>
 
 <script>
-    import Do from "../../const/do"
-    import {mapMutations} from 'vuex'
+    import {mapActions} from 'vuex'
     import {Dial} from "../../const/dial"
+    import On from "../../const/on"
 
     export default {
         name:"add-tree-part-btn",
         data: function () {return {Dial}},
         props:['tree'],
         methods: {
-            ...mapMutations([Do.SHOW_DIALOG]),
+            ...mapActions([On.SHOW_DIALOG]),
             show(dialog) {
                 this.showDialog({dialog, data: {tree: this.tree}})
             }

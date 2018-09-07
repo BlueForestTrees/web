@@ -15,6 +15,9 @@
         <add-impact-dialog/>
         <add-usage-dialog/>
         <add-facet-dialog/>
+
+        <connect-to-continue-dialog/>
+
     </span>
 </template>
 
@@ -33,12 +36,14 @@
     import AddTrunkDialog from "./dialog/AddTrunkDialog"
     import AddImpactEntryDialog from "./dialog/AddImpactEntryDialog"
     import Snack from "./layout/Snack"
+    import ConnectToContinueDialog from "./dialog/ConnectToContinueDialog"
 
     export default {
         computed: {
             ...mapState(['basket', 'snack'])
         },
         components: {
+            ConnectToContinueDialog,
             Snack,
             AddImpactEntryDialog,
             AddTrunkDialog,

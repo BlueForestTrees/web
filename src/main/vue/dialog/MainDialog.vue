@@ -1,7 +1,7 @@
 <template>
     <v-dialog v-model="visible" fullscreen transition="dialog-bottom-transition" scrollable
               :overlay="false"
-              @keydown.esc="$emit('esc',data)" @keydown.ctrl.enter="$emit('enter',data)"
+              @keydown.esc="$emit('esc')" @keydown.ctrl.enter="$emit('enter')"
     >
         <v-card tile>
             <v-toolbar card dark color="primary">
@@ -24,50 +24,10 @@
 </template>
 
 <script>
-    import Do from "../../const/do"
-    import {mapMutations} from "vuex"
-    import Vue from 'vue'
+    import Dialog from "../mixin/Dialog"
 
     export default {
         props: {dialog: String, title: String, icon: String, noaction: Boolean},
-        methods: {
-            close: function () {
-                this.visible = false
-            },
-            ...mapMutations({
-                commitData: Do.UPDATE_DIALOG_DATA,
-                commitVisible: Do.UPDATE_DIALOG_VISIBILITY,
-                commitEmptyData: Do.CLEAR_DIALOG_DATA
-            })
-        },
-        computed: {
-            data: {
-                get: function () {
-                    return this.$store.state.dialogs[this.dialog].data
-                },
-                set: function (value) {
-                    this.commitData({dialog: this.dialog, data: value})
-                }
-            },
-            visible: {
-                get: function () {
-                    return this.$store.state.dialogs[this.dialog].visible
-                },
-                set: function (value) {
-                    if (value) {
-                        this.commitEmptyData(this.dialog)
-                    }
-                    this.commitVisible({dialog: this.dialog, visible: value})
-                }
-            }
-        },
-        watch: {
-            visible(value) {
-                if (value) {
-                    this.$nextTick(() => this.$emit('focus'))
-                }
-            }
-        }
-
+        mixins: [Dialog],
     }
 </script>
