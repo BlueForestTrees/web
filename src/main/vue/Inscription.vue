@@ -20,6 +20,7 @@
                         </v-form>
                     </v-card-text>
                     <v-card-actions>
+                        <router-link :to="{name:GO.LOGIN}">Se connecter</router-link>
                         <v-spacer></v-spacer>
                         <v-btn color="primary" @click="validate" :disabled="!valid">Suivant<v-icon>navigate_next</v-icon></v-btn>
                     </v-card-actions>
@@ -43,12 +44,14 @@
     import On from "../const/on"
     import Card from "./layout/Card"
     import {mailRequired, validMail} from "../services/rules"
+    import {GO} from "../const/go"
 
     export default {
         components: {Card},
         mixins: [],
         data: function () {
             return {
+                GO,
                 valid: null,
                 mail: null,
                 mailSent: false
