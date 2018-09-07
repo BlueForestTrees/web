@@ -16,8 +16,6 @@ export default {
     DELETE_IMPACTS: 'deleteImpacts',
     DELETE_ROOT: 'deleteRoot',
     DELETE_BRANCH: 'deleteBranch',
-    HIDE_FACET_DIALOG:'hideFacetDialog',
-    HIDE_IMPACT_DIALOG:'hideImpactDialog',
     RENAME_TRUNK: 'renameTree',
     REMOVE_FROM_BASKET:'removeFromBasket',
     OPEN_TREE: 'openTree',

@@ -17,9 +17,11 @@ export default {
             saveToken(commit, response.token)
         }),
 
-    [On.LOGIN]: async ({commit}, {mail, password}) => api.postAuth({mail, password})
+    [On.LOGIN]: async ({commit, dispatch}, {mail, password}) => api
+        .postAuth({mail, password})
         .then(response => {
             saveToken(commit, response.token)
+            dispatch(On.CHECK_AUTH)
         }),
 
     [On.LOGOUT]: async ({commit, dispatch}) => {
@@ -30,6 +32,7 @@ export default {
 
     [On.CHECK_AUTH]: ({state, commit}) => {
         if (state.user) {
+            commit(Do.UPDATE_DIALOG_VISIBILITY, {dialog: Dial.CONNECT_TO_CONTINUE, visible: false})
             return true
         } else {
             commit(Do.SHOW_DIALOG, {dialog: Dial.CONNECT_TO_CONTINUE})

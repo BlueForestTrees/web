@@ -1,6 +1,16 @@
 <template>
-    <v-dialog v-model="visible" @keydown.esc="escape" @input="v => v || escape()">
-        <login-suscribe-list/>
+    <v-dialog v-model="visible" persistent max-width="500px">
+        <v-card>
+            <v-container fluid fill-height>
+                <v-layout align-center justify-center>
+                    <v-flex>
+                        <v-icon @click="escape" style="position:absolute;top:0.3em;right:0.3em">close</v-icon>
+                        <login-suscribe-list/>
+                        <v-list-tile-action-text>Vous devez être connecté pour continuer.</v-list-tile-action-text>
+                    </v-flex>
+                </v-layout>
+            </v-container>
+        </v-card>
     </v-dialog>
 </template>
 
@@ -10,11 +20,12 @@
     import Dialog from "../mixin/Dialog"
     import On from "../../const/on"
     import {mapActions} from "vuex"
+    import Card from "../layout/Card"
 
     export default {
         name: "connect-to-continue-dialog",
         mixins: [Dialog],
-        components: {LoginSuscribeList},
+        components: {Card, LoginSuscribeList},
         data() {
             return {
                 Dial,
