@@ -13,7 +13,6 @@ export default {
     searchImpactEntry: namepart => get(`/api/tree/impactEntry${paramsOf({q: namepart})}`),
     searchTrunk: ({g, term, type, aidx, ps, cat}) => cached(get, `/api/tree/trunks${paramsOf({g, q: term, t: type, aidx, ps, ...cat})}`, searchTrunkCache),
     //mixin? pour gérer (name color) et (complet)
-    getTrunks: _ids => get(`/api/tree/trunk${arrayOf('_ids', _ids)}`),
     getTrunk: _id => get(`/api/tree/trunk/${_id}`),
     //getImpactEntry
     //getFacetEntry

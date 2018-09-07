@@ -9,8 +9,8 @@ export const url = (path) => baseUrl + path
 
 /**
  *
- * @param param _ids
- * @param values [1,2,3]
+ * @param param => '_ids'
+ * @param values => [1,2,3]
  * @returns "_ids=1&_ids=2&_ids=3"
  */
 export const arrayOf = (param, values) => {

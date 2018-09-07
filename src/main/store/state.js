@@ -4,7 +4,8 @@ import ENV from "../env"
 export const createDialog = name => (dialogFactory[name] && dialogFactory[name]()) || (console.warn(`state.js il manque dialogFactory['${name}']`) || {})
 
 const dialogFactory = {
-    [Dial.ADD_TRUNK]: () => ({visible: false, data: {destination: null}}),
+    [Dial.ADD_TRUNK]: () => ({visible: false, data: {}}),
+    [Dial.LOGIN]: () => ({noAuth: true, vivisible: false, data: {destination: null}}),
     [Dial.FACET_ENTRY]: () => ({visible: false, data: {qt: null, unit: null, name: null}}),
     [Dial.ADD_IMPACT_ENTRY]: () => ({visible: false, data: {qt: null, unit: null, name: null}}),
     [Dial.ADD_FACET]: () => ({visible: false, data: {name: null}}),

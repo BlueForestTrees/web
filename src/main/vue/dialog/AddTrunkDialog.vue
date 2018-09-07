@@ -1,5 +1,6 @@
 <template>
-    <main-dialog :dialog="Dial.ADD_TRUNK" :title="'Nouveau Produit/Service'" @esc="close" @enter="validate" ref="dialog" @focus="focus">
+    <main-dialog :dialog="Dial.ADD_TRUNK" :title="'Nouveau Produit/Service'" @esc="close" @enter="validate" ref="dialog"
+                 @focus="focus">
         <v-card-text>
             <v-form v-model="valid" v-on:submit.prevent="" ref="form">
                 <color-picker v-model="color"/>
@@ -17,7 +18,7 @@
 <script>
     import MainDialog from "./MainDialog"
     import On from "../../const/on"
-    import {mapActions} from "vuex"
+    import {mapActions, mapState} from "vuex"
     import {Dial} from "../../const/dial"
     import closable from "../mixin/Closable"
     import GrandeurSelect from "../common/GrandeurSelect"
@@ -42,6 +43,9 @@
                 qt: null,
                 unit: null
             }
+        },
+        computed: {
+            ...mapState(['user'])
         },
         methods: {
             ...mapActions({
