@@ -33,6 +33,7 @@ import compareMutations from "./mutation/compareMutations"
 import compareActions from "./actions/compareActions"
 import categoriesActions from "./actions/categoriesActions"
 import dialogActions from "./actions/dialogActions"
+import navMutations from "./mutation/navMutations"
 
 
 
@@ -53,7 +54,8 @@ const store = new Vuex.Store({
         ...treeMutations,
         ...trunkMutations,
         ...userMutation,
-        ...snackbarMutations
+        ...snackbarMutations,
+        ...navMutations,
     },
     actions: {
         ...appActions,

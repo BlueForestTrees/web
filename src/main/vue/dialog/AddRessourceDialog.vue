@@ -2,6 +2,10 @@
     <main-dialog :dialog="Dial.ADD_RESSOURCE" ref="dialog" :title="'Nouvelle ressource'" @esc="close"
                  @enter="validateForm" :noaction="searching">
         <v-card-text>
+            <v-layout row align-center justify-center v-if="!isOwner">
+                <v-icon color="orange">info</v-icon>
+                Cet élément n'est pas à vous!
+            </v-layout>
             <destination :tree="tree"/>
 
             <span v-if="searching">
@@ -127,9 +131,12 @@
             MainDialog
         },
         computed: {
-            ...mapState({tree: state => state.dialogs.addRessource.data.tree}),
+            ...mapState({user: s => s.user, tree: s => s.dialogs.addRessource.data.tree}),
             searching: function () {
                 return this.searchAgain || !this.selectedItem
+            },
+            isOwner: function () {
+                return this.user && this.tree && this.tree.owner && this.tree.owner._id && this.tree.owner._id === this.user._id
             }
         },
         methods: {
@@ -171,6 +178,9 @@
                     bqt
                 }).then(() => {
                     this.addToBasket([this.tree, this.selectedItem])
+                }).catch((err) => {
+                    console.log(err)
+                    this.snack({text: "Cet élement n'est pas à vous!", color: "orange"})
                 })
                 this.close()
             },

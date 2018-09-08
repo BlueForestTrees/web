@@ -41,20 +41,12 @@ export default {
         } else {
             tree = {_id}
             tree.promises = {}
-            tree.promises.trunk = dispatch(On.LOAD_TRUNK, {_id, bqt}).then(trunk => Vue.set(tree, "trunk", trunk))
+            tree.promises.trunk = dispatch(On.LOAD_TRUNK, {_id, bqt}).then(trunk => Vue.set(tree, "trunk", trunk) && trunk)
+            tree.promises.owner = tree.promises.trunk.then(trunk => dispatch(On.LOAD_USER, trunk.oid).then(owner => Vue.set(tree, "owner", owner)))
             tree.promises.roots = dispatch(On.LOAD_ROOTS, {_id, bqt}).then(roots => Vue.set(tree, "roots", roots))
-            tree.promises.branches = dispatch(On.LOAD_BRANCHES, {
-                _id,
-                bqt
-            }).then(branches => Vue.set(tree, "branches", branches))
-            tree.promises.impacts = dispatch(On.LOAD_IMPACTS, {
-                _id,
-                bqt
-            }).then(impacts => Vue.set(tree, "impacts", impacts))
-            tree.promises.impactsTank = dispatch(On.LOAD_IMPACTS_TANK, {
-                _id,
-                bqt
-            }).then(impactsTank => Vue.set(tree, "impactsTank", impactsTank))
+            tree.promises.branches = dispatch(On.LOAD_BRANCHES, {_id, bqt}).then(branches => Vue.set(tree, "branches", branches))
+            tree.promises.impacts = dispatch(On.LOAD_IMPACTS, {_id, bqt}).then(impacts => Vue.set(tree, "impacts", impacts))
+            tree.promises.impactsTank = dispatch(On.LOAD_IMPACTS_TANK, {_id, bqt}).then(impactsTank => Vue.set(tree, "impactsTank", impactsTank))
             tree.promises.facets = dispatch(On.LOAD_FACETS, {_id, bqt}).then(facets => Vue.set(tree, "facets", facets))
             tree.promises.tank = dispatch(On.LOAD_TANK, {_id, bqt}).then(tank => Vue.set(tree, "tank", tank))
             tree.promises.all = Promise.all([tree.promises.trunk, tree.promises.roots, tree.promises.branches, tree.promises.impacts, tree.promises.impactsTank, tree.promises.facets, tree.promises.tank])

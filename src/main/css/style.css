@@ -2,6 +2,12 @@ html {
     overflow-y: auto
 }
 
+.icon-line {
+    position: relative;
+    top: 4px;
+    margin-left:0.1em;
+}
+
 
 .slide-left-enter-active {
     transition: all .2s ease;

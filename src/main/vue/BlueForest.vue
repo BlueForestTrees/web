@@ -3,9 +3,11 @@
         <left-menu/>
         <bar/>
 
-        <transition :name="transitionName" mode="out-in">
-            <router-view style="padding-top:56px"></router-view>
-        </transition>
+        <v-content>
+            <transition :name="transitionName" mode="out-in">
+                <router-view></router-view>
+            </transition>
+        </v-content>
 
         <snack :snack="snack"/>
 

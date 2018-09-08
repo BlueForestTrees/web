@@ -1,4 +1,5 @@
 import On from "../../const/on"
+import Do from "../../const/do"
 
 export default {
     [On.MOUNT_APP]: async ({dispatch, commit}) => {
@@ -7,5 +8,8 @@ export default {
     [On.EXCEPTION]: ({}, e) => {
         console.error(e)
         throw e
+    },
+    [On.SWITCH_LEFT_MENU]: async ({commit}) => {
+        commit(Do.SWITCH_LEFT_MENU)
     }
 }

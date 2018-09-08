@@ -17,6 +17,8 @@ export default {
             saveToken(commit, response.token)
         }),
 
+    [On.LOAD_USER]: ({}, oid) => api.getUser(oid),
+
     [On.LOGIN]: async ({commit, dispatch}, {mail, password}) => api
         .postAuth({mail, password})
         .then(response => {

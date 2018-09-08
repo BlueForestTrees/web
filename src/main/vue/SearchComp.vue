@@ -1,5 +1,5 @@
 <template>
-    <span>
+    <v-flex>
         <v-toolbar v-if="!nobar && anySelected" app dark class="elevation-5" color="primary">
             <slot :s="this">
             </slot>
@@ -10,7 +10,8 @@
                 <v-layout row>
                     <v-icon v-if="isSelected(item)" color="primary" style="margin-right:0.3em">check_circle</v-icon>
                     <v-icon v-else
-                            :style="'color: '+(item.color || item.trunk.color)+';margin-right:0.3em'">lens</v-icon>
+                            :style="'color: '+(item.color || item.trunk.color)+';margin-right:0.3em'">lens
+                    </v-icon>
                     <v-list-tile-content>
                         {{item.name || item.trunk.name}}
                     </v-list-tile-content>
@@ -19,13 +20,14 @@
         </template>
 
         <v-btn v-if="manualMode && items.length" block flat color="primary" @click="getMoreClick"
-               style="margin-bottom: 3em">Voir plus</v-btn>
+               style="margin-bottom: 3em">Voir plus
+        </v-btn>
         <infinite-loading v-else-if="ready" ref="iloading" @infinite="loadResults" spinner="spiral" :distance="500"
                           style="padding-bottom: 3em">
             <span slot="no-more">{{items.length}} résultats</span>
-            <span slot="no-results">Pas de résultats</span>
+            <span slot="no-results"><slot name="no-results">Pas de résultats</slot></span>
         </infinite-loading>
-    </span>
+    </v-flex>
 </template>
 
 <script>
