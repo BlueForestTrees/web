@@ -4,25 +4,25 @@
 
         <v-tabs align-with-title color="transparent">
             <v-tab icon dense :to="{name: GO.HOME}">
-                <v-icon color="blue darken-3">home</v-icon>
+                <v-icon color="blue darken-1">home</v-icon>
             </v-tab>
             <v-tab icon dense :to="{name: GO.SEARCH}">
-                <v-icon color="blue darken-3">search</v-icon>
+                <v-icon color="blue darken-1">search</v-icon>
                 <v-flex hidden-sm-and-down style="pointer-events: none">Recherche</v-flex>
             </v-tab>
             <v-tab icon dense :to="{name: GO.BASKET}">
-                <v-icon color="blue darken-3">shopping_basket</v-icon>
+                <v-icon color="blue darken-1">shopping_basket</v-icon>
                 <v-flex hidden-sm-and-down style="pointer-events: none">Panier</v-flex>
             </v-tab>
             <v-tab icon dense :to="{name: GO.TREE_EMPTY}">
-                <v-icon color="blue darken-3">category</v-icon>
+                <v-icon color="blue darken-1">category</v-icon>
                 <v-flex hidden-sm-and-down style="pointer-events: none">Composition</v-flex>
             </v-tab>
             <v-tab icon dense :to="{name: GO.COMPARE_EMPTY}">
-                <v-icon color="blue darken-3">compare_arrows</v-icon>
+                <v-icon color="blue darken-1">compare_arrows</v-icon>
                 <v-flex hidden-sm-and-down style="pointer-events: none">Comparaison</v-flex>
             </v-tab>
-            <v-tabs-slider color="blue darken-3"></v-tabs-slider>
+            <v-tabs-slider color="blue darken-1"></v-tabs-slider>
         </v-tabs>
 
         <v-spacer/>
