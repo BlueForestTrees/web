@@ -7,7 +7,7 @@
         <v-card-text class="text-md-center" v-if="loading">Chargement...</v-card-text>
 
         <v-card-text v-else-if="!tree" class="text-md-center">
-            <div>Faites une <span><v-icon @click="goSearch" color="blue">search</v-icon> recherche</span> ou prenez un produit du <span><v-icon @click="goBasket" color="blue">shopping_basket</v-icon> panier pour voir sa composition.</span></div>
+            <div>Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche</span> ou prenez un produit du <span><v-icon @click="goBasket" color="primary">shopping_basket</v-icon> panier pour voir sa composition.</span></div>
         </v-card-text>
 
         <span v-else>
@@ -153,7 +153,7 @@
                         .then(()=>this.loading = false)
                         .catch(e => {
                             this.loading = false
-                            this.snack({text: "Cet élement n'existe pas ou plus", color: "red"})
+                            this.snack({text: "Cet élement n'existe pas ou plus", color: "orange"})
                         })
                 }
             }

@@ -14,7 +14,7 @@
                             :key="'o'+item._id"
                             :style="{background: isSelected(item) ? '#D8E9F5' : '', transition: 'background .2s ease'}">
                         <v-layout row align-center>
-                            <v-icon v-if="isSelected(item)" color="blue darken-1"
+                            <v-icon v-if="isSelected(item)" color="primary"
                                     style="margin-right:0.3em">check_circle</v-icon>
                             <v-icon v-else :style="'color: '+item.color">stop</v-icon>
                             <a style="padding-right:0.5em">{{item.name}}</a>

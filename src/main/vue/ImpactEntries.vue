@@ -7,12 +7,12 @@
             </v-card-title>
 
             <v-list-tile v-for="item in items" :key="item._id" @click="toggleSelect(item)" :style="{background: isSelected(item) ? '#D8E9F5' : '', transition: 'background .2s ease'}">
-                <v-icon v-if="isSelected(item)" color="blue">check_circle</v-icon>
+                <v-icon v-if="isSelected(item)" color="primary">check_circle</v-icon>
                 <v-icon v-else :style="'color: '+item.color+';margin-right:0.2em'">lens</v-icon>
                 {{item.name}}
             </v-list-tile>
 
-            <v-toolbar v-if="anySelected" app dark class="elevation-0" color="blue">
+            <v-toolbar v-if="anySelected" app dark class="elevation-0" color="primary">
                 <v-toolbar-items>
                     <v-tooltip bottom>
                         <v-btn slot="activator" icon dense @click="unselect()"><v-icon>close</v-icon></v-btn>
@@ -40,7 +40,7 @@
 
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue" flat="flat" @click="detailsDialog = false">OK</v-btn>
+              <v-btn color="primary" flat="flat" @click="detailsDialog = false">OK</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>

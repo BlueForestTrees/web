@@ -11,7 +11,7 @@
                                     :style="{borderRadius: '1.5em',background: searchingSearch ? '#D8E9F5' : '', transition: 'background .2s ease'}">
                                 <v-container py-2 pr-3 pl-2 @click="selectSearch" style="cursor: pointer">
                                     <v-layout row align-center style="pointer-events: none">
-                                        <v-icon v-if="searchingSearch" color="blue" mr-1>search</v-icon>
+                                        <v-icon v-if="searchingSearch" color="primary" mr-1>search</v-icon>
                                         <v-icon v-else>search</v-icon>
                                         Recherche
                                     </v-layout>
@@ -21,7 +21,7 @@
                                     :style="{borderRadius: '1.5em',background: searchingBasket ? '#D8E9F5' : '', transition: 'background .2s ease'}">
                                 <v-container py-2 pr-3 pl-2 @click="selectBasket" style="cursor: pointer">
                                     <v-layout row align-center style="pointer-events: none">
-                                        <v-icon v-if="searchingBasket" color="blue" mr-1>shopping_basket</v-icon>
+                                        <v-icon v-if="searchingBasket" color="primary" mr-1>shopping_basket</v-icon>
                                         <v-icon v-else>shopping_basket</v-icon>
                                         Panier
                                     </v-layout>

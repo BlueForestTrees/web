@@ -22,7 +22,7 @@
                         <line :x1="gwidth" :x2="width" :y1="i*lineHeight" :y2="i*lineHeight" stroke="grey" stroke-width="0.4" stroke-opacity="0.3"></line>
 
                         <!--SELECTION-->
-                        <rect fill="blue" x="0" :y="i*lineHeight" :width="width" :height="lineHeight" stroke-width="1" stroke-opacity="0.8" :fill-opacity="curI === i ? 0.1 : 0" @click="curI = i" @mouseover="curI = i"></rect>
+                        <rect fill="primary" x="0" :y="i*lineHeight" :width="width" :height="lineHeight" stroke-width="1" stroke-opacity="0.8" :fill-opacity="curI === i ? 0.1 : 0" @click="curI = i" @mouseover="curI = i"></rect>
                         <g v-if="curI === i">
                             <text alignment-baseline="middle" :x="border" :y="(0.5+i)*lineHeight" :font-size="9-(1.1*(qtUnit(axis.left).length-9))" :style="{fill:leftTextColor, pointerEvents:'none'}">{{qtUnit(axis.left)}}</text>
                             <text alignment-baseline="middle" text-anchor="end" :x="gwidth-border" :font-size="9-(1.1*(qtUnit(axis.right).length-9))" :y="(0.5+i)*lineHeight" :style="{fill:rightTextColor, pointerEvents:'none'}">{{qtUnit(axis.right)}}</text>

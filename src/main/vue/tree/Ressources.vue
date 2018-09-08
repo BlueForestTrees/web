@@ -1,6 +1,6 @@
 <template>
     <span>
-            <v-toolbar v-if="anySelected" app dark class="elevation-5" color="blue">
+            <v-toolbar v-if="anySelected" app dark class="elevation-5" color="primary">
                 <v-toolbar-items>
                     <v-tooltip bottom>
                         <v-btn slot="activator" v-if="oneSelected" flat @click="goTree(oneSelected)"><span class="hidden-xs-only">ouvrir</span><v-icon>category</v-icon></v-btn>
@@ -25,7 +25,7 @@
             </v-toolbar>
 
         <v-list-tile v-for="item in items" v-if="!item.relativeTo" :key="item._id" @click="toggleSelect(item)" :style="{background: isSelected(item) ? '#D8E9F5' : '', transition: 'background .2s ease'}">
-            <v-icon v-if="isSelected(item)" color="blue">check_circle</v-icon>
+            <v-icon v-if="isSelected(item)" color="primary">check_circle</v-icon>
             <v-icon v-else :style="'color: '+item.trunk.color+';margin-right:0.2em'">lens</v-icon>
             {{qtUnitName(item.trunk)}}
         </v-list-tile>

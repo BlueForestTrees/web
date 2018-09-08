@@ -10,7 +10,7 @@
         </v-form>
         <!--@blur="ko"-->
         <v-icon right color="green" @click="ok">done</v-icon>
-        <v-icon right color="red" @click="ko">clear</v-icon>
+        <v-icon right color="orange" @click="ko">clear</v-icon>
     </v-layout>
 </template>
 

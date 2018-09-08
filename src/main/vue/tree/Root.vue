@@ -16,7 +16,7 @@
                                 <v-layout row>
                                     <v-spacer/>
                                     <v-btn icon flat>
-                                        <v-icon color="blue darken-1" @click="validateQuantity">done</v-icon>
+                                        <v-icon color="primary" @click="validateQuantity">done</v-icon>
                                     </v-btn>
                                 </v-layout>
                             </v-card-text>
@@ -26,7 +26,7 @@
 
                     <v-expansion-panel-content v-if="tree && item && item.trunk.quantity.g === 'Mass'">
                         <subheader slot="header" title="Transport"/>
-                            <v-toolbar v-if="anySelected" app dark class="elevation-0" color="blue">
+                            <v-toolbar v-if="anySelected" app dark class="elevation-0" color="primary">
                                 <v-toolbar-items>
                                     <v-tooltip bottom>
                                         <v-btn slot="activator" v-if="oneSelected" flat @click="goTree(oneSelected)"><span
@@ -85,7 +85,7 @@
                                     </v-card-text>
                                     <v-layout row>
                                         <v-spacer/>
-                                        <v-btn icon flat><v-icon color="blue darken-1" @click="ajoutTransport">done</v-icon></v-btn>
+                                        <v-btn icon flat><v-icon color="primary" @click="ajoutTransport">done</v-icon></v-btn>
                                     </v-layout>
                                 </template>
                             </template>

@@ -5,7 +5,7 @@
         </v-layout>
         <compare-ribbon v-if="leftId && rightId" :axises="axises" :left="compare.left" :right="compare.right" :leftColor="leftColor" :rightColor="rightColor" />
         <v-card-text class="text-md-center" v-else-if="loading">Chargement...</v-card-text>
-        <v-card-text class="text-md-center" v-else="!leftId">Faites une <span><v-icon @click="goSearch" color="blue">search</v-icon> recherche</span> ou prenez des produits du <span><v-icon @click="goBasket" color="blue">shopping_basket</v-icon> panier pour les comparer.</span></v-card-text>
+        <v-card-text class="text-md-center" v-else="!leftId">Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche</span> ou prenez des produits du <span><v-icon @click="goBasket" color="primary">shopping_basket</v-icon> panier pour les comparer.</span></v-card-text>
     </v-flex>
 
 </template>

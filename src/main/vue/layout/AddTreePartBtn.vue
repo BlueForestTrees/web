@@ -1,6 +1,6 @@
 <template>
         <v-menu offset-y>
-            <v-btn class="elevation-3"  fab bottom right color="blue" dark fixed slot="activator">
+            <v-btn class="elevation-3"  fab bottom right color="primary" dark fixed slot="activator">
                 <v-icon>add</v-icon>
             </v-btn>
             <v-list>

@@ -4,7 +4,7 @@
         <v-list dense>
             <v-list-tile @click="showDialog({dialog:Dial.FEEDBACK})">
                 <v-list-tile-action>
-                    <v-icon>chat_bubble</v-icon>
+                    <v-icon color="primary">chat_bubble</v-icon>
                 </v-list-tile-action>
                 <v-list-tile-content>
                     <v-list-tile-title>Faire un commentaire</v-list-tile-title>
@@ -13,7 +13,7 @@
             </v-list-tile>
             <v-list-tile @click="showDialog({dialog:Dial.ADD_TRUNK})">
                 <v-list-tile-action>
-                    <v-icon>add</v-icon>
+                    <v-icon color="primary">add</v-icon>
                 </v-list-tile-action>
                 <v-list-tile-content>
                     <v-list-tile-title>Créer un produit ou un service</v-list-tile-title>
@@ -23,7 +23,7 @@
             <v-list-group>
                 <v-list-tile slot="activator">
                     <v-list-tile-action>
-                        <v-icon>build</v-icon>
+                        <v-icon color="primary">build</v-icon>
                     </v-list-tile-action>
                     <v-list-tile-content>
                         <v-list-tile-title>Configuration</v-list-tile-title>
@@ -33,7 +33,7 @@
                 <v-list-tile @click="showDialog({dialog:Dial.FACET_ENTRY})">
                     <v-list-tile-action>
                         <v-layout row>
-                            <v-icon>add</v-icon>
+                            <v-icon color="primary">add</v-icon>
                         </v-layout>
                     </v-list-tile-action>
                     <v-list-tile-content>
@@ -43,7 +43,7 @@
                 <v-list-tile @click="goImpactEntry">
                     <v-list-tile-action>
                         <v-layout row>
-                            <v-icon>add</v-icon>
+                            <v-icon color="primary">add</v-icon>
                         </v-layout>
                     </v-list-tile-action>
                     <v-list-tile-content>
@@ -53,7 +53,7 @@
                 <v-list-tile @click="goBulkTrunk">
                     <v-list-tile-action>
                         <v-layout row>
-                            <v-icon>vertical_align_top</v-icon>
+                            <v-icon color="primary">vertical_align_top</v-icon>
                         </v-layout>
                     </v-list-tile-action>
                     <v-list-tile-content>
@@ -65,7 +65,7 @@
             <v-spacer/>
             <v-list-tile @click="deleteTrunk(tree)" v-if="tree">
                 <v-list-tile-action>
-                    <v-icon>delete</v-icon>
+                    <v-icon color="primary">delete</v-icon>
                 </v-list-tile-action>
                 <v-list-tile-content>
                     <v-list-tile-title>Supprimer {{tree.name}}</v-list-tile-title>
