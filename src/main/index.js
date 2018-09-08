@@ -4,7 +4,6 @@ import Vuetify from 'vuetify'
 import api from "./rest/api"
 import {initUnits} from "unit-manip"
 import store from "./store/store"
-import css from "../css/style.css"
 import router from "./router/router"
 
 

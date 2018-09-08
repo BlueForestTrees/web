@@ -6,27 +6,25 @@
                 <v-text-field label="Nom" autofocus v-model="namePart"></v-text-field>
             </v-card-title>
 
-            <v-list-tile v-for="item in items" :key="item._id" @click="toggleSelect(item)" :style="{background: isSelected(item) ? '#E8F5E9' : '', transition: 'background .2s ease'}">
-                <v-icon v-if="isSelected(item)" color="green">check_circle</v-icon>
+            <v-list-tile v-for="item in items" :key="item._id" @click="toggleSelect(item)" :style="{background: isSelected(item) ? '#D8E9F5' : '', transition: 'background .2s ease'}">
+                <v-icon v-if="isSelected(item)" color="blue">check_circle</v-icon>
                 <v-icon v-else :style="'color: '+item.color+';margin-right:0.2em'">lens</v-icon>
                 {{item.name}}
             </v-list-tile>
 
-            <transition name="slide-fade">
-                <v-toolbar v-if="anySelected" app dark class="elevation-0" color="green lighten-2">
-                    <v-toolbar-items>
-                        <v-tooltip bottom>
-                            <v-btn slot="activator" icon dense @click="unselect()"><v-icon>close</v-icon></v-btn>
-                            <span style="pointer-events: none">Fermer</span>
-                        </v-tooltip>
-                    </v-toolbar-items>
-                    <v-spacer/>
+            <v-toolbar v-if="anySelected" app dark class="elevation-0" color="blue">
+                <v-toolbar-items>
                     <v-tooltip bottom>
-                        <v-btn slot="activator" v-if="oneSelected" flat dense @click="detailsDialog = true">Détails<v-icon>aspect_ratio</v-icon></v-btn>
-                        <span style="pointer-events: none">Détails</span>
+                        <v-btn slot="activator" icon dense @click="unselect()"><v-icon>close</v-icon></v-btn>
+                        <span style="pointer-events: none">Fermer</span>
                     </v-tooltip>
-                </v-toolbar>
-            </transition>
+                </v-toolbar-items>
+                <v-spacer/>
+                <v-tooltip bottom>
+                    <v-btn slot="activator" v-if="oneSelected" flat dense @click="detailsDialog = true">Détails<v-icon>aspect_ratio</v-icon></v-btn>
+                    <span style="pointer-events: none">Détails</span>
+                </v-tooltip>
+            </v-toolbar>
         </span>
         <add-impact-entries-btn/>
 
@@ -42,7 +40,7 @@
 
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="green darken-1" flat="flat" @click="detailsDialog = false">OK</v-btn>
+              <v-btn color="blue" flat="flat" @click="detailsDialog = false">OK</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>

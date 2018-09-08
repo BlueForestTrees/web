@@ -12,9 +12,9 @@
                 <v-layout row align-center wrap>
                     <v-flex v-if="items.length > 0" v-for="item in items" @click="select(item)"
                             :key="'o'+item._id"
-                            :style="{background: isSelected(item) ? '#E8F5E9' : '', transition: 'background .2s ease'}">
+                            :style="{background: isSelected(item) ? '#D8E9F5' : '', transition: 'background .2s ease'}">
                         <v-layout row align-center>
-                            <v-icon v-if="isSelected(item)" color="green"
+                            <v-icon v-if="isSelected(item)" color="blue darken-3"
                                     style="margin-right:0.3em">check_circle</v-icon>
                             <v-icon v-else :style="'color: '+item.color">stop</v-icon>
                             <a style="padding-right:0.5em">{{item.name}}</a>

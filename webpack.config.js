@@ -4,7 +4,6 @@ var CopyWebpackPlugin = require('copy-webpack-plugin')
 var webpack = require('webpack')
 var Visualizer = require('webpack-visualizer-plugin')
 var LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var VueLoaderPlugin = require('vue-loader').VueLoaderPlugin
 var versions = require('./package.json').dependencies
 
@@ -23,7 +22,7 @@ var conf = {
         rules: [
             {test: /\.vue$/, exclude: /node_modules/, use: 'vue-loader'},
             {test: /\.js$/, exclude: /node_modules/, use: 'babel-loader'},
-            {test: /\.css$/, use: ExtractTextPlugin.extract({fallback: 'style-loader', use: ['css-loader']})}
+            {test: /\.css$/, exclude: /node_modules/, use: ["style-loader", "css-loader"]}
         ]
     },
     plugins: [
@@ -32,7 +31,7 @@ var conf = {
         new CopyWebpackPlugin([{from: './src/browserconfig.xml', to: '.'}]),
         new LodashModuleReplacementPlugin(),
         new VueLoaderPlugin(),
-        new ExtractTextPlugin("style.css")
+        // new ExtractTextPlugin("style.css")
     ],
     optimization: {
         splitChunks: {
@@ -44,11 +43,11 @@ var conf = {
 }
 
 if (conf.mode === "development") {
-    
+
     var convert = require('koa-connect')
     var history = require('connect-history-api-fallback')
     var proxy = require('http-proxy-middleware')
-    
+
     conf.serve = {
         add: function (app, middleware, options) {
             app.use(convert(proxy('/api/categories', {target: 'http://localhost:8081'})))
@@ -63,7 +62,7 @@ if (conf.mode === "development") {
     conf.output = {
         publicPath: "/"
     }
-    
+
     const htmlWebpackPlugin = conf.plugins[0]
     htmlWebpackPlugin.options.min = ".min"
     htmlWebpackPlugin.options.versionVuetify = versions.vuetify
@@ -77,19 +76,19 @@ if (conf.mode === "production") {
     const htmlWebpackPlugin = conf.plugins[0]
     htmlWebpackPlugin.options.min = ".min"
     htmlWebpackPlugin.options.versionVuetify = versions.vuetify
-    
+
     conf.externals = {
         'vue': 'Vue',
         'vuetify': 'Vuetify'
     }
     htmlWebpackPlugin.options.scriptVue = "<script src='https://unpkg.com/vue@" + versions.vue + "/dist/vue.min.js'></script>"
     htmlWebpackPlugin.options.scriptVuetify = "<script src='https://unpkg.com/vuetify@" + versions.vuetify + "/dist/vuetify.min.js'></script>"
-    
+
     other()
-    
+
 }
 
-function other(){
+function other() {
     conf.plugins.push(new Visualizer({filename: '../../../../visualizer/statistics.html'}))
     conf.plugins.push(new CopyWebpackPlugin([{from: 'nginx', to: '../../../etc/nginx/blueforest.org/web'}]))
 }

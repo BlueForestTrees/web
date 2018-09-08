@@ -2,12 +2,10 @@
     <span>
         <v-card-text class="text-md-center" v-if="items.length === 0">Votre panier est vide. <br>Faites une <span><v-icon @click="goSearch" color="blue">search</v-icon> recherche pour trouver des choses à mettre dans le panier.</span></v-card-text>
 
-        <transition name="slide-fade">
             <v-toolbar v-if="anySelected" app dark class="elevation-5" color="blue">
                 <slot :s="this">
                 </slot>
             </v-toolbar>
-        </transition>
         <v-container>
             <v-layout row wrap justify-center>
                 <template v-if="items.length > 0" v-for="item in items">

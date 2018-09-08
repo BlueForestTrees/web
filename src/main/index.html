@@ -20,14 +20,19 @@
     <meta name="theme-color" content="#ffffff">
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
-
+    <style>
+        html {
+            overflow-y: auto
+        }
+    </style>
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
-    <link href="https://unpkg.com/vuetify@<%= htmlWebpackPlugin.options.versionVuetify%>/dist/vuetify<%= htmlWebpackPlugin.options.min%>.css" rel="stylesheet">
+    <link href="https://unpkg.com/vuetify@<%= htmlWebpackPlugin.options.versionVuetify%>/dist/vuetify<%= htmlWebpackPlugin.options.min%>.css"
+          rel="stylesheet">
     <%= htmlWebpackPlugin.options.scriptVue %>
     <%= htmlWebpackPlugin.options.scriptVuetify %>
 </head>
 <body>
-    <span>
+<span>
         <div id="app"/>
     </span>
 </body>

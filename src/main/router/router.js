@@ -2,25 +2,14 @@ import {GO} from "../const/go"
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-//KO
-import Tree from "../vue/tree/Tree"
-//const Tree = () => import(/* webpackChunkName: "Tree" */ '../vue/tree/Tree.vue')
-import Basket from "../vue/Basket"
-//const Basket = () => import (/* webpackChunkName: "Basket" */ '../vue/Basket')
-import Imports from "../vue/Imports"
-//const Imports = () => import(/* webpackChunkName: "Imports" */ '../vue/Imports')
-import Root from "../vue/tree/Root"
-//const Root = () => import(/* webpackChunkName: "Root" */ '../vue/tree/Root')
-import Home from "../vue/Home"
-//const Home = () => import(/* webpackChunkName: "Home" */ '../vue/Home')
-import Search from "../vue/Search"
-//const Search = () => import(/* webpackChunkName: "Search" */ '../vue/Search')
-import BlueForest from "../vue/BlueForest"
-//const BlueForest = () => import(/* webpackChunkName: "BF" */ '../vue/BlueForest')
-import Compare from "../vue/compare/Compare"
-//const Compare = () => import(/* webpackChunkName: "Compare" */ '../vue/compare/Compare')
-
-//OK
+const Tree = () => import(/* webpackChunkName: "Tree" */ '../vue/tree/Tree.vue')
+const Basket = () => import (/* webpackChunkName: "Basket" */ '../vue/Basket')
+const Imports = () => import(/* webpackChunkName: "Imports" */ '../vue/Imports')
+const Root = () => import(/* webpackChunkName: "Root" */ '../vue/tree/Root')
+const Home = () => import(/* webpackChunkName: "Home" */ '../vue/Home')
+const Search = () => import(/* webpackChunkName: "Search" */ '../vue/Search')
+const BlueForest = () => import(/* webpackChunkName: "BF" */ '../vue/BlueForest')
+const Compare = () => import(/* webpackChunkName: "Compare" */ '../vue/compare/Compare')
 const Confirmation = () => import(/* webpackChunkName: "Confirmation" */ '../vue/Confirmation')
 const Inscription = () => import(/* webpackChunkName: "Inscription" */ '../vue/Inscription')
 const Login = () => import(/* webpackChunkName: "Login" */ '../vue/Login')

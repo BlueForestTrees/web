@@ -1,11 +1,9 @@
 <template>
     <span>
-        <transition name="slide-vertical">
-            <v-toolbar v-if="!nobar && anySelected" app dark class="elevation-5" color="blue">
-                <slot :s="this">
-                </slot>
-            </v-toolbar>
-        </transition>
+        <v-toolbar v-if="!nobar && anySelected" app dark class="elevation-5" color="blue">
+            <slot :s="this">
+            </slot>
+        </v-toolbar>
         <template v-if="items.length > 0" v-for="item in items">
             <div :key="item._id" @click="toggleSelect(item)" class="v-list__tile"
                  :style="{paddingTop:'8px',paddingBottom:'8px',height:'auto', background: isSelected(item) ? '#D8E9F5' : '', transition: 'background .2s ease'}">

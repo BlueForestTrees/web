@@ -16,7 +16,7 @@
                                 <v-layout row>
                                     <v-spacer/>
                                     <v-btn icon flat>
-                                        <v-icon color="green darken-1" @click="validateQuantity">done</v-icon>
+                                        <v-icon color="blue darken-1" @click="validateQuantity">done</v-icon>
                                     </v-btn>
                                 </v-layout>
                             </v-card-text>
@@ -26,8 +26,7 @@
 
                     <v-expansion-panel-content v-if="tree && item && item.trunk.quantity.g === 'Mass'">
                         <subheader slot="header" title="Transport"/>
-                        <transition name="slide-fade">
-                            <v-toolbar v-if="anySelected" app dark class="elevation-0" color="green lighten-2">
+                            <v-toolbar v-if="anySelected" app dark class="elevation-0" color="blue">
                                 <v-toolbar-items>
                                     <v-tooltip bottom>
                                         <v-btn slot="activator" v-if="oneSelected" flat @click="goTree(oneSelected)"><span
@@ -54,9 +53,8 @@
                                     </v-tooltip>
                                 </v-toolbar-items>
                             </v-toolbar>
-                        </transition>
                         <v-list-tile v-for="transport in tree.roots"  :key="transport._id" v-if="transport.relativeTo && transport.relativeTo._id===item._id"
-                                     @click="toggleSelect(transport)" :style="{background: isSelected(transport) ? '#E8F5E9' : '', transition: 'background .2s ease'}">
+                                     @click="toggleSelect(transport)" :style="{background: isSelected(transport) ? '#D8E9F5' : '', transition: 'background .2s ease'}">
                             <v-icon :style="'color: '+transport.trunk.color+';margin-right:0.2em'">lens</v-icon>
                             <span>{{(transport.relativeTo.bqt / 1000)+" km"}} {{transport.trunk.name}}</span>
                         </v-list-tile>
@@ -87,7 +85,7 @@
                                     </v-card-text>
                                     <v-layout row>
                                         <v-spacer/>
-                                        <v-btn icon flat><v-icon color="green darken-1" @click="ajoutTransport">done</v-icon></v-btn>
+                                        <v-btn icon flat><v-icon color="blue darken-1" @click="ajoutTransport">done</v-icon></v-btn>
                                     </v-layout>
                                 </template>
                             </template>

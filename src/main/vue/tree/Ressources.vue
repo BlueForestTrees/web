@@ -1,6 +1,5 @@
 <template>
     <span>
-        <transition name="slide-fade">
             <v-toolbar v-if="anySelected" app dark class="elevation-5" color="blue">
                 <v-toolbar-items>
                     <v-tooltip bottom>
@@ -24,7 +23,6 @@
                     </v-tooltip>
                 </v-toolbar-items>
             </v-toolbar>
-        </transition>
 
         <v-list-tile v-for="item in items" v-if="!item.relativeTo" :key="item._id" @click="toggleSelect(item)" :style="{background: isSelected(item) ? '#D8E9F5' : '', transition: 'background .2s ease'}">
             <v-icon v-if="isSelected(item)" color="blue">check_circle</v-icon>
