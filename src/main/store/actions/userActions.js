@@ -38,6 +38,12 @@ export default {
             commit(Do.SHOW_DIALOG, {dialog: Dial.CONNECT_TO_CONTINUE})
             return false
         }
+    },
+
+    [On.CHECK_OWNERSHIP]: ({state}, tree) => {
+        if (!state.user && state.user._id !== tree._id) {
+            throw {code: "bf403"}
+        }
     }
 }
 

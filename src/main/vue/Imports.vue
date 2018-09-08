@@ -1,5 +1,5 @@
 <template>
-    <span>
+    <v-flex>
         <v-container fluid>
             <v-layout column>
                 <h1>Import de catégories d'impact ADEME</h1>
@@ -24,7 +24,7 @@
                 <upload :dispatch="importImpactAdeme" accept=".csv"></upload>
             </v-layout>
         </v-container>
-    </span>
+    </v-flex>
 </template>
 
 <script>

@@ -12,7 +12,7 @@ export default {
     [On.LOAD_ROOTS]: ({commit}, {_id, bqt}) =>
         api.getRoots(_id)
             .then(roots => multiplyRessourceBqt(bqt, roots)),
-    [On.CREATE_ROOT]: async ({commit}, {_id, trunkId, rootId, bqt, relativeTo}) => api.postRoot({_id, trunkId, rootId, bqt, relativeTo}),
-    [On.UPDATE_ROOT]: async ({commit}, {_id, trunkId, rootId, bqt}) => api.putRoot({_id, trunkId, rootId, bqt}),
+    [On.CREATE_ROOT]: ({commit}, {_id, trunkId, rootId, bqt, relativeTo}) => api.postRoot({_id, trunkId, rootId, bqt, relativeTo}),
+    [On.UPDATE_ROOT]: ({commit}, {_id, trunkId, rootId, bqt}) => api.putRoot({_id, trunkId, rootId, bqt}),
     [On.DELETE_ROOT]: ({commit}, _id) => api.deleteRoot(_id)
 }

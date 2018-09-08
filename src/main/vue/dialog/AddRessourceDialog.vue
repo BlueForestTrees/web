@@ -158,13 +158,13 @@
                 this.selectedItem = null
             },
             ...mapActions({
-                dispatchUpdateRoot: On.CREATE_ROOT,
+                dispatchCreateRoot: On.CREATE_ROOT,
                 snack: On.SNACKBAR,
                 addToBasket: On.ADD_TO_BASKET
             }),
             async validateForm() {
                 const bqt = baseQt({qt: this.qt, unit: this.unit.shortname}) / this.tree.trunk.quantity.bqt
-                this.dispatchUpdateRoot({
+                this.dispatchCreateRoot({
                     _id: createStringObjectId(),
                     trunkId: this.tree._id,
                     rootId: this.selectedItem._id,

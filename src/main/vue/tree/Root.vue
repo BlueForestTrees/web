@@ -152,7 +152,7 @@
             ...mapActions({
                 dispatchLoadTree: On.LOAD_OPEN_TREE,
                 dispatchGoTree: On.GO_TREE,
-                dispatchUpdateRoot: On.UPDATE_ROOT,
+                dispatchCreateRoot: On.UPDATE_ROOT,
                 dispatchDeleteLink: On.DELETE_ROOT,
                 dispatchAddTransport: On.ADD_TRANSPORT
             }),
@@ -161,7 +161,7 @@
                     this.qtUpdating = true
                     const bqt = baseQt({qt: this.qt, unit: this.unit.shortname}) / this.tree.trunk.quantity.bqt
                     if (bqt !== this.item.trunk.quantity.bqt) {
-                        this.dispatchUpdateRoot({
+                        this.dispatchCreateRoot({
                             _id: this.item.linkId,
                             trunkId: this.tree._id,
                             rootId: this.item._id,

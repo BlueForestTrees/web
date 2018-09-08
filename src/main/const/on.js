@@ -7,7 +7,6 @@ export default {
     CLONE_TREE: "cloneTree",
     CLONE_TRUNK: "cloneTrunk",
     CONFIRM_SUSCRIBE: 'CONFIRM_SUSCRIBE',
-    CREATE_ADD_RESSOURCE: 'createAddRessource',
     CREATE_FACET_ENTRY: 'onCreateFacetEntry',
     CREATE_IMPACT_ENTRY: 'onCreateImpactEntry',
     CREATE_TRUNK: 'onCreateTrunk',
