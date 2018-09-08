@@ -1,5 +1,5 @@
 <template>
-    <span>
+    <v-flex key="tree">
         <v-layout row wrap justify-center align-center class="ma-4">
             <span class="title">Composition{{tree ? ' de':''}}</span>
             <v-card v-if="tree" class="pl-2 pr-3 py-2 ma-1" style="border-radius:2em"><tree-head :tree="tree"/></v-card>
@@ -106,7 +106,7 @@
             </v-layout>
         </span>
         <add-tree-part-btn v-if="tree" :tree="tree"/>
-    </span>
+    </v-flex>
 </template>
 
 <script>

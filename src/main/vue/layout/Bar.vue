@@ -3,6 +3,9 @@
         <v-toolbar-side-icon @click="nav.leftMenuVisible = !nav.leftMenuVisible"></v-toolbar-side-icon>
 
         <v-tabs align-with-title color="transparent">
+            <v-tab icon dense :to="{name: GO.HOME}">
+                <v-icon color="blue darken-3">home</v-icon>
+            </v-tab>
             <v-tab icon dense :to="{name: GO.SEARCH}">
                 <v-icon color="blue darken-3">search</v-icon>
                 <v-flex hidden-sm-and-down style="pointer-events: none">Recherche</v-flex>
@@ -92,3 +95,9 @@
         }
     }
 </script>
+
+<style>
+    .v-tabs__container {
+        padding-left: 0px;
+    }
+</style>

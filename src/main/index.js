@@ -5,6 +5,7 @@ import api from "./rest/api"
 import {initUnits} from "unit-manip"
 import store from "./store/store"
 import router from "./router/router"
+import css from "./css/style.css"
 
 
 Vue.config.productionTip = false

@@ -2,9 +2,10 @@
     <span>
         <left-menu/>
         <bar/>
-        <v-content style="padding-top:56px">
-            <router-view></router-view>
-        </v-content>
+
+        <transition :name="transitionName" mode="out-in">
+            <router-view style="padding-top:56px"></router-view>
+        </transition>
 
         <snack :snack="snack"/>
 
@@ -37,8 +38,15 @@
     import AddImpactEntryDialog from "./dialog/AddImpactEntryDialog"
     import Snack from "./layout/Snack"
     import ConnectToContinueDialog from "./dialog/ConnectToContinueDialog"
+    import {GO} from "../const/go"
 
     export default {
+        data() {
+            return {
+                transitionName: null,
+                routes: Object.values(GO)
+            }
+        },
         computed: {
             ...mapState(['basket', 'snack'])
         },
@@ -58,6 +66,11 @@
         },
         mounted: async function () {
             await this.$store.dispatch(On.MOUNT_APP)
+        },
+        watch: {
+            '$route'(to, from) {
+                this.transitionName = this.routes.indexOf(to.name) - this.routes.indexOf(from.name) > 0 ? 'slide-right' : 'slide-left'
+            }
         }
     }
 </script>

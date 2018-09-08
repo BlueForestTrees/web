@@ -1,5 +1,5 @@
 <template>
-    <span>
+    <v-flex key="basket">
         <v-layout row wrap justify-center align-center class="ma-4">
             <span class="title">Panier</span>
         </v-layout>
@@ -27,8 +27,7 @@
                 </v-tooltip>
             </template>
         </basket-comp>
-
-    </span>
+    </v-flex>
 </template>
 
 <script>

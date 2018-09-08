@@ -1,7 +1,9 @@
 <template>
     <div id="app">
         <v-app light>
-            <router-view></router-view>
+            <transition name="slide-fade" mode="out-in">
+                <router-view></router-view>
+            </transition>
         </v-app>
     </div>
 </template>

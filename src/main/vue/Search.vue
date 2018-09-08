@@ -1,6 +1,5 @@
 <template>
-    <span>
-
+    <v-flex key="search">
         <v-layout row wrap justify-center align-center class="ma-4">
             <span class="title">Recherche</span>
         </v-layout>
@@ -33,7 +32,7 @@
                 </v-toolbar-items>
             </template>
         </search-trunk>
-    </span>
+    </v-flex>
 </template>
 
 <script>

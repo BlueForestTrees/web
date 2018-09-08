@@ -28,6 +28,7 @@ export default new VueRouter({
                     name: GO.HOME,
                     path: '',
                     component: Home,
+                    test:42
                 },
                 {
                     name: GO.TREE,
