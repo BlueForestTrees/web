@@ -1,65 +1,60 @@
 <template>
-    <v-toolbar app class="elevation-1" style="background-color: #FAFAFACC">
-        <v-tooltip bottom>
-            <v-btn slot="activator" icon dense @click="nav.leftMenuVisible = !nav.leftMenuVisible"><v-icon color="blue darken-3">dehaze</v-icon></v-btn>
-            <span style="pointer-events: none">Menu de gauche</span>
-        </v-tooltip>
-        <v-tooltip bottom>
-            <v-btn slot="activator" icon dense @click="goSearch"><v-icon color="blue darken-3">search</v-icon></v-btn>
-            <span style="pointer-events: none">Recherche</span>
-        </v-tooltip>
+    <v-toolbar app tabs class="elevation-1" style="background-color: #FAFAFACC">
+        <v-toolbar-side-icon @click="nav.leftMenuVisible = !nav.leftMenuVisible"></v-toolbar-side-icon>
 
-        <v-tooltip bottom>
-            <v-btn slot="activator" icon dense @click="goBasket"><v-icon color="blue darken-3">shopping_basket</v-icon></v-btn>
-            <span style="pointer-events: none">Panier</span>
-        </v-tooltip>
+        <v-tabs align-with-title color="transparent">
+            <v-tab icon dense :to="{name: GO.SEARCH}">
+                <v-icon color="blue darken-3">search</v-icon>
+                <v-flex hidden-sm-and-down style="pointer-events: none">Recherche</v-flex>
+            </v-tab>
+            <v-tab icon dense :to="{name: GO.BASKET}">
+                <v-icon color="blue darken-3">shopping_basket</v-icon>
+                <v-flex hidden-sm-and-down style="pointer-events: none">Panier</v-flex>
+            </v-tab>
+            <v-tab icon dense :to="{name: GO.TREE_EMPTY}">
+                <v-icon color="blue darken-3">category</v-icon>
+                <v-flex hidden-sm-and-down style="pointer-events: none">Composition</v-flex>
+            </v-tab>
+            <v-tab icon dense :to="{name: GO.COMPARE_EMPTY}">
+                <v-icon color="blue darken-3">compare_arrows</v-icon>
+                <v-flex hidden-sm-and-down style="pointer-events: none">Comparaison</v-flex>
+            </v-tab>
+            <v-tabs-slider color="blue darken-3"></v-tabs-slider>
+        </v-tabs>
 
-        <v-tooltip bottom>
-            <v-btn slot="activator" icon dense @click="goTree()"><v-icon color="blue darken-3">category</v-icon></v-btn>
-            <span style="pointer-events: none">Composition</span>
-        </v-tooltip>
+        <v-spacer/>
+        <v-menu v-if="user">
+            <v-avatar slot="activator" size="32px" :style="{backgroundColor:user.color}">
+                <span :style="{color:overcolor(user.color)}">{{initiales(user.fullname)}}</span>
+            </v-avatar>
 
-        <v-tooltip bottom>
-            <v-btn slot="activator" icon dense @click="goCompare()"><v-icon color="blue darken-3">compare_arrows</v-icon></v-btn>
-            <span style="pointer-events: none">Comparaison</span>
-        </v-tooltip>
-
-        <div class="d-flex align-center" style="margin-left: auto">
-
-
-            <v-menu v-if="user">
-                <v-avatar slot="activator" size="32px" :style="{backgroundColor:user.color}">
-                    <span :style="{color:overcolor(user.color)}">{{initiales(user.fullname)}}</span>
-                </v-avatar>
-
-                <v-list two-line>
-                    <v-list-tile @click="">
-                        <v-list-tile-avatar size="64px" style="padding-right: 1em">
-                            <v-avatar slot="activator" size="64px" :style="{backgroundColor:user.color}"><h1
-                                    :style="{color:overcolor(user.color)}">{{initiales(user.fullname)}}</h1></v-avatar>
-                        </v-list-tile-avatar>
-                        <v-list-tile-content>
-                            <v-list-tile-title>{{user.fullname}}</v-list-tile-title>
-                            <v-list-tile-sub-title>{{user.mail}}</v-list-tile-sub-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
-                    <v-list-tile>
-                        <v-btn outline block class="elevation-0" @click="logout" v-if="user">Déconnexion</v-btn>
-                    </v-list-tile>
-                </v-list>
-            </v-menu>
-            <v-menu v-else>
-                <v-tooltip slot="activator" bottom>
-                    <v-btn slot="activator" icon dense>
-                        <v-avatar size="32px" tile>
-                            <img src="/img/logo.svg" alt="BlueForest">
-                        </v-avatar>
-                    </v-btn>
-                    <span style="pointer-events: none">Connexion</span>
-                </v-tooltip>
-                <login-suscribe-list />
-            </v-menu>
-        </div>
+            <v-list two-line>
+                <v-list-tile @click="">
+                    <v-list-tile-avatar size="64px" style="padding-right: 1em">
+                        <v-avatar slot="activator" size="64px" :style="{backgroundColor:user.color}"><h1
+                                :style="{color:overcolor(user.color)}">{{initiales(user.fullname)}}</h1></v-avatar>
+                    </v-list-tile-avatar>
+                    <v-list-tile-content>
+                        <v-list-tile-title>{{user.fullname}}</v-list-tile-title>
+                        <v-list-tile-sub-title>{{user.mail}}</v-list-tile-sub-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+                <v-list-tile>
+                    <v-btn outline block class="elevation-0" @click="logout" v-if="user">Déconnexion</v-btn>
+                </v-list-tile>
+            </v-list>
+        </v-menu>
+        <v-menu v-else>
+            <v-tooltip slot="activator" bottom>
+                <v-btn slot="activator" icon dense>
+                    <v-avatar size="32px" tile>
+                        <img src="/img/logo.svg" alt="BlueForest">
+                    </v-avatar>
+                </v-btn>
+                <span style="pointer-events: none">Connexion</span>
+            </v-tooltip>
+            <login-suscribe-list/>
+        </v-menu>
     </v-toolbar>
 </template>
 
@@ -87,24 +82,13 @@
             ...mapState(['nav', 'tree', 'user'])
         },
         methods: {
+            overcolor, initiales,
             goSearch: function () {
                 this.$router.push({name: "search"})
             },
-            overcolor, initiales,
             ...mapActions({
-                logout: On.LOGOUT,
-                goSearch: On.GO_SEARCH,
-                goBasket: On.GO_BASKET,
-                goTree: On.GO_TREE,
-                goCompare: On.GO_COMPARE,
-                showDialog: On.SHOW_DIALOG
-            }),
-            ...mapMutations({
-                commitVisible: Do.UPDATE_DIALOG_VISIBILITY
-            }),
-            show: function (dialog) {
-                this.showDialog({dialog})
-            }
+                logout: On.LOGOUT
+            })
         }
     }
 </script>
