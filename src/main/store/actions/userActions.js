@@ -10,14 +10,14 @@ export default {
         commit(Do.SET_TOKEN, await forage.getAccessToken())
     },
 
-    [On.WANT_SUSCRIBE]: ({}, {mail}) => api.postMail({mail}),
+    [On.WANT_SUSCRIBE]: ({}, {mail}) => api.postSuscription({mail}),
 
     [On.CONFIRM_SUSCRIBE]: async ({commit}, {token, fullname, password}) => api.postConfirm({token, fullname, password})
         .then(response => {
             saveToken(commit, response.token)
         }),
 
-    [On.LOAD_USER]: ({}, oid) => api.getUser(oid),
+    [On.LOAD_USER]: ({}, oid) => oid ? api.getUser(oid) : null,
 
     [On.LOGIN]: async ({commit, dispatch}, {mail, password}) => api
         .postAuth({mail, password})
