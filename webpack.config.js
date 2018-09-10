@@ -50,11 +50,12 @@ if (conf.mode === "development") {
 
     conf.serve = {
         add: function (app, middleware, options) {
-            app.use(convert(proxy('/api/categories', {target: 'http://localhost:8081'})))
+            app.use(convert(proxy('/api/facet', {target: 'http://localhost:8086'})))
             app.use(convert(proxy('/api/feedback', {target: 'http://localhost:8085'})))
             app.use(convert(proxy('/api/user', {target: 'http://localhost:8084'})))
             app.use(convert(proxy('/api/grandeur', {target: 'http://localhost:8083'})))
             app.use(convert(proxy('/api/import', {target: 'http://localhost:8082'})))
+            app.use(convert(proxy('/api/categories', {target: 'http://localhost:8081'})))
             app.use(convert(proxy('/api/tree', {target: 'http://localhost:8080'})))
             app.use(convert(history()))
         }

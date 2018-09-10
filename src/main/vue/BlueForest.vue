@@ -3,7 +3,7 @@
         <left-menu/>
         <bar/>
 
-        <v-content>
+        <v-content style="padding-top:56px">
             <transition :name="transitionName" mode="out-in">
                 <router-view></router-view>
             </transition>

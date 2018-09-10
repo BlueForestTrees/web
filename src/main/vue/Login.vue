@@ -6,12 +6,14 @@
             <img src="/img/forest.svg" style="width:28%">
             <v-card-text>
                 <v-form v-model="valid" v-on:submit.prevent="validate" ref="form">
-                    <v-text-field prepend-icon="mail" name="mail" label="Mail" placeholder="vous@exemple.com" type="text"
+                    <v-text-field prepend-icon="mail" name="mail" label="Mail" placeholder="vous@exemple.com"
+                                  type="text"
                                   autofocus
                                   autocomplete="username" v-model="mail" required :rules="[mailRequired, validMail]"
                     ></v-text-field>
                     <v-text-field prepend-icon="lock" name="password" label="Mot de passe"
-                                  :append-icon="showPwd ? 'visibility_off' : 'visibility'" :type="showPwd ? 'text' : 'password'" @click:append="showPwd = !showPwd"
+                                  :append-icon="showPwd ? 'visibility_off' : 'visibility'"
+                                  :type="showPwd ? 'text' : 'password'" @click:append="showPwd = !showPwd"
                                   autocomplete="current-password" v-model="password" required
                                   :rules="[validPassword]"
                     ></v-text-field>
@@ -38,14 +40,17 @@
         data: function () {
             return {
                 GO,
-                showPwd:false,
+                showPwd: false,
                 valid: null,
                 mail: null,
-                password: null
+                password: null,
+                loginFailed: false
             }
         },
         methods: {
-            validPassword: value => !!value || "Veuillez saisir un mot de passe",
+            validPassword(value) {
+                return this.loginFailed ? "Identifiants incorrects" : !!value || "Veuillez saisir un mot de passe"
+            },
             mailRequired,
             validMail,
             ...mapActions({login: On.LOGIN}),
@@ -58,6 +63,7 @@
                     } catch (e) {
                         console.error(e)
                         this.password = null
+                        this.loginFailed = true
                     }
                 }
             },

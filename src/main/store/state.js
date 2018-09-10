@@ -52,5 +52,5 @@ export default {
     dialogs: dialogs(),
     nav: {leftMenuVisible: false},
     snack: snack(),
-    version: {web: ENV.VERSION}
+    version: {web: ENV.VERSION},
 }
