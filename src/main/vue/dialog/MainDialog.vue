@@ -3,7 +3,7 @@
               :overlay="false"
               @keydown.esc="$emit('esc')" @keydown.ctrl.enter="$emit('enter')"
     >
-        <v-card tile>
+        <v-card>
             <v-toolbar card dark color="primary">
                 <v-icon>{{icon}}</v-icon>
                 <v-toolbar-title>{{title}}</v-toolbar-title>

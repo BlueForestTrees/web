@@ -1,10 +1,13 @@
 ﻿<template>
+    <span>
+
     <v-select :label="label || 'Grandeur...'" item-text="label" required
               :items="getGrandeurs()" :value="value" @change="v => $emit('input',v)"
               :disabled="disabled"
               :rules="[required]"
               return-object
     />
+    </span>
 </template>
 
 <script>

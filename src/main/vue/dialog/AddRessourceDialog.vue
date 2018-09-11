@@ -1,87 +1,70 @@
 <template>
-    <main-dialog :dialog="Dial.ADD_RESSOURCE" ref="dialog" :title="'Nouvelle ressource'" @esc="close"
-                 @enter="validateForm" :noaction="searching">
+    <main-dialog :dialog="Dial.ADD_RESSOURCE" ref="dialog" :title="'Ajouter une ressource'" @esc="close" @focus="focus" :noaction="searching">
         <v-card-text>
-            <v-layout row align-center justify-center v-if="!isOwner">
-                <v-icon color="orange">info</v-icon>
-                Cet élément n'est pas à vous!
-            </v-layout>
-            <destination :tree="tree"/>
-
-            <span v-if="searching">
+            <v-stepper v-model="idx" vertical>
+                <v-stepper-step step="1" :complete="idx > 1">Choisir le sens</v-stepper-step>
+                <v-stepper-content step="1">
                     <v-container>
-                        <v-layout row wrap justify-center>
-                            <v-card class="ma-1"
-                                    :style="{borderRadius: '1.5em',background: searchingSearch ? '#D8E9F5' : '', transition: 'background .2s ease'}">
-                                <v-container py-2 pr-3 pl-2 @click="selectSearch" style="cursor: pointer">
-                                    <v-layout row align-center style="pointer-events: none">
-                                        <v-icon v-if="searchingSearch" color="primary" mr-1>search</v-icon>
-                                        <v-icon v-else>search</v-icon>
-                                        Recherche
-                                    </v-layout>
-                                </v-container>
-                            </v-card>
-                            <v-card class="ma-1"
-                                    :style="{borderRadius: '1.5em',background: searchingBasket ? '#D8E9F5' : '', transition: 'background .2s ease'}">
-                                <v-container py-2 pr-3 pl-2 @click="selectBasket" style="cursor: pointer">
-                                    <v-layout row align-center style="pointer-events: none">
-                                        <v-icon v-if="searchingBasket" color="primary" mr-1>shopping_basket</v-icon>
-                                        <v-icon v-else>shopping_basket</v-icon>
-                                        Panier
-                                    </v-layout>
-                                </v-container>
-                            </v-card>
-                        </v-layout>
+                        <destination :tree="left"/>
+                        <v-list-tile>
+                            <v-icon x-large>call_merge</v-icon>
+                        </v-list-tile>
+                        <destination :tree="right"/>
                     </v-container>
-                    <search-trunk v-if="searchingSearch">
-                        <template slot-scope="{ s }">
-                            <v-tooltip bottom>
-                                <v-btn slot="activator" v-if="s.selectionCount" flat dense @click="validateSearch(s)">
-                                    <v-icon>done</v-icon>
-                                    Valider
-                                </v-btn>
-                                <span style="pointer-events: none">Valider</span>
-                            </v-tooltip>
-                            <v-spacer/>
-                            <v-tooltip bottom>
-                                <span slot="activator"><v-btn icon dense @click="closeSearch(s)"><v-icon>close</v-icon></v-btn></span>
-                                <span style="pointer-events: none">Fermer</span>
-                            </v-tooltip>
-                        </template>
-                    </search-trunk>
-                    <basket-comp v-if="searchingBasket" max-selection-size="1">
-                        <template slot-scope="{ s }">
-                            <v-tooltip bottom>
-                                <v-btn slot="activator" v-if="s.selectionCount" flat dense @click="validateSearch(s)">
-                                    <v-icon>done</v-icon>
-                                    Valider
-                                </v-btn>
-                                <span style="pointer-events: none">Valider</span>
-                            </v-tooltip>
-                            <v-spacer/>
-                            <v-tooltip bottom>
-                                <span slot="activator"><v-btn icon dense @click="closeSearch(s)"><v-icon>close</v-icon></v-btn></span>
-                                <span style="pointer-events: none">Fermer</span>
-                            </v-tooltip>
-                        </template>
-                    </basket-comp>
-                </span>
-            <v-card v-else>
-                <v-card-title>
-                    <v-icon large :style="{color: selectedItem.trunk.color,marginRight:'0.2em'}">lens</v-icon>
-                    {{selectedItem.trunk.name}}
-                    <v-spacer/>
-                    <v-btn icon @click="cancelItem">
-                        <v-icon color="grey darken-2">delete</v-icon>
+                    <v-btn color="primary" @click="idx++">Ok</v-btn>
+                    <v-btn dense @click="revert">
+                        <v-icon>swap_vert</v-icon>
+                        inverser
                     </v-btn>
-                </v-card-title>
-                <v-card-text>
-                    <v-text-field type="number" label="Quantité... (ex.: 10)" v-model="qt"
-                                  :rules="[required, isNumber]"/>
-                    <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]"/>
-                </v-card-text>
-            </v-card>
+                </v-stepper-content>
 
+                <v-stepper-step step="2" :complete="idx > 2">La quantité 1</v-stepper-step>
+                <v-stepper-content step="2">
+                    <v-container ma-0>
+                        <color-qt-unit-name :item="leftItem"/>
+                    </v-container>
+                    <v-form v-model="qtLeftValid" v-on:submit.prevent="" ref="qtLeftForm">
+                        <v-layout :column="$vuetify.breakpoint.xsOnly">
+                            <v-text-field autofocus type="number" label="Quantité... (ex.: 10)" v-model="leftQt" :rules="[required, isNumber]" @keydown.enter="validLeftQt"/>
+                            <unit-select v-model="leftUnit" :grandeur="leftGrandeur" :rules="[required]"/>
+                        </v-layout>
+                    </v-form>
+                    <v-btn color="primary" @click="validLeftQt">Ok</v-btn>
+                    <v-btn flat @click="idx--">retour</v-btn>
+                </v-stepper-content>
+
+                <v-stepper-step step="3" :complete="idx > 3">La quantité 2</v-stepper-step>
+                <v-stepper-content step="3">
+                    <v-container ma-0>
+                        <color-qt-unit-name :item="rightItem"/>
+                    </v-container>
+                    <v-form v-model="qtRightValid" v-on:submit.prevent="" ref="qtRightForm">
+                        <v-layout :column="$vuetify.breakpoint.xsOnly">
+                            <v-text-field autofocus type="number" label="Quantité... (ex.: 10)" v-model="rightQt" :rules="[required, isNumber]" @keydown.enter="validRightQt"/>
+                            <unit-select v-model="rightUnit" :grandeur="rightGrandeur" :rules="[required]"/>
+                        </v-layout>
+                    </v-form>
+                    <v-btn color="primary" @click="validRightQt">Ok</v-btn>
+                    <v-btn flat @click="idx--">retour</v-btn>
+                </v-stepper-content>
+
+                <v-stepper-step step="4">Confirmer</v-stepper-step>
+                <v-stepper-content step="4">
+                    <v-container>
+                        <color-qt-unit-name :item="leftItem"/>
+                        <v-list-tile>
+                            <v-icon x-large>call_merge</v-icon>
+                        </v-list-tile>
+                        <color-qt-unit-name :item="rightItem"/>
+                    </v-container>
+                    <v-btn :color="isOwner ? 'primary' : 'orange'" @click="isOwner ? validate() : ''">Ok</v-btn>
+                    <v-btn flat @click="idx--">retour</v-btn>
+                </v-stepper-content>
+            </v-stepper>
+            <v-layout mt-3 row align-center justify-center v-if="!isOwner">
+                <v-icon color="orange">info</v-icon>
+                <v-flex ml-2>Vous ne possédez pas cet élément! Impossible de le modifier pour l'instant. <br>La fonction "suggestion de modification" n'est pas encore disponible.</v-flex>
+            </v-layout>
         </v-card-text>
     </main-dialog>
 </template>
@@ -93,16 +76,18 @@
     import {Dial} from "../../const/dial"
     import Destination from "../common/Destination"
     import {isNumber, required} from "../../services/rules"
-    import {getGrandeur, unit} from 'unit-manip'
+    import {baseQt, getGrandeur, bqtGToQtUnit, unit, bestQuantity} from 'unit-manip'
     import UnitSelect from "../common/UnitSelect"
     import closable from "../mixin/Closable"
     import GrandeurSelect from "../common/GrandeurSelect"
     import SearchComp from "../SearchComp"
     import {createStringObjectId} from "../../services/calculations"
-    import {bqtGToQtUnit, baseQt} from "unit-manip"
     import SearchCat from "../SearchCat"
     import SearchTrunk from "../SearchTrunk"
     import BasketComp from "../BasketComp"
+    import Tree from "../tree/Tree"
+    import TreeHead from "../tree/TreeHead"
+    import ColorQtUnitName from "../common/ColorQtUnitName"
 
     export default {
         name: 'add-ressource-dialog',
@@ -110,17 +95,23 @@
         data() {
             return {
                 Dial: Dial,
-                selectedItem: null,
-                qt: null,
-                unit: null,
-                grandeur: null,
-                searchAgain: false,
-                panels: [],
-                searchingSearch: false,
-                searchingBasket: false
+                idx: 1,
+                qtLeftValid: null,
+                qtRightValid: null,
+
+                leftQt: null,
+                leftUnit: null,
+                leftGrandeur: null,
+
+                rightQt: null,
+                rightUnit: null,
+                rightGrandeur: null
             }
         },
         components: {
+            ColorQtUnitName,
+            TreeHead,
+            Tree,
             BasketComp,
             SearchTrunk,
             SearchCat,
@@ -131,84 +122,80 @@
             MainDialog
         },
         computed: {
-            ...mapState({user: s => s.user, tree: s => s.dialogs.addRessource.data.tree}),
+            ...mapState({user: s => s.user, data: s => s.dialogs.addRessource.data}),
+            left() {
+                return this.data.left
+            },
+            right() {
+                return this.data.right
+            },
             searching: function () {
                 return this.searchAgain || !this.selectedItem
             },
             isOwner: function () {
-                return this.user && this.tree && this.tree.owner && this.tree.owner._id && this.tree.owner._id === this.user._id
+                return this.user && this.left && this.left.owner && this.left.owner._id && this.left.owner._id === this.user._id
+            },
+            leftItem: function () {
+                return this.left && this.leftUnit && {color: this.left.trunk.color, qt: this.leftQt, unit: this.leftUnit.shortname, name: this.left.trunk.name}
+            },
+            rightItem: function () {
+                return this.right && this.rightUnit && {color: this.right.trunk.color, qt: this.rightQt, unit: this.rightUnit.shortname, name: this.right.trunk.name}
             }
         },
         methods: {
-            selectSearch() {
-                this.searchingSearch = true
-                this.searchingBasket = false
-            },
-            selectBasket() {
-                this.searchingSearch = false
-                this.searchingBasket = true
-            },
-            validateSearch: function (s) {
-                const item = s.selection[0]
-                if (!item.trunk.quantity) {
-                    this.snack({text: "Ressource inutilisable pour le moment (elle ne possède pas de quantité)"})
-                } else {
-                    this.selectedItem = item
-                    this.searchAgain = false
-                    s.unselect()
-                }
-            },
-            closeSearch: function (s) {
-                s.unselect()
-            },
-            cancelItem: function () {
-                this.selectedItem = null
-            },
             ...mapActions({
                 dispatchCreateRoot: On.CREATE_ROOT,
                 snack: On.SNACKBAR,
                 addToBasket: On.ADD_TO_BASKET
             }),
-            async validateForm() {
-                const bqt = baseQt({qt: this.qt, unit: this.unit.shortname}) / this.tree.trunk.quantity.bqt
+            revert() {
+                const tmp = this.left
+                this.data.left = this.right
+                this.data.right = tmp
+            },
+            validate() {
+                const bqt = baseQt({qt: this.rightQt, unit: this.rightUnit}) / baseQt({qt: this.leftQt, unit: this.leftUnit})
                 this.dispatchCreateRoot({
                     _id: createStringObjectId(),
-                    trunkId: this.tree._id,
-                    rootId: this.selectedItem._id,
+                    trunkId: this.left._id,
+                    rootId: this.right._id,
                     bqt
                 }).then(() => {
-                    this.addToBasket([this.tree, this.selectedItem])
+                    this.addToBasket([this.left, this.right])
                 }).catch((err) => {
                     console.log(err)
                     this.snack({text: "Cet élement n'est pas à vous!", color: "orange"})
                 })
                 this.close()
             },
-            required, isNumber,
-            notIn() {
-                if (this.selectedItem && this.tree) {
-                    for (let i = 0; i < this.tree.roots; i++) {
-                        if (this.tree.roots[i]._id === this.selectedItem._id) {
-                            return "Déjà utilisé"
-                        }
-                    }
+            validLeftQt() {
+                this.$refs.qtLeftForm.validate()
+                if (this.qtLeftValid) {
+                    this.idx++
                 }
             },
-        },
-        watch: {
-            selectedItem(item) {
-                if (item) {
-                    let bqtG = item.trunk.quantity
-                    const qtUnit = bqtGToQtUnit(bqtG)
-                    this.qt = qtUnit.bqt
-                    this.unit = unit(qtUnit.unit)
-                    this.grandeur = getGrandeur(bqtG.g)
-                } else {
-                    this.qt = null
-                    this.unit = null
-                    this.grandeur = null
+            validRightQt() {
+                this.$refs.qtRightForm.validate()
+                if (this.qtLeftValid) {
+                    this.idx++
                 }
-            }
+            },
+            focus() {
+                this.$refs.qtLeftForm.reset()
+                this.$refs.qtRightForm.reset()
+
+                this.leftGrandeur = getGrandeur(this.left.trunk.quantity.g)
+                const leftQuantity = bestQuantity(bqtGToQtUnit(this.left.trunk.quantity))
+                this.leftUnit = unit(leftQuantity.unit)
+                this.leftQt = leftQuantity.qt
+
+                this.rightGrandeur = getGrandeur(this.right.trunk.quantity.g)
+                const rightQuantity = bestQuantity(bqtGToQtUnit(this.right.trunk.quantity))
+                this.rightUnit = unit(rightQuantity.unit)
+                this.rightQt = rightQuantity.qt
+                this.idx = 1
+            },
+            required, isNumber
         }
     }
 </script>

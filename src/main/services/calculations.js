@@ -36,7 +36,7 @@ export const getRandomColor = () => {
     return color
 }
 
-export const getLuma = value => {
+const getLuma = value => {
     const c = value.substring(1)
     const rgb = parseInt(c, 16)
     const r = (rgb >> 16) & 0xff

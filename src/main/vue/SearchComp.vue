@@ -1,32 +1,25 @@
 <template>
     <v-flex>
+
         <v-toolbar v-if="!nobar && anySelected" app dark class="elevation-5" color="primary">
-            <slot :s="this">
-            </slot>
+            <slot :s="this"></slot>
         </v-toolbar>
+
         <template v-if="items.length > 0" v-for="item in items">
-            <div :key="item._id" @click="toggleSelect(item)" class="v-list__tile"
-                 :style="{paddingTop:'8px',paddingBottom:'8px',height:'auto', background: isSelected(item) ? '#D8E9F5' : '', transition: 'background .2s ease'}">
+            <div :key="item._id" @click="toggleSelect(item)" class="v-list__tile" :style="{paddingTop:'8px',paddingBottom:'8px',height:'auto', background: isSelected(item) ? '#D8E9F5' : '', transition: 'background .2s ease'}">
                 <v-layout row>
                     <v-icon v-if="isSelected(item)" color="primary" style="margin-right:0.3em">check_circle</v-icon>
-                    <v-icon v-else
-                            :style="'color: '+(item.color || item.trunk.color)+';margin-right:0.3em'">lens
-                    </v-icon>
-                    <v-list-tile-content>
-                        {{item.name || item.trunk.name}}
-                    </v-list-tile-content>
+                    <v-icon v-else :style="'color: '+(item.color || item.trunk.color)+';margin-right:0.3em'">lens</v-icon>
+                    <v-list-tile-content>{{item.name || item.trunk.name}}</v-list-tile-content>
                 </v-layout>
             </div>
         </template>
 
-        <v-btn v-if="manualMode && items.length" block flat color="primary" @click="getMoreClick"
-               style="margin-bottom: 3em">Voir plus
-        </v-btn>
-        <infinite-loading v-else-if="ready" ref="iloading" @infinite="loadResults" spinner="spiral" :distance="500"
-                          style="padding-bottom: 3em">
+        <infinite-loading v-if="ready" ref="iloading" @infinite="loadResults" spinner="spiral" :distance="500" style="padding-bottom: 3em">
             <span slot="no-more">{{items.length}} résultats</span>
             <span slot="no-results"><slot name="no-results">Pas de résultats</slot></span>
         </infinite-loading>
+
     </v-flex>
 </template>
 
@@ -52,8 +45,7 @@
         },
         data() {
             return {
-                items: [],
-                manualMode: true
+                items: []
             }
         },
         computed: {
@@ -70,15 +62,14 @@
             }
         },
         methods: {
+            dispatchSearch: function (query) {
+                return this.$store.dispatch(this.type, query)
+            },
             reset: function () {
                 this.items = []
                 this.$nextTick(() => {
                     this.$refs.iloading.$emit('$InfiniteLoading:reset')
                 })
-            },
-            getMoreClick: function () {
-                this.manualMode = false
-                this.loadResults()
             },
             loadResults: debounce(function ($state) {
                 this.dispatchSearch(this.query)
@@ -93,10 +84,7 @@
                             $state && $state.complete()
                         }
                     })
-            }, 300),
-            dispatchSearch: function (query) {
-                return this.$store.dispatch(this.type, query)
-            },
+            }, 400)
         },
     }
 </script>

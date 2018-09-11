@@ -9,7 +9,7 @@
                 <v-toolbar-items>
                     <v-tooltip bottom>
                         <v-btn slot="activator" v-if="s.selectionCount" flat dense
-                               @click="addToBasket(s.selection);s.unselect()">ajouter<v-icon>arrow_right_alt</v-icon><v-icon>shopping_basket</v-icon></v-btn>
+                               @click="addToBasket(s.selection);s.unselect()">Panier<v-icon>arrow_right_alt</v-icon><v-icon>shopping_basket</v-icon></v-btn>
                         <span style="pointer-events: none">Ajouter au panier</span>
                     </v-tooltip>
                     <v-tooltip bottom>
@@ -21,6 +21,10 @@
                     <v-tooltip bottom>
                         <v-btn slot="activator" v-if="s.twoSelected" flat dense @click="compare(s.twoSelected)">comparer<v-icon>compare_arrows</v-icon></v-btn>
                         <span style="pointer-events: none">Comparer</span>
+                    </v-tooltip>
+                    <v-tooltip bottom>
+                        <v-btn slot="activator" v-if="s.twoSelected" flat dense @click="goAdd(s.twoSelected);s.unselect()">Ajouter<v-icon>call_merge</v-icon></v-btn>
+                        <span style="pointer-events: none">Ajouter</span>
                     </v-tooltip>
                 </v-toolbar-items>
                 <v-spacer/>
@@ -39,6 +43,7 @@
     import On from "../const/on"
     import {mapActions} from "vuex"
     import SearchTrunk from "./SearchTrunk"
+    import {Dial} from "../const/dial"
 
     export default {
         name: "search",
@@ -48,7 +53,11 @@
                 goTree: On.GO_TREE,
                 addToBasket: On.ADD_TO_BASKET,
                 compare: On.GO_COMPARE,
+                showDialog: On.SHOW_DIALOG
             }),
+            goAdd(selection) {
+                this.showDialog({dialog: Dial.ADD_RESSOURCE, data: {left: selection[0], right: selection[1]}})
+            }
         },
     }
 </script>

@@ -24,7 +24,7 @@
                 </v-container>
             </v-expansion-panel-content>
         </v-expansion-panel>
-        <search-comp :filter="filter">
+        <search-comp :filter="filter" :ready="ready">
             <template slot-scope="{ s }">
                 <slot :s="s"></slot>
             </template>
@@ -39,6 +39,9 @@
     export default {
         name: 'search-trunk',
         components: {SearchComp, SearchCat},
+        props: {
+            ready: {type: Boolean, default: true},
+        },
         data: function () {
             return {
                 panels: []

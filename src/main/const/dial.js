@@ -11,7 +11,6 @@ export const Dial = {
     FACET_ENTRY: "facetEntry",
     ADD_IMPACT_ENTRY: "impactEntry",
     ADD_IMPACT: "impact",
-    CONFIGURE_LINK: "configureLink",
     SET_QT_UNIT: "setQtUnit",
     CREATE: "create",
 }

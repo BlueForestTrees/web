@@ -17,6 +17,11 @@
                 </v-tooltip>
 
                 <v-tooltip bottom>
+                    <v-btn slot="activator" v-if="s.twoSelected" flat dense @click="goAdd(s.twoSelected);s.unselect()">Ajouter<v-icon>call_merge</v-icon></v-btn>
+                    <span style="pointer-events: none">Ajouter</span>
+                </v-tooltip>
+
+                <v-tooltip bottom>
                     <v-btn slot="activator" v-if="s.anySelected" flat dense @click="s.removeSelectedItems"><v-icon>shopping_basket</v-icon><v-icon>arrow_right_alt</v-icon>retirer</v-btn>
                     <span style="pointer-events: none">Retirer</span>
                 </v-tooltip>
@@ -35,13 +40,17 @@
     import On from "../const/on"
     import selectable from "./mixin/Selectable"
     import BasketComp from "./BasketComp"
+    import {Dial} from "../const/dial"
 
     export default {
         name: 'basket',
         components: {BasketComp},
         mixins: [selectable],
         methods: {
-            ...mapActions({goTree: On.GO_TREE, goCompare: On.GO_COMPARE})
+            ...mapActions({goTree: On.GO_TREE, goCompare: On.GO_COMPARE, showDialog:On.SHOW_DIALOG}),
+            goAdd(selection) {
+                this.showDialog({dialog:Dial.ADD_RESSOURCE, data: {left: selection[0], right:selection[1]}})
+            }
         }
     }
 </script>
