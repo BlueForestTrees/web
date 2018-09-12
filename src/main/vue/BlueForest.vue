@@ -2,6 +2,7 @@
     <span>
         <left-menu/>
         <bar/>
+        <right-menu/>
 
         <v-content style="padding-top:56px">
             <transition :name="transitionName" mode="out-in">
@@ -16,11 +17,8 @@
         <add-trunk-dialog/>
         <add-ressource-dialog/>
         <add-impact-dialog/>
-        <add-usage-dialog/>
         <add-facet-dialog/>
-
         <connect-to-continue-dialog/>
-
     </span>
 </template>
 
@@ -32,7 +30,6 @@
     import {mapState} from 'vuex'
     import Tree from "./tree/Tree"
     import AddImpactDialog from "./dialog/AddImpactDialog"
-    import AddUsageDialog from "./dialog/AddUsageDialog"
     import AddFacetDialog from "./dialog/AddFacetDialog"
     import AddRessourceDialog from "./dialog/AddRessourceDialog"
     import AddFacetEntryDialog from "./dialog/AddFacetEntryDialog"
@@ -41,6 +38,7 @@
     import Snack from "./layout/Snack"
     import ConnectToContinueDialog from "./dialog/ConnectToContinueDialog"
     import {GO} from "../const/go"
+    import RightMenu from "./layout/RightMenu"
 
     export default {
         data() {
@@ -53,6 +51,7 @@
             ...mapState(['basket', 'snack'])
         },
         components: {
+            RightMenu,
             ConnectToContinueDialog,
             Snack,
             AddImpactEntryDialog,
@@ -60,7 +59,6 @@
             AddFacetEntryDialog,
             AddRessourceDialog,
             AddFacetDialog,
-            AddUsageDialog,
             AddImpactDialog,
             Tree,
             Bar,

@@ -1,15 +1,12 @@
+import {mapState} from "vuex"
+
 export default {
-    
-    data: function () {
-        return {
-            selection: []
-        }
-    },
     computed: {
+        ...mapState(["selection"]),
         selectionCount() {
             return this.selection.length
         },
-        
+
         anySelected() {
             return this.selectionCount > 0 && this.selection
         },

@@ -1,10 +1,10 @@
 <template>
         <span>
 
-                <v-toolbar v-if="anySelected" app dark class="elevation-0" color="primary">
+                <v-toolbar dense v-if="anySelected" app dark class="elevation-0" color="primary">
                     <v-toolbar-items>
                         <v-tooltip bottom>
-                            <v-btn slot="activator" v-if="oneSelected" flat dense @click="goTree(oneSelected)">ouvrir
+                            <v-btn slot="activator" v-if="oneSelected" flat dense @click="goTree(oneSelected)"><span class="hidden-xs-only">ouvrir</span>
                                 <v-icon>category</v-icon>
                             </v-btn>
                             <span style="pointer-events: none">Ouvrir</span>
@@ -16,8 +16,7 @@
                             <span style="pointer-events: none">Modifier</span>
                         </v-tooltip>
                         <v-tooltip bottom>
-                            <v-btn slot="activator" v-if="oneSelected" flat @click="remove(oneSelected)"><span
-                                    class="hidden-xs-only">supprimer</span>
+                            <v-btn slot="activator" v-if="oneSelected" flat @click="remove(oneSelected)"><span class="hidden-xs-only">supprimer</span>
                                 <v-icon>delete</v-icon>
                             </v-btn>
                             <span style="pointer-events: none">Supprimer</span>

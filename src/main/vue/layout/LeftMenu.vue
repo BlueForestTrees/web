@@ -1,5 +1,5 @@
 <template>
-    <v-navigation-drawer fixed app v-model="nav.leftMenuVisible">
+    <v-navigation-drawer fixed temporary v-model="nav.leftMenuVisible">
 
         <v-list dense>
             <v-list-tile @click="showDialog({dialog:Dial.FEEDBACK})">

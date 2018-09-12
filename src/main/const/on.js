@@ -59,6 +59,7 @@ export default {
     SELECT_CONSULT: 'selectConsult',
     SEND_FEEDBACK: 'sendFeedback',
     SHOW_DIALOG: 'showDialog',
+    SHOW_MESSAGES: 'showMessages',
     SNACKBAR: 'snackbar',
     SWIPE_RIGHT: 'SWIPE_RIGHT',
     WANT_SUSCRIBE: 'wantSuscribe',

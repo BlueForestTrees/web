@@ -4,7 +4,7 @@
               @keydown.esc="$emit('esc')" @keydown.ctrl.enter="$emit('enter')"
     >
         <v-card>
-            <v-toolbar card dark color="primary">
+            <v-toolbar dense card dark color="primary">
                 <v-icon>{{icon}}</v-icon>
                 <v-toolbar-title>{{title}}</v-toolbar-title>
                 <v-spacer></v-spacer>

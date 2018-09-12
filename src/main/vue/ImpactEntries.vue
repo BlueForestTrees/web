@@ -12,7 +12,7 @@
                 {{item.name}}
             </v-list-tile>
 
-            <v-toolbar v-if="anySelected" app dark class="elevation-0" color="primary">
+            <v-toolbar dense v-if="anySelected" app dark class="elevation-0" color="primary">
                 <v-toolbar-items>
                     <v-tooltip bottom>
                         <v-btn slot="activator" icon dense @click="unselect()"><v-icon>close</v-icon></v-btn>

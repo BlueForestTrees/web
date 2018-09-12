@@ -7,22 +7,22 @@
         <basket-comp>
             <template slot-scope="{ s }">
                 <v-tooltip bottom>
-                    <v-btn slot="activator" v-if="s.oneSelected" flat dense @click="goTree(s.oneSelected)">ouvrir<v-icon>category</v-icon></v-btn>
+                    <v-btn slot="activator" v-if="s.oneSelected" flat @click="goTree(s.oneSelected)">ouvrir<v-icon>category</v-icon></v-btn>
                     <span style="pointer-events: none">Ouvrir</span>
                 </v-tooltip>
 
                 <v-tooltip bottom>
-                    <v-btn slot="activator" v-if="s.twoSelected" flat dense @click="goCompare(s.twoSelected)">comparer<v-icon>compare_arrows</v-icon></v-btn>
+                    <v-btn slot="activator" v-if="s.twoSelected" flat @click="goCompare(s.twoSelected)">comparer<v-icon>compare_arrows</v-icon></v-btn>
                     <span style="pointer-events: none">Comparer</span>
                 </v-tooltip>
 
                 <v-tooltip bottom>
-                    <v-btn slot="activator" v-if="s.twoSelected" flat dense @click="goAdd(s.twoSelected);s.unselect()">Ajouter<v-icon>call_merge</v-icon></v-btn>
+                    <v-btn slot="activator" v-if="s.twoSelected" flat @click="goAdd(s.twoSelected);s.unselect()">Ajouter<v-icon>call_merge</v-icon></v-btn>
                     <span style="pointer-events: none">Ajouter</span>
                 </v-tooltip>
 
                 <v-tooltip bottom>
-                    <v-btn slot="activator" v-if="s.anySelected" flat dense @click="s.removeSelectedItems"><v-icon>shopping_basket</v-icon><v-icon>arrow_right_alt</v-icon>retirer</v-btn>
+                    <v-btn slot="activator" v-if="s.anySelected" flat @click="s.removeSelectedItems"><v-icon>shopping_basket</v-icon><v-icon>arrow_right_alt</v-icon>retirer</v-btn>
                     <span style="pointer-events: none">Retirer</span>
                 </v-tooltip>
                 <v-spacer/>

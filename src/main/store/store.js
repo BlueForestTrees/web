@@ -34,6 +34,10 @@ import compareActions from "./actions/compareActions"
 import categoriesActions from "./actions/categoriesActions"
 import dialogActions from "./actions/dialogActions"
 import navMutations from "./mutation/navMutations"
+import messagesActions from "./actions/messagesActions"
+import messagesMutations from "./mutation/messagesMutations"
+import selectionMutations from "./mutation/selectionMutations"
+import selectionActions from "./actions/selectionActions"
 
 
 
@@ -56,8 +60,12 @@ const store = new Vuex.Store({
         ...userMutation,
         ...snackbarMutations,
         ...navMutations,
+        ...messagesMutations,
+        ...selectionMutations
     },
     actions: {
+        ...selectionActions,
+        ...messagesActions,
         ...appActions,
         ...categoriesActions,
         ...basketActions,

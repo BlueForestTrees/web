@@ -4,18 +4,20 @@
             <v-stepper v-model="idx" vertical>
                 <v-stepper-step step="1" :complete="idx > 1">Choisir le sens</v-stepper-step>
                 <v-stepper-content step="1">
-                    <v-container>
-                        <destination :tree="left"/>
-                        <v-list-tile>
-                            <v-icon x-large>call_merge</v-icon>
-                        </v-list-tile>
-                        <destination :tree="right"/>
-                    </v-container>
-                    <v-btn color="primary" @click="idx++">Ok</v-btn>
-                    <v-btn dense @click="revert">
-                        <v-icon>swap_vert</v-icon>
-                        inverser
-                    </v-btn>
+                    <v-card>
+                        <v-container>
+                            <destination noqt :tree="left"/>
+                            <v-list-tile>
+                                <v-icon x-large>call_merge</v-icon>
+                            </v-list-tile>
+                            <destination noqt :tree="right"/>
+                        </v-container>
+                        <v-btn color="primary" @click="idx++">Ok</v-btn>
+                        <v-btn dense @click="revert">
+                            <v-icon>swap_vert</v-icon>
+                            inverser
+                        </v-btn>
+                    </v-card>
                 </v-stepper-content>
 
                 <v-stepper-step step="2" :complete="idx > 2">La quantité 1</v-stepper-step>
@@ -133,7 +135,7 @@
                 return this.searchAgain || !this.selectedItem
             },
             isOwner: function () {
-                return this.user && this.left && this.left.owner && this.left.owner._id && this.left.owner._id === this.user._id
+                return this.user && this.left && this.left.trunk && this.left.trunk.oid && this.left.trunk.oid === this.user._id
             },
             leftItem: function () {
                 return this.left && this.leftUnit && {color: this.left.trunk.color, qt: this.leftQt, unit: this.leftUnit.shortname, name: this.left.trunk.name}
@@ -154,7 +156,7 @@
                 this.data.right = tmp
             },
             validate() {
-                const bqt = baseQt({qt: this.rightQt, unit: this.rightUnit}) / baseQt({qt: this.leftQt, unit: this.leftUnit})
+                const bqt = baseQt({qt: this.rightQt, unit: this.rightUnit.shortname}) / baseQt({qt: this.leftQt, unit: this.leftUnit.shortname})
                 this.dispatchCreateRoot({
                     _id: createStringObjectId(),
                     trunkId: this.left._id,

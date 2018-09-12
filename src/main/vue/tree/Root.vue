@@ -26,18 +26,16 @@
 
                     <v-expansion-panel-content v-if="tree && item && item.trunk.quantity.g === 'Mass'">
                         <subheader slot="header" title="Transport"/>
-                            <v-toolbar v-if="anySelected" app dark class="elevation-0" color="primary">
+                            <v-toolbar dense v-if="anySelected" app dark class="elevation-0" color="primary">
                                 <v-toolbar-items>
                                     <v-tooltip bottom>
-                                        <v-btn slot="activator" v-if="oneSelected" flat @click="goTree(oneSelected)"><span
-                                                class="hidden-xs-only">ouvrir</span>
+                                        <v-btn slot="activator" v-if="oneSelected" flat @click="goTree(oneSelected)"><span class="hidden-xs-only">ouvrir</span>
                                             <v-icon>category</v-icon>
                                         </v-btn>
                                         <span style="pointer-events: none">Ouvrir</span>
                                     </v-tooltip>
                                     <v-tooltip bottom>
-                                        <v-btn slot="activator" v-if="anySelected" flat @click="remove(anySelected)"><span
-                                                class="hidden-xs-only">supprimer</span>
+                                        <v-btn slot="activator" v-if="anySelected" flat @click="remove(anySelected)"><span class="hidden-xs-only">supprimer</span>
                                             <v-icon>delete</v-icon>
                                         </v-btn>
                                         <span style="pointer-events: none">Supprimer</span>

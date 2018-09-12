@@ -25,7 +25,7 @@
         data() {
             return {
                 Dial,
-                selection: []
+                // selection: []
             }
         },
         mixins: [selectable],

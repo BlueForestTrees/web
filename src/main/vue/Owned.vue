@@ -6,31 +6,25 @@
                 <search-comp :filter="ownerFilter">
                     <template slot-scope="{ s }">
                         <v-tooltip bottom>
-                            <v-btn slot="activator" v-if="s.selectionCount" flat dense
-                                   @click="addToBasket(s.selection);s.unselect()">Panier<v-icon>arrow_right_alt</v-icon><v-icon>shopping_basket</v-icon></v-btn>
+                            <v-btn slot="activator" v-if="s.selectionCount" flat dense @click="addToBasket(s.selection);s.unselect()"><span>Panier</span><v-icon>arrow_right_alt</v-icon><v-icon>shopping_basket</v-icon></v-btn>
                             <span style="pointer-events: none">Ajouter au panier</span>
                         </v-tooltip>
 
                         <v-tooltip bottom>
-                            <v-btn slot="activator" v-if="s.oneSelected" flat dense @click="goTree(s.oneSelected)">ouvrir<v-icon>category</v-icon></v-btn>
+                            <v-btn slot="activator" v-if="s.oneSelected" flat dense @click="goTree(s.oneSelected)"><span>ouvrir</span><v-icon>category</v-icon></v-btn>
                             <span style="pointer-events: none">Ouvrir</span>
                         </v-tooltip>
 
                         <v-tooltip bottom>
-                            <v-btn slot="activator" v-if="s.twoSelected" flat dense @click="goCompare(s.twoSelected)">comparer<v-icon>compare_arrows</v-icon></v-btn>
+                            <v-btn slot="activator" v-if="s.twoSelected" flat dense @click="goCompare(s.twoSelected)"><span>comparer</span><v-icon>compare_arrows</v-icon></v-btn>
                             <span style="pointer-events: none">Comparer</span>
                         </v-tooltip>
 
-                        <v-tooltip bottom>
-                            <v-btn slot="activator" v-if="s.twoSelected" flat dense @click="goAdd(s.twoSelected);s.unselect()">Ajouter<v-icon>call_merge</v-icon></v-btn>
+                        <v-tooltip bottom class="hidden-xs-only">
+                            <v-btn slot="activator" v-if="s.twoSelected" flat dense @click="goAdd(s.twoSelected);s.unselect()"><span>Ajouter</span><v-icon>call_merge</v-icon></v-btn>
                             <span style="pointer-events: none">Ajouter</span>
                         </v-tooltip>
 
-                        <v-spacer/>
-                        <v-tooltip bottom>
-                            <v-btn slot="activator" icon dense @click="s.unselect"><v-icon>close</v-icon></v-btn>
-                            <span style="pointer-events: none">Fermer</span>
-                        </v-tooltip>
                     </template>
                     <v-card-text slot="no-results" class="text-md-center">
                         Vous n'êtes propriétaire d'aucun produit ou service.
