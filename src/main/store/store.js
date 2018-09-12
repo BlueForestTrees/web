@@ -21,7 +21,6 @@ import treeMutations from "./mutation/treeMutations"
 import trunkMutations from "./mutation/trunkMutations"
 import rootMutations from "./mutation/rootMutations"
 import basketMutations from "./mutation/basketMutations"
-import feedbackActions from "./actions/feedbackActions"
 import userActions from "./actions/userActions"
 import userMutation from "./mutation/userMutation"
 import searchActions from "./actions/searchActions"
@@ -79,7 +78,6 @@ const store = new Vuex.Store({
         ...trunkActions,
         ...tankActions,
         ...branchActions,
-        ...feedbackActions,
         ...userActions,
         ...snackbarActions,
         ...searchActions,

@@ -24,9 +24,11 @@ export default {
     getImpactTank: _id => get(`/api/tree/impacttank/${_id}`),
     getCategories: pid => cached(get, `/api/categories${paramsOf({pid: pid || null})}`, categoriesCache),
 
+    getMessages: filter => get(`/api/message${paramsOf(filter)}`),
 
     putRoot: ({_id, trunkId, rootId, relativeTo, bqt}) => put(`/api/tree/root`, {_id, trunkId, rootId, relativeTo, bqt}),
     postRoot: ({_id, trunkId, rootId, relativeTo, bqt}) => post(`/api/tree/root`, {_id, trunkId, rootId, relativeTo, bqt}),
+    postMessage: message => post(`/api/message`, message),
     deleteRoot: _id => del(`/api/tree/root/${_id}`),
 
     putFacet: (trunk, facet) => post(`/api/facet`, {trunk, facet}),
@@ -49,7 +51,6 @@ export default {
     postImpactAdeme: (formData) => upload('/api/import/ademe/impact', formData),
 
     postTrunkClone: trunkId => post(`/api/tree/trunk?sourceId=${trunkId}`),
-    postFeedback: feedback => post(`/api/feedback`, feedback),
 
 
     postSuscription: ({mail}) => post(`/api/user/suscribe`, {mail}),

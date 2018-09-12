@@ -42,7 +42,7 @@ const getLuma = value => {
     const r = (rgb >> 16) & 0xff
     const g = (rgb >> 8) & 0xff
     const b = (rgb >> 0) & 0xff
-    
+
     return 0.2126 * r + 0.7152 * g + 0.0722 * b
 }
 
@@ -95,4 +95,31 @@ export const multiplyAspectBqt = (coef, items) => {
         items[i].quantity.bqt *= coef
     }
     return items
+}
+
+export const deltaTime = time => {
+    const delta = (Date.now() - new Date(time)) / 1000
+    return delta < 30 ?
+        `à l'instant`
+        :
+        delta < 60 ?
+            `${Math.floor(delta)} sec`
+            :
+            delta < 3600 ?
+                `${Math.floor(delta / 60)} min`
+                :
+                delta < 24 * 3600 ?
+                    `${Math.floor(delta / 3600)} h`
+                    :
+                    delta < 7 * 24 * 3600 ?
+                        `${Math.floor(delta / (24 * 3600))} j`
+                        :
+                        delta < 4 * 7 * 24 * 3600 ?
+                            `${Math.floor(delta / (7 * 24 * 3600))} sem`
+                            :
+                            delta < 12 * 4 * 7 * 24 * 3600 ?
+                                `${Math.floor(delta / (4 * 7 * 24 * 3600))} mois`
+                                :
+                                `${Math.floor(delta / (12 * 4 * 7 * 24 * 3600))} an`
+
 }

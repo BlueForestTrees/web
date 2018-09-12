@@ -1,15 +1,13 @@
 <template>
     <v-navigation-drawer fixed temporary v-model="nav.leftMenuVisible">
-
         <v-list dense>
-            <v-list-tile @click="showDialog({dialog:Dial.FEEDBACK})">
+            <v-list-tile @click="nav.leftMenuVisible = false; showMessages({type:secs.GLOBAL_APP})">
                 <v-list-tile-action>
                     <v-icon color="primary">chat_bubble</v-icon>
                 </v-list-tile-action>
                 <v-list-tile-content>
                     <v-list-tile-title>Faire un commentaire</v-list-tile-title>
                 </v-list-tile-content>
-                <feedback-dialog/>
             </v-list-tile>
             <v-list-tile @click="showDialog({dialog:Dial.ADD_TRUNK})">
                 <v-list-tile-action>
@@ -18,7 +16,6 @@
                 <v-list-tile-content>
                     <v-list-tile-title>Créer un produit ou un service</v-list-tile-title>
                 </v-list-tile-content>
-                <feedback-dialog/>
             </v-list-tile>
             <v-list-group>
                 <v-list-tile slot="activator">
@@ -92,10 +89,9 @@
     import {mapActions, mapMutations, mapState} from "vuex"
     import {Dial} from "../../const/dial"
     import On from "../../const/on"
-    import FeedbackDialog from "../dialog/FeeedbackDialog"
+    import {secs} from "../../const/sections"
 
     export default {
-        components: {FeedbackDialog},
         computed: {
             ...mapState(['tree', 'nav', 'version'])
         },
@@ -114,11 +110,12 @@
                 dispatchDeleteTrunk: On.DELETE_TREE,
                 goHome: On.GO_HOME,
                 goImpactEntry: On.GO_IMPACT_ENTRY,
-                goBulkTrunk: On.GO_BULK_TRUNK
+                goBulkTrunk: On.GO_BULK_TRUNK,
+                showMessages: On.SHOW_MESSAGES
             })
         },
         data: () => ({
-            Dial: Dial,
+            Dial, secs,
             items: [
                 {icon: 'settings', text: 'Paramètres'},
                 {icon: 'chat_bubble', text: 'Faire un commentaire'},

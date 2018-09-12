@@ -1,7 +1,7 @@
 <template>
     <span>
-        <left-menu/>
         <right-menu/>
+        <left-menu/>
         <bar/>
 
         <v-content style="padding-top:56px">

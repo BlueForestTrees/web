@@ -14,7 +14,6 @@ const dialogFactory = {
     [Dial.ADD_USAGE]: () => ({visible: false, data: {tree: null}}),
     [Dial.CREATE]: () => ({visible: false, data: {}}),
     [Dial.SET_QT_UNIT]: () => ({visible: false, data: {}}),
-    [Dial.FEEDBACK]: () => ({noAuth: true, visible: false, data: {}}),
     [Dial.SUSCRIBE]: () => ({noAuth: true, visible: false, data: {}}),
     [Dial.LOGIN]: () => ({noAuth: true, visible: false, data: {}}),
     [Dial.CONNECT_TO_CONTINUE]: () => ({noAuth: true, visible: false, data: {}}),
