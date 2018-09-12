@@ -1,7 +1,7 @@
 <template>
     <span>
         <v-card-text class="text-md-center" v-if="items.length === 0">Votre panier est vide. <br>Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche pour trouver des choses à mettre dans le panier.</span></v-card-text>
-            <v-toolbar dense v-if="anySelected" app dark class="elevation-5" color="primary">
+            <v-toolbar  dense v-if="anySelected" app dark class="elevation-5" color="primary">
                 <slot :s="this"></slot>
             </v-toolbar>
         <v-container>

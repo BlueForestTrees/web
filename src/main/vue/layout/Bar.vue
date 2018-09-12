@@ -1,5 +1,5 @@
 <template>
-    <v-toolbar dense app clipped-right class="elevation-1" style="background-color: #FAFAFACC">
+    <v-toolbar dense app class="elevation-1" style="background-color: #FAFAFACC">
         <v-toolbar-side-icon @click="nav.leftMenuVisible = !nav.leftMenuVisible"></v-toolbar-side-icon>
 
         <v-tabs align-with-title color="transparent">

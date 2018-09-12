@@ -1,7 +1,7 @@
 <template>
     <v-flex>
 
-        <v-toolbar dense v-if="!nobar && anySelected" app dark class="elevation-5" color="primary">
+        <v-toolbar  dense v-if="!nobar && anySelected" app dark class="elevation-5" color="primary">
             <slot :s="this"></slot>
         </v-toolbar>
 

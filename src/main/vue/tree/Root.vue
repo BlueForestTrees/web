@@ -26,7 +26,7 @@
 
                     <v-expansion-panel-content v-if="tree && item && item.trunk.quantity.g === 'Mass'">
                         <subheader slot="header" title="Transport"/>
-                            <v-toolbar dense v-if="anySelected" app dark class="elevation-0" color="primary">
+                            <v-toolbar  dense v-if="anySelected" app dark class="elevation-0" color="primary">
                                 <v-toolbar-items>
                                     <v-tooltip bottom>
                                         <v-btn slot="activator" v-if="oneSelected" flat @click="goTree(oneSelected)"><span class="hidden-xs-only">ouvrir</span>

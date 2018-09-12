@@ -1,6 +1,6 @@
 <template>
     <span>
-            <v-toolbar dense v-if="anySelected" app dark class="elevation-5" color="primary">
+            <v-toolbar  dense v-if="anySelected" app dark class="elevation-5" color="primary">
                 <v-toolbar-items>
                     <v-tooltip bottom>
                         <v-btn slot="activator" v-if="oneSelected" flat @click="goTree(oneSelected)"><span class="hidden-xs-only">ouvrir</span><v-icon>category</v-icon></v-btn>

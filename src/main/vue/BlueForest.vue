@@ -1,8 +1,8 @@
 <template>
     <span>
         <left-menu/>
-        <bar/>
         <right-menu/>
+        <bar/>
 
         <v-content style="padding-top:56px">
             <transition :name="transitionName" mode="out-in">
