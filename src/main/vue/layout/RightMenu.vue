@@ -8,7 +8,7 @@
             </v-btn>
             <v-layout align-center my-2>
                 <v-icon color="primary">question_answer</v-icon>
-                <span class="subheading">Messages</span>
+                <span class="subheading">{{messages.title}}</span>
             </v-layout>
             <v-divider/>
         </v-layout>

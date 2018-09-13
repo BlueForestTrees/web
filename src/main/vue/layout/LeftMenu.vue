@@ -1,7 +1,7 @@
 <template>
     <v-navigation-drawer fixed temporary v-model="nav.leftMenuVisible">
         <v-list dense>
-            <v-list-tile @click="nav.leftMenuVisible = false; showMessages({type:secs.GLOBAL_APP})">
+            <v-list-tile @click="nav.leftMenuVisible = false;showGlobalMessages()">
                 <v-list-tile-action>
                     <v-icon color="primary">chat_bubble</v-icon>
                 </v-list-tile-action>
@@ -111,11 +111,11 @@
                 goHome: On.GO_HOME,
                 goImpactEntry: On.GO_IMPACT_ENTRY,
                 goBulkTrunk: On.GO_BULK_TRUNK,
-                showMessages: On.SHOW_MESSAGES
+                showGlobalMessages: On.SHOW_GLOBAL_MESSAGES
             })
         },
         data: () => ({
-            Dial, secs,
+            Dial,
             items: [
                 {icon: 'settings', text: 'Paramètres'},
                 {icon: 'chat_bubble', text: 'Faire un commentaire'},

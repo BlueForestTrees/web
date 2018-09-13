@@ -2,10 +2,14 @@ import On from "../../const/on"
 import Do from "../../const/do"
 import {messages} from "../state"
 import api from "../../rest/api"
+import {secs} from "../../const/sections"
 
 export default {
-    [On.SHOW_MESSAGES]: ({commit}, filter) => {
-        commit(Do.SET_MESSAGES, messages(filter))
+    [On.SHOW_GLOBAL_MESSAGES]: ({dispatch}) => {
+        dispatch(On.SHOW_MESSAGES, {title: "Accueil Général", filter: {type: secs.GLOBAL_APP}})
+    },
+    [On.SHOW_MESSAGES]: ({commit}, {title, filter}) => {
+        commit(Do.SET_MESSAGES, messages(title, filter))
         commit(Do.RIGHT_MENU_VISIBLE, true)
     },
     [On.LOAD_MESSAGES]: ({commit}, filter) => api.getMessages(filter).then(ms => commit(Do.PUSH_MESSAGES, ms)),
