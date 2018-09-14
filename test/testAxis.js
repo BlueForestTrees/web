@@ -1,6 +1,6 @@
 import chai from 'chai'
-import {applyCoef, buildAxises, updateRatios, separate} from "../../main/services/axis"
-import {init, withNameIdBqtG} from "../setup"
+import {applyCoef, buildAxises, updateRatios, separate} from "../src/services/axis"
+import {init, withNameIdBqtG} from "./setup"
 
 
 chai.should()

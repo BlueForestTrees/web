@@ -1,4 +1,4 @@
-import {arrayOf, paramsOf} from "../../main/rest/rest"
+import {arrayOf, paramsOf} from "../src/rest/rest"
 import {expect} from 'chai'
 
 describe('rest', function(){

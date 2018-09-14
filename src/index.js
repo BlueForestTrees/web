@@ -14,20 +14,10 @@ Vue.use(Vuetify, {
     }
 })
 
-Promise
-    .all([
-        api.getGrandeurs()
-            .then(initUnits)
-    ])
-    .then(startApp)
-
-function startApp() {
-
-    new Vue({
-        el: '#app',
-        router,
-        store,
-        components: {App},
-        template: '<App/>'
-    })
-}
+new Vue({
+    el: '#app',
+    router,
+    store,
+    components: {App},
+    template: '<App/>'
+})

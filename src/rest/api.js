@@ -24,11 +24,18 @@ export default {
     getImpactTank: _id => get(`/api/tree/impacttank/${_id}`),
     getCategories: pid => cached(get, `/api/categories${paramsOf({pid: pid || null})}`, categoriesCache),
 
+
+    getMessageCount: filter => get(`/api/message/count${paramsOf(filter)}`),
     getMessages: filter => get(`/api/message${paramsOf(filter)}`),
 
     putRoot: ({_id, trunkId, rootId, relativeTo, bqt}) => put(`/api/tree/root`, {_id, trunkId, rootId, relativeTo, bqt}),
     postRoot: ({_id, trunkId, rootId, relativeTo, bqt}) => post(`/api/tree/root`, {_id, trunkId, rootId, relativeTo, bqt}),
     postMessage: message => post(`/api/message`, message),
+    putMessage: message => put(`/api/message`, message),
+    deleteMessage: _id => del(`/api/message/${_id}`),
+    deleteReply: ({msgId, _id}) => del(`/api/message/reply/${msgId}/${_id}`),
+    putReply: reply => put(`/api/message/reply`, reply),
+    postReply: ({_id, msgId, message}) => post(`/api/message/reply`, {_id, msgId, message}),
     deleteRoot: _id => del(`/api/tree/root/${_id}`),
 
     putFacet: (trunk, facet) => post(`/api/facet`, {trunk, facet}),

@@ -1,6 +1,6 @@
 import chai, {expect} from 'chai'
 import {add, createStringObjectId} from "../../main/services/calculations"
-import {init} from "../setup"
+import {init} from "./setup"
 import {ObjectID} from 'mongodb'
 
 chai.should()

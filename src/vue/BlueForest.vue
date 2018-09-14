@@ -3,42 +3,45 @@
         <right-menu/>
         <left-menu/>
         <bar/>
+        <span v-if="dispo.grandeurs">
 
-        <v-content style="padding-top:56px">
-            <transition :name="transitionName" mode="out-in">
-                <router-view></router-view>
-            </transition>
-        </v-content>
+            <v-content style="padding-top:56px">
+                <transition :name="transitionName" mode="out-in">
+                    <router-view></router-view>
+                </transition>
+            </v-content>
 
-        <snack :snack="snack"/>
+            <snack :snack="snack"/>
 
-        <add-facet-entry-dialog/>
-        <add-impact-entry-dialog/>
-        <add-trunk-dialog/>
-        <add-ressource-dialog/>
-        <add-impact-dialog/>
-        <add-facet-dialog/>
-        <connect-to-continue-dialog/>
+            <add-facet-entry-dialog/>
+            <add-impact-entry-dialog/>
+            <add-trunk-dialog/>
+            <add-ressource-dialog/>
+            <add-impact-dialog/>
+            <add-facet-dialog/>
+            <connect-to-continue-dialog/>
+        </span>
     </span>
 </template>
 
-<script>
 
-    import LeftMenu from './layout/LeftMenu'
-    import Bar from "./layout/Bar"
+<script>
     import On from "../const/on"
+    import {GO} from "../const/go"
     import {mapState} from 'vuex'
-    import Tree from "./tree/Tree"
+
+    import Bar from "./layout/Bar"
+    import LeftMenu from './layout/LeftMenu'
+    import RightMenu from "./layout/RightMenu"
+    import Snack from "./layout/Snack"
+
     import AddImpactDialog from "./dialog/AddImpactDialog"
     import AddFacetDialog from "./dialog/AddFacetDialog"
     import AddRessourceDialog from "./dialog/AddRessourceDialog"
     import AddFacetEntryDialog from "./dialog/AddFacetEntryDialog"
     import AddTrunkDialog from "./dialog/AddTrunkDialog"
     import AddImpactEntryDialog from "./dialog/AddImpactEntryDialog"
-    import Snack from "./layout/Snack"
     import ConnectToContinueDialog from "./dialog/ConnectToContinueDialog"
-    import {GO} from "../const/go"
-    import RightMenu from "./layout/RightMenu"
 
     export default {
         data() {
@@ -48,7 +51,7 @@
             }
         },
         computed: {
-            ...mapState(['basket', 'snack'])
+            ...mapState(['basket', 'snack', 'dispo'])
         },
         components: {
             RightMenu,
@@ -60,12 +63,11 @@
             AddRessourceDialog,
             AddFacetDialog,
             AddImpactDialog,
-            Tree,
             Bar,
             LeftMenu
         },
         mounted: async function () {
-            await this.$store.dispatch(On.MOUNT_APP)
+            this.$store.dispatch(On.MOUNT_APP)
         },
         watch: {
             '$route'(to, from) {

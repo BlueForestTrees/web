@@ -11,7 +11,7 @@ var NODE_ENV = process.env.NODE_ENV
 
 var conf = {
     mode: NODE_ENV,
-    entry: './src/main/index.js',
+    entry: './src/index.js',
     resolve: {
         extensions: ['.js', '.vue', '.json'],
         alias: {
@@ -26,7 +26,7 @@ var conf = {
         ]
     },
     plugins: [
-        new HtmlWebpackPlugin({template: './src/main/index.html', inject: 'body', hash: 'true'}),
+        new HtmlWebpackPlugin({template: './src/index.html', inject: 'body', hash: 'true'}),
         new CopyWebpackPlugin([{from: './src/img', to: 'img'}]),
         new CopyWebpackPlugin([{from: './src/browserconfig.xml', to: '.'}]),
         new LodashModuleReplacementPlugin(),

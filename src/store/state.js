@@ -42,6 +42,7 @@ export const messages = (title, filter) => ({title, aid: null, filter, list: []}
 export const tree = () => ({_id: null, trunk: null, selection: null, facets: null})
 
 export default {
+    dispo: {grandeurs: false},
     selection: [],
     token: null,
     user: null,

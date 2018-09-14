@@ -37,6 +37,7 @@ import messagesActions from "./actions/messagesActions"
 import messagesMutations from "./mutation/messagesMutations"
 import selectionMutations from "./mutation/selectionMutations"
 import selectionActions from "./actions/selectionActions"
+import grandeurActions from "./actions/grandeurActions"
 
 
 
@@ -70,6 +71,7 @@ const store = new Vuex.Store({
         ...basketActions,
         ...dialogActions,
         ...facetActions,
+        ...grandeurActions,
         ...facetEntryActions,
         ...impactActions,
         ...impactEntryActions,
