@@ -1,9 +1,18 @@
 import Do from "../../const/do"
 import Vue from "vue"
 
+const mps = 10 // doit être le même que le ps sur GET message
 export default {
-    [Do.SET_MESSAGES]: (state, messages) => state.messages = messages,
-    [Do.PUSH_MESSAGES]: (state, messages) => state.messages.list.push.apply(state.messages.list, messages),
+    [Do.SET_MESSAGES_FILTER]: (state, {title, filter}) => {
+        state.messages.title = title
+        state.messages.filter = filter
+        state.messages.hasMore = true
+    },
+    [Do.PUSH_MESSAGES]: (state, messages) => {
+        state.messages.hasMore = messages.length === mps //on dit qu'il y a encore des messages à charger si on a reçu une page pleine.
+        console.log(messages.length, "hasMore:", state.messages.hasMore)
+        return state.messages.list.push.apply(state.messages.list, messages)
+    },
     [Do.PUSH_MESSAGE]: (state, message) => state.messages.list.push(message),
     [Do.REMOVE_MESSAGE]: (state, message) => {
         for (let i = 0; i < state.messages.list.length; i++) {
@@ -60,6 +69,5 @@ export default {
                 break
             }
         }
-    },
-    [Do.SET_MESSAGES_FILTER]: (state, filter) => state.messages.filter = filter
+    }
 }

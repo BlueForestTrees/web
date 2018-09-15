@@ -9,7 +9,7 @@ export default {
         dispatch(On.SHOW_MESSAGES, {title: "Accueil Général", filter: {type: secs.GLOBAL_APP}})
     },
     [On.SHOW_MESSAGES]: ({commit}, {title, filter}) => {
-        commit(Do.SET_MESSAGES, messages(title, filter))
+        commit(Do.SET_MESSAGES_FILTER, {title, filter})
         commit(Do.RIGHT_MENU_VISIBLE, true)
     },
     [On.LOAD_MESSAGES]: ({commit}, filter) => api.getMessages(filter).then(ms => commit(Do.PUSH_MESSAGES, ms)),

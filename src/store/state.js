@@ -37,8 +37,6 @@ export const snack = () => ({
     color: "black"
 })
 
-export const messages = (title, filter) => ({title, aid: null, filter, list: []})
-
 export const tree = () => ({_id: null, trunk: null, selection: null, facets: null})
 
 export default {
@@ -53,6 +51,6 @@ export default {
     dialogs: dialogs(),
     nav: {leftMenuVisible: false, rightMenuVisible: false},
     snack: snack(),
-    messages: messages(null, {}),
+    messages: {title: null, hasMore: false, filter: {}, list: []},
     version: {web: ENV.VERSION},
 }

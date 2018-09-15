@@ -24,7 +24,6 @@ export default {
     RESPOND_MESSAGE: "respondMessage",
     RIGHT_MENU_VISIBLE: 'rightMenuVisible',
     OPEN_TREE: 'openTree',
-    SET_MESSAGES: 'setMessages',
     SET_MESSAGES_FILTER: 'setMessagesFilter',
     SET_ROOTS: 'setRoots',
     SET_BRANCHES: 'setBranches',

@@ -16,7 +16,6 @@
 
 
         <span ref="messages" style="overflow-x:hidden;overflow-y:scroll;flex:1 1 auto">
-            <span>
             <v-layout ref="messages" column mx-2>
                 <template v-for="m in messages.list">
                     <v-flex mt-3 :key="m._id" style="background-color: #F2F9FE;border-radius:1em;word-wrap: break-word;">
@@ -39,8 +38,11 @@
                         </v-flex>
                     </template>
                 </template>
+                <infinite-loading ref="iloading" @infinite="moreMessages" v-if="messages.hasMore" spinner="spiral" :distance="500" style="padding-bottom: 3em">
+                    <span slot="no-more"></span>
+                    <span slot="no-results"></span>
+                </infinite-loading>
             </v-layout>
-            </span>
         </span>
 
 
@@ -61,9 +63,12 @@
     import {mapActions, mapState} from "vuex"
     import On from "../../const/on"
     import {createStringObjectId, deltaTime} from "../../services/calculations"
+    import InfiniteLoading from 'vue-infinite-loading'
+    import debounce from 'lodash.debounce'
 
     export default {
         name: "right-menu",
+        components: {InfiniteLoading},
         data() {
             return {
                 message: null,
@@ -96,6 +101,25 @@
                 dispatchDeleteMessage: On.DELETE_MESSAGE,
                 dispatchDeleteReply: On.DELETE_REPLY,
             }),
+            moreMessages: debounce(function ($state) {
+                console.log("more messages")
+                if (this.messages.list.length > 0) {//on place aid si on a déjà chargé des messages, pour la pagination.
+                    this.messages.filter.aid = this.messages.list[this.messages.list.length - 1]._id
+                } else {
+                    this.messages.filter.aid = null
+                }
+                this.loadMessages(this.messages.filter)
+                    .then(() => $state && (this.messages.hasMore ? $state.loaded() : $state.complete()))
+                    .then(() => !this.messages.hasMore && this.poll($state))
+            }, 400),
+            poll($state) {
+                if (this.nav.rightMenuVisible) {
+                    setTimeout(() => {
+                        $state.reset()
+                        this.messages.hasMore = true
+                    }, 10000)
+                }
+            },
             cancelAny() {
                 this.message = this.editMsg = this.respondMsg = null
             },
@@ -171,11 +195,6 @@
                     })
                 }
                 this.message = null
-            }
-        },
-        watch: {
-            "messages.filter": function (filter) {
-                this.loadMessages(filter)
             }
         }
     }
