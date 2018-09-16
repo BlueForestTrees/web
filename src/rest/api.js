@@ -68,5 +68,7 @@ export default {
     postAuth: async ({mail, password}) => {
         const res = await post(`/api/user/login`, {mail, password}, {resolveWithFullResponse: true})
         return {token: res.headers[X_ACCESS_TOKEN]}
-    }
+    },
+
+    getFilm: name => get(`/api/film/${name}`)
 }

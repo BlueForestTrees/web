@@ -102,7 +102,6 @@
                 dispatchDeleteReply: On.DELETE_REPLY,
             }),
             moreMessages: debounce(function ($state) {
-                console.log("more messages")
                 if (this.messages.list.length > 0) {//on place aid si on a déjà chargé des messages, pour la pagination.
                     this.messages.filter.aid = this.messages.list[this.messages.list.length - 1]._id
                 } else {

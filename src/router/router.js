@@ -13,6 +13,7 @@ const Compare = () => import(/* webpackChunkName: "Compare" */ '../vue/compare/C
 const Confirmation = () => import(/* webpackChunkName: "Confirmation" */ '../vue/Confirmation')
 const Inscription = () => import(/* webpackChunkName: "Inscription" */ '../vue/Inscription')
 const Login = () => import(/* webpackChunkName: "Login" */ '../vue/Login')
+const Plan = () => import(/* webpackChunkName: "Plan" */ '../vue/Plan')
 const ImpactEntries = () => import(/* webpackChunkName: "ImpactEntries" */ '../vue/ImpactEntries')
 
 Vue.use(VueRouter)
@@ -28,7 +29,7 @@ export default new VueRouter({
                     name: GO.HOME,
                     path: '',
                     component: Home,
-                    test:42
+                    test: 42
                 },
                 {
                     name: GO.TREE,
@@ -88,6 +89,7 @@ export default new VueRouter({
             ]
         },
         {name: GO.LOGIN, path: "/login", component: Login},
+        {name: GO.PLAN, path: "/plan", component: Plan},
         {name: GO.SUSCRIBE, path: "/suscribe", component: Inscription},
         {name: GO.CONFIRM, path: "/confirm/:token", component: Confirmation, props: true}
     ]
