@@ -1,32 +1,27 @@
 <template>
     <v-toolbar dense app class="elevation-1" style="background-color: #FAFAFACC">
         <v-toolbar-side-icon @click="nav.leftMenuVisible = !nav.leftMenuVisible"></v-toolbar-side-icon>
-
-        <v-tabs align-with-title color="transparent">
-            <v-spacer/>
+        <v-tabs align-with-title centered color="transparent">
             <v-tab icon dense :to="{name: GO.HOME}">
                 <v-icon color="primary">home</v-icon>
             </v-tab>
             <v-tab icon dense :to="{name: GO.SEARCH}">
-                <v-icon color="primary">search</v-icon>
-                <v-flex hidden-sm-and-down style="pointer-events: none">Recherche</v-flex>
+                    <v-icon color="primary">search</v-icon>
+                    <v-flex hidden-sm-and-down style="pointer-events: none">Recherche</v-flex>
             </v-tab>
             <v-tab icon dense :to="{name: GO.BASKET}">
-                <v-icon color="primary">shopping_basket</v-icon>
-                <v-flex hidden-sm-and-down style="pointer-events: none">Panier</v-flex>
+                    <v-icon color="primary">shopping_basket</v-icon>
+                    <v-flex hidden-sm-and-down style="pointer-events: none">Panier</v-flex>
             </v-tab>
             <v-tab icon dense :to="{name: GO.TREE_EMPTY}">
-                <v-icon color="primary">category</v-icon>
-                <v-flex hidden-sm-and-down style="pointer-events: none">Composition</v-flex>
+                    <v-icon color="primary">category</v-icon>
+                    <v-flex hidden-sm-and-down style="pointer-events: none">Composition</v-flex>
             </v-tab>
             <v-tab icon dense :to="{name: GO.COMPARE_EMPTY}">
-                <v-icon color="primary">compare_arrows</v-icon>
-                <v-flex hidden-sm-and-down style="pointer-events: none">Comparaison</v-flex>
+                    <v-icon color="primary">compare_arrows</v-icon>
+                    <v-flex hidden-sm-and-down style="pointer-events: none">Comparaison</v-flex>
             </v-tab>
-            <v-tabs-slider color="primary"></v-tabs-slider>
-            <v-spacer/>
         </v-tabs>
-
         <v-spacer/>
         <v-menu v-if="user">
             <v-avatar slot="activator" size="32px" :style="{backgroundColor:user.color}">
@@ -56,7 +51,7 @@
                 </v-btn>
                 <span style="pointer-events: none">Connexion</span>
             </v-tooltip>
-            <login-suscribe-list/>
+            <login-suscribe-list style="width: 17em"/>
         </v-menu>
     </v-toolbar>
 </template>
@@ -86,8 +81,8 @@
         },
         methods: {
             overcolor, initiales,
-            goSearch: function () {
-                this.$router.push({name: "search"})
+            go: function (p) {
+                this.$router.push(p)
             },
             ...mapActions({
                 logout: On.LOGOUT

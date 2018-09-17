@@ -14,6 +14,7 @@ const Confirmation = () => import(/* webpackChunkName: "Confirmation" */ '../vue
 const Inscription = () => import(/* webpackChunkName: "Inscription" */ '../vue/Inscription')
 const Login = () => import(/* webpackChunkName: "Login" */ '../vue/Login')
 const Plan = () => import(/* webpackChunkName: "Plan" */ '../vue/Plan')
+const PlanIntro = () => import(/* webpackChunkName: "Plan" */ '../vue/PlanIntro')
 const ImpactEntries = () => import(/* webpackChunkName: "ImpactEntries" */ '../vue/ImpactEntries')
 const CreateTree = () => import(/* webpackChunkName: "CreateTree" */ '../vue/CreateTree')
 
@@ -91,11 +92,12 @@ export default new VueRouter({
                     path: "imports",
                     component: Imports,
                     props: true
-                }
+                },
             ]
         },
-        {name: GO.LOGIN, path: "/login", component: Login},
         {name: GO.PLAN, path: "/plan", component: Plan},
+        {name: GO.PLAN_INTRO, path: "/plan/intro", component: PlanIntro},
+        {name: GO.LOGIN, path: "/login", component: Login},
         {name: GO.SUSCRIBE, path: "/suscribe", component: Inscription},
         {name: GO.CONFIRM, path: "/confirm/:token", component: Confirmation, props: true}
     ]

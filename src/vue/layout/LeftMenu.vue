@@ -9,6 +9,7 @@
                     <v-list-tile-title>Signaler un bug</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
+
             <v-list-tile @click="goCreateTree">
                 <v-list-tile-action>
                     <v-icon color="primary">add</v-icon>
@@ -71,7 +72,15 @@
         </v-list>
 
 
-        <v-list style="position:absolute;bottom:0em">
+        <v-list style="position:absolute;bottom:0em;width:100%">
+            <v-list-tile @click="nav.leftMenuVisible = false;$router.push({name: GO.PLAN_INTRO})">
+                <v-list-tile-action>
+                    <v-icon color="primary">live_help</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                    <v-list-tile-title>BlueForest: c'est quoi?</v-list-tile-title>
+                </v-list-tile-content>
+            </v-list-tile>
 
             <v-layout ml-2 row align-end>
                 <v-list-tile-action>
@@ -90,6 +99,7 @@
     import {Dial} from "../../const/dial"
     import On from "../../const/on"
     import {secs} from "../../const/sections"
+    import {GO} from "../../const/go"
 
     export default {
         computed: {
@@ -116,7 +126,7 @@
             })
         },
         data: () => ({
-            Dial,
+            Dial, GO,
             items: [
                 {icon: 'settings', text: 'Paramètres'},
                 {icon: 'chat_bubble', text: 'Faire un commentaire'},

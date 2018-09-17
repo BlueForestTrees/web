@@ -8,16 +8,19 @@
         </v-layout>
         <v-card-text class="text-md-center" v-if="loading">Chargement...</v-card-text>
 
-        <v-card-text v-else-if="!tree" class="text-md-center">
-            <div>Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche</span> ou prenez
-                un produit du <span><v-icon @click="goBasket" color="primary">shopping_basket</v-icon> panier pour voir sa composition.</span>
-                <br>
-                Vous pouvez aussi <span @click="goCreateTree" style="cursor:pointer"><v-icon class="icon-line"
-                                                                                             color="primary">add</v-icon>Créer un produit ou un service</span>
-                depuis le <span @click="switchLeftMenu" style="cursor:pointer"><v-icon class="icon-line"
-                                                                                       color="primary">menu</v-icon>menu de gauche.</span>
-            </div>
-        </v-card-text>
+        <v-layout v-else-if="!tree"  row wrap justify-center align-center class="ma-4">
+            <span class="title">Composition</span>
+            <v-card-text class="text-md-center">
+                <div>Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche</span> ou prenez
+                    un produit du <span><v-icon @click="goBasket" color="primary">shopping_basket</v-icon> panier pour voir sa composition.</span>
+                    <br>
+                    Vous pouvez aussi <span @click="goCreateTree" style="cursor:pointer"><v-icon class="icon-line"
+                                                                                                 color="primary">add</v-icon>Créer un produit ou un service</span>
+                    depuis le <span @click="switchLeftMenu" style="cursor:pointer"><v-icon class="icon-line"
+                                                                                           color="primary">menu</v-icon>menu de gauche.</span>
+                </div>
+            </v-card-text>
+        </v-layout>
 
         <span v-else>
 
