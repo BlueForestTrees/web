@@ -6,7 +6,7 @@
                     <v-flex>
                         <v-icon @click="escape" style="position:absolute;top:0.3em;right:0.3em">close</v-icon>
                         <login-suscribe-list/>
-                        <v-list-tile-action-text>Vous devez être connecté pour continuer.</v-list-tile-action-text>
+                        <v-list-tile-action-text>{{data.message || "Vous devez être connecté pour continuer."}}</v-list-tile-action-text>
                     </v-flex>
                 </v-layout>
             </v-container>

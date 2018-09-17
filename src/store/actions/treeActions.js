@@ -11,6 +11,7 @@ import Do from "../../const/do"
 const needRefresh = basketTree => !basketTree.branches
 
 export default {
+    [On.GO_CREATE_TREE]: () => router.push({name: GO.CREATE_TREE}),
     [On.GO_TREE]: ({commit, getters}, tree) => {
         const dest = tree ?
             {_id: tree._id, bqt: tree.trunk.quantity.bqt}

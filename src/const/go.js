@@ -5,6 +5,7 @@ export const GO = {
     COMPARE_EMPTY: 'compareEmpty',
     COMPARE_PARTIAL: 'comparePartial',
     COMPARE: 'compare',
+    CREATE_TREE: 'createTree',
     HOME: 'home',
     IMPACT_ENTRY: 'impactEntry',
     LOGIN: 'login',

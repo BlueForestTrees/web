@@ -6,9 +6,7 @@ import {Dial} from "../../const/dial"
 
 export default {
 
-    [On.USER_FROM_STORAGE]: async ({commit}) => {
-        commit(Do.SET_TOKEN, await forage.getAccessToken())
-    },
+    [On.USER_FROM_STORAGE]: async ({commit}) => commit(Do.SET_TOKEN, await forage.getAccessToken()),
 
     [On.WANT_SUSCRIBE]: ({}, {mail}) => api.postSuscription({mail}),
 
@@ -33,12 +31,15 @@ export default {
     },
 
     [On.CHECK_AUTH]: ({state, commit}) => {
-        if (state.user) {
+        if (!state.user) {
+            commit(Do.SHOW_DIALOG, {dialog: Dial.CONNECT_TO_CONTINUE, data: {message: "Vous devez être connecté pour continuer."}})
+            return false
+        } else if (state.expire < Date.now().valueOf() / 1000) {
+            commit(Do.SHOW_DIALOG, {dialog: Dial.CONNECT_TO_CONTINUE, data: {message: "Votre session a expiré."}})
+            return false
+        } else {
             commit(Do.UPDATE_DIALOG_VISIBILITY, {dialog: Dial.CONNECT_TO_CONTINUE, visible: false})
             return true
-        } else {
-            commit(Do.SHOW_DIALOG, {dialog: Dial.CONNECT_TO_CONTINUE})
-            return false
         }
     },
 

@@ -29,7 +29,7 @@
                 <v-card-text slot="no-results" class="text-md-center">
                     Vous n'êtes propriétaire d'aucun produit ou service.
                     <br>
-                    Vous pouvez <span @click="openAddTrunk" style="cursor:pointer"><v-icon class="icon-line" color="primary">add</v-icon>Créer un produit ou un service</span>
+                    Vous pouvez <span @click="goCreateTree" style="cursor:pointer"><v-icon class="icon-line" color="primary">add</v-icon>Créer un produit ou un service</span>
                     depuis le <span @click="switchLeftMenu" style="cursor:pointer"><v-icon class="icon-line" color="primary">menu</v-icon>menu de gauche.</span>
                 </v-card-text>
             </search-comp>
@@ -48,10 +48,11 @@
         name: "owned",
         components: {SearchComp},
         methods: {
-            ...mapActions({showDialog: On.SHOW_DIALOG, switchLeftMenu: On.SWITCH_LEFT_MENU}),
-            openAddTrunk() {
-                this.showDialog({dialog: Dial.ADD_TRUNK})
-            },
+            ...mapActions({
+                showDialog: On.SHOW_DIALOG, 
+                switchLeftMenu: On.SWITCH_LEFT_MENU,
+                goCreateTree: On.GO_CREATE_TREE,
+            }),
             ...mapActions({goTree: On.GO_TREE, goCompare: On.GO_COMPARE, addToBasket: On.ADD_TO_BASKET, showDialog: On.SHOW_DIALOG}),
             goAdd(selection) {
                 this.showDialog({dialog: Dial.ADD_RESSOURCE, data: {left: selection[0], right: selection[1]}})

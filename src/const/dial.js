@@ -1,6 +1,5 @@
 //Boites de dialogue
 export const Dial = {
-    ADD_TRUNK: 'addTrunk',
     CONNECT_TO_CONTINUE: 'connectToContinue',
     LOGIN: 'login',
     SUSCRIBE: 'suscribe',

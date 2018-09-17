@@ -49,9 +49,9 @@
         <span style="flex:0 1 auto">
             <v-divider/>
                 <v-layout row>
-                    <v-textarea ref="editor" style="margin-top:1em" :error-messages="errorMessages" height="2em" auto-grow @keydown.ctrl.enter="sendMessage" @keydown.esc.stop.native="cancelAny" v-model="message" :label="editorLabel" maxlength="1000" full-width></v-textarea>
+                    <v-textarea ref="editor" style="margin-top:1em" :error-messages="errorMessages" height="2em" auto-grow @keydown.ctrl.enter="trySendMessage" @keydown.esc.stop.native="cancelAny" v-model="message" :label="editorLabel" maxlength="1000" full-width></v-textarea>
                     <v-layout column ma-1>
-                        <v-icon color="primary" @click="sendMessage">send</v-icon>
+                        <v-icon color="primary" @click="trySendMessage">send</v-icon>
                         <v-icon v-if="editMsg || respondMsg" color="grey" large @click="cancelAny">close</v-icon>
                     </v-layout>
             </v-layout>
@@ -100,6 +100,7 @@
                 dispatchRespondMessage: On.RESPOND_MESSAGE,
                 dispatchDeleteMessage: On.DELETE_MESSAGE,
                 dispatchDeleteReply: On.DELETE_REPLY,
+                checkAuth: On.CHECK_AUTH
             }),
             moreMessages: debounce(function ($state) {
                 if (this.messages.list.length > 0) {//on place aid si on a déjà chargé des messages, pour la pagination.
@@ -142,6 +143,13 @@
                 this.editRep = r
                 this.message = r.message
                 this.$refs.editor.focus()
+            },
+            trySendMessage() {
+                this.checkAuth().then(ok => {
+                    if (ok) {
+                        this.sendMessage()
+                    }
+                })
             },
             sendMessage() {
                 const backup = this.message

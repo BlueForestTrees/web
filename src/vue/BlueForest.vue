@@ -15,7 +15,6 @@
 
             <add-facet-entry-dialog/>
             <add-impact-entry-dialog/>
-            <add-trunk-dialog/>
             <add-ressource-dialog/>
             <add-impact-dialog/>
             <add-facet-dialog/>
@@ -39,7 +38,6 @@
     import AddFacetDialog from "./dialog/AddFacetDialog"
     import AddRessourceDialog from "./dialog/AddRessourceDialog"
     import AddFacetEntryDialog from "./dialog/AddFacetEntryDialog"
-    import AddTrunkDialog from "./dialog/AddTrunkDialog"
     import AddImpactEntryDialog from "./dialog/AddImpactEntryDialog"
     import ConnectToContinueDialog from "./dialog/ConnectToContinueDialog"
 
@@ -58,7 +56,6 @@
             ConnectToContinueDialog,
             Snack,
             AddImpactEntryDialog,
-            AddTrunkDialog,
             AddFacetEntryDialog,
             AddRessourceDialog,
             AddFacetDialog,

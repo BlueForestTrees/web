@@ -15,6 +15,7 @@ const Inscription = () => import(/* webpackChunkName: "Inscription" */ '../vue/I
 const Login = () => import(/* webpackChunkName: "Login" */ '../vue/Login')
 const Plan = () => import(/* webpackChunkName: "Plan" */ '../vue/Plan')
 const ImpactEntries = () => import(/* webpackChunkName: "ImpactEntries" */ '../vue/ImpactEntries')
+const CreateTree = () => import(/* webpackChunkName: "CreateTree" */ '../vue/CreateTree')
 
 Vue.use(VueRouter)
 
@@ -30,6 +31,11 @@ export default new VueRouter({
                     path: '',
                     component: Home,
                     test: 42
+                },
+                {
+                    name: GO.CREATE_TREE,
+                    path: "tree/create",
+                    component: CreateTree
                 },
                 {
                     name: GO.TREE,

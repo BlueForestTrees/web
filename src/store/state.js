@@ -4,11 +4,10 @@ import ENV from "../env"
 export const createDialog = name => (dialogFactory[name] && dialogFactory[name]()) || (console.warn(`state.js il manque dialogFactory['${name}']`) || {})
 
 const dialogFactory = {
-    [Dial.ADD_TRUNK]: () => ({visible: false, data: {}}),
     [Dial.LOGIN]: () => ({noAuth: true, vivisible: false, data: {destination: null}}),
     [Dial.FACET_ENTRY]: () => ({visible: false, data: {qt: null, unit: null, name: null}}),
     [Dial.ADD_IMPACT_ENTRY]: () => ({visible: false, data: {qt: null, unit: null, name: null}}),
-    [Dial.ADD_FACET]: () => ({visible: false, data: {name: null}}),
+    [Dial.ADD_FACET]: () => ({noAuth: true, visible: false, data: {name: null}}),
     [Dial.ADD_IMPACT]: () => ({visible: false, data: {tree: null}}),
     [Dial.ADD_RESSOURCE]: () => ({visible: false, data: {left: null, right: null}}),
     [Dial.ADD_USAGE]: () => ({visible: false, data: {tree: null}}),
@@ -16,7 +15,7 @@ const dialogFactory = {
     [Dial.SET_QT_UNIT]: () => ({visible: false, data: {}}),
     [Dial.SUSCRIBE]: () => ({noAuth: true, visible: false, data: {}}),
     [Dial.LOGIN]: () => ({noAuth: true, visible: false, data: {}}),
-    [Dial.CONNECT_TO_CONTINUE]: () => ({noAuth: true, visible: false, data: {}}),
+    [Dial.CONNECT_TO_CONTINUE]: () => ({noAuth: true, visible: false, data: {message: null}}),
 }
 
 const dialogs = () => {
@@ -44,6 +43,8 @@ export default {
     selection: [],
     token: null,
     user: null,
+    userStatus: null,
+    expire: null,
     search: {name: null, cats: []},
     basket: {},
     tree: null,

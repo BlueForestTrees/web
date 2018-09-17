@@ -1,13 +1,11 @@
 <template>
-    <main-dialog :dialog="Dial.ADD_TRUNK" :title="'Nouveau produit ou service'" @esc="close" ref="dialog" noaction
-                 @focus="focus">
-
+    <v-layout key="create-tree" column wrap justify-center align-center>
+        <v-flex class="title ma-4">Créer un produit ou un service</v-flex>
         <v-stepper v-model="idx" vertical>
             <v-stepper-step step="1" :complete="idx > 1">Choisir un nom</v-stepper-step>
             <v-stepper-content step="1">
                 <v-form v-model="nameValid" v-on:submit.prevent="" ref="nameForm">
-                    <v-text-field mb-5 autofocus ref="nom" label="Nom" required v-model="name" :rules="[length2min]"
-                                  @keydown.enter="validName"/>
+                    <v-text-field mb-5 autofocus ref="nom" label="Nom" required v-model="name" :rules="[length2min]" @keydown.enter="validName"/>
                 </v-form>
                 <v-btn color="primary" @click="validName">Ok</v-btn>
             </v-stepper-content>
@@ -16,8 +14,7 @@
             <v-stepper-content step="2">
                 <v-form v-model="qtValid" v-on:submit.prevent="" ref="qtForm">
                     <v-layout :column="$vuetify.breakpoint.xsOnly">
-                        <v-text-field autofocus type="number" label="Quantité... (ex.: 10)" v-model="qt"
-                                      :rules="[required, isNumber]" @keydown.enter="validQt"/>
+                        <v-text-field autofocus type="number" label="Quantité... (ex.: 10)" v-model="qt" :rules="[required, isNumber]" @keydown.enter="validQt"/>
                         <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]"/>
                     </v-layout>
                 </v-form>
@@ -39,29 +36,26 @@
                 </v-layout>
             </v-stepper-content>
         </v-stepper>
+    </v-layout>
 
-    </main-dialog>
 </template>
 
 <script>
-    import MainDialog from "./MainDialog"
-    import On from "../../const/on"
+    import On from "../const/on"
     import {mapActions, mapState} from "vuex"
-    import {Dial} from "../../const/dial"
-    import closable from "../mixin/Closable"
-    import GrandeurSelect from "../common/GrandeurSelect"
-    import UnitSelect from "../common/UnitSelect"
+    import {Dial} from "../const/dial"
     import {unit, grandeurFromShortname, toBqtG} from 'unit-manip'
-    import {isNumber, length2min, required} from "../../services/rules"
-    import Ressources from "../tree/Ressources"
-    import {createStringObjectId, getRandomColor, trunky} from "../../services/calculations"
-    import ColorPicker from "../common/ColorPicker"
-    import TreeHead from "../tree/TreeHead"
+    import {isNumber, length2min, required} from "../services/rules"
+    import {createStringObjectId, getRandomColor, trunky} from "../services/calculations"
+    import TreeHead from "./tree/TreeHead"
+    import UnitSelect from "./common/UnitSelect"
+    import ColorPicker from "./common/ColorPicker"
+    import Connected from "./mixin/Connected"
 
     export default {
-        name: 'add-trunk-dialog',
-        mixins: [closable],
-        components: {TreeHead, ColorPicker, Ressources, UnitSelect, GrandeurSelect, MainDialog},
+        name: 'create-trunk',
+        components: {ColorPicker, UnitSelect, TreeHead},
+        mixins:[Connected],
         data() {
             return {
                 Dial,
@@ -89,6 +83,15 @@
                 return {trunk: this.trunk}
             }
         },
+        mounted () {
+            this.$refs.nameForm.reset()
+            this.$refs.qtForm.reset()
+            this.$refs.colorForm.reset()
+            this.grandeur = grandeurFromShortname("kg")
+            this.unit = unit("kg")
+            this.qt = 1
+            this.idx = 1
+        },
         methods: {
             ...mapActions({
                 createTrunk: On.CREATE_TRUNK,
@@ -115,20 +118,16 @@
             },
             validate() {
                 this.createTrunk(this.trunk).then(() => {
-                    this.close()
                     this.goTree(trunky(this.trunk))
                 })
-            },
-            focus: function () {
-                this.$refs.nameForm.reset()
-                this.$refs.qtForm.reset()
-                this.$refs.colorForm.reset()
-                this.grandeur = grandeurFromShortname("kg")
-                this.unit = unit("kg")
-                this.qt = 1
-                this.idx = 1
             },
             length2min, getRandomColor, required, isNumber
         }
     }
 </script>
+
+<style>
+    .v-stepper {
+        max-width: 500px
+    }
+</style>

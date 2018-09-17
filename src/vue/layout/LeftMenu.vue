@@ -9,7 +9,7 @@
                     <v-list-tile-title>Faire un commentaire</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
-            <v-list-tile @click="showDialog({dialog:Dial.ADD_TRUNK})">
+            <v-list-tile @click="goCreateTree">
                 <v-list-tile-action>
                     <v-icon color="primary">add</v-icon>
                 </v-list-tile-action>
@@ -111,6 +111,7 @@
                 goHome: On.GO_HOME,
                 goImpactEntry: On.GO_IMPACT_ENTRY,
                 goBulkTrunk: On.GO_BULK_TRUNK,
+                goCreateTree: On.GO_CREATE_TREE,
                 showGlobalMessages: On.SHOW_GLOBAL_MESSAGES
             })
         },

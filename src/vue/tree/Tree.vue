@@ -12,7 +12,7 @@
             <div>Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche</span> ou prenez
                 un produit du <span><v-icon @click="goBasket" color="primary">shopping_basket</v-icon> panier pour voir sa composition.</span>
                 <br>
-                Vous pouvez aussi <span @click="openAddTrunk" style="cursor:pointer"><v-icon class="icon-line"
+                Vous pouvez aussi <span @click="goCreateTree" style="cursor:pointer"><v-icon class="icon-line"
                                                                                              color="primary">add</v-icon>Créer un produit ou un service</span>
                 depuis le <span @click="switchLeftMenu" style="cursor:pointer"><v-icon class="icon-line"
                                                                                        color="primary">menu</v-icon>menu de gauche.</span>
@@ -147,7 +147,6 @@
     import BilanRessources from "./BilanRessources"
     import Subheader from "./Subheader"
     import Description from "./Description"
-    import {Dial} from "../../const/dial"
 
     export default {
         components: {
@@ -178,11 +177,9 @@
                 dispatchLoad: On.LOAD_OPEN_TREE,
                 snack: On.SNACKBAR,
                 goSearch: On.GO_SEARCH,
-                goBasket: On.GO_BASKET
+                goBasket: On.GO_BASKET,
+                goCreateTree: On.GO_CREATE_TREE,
             }),
-            openAddTrunk() {
-                this.showDialog({dialog: Dial.ADD_TRUNK})
-            },
             refresh: function () {
                 if (this.bqt && this._id) {
                     this.loading = true
