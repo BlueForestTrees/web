@@ -1,12 +1,12 @@
 <template>
     <v-navigation-drawer fixed temporary v-model="nav.leftMenuVisible">
         <v-list dense>
-            <v-list-tile @click="nav.leftMenuVisible = false;showGlobalMessages()">
+            <v-list-tile @click="nav.leftMenuVisible = false;showErrorMessages()">
                 <v-list-tile-action>
                     <v-icon color="primary">chat_bubble</v-icon>
                 </v-list-tile-action>
                 <v-list-tile-content>
-                    <v-list-tile-title>Faire un commentaire</v-list-tile-title>
+                    <v-list-tile-title>Signaler un bug</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
             <v-list-tile @click="goCreateTree">
@@ -112,7 +112,7 @@
                 goImpactEntry: On.GO_IMPACT_ENTRY,
                 goBulkTrunk: On.GO_BULK_TRUNK,
                 goCreateTree: On.GO_CREATE_TREE,
-                showGlobalMessages: On.SHOW_GLOBAL_MESSAGES
+                showErrorMessages: On.SHOW_BUGS_MESSAGES
             })
         },
         data: () => ({

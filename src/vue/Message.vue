@@ -1,6 +1,6 @@
 <template>
     <v-card>
-        <v-btn flat icon @click="showGlobalMessages">
+        <v-btn flat icon @click="showErrorMessages">
             <v-icon color="primary">chat_bubble</v-icon>
             <span style="position:absolute;color:white;top:0.4em">{{count}}</span>
         </v-btn>
@@ -24,7 +24,7 @@
         },
         methods: {
             ...mapActions({
-                showGlobalMessages: On.SHOW_GLOBAL_MESSAGES,
+                showErrorMessages: On.SHOW_GLOBAL_MESSAGES,
                 countMessages: On.COUNT_MESSAGES
             })
         }

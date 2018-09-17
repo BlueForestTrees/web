@@ -5,6 +5,9 @@ const mps = 10 // doit être le même que le ps sur GET message
 export default {
     [Do.SET_MESSAGES_FILTER]: (state, {title, filter}) => {
         state.messages.title = title
+        if (state.messages.filter !== filter) {
+            state.messages.list = []
+        }
         state.messages.filter = filter
         state.messages.hasMore = true
     },

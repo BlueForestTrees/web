@@ -69,6 +69,7 @@ export default {
     SEND_MESSAGE: 'sendMessage',
     SHOW_DIALOG: 'showDialog',
     SHOW_MESSAGES: 'showMessages',
+    SHOW_BUGS_MESSAGES: "showErrorMessages",
     SHOW_GLOBAL_MESSAGES: 'showGlobalMessages',
     SNACKBAR: 'snackbar',
     SWIPE_RIGHT: 'SWIPE_RIGHT',
