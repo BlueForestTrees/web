@@ -52,9 +52,7 @@
         <v-menu v-else>
             <v-tooltip slot="activator" bottom>
                 <v-btn slot="activator" icon dense>
-                    <v-avatar size="32px" tile>
-                        <img src="/img/logo.svg" alt="BlueForest">
-                    </v-avatar>
+                    <v-icon>person</v-icon>
                 </v-btn>
                 <span style="pointer-events: none">Connexion</span>
             </v-tooltip>
