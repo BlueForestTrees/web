@@ -5,9 +5,8 @@ html {
 .icon-line {
     position: relative;
     top: 3px;
-    margin-left:0em;
+    margin-left: 0em;
 }
-
 
 .slide-left-enter-active {
     transition: all .2s ease;
@@ -17,7 +16,7 @@ html {
     transition: all .2s ease;
 }
 
-.slide-left-enter{
+.slide-left-enter {
     transform: translateX(-10px);
     opacity: 0;
 }
@@ -35,7 +34,7 @@ html {
     transition: all .2s ease;
 }
 
-.slide-right-enter{
+.slide-right-enter {
     transform: translateX(10px);
     opacity: 0;
 }
@@ -45,10 +44,6 @@ html {
     opacity: 0;
 }
 
-
-
-
-
 .slide-fade-enter-active {
     transition: all .2s ease;
 }
@@ -57,7 +52,7 @@ html {
     transition: all .2s ease;
 }
 
-.slide-fade-enter{
+.slide-fade-enter {
     transform: translateY(-10px);
     opacity: 0;
 }
@@ -65,4 +60,8 @@ html {
 .slide-fade-leave-to {
     transform: translateX(10px);
     opacity: 0;
+}
+
+.hand {
+    cursor: pointer
 }

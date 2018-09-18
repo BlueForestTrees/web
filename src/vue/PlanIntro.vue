@@ -7,7 +7,8 @@
                 <v-card-text>
                     <p>Bonjour!</p>
                     <p>BlueForest est un projet sur l'environnement pour les particuliers et les entreprises. Ici, on peut trouver des informations sur les produits, mais on peut aussi en mettre (il faut alors s'identifier).</p>
-                    <p> On peut aussi comparer des produits ou des services. On peut réutiliser les produits de certains pour faire ses propres produits. On peut partager ses recettes! Que ce soit la recette pour faire un gâteau, ou celle pour fabriquer une voiture.</p>
+                    <p>On peut aussi comparer des produits ou des services. On peut utiliser des produits pour faire ses propres produits ou services
+                        . On peut partager ses recettes! Que ce soit la recette pour faire un gâteau, ou celle pour fabriquer une voiture.</p>
                     <p>Et quand une information manque, on peut la demander. Pour montrer aux entreprises que l'on s'intéresse à ce qu'ils font, comment ils le font...</p>
                     <p>BlueForest est une organisation à but non-lucratif mais qui a besoin de soutien pour exister.</p>
                 </v-card-text>
@@ -20,7 +21,7 @@
 </template>
 
 <script>
-    import RightMenu from "./layout/RightMenu"
+    import RightMenu from "./layout/Messages"
     import {GO} from "../const/go"
     import On from "../const/on"
     import {mapActions} from "vuex"

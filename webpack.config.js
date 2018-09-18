@@ -1,7 +1,6 @@
 var path = require('path')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
-var webpack = require('webpack')
 var Visualizer = require('webpack-visualizer-plugin')
 var LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 var VueLoaderPlugin = require('vue-loader').VueLoaderPlugin

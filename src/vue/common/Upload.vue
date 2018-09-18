@@ -1,7 +1,7 @@
 <template>
     <v-flex>
         <form>
-            <div class="dropbox">
+            <div class="dropbox hand">
                 <input type="file" class="input-file" :accept="accept || '.xlsx'" @change="select">
                 <p v-if="uploading">Traintement en cours...</p>
                 <p v-else>Déposez votre fichier ici<br> ou cliquez pour parcourir</p>
@@ -66,7 +66,6 @@
         padding: 10px 10px;
         min-height: 200px; /* minimum gheight */
         position: relative;
-        cursor: pointer;
     }
 
     .dropbox:hover {
@@ -84,6 +83,5 @@
         width: 100%;
         height: 200px;
         position: absolute;
-        cursor: pointer;
     }
 </style>

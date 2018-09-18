@@ -1,17 +1,25 @@
 <template>
     <v-container>
         <owned/>
-        <message/>
+        <v-flex mt-3>
+            <v-card>
+                <open-message :section="temoignageSection"/>
+            </v-card>
+        </v-flex>
     </v-container>
 </template>
 
 <script>
     import Owned from "./Owned"
-    import On from "../const/on"
-    import {mapActions} from "vuex"
-    import Message from "./Message"
+    import OpenMessage from "./OpenMessage"
+    import {secs} from "../const/sections"
 
     export default {
-        components: {Message, Owned}
+        components: {OpenMessage, Owned},
+        data(){
+            return {
+                temoignageSection : secs.TEMOIGNAGE
+            }
+        }
     }
 </script>

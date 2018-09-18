@@ -1,5 +1,5 @@
 <template>
-    <v-toolbar dense app class="elevation-1" style="background-color: #FAFAFACC">
+    <v-toolbar dense app class="elevation-1">
         <v-toolbar-side-icon @click="nav.leftMenuVisible = !nav.leftMenuVisible"></v-toolbar-side-icon>
         <v-tabs align-with-title centered color="transparent">
             <v-tab icon dense :to="{name: GO.HOME}">
@@ -45,12 +45,9 @@
             </v-list>
         </v-menu>
         <v-menu v-else>
-            <v-tooltip slot="activator" bottom>
-                <v-btn slot="activator" icon dense>
-                    <v-icon>person</v-icon>
-                </v-btn>
-                <span style="pointer-events: none">Connexion</span>
-            </v-tooltip>
+            <v-btn slot="activator" icon dense>
+                <v-icon>person</v-icon>
+            </v-btn>
             <login-suscribe-list style="width: 17em"/>
         </v-menu>
     </v-toolbar>

@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <v-app light>
+        <v-app :light="!nav.dark" :dark="nav.dark">
             <transition name="slide-fade" mode="out-in">
                 <router-view></router-view>
             </transition>
@@ -9,7 +9,12 @@
 </template>
 
 <script>
+    import {mapState} from "vuex"
+
     export default {
-        name: "app"
+        name: "app",
+        computed: {
+            ...mapState(['nav'])
+        }
     }
 </script>

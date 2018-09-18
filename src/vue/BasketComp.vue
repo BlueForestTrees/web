@@ -9,7 +9,7 @@
                 <template v-if="items.length > 0" v-for="item in items">
                     <v-card :key="item._id" class="ma-1"
                             :style="{borderRadius: '1.5em',background: isSelected(item) ? '#D8E9F5' : '', transition: 'background .2s ease'}">
-                        <v-container py-2 pr-3 pl-2 @click="toggleSelect(item)" style="cursor: pointer">
+                        <v-container py-2 pr-3 pl-2 @click="toggleSelect(item)" class="hand">
                             <v-layout row align-center >
                                 <v-icon v-if="isSelected(item)" color="primary" style="margin-right:0.3em">check_circle</v-icon>
                                 <v-icon v-else :style="'color: '+item.trunk.color+';margin-right:0.3em'">lens</v-icon>

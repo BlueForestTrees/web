@@ -4,16 +4,7 @@ import {messages} from "../state"
 import api from "../../rest/api"
 import {secs} from "../../const/sections"
 
-const globalFilter = {title: "Accueil Général", filter: {type: secs.GLOBAL_APP}}
-const bugFilter = {title: "Signaler un bug", filter: {type: secs.ERROR_APP}}
-
 export default {
-    [On.SHOW_BUGS_MESSAGES]: ({dispatch}) => {
-        dispatch(On.SHOW_MESSAGES, bugFilter)
-    },
-    [On.SHOW_GLOBAL_MESSAGES]: ({dispatch}) => {
-        dispatch(On.SHOW_MESSAGES, globalFilter)
-    },
     [On.SHOW_MESSAGES]: ({commit}, {title, filter}) => {
         commit(Do.SET_MESSAGES_FILTER, {title, filter})
         commit(Do.RIGHT_MENU_VISIBLE, true)

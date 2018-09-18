@@ -18,8 +18,8 @@
                                 <v-text-field prepend-icon="mail" name="mail" label="Mail" type="text"
                                               autocomplete="username" v-model="mail" disabled
                                 ></v-text-field>
-                                <v-text-field prepend-icon="person" type="text" placeholder="prénom nom"
-                                              label="Nom complet"
+                                <v-text-field prepend-icon="person" type="text" placeholder="nom d'affichage"
+                                              label="Nom d'affichage"
                                               v-model="fullname" required autofocus
                                               :rules="[nameRequired]" :validate-on-blur="true"
                                 />
@@ -64,7 +64,7 @@
         },
         methods: {
             ...mapActions({confirm: On.CONFIRM_SUSCRIBE, close: On.GO_HOME}),
-            nameRequired: value => !!value || 'Veuillez indiquer votre nom complet.',
+            nameRequired: value => !!value || 'Veuillez indiquer un nom.',
             validPassword: value => !!value || "Veuillez choisir un mot de passe",
             validate: async function () {
                 this.$refs.form.validate()

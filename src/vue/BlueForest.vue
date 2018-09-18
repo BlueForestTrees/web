@@ -31,7 +31,7 @@
 
     import Bar from "./layout/Bar"
     import LeftMenu from './layout/LeftMenu'
-    import RightMenu from "./layout/RightMenu"
+    import RightMenu from "./layout/Messages"
     import Snack from "./layout/Snack"
 
     import AddImpactDialog from "./dialog/AddImpactDialog"

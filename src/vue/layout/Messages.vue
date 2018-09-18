@@ -14,7 +14,6 @@
             <v-divider/>
         </v-flex>
 
-
         <span ref="messages" style="overflow-x:hidden;overflow-y:scroll;flex:1 1 auto">
             <v-layout ref="messages" column mx-2>
                 <template v-for="m in messages.list">
@@ -22,9 +21,9 @@
                         <v-flex ma-2><a class="body-1" style="font-weight:bold;color: #3F81CB;margin-right:1em;">{{m.shortname}}</a>{{m.message}}</v-flex>
                     </v-flex>
                     <v-flex ml-5 class="caption" style="color: #3F81CB">
-                        <a @click="respondMessage(m)">Répondre · </a>
-                        <a v-if="m.oid === user._id" @click="editMessage(m)">Modifier ·</a>
-                        <a v-if="m.oid === user._id" @click="dispatchDeleteMessage(m)">Supprimer ·</a>
+                        <a v-if="user" @click="respondMessage(m)">Répondre · </a>
+                        <a v-if="user && m.oid === user._id" @click="editMessage(m)">Modifier ·</a>
+                        <a v-if="user && m.oid === user._id" @click="dispatchDeleteMessage(m)">Supprimer ·</a>
                         {{deltaTime(m.modifDate || m.creationDate)}}
                     </v-flex>
                     <template v-for="r in m.replies">
@@ -32,8 +31,8 @@
                             <v-flex ma-2><a class="body-1" style="font-weight:bold;color: #3F81CB;margin-right:1em;">{{r.shortname}}</a>{{r.message}}</v-flex>
                         </div>
                         <v-flex class="caption" style="color: #3F81CB;margin-left:7em">
-                            <a v-if="r.oid === user._id" @click="editReply(r)">Modifier ·</a>
-                            <a v-if="r.oid === user._id" @click="dispatchDeleteReply(r)">Supprimer ·</a>
+                            <a v-if="user && r.oid === user._id" @click="editReply(r)">Modifier ·</a>
+                            <a v-if="user && r.oid === user._id" @click="dispatchDeleteReply(r)">Supprimer ·</a>
                             {{deltaTime(r.modifDate || r.creationDate)}}
                         </v-flex>
                     </template>
@@ -48,13 +47,14 @@
 
         <span style="flex:0 1 auto">
             <v-divider/>
-                <v-layout row>
-                    <v-textarea ref="editor" style="margin-top:1em" :error-messages="errorMessages" height="2em" auto-grow @keydown.ctrl.enter="trySendMessage" @keydown.esc.stop.native="cancelAny" v-model="message" :label="editorLabel" maxlength="1000" full-width></v-textarea>
-                    <v-layout column ma-1>
-                        <v-icon color="primary" @click="trySendMessage">send</v-icon>
-                        <v-icon v-if="editMsg || respondMsg" color="grey" large @click="cancelAny">close</v-icon>
-                    </v-layout>
+            <v-layout row v-if="user">
+                <v-textarea ref="editor" style="margin-top:0.5em" :error-messages="errorMessages" height="4em" auto-grow @keydown.ctrl.enter="trySendMessage" @keydown.esc.stop.native="cancelAny" v-model="message" :label="editorLabel" maxlength="1000" full-width></v-textarea>
+                <v-layout column ma-1 justify-center>
+                    <v-icon color="primary" @click="trySendMessage">send</v-icon>
+                    <v-icon v-if="editMsg || respondMsg" color="grey" large @click="cancelAny">close</v-icon>
+                </v-layout>
             </v-layout>
+            <v-btn flat v-else @click="checkAuth()"><v-icon>people</v-icon>Connectez-vous pour ajouter un message.</v-btn>
         </span>
     </v-navigation-drawer>
 </template>
@@ -67,7 +67,7 @@
     import debounce from 'lodash.debounce'
 
     export default {
-        name: "right-menu",
+        name: "messages",
         components: {InfiniteLoading},
         data() {
             return {
