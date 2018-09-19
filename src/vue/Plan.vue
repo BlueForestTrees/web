@@ -19,8 +19,8 @@
                 <div id="c">
                     <h1 class="display-3 font-weight-thin">Constat</h1>
                     <p>
-                        Au niveau mon mondial, nous polluons trop. Nous faisons des sommets, des commissions pour créer une politique durable et globale.
-                        Au niveau individuel, nous ne savons pas quoi faire. Nous ne sommes pas sûrs dans quelle mesure ce que nous faisons, ou pas, est mauvais pour l'environnment.
+                        <!--Au niveau mon mondial, nous polluons trop. Nous faisons des sommets, des commissions pour créer une politique durable et globale.-->
+                        <!--Au niveau individuel, nous ne savons pas quoi faire. Nous ne sommes pas sûrs dans quelle mesure ce que nous faisons, ou pas, est mauvais pour l'environnment.-->
 
                     </p>
                     <h2 class="display-1 font-weight-thin">Références</h2>

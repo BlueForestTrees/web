@@ -27,7 +27,6 @@
 
                 </template>
                 <v-card-text slot="no-results" class="text-md-center">
-                    Vous n'êtes propriétaire d'aucun produit ou service.
                     <br>
                     Vous pouvez <span @click="goCreateTree" style="cursor:pointer"><v-icon class="icon-line" color="primary">add</v-icon>Créer un produit ou un service</span>
                     depuis le <span @click="switchLeftMenu" style="cursor:pointer"><v-icon class="icon-line" color="primary">menu</v-icon>menu de gauche.</span>

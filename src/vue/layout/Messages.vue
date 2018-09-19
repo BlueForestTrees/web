@@ -1,18 +1,18 @@
 <template>
     <v-navigation-drawer fixed right temporary v-model="nav.rightMenuVisible" width="400" style="overflow-y:hidden;display:flex;flex-direction:column;justify-content: space-between">
 
-        <v-flex pa-2 style="flex:0 1 auto">
+        <span style="flex:0 1 auto">
             <v-btn icon absolute @click="nav.rightMenuVisible = false" style="right:1em">
                 <v-icon>close</v-icon>
             </v-btn>
-            <v-layout align-center my-2>
-                <span style="margin-left:1em;margin-right:1em">
+            <v-layout align-center pa-2>
+                <span style="margin-left:1em;margin-right:0.5em">
                     <v-icon color="primary">chat_bubble</v-icon>
                 </span>
                 <span class="subheading">{{messages.title}}</span>
             </v-layout>
             <v-divider/>
-        </v-flex>
+        </span>
 
         <span ref="messages" style="overflow-x:hidden;overflow-y:scroll;flex:1 1 auto">
             <v-layout ref="messages" column mx-2>
@@ -40,6 +40,7 @@
                 <infinite-loading ref="iloading" @infinite="moreMessages" v-if="messages.hasMore" spinner="spiral" :distance="500" style="padding-bottom: 3em">
                     <span slot="no-more"></span>
                     <span slot="no-results"></span>
+                    <span slot="spinner"><loader/></span>
                 </infinite-loading>
             </v-layout>
         </span>
@@ -65,10 +66,11 @@
     import {createStringObjectId, deltaTime} from "../../services/calculations"
     import InfiniteLoading from 'vue-infinite-loading'
     import debounce from 'lodash.debounce'
+    import Loader from "../common/Loader"
 
     export default {
         name: "messages",
-        components: {InfiniteLoading},
+        components: {Loader, InfiniteLoading},
         data() {
             return {
                 message: null,

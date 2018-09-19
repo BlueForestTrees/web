@@ -18,6 +18,7 @@
         <infinite-loading v-if="ready" ref="iloading" @infinite="loadResults" spinner="spiral" :distance="500" style="padding-bottom: 3em">
             <span slot="no-more">{{items.length}} résultats</span>
             <span slot="no-results"><slot name="no-results">Pas de résultats</slot></span>
+            <span slot="spinner"><loader/></span>
         </infinite-loading>
 
     </v-flex>
@@ -28,6 +29,7 @@
     import On from "../const/on"
     import InfiniteLoading from 'vue-infinite-loading'
     import debounce from 'lodash.debounce'
+    import Loader from "./common/Loader"
 
     export default {
         name: 'search-comp',
@@ -41,6 +43,7 @@
         },
         mixins: [selectable],
         components: {
+            Loader,
             InfiniteLoading,
         },
         data() {

@@ -73,6 +73,7 @@ if (conf.mode === "development") {
 if (conf.mode === "production") {
     conf.output = {
         path: path.resolve(__dirname, 'dist/files/var/www/blueforest.org'),
+        chunkFilename: '[name].[chunkhash].js',
         publicPath: '/'
     }
     const htmlWebpackPlugin = conf.plugins[0]
