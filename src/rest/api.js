@@ -18,10 +18,12 @@ export default {
     getGrandeurs: () => get('/api/grandeur'),
     getFacets: _id => get(`/api/facet/${_id}`),
     getImpact: _id => get(`/api/impact/${_id}`),
+    getDamage: _id => get(`/api/damage/${_id}`),
     getTank: (_id) => get(`/api/tree/tank/${_id}`),
     getBranches: _id => get(`/api/tree/branch/${_id}`),
     getRoots: _id => get(`/api/tree/root/${_id}`),
     getImpactTank: _id => get(`/api/impactTank/${_id}`),
+    getDamageTank: _id => get(`/api/damageTank/${_id}`),
     getCategories: pid => cached(get, `/api/categories${paramsOf({pid: pid || null})}`, categoriesCache),
 
 

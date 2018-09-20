@@ -172,10 +172,7 @@
                     x: -100 + 2 * i * this.taille,
                     y: -this.taille * ratio
                 }
-            },
-            ...mapActions({
-                goTree: On.GO_TREE,
-            })
+            }
         }
     }
 </script>

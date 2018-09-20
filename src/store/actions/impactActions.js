@@ -13,6 +13,14 @@ export default {
     [On.LOAD_IMPACTS]: ({}, {_id, bqt}) =>
         api.getImpact(_id)
             .then(impacts => multiplyAspectBqt(bqt, impacts)),
+
+    [On.LOAD_DAMAGES_TANK]: ({commit}, {_id, bqt}) =>
+        api.getDamageTank(_id)
+            .then(damagesTank => multiplyAspectBqt(bqt, damagesTank)),
+
+    [On.LOAD_DAMAGES]: ({}, {_id, bqt}) =>
+        api.getDamage(_id)
+            .then(damages => multiplyAspectBqt(bqt, damages)),
     
     [On.DELETE_IMPACTS]:
         async ({commit}, {impacts, toDelete}) => {

@@ -20,6 +20,7 @@ export const buildAxises = tree => ([
     // ...buildAxis(tree.trunk, "facet", tree.facets),
     // ...buildAxis(tree.trunk, "tank", tree.tank),
     ...buildAxis(tree.trunk, "impactsTank", tree.impactsTank),
+    ...buildAxis(tree.trunk, "damagesTank", tree.damagesTank),
 ])
 const buildAxis = ({name}, type, items) => items && map(items, item => ({
     tree: name,
@@ -112,9 +113,9 @@ export const updateRatios = (axises) => {
 export const rightRatio = axises => {
     let left = 0
     let right = 0
-    for (let i = 0; i < axises.common.length; i++) {
-        left += axises.common[i].left.bqt
-        right += axises.common[i].right.bqt
+    for (let i = 0; i < axises.length; i++) {
+        left += axises[i].left.bqt
+        right += axises[i].right.bqt
     }
     return right / (left + right)
 }

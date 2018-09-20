@@ -42,6 +42,8 @@ export default {
     LOAD_FACETS: 'loadFacets',
     LOAD_IMPACTS: 'loadImpacts',
     LOAD_IMPACTS_TANK: 'loadImpactsTank',
+    LOAD_DAMAGES: 'loadDamages',
+    LOAD_DAMAGES_TANK: 'loadDamagesTank',
     LOAD_BRANCHES: 'loadBranches',
     LOAD_GRANDEUR: 'loadGrandeurs',
     LOAD_MESSAGES: 'loadMesages',
