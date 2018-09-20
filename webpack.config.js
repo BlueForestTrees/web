@@ -49,6 +49,7 @@ if (conf.mode === "development") {
 
     conf.serve = {
         add: function (app, middleware, options) {
+            app.use(convert(proxy('/api/damage', {target: 'http://localhost:8090'})))
             app.use(convert(proxy('/api/film', {target: 'http://localhost:8089'})))
             app.use(convert(proxy('/api/impact', {target: 'http://localhost:8088'})))
             app.use(convert(proxy('/api/message', {target: 'http://localhost:8087'})))
