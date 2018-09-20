@@ -13,6 +13,9 @@
         <text v-if="leftPercent > 5" :x="width*0.5" text-anchor="middle" alignment-baseline="central"
               :y="width*leftRatio*0.5" font-size="25" :style="{fill:leftTextColor}">{{leftPercent}}%
         </text>
+        <text v-else :x="width*0.5" text-anchor="middle" alignment-baseline="central"
+              :y="width*leftRatio*1.6" font-size="25" :style="{fill:rightTextColor}">{{leftPercent}}%
+        </text>
         <text v-if="rightPercent > 5" :x="width*0.5" text-anchor="middle" alignment-baseline="central"
               :y="width - (width*rightRatio*0.5)" font-size="25" :style="{fill:rightTextColor}">
             {{rightPercent}}%
