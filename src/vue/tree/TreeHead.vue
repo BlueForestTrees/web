@@ -1,5 +1,5 @@
 <template>
-    <v-layout raw align-center justify-center v-if="trunk" @click="$emit('nav')">
+    <v-layout raw align-center v-if="trunk" @click="$emit('nav')">
         <v-icon v-if="!noIcon" x-large :style="{color: trunk && trunk.color || 0}">lens</v-icon>
         <span class="subheading" v-html="qtUnitName(trunk)"></span>
     </v-layout>

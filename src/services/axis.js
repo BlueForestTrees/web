@@ -38,15 +38,15 @@ const buildAxis = ({name}, type, items) => items && map(items, item => ({
  * @returns {{left: *[], common: [{left: axis, right: axis}], right: *[]}}
  */
 export const separate = (leftAxises, rightAxises) => {
-    
+
     //Un axe sans quantité est retiré des axes communs
     const leftWithoutQt = remove(leftAxises, axis => (isNil(axis._bqt) || isNil(axis.g)))
     const rightWithoutQt = remove(rightAxises, axis => (isNil(axis._bqt) || isNil(axis.g)))
-    
+
     //Un axe qui n'a pas son équivalent de l'autre côté est retiré des communs
     const leftWithoutRight = remove(leftAxises, axis => !find(rightAxises, {name: axis.name, type: axis.type, g: axis.g}))
     const rightWithoutLeft = remove(rightAxises, axis => !find(leftAxises, {name: axis.name, type: axis.type, g: axis.g}))
-    
+
     //Les axes restant sont les axes communs
     const common = []
     const zero = []
@@ -57,8 +57,8 @@ export const separate = (leftAxises, rightAxises) => {
             zero.push({left: leftAxises[i], right: rightAxises[i]})
         }
     }
-    
-    
+
+
     return {
         left: [
             ...leftWithoutQt, ...leftWithoutRight
@@ -80,7 +80,7 @@ export const applyBase = (base, axises) => {
         const rcoef = find(axises.common, c => c.right.name === base.name).right._bqt / base._bqt
         applyCoef(rcoef, axises.right)
         applyCoef(rcoef, axises.common, "right")
-        
+
         const lcoef = find(axises.common, c => c.left.name === base.name).left._bqt / base._bqt
         applyCoef(lcoef, axises.left)
         applyCoef(lcoef, axises.common, "left")
@@ -102,8 +102,8 @@ export const updateRatios = (axises) => {
         const leftAxis = axises.common[i].left
         const rightAxis = axises.common[i].right
         const sum = leftAxis.bqt + rightAxis.bqt
-        Vue.set(leftAxis, "ratio", leftAxis.bqt / sum)
-        Vue.set(rightAxis, "ratio", rightAxis.bqt / sum)
+        Vue.set(leftAxis, "ratio", Math.min(Math.max(leftAxis.bqt / sum, -1.1), 1.1))
+        Vue.set(rightAxis, "ratio", Math.min(Math.max(rightAxis.bqt / sum, -1.1), 1.1))
     }
     //axises.common.sort((a, b) => b.left.ratio - a.left.ratio)
     return axises

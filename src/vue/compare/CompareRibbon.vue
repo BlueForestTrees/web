@@ -64,19 +64,15 @@
                     {{rightPercent}}%
                 </text>
             </svg>
-        </v-card>
 
+            <v-divider></v-divider>
         <!--LEGENDE-->
-        <v-layout row wrap justify-center>
-            <v-card class="mb-1 mt-2 pl-2 pr-3" style="border-radius:2em">
-                <v-layout row>
-                    <v-layout column>
-                        <tree-head :tree="left" class="my-2" @nav="goTree(left)" :style="{cursor: 'pointer'}"/>
-                        <tree-head :tree="right" class="my-2" @nav="goTree(right)" :style="{cursor: 'pointer'}"/>
-                    </v-layout>
-                </v-layout>
-            </v-card>
-        </v-layout>
+            <v-container>
+                <tree-head :tree="left" class="my-2" @nav="goTree(left)" :style="{cursor: 'pointer'}"/>
+                <v-divider/>
+                <tree-head :tree="right" class="my-2" @nav="goTree(right)" :style="{cursor: 'pointer'}"/>
+            </v-container>
+        </v-card>
     </v-container>
 
 </template>
