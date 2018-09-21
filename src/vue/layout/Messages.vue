@@ -49,7 +49,7 @@
         <span style="flex:0 1 auto">
             <v-divider/>
             <v-layout row v-if="user">
-                <v-textarea ref="editor" style="margin-top:0.5em" :error-messages="errorMessages" height="4em" auto-grow @keydown.ctrl.enter="trySendMessage" @keydown.esc.stop.native="cancelAny" v-model="message" :label="editorLabel" maxlength="1000" full-width></v-textarea>
+                <v-textarea ref="editor" style="margin-top:0.5em" :error-messages="errorMessages" height="1em" auto-grow @keydown.ctrl.enter="trySendMessage" @keydown.esc.stop.native="cancelAny" v-model="message" :label="editorLabel" maxlength="1000" full-width></v-textarea>
                 <v-layout column ma-1 justify-center>
                     <v-icon color="primary" @click="trySendMessage">send</v-icon>
                     <v-icon v-if="editMsg || respondMsg" color="grey" large @click="cancelAny">close</v-icon>
@@ -86,9 +86,9 @@
                 if (this.respondMsg) {
                     return `Répondre à ${this.respondMsg.shortname}...`
                 } else if (this.editMsg) {
-                    return "Modifier votre message..."
+                    return "Modifier un message..."
                 } else {
-                    return "Votre message..."
+                    return "Ajouter un message..."
                 }
             }
         },

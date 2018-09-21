@@ -5,7 +5,7 @@
                 <v-avatar size="64px"><img style="width: 64px;height:64px" src="/img/logo-rond.svg" alt="BlueForest"></v-avatar>
             </v-list-tile-avatar>
             <v-list-tile-content>
-                <v-icon large @click="$router.push({name:PLAN_INTRO})" style="position:absolute;top:0.3em;right:0.5em">live_help</v-icon>
+                <to-intro/>
                 <v-list-tile-title>{{(user && user.fullname) || "Invité"}}</v-list-tile-title>
                 <v-list-tile-sub-title>{{(user && "session expirée") || "non connecté"}}</v-list-tile-sub-title>
             </v-list-tile-content>
@@ -22,14 +22,11 @@
 <script>
     import {GO as Go, GO} from "../../const/go"
     import {mapState} from "vuex"
+    import ToIntro from "../toIntro"
 
     export default {
         name: "login-suscribe-list",
-        data() {
-            return {
-                PLAN_INTRO: Go.PLAN_INTRO
-            }
-        },
+        components: {ToIntro},
         computed: {
             ...mapState({user: s => s.user, userStatus: s => s.userStatus})
         },

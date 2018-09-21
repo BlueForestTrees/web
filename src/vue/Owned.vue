@@ -1,38 +1,36 @@
 <template>
     <v-card>
-        <span v-if="ownerFilter">
-            <v-card-title>Vos produits et services</v-card-title>
-            <v-divider/>
-            <search-comp :filter="ownerFilter">
-                <template slot-scope="{ s }">
-                    <v-tooltip bottom>
-                        <v-btn slot="activator" v-if="s.selectionCount" flat dense @click="addToBasket(s.selection);s.unselect()"><span>Panier</span><v-icon>arrow_right_alt</v-icon><v-icon>shopping_basket</v-icon></v-btn>
-                        <span style="pointer-events: none">Ajouter au panier</span>
-                    </v-tooltip>
+        <v-card-title>Vos produits et services</v-card-title>
+        <v-divider/>
+        <search-comp :filter="ownerFilter" v-if="ownerFilter">
+            <template slot-scope="{ s }">
+                <v-tooltip bottom>
+                    <v-btn slot="activator" v-if="s.selectionCount" flat dense @click="addToBasket(s.selection);s.unselect()"><span>Panier</span><v-icon>arrow_right_alt</v-icon><v-icon>shopping_basket</v-icon></v-btn>
+                    <span style="pointer-events: none">Ajouter au panier</span>
+                </v-tooltip>
 
-                    <v-tooltip bottom>
-                        <v-btn slot="activator" v-if="s.oneSelected" flat dense @click="goTree(s.oneSelected)"><span>ouvrir</span><v-icon>category</v-icon></v-btn>
-                        <span style="pointer-events: none">Ouvrir</span>
-                    </v-tooltip>
+                <v-tooltip bottom>
+                    <v-btn slot="activator" v-if="s.oneSelected" flat dense @click="goTree(s.oneSelected)"><span>ouvrir</span><v-icon>category</v-icon></v-btn>
+                    <span style="pointer-events: none">Ouvrir</span>
+                </v-tooltip>
 
-                    <v-tooltip bottom>
-                        <v-btn slot="activator" v-if="s.twoSelected" flat dense @click="goCompare(s.twoSelected)"><span>comparer</span><v-icon>compare_arrows</v-icon></v-btn>
-                        <span style="pointer-events: none">Comparer</span>
-                    </v-tooltip>
+                <v-tooltip bottom>
+                    <v-btn slot="activator" v-if="s.twoSelected" flat dense @click="goCompare(s.twoSelected)"><span>comparer</span><v-icon>compare_arrows</v-icon></v-btn>
+                    <span style="pointer-events: none">Comparer</span>
+                </v-tooltip>
 
-                    <v-tooltip bottom class="hidden-xs-only">
-                        <v-btn slot="activator" v-if="s.twoSelected" flat dense @click="goAdd(s.twoSelected);s.unselect()"><span>Ajouter</span><v-icon>call_merge</v-icon></v-btn>
-                        <span style="pointer-events: none">Ajouter</span>
-                    </v-tooltip>
+                <v-tooltip bottom class="hidden-xs-only">
+                    <v-btn slot="activator" v-if="s.twoSelected" flat dense @click="goAdd(s.twoSelected);s.unselect()"><span>Ajouter</span><v-icon>call_merge</v-icon></v-btn>
+                    <span style="pointer-events: none">Ajouter</span>
+                </v-tooltip>
 
-                </template>
-                <v-card-text slot="no-results" class="text-md-center">
-                    <br>
-                    Vous pouvez <span @click="goCreateTree" style="cursor:pointer"><v-icon class="icon-line" color="primary">add</v-icon>Créer un produit ou un service</span>
-                    depuis le <span @click="switchLeftMenu" style="cursor:pointer"><v-icon class="icon-line" color="primary">menu</v-icon>menu de gauche.</span>
-                </v-card-text>
-            </search-comp>
-        </span>
+            </template>
+            <v-card-text slot="no-results" class="text-md-center">
+                <br>
+                Vous pouvez <span @click="goCreateTree" style="cursor:pointer"><v-icon class="icon-line" color="primary">add</v-icon>Créer un produit ou un service</span>
+                depuis le <span @click="switchLeftMenu" style="cursor:pointer"><v-icon class="icon-line" color="primary">menu</v-icon>menu de gauche.</span>
+            </v-card-text>
+        </search-comp>
         <v-container v-else>Connectez-vous pour lister vos produits et services.</v-container>
     </v-card>
 </template>

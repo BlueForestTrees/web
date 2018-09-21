@@ -25,6 +25,7 @@
     export default {
         name: "connect-to-continue-dialog",
         mixins: [Dialog],
+        props: {canStay: {type: Boolean, default: false}},
         components: {Card, LoginSuscribeList},
         data() {
             return {
@@ -35,7 +36,9 @@
         methods: {
             ...mapActions({goHome: On.GO_HOME}),
             escape() {
-                this.goHome()
+                if (!this.canStay) {
+                    this.goHome()
+                }
                 this.close()
             }
         }

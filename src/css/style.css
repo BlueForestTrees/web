@@ -2,6 +2,10 @@ html {
     overflow-y: auto
 }
 
+.sl{
+    padding-right:0.3em
+}
+
 .corner{
     position:absolute;
     right:0.2em;

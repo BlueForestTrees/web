@@ -5,6 +5,7 @@
             <img src="/img/blue.svg" style="width:20%">
             <img src="/img/forest.svg" style="width:28%">
             <v-card-text>
+                <to-intro/>
                 <v-form v-model="valid" v-on:submit.prevent="validate" ref="form">
                     <v-text-field prepend-icon="mail" name="mail" label="Mail" placeholder="vous@exemple.com"
                                   type="text"
@@ -34,9 +35,10 @@
     import Card from "./layout/Card"
     import {GO} from "../const/go"
     import {mailRequired, validMail} from "../services/rules"
+    import ToIntro from "./toIntro"
 
     export default {
-        components: {Card},
+        components: {ToIntro, Card},
         data: function () {
             return {
                 GO,

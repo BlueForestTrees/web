@@ -6,6 +6,7 @@
 
                 <v-container v-if="!mailSent">
                     <v-card-actions>
+                        <to-intro/>
                         <v-spacer/>
                         <h1>Bienvenue</h1>
                         <v-spacer/>
@@ -45,9 +46,10 @@
     import Card from "./layout/Card"
     import {mailRequired, validMail} from "../services/rules"
     import {GO} from "../const/go"
+    import ToIntro from "./toIntro"
 
     export default {
-        components: {Card},
+        components: {ToIntro, Card},
         mixins: [],
         data: function () {
             return {
