@@ -4,27 +4,29 @@
             <img src="/img/logo.svg" style="width:20%;padding-left:1em;padding-top:1em;">
             <img src="/img/blue.svg" style="width:20%">
             <img src="/img/forest.svg" style="width:28%">
-            <v-card-text>
-                <to-intro/>
-                <v-form v-model="valid" v-on:submit.prevent="validate" ref="form">
-                    <v-text-field prepend-icon="mail" name="mail" label="Mail" placeholder="vous@exemple.com"
-                                  type="text"
-                                  autofocus
-                                  autocomplete="username" v-model="mail" required :rules="[mailRequired, validMail]"
-                    ></v-text-field>
-                    <v-text-field prepend-icon="lock" name="password" label="Mot de passe"
-                                  :append-icon="showPwd ? 'visibility_off' : 'visibility'"
-                                  :type="showPwd ? 'text' : 'password'" @click:append="showPwd = !showPwd"
-                                  autocomplete="current-password" v-model="password" required
-                                  :rules="[validPassword]"
-                    ></v-text-field>
-                </v-form>
-            </v-card-text>
-            <v-card-actions>
-                <router-link :to="{name:GO.SUSCRIBE}">S'inscrire</router-link>
-                <v-spacer></v-spacer>
-                <v-btn color="primary" @click="validate">Connexion</v-btn>
-            </v-card-actions>
+            <v-container>
+                <v-card-text>
+                    <to-intro/>
+                    <v-form v-model="valid" v-on:submit.prevent="validate" ref="form">
+                        <v-text-field prepend-icon="mail" name="mail" label="Mail" placeholder="vous@exemple.com"
+                                      type="text"
+                                      autofocus
+                                      autocomplete="username" v-model="mail" required :rules="[mailRequired, validMail]"
+                        ></v-text-field>
+                        <v-text-field prepend-icon="lock" name="password" label="Mot de passe"
+                                      :append-icon="showPwd ? 'visibility_off' : 'visibility'"
+                                      :type="showPwd ? 'text' : 'password'" @click:append="showPwd = !showPwd"
+                                      autocomplete="current-password" v-model="password" required
+                                      :rules="[validPassword]"
+                        ></v-text-field>
+                    </v-form>
+                </v-card-text>
+                <v-card-actions>
+                    <router-link :to="{name:GO.SUSCRIBE}">S'inscrire</router-link>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" @click="validate">Connexion</v-btn>
+                </v-card-actions>
+            </v-container>
         </span>
     </card>
 </template>

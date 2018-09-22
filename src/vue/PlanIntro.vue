@@ -12,7 +12,7 @@
                     <p>Si un produit ou une information manque, on peut la demander. Pour montrer aux entreprises que l'on s'intéresse à ce qu'ils font, comment ils le font...</p>
                 </v-card-text>
                 <v-card-actions>
-                    <router-link :to="{name:GO.SUSCRIBE}">Pas encore inscrit?</router-link>
+                    <router-link :to="{name:GO.SUSCRIBE}">S'inscrire</router-link>
                     <v-spacer></v-spacer>
                     <v-btn color="primary" @click="$router.push({name:GO.PLAN})">Suite</v-btn>
                 </v-card-actions>
@@ -23,8 +23,6 @@
 <script>
     import RightMenu from "./layout/Messages"
     import {GO} from "../const/go"
-    import On from "../const/on"
-    import {mapActions} from "vuex"
     import Card from "./layout/Card"
 
     export default {

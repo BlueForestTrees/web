@@ -15,8 +15,7 @@
                     <span v-else>Nom...</span>
                 </div>
                 <v-container>
-                    <v-text-field label="Nom" autofocus v-model="search.name" @enter="panels=null" clearable
-                                  v-on:keyup.enter="panels=null"/>
+                    <v-text-field label="Nom" autofocus v-model="search.name" @enter="panels=null" clearable v-on:keyup.enter="panels=null"/>
                     <v-layout>
                         <v-spacer/>
                         <v-btn color="primary" @click="panels=null">Ok</v-btn>
@@ -24,7 +23,7 @@
                 </v-container>
             </v-expansion-panel-content>
         </v-expansion-panel>
-        <search-comp :filter="filter" :ready="ready">
+        <search-comp :filter="filter">
             <template slot-scope="{ s }">
                 <slot :s="s"></slot>
             </template>
@@ -39,16 +38,13 @@
     export default {
         name: 'search-trunk',
         components: {SearchComp, SearchCat},
-        props: {
-            ready: {type: Boolean, default: true},
-        },
         data: function () {
             return {
                 panels: []
             }
         },
         computed: {
-            ...mapGetters(['filter']),
+            ...mapGetters(['filter', 'hasFilter']),
             ...mapState({search: s => s.search}),
         },
     }

@@ -1,7 +1,7 @@
 <template>
     <v-flex>
 
-        <v-toolbar  dense v-if="!nobar && anySelected" app dark class="elevation-5" color="primary">
+        <v-toolbar dense v-if="!nobar && anySelected" app dark class="elevation-5" color="primary">
             <slot :s="this"></slot>
         </v-toolbar>
 
@@ -15,7 +15,8 @@
             </div>
         </template>
 
-        <infinite-loading v-if="ready" ref="iloading" @infinite="loadResults" spinner="spiral" :distance="500" style="padding-bottom: 3em">
+
+        <infinite-loading v-if="iloader" ref="iloading" @infinite="loadResults" spinner="spiral" :distance="500" style="padding-bottom: 3em">
             <span slot="no-more">{{items.length}} résultats</span>
             <span slot="no-results"><slot name="no-results">Pas de résultats</slot></span>
             <span slot="spinner"><loader/></span>
@@ -35,7 +36,7 @@
         name: 'search-comp',
         props: {
             ps: {default: 20},
-            ready: {type: Boolean, default: true},
+            iloader: {type: Boolean, default: true},
             filter: Object,
             nobar: Boolean,
             maxSelectionSize: Number,
@@ -62,6 +63,11 @@
         watch: {
             filter: function () {
                 this.reset()
+            },
+            iloader: function (v) {
+                if (!v) {
+                    this.items = []
+                }
             }
         },
         methods: {

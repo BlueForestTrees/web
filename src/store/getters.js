@@ -1,5 +1,6 @@
 export default {
     basketArray: (state) => Object.values(state.basket),
+    hasFilter: (state, getters) => !!(getters.filter && Object.keys(getters.filter).length > 0),
     filter: state => {
         const cat = {}
         for (let i = 0; i < state.search.cats.length; i++) {
