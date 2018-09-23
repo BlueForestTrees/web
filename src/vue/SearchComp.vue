@@ -15,7 +15,6 @@
             </div>
         </template>
 
-
         <infinite-loading v-if="iloader" ref="iloading" @infinite="loadResults" spinner="spiral" :distance="500" style="padding-bottom: 3em">
             <span slot="no-more">{{items.length}} résultats</span>
             <span slot="no-results"><slot name="no-results">Pas de résultats</slot></span>
