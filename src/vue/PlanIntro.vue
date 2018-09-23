@@ -6,7 +6,8 @@
                 <img src="/img/forest.svg" style="width:28%">
                 <v-card-text>
                     <p>Bonjour!</p>
-                    <p>BlueForest est une application pour l'environnement, les particuliers et les entreprises. On peut trouver des informations sur les produits, on peut aussi en mettre (après s'être identifié).</p>
+                    <p>BlueForest permet de découvrir nos activités de tous les jours d'une nouvelle manière.</p>
+                    <p>Au menu: avoir une idée de ce qui pollue le plus / le moins; trouver des informations sur les produits, ou en mettre (après s'être identifié).</p>
                     <p>On peut comparer des produits sur leur propriétés et sur leur impact sur l'environnement. On peut créer ses propres produits ou services.
                         On peut partager ses recettes! Celle pour faire un gâteau, ou celle pour fabriquer une voiture.</p>
                     <p>Si un produit ou une information manque, on peut la demander. Pour montrer aux entreprises que l'on s'intéresse à ce qu'ils font, comment ils le font...</p>

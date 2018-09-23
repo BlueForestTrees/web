@@ -11,10 +11,10 @@
 
             <div style="position:fixed;left:0em;top:0em;background-color: #FFFFFFDE">
                 <div style="margin-left:0em;margin-top:1em">
-                    <ul>
+                    <ul style="padding-left:1em;padding-right:0.5em">
                         <a href="#c" class="body-2 mb-1 d-block grey--text text--darken-1">Constat</a>
                         <a href="#b" class="body-2 mb-1 d-block grey--text text--darken-1">Besoin</a>
-                        <a href="#f" class="body-2 mb-1 d-block grey--text text--darken-1">Fonction</a>
+                        <a href="#f" class="body-2 mb-1 d-block grey--text text--darken-1">Fonctions</a>
                         <a href="#t" class="body-2 mb-2 d-block grey--text text--darken-1">Technique</a>
                     </ul>
                 </div>
@@ -24,12 +24,13 @@
                 <div id="i">
                     <p style="color: slategray">
                         <v-layout row align-center>
-                            <v-icon color="grey">info</v-icon>Temps de lecture: 5-10min.
+                            <v-icon color="grey">info</v-icon>
+                            Temps de lecture: 5-10min.
                         </v-layout>
                     </p>
                     <h1 class="display-3 font-weight-thin">Introduction</h1>
-                    <p>Nous trouvons finalement notre planète petite. Notre façon de faire, notre organisation change petit à petit pour plus de respect de la nature et de nous-même (ou pas). Que pouvons-nous faire pour être fiers de nous?
-                    <p>
+                    <p>Nous trouvons finalement notre planète petite. Notre façon de faire, notre organisation change petit à petit pour plus de respect de la nature et de nous-même (ou pas).<p>
+                    <p>L' "environnement" est un très mauvais concept: l'homme y est au centre, et le reste est autour. Parler du contrat naturel</p>
                     <p>Cette page présente le projet BlueForest, il y a quatre parties:
                     <p>
                     <ul>
@@ -46,49 +47,60 @@
                 <div id="c">
                     <h1 class="display-3 font-weight-thin">Constat</h1>
 
-                    <h2 class="display-1 font-weight-thin subtitle" id="orgamond">Les organisations mondiales</h2>
-                    <p>
-                        Beaucoup d'organisations internationales agissent pour l'environnement.
-                    <p>
-                    L'ONU a une branche environnement<a href="#une"><sup>numX</sup></a>, qui délivre des informations parfois encourageantes<a href="#encou"><sup>numX</sup></a>, parfois dramatiques<a href="#biod"><sup>numX</sup></a>.
-                    </p>
-                    <p>
-                        7 des 17 objectifs de l'UNESCO<a href="#unes"><sup>numX</sup></a> portent sur l'environnement.
-                    </p>
-                    <p>le monde des organisations internationales est plus ou moins séparé de celui des consommateurs. Il tend à moins l'être</p>
-
-                    <h2 class="display-1 font-weight-thin subtitle">Les entreprises<sup><a class="sup" href="#pers">numX</a></sup></h2>
-                    <p>Le monde de l'entreprise est plus ou moins séparé de celui des consommateurs. Il tend à moins l'être</p>
-
-                    <h2 class="display-1 font-weight-thin subtitle">Les personnes<sup><a class="sup" href="#pers">numX</a></sup></h2>
+                    <h2 class="display-1 font-weight-thin subtitle">Consommation & environnement</h2>
                     <p>
                         La consommation des ménages est parfois contrainte par leur niveau de vie.
                         Les choix des consommateurs restent avant tout dépendants de l’intérêt que ceux-ci portent ou pas à l’environnement.
-                        <b>Le prix et le poids des habitudes continuent de freiner une volonté de changement qui existe.</b>
+                        <b>Le prix et le poids des habitudes continuent de freiner une volonté de changement qui existe<sup><a class="sup" href="#pers">numX</a></sup>.</b>
                     </p>
-                    <p>Etes-vous plutôt optimiste, pessimiste, indifférent, ou même l'un puis l'autre à tour de rôle?</p>
+
+                    <h2 class="display-1 font-weight-thin subtitle">Production & environnement</h2>
+                    <p>Le monde de l'entreprise est plus ou moins séparé de celui des consommateurs, en tout cas culturellement.
+                    </p>
+                    <p>Les entreprises ont des actions de rapprochement vers leurs clients. Pour être dans le coeur des clients: la personnalisation<sup><a class="sup" href="#pers">numX</a>, <a class="sup" href="#pers">numX</a></sup> et les communautés<sup><a class="sup" href="#pers">numX</a></sup>.</p>
+
+                    <p>La communautarisation par une entreprise: conséquenses</p>
+
+                    <!--<h2 class="display-1 font-weight-thin subtitle">Opinion</h2>-->
+                    <!--<p>L'entreprise, par essence, utilise tous les moyens légaux possibles pour continuer à exister, pour avoir un bénéfice positif.<p>-->
+                    <!--<p>Ce constat peut sembler dur, pourtant il est salvateur: les entreprises suivent le même appât, celui de l'argent, et il suffit de modifier bla bla trop dur</p>-->
+
+                    <h2 class="display-1 font-weight-thin subtitle">Existant</h2>
+                    <p>dossiers alimentaires: vache folle, cheval dans lasagnes, gélatine de boeuf dans yaourt</p>
+                    <p>Yuka, Ambrosus, Clothparency, B-corp, QuelCosmetic, transparency-one, greenapes, ecoinvent, openlca, Life Cycle Data Network, gabi, biloba web, brightway2, greendelta, WWF crowdacting, logicout.fr</p>
 
                     <h2 class="display-1 font-weight-thin subtitle">Références</h2>
                     <ol>
-                        <li id="encou"><a href="https://www.unenvironment.org/fr/news-and-stories/communique-de-presse/sept-idees-revolutionnaires-recompensees-par-le-prix-de" target="_blank">« 7 idées révolutionnaires »</a>, Nation Unies, site web</li>
-                        <li id="biod"><a href="https://www.unenvironment.org/fr/explore-topics/ecosystemes" target="_blank">« La biodiversité disparait »</a>, Nation Unies, site web</li>
-                        <li><a href="https://www.actu-environnement.com/ae/news/climat-economie-nouveau-modele-croissance-31941.php4" target="_blank">« Un nouveau modèle de croissance »</a>, Commission mondiale pour l'économie et le climat, 2018</li>
-                        <li id="unes"><a href="https://fr.unesco.org/sdgs" target="_blank">« Les 17 objectifs de l'UNESCO »</a></li>
+                        <li><a href="http://www.elle.fr/Mode/Tops-femme/T-shirt-personnalise-2909138" target="_blank">« On veut toutes un T-shirt personnalisé »</a>, site web elle.fr</li>
+                        <li><a href="https://www.dsautomobiles.fr/guide-d-achat/configurateur/modeles/ds-7-crossback/finitions-et-motorisations/finitions.html?pid=14714" target="_blank">« Configurez »</a>, site web Citroën, personnalisation de véhicules.</li>
+                        <li><a href="https://www.pellerin-formation.com/7-marques-qui-ont-su-creer-de-nouveaux-services-produits-en-impliquant-leur-communaute/" target="_blank">« La révolution co-création »</a>, site web, liste d'exemples de co-création.</li>
                         <li id="pers"><a href="http://www.statistiques.developpement-durable.gouv.fr/fileadmin/documents/Produits_editoriaux/Publications/Datalab_essentiel/2017/datalab-essentiel-97-francais-consommation-responsable-mars2017.pdf" target="_blank">« Les Français et la consommation responsable »</a>, Ministère Français de l'environnement, 2017
                         </li>
                     </ol>
 
                     <h2 class="display-1 font-weight-thin subtitle">Discussion</h2>
-                    <p @click="showMessages(c2)" class="hand">
-                        Donnez votre opinion sur le constat
+                    <p @click="showMessages(c2)" class="hand">Donnez votre opinion sur le constat
                         <v-icon small color="primary" small>chat_bubble</v-icon>
                     </p>
 
                 </div>
                 <div id="b">
                     <h1 class="display-3 font-weight-thin">Besoin</h1>
+                    <p>Besoin d'une plateforme commune pour les relations privée-professionnel et les communautés qui s'en dégagent.</p>
+                    <p>Commun: accessible aux plus petites entreprises et actions groupées</p>
                     <p>
-                        Responsabilisation, déculpabilisation
+                        Réconciliation
+                    </p>
+                    <p>Transparence</p>
+                    <p>Culture des écosystèmes</p>
+                    <p>Source d'information partagée</p>
+                    <p>
+                        Responsabilisation et Déculpabilisation.
+                    </p>
+                    <p>
+                        Prise de conscience de son profil de consommateur, de ses points forts et de ses points faibles.
+                        Connaissance de son potentiel de progression, et progresser idéalement sans effort, frustration, ou dépenses supplémentaire.
+                        Avoir une idée de la proportion de son apport individuel sur le collectif.
                     </p>
                     <p>
                         Les personnes ont besoin d'une perception, d'une conscience de la relation entre leurs activités personnelles de tous les jours et les impacts sur l'environnement de l'activité économique de l'homme.
@@ -100,7 +112,7 @@
                     </p>
                 </div>
                 <div id="f">
-                    <h1 class="display-3 font-weight-thin">Fonctionnalités</h1>
+                    <h1 class="display-3 font-weight-thin">Fonctions</h1>
                     <p>
                         Créer une ressource
                         Rechercher
@@ -128,9 +140,12 @@
                 <div id="t">
                     <h1 class="display-3 font-weight-thin">Technique</h1>
                     <p>
-                    <p><v-icon>info</v-icon><b>Pour les curieux ou les développeurs :)</b><br>
+                    <p>
+                        <v-icon>info</v-icon>
+                        <b>Pour les curieux ou les développeurs :)</b><br>
                         L'application BlueForest est entièrement basée sur Javascript, les micro-services, docker et MongoDB.<br>
-                        Voici une bonne part des outils et méthodes utilisés sur blueforest.org:</p>
+                        Voici une bonne part des outils et méthodes utilisés sur blueforest.org:
+                    </p>
                     <ul>
                         <li>
                             Application
@@ -168,16 +183,15 @@
                     <h2 class="display-1 font-weight-thin subtitle">Discussion</h2>
                     <p>
                         <v-layout row mt-0>
-                            <span class="sl">Vous pouvez poser une question sur la technique ici <v-icon @click="showMessages(t1)" small color="primary" small>chat_bubble</v-icon>, ou sinon</span>
+                            <span class="sr">Vous pouvez poser une question sur la technique ici <v-icon @click="showMessages(t1)" small color="primary" small>chat_bubble</v-icon>, ou sinon
                             <a href="https://github.com/BlueForestTrees" target="_blank">
-                                <v-layout row align-center mt-0>
-                                    <span class="sl">BlueForest est sur GitHub</span>
+                                    <span class="sr">BlueForest est sur GitHub</span>
                                     <svg width="20px" xmlns="http://www.w3.org/2000/svg" viewBox="10 10 30 30">
                                         <path fill-rule="evenodd" clip-rule="evenodd" fill="#181616"
                                               d="M25 10c-8.3 0-15 6.7-15 15 0 6.6 4.3 12.2 10.3 14.2.8.1 1-.3 1-.7v-2.6c-4.2.9-5.1-2-5.1-2-.7-1.7-1.7-2.2-1.7-2.2-1.4-.9.1-.9.1-.9 1.5.1 2.3 1.5 2.3 1.5 1.3 2.3 3.5 1.6 4.4 1.2.1-1 .5-1.6 1-2-3.3-.4-6.8-1.7-6.8-7.4 0-1.6.6-3 1.5-4-.2-.4-.7-1.9.1-4 0 0 1.3-.4 4.1 1.5 1.2-.3 2.5-.5 3.8-.5 1.3 0 2.6.2 3.8.5 2.9-1.9 4.1-1.5 4.1-1.5.8 2.1.3 3.6.1 4 1 1 1.5 2.4 1.5 4 0 5.8-3.5 7-6.8 7.4.5.5 1 1.4 1 2.8v4.1c0 .4.3.9 1 .7 6-2 10.2-7.6 10.2-14.2C40 16.7 33.3 10 25 10z"></path>
                                     </svg>
-                                </v-layout>
                             </a>
+                                </span>
                         </v-layout>
                     </p>
                 </div>
@@ -219,7 +233,7 @@
             showMessages(filter) {
                 this.dispatchShowMessage(filter)
             },
-            ...mapActions({goHome:On.GO_HOME,dispatchShowMessage: On.SHOW_MESSAGES})
+            ...mapActions({goHome: On.GO_HOME, dispatchShowMessage: On.SHOW_MESSAGES})
         }
     }
 </script>
