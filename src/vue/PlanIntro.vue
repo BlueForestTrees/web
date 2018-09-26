@@ -6,16 +6,17 @@
                 <img src="/img/forest.svg" style="width:28%">
                 <v-card-text>
                     <p>Bonjour!</p>
-                    <p>BlueForest permet de découvrir nos activités de tous les jours d'une nouvelle manière.</p>
-                    <p>Au menu: avoir une idée de ce qui pollue le plus / le moins; trouver des informations sur les produits, ou en mettre (après s'être identifié).</p>
-                    <p>On peut comparer des produits sur leur propriétés et sur leur impact sur l'environnement. On peut créer ses propres produits ou services.
-                        On peut partager ses recettes! Celle pour faire un gâteau, ou celle pour fabriquer une voiture.</p>
-                    <p>Si un produit ou une information manque, on peut la demander. Pour montrer aux entreprises que l'on s'intéresse à ce qu'ils font, comment ils le font...</p>
+                    <p>BlueForest permet de découvrir nos activités et celle des autres d'une nouvelle manière.</p>
+                    <p>Au menu: parmi toutes nos activités, comme par exemple manger des bananes, acheter un jean, construire une éolienne, louer un photocopieur, envoyer un mail, faire 1000km en avion, etc. qu'est ce qui contient le plus de pollution, de vitamines, d'heures de travail respectant peu les droits de l'homme?</p>
+                    <p>On peut créer ses propres produits ou services (après s'être identifié), et partager ses recettes. Celle pour faire un gâteau, ou celle pour fabriquer une voiture. Que l'on soit une entreprise de 150000 personnes ou un particulier, la démarche reste la même.</p>
+                    <p>Les particuliers et les entreprises peuvent donner et recevoir des idées. Pour s'apercevoir qu'il est parfois très difficile de se passer d'une pollution, ou au contraire très facile.</p>
+                    <p>BlueForest est l'endroit de récolte et de construction des informations sur nos produits, afin d'avoir la connaissance des points forts ou faibles des alternatives</p>
+                    <p>Si une information manque, on peut la demander.</p>
                 </v-card-text>
                 <v-card-actions>
                     <router-link :to="{name:GO.SUSCRIBE}">S'inscrire</router-link>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" @click="$router.push({name:GO.PLAN})">Suite</v-btn>
+                    <v-btn color="primary" @click="$router.push({name:GO.HOME})">Entrer</v-btn>
                 </v-card-actions>
             </template>
         </card>

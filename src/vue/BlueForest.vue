@@ -19,7 +19,9 @@
             <add-impact-dialog/>
             <add-facet-dialog/>
             <connect-to-continue-dialog/>
+
         </span>
+
     </span>
 </template>
 
@@ -44,6 +46,7 @@
     export default {
         data() {
             return {
+                show:false,
                 transitionName: null,
                 routes: Object.values(GO)
             }
