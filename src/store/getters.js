@@ -1,15 +1,17 @@
 export default {
     basketArray: (state) => Object.values(state.basket),
-    hasFilter: (state, getters) => !!(getters.filter && Object.keys(getters.filter).length > 0),
     filter: state => {
         const cat = {}
+        const filter = {cat}
+        let changes = false
         for (let i = 0; i < state.search.cats.length; i++) {
-            cat["c" + (i + 1)] = state.search.cats[i]._id
+            cat["c" + i] = state.search.cats[i]._id
+            changes = true
         }
-        const f = {cat}
         if (state.search.name) {
-            f.term = state.search.name
+            filter.term = state.search.name
+            changes = true
         }
-        return f
+        return changes ? filter : null
     }
 }

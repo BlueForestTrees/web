@@ -1,6 +1,5 @@
 <template>
     <v-flex>
-
         <v-toolbar dense v-if="!nobar && anySelected" app dark class="elevation-5" color="primary">
             <slot :s="this"></slot>
         </v-toolbar>
@@ -14,8 +13,7 @@
                 </v-layout>
             </div>
         </template>
-
-        <infinite-loading v-if="iloader" ref="iloading" @infinite="loadResults" spinner="spiral" :distance="500" style="padding-bottom: 3em">
+        <infinite-loading v-if="active" ref="iloading" @infinite="loadResults" spinner="spiral" :distance="500" style="padding-bottom: 3em">
             <span slot="no-more">{{items.length}} résultats</span>
             <span slot="no-results"><slot name="no-results">Pas de résultats</slot></span>
             <span slot="spinner"><loader/></span>
@@ -35,7 +33,6 @@
         name: 'search-comp',
         props: {
             ps: {default: 20},
-            iloader: {type: Boolean, default: true},
             filter: Object,
             nobar: Boolean,
             maxSelectionSize: Number,
@@ -48,7 +45,8 @@
         },
         data() {
             return {
-                items: []
+                items: [],
+                active: null
             }
         },
         computed: {
@@ -62,11 +60,6 @@
         watch: {
             filter: function () {
                 this.reset()
-            },
-            iloader: function (v) {
-                if (!v) {
-                    this.items = []
-                }
             }
         },
         methods: {
@@ -74,10 +67,13 @@
                 return this.$store.dispatch(this.type, query)
             },
             reset: function () {
+                this.active = this.filter !== null
                 this.items = []
-                this.$nextTick(() => {
-                    this.$refs.iloading.$emit('$InfiniteLoading:reset')
-                })
+                if (this.active) {
+                    this.$nextTick(() => {
+                        this.$refs.iloading.$emit('$InfiniteLoading:reset')
+                    })
+                }
             },
             loadResults: debounce(function ($state) {
                 this.dispatchSearch(this.query)
