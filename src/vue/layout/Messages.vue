@@ -40,7 +40,7 @@
                 <infinite-loading ref="iloading" @infinite="moreMessages" v-if="messages.hasMore" spinner="spiral" :distance="500" style="padding-bottom: 3em">
                     <span slot="no-more"></span>
                     <span slot="no-results"></span>
-                    <span slot="spinner"><loader/></span>
+                    <span slot="spinner"><loader><v-divider style="margin-bottom:1em"/></loader></span>
                 </infinite-loading>
             </v-layout>
         </span>

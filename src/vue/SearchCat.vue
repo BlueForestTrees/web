@@ -1,31 +1,39 @@
 <template>
     <span>
-            <v-breadcrumbs style="padding-top: 0;padding-bottom: 0">
-              <v-icon slot="divider">arrow_forward_ios</v-icon>
-              <v-breadcrumbs-item key="root"><span @click="pathSelect(null)">Tout</span></v-breadcrumbs-item>
-              <v-breadcrumbs-item v-for="item in selection" :key="item._id">
-                  <span @click="pathSelect(item)">{{ item.name }}</span>
-              </v-breadcrumbs-item>
-            </v-breadcrumbs>
+        <div v-if="anySelected">
+            <v-layout row align-center>
+                <v-breadcrumbs>
+                  <v-icon slot="divider">arrow_forward_ios</v-icon>
+                  <v-breadcrumbs-item key="root"><span @click="pathSelect(null)">Tout</span></v-breadcrumbs-item>
+                  <v-breadcrumbs-item v-for="item in selection" :key="item._id"><span @click="pathSelect(item)">{{ item.name }}</span></v-breadcrumbs-item>
+                </v-breadcrumbs>
+                <v-spacer/>
+                <v-btn color="primary" @click="emitSelect">Ok</v-btn>
+            </v-layout>
+            <v-divider/>
+        </div>
 
-            <v-card-text>
+            <v-card-text v-if="items.length > 0">
+                <span v-if="anySelected">Sous-catégories</span>
                 <v-layout row align-center wrap>
                     <v-flex v-if="items.length > 0" v-for="item in items" @click="select(item)"
                             :key="'o'+item._id"
                             :style="{background: isSelected(item) ? '#D8E9F5' : '', transition: 'background .2s ease'}">
-                        <v-layout row align-center>
-                            <v-icon v-if="isSelected(item)" color="primary"
-                                    style="margin-right:0.3em">check_circle</v-icon>
-                            <v-icon v-else :style="'color: '+item.color">stop</v-icon>
-                            <a style="padding-right:0.5em">{{item.name}}</a>
-                        </v-layout>
+                        <a>
+                            <v-layout row align-center>
+                                <v-icon v-if="isSelected(item)" color="primary"
+                                        style="margin-right:0.3em">check_circle</v-icon>
+                                <v-icon v-else :style="'color: '+item.color">stop</v-icon>
+                                <a style="padding-right:0.5em">{{item.name}}</a>
+                            </v-layout>
+                        </a>
                 </v-flex>
                 </v-layout>
             </v-card-text>
-        <v-layout>
-            <v-spacer/>
-            <v-btn color="primary" @click="$emit('ok')">Ok</v-btn>
-        </v-layout>
+            <v-card-text v-else>
+                <p>Sous-catégories:</p>
+                <p>aucune</p>
+            </v-card-text>
     </span>
 </template>
 
@@ -47,16 +55,15 @@
             }
         },
         methods: {
-            ...mapActions({loadCats: On.LOAD_CATEGORIES}),
-            getCats: async function (pid) {
-                this.items = this.cache[pid] || await this.loadCats(pid)
+            ...mapActions({dispatchLoadCats: On.LOAD_CATEGORIES}),
+            loadCats: async function (pid) {
+                this.items = this.cache[pid] || await this.dispatchLoadCats(pid)
                 this.cache[pid] = this.items
             },
             select(item) {
                 if (this.toggleSelect(item)) {
-                    this.getCats(item._id)
+                    this.loadCats(item._id)
                 }
-                this.emitSelect()
             },
             pathSelect(item) {
                 if (item) {
@@ -64,20 +71,15 @@
                 } else {
                     this.unselect()
                 }
-                this.getCats(this.lastSelected && this.lastSelected._id)
-                this.emitSelect()
+                this.loadCats(this.lastSelected && this.lastSelected._id)
             },
             emitSelect() {
-                this.$emit("input", this.selection)
+                this.$emit("input", this.selection.slice())
+                this.$nextTick(() => this.pathSelect(null))
             }
         },
         created: function () {
-            this.getCats(null)
-        },
-        watch: {
-            value: function (v) {
-                this.selection = v
-            }
+            this.loadCats(null)
         }
     }
 </script>

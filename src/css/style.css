@@ -2,6 +2,12 @@ html {
     overflow-y: auto
 }
 
+.theme--light .v-breadcrumbs li:last-child .v-breadcrumbs__item{
+    font-weight: bold;
+    font-size: large;
+    color: #1565c0;
+}
+
 .sl{
     padding-right:0.3em
 }
