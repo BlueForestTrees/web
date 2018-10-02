@@ -27,7 +27,7 @@
     import On from "../const/on"
     import InfiniteLoading from 'vue-infinite-loading'
     import debounce from 'lodash.debounce'
-    import Loader from "./common/Loader"
+    import Loader from "./svg/Loader"
 
     export default {
         name: 'search-comp',
@@ -61,6 +61,9 @@
             filter: function () {
                 this.reset()
             }
+        },
+        mounted() {
+            this.reset()
         },
         methods: {
             dispatchSearch: function (query) {

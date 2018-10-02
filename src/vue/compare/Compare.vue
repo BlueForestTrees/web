@@ -7,7 +7,6 @@
             <v-spacer/>
         </v-layout>
 
-        <v-layout column align-center>
             <v-card v-if="selectedAxises">
                 <v-icon class="corner" x-large @click="zoom = !zoom">{{zoom ? 'pie_chart':'list'}}</v-icon>
 
@@ -25,7 +24,6 @@
             </v-card>
             <v-card-text class="text-md-center" v-else-if="loading">Chargement...</v-card-text>
             <v-card-text class="text-md-center" v-else="!leftId">Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche</span> ou prenez des produits du <span><v-icon @click="goBasket" color="primary">shopping_basket</v-icon> panier pour les comparer.</span></v-card-text>
-        </v-layout>
 
     </v-container>
 
@@ -35,10 +33,10 @@
     import {buildAxises, separate, updateRatios} from "../../services/axis"
     import On from "../../const/on"
     import {mapState, mapActions} from 'vuex'
-    import CompareRibbon from "./CompareRibbon"
+    const CompareRibbon = () => import(/* webpackChunkName: "Cribbon" */"./CompareRibbon")
+    const CompareCams = () => import(/* webpackChunkName: "Ccams" */"./CompareCams")
     import TreeHead from "../tree/TreeHead"
     import {filter} from "unit-manip"
-    import CompareCams from "./CompareCams"
 
     export default {
         name: 'compare',
@@ -89,7 +87,7 @@
             },
         },
         methods: {
-            ...mapActions({goTree:On.GO_TREE, loadTree: On.LOAD_TREE, snack: On.SNACKBAR, goSearch: On.GO_SEARCH, goBasket: On.GO_BASKET}),
+            ...mapActions({goTree: On.GO_TREE, loadTree: On.LOAD_TREE, snack: On.SNACKBAR, goSearch: On.GO_SEARCH, goBasket: On.GO_BASKET}),
             refresh: async function () {
                 this.compare.axis = null
                 if (this.leftId) {

@@ -1,33 +1,35 @@
 <template>
     <span>
-            <v-toolbar  dense v-if="anySelected" app dark class="elevation-5" color="primary">
-                <v-toolbar-items>
-                    <v-tooltip bottom>
-                        <v-btn slot="activator" v-if="oneSelected" flat @click="goTree(oneSelected)"><span class="hidden-xs-only">ouvrir</span><v-icon>category</v-icon></v-btn>
-                        <span style="pointer-events: none">Ouvrir</span>
-                    </v-tooltip>
-                    <v-tooltip bottom>
-                        <v-btn slot="activator" v-if="oneSelected" flat @click="goRoot(oneSelected)"><span class="hidden-xs-only">modifier</span><v-icon>edit</v-icon></v-btn>
-                        <span style="pointer-events: none">Modifier</span>
-                    </v-tooltip>
-                    <v-tooltip bottom>
-                        <v-btn slot="activator" v-if="anySelected" flat @click="remove(anySelected)"><span class="hidden-xs-only">supprimer</span><v-icon>delete_forever</v-icon></v-btn>
-                        <span style="pointer-events: none">Supprimer</span>
-                    </v-tooltip>
-                </v-toolbar-items>
-                <v-spacer/>
-                <v-toolbar-items>
-                    <v-tooltip bottom>
-                        <v-btn slot="activator" icon dense @click="unselect()"><v-icon>close</v-icon></v-btn>
-                        <span style="pointer-events: none">Fermer</span>
-                    </v-tooltip>
-                </v-toolbar-items>
-            </v-toolbar>
+        <v-toolbar dense v-if="anySelected" app dark class="elevation-5" color="primary">
+            <v-toolbar-items>
+                <v-tooltip bottom>
+                    <v-btn slot="activator" v-if="oneSelected" flat @click="goTree(oneSelected)"><span class="hidden-xs-only">ouvrir</span><v-icon>category</v-icon></v-btn>
+                    <span style="pointer-events: none">Ouvrir</span>
+                </v-tooltip>
+                <v-tooltip bottom>
+                    <v-btn slot="activator" v-if="oneSelected" flat @click="goRoot(oneSelected)"><span class="hidden-xs-only">modifier</span><v-icon>edit</v-icon></v-btn>
+                    <span style="pointer-events: none">Modifier</span>
+                </v-tooltip>
+                <v-tooltip bottom>
+                    <v-btn slot="activator" v-if="anySelected" flat @click="remove(anySelected)"><span class="hidden-xs-only">supprimer</span><v-icon>delete_forever</v-icon></v-btn>
+                    <span style="pointer-events: none">Supprimer</span>
+                </v-tooltip>
+            </v-toolbar-items>
+            <v-spacer/>
+            <v-toolbar-items>
+                <v-tooltip bottom>
+                    <v-btn slot="activator" icon dense @click="unselect()"><v-icon>close</v-icon></v-btn>
+                    <span style="pointer-events: none">Fermer</span>
+                </v-tooltip>
+            </v-toolbar-items>
+        </v-toolbar>
 
         <v-list-tile v-for="item in items" v-if="!item.relativeTo" :key="item._id" @click="toggleSelect(item)" :style="{background: isSelected(item) ? '#D8E9F5' : '', transition: 'background .2s ease'}">
             <v-icon v-if="isSelected(item)" color="primary">check_circle</v-icon>
             <v-icon v-else :style="'color: '+item.trunk.color+';margin-right:0.2em'">lens</v-icon>
-            {{qtUnitName(item.trunk)}}
+            <span>{{qtUnitName(item.trunk)}}</span>
+            <v-spacer/>
+            <trans-deco :key="trans._id" v-for="trans in items" v-if="trans.relativeTo && trans.relativeTo._id === item._id" :trans="trans"></trans-deco>
         </v-list-tile>
     </span>
 </template>
@@ -40,9 +42,12 @@
     import goTree from "../mixin/GoTree"
     import {getRandomColor, qtUnitName} from "../../services/calculations"
     import Subheader from "./Subheader"
+    import {bqtGToQtUnit} from "unit-manip"
+    import TransDeco from "../TransDeco"
 
     export default {
         components: {
+            TransDeco,
             Subheader,
             QtUnit
         },
@@ -79,7 +84,7 @@
                 deleteRoot: On.DELETE_ROOT,
                 dispatchLoadRoots: On.LOAD_ROOTS
             }),
-            qtUnitName, getRandomColor
+            qtUnitName, getRandomColor, bqtGToQtUnit
         }
     }
 </script>

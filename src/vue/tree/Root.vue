@@ -3,10 +3,15 @@
 
         <v-container>
 
-            <tree-head :tree="tree" @nav="dispatchGoTree(tree)" :style="{cursor: 'pointer'}"/>
-            <tree-sub-head style="margin-left:3.6em" :tree="item" icon="call_merge" @nav="dispatchGoTree(item)" :style="{cursor: 'pointer'}"/>
+            <v-container>
+                <destination :tree="tree" @click="dispatchGoTree(tree)"/>
+                <v-list-tile>
+                    <v-icon x-large>call_merge</v-icon>
+                </v-list-tile>
+                <destination :tree="item" @click="dispatchGoTree(item)"/>
+            </v-container>
 
-    <v-expansion-panel popout v-model="panels">
+            <v-expansion-panel popout v-model="panels">
                     <v-expansion-panel-content v-if="tree && item">
                         <subheader slot="header" title="Quantité"/>
                         <v-form v-if="!qtUpdating" v-model="validQtForm" v-on:submit.prevent="">
@@ -57,7 +62,6 @@
                             <span>{{(transport.relativeTo.bqt / 1000)+" km"}} {{transport.trunk.name}}</span>
                         </v-list-tile>
                         <v-card-text>
-                        <v-divider/>
                         <v-layout column>
                             <template v-if="addingTransport">
                                 <search-comp :filter="{g:'Tran'}" v-if="!transport" :maxSelectionSize="1">
@@ -92,7 +96,7 @@
                         </v-card-text>
                     </v-expansion-panel-content>
                 </v-expansion-panel>
-                </v-container>
+        </v-container>
     </v-card>
 
 </template>
@@ -114,12 +118,13 @@
     import {unit as lookupUnit} from 'unit-manip'
     import {baseQt} from 'unit-manip'
     import {bqtGToQtUnit} from "unit-manip"
+    import Destination from "../common/Destination"
 
     export default {
         name: 'root',
         props: ['treeId', 'rootId'],
         mixins: [selectable],
-        components: {Subheader, TreeSubHead, SearchComp, UnitSelect, TreeHead},
+        components: {Destination, Subheader, TreeSubHead, SearchComp, UnitSelect, TreeHead},
         data: function () {
             return {
                 qtUpdating:false,
@@ -183,6 +188,7 @@
                 if (this.transport && this.validTransportForm) {
                     this.transport.quantity = {qt: this.transportQt, unit: this.transportUnit.shortname}
                     this.dispatchAddTransport({tree: this.tree, item: this.item, transport: this.transport})
+
                     this.addingTransport = false
                     this.transport = null
                     this.transportQt = null

@@ -8,7 +8,7 @@
         </v-layout>
         <v-card-text class="text-md-center" v-if="loading">Chargement...</v-card-text>
 
-        <v-layout v-else-if="!tree"  row wrap justify-center align-center class="ma-4">
+        <v-layout v-else-if="!tree" row wrap justify-center align-center class="ma-4">
             <span class="title">Composition</span>
             <v-card-text class="text-md-center">
                 <div>Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche</span> ou prenez
@@ -24,113 +24,62 @@
 
         <span v-else>
 
-            <v-layout hidden-md-and-up>
-                <v-expansion-panel popout>
+            <v-layout column>
 
-                    <v-expansion-panel-content>
-                        <subheader slot="header" icon="info" title="DESCRIPTION"/>
-                        <v-card>
-                          <description :tree="tree"/>
-                        </v-card>
-                      </v-expansion-panel-content>
+                <v-layout v-if="tree" row wrap justify-center align-center class="ma-4">
+                    <subheader icon="info" title="DESCRIPTION"/>
+                    <v-card>
+                      <description :tree="tree"/>
+                    </v-card>
+                </v-layout>
 
-                    <v-expansion-panel-content>
-                        <subheader slot="header" icon="call_split" title="USAGE"/>
+                <v-layout v-if="tree" row wrap justify-center align-center class="ma-4">
+                    <subheader icon="call_merge" title="RESSOURCES"/>
+                    <v-flex>
                         <v-card>
-                          <branches :tree="tree"/>
+                            <ressources :tree="tree"/>
                         </v-card>
-                      </v-expansion-panel-content>
+                    </v-flex>
+                </v-layout>
 
-                      <v-expansion-panel-content>
-                        <subheader slot="header" icon="more_horiz" title="PROPRIETES"/>
-                        <v-card>
-                          <bilan-ressources :tree="tree"/>
-                        </v-card>
-                      </v-expansion-panel-content>
 
-                      <v-expansion-panel-content>
-                        <subheader slot="header" icon="keyboard_tab" title="EXTERNALITES"/>
-                        <v-card>
-                          <impacts :tree="tree"/>
-                        </v-card>
-                      </v-expansion-panel-content>
+                <!--<v-expansion-panel-content>-->
+                <!--<subheader slot="header" icon="call_split" title="USAGE"/>-->
+                <!--<v-card>-->
+                <!--<branches :tree="tree"/>-->
+                <!--</v-card>-->
+                <!--</v-expansion-panel-content>-->
 
-                      <v-expansion-panel-content>
-                        <subheader slot="header" icon="keyboard_tab" title="BILAN EXTERNALITES"/>
-                        <v-card>
-                          <bilan-impacts :tree="tree"/>
-                        </v-card>
-                      </v-expansion-panel-content>
-                            <v-expansion-panel-content>
-                        <subheader slot="header" icon="call_merge" title="RESSOURCES"/>
-                        <v-card>
-                          <ressources :tree="tree"/>
-                        </v-card>
-                      </v-expansion-panel-content>
+                <!--<v-expansion-panel-content>-->
+                <!--<subheader slot="header" icon="more_horiz" title="PROPRIETES"/>-->
+                <!--<v-card>-->
+                <!--<facets :tree="tree"/>-->
+                <!--</v-card>-->
+                <!--</v-expansion-panel-content>-->
 
-                        <v-expansion-panel-content>
-                        <subheader slot="header" icon="call_merge" title="BILAN RESSOURCES"/>
-                        <v-card>
-                          <bilan-ressources :tree="tree"/>
-                        </v-card>
-                      </v-expansion-panel-content>
+                <!--<v-expansion-panel-content>-->
+                <!--<subheader slot="header" icon="keyboard_tab" title="EXTERNALITES"/>-->
+                <!--<v-card>-->
+                <!--<impacts :tree="tree"/>-->
+                <!--</v-card>-->
+                <!--</v-expansion-panel-content>-->
 
-            </v-expansion-panel>
+                <!--<v-expansion-panel-content>-->
+                <!--<subheader slot="header" icon="keyboard_tab" title="BILAN EXTERNALITES"/>-->
+                <!--<v-card>-->
+                <!--<bilan-impacts :tree="tree"/>-->
+                <!--</v-card>-->
+                <!--</v-expansion-panel-content>-->
+
+                <!--<v-expansion-panel-content>-->
+                <!--<subheader slot="header" icon="call_merge" title="BILAN RESSOURCES"/>-->
+                <!--<v-card>-->
+                <!--<bilan-ressources :tree="tree"/>-->
+                <!--</v-card>-->
+                <!--</v-expansion-panel-content>-->
+
             </v-layout>
 
-
-
-            <v-layout row wrap mx-2 hidden-sm-and-down>
-                <v-flex pa-2>
-                    <v-card>
-                        <subheader icon="info" title="DESCRIPTION"/>
-                        <v-divider/>
-                        <description :tree="tree"/>
-                    </v-card>
-                </v-flex>
-                <v-flex pa-2>
-                    <v-card>
-                        <subheader icon="call_merge" title="RESSOURCES"/>
-                        <v-divider/>
-                        <ressources :tree="tree"/>
-                    </v-card>
-                </v-flex>
-                <v-flex pa-2>
-                    <v-card>
-                        <subheader icon="call_merge" title="BILAN RESSOURCES"/>
-                        <v-divider/>
-                        <bilan-ressources :tree="tree"/>
-                    </v-card>
-                </v-flex>
-                <v-flex pa-2>
-                    <v-card>
-                        <subheader icon="more_horiz" title="PROPRIETES"/>
-                        <v-divider/>
-                        <facets :tree="tree"/>
-                    </v-card>
-                </v-flex>
-                <v-flex pa-2>
-                    <v-card>
-                        <subheader icon="keyboard_tab" title="EXTERNALITES"/>
-                        <v-divider/>
-                        <impacts :tree="tree"/>
-                    </v-card>
-                </v-flex>
-                <v-flex pa-2>
-                    <v-card>
-                        <subheader icon="keyboard_tab" title="BILAN EXTERNALITES"/>
-                        <v-divider/>
-                        <bilan-impacts :tree="tree"/>
-                    </v-card>
-                </v-flex>
-                <v-flex pa-2>
-                    <v-card>
-                        <subheader icon="call_split" title="USAGE"/>
-                        <v-divider/>
-                        <branches :tree="tree"/>
-                    </v-card>
-                </v-flex>
-            </v-layout>
         </span>
         <add-tree-part-btn v-if="tree" :tree="tree"/>
     </v-flex>

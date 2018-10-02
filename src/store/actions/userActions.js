@@ -3,8 +3,6 @@ import Do from "../../const/do"
 import api from "../../rest/api"
 import forage from "../../services/forage"
 import {Dial} from "../../const/dial"
-import router from "../../router/router"
-import {GO} from "../../const/go"
 
 export default {
 

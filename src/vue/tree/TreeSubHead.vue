@@ -1,10 +1,10 @@
 <template>
-    <v-layout raw justify-center v-if="trunk" @click="$emit('nav')" style="margin-top:-2em">
-        <v-icon x-large>{{icon}}</v-icon>
-        <span style="margin-top:4.5em">
+    <v-layout align-center v-if="trunk" @click="$emit('nav')">
+        <v-layout column>
+            <v-icon x-large>{{icon}}</v-icon>
             <v-icon v-if="!noIcon" :style="{color: trunk && trunk.color || 0}">lens</v-icon>
-            <span class="subheading" v-html="qtUnitName(trunk)"></span>
-        </span>
+            <span class="subheading" v-html="qtUnitName(trunk)" style="position:relative"></span>
+        </v-layout>
     </v-layout>
 </template>
 <script>
