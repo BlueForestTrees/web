@@ -48,10 +48,10 @@
     </span>
 </template>
 <script>
-    import selectable from "./mixin/Selectable"
-    import On from "../const/on"
+    import selectable from "../mixin/Selectable"
+    import On from "../../const/on"
     import {mapActions} from "vuex"
-    import AddImpactEntriesBtn from "./layout/AddImpactEntriesBtn"
+    import AddImpactEntriesBtn from "../common/AddImpactEntriesBtn"
 
     export default {
         components: {AddImpactEntriesBtn},

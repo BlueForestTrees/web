@@ -23,9 +23,9 @@
 </template>
 
 <script>
-    import RightMenu from "./layout/Messages"
-    import {GO} from "../const/go"
-    import Card from "./layout/Card"
+    import RightMenu from "../messages/Messages"
+    import {GO} from "../../const/go"
+    import Card from "../common/Card"
 
     export default {
         name: "plan-intro",

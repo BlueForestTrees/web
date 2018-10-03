@@ -29,7 +29,8 @@
                         </v-layout>
                     </p>
                     <h1 class="display-3 font-weight-thin">Introduction</h1>
-                    <p>Nous trouvons finalement notre planète petite. Notre façon de faire, notre organisation change petit à petit pour plus de respect de la nature et de nous-même (ou pas).<p>
+                    <p>Nous trouvons finalement notre planète petite. Notre façon de faire, notre organisation change petit à petit pour plus de respect de la nature et de nous-même (ou pas).
+                    <p>
                     <p>L' "environnement" est un très mauvais concept: l'homme y est au centre, et le reste est autour. Parler du contrat naturel</p>
                     <p>Cette page présente le projet BlueForest, il y a quatre parties:
                     <p>
@@ -204,22 +205,22 @@
             </v-card-actions>
         </div>
 
-        <right-menu/>
+        <messages v-if="nav.rightMenuVisible"/>
         <connect-to-continue-dialog can-stay/>
     </v-container>
 </template>
 
 <script>
-    import RightMenu from "./layout/Messages"
-    import {GO} from "../const/go"
-    import On from "../const/on"
+    import Messages from "../messages/Messages"
+    import {GO} from "../../const/go"
+    import On from "../../const/on"
     import {mapActions} from "vuex"
-    import Card from "./layout/Card"
-    import ConnectToContinueDialog from "./dialog/ConnectToContinueDialog"
+    import Card from "../common/Card"
+    import ConnectToContinueDialog from "../dialog/ConnectToContinueDialog"
 
     export default {
         name: "plan",
-        components: {ConnectToContinueDialog, Card, RightMenu},
+        components: {ConnectToContinueDialog, Card, Messages},
         data() {
             return {
                 GO,
@@ -228,6 +229,9 @@
                 f1: {title: "Les fonctions - participez", filter: {type: "fonction#2"}},
                 t1: {title: "Technique - participez", filter: {type: "Technique#2"}}
             }
+        },
+        computed: {
+            ...mapState(['nav'])
         },
         methods: {
             showMessages(filter) {

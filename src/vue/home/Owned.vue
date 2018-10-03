@@ -36,9 +36,9 @@
 </template>
 
 <script>
-    import On from "../const/on"
-    import {Dial} from "../const/dial"
-    import SearchComp from "./SearchComp"
+    import On from "../../const/on"
+    import {Dial} from "../../const/dial"
+    import SearchComp from "../search/SearchComp"
     import {mapActions, mapState} from "vuex"
 
     export default {

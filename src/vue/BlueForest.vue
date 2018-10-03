@@ -1,7 +1,7 @@
 <template>
     <span>
-        <right-menu/>
-        <left-menu/>
+        <messages v-if="nav.rightMenuVisible"/>
+        <left-menu v-if="nav.leftMenuVisible"/>
         <bar/>
         <span v-if="dispo.grandeurs">
 
@@ -31,10 +31,11 @@
     import {GO} from "../const/go"
     import {mapState} from 'vuex'
 
-    import Bar from "./layout/Bar"
-    import LeftMenu from './layout/LeftMenu'
-    import RightMenu from "./layout/Messages"
-    import Snack from "./layout/Snack"
+    import Bar from "./common/Bar"
+
+    const LeftMenu = () => import(/* webpackChunkName: "LeftMenu" */ "./common/LeftMenu")
+    const Messages = () => import(/* webpackChunkName: "Messages" */ "./messages/Messages")
+    import Snack from "./common/Snack"
 
     import AddImpactDialog from "./dialog/AddImpactDialog"
     import AddFacetDialog from "./dialog/AddFacetDialog"
@@ -46,16 +47,16 @@
     export default {
         data() {
             return {
-                show:false,
+                show: false,
                 transitionName: null,
                 routes: Object.values(GO)
             }
         },
         computed: {
-            ...mapState(['basket', 'snack', 'dispo'])
+            ...mapState(['nav', 'basket', 'snack', 'dispo'])
         },
         components: {
-            RightMenu,
+            Messages,
             ConnectToContinueDialog,
             Snack,
             AddImpactEntryDialog,

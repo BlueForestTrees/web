@@ -20,7 +20,7 @@
     import Dialog from "../mixin/Dialog"
     import On from "../../const/on"
     import {mapActions} from "vuex"
-    import Card from "../layout/Card"
+    import Card from "../common/Card"
 
     export default {
         name: "connect-to-continue-dialog",

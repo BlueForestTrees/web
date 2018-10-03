@@ -24,8 +24,8 @@
 </template>
 
 <script>
-    import selectable from "./mixin/Selectable"
-    import On from "../const/on"
+    import selectable from "../mixin/Selectable"
+    import On from "../../const/on"
     import {mapActions} from "vuex"
     import {mapGetters} from "vuex"
 

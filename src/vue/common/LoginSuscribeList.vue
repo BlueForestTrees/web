@@ -22,7 +22,7 @@
 <script>
     import {GO as Go, GO} from "../../const/go"
     import {mapState} from "vuex"
-    import ToIntro from "../toIntro"
+    import ToIntro from "./toIntro"
 
     export default {
         name: "login-suscribe-list",

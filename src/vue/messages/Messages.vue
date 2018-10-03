@@ -66,7 +66,7 @@
     import {createStringObjectId, deltaTime} from "../../services/calculations"
     import InfiniteLoading from 'vue-infinite-loading'
     import debounce from 'lodash.debounce'
-    import Loader from "../svg/Loader"
+    import Loader from "../loader/Loader"
 
     export default {
         name: "messages",

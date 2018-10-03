@@ -61,7 +61,7 @@
     import On from "../../const/on"
     import {GO} from "../../const/go"
     import {initiales, overcolor} from "../../services/calculations"
-    import LoginSuscribeList from "../common/LoginSuscribeList"
+    import LoginSuscribeList from "./LoginSuscribeList"
 
     export default {
         data: function () {

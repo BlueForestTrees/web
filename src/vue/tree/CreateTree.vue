@@ -41,16 +41,16 @@
 </template>
 
 <script>
-    import On from "../const/on"
+    import On from "../../const/on"
     import {mapActions, mapState} from "vuex"
-    import {Dial} from "../const/dial"
+    import {Dial} from "../../const/dial"
     import {unit, grandeurFromShortname, toBqtG} from 'unit-manip'
-    import {isNumber, length2min, required} from "../services/rules"
-    import {createStringObjectId, getRandomColor, trunky} from "../services/calculations"
-    import TreeHead from "./tree/TreeHead"
-    import UnitSelect from "./common/UnitSelect"
-    import ColorPicker from "./common/ColorPicker"
-    import Connected from "./mixin/Connected"
+    import {isNumber, length2min, required} from "../../services/rules"
+    import {createStringObjectId, getRandomColor, trunky} from "../../services/calculations"
+    import TreeHead from "./TreeHead"
+    import UnitSelect from "../common/UnitSelect"
+    import ColorPicker from "../common/ColorPicker"
+    import Connected from "../mixin/Connected"
 
     export default {
         name: 'create-trunk',

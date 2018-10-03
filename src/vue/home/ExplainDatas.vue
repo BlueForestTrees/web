@@ -32,8 +32,8 @@
 </template>
 
 <script>
-    import OpenMessage from "./OpenMessage"
-    import {secs} from "../const/sections"
+    import OpenMessage from "../common/OpenMessage"
+    import {secs} from "../../const/sections"
 
     export default {
         name: "explain-datas",

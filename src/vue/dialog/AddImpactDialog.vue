@@ -55,7 +55,7 @@
     import {find} from 'unit-manip'
     import Destination from "../common/Destination"
     import UnitSelect from "../common/UnitSelect"
-    import SearchComp from "../SearchComp"
+    import SearchComp from "../search/SearchComp"
     import {createStringObjectId} from "../../services/calculations"
 
     export default {

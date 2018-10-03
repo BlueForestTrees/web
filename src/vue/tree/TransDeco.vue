@@ -7,7 +7,7 @@
 
 <script>
 
-    import {qtUnit} from "../services/calculations"
+    import {qtUnit} from "../../services/calculations"
 
     export default {
         name: "trans-deco",

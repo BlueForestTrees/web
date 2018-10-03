@@ -34,8 +34,6 @@ var conf = {
     ],
     optimization: {
         splitChunks: {
-            // Must be specified for HtmlWebpackPlugin to work correctly.
-            // See: https://github.com/jantimon/html-webpack-plugin/issues/882
             chunks: 'all',
         }
     }

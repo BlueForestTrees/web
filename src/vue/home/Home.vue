@@ -20,8 +20,8 @@
 
 <script>
     import Owned from "./Owned"
-    import OpenMessage from "./OpenMessage"
-    import {secs} from "../const/sections"
+    import OpenMessage from "../common/OpenMessage"
+    import {secs} from "../../const/sections"
     import WhatIs from "./WhatIsBF"
     import ExplainDatas from "./ExplainDatas"
 

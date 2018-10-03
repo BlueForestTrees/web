@@ -10,9 +10,9 @@
 </template>
 
 <script>
-    import On from "../const/on"
+    import On from "../../const/on"
     import {mapActions} from "vuex"
-    import {secs} from "../const/sections"
+    import {secs} from "../../const/sections"
 
     export default {
         name: "open-message",

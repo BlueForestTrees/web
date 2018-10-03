@@ -110,7 +110,7 @@
     import {find} from "lodash"
     import {isNumber, required} from "../../services/rules"
     import UnitSelect from "../common/UnitSelect"
-    import SearchComp from "../SearchComp"
+    import SearchComp from "../search/SearchComp"
     import selectable from "../mixin/Selectable"
     import TreeSubHead from "./TreeSubHead"
     import Subheader from "./Subheader"

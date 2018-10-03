@@ -13,39 +13,37 @@
             <v-divider/>
         </div>
 
-            <v-card-text v-if="items.length > 0">
-                <span v-if="anySelected">Sous-catégories</span>
-                <v-layout row align-center wrap>
-                    <v-flex v-if="items.length > 0" v-for="item in items" @click="select(item)"
-                            :key="'o'+item._id"
-                            :style="{background: isSelected(item) ? '#D8E9F5' : '', transition: 'background .2s ease'}">
-                        <a>
-                            <v-layout row align-center>
-                                <v-icon v-if="isSelected(item)" color="primary"
-                                        style="margin-right:0.3em">check_circle</v-icon>
-                                <v-icon v-else :style="'color: '+item.color">stop</v-icon>
-                                <a style="padding-right:0.5em">{{item.name}}</a>
-                            </v-layout>
-                        </a>
-                </v-flex>
-                </v-layout>
-            </v-card-text>
-            <v-card-text v-else>
-                <p>Sous-catégories:</p>
-                <p>aucune</p>
-            </v-card-text>
+        <v-card-text v-if="items.length > 0">
+            <span v-if="anySelected">Sous-catégories</span>
+            <v-layout row align-center wrap>
+                <v-flex v-if="items.length > 0" v-for="item in items" @click="select(item)"
+                        :key="'o'+item._id"
+                        :style="{background: isSelected(item) ? '#D8E9F5' : '', transition: 'background .2s ease'}">
+                    <a>
+                        <v-layout row align-center>
+                            <v-icon v-if="isSelected(item)" color="primary"
+                                    style="margin-right:0.3em">check_circle</v-icon>
+                            <v-icon v-else :style="'color: '+item.color">stop</v-icon>
+                            <a style="padding-right:0.5em">{{item.name}}</a>
+                        </v-layout>
+                    </a>
+            </v-flex>
+            </v-layout>
+        </v-card-text>
+        <v-card-text v-else>
+            <p>Sous-catégories:</p>
+            <p>aucune</p>
+        </v-card-text>
     </span>
 </template>
 
 <script>
     import {mapActions} from "vuex"
-    import On from "../const/on"
-    import selectable from "./mixin/Selectable"
-    import Expendable from "./common/Expendable"
+    import On from "../../const/on"
+    import selectable from "../mixin/Selectable"
 
     export default {
         name: "search-cat",
-        components: {Expendable},
         mixins: [selectable],
         props: ['value'],
         data: function () {

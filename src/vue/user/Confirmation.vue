@@ -41,11 +41,11 @@
 </template>
 
 <script>
-    import Card from "./layout/Card"
-    import On from "../const/on"
+    import Card from "../common/Card"
+    import On from "../../const/on"
     import {mapActions} from 'vuex'
     import decode from 'jwt-decode'
-    import {GO} from "../const/go"
+    import {GO} from "../../const/go"
 
     export default {
         name: 'confirmation',

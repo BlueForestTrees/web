@@ -33,11 +33,11 @@
 
 <script>
     import {mapActions} from "vuex"
-    import On from "../const/on"
-    import Card from "./layout/Card"
-    import {GO} from "../const/go"
-    import {mailRequired, validMail} from "../services/rules"
-    import ToIntro from "./toIntro"
+    import On from "../../const/on"
+    import Card from "../common/Card"
+    import {GO} from "../../const/go"
+    import {mailRequired, validMail} from "../../services/rules"
+    import ToIntro from "../common/toIntro"
 
     export default {
         components: {ToIntro, Card},

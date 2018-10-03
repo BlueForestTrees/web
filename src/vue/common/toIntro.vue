@@ -3,7 +3,7 @@
 </template>
 
 <script>
-    import {GO as Go} from "../const/go"
+    import {GO as Go} from "../../const/go"
 
     export default{
         name:"to-intro",

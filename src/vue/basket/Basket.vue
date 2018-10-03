@@ -37,10 +37,10 @@
 
 <script>
     import {mapActions} from "vuex"
-    import On from "../const/on"
-    import selectable from "./mixin/Selectable"
+    import selectable from "../mixin/Selectable"
     import BasketComp from "./BasketComp"
-    import {Dial} from "../const/dial"
+    import On from "../../const/on"
+    import {Dial} from "../../const/dial"
 
     export default {
         name: 'basket',

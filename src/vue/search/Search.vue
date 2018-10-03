@@ -40,10 +40,10 @@
 </template>
 
 <script>
-    import On from "../const/on"
+    import On from "../../const/on"
     import {mapActions} from "vuex"
     import SearchTrunk from "./SearchTrunk"
-    import {Dial} from "../const/dial"
+    import {Dial} from "../../const/dial"
 
     export default {
         name: "search",

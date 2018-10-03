@@ -94,7 +94,7 @@
     import {mapActions, mapState} from "vuex"
     import On from "../../const/on"
     import TreeHead from "./TreeHead"
-    import AddTreePartBtn from "../layout/AddTreePartBtn"
+    import AddTreePartBtn from "../common/AddTreePartBtn"
     import BilanImpacts from "./BilanImpacts"
     import BilanRessources from "./BilanRessources"
     import Subheader from "./Subheader"

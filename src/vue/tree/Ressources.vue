@@ -43,7 +43,7 @@
     import {getRandomColor, qtUnitName} from "../../services/calculations"
     import Subheader from "./Subheader"
     import {bqtGToQtUnit} from "unit-manip"
-    import TransDeco from "../TransDeco"
+    import TransDeco from "./TransDeco"
 
     export default {
         components: {

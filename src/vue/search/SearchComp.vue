@@ -23,11 +23,11 @@
 </template>
 
 <script>
-    import selectable from "./mixin/Selectable"
-    import On from "../const/on"
+    import selectable from "../mixin/Selectable"
+    import On from "../../const/on"
     import InfiniteLoading from 'vue-infinite-loading'
     import debounce from 'lodash.debounce'
-    import Loader from "./svg/Loader"
+    import Loader from "../loader/Loader"
 
     export default {
         name: 'search-comp',
