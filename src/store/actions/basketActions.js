@@ -34,12 +34,12 @@ export default {
         dispatch(On.SAVE_BASKET)
     },
     [On.SAVE_BASKET]: ({state}) => {
-        forage.setBasket(Object.values(state.basket))
+        // forage.setBasket(Object.values(state.basket))
     },
     [On.LOAD_BASKET]: ({commit}) => {
-        const items = forage.getBasket()
-        if (items) {
-            commit(Do.ADD_TO_BASKET, items)
-        }
+        // const items = forage.getBasket()
+        // if (items) {
+        //     commit(Do.ADD_TO_BASKET, items)
+        // }
     }
 }

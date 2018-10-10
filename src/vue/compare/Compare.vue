@@ -3,27 +3,39 @@
         <v-layout row align-center mb-4>
             <v-spacer/>
             <v-flex class="title">Comparaison</v-flex>
-            <v-select class="title mt-1 ml-1 pl-2" style="max-width: 16em;margin-bottom:0em" :items="types" v-model="type" item-text="text" item-value="code"></v-select>
-            <v-spacer/>
         </v-layout>
 
-            <v-card v-if="selectedAxises">
+        <v-container v-if="compare.left && compare.right">
+            <tree-head :tree="compare.left" class="my-2" @nav="goTree(compare.left)" :style="{cursor: 'pointer'}"/>
+            <v-divider/>
+            <tree-head :tree="compare.right" class="my-2" @nav="goTree(compare.right)" :style="{cursor: 'pointer'}"/>
+        </v-container>
+        <v-card-text class="text-md-center" v-else>Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche</span> ou prenez des produits du <span><v-icon @click="goBasket" color="primary">shopping_basket</v-icon> panier pour les comparer.</span></v-card-text>
+
+
+
+        <v-card v-if="hasFacetAxises">
+            <v-layout row align-center pl-4 pt-4>
+                <v-flex class="display-1">Propriétés</v-flex>
                 <v-icon class="corner" x-large @click="zoom = !zoom">{{zoom ? 'pie_chart':'list'}}</v-icon>
+            </v-layout>
 
-                <!--LEGENDE-->
-                <v-container>
-                    <tree-head :tree="compare.left" class="my-2" @nav="goTree(compare.left)" :style="{cursor: 'pointer'}"/>
-                    <v-divider/>
-                    <tree-head :tree="compare.right" class="my-2" @nav="goTree(compare.right)" :style="{cursor: 'pointer'}"/>
-                </v-container>
+            <compare-ribbon v-if="zoom" :axises="facetsAxises" :leftColor="leftColor" :rightColor="rightColor"/>
+            <compare-cams v-else :axises="facetsAxises" :leftColor="leftColor" :rightColor="rightColor"/>
+        </v-card>
+        <v-card-text class="text-md-center" v-else-if="loading">Chargement...</v-card-text>
 
-                <v-divider></v-divider>
 
-                <compare-ribbon v-if="zoom" :axises="selectedAxises" :leftColor="leftColor" :rightColor="rightColor"/>
-                <compare-cams v-else :axises="selectedAxises" :leftColor="leftColor" :rightColor="rightColor"/>
-            </v-card>
-            <v-card-text class="text-md-center" v-else-if="loading">Chargement...</v-card-text>
-            <v-card-text class="text-md-center" v-else="!leftId">Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche</span> ou prenez des produits du <span><v-icon @click="goBasket" color="primary">shopping_basket</v-icon> panier pour les comparer.</span></v-card-text>
+        <v-card v-if="hasImpactAxises">
+            <v-layout row align-center pl-4 pt-4 mt-4>
+                <v-flex class="display-1">Environnement</v-flex>
+                <v-icon class="corner" x-large @click="zoom = !zoom">{{zoom ? 'pie_chart':'list'}}</v-icon>
+            </v-layout>
+
+            <compare-ribbon v-if="zoom" :axises="impactsAxises" :leftColor="leftColor" :rightColor="rightColor"/>
+            <compare-cams v-else :axises="impactsAxises" :leftColor="leftColor" :rightColor="rightColor"/>
+        </v-card>
+        <v-card-text class="text-md-center" v-else-if="loading">Chargement...</v-card-text>
 
     </v-container>
 
@@ -33,6 +45,7 @@
     import {buildAxises, separate, updateRatios} from "../../services/axis"
     import On from "../../const/on"
     import {mapState, mapActions} from 'vuex'
+
     const CompareRibbon = () => import(/* webpackChunkName: "Cribbon" */"./CompareRibbon")
     const CompareCams = () => import(/* webpackChunkName: "Ccams" */"./CompareCams")
     import TreeHead from "../tree/TreeHead"
@@ -51,10 +64,11 @@
                 zoom: false,
                 base: null,
                 loading: false,
-                type: "impactsTank",
+                type: "facets",
                 types: [
+                    {code: "facets", text: "Propriétés"},
                     {code: "impactsTank", text: "Impact environmental"},
-                    {code: "damagesTank", text: "Dommages environnementeux"}
+                    {code: "damagesTank", text: "Dommages environnementaux"}
                 ],
             }
         },
@@ -66,28 +80,7 @@
                 this.refresh()
             }
         },
-        computed: {
-            ...mapState(['compare']),
-            selectedAxises: function () {
-                if (this.axises) {
-                    return filter(this.axises.common, axis => axis.left.type === this.type)
-                }
-            },
-            axises: function () {
-                if (this.compare.leftAxises && this.compare.rightAxises) {
-                    this.compare.axis = updateRatios(separate(this.compare.leftAxises, this.compare.rightAxises))
-                }
-                return this.compare.axis
-            },
-            leftColor: function () {
-                return this.compare && this.compare.left && this.compare.left.trunk && this.compare.left.trunk.color
-            },
-            rightColor: function () {
-                return this.compare && this.compare.right && this.compare.right.trunk && this.compare.right.trunk.color
-            },
-        },
         methods: {
-            ...mapActions({goTree: On.GO_TREE, loadTree: On.LOAD_TREE, snack: On.SNACKBAR, goSearch: On.GO_SEARCH, goBasket: On.GO_BASKET}),
             refresh: async function () {
                 this.compare.axis = null
                 if (this.leftId) {
@@ -98,7 +91,39 @@
                     this.compare.right = await this.loadTree({_id: this.rightId})
                     this.compare.right.promises.all.then(() => this.compare.rightAxises = buildAxises(this.compare.right))
                 }
-            }
+            },
+            ...mapActions({goTree: On.GO_TREE, loadTree: On.LOAD_TREE, snack: On.SNACKBAR, goSearch: On.GO_SEARCH, goBasket: On.GO_BASKET}),
+        },
+        computed: {
+            ...mapState(['compare']),
+            axises: function () {
+                if (this.compare.leftAxises && this.compare.rightAxises) {
+                    this.compare.axis = updateRatios(separate(this.compare.leftAxises, this.compare.rightAxises))
+                }
+                return this.compare.axis
+            },
+            hasFacetAxises() {
+                return this.facetsAxises && this.facetsAxises.length !== 0
+            },
+            facetsAxises: function () {
+                if (this.axises) {
+                    return filter(this.axises.common, axis => axis.left.type === "facets")
+                }
+            },
+            hasImpactAxises() {
+                return this.impactsAxises && this.impactsAxises.length !== 0
+            },
+            impactsAxises: function () {
+                if (this.axises) {
+                    return filter(this.axises.common, axis => axis.left.type === "impactsTank")
+                }
+            },
+            leftColor: function () {
+                return this.compare && this.compare.left && this.compare.left.trunk && this.compare.left.trunk.color || "#0000BB"
+            },
+            rightColor: function () {
+                return this.compare && this.compare.right && this.compare.right.trunk && this.compare.right.trunk.color || "#00FF00"
+            },
         },
     }
 </script>

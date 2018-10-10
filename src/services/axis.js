@@ -17,8 +17,8 @@ import Vue from 'vue'
  * @param tree
  */
 export const buildAxises = tree => ([
-    // ...buildAxis(tree.trunk, "facet", tree.facets),
-    // ...buildAxis(tree.trunk, "tank", tree.tank),
+    ...buildAxis(tree.trunk, "facets", tree.facets),
+    ...buildAxis(tree.trunk, "tank", tree.tank),
     ...buildAxis(tree.trunk, "impactsTank", tree.impactsTank),
     ...buildAxis(tree.trunk, "damagesTank", tree.damagesTank),
 ])
@@ -52,7 +52,7 @@ export const separate = (leftAxises, rightAxises) => {
     const common = []
     const zero = []
     for (let i = 0; i < leftAxises.length; i++) {
-        if (!(leftAxises[i]._bqt === 0 & rightAxises[i]._bqt === 0)) {
+        if (!(leftAxises[i]._bqt === 0 && rightAxises[i]._bqt === 0)) {
             common.push({left: leftAxises[i], right: rightAxises[i]})
         } else {
             zero.push({left: leftAxises[i], right: rightAxises[i]})

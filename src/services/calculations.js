@@ -1,4 +1,5 @@
 import {map, bqtGToQtUnit, bestQuantity, unitCoef, changeUnit, grandeur, baseQt} from "unit-manip"
+import {isNil} from "lodash";
 
 export const createStringObjectId = () => (new Date().getTime() / 1000 | 0).toString(16) + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, () => (Math.random() * 16 | 0).toString(16)).toLowerCase()
 
@@ -16,7 +17,7 @@ export const qtUnit = bqtG => {
             const best = bestQuantity(qtUnit)
             return `${best.qt} ${grandeur(best.unit) !== "Nomb" ? best.unit : ''}`
         } else {
-            return `${qtUnit.qt || "?"} ${qtUnit.unit || " ?"}`
+            return `${isNil(qtUnit.qt) ? "?" : qtUnit.qt} ${qtUnit.unit || " ?"}`
         }
     } else {
         return "??"

@@ -1,12 +1,13 @@
 import On from "../../const/on"
 import api from "../../rest/api"
 import Do from "../../const/do"
-import {hasQuantity, idQtFrom} from "../../services/calculations"
+import {idQtFrom, multiplyAspectBqt} from "../../services/calculations"
 import {map} from 'unit-manip'
 
 export default {
 
-    [On.LOAD_FACETS]: ({commit}, tree) => api.getFacets(tree._id),
+    [On.LOAD_FACETS]: ({commit}, {_id, bqt}) => api.getFacets(_id)
+        .then(facets => multiplyAspectBqt(bqt, facets)),
 
     [On.DELETE_FACETS]:
         ({commit}, {facets, toDelete}) => {

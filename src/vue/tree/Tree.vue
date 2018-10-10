@@ -28,9 +28,7 @@
 
                 <v-layout v-if="tree" row wrap justify-center align-center class="ma-4">
                     <subheader icon="info" title="DESCRIPTION"/>
-                    <v-card>
-                      <description :tree="tree"/>
-                    </v-card>
+                    <description :tree="tree"/>
                 </v-layout>
 
                 <v-layout v-if="tree" row wrap justify-center align-center class="ma-4">
@@ -38,6 +36,15 @@
                     <v-flex>
                         <v-card>
                             <ressources :tree="tree"/>
+                        </v-card>
+                    </v-flex>
+                </v-layout>
+
+                 <v-layout v-if="tree" row wrap justify-center align-center class="ma-4">
+                    <subheader icon="more_horiz" title="PROPRIETES"/>
+                    <v-flex>
+                        <v-card>
+                            <facets :tree="tree"/>
                         </v-card>
                     </v-flex>
                 </v-layout>
