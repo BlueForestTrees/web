@@ -1,6 +1,6 @@
 <template>
     <v-layout raw align-center v-if="trunk" @click="$emit('nav')">
-        <photo :trunk="trunk" size="100"/>
+        <photo v-if="photo" :trunk="trunk" size="100"/>
         <v-icon v-if="!noIcon" x-large :style="{color: trunk && trunk.color || 0}">lens</v-icon>
         <span class="subheading" v-html="qtUnitName(trunk)"></span>
     </v-layout>
@@ -12,7 +12,7 @@
     export default {
         name: "tree-head",
         components: {Photo},
-        props: {"tree": Object, "noIcon": Boolean},
+        props: {photo: {type: Boolean, default: true}, "tree": Object, "noIcon": Boolean},
         methods: {
             qtUnitName, shadeColor
         },

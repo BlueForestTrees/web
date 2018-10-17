@@ -30,10 +30,6 @@
             </v-flex>
             </v-layout>
         </v-card-text>
-        <v-card-text v-else>
-            <p>Sous-catégories:</p>
-            <p>aucune</p>
-        </v-card-text>
     </span>
 </template>
 

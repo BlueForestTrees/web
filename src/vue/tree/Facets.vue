@@ -1,10 +1,16 @@
 <template>
-        <span>
-            <v-list-tile v-for="item in items" :key="item._id" @click="toggleSelect(item)" :class="'active'">
-                <v-icon :style="'color: '+item.color+';margin-right:0.2em'">lens</v-icon>
-                {{qtUnitName(item) }}
-            </v-list-tile>
-        </span>
+    <v-list>
+        <template v-if="hasItems" v-for="item in items">
+            <v-layout row align-center :key="item._id">
+                <v-icon :style="{color:item.color}">lens</v-icon>
+                {{qtUnitName(item)}}
+            </v-layout>
+            <v-divider/>
+        </template>
+        <v-list-tile v-if="!hasItems">
+            <h5>Pas encore d'informations</h5>
+        </v-list-tile>
+    </v-list>
 </template>
 
 <script>

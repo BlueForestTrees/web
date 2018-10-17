@@ -1,6 +1,5 @@
 <template>
-        <span>
-
+        <v-list>
                 <v-toolbar  dense v-if="anySelected" app dark class="elevation-0" color="primary">
                     <v-toolbar-items>
                         <v-tooltip bottom>
@@ -38,8 +37,11 @@
                 <v-icon v-else :style="'color: '+item.trunk.color+';margin-right:0.2em'">lens</v-icon>
                 {{qtUnitName(item.trunk)}}
             </v-list-tile>
+            <v-list-tile v-if="!hasItems">
+                <h5>Pas encore d'informations</h5>
+            </v-list-tile>
 
-        </span>
+        </v-list>
 </template>
 
 <script>

@@ -1,16 +1,22 @@
 <template>
-    <span>
-        <photo :trunk="trunk"/>
-        <v-list-tile v-if="owner">
+    <v-layout column align-center>
+        <v-flex>
+            <photo :trunk="trunk"/>
+        </v-flex>
+        <v-layout row align-center v-if="owner">
             <v-flex>Propriétaire:</v-flex>
-            <v-flex>{{owner.shortname}}</v-flex>
-            <v-flex>{{owner.fullname}}</v-flex>
-        </v-list-tile>
-        <v-flex v-if="code">Code: {{code}}</v-flex>
-    </span>
+            <v-spacer/>
+            <v-flex><a :href="owner.site" target="_blank">{{owner.fullname}}</a></v-flex>
+        </v-layout>
+        <v-layout row align-center v-if="code">
+            <v-flex>Code:</v-flex>
+            <v-spacer/>
+            <span>{{code}}</span>
+        </v-layout>
+    </v-layout>
 </template>
 <script>
-    import Photo from "../common/Photo"
+    const Photo = () => import(/* webpackChunkName: "Photo" */ "../common/Photo")
 
     export default {
         components: {Photo},

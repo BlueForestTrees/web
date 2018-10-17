@@ -1,5 +1,5 @@
 <template>
-    <v-card><img v-if="img" :src="img"/></v-card>
+    <img v-if="img" :src="img"/>
 </template>
 <script>
     export default {

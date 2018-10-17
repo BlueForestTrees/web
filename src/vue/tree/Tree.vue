@@ -1,14 +1,7 @@
 <template>
     <v-flex key="tree">
-        <v-layout v-if="tree" row wrap justify-center align-center class="ma-4">
-            <span class="title">Composition{{tree ? ' de:':''}}</span>
-            <v-card v-if="tree" class="pl-2 pr-3 py-2 ma-1" style="border-radius:2em">
-                <tree-head :tree="tree"/>
-            </v-card>
-        </v-layout>
-        <v-card-text class="text-md-center" v-if="loading">Chargement...</v-card-text>
 
-        <v-layout v-else-if="!tree" row wrap justify-center align-center class="ma-4">
+        <v-layout v-if="!tree" row wrap justify-center align-center class="ma-4">
             <span class="title">Composition</span>
             <v-card-text class="text-md-center">
                 <div>Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche</span> ou prenez
@@ -22,73 +15,80 @@
             </v-card-text>
         </v-layout>
 
-        <span v-else>
+        <v-layout column v-else>
 
-            <v-layout column>
-
-                <v-layout v-if="tree" row wrap justify-center align-center class="ma-4">
-                    <subheader icon="info" title="DESCRIPTION"/>
-                    <description :tree="tree"/>
-                </v-layout>
-
-                <v-layout v-if="tree" row wrap justify-center align-center class="ma-4">
-                    <subheader icon="call_merge" title="RESSOURCES"/>
-                    <v-flex>
-                        <v-card>
-                            <ressources :tree="tree"/>
-                        </v-card>
-                    </v-flex>
-                </v-layout>
-
-                 <v-layout v-if="tree" row wrap justify-center align-center class="ma-4">
-                    <subheader icon="more_horiz" title="PROPRIETES"/>
-                    <v-flex>
-                        <v-card>
-                            <facets :tree="tree"/>
-                        </v-card>
-                    </v-flex>
-                </v-layout>
-
-
-                <!--<v-expansion-panel-content>-->
-                <!--<subheader slot="header" icon="call_split" title="USAGE"/>-->
-                <!--<v-card>-->
-                <!--<branches :tree="tree"/>-->
-                <!--</v-card>-->
-                <!--</v-expansion-panel-content>-->
-
-                <!--<v-expansion-panel-content>-->
-                <!--<subheader slot="header" icon="more_horiz" title="PROPRIETES"/>-->
-                <!--<v-card>-->
-                <!--<facets :tree="tree"/>-->
-                <!--</v-card>-->
-                <!--</v-expansion-panel-content>-->
-
-                <!--<v-expansion-panel-content>-->
-                <!--<subheader slot="header" icon="keyboard_tab" title="EXTERNALITES"/>-->
-                <!--<v-card>-->
-                <!--<impacts :tree="tree"/>-->
-                <!--</v-card>-->
-                <!--</v-expansion-panel-content>-->
-
-                <!--<v-expansion-panel-content>-->
-                <!--<subheader slot="header" icon="keyboard_tab" title="BILAN EXTERNALITES"/>-->
-                <!--<v-card>-->
-                <!--<bilan-impacts :tree="tree"/>-->
-                <!--</v-card>-->
-                <!--</v-expansion-panel-content>-->
-
-                <!--<v-expansion-panel-content>-->
-                <!--<subheader slot="header" icon="call_merge" title="BILAN RESSOURCES"/>-->
-                <!--<v-card>-->
-                <!--<bilan-ressources :tree="tree"/>-->
-                <!--</v-card>-->
-                <!--</v-expansion-panel-content>-->
-
+            <v-layout row wrap justify-center align-center class="ma-4">
+                <span class="title">Composition{{tree ? ' de:':''}}</span>
+                <v-card class="pl-2 pr-3 py-2 ma-1" style="border-radius:2em">
+                    <tree-head :photo="false" :tree="tree"/>
+                </v-card>
             </v-layout>
 
-        </span>
-        <add-tree-part-btn v-if="tree" :tree="tree"/>
+            <v-layout row wrap justify-center align-center class="ma-4">
+                <subheader icon="info" title="Description"/>
+                <v-flex>
+                    <v-card>
+                        <description :tree="tree"/>
+                    </v-card>
+                </v-flex>
+            </v-layout>
+
+            <v-layout row wrap justify-center align-center class="ma-4">
+                <subheader icon="more_horiz" title="Propriétés"/>
+                <v-flex>
+                    <v-card>
+                        <facets :tree="tree"/>
+                    </v-card>
+                </v-flex>
+            </v-layout>
+
+            <v-layout row wrap justify-center align-center class="ma-4">
+                <subheader slot="header" icon="keyboard_tab" title="Environnement"/>
+                <v-flex>
+                    <v-card>
+                        <bilan-impacts :tree="tree"/>
+                    </v-card>
+                </v-flex>
+            </v-layout>
+
+            <v-layout row wrap justify-center align-center class="ma-4">
+                <subheader slot="header" icon="call_split" title="Utilisé dans..."/>
+                <v-flex>
+                    <v-card>
+                        <branches :tree="tree"/>
+                    </v-card>
+                </v-flex>
+            </v-layout>
+
+            <v-layout row wrap justify-center align-center class="ma-4">
+                <subheader icon="call_merge" title="Composants"/>
+                <v-flex>
+                    <v-card>
+                        <ressources :tree="tree"/>
+                    </v-card>
+                </v-flex>
+            </v-layout>
+
+
+            <!--<v-expansion-panel-content>-->
+            <!--<subheader slot="header" icon="keyboard_tab" title="EXTERNALITES LOCALES"/>-->
+            <!--<v-card>-->
+            <!--<impacts :tree="tree"/>-->
+            <!--</v-card>-->
+            <!--</v-expansion-panel-content>-->
+
+
+            <!--<v-expansion-panel-content>-->
+            <!--<subheader slot="header" icon="call_merge" title="BILAN RESSOURCES"/>-->
+            <!--<v-card>-->
+            <!--<bilan-ressources :tree="tree"/>-->
+            <!--</v-card>-->
+            <!--</v-expansion-panel-content>-->
+
+            <add-tree-part-btn :tree="tree"/>
+        </v-layout>
+
+
     </v-flex>
 </template>
 
@@ -105,7 +105,8 @@
     import BilanImpacts from "./BilanImpacts"
     import BilanRessources from "./BilanRessources"
     import Subheader from "./Subheader"
-    import Description from "./Description"
+
+    const Description = () => import(/* webpackChunkName: "Description" */ "./Description")
 
     export default {
         components: {
@@ -121,11 +122,6 @@
             Facets
         },
         props: ['_id', 'bqt'],
-        data: function () {
-            return {
-                loading: false
-            }
-        },
         computed: {
             ...mapState(['tree'])
         },
@@ -141,11 +137,8 @@
             }),
             refresh: function () {
                 if (this.bqt && this._id) {
-                    this.loading = true
                     this.dispatchLoad({bqt: this.bqt, _id: this._id})
-                        .then(() => this.loading = false)
                         .catch(e => {
-                            this.loading = false
                             this.snack({text: "Cet élement n'existe pas ou plus", color: "orange"})
                         })
                 }

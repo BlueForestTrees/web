@@ -1,5 +1,5 @@
 <template>
-    <span>
+    <v-list>
         <v-toolbar dense v-if="anySelected" app dark class="elevation-5" color="primary">
             <v-toolbar-items>
                 <v-tooltip bottom>
@@ -31,7 +31,10 @@
             <v-spacer/>
             <trans-deco :key="trans._id" v-for="trans in items" v-if="trans.relativeTo && trans.relativeTo._id === item._id" :trans="trans"></trans-deco>
         </v-list-tile>
-    </span>
+        <v-list-tile v-if="!hasItems">
+            <h5>Pas encore d'informations</h5>
+        </v-list-tile>
+    </v-list>
 </template>
 
 <script>

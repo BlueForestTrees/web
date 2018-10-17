@@ -3,7 +3,7 @@
         <form>
             <div class="dropbox hand">
                 <input type="file" class="input-file" :accept="accept || '.xlsx'" @change="select">
-                <p v-if="uploading">Traintement en cours...</p>
+                <p v-if="uploading">Traitement en cours...</p>
                 <p v-else>Déposez votre fichier ici<br> ou cliquez pour parcourir</p>
             </div>
         </form>
