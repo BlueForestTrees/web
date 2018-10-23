@@ -69,7 +69,7 @@ if (conf.mode === "development") {
     htmlWebpackPlugin.options.versionVuetify = versions.vuetify
 }
 
-if (conf.mode === "production") {
+if (conf.mode !== "production") {
     conf.output = {
         path: path.resolve(__dirname, 'dist/www'),
         chunkFilename: '[name].[chunkhash].js',
