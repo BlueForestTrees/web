@@ -71,7 +71,7 @@ if (conf.mode === "development") {
 
 if (conf.mode === "production") {
     conf.output = {
-        path: path.resolve(__dirname, 'dist/files/var/www/blueforest.org'),
+        path: path.resolve(__dirname, 'dist/www'),
         chunkFilename: '[name].[chunkhash].js',
         publicPath: '/'
     }
@@ -91,8 +91,8 @@ if (conf.mode === "production") {
 }
 
 function other() {
-    conf.plugins.push(new Visualizer({filename: '../../../../visualizer/statistics.html'}))
-    conf.plugins.push(new CopyWebpackPlugin([{from: 'nginx', to: '../../../etc/nginx/blueforest.org/web'}]))
+    conf.plugins.push(new Visualizer({filename: '../statistics.html'}))
+    conf.plugins.push(new CopyWebpackPlugin([{from: 'nginx.conf', to: '../nginx'}]))
 }
 
 module.exports = conf
