@@ -1,4 +1,5 @@
 FROM node AS build
+
 WORKDIR /app
 COPY . .
 RUN yarn install

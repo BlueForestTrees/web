@@ -8,6 +8,8 @@ var versions = require('./package.json').dependencies
 
 var NODE_ENV = process.env.NODE_ENV
 
+console.log("NODE_ENV === ", NODE_ENV)
+
 var conf = {
     mode: NODE_ENV,
     entry: './src/index.js',
@@ -69,7 +71,7 @@ if (conf.mode === "development") {
     htmlWebpackPlugin.options.versionVuetify = versions.vuetify
 }
 
-if (conf.mode !== "production") {
+if (conf.mode === "production") {
     conf.output = {
         path: path.resolve(__dirname, 'dist/www'),
         chunkFilename: '[name].[chunkhash].js',
