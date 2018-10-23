@@ -7,5 +7,5 @@ RUN yarn build
 
 FROM nginx:stable
 COPY --from=build /app/dist/www/ /var/www
-COPY /app/dist/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/dist/nginx/nginx.conf /etc/nginx/conf.d/default.conf
 CMD ["nginx -g 'daemon off;'"]
