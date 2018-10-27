@@ -3,6 +3,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 const Tree = () => import(/* webpackChunkName: "Tree" */ '../vue/tree/Tree.vue')
+const Equivalence = () => import(/* webpackChunkName: "Equivalence" */ '../vue/equivalence/Equivalence.vue')
 const Basket = () => import (/* webpackChunkName: "Basket" */ '../vue/basket/Basket')
 const Imports = () => import(/* webpackChunkName: "Imports" */ '../vue/import/Imports')
 const Root = () => import(/* webpackChunkName: "Root" */ '../vue/tree/Root')
@@ -21,7 +22,7 @@ const CreateTree = () => import(/* webpackChunkName: "CreateTree" */ '../vue/tre
 Vue.use(VueRouter)
 
 export default new VueRouter({
-    mode: 'history',
+    type: 'history',
     base: "/",
     routes: [
         {
@@ -42,6 +43,12 @@ export default new VueRouter({
                     name: GO.TREE,
                     path: "tree/:bqt/:_id",
                     component: Tree,
+                    props: true
+                },
+                {
+                    name: GO.EQUIV,
+                    path: "equiv/:bqt/:_id/:sbqt/:s_id",
+                    component: Equivalence,
                     props: true
                 },
                 {

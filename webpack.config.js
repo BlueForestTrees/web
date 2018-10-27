@@ -11,7 +11,7 @@ var NODE_ENV = process.env.NODE_ENV
 console.log("NODE_ENV === ", NODE_ENV)
 
 var conf = {
-    mode: NODE_ENV,
+    type: NODE_ENV,
     entry: './src/index.js',
     resolve: {
         extensions: ['.js', '.vue', '.json'],
@@ -41,7 +41,7 @@ var conf = {
     }
 }
 
-if (conf.mode === "development") {
+if (conf.type === "development") {
 
     var convert = require('koa-connect')
     var history = require('connect-history-api-fallback')
@@ -71,7 +71,7 @@ if (conf.mode === "development") {
     htmlWebpackPlugin.options.versionVuetify = versions.vuetify
 }
 
-if (conf.mode === "production") {
+if (conf.type === "production") {
     conf.output = {
         path: path.resolve(__dirname, 'dist/www'),
         chunkFilename: '[name].[chunkhash].js',

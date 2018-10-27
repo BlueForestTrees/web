@@ -1,45 +1,37 @@
 <template>
-    <v-list>
-        <template v-if="hasItems" v-for="item in items">
-            <v-layout row align-center :key="item._id">
-                <v-icon :style="{color:item.color}">lens</v-icon>
-                {{qtUnitName(item)}}
-            </v-layout>
-            <v-divider/>
+    <selectable-list :items="items" :maxSelectionSize="1" :selection="selection">
+        <template slot="bar" slot-scope="{ s }">
+            <v-toolbar-items>
+                <v-tooltip bottom>
+                    <v-btn slot="activator" flat dense @click="">Equivalence<v-icon>arrow_right_alt</v-icon><v-icon>search</v-icon></v-btn>
+                    <span style="pointer-events: none">Trouver des équivalences</span>
+                </v-tooltip>
+            </v-toolbar-items>
+            <v-spacer/>
+            <v-toolbar-items>
+                <v-tooltip bottom>
+                    <v-btn slot="activator" icon dense @click="s.unselect()"><v-icon>close</v-icon></v-btn>
+                    <span style="pointer-events: none">Fermer</span>
+                </v-tooltip>
+            </v-toolbar-items>
         </template>
-        <v-list-tile v-if="!hasItems">
-            <h5>Pas encore d'informations</h5>
-        </v-list-tile>
-    </v-list>
+        <h5 slot="no-items">Ce produit ne contient pas encore d'impacts sur l'environnement.</h5>
+    </selectable-list>
 </template>
 
 <script>
-    import {Dial} from "../../const/dial"
     import {qtUnitName} from "../../services/calculations"
-    import QtUnit from "../common/QtUnit"
-    import Subheader from "./Subheader"
+    import SelectableList from "../common/SelectableList"
 
     export default {
         components: {
-            Subheader,
-            QtUnit,
+            SelectableList,
         },
-        data() {
-            return {
-                Dial,
-                showBilan: false
-            }
-        },
-
-        props: ['tree'],
+        props: ['tree','selection'],
         computed: {
-            hasItems: function () {
-                return this.items && !!this.items.length && this.items.length > 0
-            },
             items: function () {
                 return this.tree && this.tree.impactsTank
             }
-
         },
         methods: {
             qtUnitName

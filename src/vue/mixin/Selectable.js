@@ -48,7 +48,7 @@ export default {
             }
             if (!removed) {
                 this.selection.push(item)
-                if (this.maxSelectionSize < this.selection.length) {
+                if (this.maxSelectionSize && this.maxSelectionSize < this.selection.length) {
                     this.selection.splice(0, this.selection.length - this.maxSelectionSize)
                 }
             }

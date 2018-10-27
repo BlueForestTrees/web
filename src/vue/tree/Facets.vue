@@ -1,67 +1,53 @@
 <template>
-    <v-list>
-        <template v-if="hasItems" v-for="item in items">
-            <v-layout row align-center :key="item._id">
-                <v-icon :style="{color:item.color}">lens</v-icon>
-                {{qtUnitName(item)}}
-            </v-layout>
-            <v-divider/>
+    <selectable-list :items="facets" :maxSelectionSize="1" :selection="selection">
+        <template slot="bar" slot-scope="{ s }">
+            <v-toolbar-items>
+                <v-tooltip bottom>
+                    <v-btn slot="activator" flat dense @click="goEquiv(s.oneSelected)">Equivalence
+                        <v-icon>arrow_right_alt</v-icon>
+                        <v-icon>search</v-icon>
+                    </v-btn>
+                    <span style="pointer-events: none">Trouver des équivalences</span>
+                </v-tooltip>
+            </v-toolbar-items>
+            <v-spacer/>
+            <v-toolbar-items>
+                <v-tooltip bottom>
+                    <v-btn slot="activator" icon dense @click="s.unselect()">
+                        <v-icon>close</v-icon>
+                    </v-btn>
+                    <span style="pointer-events: none">Fermer</span>
+                </v-tooltip>
+            </v-toolbar-items>
         </template>
-        <v-list-tile v-if="!hasItems">
-            <h5>Pas encore d'informations</h5>
-        </v-list-tile>
-    </v-list>
+        <h5 slot="no-items">Ce produit ne contient pas encore de propriétés.</h5>
+    </selectable-list>
 </template>
 
 <script>
-    import Do from "../../const/do"
-    import {mapActions, mapMutations} from 'vuex'
-    import {Dial} from "../../const/dial"
+    import SelectableList from "../common/SelectableList"
     import On from "../../const/on"
-    import {getRandomColor, hasQuantity, qtUnitName} from "../../services/calculations"
-    import QtUnit from "../common/QtUnit"
-    import selectable from "../mixin/Selectable"
-    import Subheader from "./Subheader"
-
+    import {mapActions} from 'vuex'
     export default {
         components: {
-            Subheader,
-            QtUnit,
+            SelectableList,
         },
-        data() {
-            return {
-                Dial,
-                // selection: []
-            }
-        },
-        mixins: [selectable],
-        props: ['tree'],
+        props: ['tree', 'selection'],
         computed: {
-            items: function () {
-                return this.facets
-            },
-            hasItems: function () {
-                return this.items && this.items.length && this.items.length > 0
-            },
             facets: function () {
                 return this.tree && this.tree.facets
             },
-            quantity: function () {
-                return qtUnitName({name: "Quantité", ...this.tree.trunk.quantity})
-            }
         },
         methods: {
-            ...mapActions({showDialog: On.SHOW_DIALOG, dispatchDeleteFacets: On.DELETE_FACETS}),
-            deleteItems() {
-                this.dispatchDeleteFacets({facets: this.facets, toDelete: this.selection})
-            },
-            qtUnitName, hasQuantity, getRandomColor
+            ...mapActions({dispatchGoEquiv: On.GO_EQUIV}),
+            goEquiv(facet) {
+                this.dispatchGoEquiv({
+                    _id: this.tree._id,
+                    bqt: this.tree.trunk.quantity.bqt,
+                    s_id: facet._id,
+                    sbqt: facet.quantity.bqt
+                })
+            }
         }
     }
 </script>
-
-<style>
-    .selected {
-        color: #FF0000
-    }
-</style>

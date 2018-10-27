@@ -9,6 +9,8 @@ const userCache = cache({maxLength: 200})
 const cached = async (method, uri, cache) => cache.get(uri) || cache.put(uri, await get(uri))
 
 export default {
+    searchByFacet: ({bqt, _id}) => get(`/api/facet/equiv/${bqt}/${_id}`),
+    searchByImpact: ({bqt, _id}) => get(`/api/impact/equiv/${bqt}/${_id}`),
     searchFacetEntry: namepart => get(`/api/facetEntry${paramsOf({q: namepart})}`),
     searchImpactEntry: namepart => get(`/api/impactEntry${paramsOf({q: namepart})}`),
     searchTrunk: ({g, term, type, aidx, ps, cat, oid}) => cached(get, `/api/tree/trunks${paramsOf({g, q: term, t: type, aidx, ps, ...cat, oid})}`, searchTrunkCache),

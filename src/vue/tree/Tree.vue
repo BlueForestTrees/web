@@ -37,7 +37,7 @@
                 <subheader icon="more_horiz" title="Propriétés"/>
                 <v-flex>
                     <v-card>
-                        <facets :tree="tree"/>
+                        <facets :tree="tree" :selection="selection"/>
                     </v-card>
                 </v-flex>
             </v-layout>
@@ -46,7 +46,7 @@
                 <subheader slot="header" icon="keyboard_tab" title="Environnement"/>
                 <v-flex>
                     <v-card>
-                        <bilan-impacts :tree="tree"/>
+                        <bilan-impacts :tree="tree" :selection="selection"/>
                     </v-card>
                 </v-flex>
             </v-layout>
@@ -120,6 +120,11 @@
             Ressources,
             Branches,
             Facets
+        },
+        data() {
+            return {
+                selection: []
+            }
         },
         props: ['_id', 'bqt'],
         computed: {

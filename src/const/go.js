@@ -11,6 +11,7 @@ export const GO = {
     BASKET: 'basket',
     TREE_EMPTY: 'emptyTree',
     TREE: 'tree',
+    EQUIV: 'equiv',
     CREATE_TREE: 'createTree',
     ROOT: 'root',
     COMPARE_EMPTY: 'compareEmpty',
