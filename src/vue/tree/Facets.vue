@@ -20,6 +20,7 @@
                 </v-tooltip>
             </v-toolbar-items>
         </template>
+
         <h5 slot="no-items">Ce produit ne contient pas encore de propriétés.</h5>
     </selectable-list>
 </template>

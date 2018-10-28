@@ -22,7 +22,7 @@ const CreateTree = () => import(/* webpackChunkName: "CreateTree" */ '../vue/tre
 Vue.use(VueRouter)
 
 export default new VueRouter({
-    type: 'history',
+    mode: 'history',
     base: "/",
     routes: [
         {

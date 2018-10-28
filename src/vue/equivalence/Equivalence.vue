@@ -8,7 +8,6 @@
             <v-layout row wrap justify-center align-center class="ma-4">
                 <v-card class="pl-2 pr-3 py-2 ma-1" style="border-radius:2em">
                     <v-container>
-
                     <v-layout row align-center v-if="filter"><v-flex class="display-1">Produits avec {{qtUnitName(filter)}}</v-flex></v-layout>
                     <tree-head :photo="false" :tree="tree" v-if="tree"/>
                     <loader v-else/>
@@ -101,7 +100,7 @@
                     this.type = "facet"
                     this.filter = attribut
                 } else {
-                    attribut = this.tree && this.tree.impactsTank && [find(this.tree.impactsTank, "_id", this.s_id)]
+                    attribut = this.tree && this.tree.impactsTank && find(this.tree.impactsTank, "_id", this.s_id)
                     if (attribut) {
                         this.type = "impact"
                         this.filter = attribut
