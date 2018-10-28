@@ -8,37 +8,44 @@
             <v-layout row wrap justify-center align-center class="ma-4">
                 <v-card class="pl-2 pr-3 py-2 ma-1" style="border-radius:2em">
                     <v-container>
-                    <v-layout row align-center v-if="filter"><v-flex class="display-1">Produits avec {{qtUnitName(filter)}}</v-flex></v-layout>
-                    <tree-head :photo="false" :tree="tree" v-if="tree"/>
-                    <loader v-else/>
-                    <selectable-list :items="equivalences" :max-selection-size="1">
-                        <template slot="bar" slot-scope="{ s }">
-                            <v-toolbar-items>
-                                <!--<v-tooltip bottom>-->
-                                    <!--<v-btn slot="activator" v-if="s.selectionCount" flat dense-->
-                                           <!--@click="addToBasket(s.selection);s.unselect()">Panier<v-icon>arrow_right_alt</v-icon><v-icon>shopping_basket</v-icon></v-btn>-->
-                                    <!--<span style="pointer-events: none">Ajouter au panier</span>-->
-                                <!--</v-tooltip>-->
-                                <v-tooltip bottom>
-                                    <v-btn slot="activator" v-if="s.oneSelected" flat dense @click="goTree({_id:s.oneSelected._id, trunk:s.oneSelected})">ouvrir
-                                        <v-icon>category</v-icon>
-                                    </v-btn>
-                                    <span style="pointer-events: none">Ouvrir</span>
-                                </v-tooltip>
-                            </v-toolbar-items>
-                            <v-spacer/>
-                            <v-toolbar-items>
-                                <v-tooltip bottom>
-                                    <v-btn slot="activator" icon dense @click="s.unselect()"><v-icon>close</v-icon></v-btn>
-                                    <span style="pointer-events: none">Fermer</span>
-                                </v-tooltip>
-                            </v-toolbar-items>
-                        </template>
-                        <span slot="no-items"/>
-                    </selectable-list>
+                        <v-layout row align-center v-if="filter">
+                            <v-flex class="display-1">Produits avec: {{qtUnitName(filter)}}</v-flex>
+                        </v-layout>
+                        <tree-head :photo="false" :tree="tree" v-if="tree"/>
+                        <loader v-else/>
+                        <selectable-list :items="equivalences" :max-selection-size="1">
+                            <template slot="bar" slot-scope="{ s }">
+                                <v-toolbar-items>
+                                    <v-tooltip bottom>
+                                        <v-btn slot="activator" v-if="s.selectionCount" flat dense
+                                               @click="addToBasket(s.selection);s.unselect()">Panier
+                                            <v-icon>arrow_right_alt</v-icon>
+                                            <v-icon>shopping_basket</v-icon>
+                                        </v-btn>
+                                        <span style="pointer-events: none">Ajouter au panier</span>
+                                    </v-tooltip>
+                                    <v-tooltip bottom>
+                                        <v-btn slot="activator" v-if="s.oneSelected" flat dense @click="goTree({_id:s.oneSelected._id, trunk:s.oneSelected})">ouvrir
+                                            <v-icon>category</v-icon>
+                                        </v-btn>
+                                        <span style="pointer-events: none">Ouvrir</span>
+                                    </v-tooltip>
+                                </v-toolbar-items>
+                                <v-spacer/>
+                                <v-toolbar-items>
+                                    <v-tooltip bottom>
+                                        <v-btn slot="activator" icon dense @click="s.unselect()">
+                                            <v-icon>close</v-icon>
+                                        </v-btn>
+                                        <span style="pointer-events: none">Fermer</span>
+                                    </v-tooltip>
+                                </v-toolbar-items>
+                            </template>
+                            <span slot="no-items"/>
+                        </selectable-list>
 
-                    <loader v-if="loading"/>
-                    <v-btn v-else flat @click="updateEquivalences" block>Plus</v-btn>
+                        <loader v-if="loading"/>
+                        <v-btn v-else flat @click="updateEquivalences" block>Plus</v-btn>
 
                     </v-container>
                 </v-card>
@@ -51,7 +58,7 @@
     import On from "../../const/on"
     import Loader from "../loader/Loader"
     import TreeHead from "../tree/TreeHead"
-    import {find} from "unit-manip"
+    import {find, map} from "unit-manip"
     import SelectableList from "../common/SelectableList"
     import {qtUnitName} from "../../services/calculations"
 
@@ -80,9 +87,12 @@
                 dispatchSearchEquiv: On.SEARCH_EQUIV,
                 snack: On.SNACKBAR,
                 goTree: On.GO_TREE,
-                addToBasket: On.ADD_TO_BASKET,
+                dispatchAddToBasket: On.ADD_TO_BASKET,
                 showDialog: On.SHOW_DIALOG
             }),
+            addToBasket: function (selection) {
+                this.dispatchAddToBasket(map(selection, e => ({_id: e._id, trunk: e})))
+            },
             refresh: async function () {
                 try {
                     this.tree = await this.dispatchLoad({bqt: this.bqt, _id: this._id})

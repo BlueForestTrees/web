@@ -10,7 +10,7 @@ export default {
     [On.CREATE_TRUNK]: async ({commit, state, dispatch}, trunk) => api.postTrunk(trunk),
     
     [On.LOAD_TRUNK]: ({commit}, {bqt, _id}) => api.getTrunk(_id)
-        .then(trunk => (trunk.quantity.bqt = bqt) && trunk),
+        .then(trunk => (trunk.quantity.bqt = bqt || 1) && trunk),
     
     [On.RENAME_TRUNK]: ({commit}, {trunk, newName}) =>
         api.putTrunkName(trunk._id, newName)
