@@ -94,7 +94,10 @@ if (conf.mode === "production") {
 
 function other() {
     conf.plugins.push(new Visualizer({filename: '../statistics.html'}))
-    conf.plugins.push(new CopyWebpackPlugin([{from: 'nginx.conf', to: '../nginx'}]))
+    conf.plugins.push(new CopyWebpackPlugin([
+        {from: 'nginx/mime.types', to: '../nginx'},
+        {from: 'nginx/nginx.conf', to: '../nginx'}
+    ]))
 }
 
 module.exports = conf
