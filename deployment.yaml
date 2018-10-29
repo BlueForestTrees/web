@@ -1,0 +1,59 @@
+apiVersion: apps/v1beta2
+kind: DaemonSet
+metadata:
+  annotations:
+    deprecated.daemonset.template.generation: "1"
+    field.cattle.io/creatorId: user-rddjj
+    field.cattle.io/publicEndpoints: '[{"addresses":["51.68.226.235"],"port":443,"protocol":"HTTPS","serviceName":"bf:ingress-85736c27394d60ecb1ffa2ef59db5e3f","ingressName":"bf:front","hostname":"blueforest.org","allNodes":true}]'
+  creationTimestamp: 2018-10-27T09:39:30Z
+  generation: 1
+  labels:
+    cattle.io/creator: norman
+    workload.user.cattle.io/workloadselector: daemonSet-bf-web
+  name: web
+  namespace: bf
+  resourceVersion: "681807"
+  selfLink: /apis/apps/v1beta2/namespaces/bf/daemonsets/web
+  uid: 3431e6d0-d9cc-11e8-85e2-fa163e68c03b
+spec:
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      workload.user.cattle.io/workloadselector: daemonSet-bf-web
+  template:
+    metadata:
+      annotations:
+        cattle.io/timestamp: 2018-10-27T09:39:28Z
+      creationTimestamp: null
+      labels:
+        workload.user.cattle.io/workloadselector: daemonSet-bf-web
+    spec:
+      containers:
+      - env:
+        - name: NODE_ENV
+          value: production
+        image: blueforest/web:1.3.2
+        imagePullPolicy: Always
+        name: web
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities: {}
+          privileged: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+        stdin: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        tty: true
+      dnsPolicy: ClusterFirst
+      imagePullSecrets:
+      - name: blueforest
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  updateStrategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
