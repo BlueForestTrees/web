@@ -26,7 +26,7 @@ export default {
     getRoots: _id => get(`/api/tree/root/${_id}`),
     getImpactTank: _id => get(`/api/impactTank/${_id}`),
     getDamageTank: _id => get(`/api/damageTank/${_id}`),
-    getCategories: pid => cached(get, `/api/categories${paramsOf({pid: pid || null})}`, categoriesCache),
+    getCategories: pid => cached(get, `/api/categorie${paramsOf({pid: pid || null})}`, categoriesCache),
 
 
     getMessageCount: filter => get(`/api/message/count${paramsOf(filter)}`),
