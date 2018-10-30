@@ -16,8 +16,8 @@ Vue.use(Vuetify, {
 
 new Vue({
     el: '#app',
-    router,
-    store,
+    //router,
+    //store,
     components: {App},
     template: '<App/>'
 })
