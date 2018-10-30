@@ -26,7 +26,7 @@ export default new VueRouter({
     base: "/",
     routes: [
         {
-            path: "/", component: BlueForest,
+               path: "/", component: BlueForest,
             children: [
                 {
                     name: GO.HOME,

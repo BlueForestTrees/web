@@ -65,7 +65,6 @@
                         await this.login({mail: this.mail, password: this.password})
                         this.$router.push('/')
                     } catch (e) {
-                        console.error(e)
                         this.password = null
                         this.loginFailed = true
                     }

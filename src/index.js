@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import App from './vue/App'
 import Vuetify from 'vuetify'
-import api from "./rest/api"
-import {initUnits} from "unit-manip"
 import store from "./store/store"
 import router from "./router/router"
 import css from "./css/style.css"
@@ -16,8 +14,8 @@ Vue.use(Vuetify, {
 
 new Vue({
     el: '#app',
-    //router,
-    //store,
+    router,
+    store,
     components: {App},
     template: '<App/>'
 })

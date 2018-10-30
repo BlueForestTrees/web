@@ -1,11 +1,13 @@
+import Vue from 'vue'
+import VueRessource from 'vue-resource'
 import root from 'window-or-global'
-import req from 'request-promise-lite'
 import {X_ACCESS_TOKEN} from "../const/headers"
 import isNil from 'lodash.isnil'
 import state from '../store/state'
 
-const baseUrl = root.location ? root.location.origin : 'tests/'
-export const url = (path) => baseUrl + path
+Vue.use(VueRessource)
+
+Vue.http.options.root = root.location ? root.location.origin : 'tests/'
 
 /**
  *
@@ -35,18 +37,16 @@ export const paramsOf = params => {
 
 const token = () => state.token && {[X_ACCESS_TOKEN]: state.token} || {}
 
-export const get = (path, reqOpts) => req.get(url(path), {json: true, ...reqOpts})
-export const del = (path, reqOpts) => req.del(url(path), {
-    json: true,
-    headers: {[X_ACCESS_TOKEN]: state.token}, ...reqOpts
-})
-export const post = (path, body, reqOpts) => req.post(url(path), {body, json: true, headers: {...token()}, ...reqOpts})
-export const put = (path, body, reqOpts) => req.put(url(path), {body, json: true, headers: {...token()}, ...reqOpts})
+export const get = async (url, reqOpts) => (await Vue.http.get(url, {json: true, ...reqOpts})).body
 
-export const upload = (path, formData, reqOpts) => {
+export const del = (url, reqOpts) => Vue.http.delete(url, {json: true, headers: {[X_ACCESS_TOKEN]: state.token}, ...reqOpts})
+export const post = (url, body, reqOpts) => Vue.http.post(url, body, {json: true, headers: {...token()}, ...reqOpts})
+export const put = (url, body, reqOpts) => Vue.http.put(url, body, {json: true, headers: {...token()}, ...reqOpts})
+
+export const upload = (url, formData, reqOpts) => {
     let xhr = new XMLHttpRequest()
     xhr.responseType = 'json'
-    xhr.open('POST', url(path), true)
+    xhr.open('POST', Vue.http.options.root + url, true)
 
     //Headers
     if (state.token) {
