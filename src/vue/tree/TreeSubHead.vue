@@ -2,7 +2,7 @@
     <v-layout align-center v-if="trunk" @click="$emit('nav')">
         <v-layout column>
             <v-icon x-large>{{icon}}</v-icon>
-            <v-icon v-if="!noIcon" :style="{color: trunk && trunk.color || 0}">lens</v-icon>
+            <v-icon v-if="!noIcon" :style="{color: trunk && trunk.color || 0}">panorama_fish_eye</v-icon>
             <span class="subheading" v-html="qtUnitName(trunk)" style="position:relative"></span>
         </v-layout>
     </v-layout>

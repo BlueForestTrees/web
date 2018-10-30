@@ -34,7 +34,7 @@
 
             <v-list-tile v-for="item in items" :key="item._id" @click="toggleSelect(item)" :style="{background: isSelected(item) ? '#D8E9F5' : '', transition: 'background .2s ease'}">
                 <v-icon v-if="isSelected(item)" color="primary">check_circle</v-icon>
-                <v-icon v-else :style="'color: '+item.trunk.color+';margin-right:0.2em'">lens</v-icon>
+                <v-icon v-else :style="'color: '+item.trunk.color+';margin-right:0.2em'">panorama_fish_eye</v-icon>
                 {{qtUnitName(item.trunk)}}
             </v-list-tile>
             <v-list-tile v-if="!hasItems">

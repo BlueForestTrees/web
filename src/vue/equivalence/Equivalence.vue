@@ -13,7 +13,7 @@
                         </v-layout>
                         <tree-head :photo="false" :tree="tree" v-if="tree"/>
                         <loader v-else/>
-                        <selectable-list :items="equivalences" :max-selection-size="1">
+                        <selectable-list :items="equivalences">
                             <template slot="bar" slot-scope="{ s }">
                                 <v-toolbar-items>
                                     <v-tooltip bottom>
@@ -29,6 +29,10 @@
                                             <v-icon>category</v-icon>
                                         </v-btn>
                                         <span style="pointer-events: none">Ouvrir</span>
+                                    </v-tooltip>
+                                    <v-tooltip bottom>
+                                        <v-btn slot="activator" v-if="s.twoSelected" flat dense @click="compare(s.twoSelected)">comparer<v-icon>compare_arrows</v-icon></v-btn>
+                                        <span style="pointer-events: none">Comparer</span>
                                     </v-tooltip>
                                 </v-toolbar-items>
                                 <v-spacer/>
@@ -87,6 +91,7 @@
                 dispatchSearchEquiv: On.SEARCH_EQUIV,
                 snack: On.SNACKBAR,
                 goTree: On.GO_TREE,
+                compare: On.GO_COMPARE,
                 dispatchAddToBasket: On.ADD_TO_BASKET,
                 showDialog: On.SHOW_DIALOG
             }),

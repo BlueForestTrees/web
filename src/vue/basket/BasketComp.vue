@@ -13,7 +13,7 @@
                         <v-container py-2 pr-3 pl-2 @click="toggleSelect(item)" class="hand">
                             <v-layout row align-center>
                                 <v-icon v-if="isSelected(item)" color="primary" style="margin-right:0.3em">check_circle</v-icon>
-                                <v-icon v-else :style="'color: '+item.trunk.color+';margin-right:0.3em'">lens</v-icon>
+                                <v-icon v-else :style="'color: '+item.trunk.color+';margin-right:0.3em'">panorama_fish_eye</v-icon>
                                 {{item.trunk.name}}
                             </v-layout>
                         </v-container>

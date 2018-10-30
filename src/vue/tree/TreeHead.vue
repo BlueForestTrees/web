@@ -1,7 +1,7 @@
 <template>
     <v-layout raw align-center v-if="trunk" @click="$emit('nav')">
         <photo v-if="photo" :trunk="trunk" size="100"/>
-        <v-icon v-if="!noIcon" x-large :style="{color: trunk && trunk.color || 0}">lens</v-icon>
+        <v-icon v-if="!noIcon" x-large :style="{color: trunk && trunk.color || 0}">panorama_fish_eye</v-icon>
         <span class="subheading" v-html="qtUnitName(trunk)"></span>
     </v-layout>
 </template>

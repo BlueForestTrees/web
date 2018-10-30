@@ -1,6 +1,6 @@
 <template>
     <v-list-tile v-if="item">
-        <v-icon x-large :style="{color: item.color || 0,marginRight:'0.2em'}">lens</v-icon>
+        <v-icon x-large :style="{color: item.color || 0,marginRight:'0.2em'}">panorama_fish_eye</v-icon>
         <h3>{{`${item.qt} ${item.unit} ${item.name}`}}</h3>
     </v-list-tile>
 </template>

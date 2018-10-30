@@ -1,11 +1,8 @@
-export default {
+import {mapState} from "vuex"
 
-    data: function () {
-        return {
-            selection: []
-        }
-    },
+export default {
     computed: {
+        ...mapState(['selection']),
         selectionCount() {
             return this.selection.length
         },
@@ -28,7 +25,7 @@ export default {
     },
     methods: {
         unselect: function () {
-            this.selection = []
+            this.selection.splice(0,this.selection.length)
         },
         isSelected: function (item) {
             for (let i = 0; i < this.selection.length; i++) {
@@ -41,7 +38,7 @@ export default {
             let removed = false
             for (let i = 0; i < this.selection.length; i++) {
                 if (item === this.selection[i]) {
-                    this.selection.splice(opts.after ? i + 1 : i, opts.after ? 999 : 1)
+                    this.selection.splice(opts.andAfter ? i + 1 : i, opts.andAfter ? 999 : 1)
                     removed = true
                     break
                 }

@@ -26,7 +26,7 @@
 
         <v-list-tile v-for="item in items" v-if="!item.relativeTo" :key="item._id" @click="toggleSelect(item)" :style="{background: isSelected(item) ? '#D8E9F5' : '', transition: 'background .2s ease'}">
             <v-icon v-if="isSelected(item)" color="primary">check_circle</v-icon>
-            <v-icon v-else :style="'color: '+item.trunk.color+';margin-right:0.2em'">lens</v-icon>
+            <v-icon v-else :style="'color: '+item.trunk.color+';margin-right:0.2em'">panorama_fish_eye</v-icon>
             <span>{{qtUnitName(item.trunk)}}</span>
             <v-spacer/>
             <trans-deco :key="trans._id" v-for="trans in items" v-if="trans.relativeTo && trans.relativeTo._id === item._id" :trans="trans"></trans-deco>

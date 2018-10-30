@@ -55,9 +55,8 @@
 
 <script>
     import MainDialog from "../dialog/MainDialog"
-    import {mapMutations, mapState, mapActions} from "vuex"
+    import {mapActions, mapState} from "vuex"
     import {Dial} from "../../const/dial"
-    import Do from "../../const/do"
     import On from "../../const/on"
     import {GO} from "../../const/go"
     import {initiales, overcolor} from "../../services/calculations"

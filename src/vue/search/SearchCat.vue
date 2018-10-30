@@ -61,7 +61,7 @@
             },
             pathSelect(item) {
                 if (item) {
-                    this.toggleSelect(item, {after: true})
+                    this.toggleSelect(item, {andAfter: true})
                 } else {
                     this.unselect()
                 }

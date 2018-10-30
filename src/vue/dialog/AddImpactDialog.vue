@@ -25,7 +25,7 @@
 
                 <v-card v-else>
                     <v-card-title>
-                        <v-icon large :style="{color: selectedItem.color,marginRight:'0.2em'}">lens</v-icon>
+                        <v-icon large :style="{color: selectedItem.color,marginRight:'0.2em'}">panorama_fish_eye</v-icon>
                         {{selectedItem.name}}
                         <v-spacer/>
                         <v-btn icon @click="cancelItem">

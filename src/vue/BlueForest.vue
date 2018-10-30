@@ -5,7 +5,7 @@
         <bar/>
         <span v-if="dispo.grandeurs">
 
-            <v-content style="padding-top:56px">
+            <v-content>
                 <transition :name="transitionName" mode="out-in">
                     <router-view></router-view>
                 </transition>

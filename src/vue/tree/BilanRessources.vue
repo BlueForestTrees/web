@@ -1,7 +1,7 @@
 <template>
     <span>
         <v-list-tile avatar :key="item.trunk.name" v-for="item in items">
-            <v-icon :style="{color:item.trunk.color,marginRight:'0.2em'}">lens</v-icon>{{qtUnitName(item.trunk) }}
+            <v-icon :style="{color:item.trunk.color,marginRight:'0.2em'}">panorama_fish_eye</v-icon>{{qtUnitName(item.trunk) }}
         </v-list-tile>
     </span>
 </template>
