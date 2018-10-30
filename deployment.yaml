@@ -2,18 +2,18 @@ apiVersion: apps/v1beta2
 kind: DaemonSet
 metadata:
   annotations:
-    deprecated.daemonset.template.generation: "6"
+    deprecated.daemonset.template.generation: "13"
     field.cattle.io/creatorId: user-rddjj
     field.cattle.io/publicEndpoints: '[{"addresses":["51.68.226.235"],"port":443,"protocol":"HTTPS","serviceName":"bf:ingress-196204fb02933559adcb7a3ac1f5f686","ingressName":"bf:front","hostname":"blueforest.org","allNodes":true}]'
-    kubectl.kubernetes.io/last-applied-configuration: '{"apiVersion":"apps/v1beta2","kind":"DaemonSet","metadata":{"annotations":{"deprecated.daemonset.template.generation":"4","field.cattle.io/creatorId":"user-rddjj","field.cattle.io/publicEndpoints":"[{\"addresses\":[\"51.68.226.235\"],\"port\":443,\"protocol\":\"HTTPS\",\"serviceName\":\"bf:ingress-196204fb02933559adcb7a3ac1f5f686\",\"ingressName\":\"bf:front\",\"hostname\":\"blueforest.org\",\"allNodes\":true}]"},"creationTimestamp":"2018-10-27T09:39:30Z","generation":4,"labels":{"cattle.io/creator":"norman","workload.user.cattle.io/workloadselector":"daemonSet-bf-web"},"name":"web","namespace":"bf","resourceVersion":"940476","selfLink":"/apis/apps/v1beta2/namespaces/bf/daemonsets/web","uid":"3431e6d0-d9cc-11e8-85e2-fa163e68c03b"},"spec":{"revisionHistoryLimit":10,"selector":{"matchLabels":{"workload.user.cattle.io/workloadselector":"daemonSet-bf-web"}},"template":{"metadata":{"annotations":{"cattle.io/timestamp":"2018-10-29T11:37:40Z"},"creationTimestamp":null,"labels":{"workload.user.cattle.io/workloadselector":"daemonSet-bf-web"}},"spec":{"containers":[{"env":[{"name":"NODE_ENV","value":"production"}],"image":"blueforest/web:1.3.6","imagePullPolicy":"Always","name":"web","resources":{},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{},"privileged":false,"readOnlyRootFilesystem":false,"runAsNonRoot":false},"stdin":true,"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","tty":true}],"dnsPolicy":"ClusterFirst","imagePullSecrets":[{"name":"blueforest"}],"restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"terminationGracePeriodSeconds":30}},"updateStrategy":{"rollingUpdate":{"maxUnavailable":1},"type":"RollingUpdate"}}}'
+    kubectl.kubernetes.io/last-applied-configuration: '{"apiVersion":"apps/v1beta2","kind":"DaemonSet","metadata":{"annotations":{"deprecated.daemonset.template.generation":"6","field.cattle.io/creatorId":"user-rddjj","field.cattle.io/publicEndpoints":"[{\"addresses\":[\"51.68.226.235\"],\"port\":443,\"protocol\":\"HTTPS\",\"serviceName\":\"bf:ingress-196204fb02933559adcb7a3ac1f5f686\",\"ingressName\":\"bf:front\",\"hostname\":\"blueforest.org\",\"allNodes\":true}]"},"creationTimestamp":"2018-10-27T09:39:30Z","generation":6,"labels":{"cattle.io/creator":"norman","workload.user.cattle.io/workloadselector":"daemonSet-bf-web"},"name":"web","namespace":"bf","resourceVersion":"943691","selfLink":"/apis/apps/v1beta2/namespaces/bf/daemonsets/web","uid":"3431e6d0-d9cc-11e8-85e2-fa163e68c03b"},"spec":{"revisionHistoryLimit":10,"selector":{"matchLabels":{"workload.user.cattle.io/workloadselector":"daemonSet-bf-web"}},"template":{"metadata":{"annotations":{"cattle.io/timestamp":"2018-10-29T12:02:35Z"},"creationTimestamp":null,"labels":{"workload.user.cattle.io/workloadselector":"daemonSet-bf-web"}},"spec":{"containers":[{"env":[{"name":"NODE_ENV","value":"production"}],"image":"blueforest/web:1.3.8","imagePullPolicy":"Always","name":"web","resources":{},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{},"privileged":false,"readOnlyRootFilesystem":false,"runAsNonRoot":false},"stdin":true,"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","tty":true}],"dnsPolicy":"ClusterFirst","imagePullSecrets":[{"name":"blueforest"}],"restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"terminationGracePeriodSeconds":30}},"updateStrategy":{"rollingUpdate":{"maxUnavailable":1},"type":"RollingUpdate"}}}'
   creationTimestamp: 2018-10-27T09:39:30Z
-  generation: 6
+  generation: 13
   labels:
     cattle.io/creator: norman
     workload.user.cattle.io/workloadselector: daemonSet-bf-web
   name: web
   namespace: bf
-  resourceVersion: "943691"
+  resourceVersion: "1102561"
   selfLink: /apis/apps/v1beta2/namespaces/bf/daemonsets/web
   uid: 3431e6d0-d9cc-11e8-85e2-fa163e68c03b
 spec:
@@ -24,7 +24,8 @@ spec:
   template:
     metadata:
       annotations:
-        cattle.io/timestamp: 2018-10-29T12:02:35Z
+        cattle.io/timestamp: 2018-10-30T09:11:05Z
+        field.cattle.io/ports: '[null]'
       creationTimestamp: null
       labels:
         workload.user.cattle.io/workloadselector: daemonSet-bf-web
@@ -33,7 +34,7 @@ spec:
       - env:
         - name: NODE_ENV
           value: production
-        image: blueforest/web:1.3.9
+        image: blueforest/web:1.3.9-debug
         imagePullPolicy: Always
         name: web
         resources: {}
