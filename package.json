@@ -1,6 +1,6 @@
 {
   "name": "web-blueforest",
-  "version": "1.3.9-debug",
+  "version": "1.4.0",
   "description": "web for trees",
   "main": "index.js",
   "author": "slim",
