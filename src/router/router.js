@@ -5,7 +5,6 @@ import VueRouter from 'vue-router'
 const Tree = () => import(/* webpackChunkName: "Tree" */ '../vue/tree/Tree.vue')
 const Equivalence = () => import(/* webpackChunkName: "Equivalence" */ '../vue/equivalence/Equivalence.vue')
 const Basket = () => import (/* webpackChunkName: "Basket" */ '../vue/basket/Basket')
-const Imports = () => import(/* webpackChunkName: "Imports" */ '../vue/import/Imports')
 const Root = () => import(/* webpackChunkName: "Root" */ '../vue/tree/Root')
 const Home = () => import(/* webpackChunkName: "Home" */ '../vue/home/Home')
 const Search = () => import(/* webpackChunkName: "Search" */ '../vue/search/Search')
@@ -93,13 +92,7 @@ export default new VueRouter({
                     path: "compare/:leftId/:rightId",
                     component: Compare,
                     props: true
-                },
-                {
-                    name: GO.BULK_TRUNK,
-                    path: "imports",
-                    component: Imports,
-                    props: true
-                },
+                }
             ]
         },
         {name: GO.PLAN, path: "/plan", component: Plan},

@@ -5,7 +5,6 @@ export const GO = {
     PLAN_INTRO: 'planIntro',
     PLAN: 'plan',
     HOME: 'home',
-    BULK_TRUNK: 'bulkTrunk',
     IMPACT_ENTRY: 'impactEntry',
     SEARCH: 'search',
     BASKET: 'basket',
