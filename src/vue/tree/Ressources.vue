@@ -1,40 +1,22 @@
 <template>
-    <v-list>
-        <v-toolbar dense v-if="anySelected" app dark class="elevation-5" color="primary">
+    <selectable-list :items="items" :maxSelectionSize="1" :selection="selection">
+        <template slot="bar" slot-scope="{ s }">
             <v-toolbar-items>
                 <v-tooltip bottom>
-                    <v-btn slot="activator" v-if="oneSelected" flat @click="goTree(oneSelected)"><span class="hidden-xs-only">ouvrir</span><v-icon>category</v-icon></v-btn>
-                    <span style="pointer-events: none">Ouvrir</span>
-                </v-tooltip>
-                <v-tooltip bottom>
-                    <v-btn slot="activator" v-if="oneSelected" flat @click="goRoot(oneSelected)"><span class="hidden-xs-only">modifier</span><v-icon>edit</v-icon></v-btn>
-                    <span style="pointer-events: none">Modifier</span>
-                </v-tooltip>
-                <v-tooltip bottom>
-                    <v-btn slot="activator" v-if="anySelected" flat @click="remove(anySelected)"><span class="hidden-xs-only">supprimer</span><v-icon>delete_forever</v-icon></v-btn>
-                    <span style="pointer-events: none">Supprimer</span>
+                    <v-btn slot="activator" flat dense @click="goEquiv(s.oneSelected)">Equivalence<v-icon>arrow_right_alt</v-icon><v-icon>search</v-icon></v-btn>
+                    <span style="pointer-events: none">Trouver des équivalences</span>
                 </v-tooltip>
             </v-toolbar-items>
             <v-spacer/>
             <v-toolbar-items>
                 <v-tooltip bottom>
-                    <v-btn slot="activator" icon dense @click="unselect()"><v-icon>close</v-icon></v-btn>
+                    <v-btn slot="activator" icon dense @click="s.unselect()"><v-icon>close</v-icon></v-btn>
                     <span style="pointer-events: none">Fermer</span>
                 </v-tooltip>
             </v-toolbar-items>
-        </v-toolbar>
-
-        <v-list-tile v-for="item in items" v-if="!item.relativeTo" :key="item._id" @click="toggleSelect(item)" :style="{background: isSelected(item) ? '#D8E9F5' : '', transition: 'background .2s ease'}">
-            <v-icon v-if="isSelected(item)" color="primary">check_circle</v-icon>
-            <v-icon v-else :style="'color: '+item.trunk.color+';margin-right:0.2em'">lens</v-icon>
-            <span>{{qtUnitName(item.trunk)}}</span>
-            <v-spacer/>
-            <trans-deco :key="trans._id" v-for="trans in items" v-if="trans.relativeTo && trans.relativeTo._id === item._id" :trans="trans"></trans-deco>
-        </v-list-tile>
-        <v-list-tile v-if="!hasItems">
-            <h5>Pas encore d'informations</h5>
-        </v-list-tile>
-    </v-list>
+        </template>
+        <h5 slot="no-items">Ce produit ne contient pas encore d'impacts sur l'environnement.</h5>
+    </selectable-list>
 </template>
 
 <script>
@@ -47,30 +29,27 @@
     import Subheader from "./Subheader"
     import {bqtGToQtUnit} from "unit-manip"
     import TransDeco from "./TransDeco"
+    import SelectableList from "../common/SelectableList"
 
     export default {
         components: {
-            TransDeco,
-            Subheader,
-            QtUnit
+            SelectableList,
         },
-        mixins: [selectable, goTree],
-        props: ['tree'],
-        data() {
-            return {
-                showBilan: false
-            }
-        },
+        props: ['tree', 'selection'],
+        mixins: [goTree],
         computed: {
             items: function () {
                 return this.tree && this.tree.roots
-            },
-            hasItems: function () {
-                return this.items && this.items.length && this.items.length > 0
             }
         },
 
         methods: {
+            ...mapActions({
+                dispatchGoRoot: On.GO_ROOT,
+                deleteRoot: On.DELETE_ROOT,
+                dispatchLoadRoots: On.LOAD_ROOTS,
+                dispatchGoEquiv: On.GO_EQUIV
+            }),
             goRoot: function (root) {
                 this.dispatchGoRoot({treeId: this.tree._id, rootId: root._id})
                 this.unselect()
@@ -81,12 +60,14 @@
                 }
                 this.unselect()
             },
-
-            ...mapActions({
-                dispatchGoRoot: On.GO_ROOT,
-                deleteRoot: On.DELETE_ROOT,
-                dispatchLoadRoots: On.LOAD_ROOTS
-            }),
+            goEquiv(root) {
+                this.dispatchGoEquiv({
+                    _id: this.tree._id,
+                    bqt: this.tree.trunk.quantity.bqt,
+                    s_id: root._id,
+                    sbqt: root.trunk.quantity.bqt
+                })
+            },
             qtUnitName, getRandomColor, bqtGToQtUnit
         }
     }
