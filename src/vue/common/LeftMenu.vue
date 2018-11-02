@@ -48,16 +48,6 @@
                         <v-list-tile-title>Catalogue des impacts</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
-                <v-list-tile @click="goBulkTrunk">
-                    <v-list-tile-action>
-                        <v-layout row>
-                            <v-icon color="primary">vertical_align_top</v-icon>
-                        </v-layout>
-                    </v-list-tile-action>
-                    <v-list-tile-content>
-                        <v-list-tile-title>Imports</v-list-tile-title>
-                    </v-list-tile-content>
-                </v-list-tile>
             </v-list-group>
             <v-list-tile @click="nav.leftMenuVisible = false;showBugMessages()">
                 <v-list-tile-action>
@@ -137,7 +127,6 @@
                 dispatchDeleteTrunk: On.DELETE_TREE,
                 goHome: On.GO_HOME,
                 goImpactEntry: On.GO_IMPACT_ENTRY,
-                goBulkTrunk: On.GO_BULK_TRUNK,
                 goCreateTree: On.GO_CREATE_TREE,
                 dispatchShowMessages: On.SHOW_MESSAGES
             })

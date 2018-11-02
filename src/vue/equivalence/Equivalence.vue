@@ -13,7 +13,7 @@
                         </v-layout>
                         <tree-head :photo="false" :tree="tree" v-if="tree"/>
                         <loader v-else/>
-                        <selectable-list :items="equivalences">
+                        <selectable-list :items="equivalences" :exceptId="_id">
                             <template slot="bar" slot-scope="{ s }">
                                 <v-toolbar-items>
                                     <v-tooltip bottom>
@@ -114,18 +114,28 @@
                 if (attribut) {
                     this.type = "facet"
                     this.filter = attribut
-                } else {
-                    attribut = this.tree && this.tree.impactsTank && find(this.tree.impactsTank, "_id", this.s_id)
-                    if (attribut) {
-                        this.type = "impact"
-                        this.filter = attribut
-                    }
+                    return
                 }
+
+                attribut = this.tree && this.tree.impactsTank && find(this.tree.impactsTank, "_id", this.s_id)
+                if (attribut) {
+                    this.type = "impact"
+                    this.filter = attribut
+                    return
+                }
+
+                attribut = this.tree && this.tree.roots && find(this.tree.roots, "_id", this.s_id)
+                if (attribut) {
+                    this.type = "root"
+                    this.filter = attribut
+                    return
+                }
+                console.warn("update filter but no equiv attribute")
             },
             async updateEquivalences() {
                 if (this.filter) {
                     this.loading = true
-                    await this.dispatchSearchEquiv({results: this.equivalences, type: this.type, bqt: this.sbqt, _id: this.filter[`${this.type}Id`]})
+                    await this.dispatchSearchEquiv({results: this.equivalences, type: this.type, bqt: this.sbqt, _id: this.filter[(this.type === "root" ? "_id" : `${this.type}Id`)]})
                     this.loading = false
                 }
             }

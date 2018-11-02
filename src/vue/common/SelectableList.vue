@@ -4,7 +4,7 @@
             <slot name="bar" :s="this"></slot>
         </v-toolbar>
 
-        <template v-if="hasItems" v-for="item in items">
+        <template v-if="hasItems && item._id !== exceptId" v-for="item in items">
             <div :key="item._id" @click="toggleSelect(item)" class="v-list__tile" :style="{paddingTop:'8px',paddingBottom:'8px',height:'auto', background: isSelected(item) ? '#D8E9F5' : '', transition: 'background .2s ease'}">
                 <v-layout row>
                     <v-icon v-if="isSelected(item)" color="primary" style="margin-right:0.3em">check_circle</v-icon>
@@ -27,7 +27,7 @@
 
     export default {
         name: "selectable-list",
-        props: {nobar: Boolean, items: Array, maxSelectionSize: Number},
+        props: {nobar: Boolean, items: Array, maxSelectionSize: Number, exceptId: String},
         mixins: [selectable],
         computed: {
             hasItems: function () {

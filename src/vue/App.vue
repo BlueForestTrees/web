@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <v-app :light="!nav.dark" :dark="nav.dark">
+        <v-app >
             <transition name="slide-fade" mode="out-in">
                 <router-view></router-view>
             </transition>
@@ -14,7 +14,7 @@
     export default {
         name: "app",
         computed: {
-            ...mapState(['nav'])
+           ...mapState(['nav'])
         }
     }
 </script>

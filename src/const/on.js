@@ -26,7 +26,6 @@ export default {
     EXCEPTION: 'exception',
     SWITCH_LEFT_MENU: 'switchLeftMenu',
     GO_IMPACT_ENTRY: 'goImpactEntry',
-    GO_BULK_TRUNK: "goBulkTrunk",
     GO_CREATE_TREE: "goCreateTree",
     GO_EQUIV: "goEquiv",
     GO_HOME: 'goHome',

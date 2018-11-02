@@ -30,19 +30,17 @@
     import On from "../const/on"
     import {GO} from "../const/go"
     import {mapState} from 'vuex'
-
     import Bar from "./common/Bar"
-
-    const LeftMenu = () => import(/* webpackChunkName: "LeftMenu" */ "./common/LeftMenu")
-    const Messages = () => import(/* webpackChunkName: "Messages" */ "./messages/Messages")
     import Snack from "./common/Snack"
-
     import AddImpactDialog from "./dialog/AddImpactDialog"
     import AddFacetDialog from "./dialog/AddFacetDialog"
     import AddRessourceDialog from "./dialog/AddRessourceDialog"
     import AddFacetEntryDialog from "./dialog/AddFacetEntryDialog"
     import AddImpactEntryDialog from "./dialog/AddImpactEntryDialog"
     import ConnectToContinueDialog from "./dialog/ConnectToContinueDialog"
+
+    const LeftMenu = () => import(/* webpackChunkName: "LeftMenu" */ "./common/LeftMenu")
+    const Messages = () => import(/* webpackChunkName: "Messages" */ "./messages/Messages")
 
     export default {
         data() {

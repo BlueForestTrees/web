@@ -64,7 +64,7 @@
                 <subheader icon="call_merge" title="Composants"/>
                 <v-flex>
                     <v-card>
-                        <ressources :tree="tree"/>
+                        <ressources :tree="tree" :selection="selection"/>
                     </v-card>
                 </v-flex>
             </v-layout>
