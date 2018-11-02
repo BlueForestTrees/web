@@ -12,7 +12,8 @@ const needRefresh = basketTree => !basketTree.branches
 
 export default {
     [On.GO_CREATE_TREE]: () => router.push({name: GO.CREATE_TREE}),
-    [On.GO_TREE]: ({commit, getters}, tree) => {
+    [On.GO_TREE]: ({commit, getters, dispatch}, tree) => {
+        dispatch(On.UNSELECT)
         const dest = tree ?
             {_id: tree._id, bqt: tree.trunk.quantity.bqt}
             :

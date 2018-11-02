@@ -1,10 +1,6 @@
 <template>
     <span>
         <v-card-text v-if="items.length === 0" class="text-md-center">Votre panier est vide. <br>Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche pour trouver des choses à mettre dans le panier.</span></v-card-text>
-        <v-toolbar dense v-if="anySelected" app dark class="elevation-5" color="primary">
-            <slot :s="this"></slot>
-        </v-toolbar>
-
         <v-container v-if="items.length > 0">
             <v-layout row wrap justify-center>
                 <template v-for="item in items">
@@ -38,11 +34,7 @@
             ...mapGetters({items: 'basketArray'})
         },
         methods: {
-            removeSelectedItems: function () {
-                this.remove(this.selection)
-                    .then(this.unselect())
-            },
-            ...mapActions({remove: On.REMOVE_FROM_BASKET, goSearch: On.GO_SEARCH})
+            ...mapActions({goSearch: On.GO_SEARCH})
         }
     }
 </script>

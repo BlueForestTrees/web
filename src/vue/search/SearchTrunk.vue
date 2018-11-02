@@ -25,11 +25,7 @@
             </v-menu>
         </v-layout>
         <trunk-filter class="mt-3" v-if="filter" :search="search"/>
-        <search-comp :filter="filter">
-            <template slot-scope="{ s }">
-                <slot :s="s"></slot>
-            </template>
-        </search-comp>
+        <search-comp :filter="filter"/>
     </span>
 </template>
 <script>

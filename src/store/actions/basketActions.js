@@ -9,10 +9,18 @@ export default {
     [On.GO_BASKET]: ({}) => {
         router.push({name: GO.BASKET})
     },
+    [On.ADD_SELECTION_TO_BASKET]: ({dispatch, state}) => {
+        dispatch(On.ADD_TO_BASKET, state.selection)
+        dispatch(On.UNSELECT)
+    },
     [On.ADD_TO_BASKET]: ({commit, dispatch, state}, items) => {
         commit(Do.ADD_TO_BASKET, items)
         commit(Do.CLOSE_COMPARE_RIGHT)
         dispatch(On.SAVE_BASKET)
+    },
+    [On.REMOVE_SELECTION_FROM_BASKET]: ({dispatch, state}) => {
+        dispatch(On.REMOVE_FROM_BASKET, state.selection)
+        dispatch(On.UNSELECT)
     },
     [On.REMOVE_FROM_BASKET]: ({state, commit, dispatch}, items) => {
         commit(Do.REMOVE_FROM_BASKET, items)

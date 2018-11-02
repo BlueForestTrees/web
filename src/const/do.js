@@ -19,7 +19,7 @@ export default {
     DELETE_REPLY: 'deleteReply',
     PUSH_MESSAGES: 'appendMessages',
     RENAME_TRUNK: 'renameTree',
-    REMOVE_FROM_BASKET: 'removeFromBasket',
+    REMOVE_FROM_BASKET: 'removeSelectionFromBasket',
     REMOVE_MESSAGE: "removeMessage",
     RESPOND_MESSAGE: "respondMessage",
     RIGHT_MENU_VISIBLE: 'rightMenuVisible',
