@@ -2,6 +2,19 @@ html {
     overflow-y: auto
 }
 
+.align {
+    text-align: center;
+}
+
+.full-width {
+    width:100%;
+}
+
+
+.half-width {
+    width:100%;
+}
+
 .theme--light .v-breadcrumbs li:last-child .v-breadcrumbs__item{
     font-weight: bold;
     font-size: large;

@@ -1,6 +1,6 @@
 <template>
     <card>
-        <span slot="content">
+        <span>
             <img style="width:20%;padding-top:1em;padding-left:1em;" src="/img/logo.svg">
             <v-container>
                     <v-card-actions>
