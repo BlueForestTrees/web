@@ -1,9 +1,10 @@
 import router from "../../router/router"
 import On from "../../const/on"
 import {GO} from "../../const/go"
+import Do from "../../const/do"
 
 export default {
-    [On.GO_COMPARE]: ({state, getters}, trees) => {
+    [On.GO_COMPARE]: ({state,commit, getters}, trees) => {
 
         let dest = []
 
@@ -17,6 +18,8 @@ export default {
                 dest.push(state.compare.right)
             }
         }
+
+        commit(Do.UNSELECT)
 
         if(dest.length === 0){
             router.push({name: GO.COMPARE_EMPTY})
