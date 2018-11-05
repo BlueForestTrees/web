@@ -1,6 +1,5 @@
 <template>
     <v-flex>
-
         <template v-if="items.length > 0" v-for="item in items">
             <div :key="item._id" @click="toggleSelect(item)" class="v-list__tile" :style="{paddingTop:'8px',paddingBottom:'8px',height:'auto', background: isSelected(item) ? '#D8E9F5' : '', transition: 'background .2s ease'}">
                 <v-layout row>

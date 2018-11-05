@@ -41,6 +41,7 @@ export const tree = () => ({_id: null, trunk: null, selection: null, facets: nul
 export default {
     dispo: {grandeurs: false},
     selection: [],
+    catSelection: [],
     maxSelectionSize: null,
     token: null,
     user: null,

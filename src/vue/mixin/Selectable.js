@@ -1,12 +1,18 @@
 import {mapState} from "vuex"
 
 export default {
+    props: {
+        map: {type: String, default: "selection"}
+    },
     computed: {
-        ...mapState(['selection']),
+        ...mapState({
+            selection(state) {
+                return state[this.map]
+            }
+        }),
         selectionCount() {
             return this.selection.length
         },
-
         anySelected() {
             return this.selectionCount > 0 && this.selection
         },
@@ -25,7 +31,7 @@ export default {
     },
     methods: {
         unselect: function () {
-            this.selection.splice(0,this.selection.length)
+            this.selection.splice(0, this.selection.length)
         },
         isSelected: function (item) {
             for (let i = 0; i < this.selection.length; i++) {

@@ -9,7 +9,7 @@
                     </v-layout>
                 </div>
                 <v-card>
-                    <search-cat v-model="search.cats" @input="showCat=false"/>
+                    <search-cat v-model="search.cats" @input="showCat=false" map="catSelection"/>
                 </v-card>
             </v-menu>
             <v-menu v-model="showName" :close-on-content-click="false" max-width="500px" offset-y class="ml-3">

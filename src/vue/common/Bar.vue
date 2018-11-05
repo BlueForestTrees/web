@@ -133,7 +133,8 @@
                 removeSelectionFromBasket: On.REMOVE_SELECTION_FROM_BASKET,
                 goSearch: On.GO_SEARCH,
                 goTree: On.GO_TREE,
-                addSelectionToBasket: On.ADD_SELECTION_TO_BASKET
+                addSelectionToBasket: On.ADD_SELECTION_TO_BASKET,
+                goCompare: On.GO_COMPARE
             })
         }
     }
