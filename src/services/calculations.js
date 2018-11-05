@@ -10,12 +10,13 @@ export const format = v => v < 10 ? Math.round(v * 100) / 100 : Math.round(v * 1
 export const trunkyAll = items => map(items, trunky)
 export const trunky = trunk => ({_id: trunk._id, trunk})
 export const idQtFrom = item => ({_id: item._id, quantity: item.quantity})
-export const qtUnit = bqtG => {
+export const qtUnit = item => {
+    const bqtG = item && ((item.trunk && item.trunk.quantity) || item.quantity || item)
     if (bqtG) {
         const qtUnit = bqtGToQtUnit(bqtG)
         if (qtUnit.qt && qtUnit.unit) {
             const best = bestQuantity(qtUnit)
-            return `${best.qt}${grandeur(best.unit) !== "Nomb" ? best.unit : ''}`
+            return `${best.qt} ${grandeur(best.unit) !== "Nomb" ? best.unit : ''}`
         } else {
             return `${isNil(qtUnit.qt) ? "?" : qtUnit.qt} ${qtUnit.unit || " ?"}`
         }
@@ -23,10 +24,10 @@ export const qtUnit = bqtG => {
         return "??"
     }
 }
-export const name = item => removeUseless(item && item.name || '?')
+export const name = item => removeUseless(item && (item.name || item.trunk && item.trunk.name) || '?')
 export const removeUseless = name => name.replace(/\([^)]*\)/, "...")
 export const equiv = item => item.eq ? `(éq. ${item.eq})` : ""
-export const qtUnitName = item => `${qtUnit((item.trunk && item.trunk.quantity) || item.quantity || item)} ${name(item.trunk || item)} ${equiv((item.trunk && item.trunk.quantity) || item.quantity || item)}`
+export const qtUnitName = item => `${qtUnit(item)} ${name(item)} ${equiv((item.trunk && item.trunk.quantity) || item.quantity || item)}`
 
 export const getRandomColor = () => {
     const letters = '0123456789ABCDEF'

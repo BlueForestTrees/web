@@ -15,7 +15,7 @@
                 </v-tooltip>
             </v-toolbar-items>
         </template>
-        <h5 slot="no-items">Ce produit ne contient pas encore d'impacts sur l'environnement.</h5>
+        <open-message slot="no-items" :section="section"/>
     </selectable-list>
 </template>
 
@@ -30,9 +30,11 @@
     import {bqtGToQtUnit} from "unit-manip"
     import TransDeco from "./TransDeco"
     import SelectableList from "../common/SelectableList"
+    import OpenMessage from "../common/OpenMessage"
 
     export default {
         components: {
+            OpenMessage,
             SelectableList,
         },
         props: ['tree', 'selection'],
@@ -40,6 +42,15 @@
         computed: {
             items: function () {
                 return this.tree && this.tree.roots
+            },
+            section: function () {
+                return {
+                    title: `On ne sait pas encore ce qui entre dans la composition de ce produit. Indiquez que vous aimeriez le savoir.`,
+                    filter: {
+                        type: 'trunk-root',
+                        topicId: this.tree._id
+                    }
+                }
             }
         },
 

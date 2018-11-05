@@ -1,6 +1,6 @@
 <template>
         <card>
-            <template slot="content">
+            <template>
                 <img src="/img/logo.svg" style="width:20%;padding-left:1em;padding-top:1em;">
                 <img src="/img/blue.svg" style="width:20%">
                 <img src="/img/forest.svg" style="width:28%">

@@ -22,6 +22,8 @@ export default {
                 :
                 null
 
+        commit(Do.CLOSE_TREE)
+
         if (dest) {
             return router.push({name: GO.TREE, params: dest})
         } else {

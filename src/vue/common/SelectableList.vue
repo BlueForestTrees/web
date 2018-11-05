@@ -1,5 +1,5 @@
 <template>
-    <v-list>
+    <v-list v-if="hasItems">
         <v-toolbar dense v-if="!nobar && anySelected" app dark class="elevation-5" color="primary">
             <slot name="bar" :s="this"></slot>
         </v-toolbar>
@@ -14,12 +14,12 @@
             </div>
             <v-divider/>
         </template>
-        <v-list-tile v-if="!hasItems">
-            <slot name="no-items">
-                <h5>Pas encore d'informations</h5>
-            </slot>
-        </v-list-tile>
     </v-list>
+    <div v-else>
+        <slot name="no-items">
+            <h5>Pas encore d'informations</h5>
+        </slot>
+    </div>
 </template>
 <script>
     import selectable from "../mixin/Selectable"

@@ -26,8 +26,6 @@
             <br>
             <p>Toute aide est la bienvenue pour les informations sur les conditions de travail ou autre aspects des produits.</p>
         </v-container>
-        <v-divider/>
-        <open-message :section="DATAS"/>
     </v-card>
 </template>
 
@@ -38,8 +36,5 @@
     export default {
         name: "explain-datas",
         components: {OpenMessage},
-        data() {
-            return {DATAS: secs.DATAS}
-        }
     }
 </script>

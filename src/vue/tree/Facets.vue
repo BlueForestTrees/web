@@ -20,8 +20,7 @@
                 </v-tooltip>
             </v-toolbar-items>
         </template>
-
-        <h5 slot="no-items">Ce produit ne contient pas encore de propriétés.</h5>
+        <open-message slot="no-items" :section="section"/>
     </selectable-list>
 </template>
 
@@ -29,8 +28,11 @@
     import SelectableList from "../common/SelectableList"
     import On from "../../const/on"
     import {mapActions} from 'vuex'
+    import OpenMessage from "../common/OpenMessage"
+
     export default {
         components: {
+            OpenMessage,
             SelectableList,
         },
         props: ['tree', 'selection'],
@@ -38,6 +40,15 @@
             facets: function () {
                 return this.tree && this.tree.facets
             },
+            section: function () {
+                return {
+                    title: `"Aucune propriété n'est spécifiée pour ce produit. Indiquez si vous aimeriez les connaître.`,
+                    filter: {
+                        type: 'trunk-facet',
+                        topicId: this.tree._id
+                    }
+                }
+            }
         },
         methods: {
             ...mapActions({dispatchGoEquiv: On.GO_EQUIV}),
