@@ -45,7 +45,7 @@
             },
             section: function () {
                 return {
-                    title: `On ne sait pas encore ce qui entre dans la composition de ce "${this.tree.trunk && this.tree.trunk.name}". Une idée?`,
+                    title: `On ne sait pas encore ce qui entre dans la composition de ce produit. Indiquez que vous aimeriez le savoir.`,
                     filter: {
                         type: 'trunk-root',
                         topicId: this.tree._id

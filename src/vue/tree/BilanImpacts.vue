@@ -38,7 +38,7 @@
             },
             section: function () {
                 return {
-                    title: `"${this.tree.trunk && this.tree.trunk.name}" ne contient pas encore d'impact sur l'environnement. Une idée?`,
+                    title: `Les impacts sur l'environnement de ce produit ne sont pas fournis. Indiquez si souhaitez les connaitre.`,
                     filter: {
                         type: 'trunk-impact',
                         topicId: this.tree._id

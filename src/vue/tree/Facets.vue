@@ -42,7 +42,7 @@
             },
             section: function () {
                 return {
-                    title: `"${this.tree.trunk && this.tree.trunk.name}" ne contient pas encore de propriétés. Une idée?`,
+                    title: `"Aucune propriété n'est spécifiée pour ce produit. Indiquez si vous aimeriez les connaître.`,
                     filter: {
                         type: 'trunk-facet',
                         topicId: this.tree._id
