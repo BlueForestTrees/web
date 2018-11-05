@@ -63,14 +63,14 @@
             <v-btn slot="activator" v-if="twoSelected" flat @click="goCompare(twoSelected)">comparer
                 <v-icon>compare_arrows</v-icon>
             </v-btn>
-            <span style="pointer-events: none">Comparer</span>
+            <span style="pointer-events: none">Comparer ces deux éléments</span>
         </v-tooltip>
 
         <v-tooltip bottom>
-            <v-btn slot="activator" v-if="twoSelected" flat @click="goAdd(twoSelected);unselect()">Ajouter
+            <v-btn slot="activator" v-if="twoSelected" flat @click="goAdd(twoSelected);unselect()">Composer
                 <v-icon>call_merge</v-icon>
             </v-btn>
-            <span style="pointer-events: none">Ajouter</span>
+            <span style="pointer-events: none">Faire d'un produit le composant de l'autre</span>
         </v-tooltip>
 
         <v-tooltip bottom>
@@ -79,13 +79,19 @@
                 <v-icon>arrow_right_alt</v-icon>
                 retirer
             </v-btn>
-            <span style="pointer-events: none">Retirer</span>
+            <span style="pointer-events: none">Retirer du panier</span>
         </v-tooltip>
         <v-tooltip bottom>
             <v-btn slot="activator" v-if="selectionCount" flat dense
                    @click="addSelectionToBasket">Panier<v-icon>arrow_right_alt</v-icon><v-icon>shopping_basket</v-icon></v-btn>
             <span style="pointer-events: none">Ajouter au panier</span>
         </v-tooltip>
+        <v-toolbar-items>
+            <v-tooltip bottom>
+                <v-btn slot="activator" flat dense @click="goEquiv(oneSelected)">Equivalence<v-icon>arrow_right_alt</v-icon><v-icon>search</v-icon></v-btn>
+                <span style="pointer-events: none">Trouver des équivalences</span>
+            </v-tooltip>
+        </v-toolbar-items>
         <v-spacer/>
         <v-tooltip bottom>
             <v-btn slot="activator" icon dense @click="unselect">
@@ -135,7 +141,16 @@
                 goTree: On.GO_TREE,
                 addSelectionToBasket: On.ADD_SELECTION_TO_BASKET,
                 goCompare: On.GO_COMPARE
-            })
+            }),
+            ...mapActions({dispatchGoEquiv: On.GO_EQUIV}),
+            goEquiv(impact) {
+                this.dispatchGoEquiv({
+                    _id: this.tree._id,
+                    bqt: this.tree.trunk.quantity.bqt,
+                    s_id: impact._id,
+                    sbqt: impact.quantity.bqt
+                })
+            }
         }
     }
 </script>

@@ -11,7 +11,8 @@ const mapTrunks = (dispatch, results) => async idBqts => Promise.all(
     }))
 
 export default {
-    [On.GO_EQUIV]: ({}, {_id, bqt, sbqt, s_id}) => {
+    [On.GO_EQUIV]: ({dispatch}, {_id, bqt, sbqt, s_id}) => {
+        dispatch(On.UNSELECT)
         return router.push({name: GO.EQUIV, params: {_id, bqt, sbqt, s_id}})
     },
     [On.SEARCH_EQUIV]: ({dispatch}, {_id, bqt, type, results}) => {

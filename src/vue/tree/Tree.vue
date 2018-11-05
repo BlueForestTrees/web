@@ -20,12 +20,12 @@
 
             <tree-card :tree="tree" @change="v => current = v"/>
             <card>
-                        <description v-if="!current" :tree="tree"/>
-                        <ressources v-if="current === 'root'" :tree="tree" :selection="selection"/>
-                        <facets v-if="current === 'facet'" :tree="tree" :selection="selection"/>
-                        <bilan-impacts v-if="current === 'impact'" :tree="tree" :selection="selection"/>
-                        <branches v-if="current === 'branch'" :tree="tree"/>
-                    </card>
+                <description v-if="!current" :tree="tree"/>
+                <ressources v-if="current === 'root'" :tree="tree" :selection="selection"/>
+                <facets v-if="current === 'facet'" :tree="tree" :selection="selection"/>
+                <bilan-impacts v-if="current === 'impact'" :tree="tree" :selection="selection"/>
+                <branches v-if="current === 'branch'" :tree="tree"/>
+            </card>
 
             <add-tree-part-btn :tree="tree"/>
         </v-layout>

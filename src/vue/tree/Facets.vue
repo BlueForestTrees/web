@@ -42,7 +42,7 @@
             },
             section: function () {
                 return {
-                    title: `"Aucune propriété n'est spécifiée pour ce produit. Indiquez si vous aimeriez les connaître.`,
+                    title: `Aucune propriété n'est spécifiée pour ce produit. Indiquez si vous aimeriez les connaître.`,
                     filter: {
                         type: 'trunk-facet',
                         topicId: this.tree._id
