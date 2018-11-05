@@ -50,7 +50,12 @@
                 switchLeftMenu: On.SWITCH_LEFT_MENU,
                 goCreateTree: On.GO_CREATE_TREE,
             }),
-            ...mapActions({goTree: On.GO_TREE, goCompare: On.GO_COMPARE, addToBasket: On.ADD_TO_BASKET, showDialog: On.SHOW_DIALOG}),
+            ...mapActions({
+                goTree: On.GO_TREE,
+                goCompare: On.GO_COMPARE,
+                addToBasket: On.ADD_TO_BASKET,
+                showDialog: On.SHOW_DIALOG
+            }),
             goAdd(selection) {
                 this.showDialog({dialog: Dial.ADD_RESSOURCE, data: {left: selection[0], right: selection[1]}})
             }

@@ -32,7 +32,7 @@ spec:
       - env:
         - name: NODE_ENV
           value: production
-        image: blueforest/web:1.4.3
+        image: blueforest/web:1.4.4
         imagePullPolicy: Always
         name: web
         resources: {}

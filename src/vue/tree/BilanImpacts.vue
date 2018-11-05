@@ -15,7 +15,7 @@
                 </v-tooltip>
             </v-toolbar-items>
         </template>
-        <h5 slot="no-items">Ce produit ne contient pas encore d'impacts sur l'environnement.</h5>
+        <open-message slot="no-items" :section="section"/>
     </selectable-list>
 </template>
 
@@ -24,15 +24,26 @@
     import SelectableList from "../common/SelectableList"
     import On from "../../const/on"
     import {mapActions} from 'vuex'
+    import OpenMessage from "../common/OpenMessage"
 
     export default {
         components: {
+            OpenMessage,
             SelectableList,
         },
         props: ['tree','selection'],
         computed: {
             items: function () {
                 return this.tree && this.tree.impactsTank
+            },
+            section: function () {
+                return {
+                    title: `"${this.tree.trunk && this.tree.trunk.name}" ne contient pas encore d'impact sur l'environnement. Une idée?`,
+                    filter: {
+                        type: 'trunk-impact',
+                        topicId: this.tree._id
+                    }
+                }
             }
         },
         methods: {
