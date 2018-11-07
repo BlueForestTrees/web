@@ -4,8 +4,8 @@
 
         <v-spacer/>
 
-        <v-btn icon flat :to="{name: GO.SEARCH}"><v-icon color="primary">search</v-icon></v-btn>
-        <v-btn icon flat :to="{name: GO.BASKET}"><v-icon color="primary">shopping_basket</v-icon></v-btn>
+        <v-btn icon flat :to="{name: GO.SEARCH}"><v-icon large color="primary">search</v-icon></v-btn>
+        <v-btn icon flat :to="{name: GO.BASKET}"><v-icon :large="notEmptyBasket" color="primary">shopping_basket</v-icon></v-btn>
         <v-menu v-if="user">
             <v-avatar slot="activator" size="32px" :style="{backgroundColor:user.color}" class="ml-2">
                 <span :style="{color:overcolor(user.color)}">{{initiales(user.fullname)}}</span>
@@ -106,7 +106,7 @@
 
 <script>
     import MainDialog from "../dialog/MainDialog"
-    import {mapActions, mapState} from "vuex"
+    import {mapActions, mapState, mapGetters} from "vuex"
     import {Dial} from "../../const/dial"
     import On from "../../const/on"
     import {GO} from "../../const/go"
@@ -135,6 +135,7 @@
                 }
                 return true
             },
+            ...mapGetters(['notEmptyBasket'])
         },
         methods: {
             overcolor, initiales,

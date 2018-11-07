@@ -13,10 +13,13 @@ export default {
         dispatch(On.ADD_TO_BASKET, state.selection)
         dispatch(On.UNSELECT)
     },
-    [On.ADD_TO_BASKET]: ({commit, dispatch, state}, items) => {
+    [On.ADD_TO_BASKET]: async ({commit, dispatch, state}, items) => {
+        const length = items.length
+        const s = items.length > 1 ? 's' : ''
         commit(Do.ADD_TO_BASKET, items)
         commit(Do.CLOSE_COMPARE_RIGHT)
-        dispatch(On.SAVE_BASKET)
+        await dispatch(On.SAVE_BASKET)
+        dispatch(On.SNACKBAR, {text: `${length} élément${s} ajouté${s} au panier`, color: "green"})
     },
     [On.REMOVE_SELECTION_FROM_BASKET]: ({dispatch, state}) => {
         dispatch(On.REMOVE_FROM_BASKET, state.selection)

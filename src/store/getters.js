@@ -1,5 +1,6 @@
 export default {
     basketArray: (state) => Object.values(state.basket),
+    notEmptyBasket: (s, getters) => getters.basketArray.length > 0,
     filter: state => {
         const cat = {}
         const filter = {cat}
