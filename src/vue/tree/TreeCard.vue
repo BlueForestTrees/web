@@ -15,7 +15,7 @@
                 </v-flex>
             </v-layout>
         </v-container>
-        <v-btn-toggle v-model="detail" @change="v=>$emit('change',v)" class="full-width">
+        <v-btn-toggle v-if="!noBar" v-model="detail" @change="v=>$emit('change',v)" class="full-width">
             <v-btn flat value="impact" block>
                 <!--class="fill-height">-->
                 environnement<!--<img src="/img/logo.svg"/>-->
@@ -39,7 +39,7 @@
     export default {
         name: "tree-card",
         components: {Card},
-        props: {"tree": Object},
+        props: {"tree": Object, "noBar": {type: Boolean, default: false}},
         data() {
             return {detail: null}
         },

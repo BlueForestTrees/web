@@ -19,6 +19,7 @@
         <v-layout column v-else>
 
             <tree-card :tree="tree" @change="v => current = v"/>
+
             <card>
                 <description v-if="!current" :tree="tree"/>
                 <ressources v-if="current === 'root'" :tree="tree" :selection="selection"/>
