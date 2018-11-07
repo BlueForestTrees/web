@@ -1,7 +1,7 @@
 <template>
     <v-layout key="create-tree" column wrap justify-center align-center>
         <v-flex class="title ma-4">Créer un produit ou un service</v-flex>
-        <v-stepper v-model="idx" vertical>
+        <v-stepper v-model="idx" vertical @input="next">
             <v-stepper-step step="1" :complete="idx > 1">Choisir un nom</v-stepper-step>
             <v-stepper-content step="1">
                 <v-form v-model="nameValid" v-on:submit.prevent="" ref="nameForm">
@@ -93,6 +93,11 @@
             this.idx = 1
         },
         methods: {
+            next(v){
+                if(v === 4){
+                    this.validColor()
+                }
+            },
             ...mapActions({
                 createTrunk: On.CREATE_TRUNK,
                 putQuantity: On.PUT_TRUNK_QUANTITY,

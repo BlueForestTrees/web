@@ -1,6 +1,26 @@
 <template>
     <v-navigation-drawer fixed temporary v-model="nav.leftMenuVisible">
         <v-list dense>
+
+            <v-list-tile @click="nav.leftMenuVisible = false;$router.push({name: GO.HOME})">
+                <v-list-tile-action>
+                    <v-icon color="primary">home</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                    <v-list-tile-title>Accueil</v-list-tile-title>
+                </v-list-tile-content>
+            </v-list-tile>
+
+            <v-list-tile @click="nav.leftMenuVisible = false;$router.push({name: GO.BASKET})">
+                <v-list-tile-action>
+                    <v-icon color="primary">shopping_basket</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                    <v-list-tile-title>Panier</v-list-tile-title>
+                </v-list-tile-content>
+            </v-list-tile>
+
+
             <v-list-tile @click="nav.leftMenuVisible = false;$router.push({name: GO.PLAN_INTRO})">
                 <v-list-tile-action>
                     <v-icon color="primary">live_help</v-icon>

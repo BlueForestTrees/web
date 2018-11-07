@@ -52,8 +52,8 @@ export default {
     tree: null,
     compare: {left: null, right: null, leftAxises: null, rightAxises: null, axis: null},
     dialogs: dialogs(),
-    nav: {leftMenuVisible: false, rightMenuVisible: false, dark: (localStorage.getItem("dark") === 'true')},
+    nav: {leftMenuVisible: false, rightMenuVisible: false, dark: (localStorage.getItem("dark") === 'true'), detailsDialog:false},
     snack: snack(),
     messages: {title: null, hasMore: false, filter: {}, list: []},
-    version: {web: ENV.VERSION},
+    version: {web: ENV.VERSION}
 }

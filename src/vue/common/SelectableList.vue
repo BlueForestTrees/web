@@ -5,7 +5,8 @@
                 <v-layout row>
                     <v-icon v-if="isSelected(item)" color="primary" style="margin-right:0.3em">check_circle</v-icon>
                     <v-icon v-else :style="'color: '+(item.color || item.trunk.color)+';margin-right:0.3em'">panorama_fish_eye</v-icon>
-                    <v-list-tile-content>{{qtUnitName(item)}}</v-list-tile-content>
+                    <v-list-tile-content v-if="!noQt">{{qtUnitName(item)}}</v-list-tile-content>
+                    <v-list-tile-content v-else>{{name(item)}}</v-list-tile-content>
                 </v-layout>
             </div>
             <v-divider/>
@@ -19,11 +20,11 @@
 </template>
 <script>
     import selectable from "../mixin/Selectable"
-    import {qtUnitName} from "../../services/calculations"
+    import {qtUnitName, name} from "../../services/calculations"
 
     export default {
         name: "selectable-list",
-        props: {nobar: Boolean, items: Array, maxSelectionSize: Number, exceptId: String},
+        props: {nobar: Boolean, items: Array, maxSelectionSize: Number, exceptId: String, noQt: {type: Boolean, default: false}},
         mixins: [selectable],
         computed: {
             hasItems: function () {
@@ -31,7 +32,7 @@
             }
         },
         methods: {
-            qtUnitName
+            qtUnitName, name
         }
     }
 </script>

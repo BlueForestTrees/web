@@ -13,6 +13,9 @@ export default {
         selectionCount() {
             return this.selection.length
         },
+        noneSelected() {
+            return this.selectionCount() === 0
+        },
         anySelected() {
             return this.selectionCount > 0 && this.selection
         },

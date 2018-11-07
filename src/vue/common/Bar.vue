@@ -1,28 +1,11 @@
 <template>
-    <v-toolbar v-if="!anySelected" dense app class="elevation-1">
+    <v-toolbar v-if="!anySelected" dense app class="elevation-1" style='background-color:#FFFFFFBB'>
         <v-toolbar-side-icon @click="nav.leftMenuVisible = !nav.leftMenuVisible"></v-toolbar-side-icon>
-        <v-tabs align-with-title centered color="transparent">
-            <v-tab icon dense :to="{name: GO.HOME}">
-                <v-icon color="primary">home</v-icon>
-            </v-tab>
-            <v-tab icon dense :to="{name: GO.SEARCH}">
-                <v-icon color="primary">search</v-icon>
-                <v-flex hidden-sm-and-down style="pointer-events: none">Recherche</v-flex>
-            </v-tab>
-            <v-tab icon dense :to="{name: GO.BASKET}">
-                <v-icon color="primary">shopping_basket</v-icon>
-                <v-flex hidden-sm-and-down style="pointer-events: none">Panier</v-flex>
-            </v-tab>
-            <v-tab icon dense :to="{name: GO.TREE_EMPTY}">
-                <v-icon color="primary">category</v-icon>
-                <v-flex hidden-sm-and-down style="pointer-events: none">Composition</v-flex>
-            </v-tab>
-            <v-tab icon dense :to="{name: GO.COMPARE_EMPTY}">
-                <v-icon color="primary">compare_arrows</v-icon>
-                <v-flex hidden-sm-and-down style="pointer-events: none">Comparer</v-flex>
-            </v-tab>
-        </v-tabs>
+
         <v-spacer/>
+        <v-btn icon :to="{name: GO.SEARCH}">
+            <v-icon large color="primary">search</v-icon>
+        </v-btn>
         <v-menu v-if="user">
             <v-avatar slot="activator" size="32px" :style="{backgroundColor:user.color}">
                 <span :style="{color:overcolor(user.color)}">{{initiales(user.fullname)}}</span>
@@ -53,10 +36,13 @@
     </v-toolbar>
     <v-toolbar v-else dense app dark class="elevation-5" color="primary">
 
+        <v-layout row align-center>
+
+
 
         <v-tooltip v-if="oneSelected && selectionIsTree" bottom>
             <v-btn slot="activator" flat @click="goTree(oneSelected)">ouvrir
-                <v-icon>category</v-icon>
+                <v-icon x-large>category</v-icon>
             </v-btn>
             <span style="pointer-events: none">Ouvrir</span>
         </v-tooltip>
@@ -64,22 +50,22 @@
 
         <v-tooltip bottom>
             <v-btn slot="activator" v-if="twoSelected" flat @click="goCompare(twoSelected)">comparer
-                <v-icon>compare_arrows</v-icon>
+                <v-icon x-large>compare_arrows</v-icon>
             </v-btn>
             <span style="pointer-events: none">Comparer ces deux éléments</span>
         </v-tooltip>
 
         <v-tooltip v-if="$route.name === GO.BASKET && twoSelected" bottom>
             <v-btn slot="activator" flat @click="goAdd(twoSelected);unselect()">Composer
-                <v-icon>call_merge</v-icon>
+                <v-icon x-large>call_merge</v-icon>
             </v-btn>
             <span style="pointer-events: none">Faire d'un produit le composant de l'autre</span>
         </v-tooltip>
 
         <v-tooltip v-if="$route.name === GO.BASKET" bottom>
             <v-btn slot="activator" v-if="anySelected" flat @click="removeSelectionFromBasket">
-                <v-icon>shopping_basket</v-icon>
-                <v-icon>arrow_right_alt</v-icon>
+                <v-icon x-large>shopping_basket</v-icon>
+                <v-icon x-large>arrow_right_alt</v-icon>
                 retirer
             </v-btn>
             <span style="pointer-events: none">Retirer du panier</span>
@@ -89,8 +75,8 @@
         <v-tooltip v-if="$route.name !== GO.BASKET && selectionCount && selectionIsTree" bottom>
             <v-btn slot="activator" flat dense
                    @click="addSelectionToBasket">Panier
-                <v-icon>arrow_right_alt</v-icon>
-                <v-icon>shopping_basket</v-icon>
+                <v-icon x-large>arrow_right_alt</v-icon>
+                <v-icon x-large>shopping_basket</v-icon>
             </v-btn>
             <span style="pointer-events: none">Ajouter au panier</span>
         </v-tooltip>
@@ -98,18 +84,25 @@
 
         <v-tooltip v-if="$route.name === GO.TREE" bottom>
             <v-btn slot="activator" flat dense @click="goEquiv(oneSelected)">Equivalence
-                <v-icon>arrow_right_alt</v-icon>
-                <v-icon>search</v-icon>
+                <v-icon x-large>arrow_right_alt</v-icon>
+                <v-icon x-large>search</v-icon>
             </v-btn>
             <span style="pointer-events: none">Trouver des équivalences</span>
+        </v-tooltip>
+
+        <v-tooltip v-if="$route.name === GO.IMPACT_ENTRY && oneSelected" bottom>
+            <v-btn slot="activator" flat dense @click="nav.detailsDialog = true">Détails<v-icon>aspect_ratio</v-icon></v-btn>
+            <span style="pointer-events: none">Détails</span>
         </v-tooltip>
         <v-spacer/>
         <v-tooltip bottom>
             <v-btn slot="activator" icon dense @click="unselect">
-                <v-icon>close</v-icon>
+                <v-icon x-large>close</v-icon>
             </v-btn>
             <span style="pointer-events: none">Fermer</span>
         </v-tooltip>
+        </v-layout>
+
     </v-toolbar>
 </template>
 

@@ -6,8 +6,8 @@
         </v-layout>
 
         <v-layout row v-if="compare.left && compare.right">
-            <tree-card class="my-2" :tree="compare.left" @nav="goTree(compare.left)" :style="{cursor: 'pointer'}" no-bar/>
-            <tree-card class="my-2 ml-2":tree="compare.right" @nav="goTree(compare.right)" :style="{cursor: 'pointer'}" no-bar/>
+            <tree-card class="half-width my-2" :tree="compare.left" @nav="goTree(compare.left)" :style="{cursor: 'pointer'}" no-bar selectable />
+            <tree-card class="half-width my-2 ml-2":tree="compare.right" @nav="goTree(compare.right)" :style="{cursor: 'pointer'}" no-bar selectable />
         </v-layout>
         <v-card-text class="text-md-center" v-else>Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche</span> ou prenez des produits du <span><v-icon @click="goBasket" color="primary">shopping_basket</v-icon> panier pour les comparer.</span></v-card-text>
 

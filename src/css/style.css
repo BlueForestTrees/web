@@ -2,6 +2,10 @@ html {
     overflow-y: auto
 }
 
+.not-too-height {
+    max-width: 15em;
+}
+
 .not-too-large {
     max-width: 700px;
 }

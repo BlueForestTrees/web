@@ -1,9 +1,9 @@
 <template>
     <v-card>
-        <v-container>
-            <v-layout column>
+        <v-container @click="selectable && toggleSelect(tree)" :style="{background: isSelected(tree) ? '#D8E9F5' : '', height:'100%'}">
+            <v-layout column fill-height>
                 <v-layout row align-center>
-                    <svg width="30%" height="30%" viewBox="-10 -10 20 20">
+                    <svg width="30%" height="30%" viewBox="-10 -10 20 20" class="not-too-height">
                         <circle cx="0" cy="0" r="8" :stroke="trunk && trunk.color || 0" fill="none"/>
                     </svg>
                     <v-flex>
@@ -35,10 +35,16 @@
 
 <script>
     import {qtUnit, name} from "../../services/calculations"
+    import selectable from "../mixin/Selectable"
 
     export default {
         name: "tree-card",
-        props: {"tree": Object, "noBar": {type: Boolean, default: false}},
+        mixins: [selectable],
+        props: {
+            "tree": Object,
+            "noBar": {type: Boolean, default: false},
+            "selectable": {type: Boolean, default: false}
+        },
         data() {
             return {detail: null}
         },
