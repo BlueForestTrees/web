@@ -5,11 +5,10 @@
             <v-flex class="title">Comparaison</v-flex>
         </v-layout>
 
-        <v-container v-if="compare.left && compare.right">
-            <tree-head :tree="compare.left" class="my-2" @nav="goTree(compare.left)" :style="{cursor: 'pointer'}"/>
-            <v-divider/>
-            <tree-head :tree="compare.right" class="my-2" @nav="goTree(compare.right)" :style="{cursor: 'pointer'}"/>
-        </v-container>
+        <v-layout row v-if="compare.left && compare.right">
+            <tree-card class="my-2" :tree="compare.left" @nav="goTree(compare.left)" :style="{cursor: 'pointer'}" no-bar/>
+            <tree-card :tree="compare.right" class="my-2" @nav="goTree(compare.right)" :style="{cursor: 'pointer'}" no-bar/>
+        </v-layout>
         <v-card-text class="text-md-center" v-else>Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche</span> ou prenez des produits du <span><v-icon @click="goBasket" color="primary">shopping_basket</v-icon> panier pour les comparer.</span></v-card-text>
 
 
@@ -50,11 +49,13 @@
     const CompareCams = () => import(/* webpackChunkName: "Ccams" */"./CompareCams")
     import TreeHead from "../tree/TreeHead"
     import {filter} from "unit-manip"
+    import TreeCard from "../tree/TreeCard"
 
     export default {
         name: 'compare',
         props: ['leftId', 'rightId'],
         components: {
+            TreeCard,
             CompareCams,
             TreeHead,
             CompareRibbon
