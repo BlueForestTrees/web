@@ -3,14 +3,13 @@
         <v-toolbar-side-icon @click="nav.leftMenuVisible = !nav.leftMenuVisible"></v-toolbar-side-icon>
 
         <v-spacer/>
-        <v-btn icon :to="{name: GO.SEARCH}">
-            <v-icon large color="primary">search</v-icon>
-        </v-btn>
+
+        <v-btn icon flat :to="{name: GO.SEARCH}"><v-icon color="primary">search</v-icon></v-btn>
+        <v-btn icon flat :to="{name: GO.BASKET}"><v-icon color="primary">shopping_basket</v-icon></v-btn>
         <v-menu v-if="user">
-            <v-avatar slot="activator" size="32px" :style="{backgroundColor:user.color}">
+            <v-avatar slot="activator" size="32px" :style="{backgroundColor:user.color}" class="ml-2">
                 <span :style="{color:overcolor(user.color)}">{{initiales(user.fullname)}}</span>
             </v-avatar>
-
             <v-list two-line>
                 <v-list-tile @click="">
                     <v-list-tile-avatar size="64px" style="padding-right: 1em">
@@ -28,11 +27,10 @@
             </v-list>
         </v-menu>
         <v-menu v-else>
-            <v-btn slot="activator" icon dense>
-                <v-icon>person</v-icon>
-            </v-btn>
+            <v-btn slot="activator" icon dense><v-icon>person</v-icon></v-btn>
             <login-suscribe-list style="width: 17em"/>
         </v-menu>
+
     </v-toolbar>
     <v-toolbar v-else dense app dark class="elevation-5" color="primary">
 
@@ -41,7 +39,7 @@
 
 
         <v-tooltip v-if="oneSelected && selectionIsTree" bottom>
-            <v-btn slot="activator" flat @click="goTree(oneSelected)">ouvrir
+            <v-btn slot="activator" flat @click="goTree(oneSelected)">détails
                 <v-icon x-large>category</v-icon>
             </v-btn>
             <span style="pointer-events: none">Ouvrir</span>
@@ -136,7 +134,7 @@
                     }
                 }
                 return true
-            }
+            },
         },
         methods: {
             overcolor, initiales,
