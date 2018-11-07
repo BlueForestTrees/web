@@ -7,8 +7,4 @@ stages:
       tag: blueforest/web:1.4.6
       pushRemote: true
       registry: index.docker.io
-- name: deploy
-  steps:
-  - applyYamlConfig:
-      path: ./deployment.yaml
 timeout: 60
