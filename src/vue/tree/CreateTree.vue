@@ -46,7 +46,7 @@
     import {Dial} from "../../const/dial"
     import {unit, grandeurFromShortname, toBqtG} from 'unit-manip'
     import {isNumber, length2min, required} from "../../services/rules"
-    import {createStringObjectId, getRandomColor, trunky} from "../../services/calculations"
+    import {createStringObjectId, getRandomColor, treefy} from "../../services/calculations"
     import TreeHead from "./TreeHead"
     import UnitSelect from "../common/UnitSelect"
     import ColorPicker from "../common/ColorPicker"
@@ -118,7 +118,7 @@
             },
             validate() {
                 this.createTrunk(this.trunk).then(() => {
-                    this.goTree(trunky(this.trunk))
+                    this.goTree(treefy(this.trunk))
                 })
             },
             length2min, getRandomColor, required, isNumber

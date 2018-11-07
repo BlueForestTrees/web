@@ -7,8 +7,8 @@ export const idQuantity = tree => ({_id: tree._id, quantity: tree.trunk.quantity
 export const hasQuantity = e => e && e.quantity && e.quantity.bqt && e.quantity.g
 export const transportQuantity = (masse, distance) => baseQt({qt: changeUnit(masse, "t") * changeUnit(distance, "km"), unit: "t*km"})
 export const format = v => v < 10 ? Math.round(v * 100) / 100 : Math.round(v * 10) / 10
-export const trunkyAll = items => map(items, trunky)
-export const trunky = trunk => ({_id: trunk._id, trunk})
+export const treefyAll = items => map(items, treefy)
+export const treefy = trunk => ({_id: trunk._id, trunk})
 export const idQtFrom = item => ({_id: item._id, quantity: item.quantity})
 export const qtUnit = item => {
     const bqtG = item && ((item.trunk && item.trunk.quantity) || item.quantity || item)

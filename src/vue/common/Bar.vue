@@ -69,7 +69,7 @@
             <span style="pointer-events: none">Comparer ces deux éléments</span>
         </v-tooltip>
 
-        <v-tooltip v-if="twoSelected" bottom>
+        <v-tooltip v-if="$route.name === GO.BASKET && twoSelected" bottom>
             <v-btn slot="activator" flat @click="goAdd(twoSelected);unselect()">Composer
                 <v-icon>call_merge</v-icon>
             </v-btn>

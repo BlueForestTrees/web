@@ -7,11 +7,9 @@
 
         <v-layout row v-if="compare.left && compare.right">
             <tree-card class="my-2" :tree="compare.left" @nav="goTree(compare.left)" :style="{cursor: 'pointer'}" no-bar/>
-            <tree-card :tree="compare.right" class="my-2" @nav="goTree(compare.right)" :style="{cursor: 'pointer'}" no-bar/>
+            <tree-card class="my-2 ml-2":tree="compare.right" @nav="goTree(compare.right)" :style="{cursor: 'pointer'}" no-bar/>
         </v-layout>
         <v-card-text class="text-md-center" v-else>Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche</span> ou prenez des produits du <span><v-icon @click="goBasket" color="primary">shopping_basket</v-icon> panier pour les comparer.</span></v-card-text>
-
-
 
         <v-card v-if="hasFacetAxises">
             <v-layout row align-center pl-4 pt-4>
@@ -24,9 +22,8 @@
         </v-card>
         <v-card-text class="text-md-center" v-else-if="loading">Chargement...</v-card-text>
 
-
         <v-card v-if="hasImpactAxises">
-            <v-layout row align-center pl-4 pt-4 mt-4>
+            <v-layout row align-center pl-4 pt-4>
                 <v-flex class="display-1">Environnement</v-flex>
                 <v-icon class="corner" x-large @click="zoom = !zoom">{{zoom ? 'pie_chart':'list'}}</v-icon>
             </v-layout>

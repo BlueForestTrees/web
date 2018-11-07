@@ -3,10 +3,11 @@ import router from "../../router/router"
 import {GO} from "../../const/go"
 import api from "../../rest/api"
 import {map} from "unit-manip"
+import {treefy} from "../../services/calculations"
 
 const mapTrunks = (dispatch, results) => async idBqts => Promise.all(
     map(idBqts, async idBqt => {
-        let t = await dispatch(On.LOAD_TRUNK, idBqt)
+        let t = await dispatch(On.LOAD_TRUNK, idBqt).then(treefy)
         t && results.push(t)
     }))
 

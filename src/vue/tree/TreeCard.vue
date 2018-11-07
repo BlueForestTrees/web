@@ -1,5 +1,5 @@
 <template>
-    <card>
+    <v-card>
         <v-container>
             <v-layout column>
                 <v-layout row align-center>
@@ -29,16 +29,15 @@
                 propriétés<!--<img src="/img/logo.svg"/>-->
             </v-btn>
         </v-btn-toggle>
-    </card>
+    </v-card>
 </template>
 
+
 <script>
-    import Card from "../common/Card"
     import {qtUnit, name} from "../../services/calculations"
 
     export default {
         name: "tree-card",
-        components: {Card},
         props: {"tree": Object, "noBar": {type: Boolean, default: false}},
         data() {
             return {detail: null}

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import On from "../../const/on"
 import api from "../../rest/api"
-import {createStringObjectId, transportQuantity, trunkyAll} from "../../services/calculations"
+import {createStringObjectId, transportQuantity, treefyAll} from "../../services/calculations"
 import {bqtGToQtUnit, baseQt} from "unit-manip"
 import router from "../../router/router"
 import {GO} from "../../const/go"
@@ -61,7 +61,7 @@ export default {
         return tree
     },
 
-    [On.SEARCH_TREE]: async ({commit}, query) => trunkyAll(await api.searchTrunk(query)),
+    [On.SEARCH_TREE]: async ({commit}, query) => treefyAll(await api.searchTrunk(query)),
 
     [On.CLONE_TREE]: ({dispatch}, {_id}) =>
         dispatch(On.CLONE_TRUNK, _id),
