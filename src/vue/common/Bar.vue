@@ -155,12 +155,12 @@
                 showDialog: On.SHOW_DIALOG
             }),
             ...mapActions({dispatchGoEquiv: On.GO_EQUIV}),
-            goEquiv(impact) {
+            goEquiv(e) {
                 this.dispatchGoEquiv({
                     _id: this.tree._id,
                     bqt: this.tree.trunk.quantity.bqt,
-                    s_id: impact._id,
-                    sbqt: impact.quantity.bqt
+                    s_id: e._id,
+                    sbqt: e.trunk? e.trunk.quantity.bqt : e.quantity.bqt
                 })
             }
         }
