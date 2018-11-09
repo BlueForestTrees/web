@@ -64,7 +64,7 @@
     import SearchName from "./SearchName"
 
     const SearchComp = () => import(/* webpackChunkName: "SearchComp" */ './SearchComp')
-    const TrunkFilter = () => import(/* webpackChunkName: "ImpactEntries" */ './TrunkFilter')
+    const TrunkFilter = () => import(/* webpackChunkName: "TrunkFilter" */ './TrunkFilter')
     const ImpactEntries = () => import(/* webpackChunkName: "ImpactEntries" */ '../impact/ImpactEntries')
     const FacetEntries = () => import(/* webpackChunkName: "FacetEntries" */ '../facet/FacetEntries')
 

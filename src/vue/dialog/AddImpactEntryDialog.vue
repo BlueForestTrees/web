@@ -21,6 +21,7 @@
     import {length2min} from "../../services/rules"
     import closable from "../mixin/Closable"
     import ColorPicker from "../common/ColorPicker"
+    import {createStringObjectId} from "../../services/calculations"
 
     export default {
         mixins: [closable],
@@ -42,11 +43,19 @@
         props: ['data'],
         methods: {
             length2min,
-            ...mapActions({"createImpactEntry": On.CREATE_IMPACT_ENTRY}),
+            ...mapActions({
+                createImpactEntry: On.CREATE_IMPACT_ENTRY,
+                snack: On.SNACKBAR
+            }),
             validate: function () {
                 this.$refs.form.validate()
                 if (this.valid) {
-                    this.createImpactEntry({color:this.color, name: this.name, grandeur: this.grandeur.key})
+                    this.createImpactEntry({
+                        _id: createStringObjectId(),
+                        color: this.color,
+                        name: this.name,
+                        g: this.grandeur.key
+                    }).then(() => this.snack({text: `Le type de propriété "${this.name}" a été crée`}))
                     this.close()
                 }
             },

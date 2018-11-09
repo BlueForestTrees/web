@@ -16,8 +16,6 @@
             <add-facet-entry-dialog/>
             <add-impact-entry-dialog/>
             <add-ressource-dialog/>
-            <add-impact-dialog/>
-            <add-facet-dialog/>
             <connect-to-continue-dialog/>
 
         </span>
@@ -32,8 +30,6 @@
     import {mapState} from 'vuex'
     import Bar from "./common/Bar"
     import Snack from "./common/Snack"
-    import AddImpactDialog from "./dialog/AddImpactDialog"
-    import AddFacetDialog from "./dialog/AddFacetDialog"
     import AddRessourceDialog from "./dialog/AddRessourceDialog"
     import AddFacetEntryDialog from "./dialog/AddFacetEntryDialog"
     import AddImpactEntryDialog from "./dialog/AddImpactEntryDialog"
@@ -60,8 +56,6 @@
             AddImpactEntryDialog,
             AddFacetEntryDialog,
             AddRessourceDialog,
-            AddFacetDialog,
-            AddImpactDialog,
             Bar,
             LeftMenu
         },

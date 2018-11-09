@@ -28,7 +28,7 @@
                 <branches v-if="current === 'branch'" :tree="tree"/>
             </card>
 
-            <add-tree-part-btn :tree="tree"/>
+            <tree-fab :tree="tree"></tree-fab>
         </v-layout>
 
 
@@ -40,11 +40,9 @@
     import Branches from "./Branches"
     import Ressources from "./Ressources"
     import Impacts from "./Impacts"
-    import {LOAD_OPEN_TREE} from "../../const/on"
     import {mapActions, mapState} from "vuex"
     import On from "../../const/on"
-    import TreeHead from "./TreeHead"
-    import AddTreePartBtn from "../common/AddTreePartBtn"
+    import TreeFab from "./TreeFab"
     import BilanImpacts from "./BilanImpacts"
     import BilanRessources from "./BilanRessources"
     import Subheader from "./Subheader"
@@ -61,8 +59,8 @@
             Subheader,
             BilanRessources,
             BilanImpacts,
-            AddTreePartBtn,
-            TreeHead,
+            TreeFab,
+            TreeFab,
             Impacts,
             Ressources,
             Branches,

@@ -27,8 +27,7 @@ export default {
             await api.deleteImpacts(impacts._id, map(toDelete, e => e._id))
             commit(Do.DELETE_IMPACTS, {impacts, toDelete})
         },
-    [On.ADD_IMPACT]: ({commit}, {_id, trunkId, impactId, bqt}) => api.postImpact(_id, trunkId, impactId, bqt),
-    
+
     [On.IMPORT_IMPACT_ADEME]: ({}, file) => {
         const formData = new FormData(file)
         formData.append("csv.ademe.impact", file)

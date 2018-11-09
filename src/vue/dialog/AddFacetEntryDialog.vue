@@ -17,6 +17,7 @@
     import GrandeurSelect from "../common/GrandeurSelect"
     import {length2min} from "../../services/rules"
     import ColorPicker from "../common/ColorPicker"
+    import {createStringObjectId} from "../../services/calculations"
 
     export default {
         name: 'add-facet-entry-dialog',
@@ -37,9 +38,17 @@
         props: ['data'],
         methods: {
             length2min,
-            ...mapActions({createFacetEntry: On.CREATE_FACET_ENTRY}),
+            ...mapActions({
+                createFacetEntry: On.CREATE_FACET_ENTRY,
+                snack: On.SNACKBAR
+            }),
             validate: function () {
-                this.createFacetEntry({color: this.color, name: this.name, grandeur: this.grandeur.key})
+                this.createFacetEntry({
+                    _id: createStringObjectId(),
+                    color: this.color,
+                    name: this.name,
+                    g: this.grandeur.key
+                }).then(() => this.snack({text: `Le type de propriété "${this.name}" a été crée`}))
                 this.close()
             },
             close: function () {

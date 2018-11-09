@@ -17,54 +17,12 @@ describe('Axis calculations', function () {
             impactsTank: [withNameIdBqtG("co2", "d", 3, "Mass"), withNameIdBqtG("poison", "e", 4, "Volu")]
         }
         const expected = [
-            {
-                "name": "vitamine",
-                "_bqt": 1,
-                bqt: 1,
-                "tree": "Skate",
-                "type": "facet",
-                "g": "Mass",
-            },
-            {
-                "name": "voutamine",
-                "_bqt": 7,
-                bqt: 7,
-                "tree": "Skate",
-                "type": "facet",
-                "g": "Mass",
-            },
-            {
-                "name": "eau",
-                "_bqt": 3,
-                bqt: 3,
-                "tree": "Skate",
-                "type": "tank",
-                "g": "Volu",
-            },
-            {
-                "name": "elec",
-                "_bqt": 2,
-                bqt: 2,
-                "tree": "Skate",
-                "type": "tank",
-                "g": "Volu",
-            },
-            {
-                "name": "co2",
-                "_bqt": 3,
-                bqt: 3,
-                "tree": "Skate",
-                "type": "impactsTank",
-                "g": "Mass"
-            },
-            {
-                "name": "poison",
-                "_bqt": 4,
-                bqt: 4,
-                "tree": "Skate",
-                "type": "impactsTank",
-                "g": "Volu",
-            }
+            {"name": "vitamine", "_bqt": 1,bqt: 1,"tree": "Skate","type": "facets","g": "Mass"},
+            {"name": "voutamine","_bqt": 7,bqt: 7,"tree": "Skate","type": "facets","g": "Mass"},
+            {"name": "eau","_bqt": 3,bqt: 3,"tree": "Skate","type": "tank","g": "Volu"},
+            {"name": "elec","_bqt": 2,bqt: 2,"tree": "Skate","type": "tank","g": "Volu"},
+            {"name": "co2","_bqt": 3,bqt: 3,"tree": "Skate","type": "impactsTank","g": "Mass"},
+            {"name": "poison","_bqt": 4,bqt: 4,"tree": "Skate","type": "impactsTank","g": "Volu"}
         ]
         buildAxises(tree).should.be.deep.equal(expected)
     })

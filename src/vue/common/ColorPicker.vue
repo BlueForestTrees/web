@@ -1,9 +1,13 @@
 <template>
     <v-layout row align-center>
-        <v-btn flat icon><v-icon @click="color=null">autorenew</v-icon></v-btn>
+        <v-btn flat icon>
+            <v-icon @click="color=null">autorenew</v-icon>
+        </v-btn>
         <v-text-field label="Couleur" :rules="[isColor]" required v-model="color"/>
         <v-menu>
-            <v-btn slot="activator" x-large fab :style="{backgroundColor:color}"><v-icon :color="arrowColor">edit</v-icon></v-btn>
+            <v-btn slot="activator" x-large fab :style="{backgroundColor:color}">
+                <v-icon :color="arrowColor">edit</v-icon>
+            </v-btn>
             <swatches v-model="color" inline colors="text-advanced" popover-to="left"/>
         </v-menu>
     </v-layout>
@@ -24,6 +28,9 @@
         },
         components: {
             Swatches
+        },
+        mounted() {
+            this.emitColorChange()
         },
         computed: {
             color: {

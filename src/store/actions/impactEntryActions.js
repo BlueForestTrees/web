@@ -7,7 +7,7 @@ export default {
 
     [On.GO_IMPACT_ENTRY]: () => router.push({name: GO.IMPACT_ENTRY}),
 
-    [On.CREATE_IMPACT_ENTRY]: async ({}, {color, name, grandeur}) => api.postImpactEntry({color, name, grandeur}),
+    [On.CREATE_IMPACT_ENTRY]: async ({}, {_id, color, name, g}) => api.postImpactEntry({_id, color, name, g}),
 
     [On.SEARCH_IMPACT_ENTRY]: async ({}, {term}) => api.searchImpactEntry(term),
 

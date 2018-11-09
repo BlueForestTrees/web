@@ -22,6 +22,7 @@ export const buildAxises = tree => ([
     ...buildAxis(tree.trunk, "impactsTank", tree.impactsTank),
     ...buildAxis(tree.trunk, "damagesTank", tree.damagesTank),
 ])
+const eq = eq => eq ? {eq} : {}
 const buildAxis = ({name}, type, items) => items && map(items, item => ({
     tree: name,
     type,
@@ -29,7 +30,7 @@ const buildAxis = ({name}, type, items) => items && map(items, item => ({
     bqt: quantity(item).bqt,
     _bqt: quantity(item).bqt,
     g: quantity(item).g,
-    eq: quantity(item).bqt.eq
+    ...eq(quantity(item).bqt.eq)
 })) || []
 
 /**

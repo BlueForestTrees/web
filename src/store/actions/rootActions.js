@@ -9,6 +9,7 @@ export default {
     [On.GO_ROOT]: ({commit, state}, {treeId, rootId}) => {
         router.push({name: GO.ROOT, params: {treeId, rootId}})
     },
+    [On.CREATE_ROOT]: async ({commit}, {_id, trunkId, rootId, bqt, relativeTo}) => api.postRoot({_id, trunkId, rootId, bqt, relativeTo}),
     [On.LOAD_ROOTS]: ({commit}, {_id, bqt}) =>
         api.getRoots(_id)
             .then(roots => multiplyRessourceBqt(bqt, roots)),

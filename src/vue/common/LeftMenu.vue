@@ -1,65 +1,33 @@
 <template>
     <v-navigation-drawer app v-model="nav.leftMenuVisible">
         <v-list dense>
-
-            <v-list-tile @click="$router.push({name: GO.HOME})">
-                <v-list-tile-action>
-                    <v-icon color="primary">home</v-icon>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                    <v-list-tile-title>Accueil</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
-
             <v-list-tile @click="goCreateTree">
                 <v-list-tile-action>
-                    <v-icon color="primary">add</v-icon>
+                    <v-icon color="primary">panorama_fish_eye</v-icon>
                 </v-list-tile-action>
                 <v-list-tile-content>
                     <v-list-tile-title>Créer un produit ou un service</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
-            <v-list-group>
-                <v-list-tile slot="activator">
-                    <v-list-tile-action>
-                        <v-icon color="primary">chrome_reader_mode</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-content>
-                        <v-list-tile-title>Catalogue</v-list-tile-title>
-                    </v-list-tile-content>
-                </v-list-tile>
 
-                <v-list-tile @click="goFacetEntry">
-                    <v-list-tile-action>
-                        <v-layout row>
-                            <v-icon color="primary">more_horiz</v-icon>
-                        </v-layout>
-                    </v-list-tile-action>
-                    <v-list-tile-content>
-                        <v-list-tile-title>Propriétés</v-list-tile-title>
-                    </v-list-tile-content>
-                </v-list-tile>
-                <v-list-tile @click="goImpactEntry">
-                    <v-list-tile-action>
-                        <v-layout row>
-                            <v-icon color="primary">keyboard_tab</v-icon>
-                        </v-layout>
-                    </v-list-tile-action>
-                    <v-list-tile-content>
-                        <v-list-tile-title>Impacts</v-list-tile-title>
-                    </v-list-tile-content>
-                </v-list-tile>
-            </v-list-group>
-
-
-            <v-list-tile @click="deleteTrunk(tree)" v-if="tree">
+            <v-list-tile @click="show(Dial.ADD_IMPACT_ENTRY)">
                 <v-list-tile-action>
-                    <v-icon color="primary">delete</v-icon>
+                    <v-icon color="primary">keyboard_tab</v-icon>
                 </v-list-tile-action>
                 <v-list-tile-content>
-                    <v-list-tile-title>Supprimer {{tree.name}}</v-list-tile-title>
+                    <v-list-tile-title>Ajouter un type d'impact</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
+
+            <v-list-tile @click="show(Dial.FACET_ENTRY)">
+                <v-list-tile-action>
+                    <v-icon color="primary">keyboard_backspace</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                    <v-list-tile-title>Ajouter une propriété au catalogue</v-list-tile-title>
+                </v-list-tile-content>
+            </v-list-tile>
+
         </v-list>
 
 
@@ -92,18 +60,25 @@
 </template>
 
 <script>
-    import Do from "../../const/do"
-    import {mapActions, mapMutations, mapState} from "vuex"
+    import {mapActions, mapState} from "vuex"
     import {Dial} from "../../const/dial"
     import On from "../../const/on"
     import {secs} from "../../const/sections"
     import {GO} from "../../const/go"
 
     export default {
+        data() {
+            return {
+                Dial
+            }
+        },
         computed: {
             ...mapState(['tree', 'nav', 'version'])
         },
         methods: {
+            show(dialog){
+                this.showDialog({dialog})
+            },
             switchColors() {
                 this.nav.dark = !this.nav.dark
                 localStorage.setItem("dark", this.nav.dark)
@@ -112,18 +87,9 @@
             showBugMessages() {
                 this.dispatchShowMessages(secs.BUG)
             },
-            deleteTrunk(tree) {
-                this.dispatchDeleteTrunk(tree)
-                    .then(this.closeTree)
-                    .then(this.goHome)
-            },
-            ...mapMutations({
-                closeTree: Do.CLOSE_TREE
-            }),
             ...mapActions({
                 showDialog: On.SHOW_DIALOG,
                 dispatchDeleteTrunk: On.DELETE_TREE,
-                goHome: On.GO_HOME,
                 goImpactEntry: On.GO_IMPACT_ENTRY,
                 goFacetEntry: On.GO_FACET_ENTRY,
                 goCreateTree: On.GO_CREATE_TREE,

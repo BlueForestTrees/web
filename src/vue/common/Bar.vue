@@ -1,11 +1,18 @@
 <template>
     <v-toolbar v-if="!anySelected" dense app class="elevation-0" style='background-color:#FFFFFFBB'>
         <v-toolbar-side-icon @click="nav.leftMenuVisible = !nav.leftMenuVisible"></v-toolbar-side-icon>
+        <v-btn @click="goHome" flat icon color="primary">
+            <v-icon>home</v-icon>
+        </v-btn>
 
         <v-spacer/>
 
-        <v-btn icon flat :to="{name: GO.SEARCH}"><v-icon large color="primary">search</v-icon></v-btn>
-        <v-btn icon flat :to="{name: GO.BASKET}"><v-icon :large="notEmptyBasket" color="primary">shopping_basket</v-icon></v-btn>
+        <v-btn icon flat :to="{name: GO.SEARCH}">
+            <v-icon large color="primary">search</v-icon>
+        </v-btn>
+        <v-btn icon flat :to="{name: GO.BASKET}">
+            <v-icon :large="notEmptyBasket" color="primary">shopping_basket</v-icon>
+        </v-btn>
         <v-menu v-if="user">
             <v-avatar slot="activator" size="32px" :style="{backgroundColor:user.color}" class="ml-2">
                 <span :style="{color:overcolor(user.color)}">{{initiales(user.fullname)}}</span>
@@ -27,7 +34,9 @@
             </v-list>
         </v-menu>
         <v-menu v-else>
-            <v-btn slot="activator" icon dense><v-icon>person</v-icon></v-btn>
+            <v-btn slot="activator" icon dense>
+                <v-icon>person</v-icon>
+            </v-btn>
             <login-suscribe-list style="width: 17em"/>
         </v-menu>
 
@@ -36,65 +45,67 @@
 
         <v-layout row align-center>
 
-        <v-tooltip v-if="oneSelected && selectionIsTree" bottom>
-            <v-btn slot="activator" flat @click="goTree(oneSelected)">détails
-                <v-icon x-large>category</v-icon>
-            </v-btn>
-            <span style="pointer-events: none">Ouvrir</span>
-        </v-tooltip>
+            <v-tooltip v-if="oneSelected && selectionIsTree" bottom>
+                <v-btn slot="activator" flat @click="goTree(oneSelected)">détails
+                    <v-icon x-large>category</v-icon>
+                </v-btn>
+                <span style="pointer-events: none">Ouvrir</span>
+            </v-tooltip>
 
-        <v-tooltip bottom>
-            <v-btn slot="activator" v-if="twoSelected && selectionIsTree" flat @click="goCompare(twoSelected)">comparer
-                <v-icon x-large>compare_arrows</v-icon>
-            </v-btn>
-            <span style="pointer-events: none">Comparer ces deux éléments</span>
-        </v-tooltip>
+            <v-tooltip bottom>
+                <v-btn slot="activator" v-if="twoSelected && selectionIsTree" flat @click="goCompare(twoSelected)">comparer
+                    <v-icon x-large>compare_arrows</v-icon>
+                </v-btn>
+                <span style="pointer-events: none">Comparer ces deux éléments</span>
+            </v-tooltip>
 
-        <v-tooltip v-if="$route.name === GO.BASKET && twoSelected" bottom>
-            <v-btn slot="activator" flat @click="goAdd(twoSelected);unselect()">Composer
-                <v-icon x-large>call_merge</v-icon>
-            </v-btn>
-            <span style="pointer-events: none">Faire d'un produit le composant de l'autre</span>
-        </v-tooltip>
+            <v-tooltip v-if="$route.name === GO.BASKET && twoSelected" bottom>
+                <v-btn slot="activator" flat @click="goAdd(twoSelected);unselect()">Composer
+                    <v-icon x-large>call_merge</v-icon>
+                </v-btn>
+                <span style="pointer-events: none">Faire d'un produit le composant de l'autre</span>
+            </v-tooltip>
 
-        <v-tooltip v-if="$route.name === GO.BASKET" bottom>
-            <v-btn slot="activator" v-if="anySelected" flat @click="removeSelectionFromBasket">
-                <v-icon x-large>shopping_basket</v-icon>
-                <v-icon x-large>arrow_right_alt</v-icon>
-                retirer
-            </v-btn>
-            <span style="pointer-events: none">Retirer du panier</span>
-        </v-tooltip>
+            <v-tooltip v-if="$route.name === GO.BASKET" bottom>
+                <v-btn slot="activator" v-if="anySelected" flat @click="removeSelectionFromBasket">
+                    <v-icon x-large>shopping_basket</v-icon>
+                    <v-icon x-large>arrow_right_alt</v-icon>
+                    retirer
+                </v-btn>
+                <span style="pointer-events: none">Retirer du panier</span>
+            </v-tooltip>
 
-        <v-tooltip v-if="$route.name !== GO.BASKET && selectionCount" bottom>
-            <v-btn slot="activator" flat dense
-                   @click="addSelectionToBasket">Panier
-                <v-icon x-large>arrow_right_alt</v-icon>
-                <v-icon x-large>shopping_basket</v-icon>
-            </v-btn>
-            <span style="pointer-events: none">Ajouter au panier</span>
-        </v-tooltip>
+            <v-tooltip v-if="$route.name !== GO.BASKET && selectionCount" bottom>
+                <v-btn slot="activator" flat dense
+                       @click="addSelectionToBasket">Panier
+                    <v-icon x-large>arrow_right_alt</v-icon>
+                    <v-icon x-large>shopping_basket</v-icon>
+                </v-btn>
+                <span style="pointer-events: none">Ajouter au panier</span>
+            </v-tooltip>
 
 
-        <v-tooltip v-if="$route.name === GO.TREE && oneSelected" bottom>
-            <v-btn slot="activator" flat dense @click="goEquiv(oneSelected)">Equivalence
-                <v-icon x-large>arrow_right_alt</v-icon>
-                <v-icon x-large>search</v-icon>
-            </v-btn>
-            <span style="pointer-events: none">Trouver des équivalences</span>
-        </v-tooltip>
+            <v-tooltip v-if="$route.name === GO.TREE && oneSelected" bottom>
+                <v-btn slot="activator" flat dense @click="goEquiv(oneSelected)">Equivalence
+                    <v-icon x-large>arrow_right_alt</v-icon>
+                    <v-icon x-large>search</v-icon>
+                </v-btn>
+                <span style="pointer-events: none">Trouver des équivalences</span>
+            </v-tooltip>
 
-        <v-tooltip v-if="$route.name === GO.IMPACT_ENTRY && oneSelected" bottom>
-            <v-btn slot="activator" flat dense @click="nav.detailsDialog = true">Détails<v-icon>aspect_ratio</v-icon></v-btn>
-            <span style="pointer-events: none">Détails</span>
-        </v-tooltip>
-        <v-spacer/>
-        <v-tooltip bottom>
-            <v-btn slot="activator" icon dense @click="unselect">
-                <v-icon x-large>close</v-icon>
-            </v-btn>
-            <span style="pointer-events: none">Fermer</span>
-        </v-tooltip>
+            <v-tooltip v-if="$route.name === GO.IMPACT_ENTRY && oneSelected" bottom>
+                <v-btn slot="activator" flat dense @click="nav.detailsDialog = true">Détails
+                    <v-icon>aspect_ratio</v-icon>
+                </v-btn>
+                <span style="pointer-events: none">Détails</span>
+            </v-tooltip>
+            <v-spacer/>
+            <v-tooltip bottom>
+                <v-btn slot="activator" icon dense @click="unselect">
+                    <v-icon x-large>close</v-icon>
+                </v-btn>
+                <span style="pointer-events: none">Fermer</span>
+            </v-tooltip>
         </v-layout>
 
     </v-toolbar>
@@ -146,6 +157,7 @@
                 removeSelectionFromBasket: On.REMOVE_SELECTION_FROM_BASKET,
                 goSearch: On.GO_SEARCH,
                 goTree: On.GO_TREE,
+                goHome: On.GO_HOME,
                 addSelectionToBasket: On.ADD_SELECTION_TO_BASKET,
                 goCompare: On.GO_COMPARE,
                 showDialog: On.SHOW_DIALOG
@@ -156,7 +168,7 @@
                     _id: this.tree._id,
                     bqt: this.tree.trunk.quantity.bqt,
                     s_id: e._id,
-                    sbqt: e.trunk? e.trunk.quantity.bqt : e.quantity.bqt
+                    sbqt: e.trunk ? e.trunk.quantity.bqt : e.quantity.bqt
                 })
             }
         }

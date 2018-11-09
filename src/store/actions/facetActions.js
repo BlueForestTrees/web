@@ -13,10 +13,5 @@ export default {
         ({commit}, {facets, toDelete}) => {
             api.deleteFacets(facets._id, map(toDelete, e => e._id))
             commit(Do.DELETE_FACETS, {facets, toDelete})
-        },
-    [On.ADD_FACET]:
-        async ({commit}, {tree, facet}) => {
-            api.putFacet(idQtFrom(tree.trunk), idQtFrom(facet))
-            commit(Do.ADD_FACET, {tree, facet})
         }
 }

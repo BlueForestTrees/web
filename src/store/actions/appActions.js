@@ -3,6 +3,7 @@ import Do from "../../const/do"
 
 export default {
     [On.MOUNT_APP]: async ({dispatch}) => {
+        dispatch(On.DARK_FROM_STORAGE)
         dispatch(On.USER_FROM_STORAGE)
         dispatch(On.LOAD_GRANDEUR)
         dispatch(On.LOAD_BASKET)
@@ -13,5 +14,8 @@ export default {
     },
     [On.SWITCH_LEFT_MENU]: async ({commit}) => {
         commit(Do.SWITCH_LEFT_MENU)
+    },
+    [On.DARK_FROM_STORAGE]: ({state}) => {
+        state.nav.dark = localStorage.getItem("dark") === 'true'
     }
 }

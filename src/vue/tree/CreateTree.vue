@@ -15,6 +15,7 @@
                 <v-form v-model="qtValid" v-on:submit.prevent="" ref="qtForm">
                     <v-layout :column="$vuetify.breakpoint.xsOnly">
                         <v-text-field autofocus type="number" label="Quantité... (ex.: 10)" v-model="qt" :rules="[required, isNumber]" @keydown.enter="validQt"/>
+                        <grandeur-select v-model="grandeur" />
                         <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]"/>
                     </v-layout>
                 </v-form>
@@ -51,10 +52,11 @@
     import UnitSelect from "../common/UnitSelect"
     import ColorPicker from "../common/ColorPicker"
     import Connected from "../mixin/Connected"
+    import GrandeurSelect from "../common/GrandeurSelect"
 
     export default {
         name: 'create-trunk',
-        components: {ColorPicker, UnitSelect, TreeHead},
+        components: {GrandeurSelect, ColorPicker, UnitSelect, TreeHead},
         mixins:[Connected],
         data() {
             return {

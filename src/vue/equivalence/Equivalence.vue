@@ -11,7 +11,7 @@
                         <v-layout row align-center v-if="filter">
                             <v-flex class="display-1">Produits avec: {{qtUnitName(filter)}}</v-flex>
                         </v-layout>
-                        <tree-head :photo="false" :tree="tree" v-if="tree"/>
+                        <tree-head :photo="false" :tree="tree" v-if="tree" selectable/>
                         <loader v-else/>
                         <selectable-list :items="equivalences" :exceptId="_id"/>
 
