@@ -53,6 +53,9 @@ export default {
 
 
     postImpact: (_id, trunkId, impactId, bqt) => post(`/api/impact`, {_id, trunkId, impactId, bqt}),
+    postFacet: (_id, trunkId, facetId, bqt) => post(`/api/facet`, {_id, trunkId, facetId, bqt}),
+    postDamage: (_id, trunkId, damageId, bqt) => post(`/api/damage`, {_id, trunkId, damageId, bqt}),
+
     postFacetEntry: facet => post('/api/facetEntry', facet),
     postImpactEntry: impact => post('/api/impactEntry', impact),
     postTrunk: trunk => post('/api/tree/trunk', trunk),

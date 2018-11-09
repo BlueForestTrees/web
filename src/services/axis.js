@@ -2,7 +2,7 @@ import find from 'lodash.find'
 import isNil from 'lodash.isnil'
 import {map} from 'unit-manip'
 import remove from 'lodash.remove'
-import {format} from "./calculations"
+import {format, quantity, name as _name} from "./calculations"
 import Vue from 'vue'
 
 /**
@@ -25,11 +25,11 @@ export const buildAxises = tree => ([
 const buildAxis = ({name}, type, items) => items && map(items, item => ({
     tree: name,
     type,
-    name: item.name,
-    bqt: item.quantity.bqt,
-    _bqt: item.quantity.bqt,
-    g: item.quantity.g,
-    eq: item.quantity.eq
+    name: _name(item),
+    bqt: quantity(item).bqt,
+    _bqt: quantity(item).bqt,
+    g: quantity(item).g,
+    eq: quantity(item).bqt.eq
 })) || []
 
 /**
@@ -100,11 +100,15 @@ export const applyCoef = (coef, items, prop) => {
 
 export const updateRatios = (axises) => {
     for (let i = 0; i < axises.common.length; i++) {
-        const leftAxis = axises.common[i].left
-        const rightAxis = axises.common[i].right
-        const sum = leftAxis.bqt + rightAxis.bqt
-        Vue.set(leftAxis, "ratio", Math.min(Math.max(leftAxis.bqt / sum, -1.1), 1.1))
-        Vue.set(rightAxis, "ratio", Math.min(Math.max(rightAxis.bqt / sum, -1.1), 1.1))
+        try {
+            const leftAxis = axises.common[i].left
+            const rightAxis = axises.common[i].right
+            const sum = leftAxis.bqt + rightAxis.bqt
+            Vue.set(leftAxis, "ratio", Math.min(Math.max(leftAxis.bqt / sum, -1.1), 1.1))
+            Vue.set(rightAxis, "ratio", Math.min(Math.max(rightAxis.bqt / sum, -1.1), 1.1))
+        } catch (e) {
+            console.error("err update ratio ", axises.common[i])
+        }
     }
     //axises.common.sort((a, b) => b.left.ratio - a.left.ratio)
     return axises

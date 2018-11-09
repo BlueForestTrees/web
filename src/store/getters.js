@@ -1,6 +1,10 @@
 export default {
     basketArray: (state) => Object.values(state.basket),
-    notEmptyBasket: (s, getters) => getters.basketArray.length > 0,
+    basketDamageArray: (state) => Object.values(state.basketdamage),
+    basketImpactArray: (state) => Object.values(state.basketimpact),
+    basketFacetArray: (state) => Object.values(state.basketfacet),
+    emptyBasket: (state, getters) => !getters.notEmptyBasket,
+    notEmptyBasket: (s, getters) => getters.basketArray.length > 0 || getters.basketDamageArray.length > 0 || getters.basketImpactArray.length > 0 || getters.basketFacetArray.length > 0,
     filter: state => {
         const cat = {}
         const filter = {cat}
@@ -15,17 +19,4 @@ export default {
         }
         return changes ? filter : null
     },
-    selectionCount: state => state.selection.length,
-    isSelected: item => state => {
-        for (let i = 0; i < state.selection.length; i++) {
-            if (item === state.selection[i]) {
-                return true
-            }
-        }
-    },
-    anySelected: (state, getters) => getters.selectionCount > 0 && state.selection,
-    oneSelected: (state, getters) => getters.selectionCount === 1 && state.selection[0],
-    twoSelected: (state, getters) => getters.selectionCount === 2 && state.selection,
-    manySelected: (state, getters) => getters.selectionCount > 2 && state.selection,
-    lastSelected: (state, getters) => getters.selectionCount > 0 && state.selection[getters.selectionCount - 1]
 }

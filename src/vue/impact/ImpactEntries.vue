@@ -1,12 +1,14 @@
 <template>
 <span>
         <span style="width: 100%">
+
             <v-card-title primary-title>
                 <p style="padding-right:1em">Filtre</p>
                 <v-text-field label="Nom" autofocus v-model="namePart"></v-text-field>
             </v-card-title>
+            <v-divider/>
 
-            <selectable-list :items="items" no-qt :max-selection-size="1"/>
+            <selectable-list :items="items" no-qt />
 
         </span>
         <add-impact-entries-btn/>
@@ -31,7 +33,6 @@
     </span>
 </template>
 <script>
-    import selectable from "../mixin/Selectable"
     import On from "../../const/on"
     import {mapActions, mapState} from "vuex"
     import AddImpactEntriesBtn from "../common/AddImpactEntriesBtn"
@@ -39,12 +40,10 @@
 
     export default {
         components: {SelectableList, AddImpactEntriesBtn},
-        mixins: [selectable],
         data: function () {
             return {
                 namePart: null,
                 items: null,
-                maxSelectionSize: 1,
                 detailsDialog: false
             }
         },

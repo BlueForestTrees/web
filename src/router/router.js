@@ -15,7 +15,6 @@ const Inscription = () => import(/* webpackChunkName: "Inscription" */ '../vue/u
 const Login = () => import(/* webpackChunkName: "Login" */ '../vue/user/Login')
 const Plan = () => import(/* webpackChunkName: "Plan" */ '../vue/plan/Plan')
 const PlanIntro = () => import(/* webpackChunkName: "Plan" */ '../vue/plan/PlanIntro')
-const ImpactEntries = () => import(/* webpackChunkName: "ImpactEntries" */ '../vue/impact/ImpactEntries')
 const CreateTree = () => import(/* webpackChunkName: "CreateTree" */ '../vue/tree/CreateTree')
 
 Vue.use(VueRouter)
@@ -65,11 +64,6 @@ export default new VueRouter({
                     name: GO.SEARCH,
                     path: "search",
                     component: Search
-                },
-                {
-                    name: GO.IMPACT_ENTRY,
-                    path: "impactEntries",
-                    component: ImpactEntries
                 },
                 {
                     name: GO.BASKET,

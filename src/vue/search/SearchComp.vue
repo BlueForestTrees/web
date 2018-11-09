@@ -1,20 +1,11 @@
 <template>
     <v-flex>
-        <template v-if="items.length > 0" v-for="item in items">
-            <div :key="item._id" @click="toggleSelect(item)" class="v-list__tile" :style="{paddingTop:'8px',paddingBottom:'8px',height:'auto', background: isSelected(item) ? '#D8E9F5' : '', transition: 'background .2s ease'}">
-                <v-layout row>
-                    <v-icon v-if="isSelected(item)" color="primary" style="margin-right:0.3em">check_circle</v-icon>
-                    <v-icon v-else :style="'color: '+(item.color || item.trunk.color)+';margin-right:0.3em'">panorama_fish_eye</v-icon>
-                    <v-list-tile-content>{{item.name || item.trunk.name}}</v-list-tile-content>
-                </v-layout>
-            </div>
-        </template>
+        <selectable-list :items="items" no-qt><span slot="no-items"></span></selectable-list>
         <infinite-loading v-if="active" ref="iloading" @infinite="loadResults" spinner="spiral" :distance="500" style="padding-bottom: 3em">
             <span slot="no-more">{{items.length}} résultats</span>
             <span slot="no-results"><slot name="no-results">Pas de résultats</slot></span>
             <span slot="spinner"><loader/></span>
         </infinite-loading>
-
     </v-flex>
 </template>
 
@@ -24,6 +15,7 @@
     import InfiniteLoading from 'vue-infinite-loading'
     import debounce from 'lodash.debounce'
     import Loader from "../loader/Loader"
+    import SelectableList from "../common/SelectableList"
 
     export default {
         name: 'search-comp',
@@ -35,6 +27,7 @@
         },
         mixins: [selectable],
         components: {
+            SelectableList,
             Loader,
             InfiniteLoading,
         },

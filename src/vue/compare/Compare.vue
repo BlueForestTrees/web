@@ -4,34 +4,28 @@
             <v-spacer/>
             <v-flex class="title">Comparaison</v-flex>
         </v-layout>
+        <v-card-text v-if="!compare.left || !compare.right" class="text-md-center">Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche</span> ou prenez des produits du <span><v-icon @click="goBasket" color="primary">shopping_basket</v-icon> panier pour les comparer.</span></v-card-text>
 
-        <v-layout row v-if="compare.left && compare.right">
-            <tree-card class="half-width my-2" :tree="compare.left" @nav="goTree(compare.left)" :style="{cursor: 'pointer'}" no-bar selectable />
-            <tree-card class="half-width my-2 ml-2":tree="compare.right" @nav="goTree(compare.right)" :style="{cursor: 'pointer'}" no-bar selectable />
-        </v-layout>
-        <v-card-text class="text-md-center" v-else>Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche</span> ou prenez des produits du <span><v-icon @click="goBasket" color="primary">shopping_basket</v-icon> panier pour les comparer.</span></v-card-text>
-
-        <v-card v-if="hasFacetAxises">
-            <v-layout row align-center pl-4 pt-4>
-                <v-flex class="display-1">Propriétés</v-flex>
-                <v-icon class="corner" x-large @click="zoom = !zoom">{{zoom ? 'pie_chart':'list'}}</v-icon>
+        <span v-else>
+            <v-layout row>
+                <tree-card class="half-width my-0" :tree="compare.left" @nav="goTree(compare.left)" :style="{cursor: 'pointer'}" no-bar selectable/>
+                <tree-card class="half-width my-0 ml-2" :tree="compare.right" @nav="goTree(compare.right)" :style="{cursor: 'pointer'}" no-bar selectable/>
             </v-layout>
+            <v-card class="my-1">
+                <v-layout row align-center justify-center>
+                    <v-checkbox v-model="selectedDomain" label="ENVIRONNEMENT" value="impactsTank"></v-checkbox>
+                    <v-checkbox v-model="selectedDomain" label="RESSOURCES" value="tank"></v-checkbox>
+                    <v-checkbox v-model="selectedDomain" label="PROPRIETES" value="facets"></v-checkbox>
+                </v-layout>
+            </v-card>
+        </span>
 
-            <compare-ribbon v-if="zoom" :axises="facetsAxises" :leftColor="leftColor" :rightColor="rightColor"/>
-            <compare-cams v-else :axises="facetsAxises" :leftColor="leftColor" :rightColor="rightColor"/>
+        <v-card v-if="hasAxises">
+            <v-layout row align-center pl-4 pt-4><v-icon class="corner" x-large @click="zoom = !zoom">{{zoom ? 'pie_chart':'list'}}</v-icon></v-layout>
+
+            <compare-ribbon v-if="zoom" :axises="selectedAxises" :leftColor="leftColor" :rightColor="rightColor"/>
+            <compare-cams v-else :axises="selectedAxises" :leftColor="leftColor" :rightColor="rightColor"/>
         </v-card>
-        <v-card-text class="text-md-center" v-else-if="loading">Chargement...</v-card-text>
-
-        <v-card v-if="hasImpactAxises">
-            <v-layout row align-center pl-4 pt-4>
-                <v-flex class="display-1">Environnement</v-flex>
-                <v-icon class="corner" x-large @click="zoom = !zoom">{{zoom ? 'pie_chart':'list'}}</v-icon>
-            </v-layout>
-
-            <compare-ribbon v-if="zoom" :axises="impactsAxises" :leftColor="leftColor" :rightColor="rightColor"/>
-            <compare-cams v-else :axises="impactsAxises" :leftColor="leftColor" :rightColor="rightColor"/>
-        </v-card>
-        <v-card-text class="text-md-center" v-else-if="loading">Chargement...</v-card-text>
 
     </v-container>
 
@@ -61,13 +55,7 @@
             return {
                 zoom: false,
                 base: null,
-                loading: false,
-                type: "facets",
-                types: [
-                    {code: "facets", text: "Propriétés"},
-                    {code: "impactsTank", text: "Impact environmental"},
-                    {code: "damagesTank", text: "Dommages environnementaux"}
-                ],
+                selectedDomain: []
             }
         },
         created: async function () {
@@ -100,21 +88,11 @@
                 }
                 return this.compare.axis
             },
-            hasFacetAxises() {
-                return this.facetsAxises && this.facetsAxises.length !== 0
+            hasAxises() {
+                return this.selectedAxises && this.selectedAxises.length !== 0
             },
-            facetsAxises: function () {
-                if (this.axises) {
-                    return filter(this.axises.common, axis => axis.left.type === "facets")
-                }
-            },
-            hasImpactAxises() {
-                return this.impactsAxises && this.impactsAxises.length !== 0
-            },
-            impactsAxises: function () {
-                if (this.axises) {
-                    return filter(this.axises.common, axis => axis.left.type === "impactsTank")
-                }
+            selectedAxises(){
+                return this.axises && filter(this.axises.common, axis => this.selectedDomain.includes(axis.left.type))
             },
             leftColor: function () {
                 return this.compare && this.compare.left && this.compare.left.trunk && this.compare.left.trunk.color || "#0000BB"

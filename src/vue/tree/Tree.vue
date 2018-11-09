@@ -18,7 +18,7 @@
 
         <v-layout column v-else>
 
-            <tree-card :tree="tree" @change="v => current = v"/>
+            <tree-card :tree="tree" @change="v => current = v" selectable/>
 
             <card>
                 <description v-if="!current" :tree="tree"/>

@@ -1,6 +1,6 @@
 <template>
     <selectable-list :items="items" :maxSelectionSize="1" :selection="selection">
-        <open-message slot="no-items" :section="section"/>
+        <open-message class="mt-5" slot="no-items" :section="section"/>
     </selectable-list>
 </template>
 

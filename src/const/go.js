@@ -6,6 +6,7 @@ export const GO = {
     PLAN: 'plan',
     HOME: 'home',
     IMPACT_ENTRY: 'impactEntry',
+    FACET_ENTRY: 'facetEntry',
     SEARCH: 'search',
     BASKET: 'basket',
     TREE_EMPTY: 'emptyTree',

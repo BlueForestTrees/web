@@ -1,5 +1,5 @@
 <template>
-    <v-toolbar v-if="!anySelected" dense app class="elevation-1" style='background-color:#FFFFFFBB'>
+    <v-toolbar v-if="!anySelected" dense app class="elevation-0" style='background-color:#FFFFFFBB'>
         <v-toolbar-side-icon @click="nav.leftMenuVisible = !nav.leftMenuVisible"></v-toolbar-side-icon>
 
         <v-spacer/>
@@ -36,8 +36,6 @@
 
         <v-layout row align-center>
 
-
-
         <v-tooltip v-if="oneSelected && selectionIsTree" bottom>
             <v-btn slot="activator" flat @click="goTree(oneSelected)">détails
                 <v-icon x-large>category</v-icon>
@@ -45,9 +43,8 @@
             <span style="pointer-events: none">Ouvrir</span>
         </v-tooltip>
 
-
         <v-tooltip bottom>
-            <v-btn slot="activator" v-if="twoSelected" flat @click="goCompare(twoSelected)">comparer
+            <v-btn slot="activator" v-if="twoSelected && selectionIsTree" flat @click="goCompare(twoSelected)">comparer
                 <v-icon x-large>compare_arrows</v-icon>
             </v-btn>
             <span style="pointer-events: none">Comparer ces deux éléments</span>
@@ -69,8 +66,7 @@
             <span style="pointer-events: none">Retirer du panier</span>
         </v-tooltip>
 
-
-        <v-tooltip v-if="$route.name !== GO.BASKET && selectionCount && selectionIsTree" bottom>
+        <v-tooltip v-if="$route.name !== GO.BASKET && selectionCount" bottom>
             <v-btn slot="activator" flat dense
                    @click="addSelectionToBasket">Panier
                 <v-icon x-large>arrow_right_alt</v-icon>
@@ -80,7 +76,7 @@
         </v-tooltip>
 
 
-        <v-tooltip v-if="$route.name === GO.TREE" bottom>
+        <v-tooltip v-if="$route.name === GO.TREE && oneSelected" bottom>
             <v-btn slot="activator" flat dense @click="goEquiv(oneSelected)">Equivalence
                 <v-icon x-large>arrow_right_alt</v-icon>
                 <v-icon x-large>search</v-icon>

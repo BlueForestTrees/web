@@ -6,6 +6,7 @@ import {bqtGToQtUnit, baseQt} from "unit-manip"
 import router from "../../router/router"
 import {GO} from "../../const/go"
 import Do from "../../const/do"
+import {DAMAGE, FACET, IMPACT} from "../../const/attributesTypes"
 
 //on détecte que l'objet est à charger en se basant arbitrairement sur le champ branches
 const needRefresh = basketTree => !basketTree.branches
@@ -83,5 +84,19 @@ export default {
         }),
         bqt: transportQuantity(bqtGToQtUnit(item.trunk.quantity), transport.quantity),
     }),
+    [On.CREATE_LINK]: ({dispatch}, {_id, parent, child, bqt}) => {
+        if (!child.type) {
+            return api.postRoot({_id, trunkId: parent._id, rootId: child._id, bqt})
+        } else {
+            switch (child.type) {
+                case IMPACT:
+                    return api.postImpact(_id, parent._id, child._id, bqt)
+                case DAMAGE:
+                    return api.postDamage(_id, parent._id, child._id, bqt)
+                case FACET:
+                    return api.postFacet(_id, parent._id, child._id, bqt)
 
+            }
+        }
+    }
 }

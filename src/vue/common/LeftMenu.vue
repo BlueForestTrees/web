@@ -22,31 +22,31 @@
             <v-list-group>
                 <v-list-tile slot="activator">
                     <v-list-tile-action>
-                        <v-icon color="primary">build</v-icon>
+                        <v-icon color="primary">chrome_reader_mode</v-icon>
                     </v-list-tile-action>
                     <v-list-tile-content>
-                        <v-list-tile-title>Configuration</v-list-tile-title>
+                        <v-list-tile-title>Catalogue</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
 
-                <v-list-tile @click="showDialog({dialog:Dial.FACET_ENTRY})">
+                <v-list-tile @click="goFacetEntry">
                     <v-list-tile-action>
                         <v-layout row>
-                            <v-icon color="primary">add</v-icon>
+                            <v-icon color="primary">more_horiz</v-icon>
                         </v-layout>
                     </v-list-tile-action>
                     <v-list-tile-content>
-                        <v-list-tile-title>Catalogue des propriété</v-list-tile-title>
+                        <v-list-tile-title>Propriétés</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile @click="goImpactEntry">
                     <v-list-tile-action>
                         <v-layout row>
-                            <v-icon color="primary">add</v-icon>
+                            <v-icon color="primary">keyboard_tab</v-icon>
                         </v-layout>
                     </v-list-tile-action>
                     <v-list-tile-content>
-                        <v-list-tile-title>Catalogue des impacts</v-list-tile-title>
+                        <v-list-tile-title>Impacts</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
             </v-list-group>
@@ -125,6 +125,7 @@
                 dispatchDeleteTrunk: On.DELETE_TREE,
                 goHome: On.GO_HOME,
                 goImpactEntry: On.GO_IMPACT_ENTRY,
+                goFacetEntry: On.GO_FACET_ENTRY,
                 goCreateTree: On.GO_CREATE_TREE,
                 dispatchShowMessages: On.SHOW_MESSAGES
             })

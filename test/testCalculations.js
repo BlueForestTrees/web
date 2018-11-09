@@ -1,5 +1,5 @@
 import chai, {expect} from 'chai'
-import {add, createStringObjectId} from "../../main/services/calculations"
+import {add, createStringObjectId} from "../src/services/calculations"
 import {init} from "./setup"
 import {ObjectID} from 'mongodb'
 

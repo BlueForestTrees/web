@@ -1,26 +1,6 @@
 <template>
     <selectable-list :items="facets" :maxSelectionSize="1" :selection="selection">
-        <template slot="bar" slot-scope="{ s }">
-            <v-toolbar-items>
-                <v-tooltip bottom>
-                    <v-btn slot="activator" flat dense @click="goEquiv(s.oneSelected)">Equivalence
-                        <v-icon>arrow_right_alt</v-icon>
-                        <v-icon>search</v-icon>
-                    </v-btn>
-                    <span style="pointer-events: none">Trouver des équivalences</span>
-                </v-tooltip>
-            </v-toolbar-items>
-            <v-spacer/>
-            <v-toolbar-items>
-                <v-tooltip bottom>
-                    <v-btn slot="activator" icon dense @click="s.unselect()">
-                        <v-icon>close</v-icon>
-                    </v-btn>
-                    <span style="pointer-events: none">Fermer</span>
-                </v-tooltip>
-            </v-toolbar-items>
-        </template>
-        <open-message slot="no-items" :section="section"/>
+        <open-message class="mt-5" slot="no-items" :section="section"/>
     </selectable-list>
 </template>
 

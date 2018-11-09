@@ -59,7 +59,7 @@
                         </v-list-tile>
                         <color-qt-unit-name :item="rightItem"/>
                     </v-container>
-                    <v-btn :color="isOwner ? 'primary' : 'orange'" @click="isOwner ? validate() : ''">Ok</v-btn>
+                    <v-btn :disabled="!isOwner" @click="validate">Ok</v-btn>
                     <v-btn flat @click="idx--">retour</v-btn>
                 </v-stepper-content>
             </v-stepper>
@@ -83,9 +83,8 @@
     import closable from "../mixin/Closable"
     import GrandeurSelect from "../common/GrandeurSelect"
     import SearchComp from "../search/SearchComp"
-    import {createStringObjectId} from "../../services/calculations"
+    import {createStringObjectId, color, name, quantity} from "../../services/calculations"
     import SearchCat from "../search/SearchCat"
-    import SearchTrunk from "../search/SearchTrunk"
     import BasketComp from "../basket/BasketComp"
     import Tree from "../tree/Tree"
     import TreeHead from "../tree/TreeHead"
@@ -115,7 +114,6 @@
             TreeHead,
             Tree,
             BasketComp,
-            SearchTrunk,
             SearchCat,
             SearchComp,
             GrandeurSelect,
@@ -135,18 +133,19 @@
                 return this.searchAgain || !this.selectedItem
             },
             isOwner: function () {
-                return this.user && this.left && this.left.trunk && this.left.trunk.oid && this.left.trunk.oid === this.user._id
+                return this.user && this.left && this.left.trunk && this.left.trunk.oid && this.left.trunk.oid === this.user._id || this.user.rights.charAt(0) === 'G'
             },
             leftItem: function () {
-                return this.left && this.leftUnit && {color: this.left.trunk.color, qt: this.leftQt, unit: this.leftUnit.shortname, name: this.left.trunk.name}
+                return this.left && this.leftUnit && {color: color(this.left), qt: this.leftQt, unit: this.leftUnit.shortname, name: name(this.left)}
             },
             rightItem: function () {
-                return this.right && this.rightUnit && {color: this.right.trunk.color, qt: this.rightQt, unit: this.rightUnit.shortname, name: this.right.trunk.name}
+                return this.right && this.rightUnit && {color: color(this.right), qt: this.rightQt, unit: this.rightUnit.shortname, name: name(this.right)}
             }
         },
         methods: {
+            name, quantity,
             ...mapActions({
-                dispatchCreateRoot: On.CREATE_ROOT,
+                dispatchCreateLink: On.CREATE_LINK,
                 snack: On.SNACKBAR,
                 addToBasket: On.ADD_TO_BASKET
             }),
@@ -157,10 +156,10 @@
             },
             validate() {
                 const bqt = baseQt({qt: this.rightQt, unit: this.rightUnit.shortname}) / baseQt({qt: this.leftQt, unit: this.leftUnit.shortname})
-                this.dispatchCreateRoot({
+                this.dispatchCreateLink({
                     _id: createStringObjectId(),
-                    trunkId: this.left._id,
-                    rootId: this.right._id,
+                    parent: this.left,
+                    child: this.right,
                     bqt
                 }).then(() => {
                     this.addToBasket([this.left, this.right])
@@ -186,13 +185,13 @@
                 this.$refs.qtLeftForm.reset()
                 this.$refs.qtRightForm.reset()
 
-                this.leftGrandeur = getGrandeur(this.left.trunk.quantity.g)
-                const leftQuantity = bestQuantity(bqtGToQtUnit(this.left.trunk.quantity))
+                this.leftGrandeur = getGrandeur(quantity(this.left).g)
+                const leftQuantity = bestQuantity(bqtGToQtUnit(quantity(this.left)))
                 this.leftUnit = unit(leftQuantity.unit)
                 this.leftQt = leftQuantity.qt
 
-                this.rightGrandeur = getGrandeur(this.right.trunk.quantity.g)
-                const rightQuantity = bestQuantity(bqtGToQtUnit(this.right.trunk.quantity))
+                this.rightGrandeur = getGrandeur(quantity(this.right).g)
+                const rightQuantity = bestQuantity(bqtGToQtUnit(quantity(this.right)))
                 this.rightUnit = unit(rightQuantity.unit)
                 this.rightQt = rightQuantity.qt
                 this.idx = 1
