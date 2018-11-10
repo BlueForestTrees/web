@@ -64,19 +64,7 @@
                         <v-card-text>
                         <v-layout column>
                             <template v-if="addingTransport">
-                                <search-comp :filter="{g:'Tran'}" v-if="!transport" :maxSelectionSize="1">
-                                    <template slot-scope="{ s }">
-                                        <v-tooltip bottom v-if="s.oneSelected">
-                                            <v-btn slot="activator" v-if="s.selectionCount" flat dense @click="transport = s.oneSelected"><v-icon>done</v-icon>Ajouter</v-btn>
-                                            <span style="pointer-events: none">Ajouter ce transport</span>
-                                        </v-tooltip>
-                                        <v-spacer/>
-                                        <v-tooltip bottom>
-                                            <span slot="activator"><v-btn icon dense @click="cancelAddingTransport(s)"><v-icon>close</v-icon></v-btn></span>
-                                            <span style="pointer-events: none">Fermer</span>
-                                        </v-tooltip>
-                                    </template>
-                                </search-comp>
+                                <search-comp :filter="{g:'Tran'}" v-if="!transport" :maxSelectionSize="1"/>
                                 <template v-else>
                                     <v-card-title><v-icon large :style="{color: transport.trunk.color,marginRight:'0.2em'}">panorama_fish_eye</v-icon>{{transport.trunk.name}}</v-card-title>
                                     <v-card-text>

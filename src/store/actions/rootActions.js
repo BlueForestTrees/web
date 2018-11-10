@@ -2,7 +2,7 @@ import On from "../../const/on"
 import api from "../../rest/api"
 import router from "../../router/router"
 import {GO} from "../../const/go"
-import {multiplyRessourceBqt} from "../../services/calculations"
+import {applyRessourceCoef} from "../../services/calculations"
 
 export default {
 
@@ -12,7 +12,7 @@ export default {
     [On.CREATE_ROOT]: async ({commit}, {_id, trunkId, rootId, bqt, relativeTo}) => api.postRoot({_id, trunkId, rootId, bqt, relativeTo}),
     [On.LOAD_ROOTS]: ({commit}, {_id, bqt}) =>
         api.getRoots(_id)
-            .then(roots => multiplyRessourceBqt(bqt, roots)),
+            .then(roots => applyRessourceCoef(bqt, roots)),
     [On.UPDATE_ROOT]: ({commit}, {_id, trunkId, rootId, bqt}) => api.putRoot({_id, trunkId, rootId, bqt}),
     [On.DELETE_ROOT]: ({commit}, _id) => api.deleteRoot(_id)
 }

@@ -88,13 +88,13 @@ export const add = (q1, q2) => ({
     unit: q2.unit
 })
 
-export const multiplyRessourceBqt = (coef, items) => {
+export const applyRessourceCoef = (coef, items) => {
     for (let i = 0; i < items.length; i++) {
         items[i].trunk.quantity.bqt *= coef
     }
     return items
 }
-export const multiplyAspectBqt = (coef, items) => {
+export const applyAspectCoef = (coef, items) => {
     for (let i = 0; i < items.length; i++) {
         items[i].quantity.bqt *= coef
     }

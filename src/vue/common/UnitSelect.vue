@@ -1,6 +1,6 @@
 <template>
     <v-select
-            label="Unité..." item-text="name" required
+            label="Unité..." item-text="name" required :solo="solo" :outline="outline"
             :items="items" :value="value" @input="v => $emit('input',v)" :rules="rules"
             return-object
     />
@@ -9,7 +9,7 @@
 <script>
     export default {
         name: 'unit-select',
-        props: ['value', 'grandeur', 'rules'],
+        props: ['value', 'grandeur', 'rules', 'solo', 'outline'],
         computed: {
             items: function () {
                 if (this.grandeur && this.grandeur.units) {

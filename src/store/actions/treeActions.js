@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import On from "../../const/on"
 import api from "../../rest/api"
-import {createStringObjectId, transportQuantity, treefyAll} from "../../services/calculations"
+import {applyAspectCoef, applyRessourceCoef, createStringObjectId, transportQuantity, treefyAll} from "../../services/calculations"
 import {bqtGToQtUnit, baseQt} from "unit-manip"
 import router from "../../router/router"
 import {GO} from "../../const/go"
@@ -46,6 +46,7 @@ export default {
         } else {
             tree = {_id}
             tree.promises = {}
+            tree.promises.selection = Promise.resolve(null).then(selection => Vue.set(tree, "selection", selection) && selection)
             tree.promises.trunk = dispatch(On.LOAD_TRUNK, {_id, bqt}).then(trunk => Vue.set(tree, "trunk", trunk) && trunk)
             tree.promises.owner = tree.promises.trunk.then(trunk => dispatch(On.LOAD_USER, trunk.oid).then(owner => Vue.set(tree, "owner", owner)))
             tree.promises.roots = dispatch(On.LOAD_ROOTS, {_id, bqt}).then(roots => Vue.set(tree, "roots", roots))
@@ -98,5 +99,21 @@ export default {
 
             }
         }
+    },
+    [On.CHANGE_QUANTITY]: ({dispatch}, {tree, quantity}) => {
+        const coef = quantity.bqt / tree.trunk.quantity.bqt
+
+        applyRessourceCoef(coef, [tree])
+        applyRessourceCoef(coef, tree.roots)
+        applyRessourceCoef(coef, tree.tank)
+        applyRessourceCoef(coef, tree.branches)
+
+        applyAspectCoef(coef, tree.impacts)
+        applyAspectCoef(coef, tree.damages)
+        applyAspectCoef(coef, tree.facets)
+        applyAspectCoef(coef, tree.impactsTank)
+        applyAspectCoef(coef, tree.damagesTank)
+
+        // dispatch(On.CHANGE_COMPARE_QUANTITY, {tree, quantity})
     }
 }

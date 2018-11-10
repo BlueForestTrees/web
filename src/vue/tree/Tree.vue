@@ -1,7 +1,6 @@
 <template>
     <v-flex key="tree">
 
-
         <v-layout v-if="!tree" row wrap justify-center align-center class="ma-4">
             <span class="title">Composition</span>
             <v-card-text class="text-md-center">
@@ -18,7 +17,10 @@
 
         <v-layout column v-else>
 
-            <tree-card :tree="tree" @change="v => current = v" selectable/>
+            <v-card>
+                <tree-card :tree="tree" />
+                <select-attribute-bar @change="v => current = v"/>
+            </v-card>
 
             <card>
                 <description v-if="!current" :tree="tree"/>
@@ -36,32 +38,27 @@
 </template>
 
 <script>
-    import Facets from "./Facets"
-    import Branches from "./Branches"
-    import Ressources from "./Ressources"
-    import Impacts from "./Impacts"
     import {mapActions, mapState} from "vuex"
     import On from "../../const/on"
     import TreeFab from "./TreeFab"
-    import BilanImpacts from "./BilanImpacts"
-    import BilanRessources from "./BilanRessources"
-    import Subheader from "./Subheader"
     import TreeCard from "./TreeCard"
     import Card from "../common/Card"
+    import SelectAttributeBar from "./SelectAttributeBar"
 
     const Description = () => import(/* webpackChunkName: "Description" */ "./Description")
+    const Ressources = () => import(/* webpackChunkName: "Ressources" */ "./Ressources")
+    const Facets = () => import(/* webpackChunkName: "Facets" */ "./Facets")
+    const BilanImpacts = () => import(/* webpackChunkName: "BilanImpacts" */ "./BilanImpacts")
+    const Branches = () => import(/* webpackChunkName: "Branches" */ "./Branches")
 
     export default {
         components: {
+            SelectAttributeBar,
             Card,
             TreeCard,
             Description,
-            Subheader,
-            BilanRessources,
             BilanImpacts,
             TreeFab,
-            TreeFab,
-            Impacts,
             Ressources,
             Branches,
             Facets

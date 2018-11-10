@@ -2,6 +2,8 @@ export default {
     ADD_TO_BASKET: 'addToBasket',
     ADD_SELECTION_TO_BASKET: 'addSelectionToBasket',
     ADD_TRANSPORT: 'addTransport',
+    CHANGE_QUANTITY: 'changeQuantity',
+    CHANGE_COMPARE_QUANTITY: 'changeCompareQuantity',
     CHECK_AUTH: "checkAuth",
     CHECK_OWNERSHIP: "checkOwnership",
     CLEAR_SEARCH: 'clearSearch',

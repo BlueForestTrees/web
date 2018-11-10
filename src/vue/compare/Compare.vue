@@ -7,10 +7,12 @@
         <v-card-text v-if="!compare.left || !compare.right" class="text-md-center">Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche</span> ou prenez des produits du <span><v-icon @click="goBasket" color="primary">shopping_basket</v-icon> panier pour les comparer.</span></v-card-text>
 
         <span v-else>
-            <v-layout row>
-                <tree-card class="half-width my-0" :tree="compare.left" @nav="goTree(compare.left)" :style="{cursor: 'pointer'}" no-bar selectable/>
-                <tree-card class="half-width my-0 ml-2" :tree="compare.right" @nav="goTree(compare.right)" :style="{cursor: 'pointer'}" no-bar selectable/>
-            </v-layout>
+            <v-card>
+                <v-layout row>
+                        <tree-card class="half-width my-0" :tree="compare.left" @nav="goTree(compare.left)" :style="{cursor: 'pointer'}" selectable/>
+                        <tree-card class="half-width my-0 ml-2" :tree="compare.right" @nav="goTree(compare.right)" :style="{cursor: 'pointer'}" selectable/>
+                </v-layout>
+            </v-card>
             <v-card class="my-1">
                 <v-layout row align-center justify-center>
                     <v-checkbox v-model="selectedDomain" label="ENVIRONNEMENT" value="impactsTank"></v-checkbox>

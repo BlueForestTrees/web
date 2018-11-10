@@ -1,54 +1,55 @@
 <template>
-    <v-card>
-        <v-container @click="selectable && toggleSelect(tree)" :style="{background: isSelected(tree) ? '#D8E9F5' : '', height:'100%'}">
-            <v-layout column fill-height>
-                <v-layout row align-center>
-                    <svg width="30%" height="30%" viewBox="-10 -10 20 20" class="not-too-height">
-                        <circle cx="0" cy="0" r="8" :stroke="trunk && trunk.color || 0" fill="none"/>
-                    </svg>
-                    <v-flex>
-                        <h1 class="display-3 align" v-html="qtUnit(trunk)"></h1>
-                    </v-flex>
-                </v-layout>
+    <v-container @click="selectable && toggleSelect(tree)" :style="{background: isSelected(tree) ? '#D8E9F5' : '', height:'100%'}">
+        <v-layout column fill-height>
+            <v-layout row align-center>
+                <svg width="30%" height="30%" viewBox="-10 -10 20 20" class="not-too-height">
+                    <circle cx="0" cy="0" r="8" :stroke="trunk && trunk.color || 0" fill="none"></circle>
+                </svg>
                 <v-flex>
-                    <H3 class="display-1 align" v-html="name(trunk)"></H3>
+                    <card3d :flipped="qtFlipped" v-if="trunk">
+                        <h1 slot="front" class="display-3 align" v-html="qtUnit(trunk)" @click.stop="flip"></h1>
+                        <quantity-selection slot="back" :tree="tree" @close="flip" @change="changeQuantity"/>
+                    </card3d>
                 </v-flex>
             </v-layout>
-        </v-container>
-        <v-btn-toggle v-if="!noBar" v-model="detail" @change="v=>$emit('change',v)" class="full-width">
-            <v-btn flat value="impact" block>
-                <!--class="fill-height">-->
-                environnement<!--<img src="/img/logo.svg"/>-->
-            </v-btn>
-            <v-btn flat value="root" block>
-                <!--class="fill-height">-->
-                ressources<!--<img src="/img/logo.svg"/>-->
-            </v-btn>
-            <v-btn flat value="facet" block>
-                <!--class="fill-height">-->
-                propriétés<!--<img src="/img/logo.svg"/>-->
-            </v-btn>
-        </v-btn-toggle>
-    </v-card>
+            <v-flex>
+                <H3 class="display-1 align" v-html="name(trunk)"></H3>
+            </v-flex>
+        </v-layout>
+    </v-container>
 </template>
 
-
 <script>
+    import {mapActions} from "vuex"
     import {qtUnit, name} from "../../services/calculations"
     import selectable from "../mixin/Selectable"
+    import Card3d from "../common/Card3d"
+    import QuantitySelection from "../dialog/QuantitySelection"
+    import On from "../../const/on"
 
     export default {
         name: "tree-card",
+        components: {QuantitySelection, Card3d},
         mixins: [selectable],
         props: {
-            "tree": Object,
-            "noBar": {type: Boolean, default: false},
-            "selectable": {type: Boolean, default: false}
+            tree: Object,
+            noBar: {type: Boolean, default: false},
+            selectable: {type: Boolean, default: false}
         },
         data() {
-            return {detail: null}
+            return {
+                qtFlipped: false
+            }
         },
         methods: {
+            ...mapActions({
+                changeQuantity: On.CHANGE_QUANTITY,
+                unselect: On.UNSELECT
+            }),
+            flip() {
+                this.qtFlipped = !this.qtFlipped
+                this.unselect()
+            },
             qtUnit, name
         },
         computed: {

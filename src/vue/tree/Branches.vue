@@ -1,22 +1,5 @@
 <template>
     <selectable-list :items="items" :maxSelectionSize="1" :selection="selection">
-        <template slot="bar" slot-scope="{ s }">
-            <v-toolbar-items>
-                <v-tooltip bottom>
-                    <v-btn slot="activator" v-if="oneSelected" flat dense @click="goTree(oneSelected)"><span class="hidden-xs-only">ouvrir</span>
-                        <v-icon>category</v-icon>
-                    </v-btn>
-                    <span style="pointer-events: none">Ouvrir</span>
-                </v-tooltip>
-                <v-spacer/>
-                <v-tooltip bottom>
-                    <v-btn slot="activator" icon dense @click="unselect()">
-                        <v-icon>close</v-icon>
-                    </v-btn>
-                    <span style="pointer-events: none">Fermer</span>
-                </v-tooltip>
-            </v-toolbar-items>
-        </template>
         <open-message slot="no-items" :section="section"/>
     </selectable-list>
 </template>

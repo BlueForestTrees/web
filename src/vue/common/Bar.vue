@@ -46,8 +46,9 @@
         <v-layout row align-center>
 
             <v-tooltip v-if="oneSelected && selectionIsTree" bottom>
-                <v-btn slot="activator" flat @click="goTree(oneSelected)">détails
-                    <v-icon x-large>category</v-icon>
+                <v-btn slot="activator" flat @click="goTree(oneSelected)">
+                    <v-icon x-large>panorama_fish_eye</v-icon>
+                    détails
                 </v-btn>
                 <span style="pointer-events: none">Ouvrir</span>
             </v-tooltip>
