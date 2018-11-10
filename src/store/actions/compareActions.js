@@ -2,6 +2,7 @@ import router from "../../router/router"
 import On from "../../const/on"
 import {GO} from "../../const/go"
 import Do from "../../const/do"
+import {applyAxisCoef, applyAxisesCoef} from "../../services/calculations"
 
 export default {
     [On.GO_COMPARE]: ({state, commit, getters}, trees) => {
@@ -30,15 +31,11 @@ export default {
         }
     },
     [On.CHANGE_COMPARE_QUANTITY]: ({state}, {tree, quantity}) => {
-        const axisesToUpdate = state.compare.left && state.compare.left._id === tree._id ?
-            state.compare.leftAxises
-            :
-            state.compare.right && state.compare.right._id === tree._id && state.compare.rightAxises
-
+        const axisesToUpdate = state.compare.left && state.compare.left._id === tree._id ? "left" : state.compare.right && state.compare.right._id === tree._id && "right"
         if (axisesToUpdate) {
             const coef = quantity.bqt / tree.trunk.quantity.bqt
-            console.log("update axises", axisesToUpdate)
+            applyAxisCoef(coef, state.compare.axis[axisesToUpdate])
+            applyAxisCoef(coef, state.compare.axis.common, axisesToUpdate)
         }
-
     }
 }

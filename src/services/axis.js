@@ -2,7 +2,7 @@ import find from 'lodash.find'
 import isNil from 'lodash.isnil'
 import {map} from 'unit-manip'
 import remove from 'lodash.remove'
-import {format, quantity, name as _name} from "./calculations"
+import {format, quantity, name as _name, applyAxisCoef} from "./calculations"
 import Vue from 'vue'
 
 /**
@@ -28,7 +28,6 @@ const buildAxis = ({name}, type, items) => items && map(items, item => ({
     type,
     name: _name(item),
     bqt: quantity(item).bqt,
-    _bqt: quantity(item).bqt,
     g: quantity(item).g,
     ...eq(quantity(item).bqt.eq)
 })) || []
@@ -42,8 +41,8 @@ const buildAxis = ({name}, type, items) => items && map(items, item => ({
 export const separate = (leftAxises, rightAxises) => {
 
     //Un axe sans quantité est retiré des axes communs
-    const leftWithoutQt = remove(leftAxises, axis => (isNil(axis._bqt) || isNil(axis.g)))
-    const rightWithoutQt = remove(rightAxises, axis => (isNil(axis._bqt) || isNil(axis.g)))
+    const leftWithoutQt = remove(leftAxises, axis => (isNil(axis.bqt) || isNil(axis.g)))
+    const rightWithoutQt = remove(rightAxises, axis => (isNil(axis.bqt) || isNil(axis.g)))
 
     //Un axe qui n'a pas son équivalent de l'autre côté est retiré des communs
     const leftWithoutRight = remove(leftAxises, axis => !find(rightAxises, {name: axis.name, type: axis.type, g: axis.g}))
@@ -53,7 +52,7 @@ export const separate = (leftAxises, rightAxises) => {
     const common = []
     const zero = []
     for (let i = 0; i < leftAxises.length; i++) {
-        if (!(leftAxises[i]._bqt === 0 && rightAxises[i]._bqt === 0)) {
+        if (!(leftAxises[i].bqt === 0 && rightAxises[i].bqt === 0)) {
             common.push({left: leftAxises[i], right: rightAxises[i]})
         } else {
             zero.push({left: leftAxises[i], right: rightAxises[i]})
@@ -70,33 +69,6 @@ export const separate = (leftAxises, rightAxises) => {
             ...rightWithoutQt, ...rightWithoutLeft
         ]
     }
-}
-
-/**
- * Met à jour les données pour comparer à égalité sur l'axe de base spécifié
- * @param base axe commun utilisé comme base d'égalité (ex. applyBase "Quantité" => appliquer la quantité de gauche sur la droite, et appliquer le coef sur les autres axes de gauche.
- * @param axises
- */
-export const applyBase = (base, axises) => {
-    if (base) {
-        const rcoef = find(axises.common, c => c.right.name === base.name).right._bqt / base._bqt
-        applyCoef(rcoef, axises.right)
-        applyCoef(rcoef, axises.common, "right")
-
-        const lcoef = find(axises.common, c => c.left.name === base.name).left._bqt / base._bqt
-        applyCoef(lcoef, axises.left)
-        applyCoef(lcoef, axises.common, "left")
-    }
-}
-export const applyCoef = (coef, items, prop) => {
-    for (let i = 0; i < items.length; i++) {
-        if (prop) {
-            items[i][prop].bqt = coef * items[i][prop]._bqt
-        } else {
-            items[i].bqt = coef * items[i]._bqt
-        }
-    }
-    return items
 }
 
 export const updateRatios = (axises) => {

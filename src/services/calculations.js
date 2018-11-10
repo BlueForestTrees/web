@@ -1,5 +1,5 @@
 import {map, bqtGToQtUnit, bestQuantity, unitCoef, changeUnit, grandeur, baseQt} from "unit-manip"
-import {isNil} from "lodash";
+import {isNil} from "lodash"
 
 export const createStringObjectId = () => (new Date().getTime() / 1000 | 0).toString(16) + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, () => (Math.random() * 16 | 0).toString(16)).toLowerCase()
 
@@ -97,6 +97,17 @@ export const applyRessourceCoef = (coef, items) => {
 export const applyAspectCoef = (coef, items) => {
     for (let i = 0; i < items.length; i++) {
         items[i].quantity.bqt *= coef
+    }
+    return items
+}
+
+export const applyAxisCoef = (coef, items, prop) => {
+    for (let i = 0; i < items.length; i++) {
+        if (prop) {
+            items[i][prop].bqt *= coef
+        } else {
+            items[i].bqt *= coef
+        }
     }
     return items
 }

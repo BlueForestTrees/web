@@ -1,5 +1,5 @@
 import chai from 'chai'
-import {applyCoef, buildAxises, updateRatios, separate} from "../src/services/axis"
+import {applyAxisCoef, buildAxises, updateRatios, separate} from "../src/services/axis"
 import {init, withNameIdBqtG} from "./setup"
 
 
@@ -70,7 +70,7 @@ describe('Axis calculations', function () {
         separate(leftAxises, rightAxises).should.deep.equal(expected)
     })
     
-    it('applyCoef', function () {
+    it('applyAxisCoef', function () {
         const axises = [
             {tree: "leftTreeName", type: "facet", name: "Prix", _bqt: 4},
             {tree: "leftTreeName", type: "trunk", name: "Quantité", _bqt: 6},
@@ -85,7 +85,7 @@ describe('Axis calculations', function () {
             {tree: "leftTreeName", type: "tank", name: "Elec", _bqt: 10, bqt: 20},
         ]
         
-        applyCoef(coef, axises).should.deep.equal(expected)
+        applyAxisCoef(coef, axises).should.deep.equal(expected)
         
     })
     

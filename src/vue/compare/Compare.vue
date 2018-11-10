@@ -7,14 +7,16 @@
         <v-card-text v-if="!compare.left || !compare.right" class="text-md-center">Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche</span> ou prenez des produits du <span><v-icon @click="goBasket" color="primary">shopping_basket</v-icon> panier pour les comparer.</span></v-card-text>
 
         <span v-else>
-            <v-card>
-                <v-layout row>
-                        <tree-card class="half-width my-0" :tree="compare.left" @nav="goTree(compare.left)" :style="{cursor: 'pointer'}" selectable/>
-                        <tree-card class="half-width my-0 ml-2" :tree="compare.right" @nav="goTree(compare.right)" :style="{cursor: 'pointer'}" selectable/>
-                </v-layout>
-            </v-card>
-            <v-card class="my-1">
-                <v-layout row align-center justify-center>
+            <v-layout :column="$vuetify.breakpoint.xsOnly">
+                <v-card class="half-width ma-1">
+                    <tree-card :tree="compare.left" @nav="goTree(compare.left)" :style="{cursor: 'pointer'}" selectable/>
+                </v-card>
+                <v-card class="half-width ma-1">
+                    <tree-card :tree="compare.right" @nav="goTree(compare.right)" :style="{cursor: 'pointer'}" selectable/>
+                </v-card>
+            </v-layout>
+            <v-card class="ma-1">
+                <v-layout :column="$vuetify.breakpoint.xsOnly" align-center justify-center>
                     <v-checkbox v-model="selectedDomain" label="ENVIRONNEMENT" value="impactsTank"></v-checkbox>
                     <v-checkbox v-model="selectedDomain" label="RESSOURCES" value="tank"></v-checkbox>
                     <v-checkbox v-model="selectedDomain" label="PROPRIETES" value="facets"></v-checkbox>
@@ -23,7 +25,9 @@
         </span>
 
         <v-card v-if="hasAxises">
-            <v-layout row align-center pl-4 pt-4><v-icon class="corner" x-large @click="zoom = !zoom">{{zoom ? 'pie_chart':'list'}}</v-icon></v-layout>
+            <v-layout row align-center pl-4 pt-4>
+                <v-icon class="corner" x-large @click="zoom = !zoom">{{zoom ? 'pie_chart':'list'}}</v-icon>
+            </v-layout>
 
             <compare-ribbon v-if="zoom" :axises="selectedAxises" :leftColor="leftColor" :rightColor="rightColor"/>
             <compare-cams v-else :axises="selectedAxises" :leftColor="leftColor" :rightColor="rightColor"/>
@@ -90,11 +94,15 @@
                 }
                 return this.compare.axis
             },
+
+
+            selectedAxises() {
+                return this.axises && filter(this.axises.common, axis => this.selectedDomain.includes(axis.left.type))
+            },
+
+
             hasAxises() {
                 return this.selectedAxises && this.selectedAxises.length !== 0
-            },
-            selectedAxises(){
-                return this.axises && filter(this.axises.common, axis => this.selectedDomain.includes(axis.left.type))
             },
             leftColor: function () {
                 return this.compare && this.compare.left && this.compare.left.trunk && this.compare.left.trunk.color || "#0000BB"

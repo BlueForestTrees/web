@@ -103,6 +103,8 @@ export default {
     [On.CHANGE_QUANTITY]: ({dispatch}, {tree, quantity}) => {
         const coef = quantity.bqt / tree.trunk.quantity.bqt
 
+        dispatch(On.CHANGE_COMPARE_QUANTITY, {tree, quantity})
+
         applyRessourceCoef(coef, [tree])
         applyRessourceCoef(coef, tree.roots)
         applyRessourceCoef(coef, tree.tank)
@@ -114,6 +116,5 @@ export default {
         applyAspectCoef(coef, tree.impactsTank)
         applyAspectCoef(coef, tree.damagesTank)
 
-        // dispatch(On.CHANGE_COMPARE_QUANTITY, {tree, quantity})
     }
 }
