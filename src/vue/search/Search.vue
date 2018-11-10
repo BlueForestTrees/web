@@ -4,7 +4,7 @@
             <v-icon color="blue">search</v-icon>
             <span class="title">Recherche</span>
         </v-layout>
-        <v-layout row align-center justify-center>
+        <v-layout :column="$vuetify.breakpoint.xsOnly" align-center justify-center>
             <v-menu v-model="showType" max-width="500px" offset-y>
                 <div slot="activator" class="subheading">
                     <v-layout row align-center>
@@ -20,7 +20,7 @@
                     </v-list>
                 </v-card>
             </v-menu>
-            <span v-if="type===On.SEARCH_TREE">
+            <template v-if="type===On.SEARCH_TREE">
                 <v-menu v-model="showCat" :close-on-content-click="false" max-width="500px" offset-y class="ml-3">
                     <div slot="activator" class="subheading">
                         <v-layout row align-center>
@@ -43,7 +43,7 @@
                         <search-name @input="nameChange"></search-name>
                     </v-card>
                 </v-menu>
-            </span>
+            </template>
         </v-layout>
         <v-divider class="mt-3"/>
 

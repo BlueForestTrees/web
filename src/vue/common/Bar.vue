@@ -41,7 +41,26 @@
         </v-menu>
 
     </v-toolbar>
-    <v-toolbar v-else dense app dark class="elevation-5" color="primary">
+    <v-toolbar v-else dense app dark class="elevation-5" color="primary" :extended="$vuetify.breakpoint.xsOnly">
+
+        <span slot="extension">
+            <v-tooltip v-if="$vuetify.breakpoint.xsOnly && $route.name !== GO.BASKET && selectionCount" bottom>
+                <v-btn slot="activator" flat dense
+                       @click="addSelectionToBasket">Panier
+                    <v-icon x-large>arrow_right_alt</v-icon>
+                    <v-icon x-large>shopping_basket</v-icon>
+                </v-btn>
+                <span style="pointer-events: none">Ajouter au panier</span>
+            </v-tooltip>
+             <v-tooltip v-if="$vuetify.breakpoint.xsOnly && $route.name === GO.BASKET" bottom>
+                <v-btn slot="activator" v-if="anySelected" flat @click="removeSelectionFromBasket">
+                    <v-icon x-large>shopping_basket</v-icon>
+                    <v-icon x-large>arrow_right_alt</v-icon>
+                    retirer
+                </v-btn>
+                <span style="pointer-events: none">Retirer du panier</span>
+            </v-tooltip>
+        </span>
 
         <v-layout row align-center>
 
@@ -53,8 +72,8 @@
                 <span style="pointer-events: none">Ouvrir</span>
             </v-tooltip>
 
-            <v-tooltip bottom>
-                <v-btn slot="activator" v-if="twoSelected && selectionIsTree" flat @click="goCompare(twoSelected)">comparer
+            <v-tooltip bottom v-if="twoSelected && selectionIsTree">
+                <v-btn slot="activator" flat @click="goCompare(twoSelected)">comparer
                     <v-icon x-large>compare_arrows</v-icon>
                 </v-btn>
                 <span style="pointer-events: none">Comparer ces deux éléments</span>
@@ -67,7 +86,7 @@
                 <span style="pointer-events: none">Faire d'un produit le composant de l'autre</span>
             </v-tooltip>
 
-            <v-tooltip v-if="$route.name === GO.BASKET" bottom>
+            <v-tooltip v-if="$vuetify.breakpoint.smAndUp && $route.name === GO.BASKET" bottom>
                 <v-btn slot="activator" v-if="anySelected" flat @click="removeSelectionFromBasket">
                     <v-icon x-large>shopping_basket</v-icon>
                     <v-icon x-large>arrow_right_alt</v-icon>
@@ -76,7 +95,7 @@
                 <span style="pointer-events: none">Retirer du panier</span>
             </v-tooltip>
 
-            <v-tooltip v-if="$route.name !== GO.BASKET && selectionCount" bottom>
+            <v-tooltip v-if="$vuetify.breakpoint.smAndUp && $route.name !== GO.BASKET && selectionCount" bottom>
                 <v-btn slot="activator" flat dense
                        @click="addSelectionToBasket">Panier
                     <v-icon x-large>arrow_right_alt</v-icon>
@@ -100,6 +119,7 @@
                 </v-btn>
                 <span style="pointer-events: none">Détails</span>
             </v-tooltip>
+
             <v-spacer/>
             <v-tooltip bottom>
                 <v-btn slot="activator" icon dense @click="unselect">
