@@ -28,6 +28,7 @@
 
 <style>
     .scene {
+        width:200px;
         height:100px;
         perspective: 600px;
     }
