@@ -47,6 +47,14 @@
                     <v-list-tile-title>BlueForest, c'est quoi?</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
+            <v-list-tile @click="goto(GO.ROAD_MAP)">
+                <v-list-tile-action>
+                    <v-icon color="primary">chrome_reader_mode</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                    <v-list-tile-title>Fonctions à venir</v-list-tile-title>
+                </v-list-tile-content>
+            </v-list-tile>
             <v-list-tile @click="goto(GO.DATA_EXPLAINED)">
                 <v-list-tile-action>
                     <v-icon color="primary">perm_data_settings</v-icon>

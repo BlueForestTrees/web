@@ -1,7 +1,7 @@
 <template>
     <v-card>
         <v-divider/>
-        <v-card-title><v-icon>perm_data_settings</v-icon>Les données</v-card-title>
+        <v-card-title><v-icon large>perm_data_settings</v-icon><h6 class="title">D'où viennent les données?</h6></v-card-title>
         <v-divider/>
         <v-container>
             <p>BlueForest recueille les données sur les produits de différentes sources, en un seul endroit. Actuellement, on peut y trouver les données suivantes:</p>
@@ -22,7 +22,7 @@
                 <li>Les données des particuliers</li>
             </ul>
             <br>
-            <p>Toute aide est la bienvenue pour les informations sur les conditions de travail ou autre aspects des produits.</p>
+            <p>Toute aide est la bienvenue pour les informations sur les conditions de travail ou envisager d'autres aspects des produits.</p>
         </v-container>
     </v-card>
 </template>

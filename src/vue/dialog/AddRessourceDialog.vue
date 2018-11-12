@@ -133,7 +133,7 @@
                 return this.searchAgain || !this.selectedItem
             },
             isOwner: function () {
-                return this.user && this.left && this.left.trunk && this.left.trunk.oid && this.left.trunk.oid === this.user._id || this.user.rights.charAt(0) === 'G'
+                return this.user && (this.left && this.left.trunk && this.left.trunk.oid && this.left.trunk.oid === this.user._id || this.user.rights.charAt(0) === 'G')
             },
             leftItem: function () {
                 return this.left && this.leftUnit && {color: color(this.left), qt: this.leftQt, unit: this.leftUnit.shortname, name: name(this.left)}

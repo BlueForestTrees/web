@@ -63,6 +63,7 @@ export default {
     MOUNT_APP: 'mountApp',
     LOAD_TREE: 'loadTree',
     RENAME_TRUNK: 'renameTrunk',
+    REFRESH_MY_MESSAGES: 'refreshMyMessages',
     REFRESH_ROOTS: 'refreshRoots',
     REFRESH_TREE: 'refreshTree',
     REMOVE_SELECTION_FROM_BASKET: 'removeSelectionFromBasket',

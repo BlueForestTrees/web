@@ -10,6 +10,7 @@ export default {
     DELETE_BRANCH: 'deleteBranch',
     DELETE_REPLY: 'deleteReply',
     PUSH_MESSAGES: 'appendMessages',
+    PUSH_MY_MESSAGES: 'appendMyMessages',
     RENAME_TRUNK: 'renameTree',
     REMOVE_FROM_BASKET: 'removeSelectionFromBasket',
     REMOVE_MESSAGE: "removeMessage",

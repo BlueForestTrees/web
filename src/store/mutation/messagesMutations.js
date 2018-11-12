@@ -15,6 +15,9 @@ export default {
         state.messages.hasMore = messages.length === mps //on dit qu'il y a encore des messages à charger si on a reçu une page pleine.
         return state.messages.list.push.apply(state.messages.list, messages)
     },
+    [Do.PUSH_MY_MESSAGES]: (state, messages) => {
+        return state.myMessages = messages
+    },
     [Do.PUSH_MESSAGE]: (state, message) => state.messages.list.push(message),
     [Do.REMOVE_MESSAGE]: (state, message) => {
         for (let i = 0; i < state.messages.list.length; i++) {

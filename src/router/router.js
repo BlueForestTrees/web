@@ -14,7 +14,8 @@ const Confirmation = () => import(/* webpackChunkName: "Confirmation" */ '../vue
 const Inscription = () => import(/* webpackChunkName: "Inscription" */ '../vue/user/Inscription')
 const Login = () => import(/* webpackChunkName: "Login" */ '../vue/user/Login')
 const Plan = () => import(/* webpackChunkName: "Plan" */ '../vue/plan/Plan')
-const PlanIntro = () => import(/* webpackChunkName: "Plan" */ '../vue/plan/PlanIntro')
+const RoadMap = () => import(/* webpackChunkName: "RoadMap" */ '../vue/plan/RoadMap')
+const BFCestQuoi = () => import(/* webpackChunkName: "BFCestQuoi" */ '../vue/plan/BFCestQuoi')
 const CreateTree = () => import(/* webpackChunkName: "CreateTree" */ '../vue/tree/CreateTree')
 const DatasExplained = () => import(/* webpackChunkName: "DatasExplained" */ '../vue/explain/DataExplained')
 
@@ -27,6 +28,11 @@ export default new VueRouter({
         {
                path: "/", component: BlueForest,
             children: [
+                {
+                    name: GO.ROAD_MAP,
+                    path: 'roadmap',
+                    component: RoadMap,
+                },
                 {
                     name: GO.DATA_EXPLAINED,
                     path: 'explain/datas',
@@ -95,7 +101,7 @@ export default new VueRouter({
             ]
         },
         {name: GO.PLAN, path: "/plan", component: Plan},
-        {name: GO.PLAN_INTRO, path: "/plan/intro", component: PlanIntro},
+        {name: GO.PLAN_INTRO, path: "/plan/intro", component: BFCestQuoi},
         {name: GO.LOGIN, path: "/login", component: Login},
         {name: GO.SUSCRIBE, path: "/suscribe", component: Inscription},
         {name: GO.CONFIRM, path: "/confirm/:token", component: Confirmation, props: true}

@@ -55,5 +55,6 @@ export default {
     nav: {leftMenuVisible: false, rightMenuVisible: false, dark: false, detailsDialog:false},
     snack: snack(),
     messages: {title: null, hasMore: false, filter: {}, list: []},
+    myMessages: [],
     version: {web: ENV.VERSION}
 }

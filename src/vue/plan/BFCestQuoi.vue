@@ -15,6 +15,8 @@
                 </v-card-text>
                 <v-card-actions>
                     <router-link :to="{name:GO.SUSCRIBE}">S'inscrire</router-link>
+                    <router-link :to="{name:GO.ROAD_MAP}">Road Map</router-link>
+                    <router-link :to="{name:GO.DATA_EXPLAINED}">D'où viennent les données?</router-link>
                     <v-spacer></v-spacer>
                     <v-btn color="primary" @click="$router.push({name:GO.HOME})">Entrer</v-btn>
                 </v-card-actions>
@@ -28,7 +30,7 @@
     import Card from "../common/Card"
 
     export default {
-        name: "plan-intro",
+        name: "bf-cest-quoi",
         components: {Card, RightMenu},
         data() {
             return {

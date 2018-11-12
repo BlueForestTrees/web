@@ -2,7 +2,6 @@ import On from "../../const/on"
 import Do from "../../const/do"
 import {messages} from "../state"
 import api from "../../rest/api"
-import {secs} from "../../const/sections"
 
 export default {
     [On.SHOW_MESSAGES]: ({commit}, {title, filter}) => {
@@ -10,6 +9,7 @@ export default {
         commit(Do.RIGHT_MENU_VISIBLE, true)
     },
     [On.LOAD_MESSAGES]: ({commit}, filter) => api.getMessages(filter).then(ms => commit(Do.PUSH_MESSAGES, ms)),
+    [On.REFRESH_MY_MESSAGES]: ({commit, state}) => (state.user && api.getMessages({oid: state.user._id}).then(ms => commit(Do.PUSH_MY_MESSAGES, ms))) || commit(Do.PUSH_MY_MESSAGES, []),
     [On.COUNT_MESSAGES]: ({}, filter) => api.getMessageCount(filter),
 
     [On.UPDATE_MESSAGE]: ({state, commit}, message) => {
