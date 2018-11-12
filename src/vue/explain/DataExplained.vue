@@ -1,20 +1,18 @@
 <template>
     <v-card>
-        <v-card-title>
-            <v-icon color="primary">perm_data_settings</v-icon>
-            Les données
-        </v-card-title>
+        <v-divider/>
+        <v-card-title><v-icon>perm_data_settings</v-icon>Les données</v-card-title>
         <v-divider/>
         <v-container>
             <p>BlueForest recueille les données sur les produits de différentes sources, en un seul endroit. Actuellement, on peut y trouver les données suivantes:</p>
             <ul>
                 <li>Les données de la base Impact de l'<a href="https://www.ademe.fr/" target="_blank">ADEME</a> (~1200 produits et leurs impacts environementaux)</li>
                 <li>La base de données <a href="https://fr.openfoodfacts.org/" target="_blank">OpenFoodFact</a> (~650000 produits alimentaires et leurs apports nutritionnels)</li>
-                <li>Les données des entreprises</li>
-                <li>Les données des particuliers</li>
+                <li>Entreprises: les données sur vos produits</li>
+                <li>Particuliers: les données sur vos recettes</li>
             </ul>
             <br>
-            <p>L'intégration des données suivantes est en cours ou à l'étude:</p>
+            <p>L'intégration des données suivantes est à l'étude:</p>
             <ul>
                 <li>La base <a href="http://eplca.jrc.ec.europa.eu/LCDN/" target="_blank">LCDN</a> (nombreux produits et leurs impacts environnementaux)</li>
                 <li>La base de données <a href="http://www.agri-footprint.com/" target="_blank">AgriFootPrint</a> (~5000 produits alimentaires et leurs impacts environnementaux) (payant)</li>

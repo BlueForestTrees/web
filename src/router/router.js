@@ -16,6 +16,7 @@ const Login = () => import(/* webpackChunkName: "Login" */ '../vue/user/Login')
 const Plan = () => import(/* webpackChunkName: "Plan" */ '../vue/plan/Plan')
 const PlanIntro = () => import(/* webpackChunkName: "Plan" */ '../vue/plan/PlanIntro')
 const CreateTree = () => import(/* webpackChunkName: "CreateTree" */ '../vue/tree/CreateTree')
+const DatasExplained = () => import(/* webpackChunkName: "DatasExplained" */ '../vue/explain/DataExplained')
 
 Vue.use(VueRouter)
 
@@ -27,10 +28,14 @@ export default new VueRouter({
                path: "/", component: BlueForest,
             children: [
                 {
+                    name: GO.DATA_EXPLAINED,
+                    path: 'explain/datas',
+                    component: DatasExplained,
+                },
+                {
                     name: GO.HOME,
                     path: '',
                     component: Home,
-                    test: 42
                 },
                 {
                     name: GO.CREATE_TREE,

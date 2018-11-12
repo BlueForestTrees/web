@@ -1,4 +1,5 @@
 export const GO = {
+    DATA_EXPLAINED: "datasExplained",
     SUSCRIBE: 'suscribe',
     CONFIRM: 'confirm',
     LOGIN: 'login',
