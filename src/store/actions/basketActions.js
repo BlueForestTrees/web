@@ -2,8 +2,8 @@ import router from "../../router/router"
 import {GO} from "../../const/go"
 import On from "../../const/on"
 import Do from "../../const/do"
-import {find} from "unit-manip"
-import forage from "../../services/forage"
+// import {find} from "unit-manip"
+// import forage from "../../services/forage"
 
 export default {
     [On.GO_BASKET]: ({}) => {
@@ -11,14 +11,14 @@ export default {
     },
     [On.ADD_SELECTION_TO_BASKET]: ({dispatch, state}) => {
         dispatch(On.ADD_TO_BASKET, state.selection)
+        const length = state.selection.length
+        const s = state.selection.length > 1 ? 's' : ''
+        dispatch(On.SNACKBAR, {text: `${length} élément${s} ajouté${s} au panier`, color: "green"})
         dispatch(On.UNSELECT)
     },
     [On.ADD_TO_BASKET]: async ({commit, dispatch, state}, items) => {
-        const length = items.length
-        const s = items.length > 1 ? 's' : ''
         commit(Do.ADD_TO_BASKET, items)
-        await dispatch(On.SAVE_BASKET)
-        dispatch(On.SNACKBAR, {text: `${length} élément${s} ajouté${s} au panier`, color: "green"})
+        return dispatch(On.SAVE_BASKET)
     },
     [On.REMOVE_SELECTION_FROM_BASKET]: ({dispatch, state}) => {
         dispatch(On.REMOVE_FROM_BASKET, state.selection)
