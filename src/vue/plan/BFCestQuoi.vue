@@ -14,9 +14,8 @@
                     <p>Si une information manque, on peut la demander.</p>
                 </v-card-text>
                 <v-card-actions>
-                    <router-link :to="{name:GO.PLAN}">En savoir plus</router-link>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" @click="$router.push({name:GO.HOME})">Entrer</v-btn>
+                    <router-link :to="{name:GO.PLAN}">En savoir plus</router-link>
                 </v-card-actions>
             </template>
         </card>

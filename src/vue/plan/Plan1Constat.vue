@@ -1,55 +1,89 @@
 <template>
-    <v-card flat id="c">
-        <h1 class="display-3 font-weight-thin">Constat</h1>
+    <div id="c">
+        <p><v-icon color="green">info</v-icon>Temps de lecture: 2-3 min.</p>
+        <p></p>
 
-        <h2 class="display-1 font-weight-thin subtitle">Consommation & environnement</h2>
-        <p>"Il suffit de pas que ça s'achète pour pas que ça se vende" - Coluche</p>
+        <h1 class="display-3 font-weight-thin">Aujourd'hui</h1>
+
+        <p>Nous trouvons notre planète petite. Notre façon de faire change petit à petit pour plus de respect de la nature et de nous-même (ou pas).
+        <p>
+        <p>L'idée "d'environnement" est un mauvais concept: l'homme y est au centre, et le reste est autour. Ne sommes-nous pas plutôt un maillon de la chaîne?</p>
+
+
+        <h2 class="display-1 font-weight-thin">Consommation & environnement</h2>
         <p>
             La consommation des ménages est parfois contrainte par leur niveau de vie.
             Les choix des consommateurs restent avant tout dépendants de l’intérêt que ceux-ci portent ou pas à l’environnement.
-            <b>Le prix et le poids des habitudes continuent de freiner une volonté de changement qui existe<sup><a class="sup" href="#pers">numX</a></sup>.</b>
         </p>
-
-        <h2 class="display-1 font-weight-thin subtitle">Production & environnement</h2>
-        <p>Le monde de l'entreprise est plus ou moins séparé de celui des consommateurs, en tout cas culturellement.
+        <p>
+            <b>Le prix et le poids des habitudes continuent de freiner une volonté de changement qui existe.(<a href="http://www.statistiques.developpement-durable.gouv.fr/fileadmin/documents/Produits_editoriaux/Publications/Datalab_essentiel/2017/datalab-essentiel-97-francais-consommation-responsable-mars2017.pdf" target="_blank">« Les Français et la
+                consommation responsable »</a>)</b>
         </p>
-        <p>Les entreprises ont des actions de rapprochement vers leurs clients. Pour être dans le coeur des clients: la <b>personnalisation</b><sup><a class="sup" href="#pers">numX</a>, <a class="sup" href="#pers">numX</a></sup> et les <b>communautés</b><sup><a class="sup" href="#pers">numX</a></sup>.</p>
-        <p>La <b>personnalisation</b> est le fait de proposer au consommateurs un niveau plus ou moins approfondi de choix sur-mesure appliqué à un produit produit à grande échelle.</p>
-        <p>La <b>communauté</b> par l'entreprise est le fait de tâcher de donner un sentiment identitaire aux consommateurs d'un même produit pour qu'ils soient un relais publicitaire.</p>
+        <p>"Il suffit de pas que ça s'achète pour pas que ça se vende" - Coluche</p>
 
-        <!--<h2 class="display-1 font-weight-thin subtitle">Opinion</h2>-->
-        <!--<p>L'entreprise, par essence, utilise tous les moyens légaux possibles pour continuer à exister, pour avoir un bénéfice positif.<p>-->
-        <!--<p>Ce constat peut sembler dur, pourtant il est salvateur: les entreprises suivent le même appât, celui de l'argent, et il suffit de modifier bla bla trop dur</p>-->
 
-        <h2 class="display-1 font-weight-thin subtitle">Existant</h2>
-        <p>De nombreuses organisations souhaitent promouvoir le développement durable. Ces organisations sont très différentes les unes des autres.</p>
+        <h2 class="display-1 font-weight-thin">Production & environnement</h2>
+        <p>Les entreprises ont des actions de rapprochement vers leurs clients:</p>
         <ul>
-            <li>Les organisations sont portées une seule personne, ou parfois un groupe, jusqu'à des pays entiers.</li>
-            <li>Leur public visé peut être les particuliers, les entreprises d’un ou plusieurs secteurs, voire les gouvernements.</li>
-            <li>Leur but peut être lucratif ou non.</li>
-            <li>Le niveau de qualification requis par leur employés va de l’absence de qualification à un doctorat spécialisé.</li>
+            <li>La <b>personnalisation</b>: c'est le fait de proposer au consommateurs un niveau plus ou moins approfondi de choix sur-mesure appliqué à un produit produit à grande échelle.</li>
+            <li>La <b>communauté</b>: l'entreprise tâche de donner un sentiment identitaire aux consommateurs d'un même produit pour qu'ils soient un relais publicitaire.</li>
         </ul>
-        <p>Yuka, Ambrosus, Clothparency, B-corp, QuelCosmetic, transparency-one, greenapes, ecoinvent, openlca, Life Cycle Data Network, gabi, biloba web, brightway2, greendelta, WWF crowdacting, logicout.fr</p>
+        <p>La prise en compte de l'impact environnemental sur nos manières de produire peut-elle se réduire à une "communauté bio"?</p>
 
-        <h2 class="display-1 font-weight-thin subtitle">Références</h2>
-        <ol>
-            <li><a href="http://www.elle.fr/Mode/Tops-femme/T-shirt-personnalise-2909138" target="_blank">« On veut toutes un T-shirt personnalisé »</a>, site web elle.fr</li>
-            <li><a href="https://www.dsautomobiles.fr/guide-d-achat/configurateur/modeles/ds-7-crossback/finitions-et-motorisations/finitions.html?pid=14714" target="_blank">« Configurez »</a>, site web Citroën, personnalisation de véhicules.</li>
-            <li><a href="https://www.pellerin-formation.com/7-marques-qui-ont-su-creer-de-nouveaux-services-produits-en-impliquant-leur-communaute/" target="_blank">« La révolution co-création »</a>, site web, liste d'exemples de co-création.</li>
-            <li id="pers"><a href="http://www.statistiques.developpement-durable.gouv.fr/fileadmin/documents/Produits_editoriaux/Publications/Datalab_essentiel/2017/datalab-essentiel-97-francais-consommation-responsable-mars2017.pdf" target="_blank">« Les Français et la consommation responsable »</a>, Ministère Français de l'environnement, 2017
-            </li>
-        </ol>
 
-        <h2 class="display-1 font-weight-thin subtitle">Discussion</h2>
-        <p @click="showMessages(c2)" class="hand">Donnez votre opinion sur le constat
-            <v-icon small color="primary" small>chat_bubble</v-icon>
-        </p>
+        <h2 class="display-1 font-weight-thin">Environnement: les acteurs</h2>
+        <p>De nombreuses organisations promeuvent le développement durable, selon différentes approches:</p>
+        <ul>
+            <li>Mouvement citoyen: <a href="https://www.i-boycott.org/" target="_blank">Iboycott</a>, <a href="https://lamarqueduconsommateur.com/" target="_blank">c’est qui le patron</a>, <a href="http://www.wemove.eu" target="_blank">wemove</a>, <a href="https://www.change.org/" target="_blank">change.org</a></li>
+            <li>Informations sur les produits ou services:</li>
+            <ul>
+                <li>
+                    <a href="https://fr.openfoodfacts.org/" target="_blank">OpenFoodFact</a>: Base de données ouverte d'apports nutritionnels sur les produits alimentaires industriels.
+                </li>
+                <li>
+                    <a href="https://yuka.io/" target="_blank">Yuka</a>: Base de données d'apports nutritionnels sur les produits alimentaires industriels.
+                </li>
+                <li>
+                    <a href="http://www.clothparency.com/" target="_blank">Clothparency</a>: Evaluation environnementale et sociale dans le secteur textile.
+                </li>
+                <li>
+                    <a href="https://www.quechoisir.org/application-mobile-quelcosmetic-n52804/" target="_blank">QuelCosmetic</a>: Indication d'ingrédients indésirables dans les produits de beauté.
+                </li>
+                <li>
+                    <a href="https://www.logicout.fr/couts/" target="_blank">Logicout</a>: Evaluation d'impact environnemental des transports en voiture et camion.
+                </li>
+            </ul>
+            <li>Notation, labellisation d’entreprises: <a href="https://bcorporation.eu/about-b-lab/country-partner/france" target="_blank">B Corp</a>, <a href="http://biomattitude.com/" target="_blank">Biomattitude</a></li>
+            <li>Partage de pratiques, annuaire ‘green’: <a href="https://www.wwf.fr/agir-au-quotidien/crowdacting" target="_blank">WAG</a>, <a href="https://www.greenapes.com/en/" target="_blank">Greenapes</a></li>
+            <li>Création d’information détaillée et fiable sur les produits: <a href="https://ambrosus.com/fr/" target="_blank">Ambrosus</a>, <a href="https://www.sgsgroup.fr/fr-fr/news/2017/07/sgs-et-transparency-one-visibilite-chaine-d-approvisionnement" target="_blank">TransparencyOne</a>, Provenance</li>
+            <li>Logiciels, Base de données, cabinets d'Analyse de Cycle de Vie: <a href="http://eplca.jrc.ec.europa.eu/LCDN/" target="_blank">Life Cycle Data Network</a>, <a href="https://www.ecoinvent.org/home.html" target="_blank">Ecoinvent</a>, <a href="http://www.openlca.org/" target="_blank">Openlca</a>, <a href="https://network.simapro.com/evea/"
+                                                                                                                                                                                                                                                                                                                          target="_blank">SimaPro</a>, <a
+                    href="http://www.gabi-software.com/france/logiciel/" target="_blank">Gabi</a>, et de <a href="https://www.avnir.org/FR/Bureaux-d-etudes-et-cabinets-de-conseil-251.html" target="_blank">nombreux cabinets</a></li>
+        </ul>
+        <p></p>
+        <p>Ces organisations sont très différentes les unes des autres:</p>
+        <ul>
+            <li>Les organisations sont portées par une seule personne, ou parfois un groupe, jusqu'à des pays entiers.</li>
+            <li>Leur public visé peut être les particuliers, les professionnels d’un ou plusieurs secteurs, les gouvernements.</li>
+            <li>Leur but peut être lucratif ou non.</li>
+            <li>Le niveau de qualification requis par les personnes y travaillant va de l’absence de qualification à un doctorat spécialisé.</li>
+        </ul>
+        <p></p>
 
-    </v-card>
+
+        <h2 class="display-1 font-weight-thin">Discussion</h2>
+        <open-message :section="secs.CONSTAT"/>
+        <p><v-icon color="green" small>info</v-icon>Votre point de vue est essentiel à la poursuite de ce projet! :)</p>
+    </div>
 </template>
 
 <script>
+    import OpenMessage from "../common/OpenMessage"
+    import {secs} from "../../const/sections"
+
     export default {
-        name: "plan-constat"
+        name: "plan-constat",
+        data: () => ({secs}),
+        components: {OpenMessage}
     }
 </script>

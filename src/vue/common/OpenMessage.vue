@@ -4,7 +4,7 @@
             <h5>{{this.section.title}}</h5>
             <v-btn flat icon>
                 <v-icon color="primary">chat_bubble</v-icon>
-                <span style="position:absolute;color:white;top:0.4em">{{count}}</span>
+                <span style="position:absolute;color:white;top:0em">{{count}}</span>
             </v-btn>
         </v-card-title>
     </v-flex>
