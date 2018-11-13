@@ -42,7 +42,7 @@
                         </v-btn>
                     </div>
                 </v-item>
-                <v-item key="bt">
+                <v-item key="bm">
                     <div slot-scope="{ active, toggle }">
                         <v-btn :input-value="active" icon @click="toggle">
                             <v-icon color="primary">fiber_manual_record</v-icon>

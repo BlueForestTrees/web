@@ -2,19 +2,17 @@
     <div v-if="search">
         <v-layout v-if="search.cats.length>0" row align-center>
             <span class="pa-3">Catégorie:</span>
-            <v-breadcrumbs class="px-3">
-                <v-icon slot="divider">arrow_forward_ios</v-icon>
-                <v-breadcrumbs-item v-for="item in search.cats" :key="item._id"><span>{{ item.name }}</span></v-breadcrumbs-item>
-            </v-breadcrumbs>
+                <template v-for="(cat, idx) in search.cats">
+                    <span>{{cat.name}}</span>
+                    <v-icon small v-if="idx < search.cats.length-1">keyboard_arrow_right</v-icon>
+                </template>
             <v-icon @click="search.cats = []">clear</v-icon>
         </v-layout>
         <span v-if="search.name">
         <v-divider/>
         <v-layout row align-center>
             <span class="pa-3">Nom:</span>
-            <v-breadcrumbs class="px-3">
-                <v-breadcrumbs-item><span>{{ search.name }}</span></v-breadcrumbs-item>
-            </v-breadcrumbs>
+            <span>{{ search.name }}</span>
             <v-icon @click="search.name = null">clear</v-icon>
         </v-layout>
         </span>

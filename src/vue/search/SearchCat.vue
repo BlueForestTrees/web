@@ -1,32 +1,35 @@
 <template>
-    <span>
-        <div>
-            <v-layout row align-center>
-                <v-breadcrumbs>
-                  <v-icon slot="divider">arrow_forward_ios</v-icon>
-                  <v-breadcrumbs-item key="root"><span @click="pathSelect(null)">Tout</span></v-breadcrumbs-item>
-                  <v-breadcrumbs-item v-for="item in selection" :key="item._id"><span @click="pathSelect(item)">{{ item.name }}</span></v-breadcrumbs-item>
-                </v-breadcrumbs>
-            </v-layout>
-            <v-divider/>
+    <v-layout row class="not-too-small">
+        <div v-if="anySelected" class="grey lighten-5" style="min-width: 12em;">
+            <v-card-text>
+                <v-layout column align-center>
+                    <a @click="pathSelect(null)">Tout</a>
+                    <v-icon v-if="anySelected" small>keyboard_arrow_down</v-icon>
+                    <template v-for="(cat, idx) in selection">
+                        <v-layout column v-if="idx < selection.length-1">
+                            <a @click="pathSelect(cat)">{{cat.name}}</a>
+                            <v-icon small>keyboard_arrow_down</v-icon>
+                        </v-layout>
+                        <a v-else><b>{{cat.name}}</b></a>
+                    </template>
+                    <v-layout column>
+                        <v-spacer/>
+                        <v-btn v-if="anySelected" color="primary" @click="emitSelect">Ok</v-btn>
+                    </v-layout>
+                </v-layout>
+            </v-card-text>
         </div>
-
-        <v-card-text v-if="items.length > 0" class="not-too-small">
-            <span v-if="anySelected">Sous-catégories</span>
-            <v-layout row align-center wrap>
-                <loader v-if="loading"/>
-                <v-flex v-else-if="items.length > 0" v-for="item in items" @click="select(item)" :key="'o'+item._id">
-                    <a><v-layout row align-center><v-icon :style="'color: '+item.color">stop</v-icon><a style="padding-right:0.5em">{{item.name}}</a></v-layout></a>
-                </v-flex>
-            </v-layout>
-        </v-card-text>
-        <v-card-text>
-            <v-layout row>
-                <v-spacer/>
-                <v-btn color="primary" @click="emitSelect">Ok</v-btn>
-            </v-layout>
-        </v-card-text>
-    </span>
+        <v-container v-if="loading || items.length > 0">
+                <v-card-text class="not-too-small">
+                    <v-layout column wrap>
+                        <loader v-if="loading"/>
+                        <a v-else-if="items.length > 0" v-for="item in items" @click="select(item)" :key="'o'+item._id">
+                            <v-layout row align-center><v-icon :style="'color: '+item.color">stop</v-icon><a style="padding-right:0.5em">{{item.name}}</a></v-layout>
+                        </a>
+                    </v-layout>
+                </v-card-text>
+        </v-container>
+    </v-layout>
 </template>
 
 <script>

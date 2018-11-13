@@ -9,7 +9,6 @@
         <p>
         <p>L'idée "d'environnement" est un mauvais concept: l'homme y est au centre, et le reste est autour. Ne sommes-nous pas plutôt un maillon de la chaîne?</p>
 
-
         <h2 class="display-1 font-weight-thin">Consommation & environnement</h2>
         <p>
             La consommation des ménages est parfois contrainte par leur niveau de vie.
@@ -47,7 +46,7 @@
                     <a href="http://www.clothparency.com/" target="_blank">Clothparency</a>: Evaluation environnementale et sociale dans le secteur textile.
                 </li>
                 <li>
-                    <a href="https://www.quechoisir.org/application-mobile-quelcosmetic-n52804/" target="_blank">QuelCosmetic</a>: Indication d'ingrédients indésirables dans les produits de beauté.
+                    <a href="https://fr.openbeautyfacts.org" target="_blank">OpenBeautyFact</a>, <a href="https://www.quechoisir.org/application-mobile-quelcosmetic-n52804/" target="_blank">QuelCosmetic</a>: Informations sur les produits de beauté.
                 </li>
                 <li>
                     <a href="https://www.logicout.fr/couts/" target="_blank">Logicout</a>: Evaluation d'impact environnemental des transports en voiture et camion.
@@ -55,7 +54,7 @@
             </ul>
             <li>Notation, labellisation d’entreprises: <a href="https://bcorporation.eu/about-b-lab/country-partner/france" target="_blank">B Corp</a>, <a href="http://biomattitude.com/" target="_blank">Biomattitude</a></li>
             <li>Partage de pratiques, annuaire ‘green’: <a href="https://www.wwf.fr/agir-au-quotidien/crowdacting" target="_blank">WAG</a>, <a href="https://www.greenapes.com/en/" target="_blank">Greenapes</a></li>
-            <li>Création d’information détaillée et fiable sur les produits: <a href="https://ambrosus.com/fr/" target="_blank">Ambrosus</a>, <a href="https://www.sgsgroup.fr/fr-fr/news/2017/07/sgs-et-transparency-one-visibilite-chaine-d-approvisionnement" target="_blank">TransparencyOne</a>, Provenance</li>
+            <li>Création d’information détaillée et fiable sur les produits: <a href="https://ambrosus.com/fr/" target="_blank">Ambrosus</a>, <a href="https://www.sgsgroup.fr/fr-fr/news/2017/07/sgs-et-transparency-one-visibilite-chaine-d-approvisionnement" target="_blank">TransparencyOne</a>, <a href="https://www.provenance.org/" target="_blank">Provenance</a></li>
             <li>Logiciels, Base de données, cabinets d'Analyse de Cycle de Vie: <a href="http://eplca.jrc.ec.europa.eu/LCDN/" target="_blank">Life Cycle Data Network</a>, <a href="https://www.ecoinvent.org/home.html" target="_blank">Ecoinvent</a>, <a href="http://www.openlca.org/" target="_blank">Openlca</a>, <a href="https://network.simapro.com/evea/"
                                                                                                                                                                                                                                                                                                                           target="_blank">SimaPro</a>, <a
                     href="http://www.gabi-software.com/france/logiciel/" target="_blank">Gabi</a>, et de <a href="https://www.avnir.org/FR/Bureaux-d-etudes-et-cabinets-de-conseil-251.html" target="_blank">nombreux cabinets</a></li>
