@@ -1,8 +1,8 @@
 <template>
     <v-layout row class="not-too-small">
-        <div v-if="anySelected" class="grey lighten-5" style="min-width: 12em;">
+        <div class="grey lighten-5" style="min-width: 12em;">
                 <v-layout column align-center pa-1>
-                    <a @click="pathSelect(null)">Tout</a>
+                    <a @click="pathSelect(null)">Toutes les catégories</a>
                     <v-icon v-if="anySelected" small>keyboard_arrow_down</v-icon>
                     <template v-for="(cat, idx) in selection">
                         <v-layout column v-if="idx < selection.length-1">

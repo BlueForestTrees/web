@@ -16,17 +16,17 @@
                 </v-card>
             </v-layout>
             <v-card class="ma-1">
-                <v-layout :column="$vuetify.breakpoint.xsOnly" align-center justify-center>
-                    <v-checkbox v-model="selectedDomain" label="ENVIRONNEMENT" value="impactsTank"></v-checkbox>
-                    <v-checkbox v-model="selectedDomain" label="RESSOURCES" value="tank"></v-checkbox>
-                    <v-checkbox v-model="selectedDomain" label="PROPRIETES" value="facets"></v-checkbox>
+                <v-layout :column="$vuetify.breakpoint.xsOnly" align-content-center mx-auto>
+                        <v-checkbox v-model="selectedDomain" label="ENVIRONNEMENT" value="impactsTank"></v-checkbox>
+                        <v-checkbox v-model="selectedDomain" label="RESSOURCES" value="tank"></v-checkbox>
+                        <v-checkbox v-model="selectedDomain" label="PROPRIETES" value="facets"></v-checkbox>
                 </v-layout>
             </v-card>
         </span>
 
         <v-card v-if="hasAxises">
             <v-layout row align-center pl-4 pt-4>
-                <v-icon class="corner" x-large @click="zoom = !zoom">{{zoom ? 'pie_chart':'list'}}</v-icon>
+                <v-icon class="corner" x-large @click="zoom = !zoom">{{zoom ? 'close':'search'}}</v-icon>
             </v-layout>
 
             <compare-ribbon v-if="zoom" :axises="selectedAxises" :leftColor="leftColor" :rightColor="rightColor"/>
