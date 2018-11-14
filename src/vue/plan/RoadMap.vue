@@ -36,7 +36,7 @@
                     {
                         icon: 'border_all',
                         title: 'Puzzle',
-                        text:"<p>On place des produits/services comme des pièces de puzzle. Les pièces s'additionnent entre elles et forment alors un groupe. Au contraire, deux groupes entre eux se soustraient. La différence entre deux groupes représentent ce que l'on gagne (ou perd) quand on achète un groupe plutot que l'autre... Cette différence est exprimée par un troisième groupe, <i>le gain.</i></p><p>Le but du puzzle est de montrer ce que l'on gagne lorsqu'on remplace une activité par une autre. </p><p><i>Exemple: manger toute l'année des bananes en provenance des canaries en bateau plutôt que celle de la république dominicaine fait gagner l'équivalent en CO2 d'un Paris-Moscou en voiture.</p></p>"
+                        text:"<p>On place des produits/services comme des pièces de puzzle. Les pièces s'additionnent entre elles et forment alors un groupe. Au contraire, deux groupes entre eux se soustraient. La différence entre deux groupes représentent ce que l'on gagne (ou perd) quand on achète un groupe plutot que l'autre... Cette différence est exprimée par un troisième groupe, <i>le gain.</i></p><p>Le but du puzzle est de montrer ce que l'on gagne lorsqu'on remplace une activité par une autre. </p><p><i>Exemple: manger toute l'année des bananes en provenance des canaries par bateau plutôt que celle de la république dominicaine fait gagner l'équivalent en CO2 d'un Paris-Moscou en voiture.</p></p>"
                     },
                     {
                         icon: 'flag',
@@ -86,12 +86,7 @@
                     {
                         icon:'shopping_basket',
                         title:'Panier',
-                        text:"<p>Rendre plus simple et scénarisée l'utilisation du panier.</p>"
-                    },
-                    {
-                        icon:'brush',
-                        title:'Icônes',
-                        text:"<p>Remplacer les textes des barres 'environnement, ressource, propriétés' par des dessins svg.</p>"
+                        text:"<p>Rendre plus simple et scénarisée l'utilisation du panier. Permettre d'enregistrer des paniers pour les retrouver plus tard ou les partager.</p>"
                     }
                 ]
             }

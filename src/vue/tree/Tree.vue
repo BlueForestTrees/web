@@ -22,9 +22,9 @@
                 <select-attribute-bar @change="v => current = v"/>
             </v-card>
 
+            <ressources v-if="current === 'root'" :tree="tree" :selection="selection"/>
             <card>
                 <description v-if="!current" :tree="tree"/>
-                <ressources v-if="current === 'root'" :tree="tree" :selection="selection"/>
                 <facets v-if="current === 'facet'" :tree="tree" :selection="selection"/>
                 <bilan-impacts v-if="current === 'impact'" :tree="tree" :selection="selection"/>
                 <branches v-if="current === 'branch'" :tree="tree"/>

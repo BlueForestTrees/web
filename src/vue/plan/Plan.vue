@@ -1,7 +1,5 @@
 <template>
     <v-container>
-
-
         <v-window v-model="window">
             <v-window-item key="c">
                 <plan-constat/>

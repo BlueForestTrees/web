@@ -1,5 +1,6 @@
 import {Dial} from "../const/dial"
 import ENV from "../env"
+import {maquettes} from "../const/maquettes"
 
 export const createDialog = name => (dialogFactory[name] && dialogFactory[name]()) || (console.warn(`state.js il manque dialogFactory['${name}']`) || {})
 
@@ -36,6 +37,7 @@ export const snack = () => ({
 export const tree = () => ({_id: null, trunk: null, selection: null, facets: null})
 
 export default {
+    version: {web: ENV.VERSION},
     dispo: {grandeurs: false},
     selection: [],
     catSelection: [],
@@ -52,9 +54,9 @@ export default {
     tree: null,
     compare: {left: null, right: null, leftAxises: null, rightAxises: null, axis: null},
     dialogs: dialogs(),
-    nav: {leftMenuVisible: false, rightMenuVisible: false, dark: false, detailsDialog:false},
+    nav: {leftMenuVisible: false, rightMenuVisible: false, dark: false, detailsDialog: false},
     snack: snack(),
     messages: {title: null, hasMore: false, filter: {}, list: []},
     myMessages: [],
-    version: {web: ENV.VERSION}
+    maquettes
 }

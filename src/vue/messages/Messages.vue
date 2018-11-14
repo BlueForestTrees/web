@@ -55,7 +55,7 @@
                     <v-icon v-if="editMsg || respondMsg" color="grey" large @click="cancelAny">close</v-icon>
                 </v-layout>
             </v-layout>
-            <v-btn flat v-else @click="checkAuth()"><v-icon>people</v-icon>Connectez-vous pour participer</v-btn>
+            <v-btn flat v-else @click="checkAuth()"><v-icon>people</v-icon>Connection</v-btn>
         </span>
     </v-navigation-drawer>
 </template>

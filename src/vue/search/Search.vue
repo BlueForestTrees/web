@@ -2,10 +2,8 @@
     <v-flex key="search">
         <v-layout row wrap justify-center align-center class="ma-4">
             <v-icon color="blue">search</v-icon>
-            <span class="title">Recherche</span>
-        </v-layout>
-        <v-layout :column="$vuetify.breakpoint.xsOnly" align-center justify-center>
-            <v-menu v-model="showType" max-width="500px" offset-y>
+            <span class="title">Recherche: </span>
+            <v-menu v-model="showType" max-width="500px" offset-y style="padding-top: 5px; padding-left:5px">
                 <div slot="activator" class="subheading">
                     <v-layout row align-center>
                         <span>{{label}}</span>
@@ -20,6 +18,8 @@
                     </v-list>
                 </v-card>
             </v-menu>
+        </v-layout>
+        <v-layout :column="$vuetify.breakpoint.xsOnly" align-center justify-center>
             <template v-if="type===On.SEARCH_TREE">
                 <v-menu v-model="showCat" :close-on-content-click="false" max-width="500px" offset-y class="ml-3">
                     <div slot="activator" class="subheading">
@@ -41,6 +41,48 @@
                     </div>
                     <v-card>
                         <search-name @input="nameChange"></search-name>
+                    </v-card>
+                </v-menu>
+                <v-menu v-model="showEnv" offset-y class="ml-3">
+                    <div slot="activator" class="subheading">
+                        <v-layout row align-center>
+                            <span>Environnement</span>
+                            <v-icon>arrow_drop_down</v-icon>
+                        </v-layout>
+                    </div>
+                    <v-card>
+                        <v-layout align-center pa-2>
+                            <v-icon color="orange" large>new_releases</v-icon>
+                            Pouvoir rechercher un produit en fonction de ces impacts environnementaux.
+                        </v-layout>
+                    </v-card>
+                </v-menu>
+                <v-menu v-model="showRes" offset-y class="ml-3">
+                    <div slot="activator" class="subheading">
+                        <v-layout row align-center>
+                            <span>Ressources</span>
+                            <v-icon>arrow_drop_down</v-icon>
+                        </v-layout>
+                    </div>
+                    <v-card>
+                        <v-layout align-center pa-2>
+                            <v-icon color="orange" large>new_releases</v-icon>
+                            Pouvoir rechercher un produit en fonction des resources qui ont été utilisées pour le fabriquer/transporter/recycler.
+                        </v-layout>
+                    </v-card>
+                </v-menu>
+                <v-menu v-model="showFac" offset-y class="ml-3">
+                    <div slot="activator" class="subheading">
+                        <v-layout row align-center>
+                            <span>Propriétés</span>
+                            <v-icon>arrow_drop_down</v-icon>
+                        </v-layout>
+                    </div>
+                    <v-card>
+                        <v-layout align-center pa-2>
+                            <v-icon color="orange" large>new_releases</v-icon>
+                            Pouvoir rechercher un produit en fonction de ces propriétés. (dimensions, avantages/inconvénients, apports nutritionnels...)
+                        </v-layout>
                     </v-card>
                 </v-menu>
             </template>
@@ -95,12 +137,15 @@
                 On,
                 showCat: false,
                 showName: false,
+                showEnv: false,
+                showRes: false,
+                showFac: false,
                 showType: false,
                 type: On.SEARCH_TREE,
                 labels: {
                     [On.SEARCH_TREE]: "Produits, Services",
-                    [On.SEARCH_IMPACT_ENTRY]: "Environnement",
-                    [On.SEARCH_FACET_ENTRY]: "Propriétés"
+                    [On.SEARCH_IMPACT_ENTRY]: "Impacts sur l'environnement",
+                    [On.SEARCH_FACET_ENTRY]: "Propriétés de produits"
                 }
             }
         },
