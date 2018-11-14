@@ -15,7 +15,7 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <router-link :to="{name:GO.PLAN}">En savoir plus</router-link>
+                    <!--<router-link :to="{name:GO.PLAN}">En savoir plus</router-link>-->
                 </v-card-actions>
             </template>
         </card>
