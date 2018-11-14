@@ -2,9 +2,11 @@
     <v-container @click="selectable && toggleSelect(tree)" :style="{background: isSelected(tree) ? '#D8E9F5' : '', height:'100%'}">
         <v-layout column fill-height>
             <v-layout :column="$vuetify.breakpoint.xsOnly" align-center>
-                <svg width="30%" height="30%" viewBox="-10 -10 20 20" class="not-too-height">
-                    <circle cx="0" cy="0" r="8" :stroke="trunk && trunk.color || 0" fill="none"></circle>
-                </svg>
+                <v-flex>
+                    <svg width="30%" height="30%" viewBox="-10 -10 20 20" class="not-too-height not-too-very-small">
+                        <circle cx="0" cy="0" r="8" :stroke="trunk && trunk.color || 0" fill="none"></circle>
+                    </svg>
+                </v-flex>
                 <v-flex>
                     <card3d :flipped="qtFlipped" v-if="trunk">
                         <h1 slot="front" class="display-3 align" v-html="qtUnit(trunk)" @click.stop="flip"></h1>

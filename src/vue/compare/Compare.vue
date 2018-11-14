@@ -7,7 +7,7 @@
         <v-card-text v-if="!compare.left || !compare.right" class="text-md-center">Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche</span> ou prenez des produits du <span><v-icon @click="goBasket" color="primary">shopping_basket</v-icon> panier pour les comparer.</span></v-card-text>
 
         <span v-else>
-            <v-layout :column="$vuetify.breakpoint.xsOnly">
+            <v-layout :column="$vuetify.breakpoint.smAndDown">
                 <v-card class="half-width ma-1">
                     <tree-card :tree="compare.left" @nav="goTree(compare.left)" :style="{cursor: 'pointer'}" selectable/>
                 </v-card>

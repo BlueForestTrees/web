@@ -6,6 +6,11 @@ a {
     text-decoration: none;
 }
 
+.not-too-very-small {
+    min-width: 5em;
+    min-height: 5em;
+}
+
 .not-too-small {
     min-width: 12em;
     min-height: 12em;
