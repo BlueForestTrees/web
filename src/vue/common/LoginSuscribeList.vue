@@ -5,8 +5,7 @@
                 <v-avatar size="64px"><img style="width: 64px;height:64px" src="/img/logo-rond.svg" alt="BlueForest"></v-avatar>
             </v-list-tile-avatar>
             <v-list-tile-content>
-                <to-intro/>
-                <v-list-tile-title>{{(user && user.fullname) || "Invité"}}</v-list-tile-title>
+                <v-list-tile-title>{{(user && user.fullname) || "Visiteur"}}</v-list-tile-title>
                 <v-list-tile-sub-title>{{(user && "session expirée") || "non connecté"}}</v-list-tile-sub-title>
             </v-list-tile-content>
         </v-list-tile>

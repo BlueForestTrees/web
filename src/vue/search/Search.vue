@@ -46,6 +46,7 @@
                 <v-menu v-model="showEnv" offset-y class="ml-3">
                     <div slot="activator" class="subheading">
                         <v-layout row align-center>
+                            <v-icon color="orange" small>new_releases</v-icon>
                             <span>Environnement</span>
                             <v-icon>arrow_drop_down</v-icon>
                         </v-layout>
@@ -60,20 +61,23 @@
                 <v-menu v-model="showRes" offset-y class="ml-3">
                     <div slot="activator" class="subheading">
                         <v-layout row align-center>
+                            <v-icon color="orange" small>new_releases</v-icon>
                             <span>Ressources</span>
                             <v-icon>arrow_drop_down</v-icon>
                         </v-layout>
                     </div>
                     <v-card>
                         <v-layout align-center pa-2>
+                            <v-icon color="orange" small>new_releases</v-icon>
                             <v-icon color="orange" large>new_releases</v-icon>
-                            Pouvoir rechercher un produit en fonction des resources qui ont été utilisées pour le fabriquer/transporter/recycler.
+                            Pouvoir rechercher un produit en fonction des ressources qui ont été utilisées pour le fabriquer/transporter/recycler.
                         </v-layout>
                     </v-card>
                 </v-menu>
                 <v-menu v-model="showFac" offset-y class="ml-3">
                     <div slot="activator" class="subheading">
                         <v-layout row align-center>
+                            <v-icon color="orange" small>new_releases</v-icon>
                             <span>Propriétés</span>
                             <v-icon>arrow_drop_down</v-icon>
                         </v-layout>

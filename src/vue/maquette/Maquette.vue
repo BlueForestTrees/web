@@ -10,7 +10,7 @@
                 <img :src="url(slide)" style="width:100%"/>
             </v-window-item>
         </v-window>
-        <v-divider/>
+        <v-divider v-if="!noDiv"/>
         <v-card-actions class="justify-space-between">
             <v-btn flat @click="prev"><v-icon>keyboard_arrow_left</v-icon></v-btn>
             <span class="display-1 font-weight-thin">{{maquette}}</span>
@@ -31,6 +31,7 @@
         components: {MaquetteLogo},
         props: {
             maquette: {type: String},
+            noDiv:{type:Boolean}
         },
         data: () => ({
             window: null
