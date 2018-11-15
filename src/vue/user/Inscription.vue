@@ -6,7 +6,6 @@
 
             <v-container v-if="!mailSent">
                 <v-card-actions>
-                    <to-intro/>
                     <v-spacer/>
                     <h1>Bienvenue</h1>
                     <v-spacer/>
@@ -21,9 +20,9 @@
                     </v-form>
                 </v-card-text>
                 <v-card-actions>
-                    <router-link :to="{name:GO.LOGIN}">Se connecter</router-link>
+                    <router-link :to="{name:GO.LOGIN}">Déjà inscrit</router-link>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" @click="validate" :disabled="!valid">Suivant<v-icon>navigate_next</v-icon></v-btn>
+                    <v-btn color="primary" @click="validate" :disabled="!valid">Inscription<v-icon>navigate_next</v-icon></v-btn>
                 </v-card-actions>
             </v-container>
             <v-container v-else>
@@ -46,10 +45,9 @@
     import Card from "../common/Card"
     import {mailRequired, validMail} from "../../services/rules"
     import {GO} from "../../const/go"
-    import ToIntro from "../common/toIntro"
 
     export default {
-        components: {ToIntro, Card},
+        components: {Card},
         mixins: [],
         data: function () {
             return {

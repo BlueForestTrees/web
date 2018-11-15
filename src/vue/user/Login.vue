@@ -6,7 +6,7 @@
             <img src="/img/forest.svg" style="width:28%">
             <v-container>
                 <v-card-text>
-                    <to-intro/>
+                    <v-layout v-if="loginFailed" row align-center><v-icon color="red">report_problem</v-icon><span class="error--text">Mail inconnu ou mot de passe incorrect</span></v-layout>
                     <v-form v-model="valid" v-on:submit.prevent="validate" ref="form">
                         <v-text-field prepend-icon="mail" name="mail" label="Mail" placeholder="vous@exemple.com"
                                       type="text"
@@ -22,7 +22,7 @@
                     </v-form>
                 </v-card-text>
                 <v-card-actions>
-                    <router-link :to="{name:GO.SUSCRIBE}">S'inscrire</router-link>
+                    <router-link :to="{name:GO.SUSCRIBE}">Cliquez ici pour vous inscrire</router-link>
                     <v-spacer></v-spacer>
                     <v-btn color="primary" @click="validate">Connexion</v-btn>
                 </v-card-actions>
@@ -37,10 +37,9 @@
     import Card from "../common/Card"
     import {GO} from "../../const/go"
     import {mailRequired, validMail} from "../../services/rules"
-    import ToIntro from "../common/toIntro"
 
     export default {
-        components: {ToIntro, Card},
+        components: {Card},
         data: function () {
             return {
                 GO,
@@ -53,7 +52,7 @@
         },
         methods: {
             validPassword(value) {
-                return this.loginFailed ? "Identifiants incorrects" : !!value || "Veuillez saisir un mot de passe"
+                return !!value || "Veuillez saisir un mot de passe"
             },
             mailRequired,
             validMail,

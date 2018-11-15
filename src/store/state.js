@@ -58,5 +58,6 @@ export default {
     snack: snack(),
     messages: {title: null, hasMore: false, filter: {}, list: []},
     myMessages: [],
-    maquettes
+    maquettes,
+    correlationId: null
 }

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRessource from 'vue-resource'
 import root from 'window-or-global'
-import {X_ACCESS_TOKEN} from "../const/headers"
+import {X_ACCESS_TOKEN, X_CORRELATION_ID} from "../const/headers"
 import isNil from 'lodash.isnil'
 import state from '../store/state'
 
@@ -36,12 +36,12 @@ export const paramsOf = params => {
 }
 
 const token = () => state.token && {[X_ACCESS_TOKEN]: state.token} || {}
+const correlationId = () => state.correlationId && {[X_CORRELATION_ID]: state.correlationId} || {}
 
-export const get = async (url, reqOpts) => (await Vue.http.get(url, {json: true, ...reqOpts})).body
-
-export const del = (url, reqOpts) => Vue.http.delete(url, {json: true, headers: {[X_ACCESS_TOKEN]: state.token}, ...reqOpts})
-export const post = (url, body, reqOpts) => Vue.http.post(url, body, {json: true, headers: {...token()}, ...reqOpts})
-export const put = (url, body, reqOpts) => Vue.http.put(url, body, {json: true, headers: {...token()}, ...reqOpts})
+export const get = async (url, reqOpts) => (await Vue.http.get(url, {json: true, headers: {...correlationId()}, ...reqOpts})).body
+export const del = (url, reqOpts) => Vue.http.delete(url, {json: true, headers: {...token(), ...correlationId()}, ...reqOpts})
+export const post = (url, body, reqOpts) => Vue.http.post(url, body, {json: true, headers: {...token(), ...correlationId()}, ...reqOpts})
+export const put = (url, body, reqOpts) => Vue.http.put(url, body, {json: true, headers: {...token(), ...correlationId()}, ...reqOpts})
 
 export const upload = (url, formData, reqOpts) => {
     let xhr = new XMLHttpRequest()
