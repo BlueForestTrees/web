@@ -21,16 +21,63 @@
                 </v-layout>
             </v-layout>
 
+
+            <v-card-title slot="header">
+                <v-icon>panorama_fish_eye</v-icon>
+                <h6 class="title">Vos produits et services</h6>
+            </v-card-title>
             <my-product :user="user"/>
-
-            <my-basket :user="user"/>
-
-            <my-puzzle :user="user"/>
-
-            <my-team :user="user"/>
-
-            <my-messages/>
-
+            <v-expansion-panel popout>
+                <!--<v-expansion-panel-content key="mpr">-->
+                    <!---->
+                <!--</v-expansion-panel-content>-->
+                <v-expansion-panel-content key="mba">
+                    <v-card-title slot="header">
+                        <v-tooltip bottom>
+                            <v-layout align-center slot="activator">
+                                <v-icon>shopping_basket</v-icon>
+                                <h6 class="title">Paniers</h6>
+                                <v-icon color="orange" small>new_releases</v-icon>
+                            </v-layout>
+                            <span style="pointer-events: none">Cette fonction est à l'étude! Accélérez-la en votant pour elle dans la section 'Fonctions à venir' du menu de gauche.</span>
+                        </v-tooltip>
+                    </v-card-title>
+                    <my-basket :user="user"/>
+                </v-expansion-panel-content>
+                <v-expansion-panel-content key="mpu">
+                    <v-card-title slot="header">
+                        <v-tooltip bottom>
+                            <v-layout align-center slot="activator">
+                                <v-icon>border_all</v-icon>
+                                <h6 class="title">Puzzles</h6>
+                                <v-icon color="orange" small>new_releases</v-icon>
+                            </v-layout>
+                            <span style="pointer-events: none">Cette fonction est à l'étude! Accélérez-la en votant pour elle dans la section 'Fonctions à venir' du menu de gauche.</span>
+                        </v-tooltip>
+                    </v-card-title>
+                    <my-puzzle :user="user"/>
+                </v-expansion-panel-content>
+                <v-expansion-panel-content key="mte">
+                    <v-card-title slot="header">
+                        <v-tooltip bottom>
+                            <v-layout align-center slot="activator">
+                                <v-icon>flag</v-icon>
+                                <h6 class="title">Equipes</h6>
+                                <v-icon color="orange" small>new_releases</v-icon>
+                            </v-layout>
+                            <span style="pointer-events: none">Cette fonction est à l'étude! Accélérez-la en votant pour elle dans la section 'Fonctions à venir' du menu de gauche.</span>
+                        </v-tooltip>
+                    </v-card-title>
+                    <my-team :user="user"/>
+                </v-expansion-panel-content>
+                <v-expansion-panel-content key="mme">
+                    <v-card-title slot="header">
+                        <v-icon>chat_bubble</v-icon>
+                        <h6 class="title">Messages</h6>
+                    </v-card-title>
+                    <my-messages/>
+                </v-expansion-panel-content>
+            </v-expansion-panel>
 
 
         </v-flex>

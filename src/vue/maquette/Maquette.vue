@@ -1,7 +1,6 @@
 <template>
     <span>
         <v-card-actions>
-            <maquette-logo/>
             <v-spacer></v-spacer>
             <slot name="corner"></slot>
         </v-card-actions>
@@ -23,12 +22,10 @@
     </span>
 </template>
 <script>
-    import MaquetteLogo from "./MaquetteLogo"
     import {mapState} from "vuex"
 
     export default {
         name: "maquette",
-        components: {MaquetteLogo},
         props: {
             maquette: {type: String},
             noDiv:{type:Boolean}

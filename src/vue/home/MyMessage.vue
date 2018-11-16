@@ -1,10 +1,5 @@
 <template>
     <v-card class="ma-1">
-        <v-card-title>
-            <v-icon>chat_bubble</v-icon>
-            <h6 class="title">Messages</h6>
-        </v-card-title>
-        <v-divider/>
         <v-card-text v-if="user" class="text-md-center">
             <v-list>
                 <v-list-tile v-for="m in messages" :key="m._id" @click="">

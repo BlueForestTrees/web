@@ -5,7 +5,7 @@ import api from "../../rest/api"
 
 export default {
     [On.MOUNT_APP]: async ({dispatch}) => {
-        await dispatch(On.INIT_CORRELATION_ID)
+        //await dispatch(On.INIT_CORRELATION_ID)
         dispatch(On.DARK_FROM_STORAGE)
         dispatch(On.USER_FROM_STORAGE)
         dispatch(On.LOAD_GRANDEUR)

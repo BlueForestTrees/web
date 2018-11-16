@@ -44,11 +44,6 @@
                 secs,
                 items: [
                     {
-                        icon: 'border_all',
-                        title: 'Puzzle',
-                        text: "<p>On place des produits/services comme des pièces de puzzle. Les pièces s'additionnent entre elles et forment alors un groupe. Au contraire, deux groupes entre eux se soustraient. La différence entre deux groupes représentent ce que l'on gagne (ou perd) quand on achète un groupe plutot que l'autre... Cette différence est exprimée par un troisième groupe, <i>le gain.</i></p><p>Le but du puzzle est de montrer ce que l'on gagne lorsqu'on remplace une activité par une autre. </p><p><i>Exemple: manger toute l'année des bananes en provenance des canaries par bateau plutôt que celle de la république dominicaine fait gagner l'équivalent en CO2 d'un Paris-Moscou en voiture.</p></p>"
-                    },
-                    {
                         icon: 'flag',
                         title: 'Equipes',
                         text: "<p>Sur blueforest on peut tout voir, mais ne modifier que ce qui nous appartient.</p><p>En formant une équipe, on peut travailler à plusieurs sur un produit/service.</p>"
@@ -83,6 +78,18 @@
                         title: 'Vue Ressources et Vue Usages',
                         text: "<p>Dans le détail d'un produit ou service, on ne voit que les ressources directement utilisées.</p><p>Créer une vue qui montre toute l'arborescence des flux entrants, ainsi qu'une vue qui montre les ressources 'première' uniquement, càd celle qui n'utilisent pas elle-même des ressources.<p>Idem pour les usages potentiels d'un produit.</p>",
                         maquette: [maquettes.ARBRE_RESSOURCE, maquettes.ARBRE_USAGE]
+                    },
+                    {
+                        icon: 'border_all',
+                        title: 'Puzzle',
+                        text: "<p>On place des produits/services comme des pièces de puzzle. Les pièces s'additionnent entre elles et forment alors un groupe. Au contraire, deux groupes entre eux se soustraient. La différence entre deux groupes représentent ce que l'on gagne (ou perd) quand on achète un groupe plutot que l'autre... Cette différence est exprimée par un troisième groupe, <i>le gain.</i></p><p>Le but du puzzle est de montrer ce que l'on gagne lorsqu'on remplace une activité par une autre. </p><p><i>Exemple: manger toute l'année des bananes en provenance des canaries par bateau plutôt que celle de la république dominicaine fait gagner l'équivalent en CO2 d'un Paris-Moscou en voiture.</p></p>",
+                        maquette: [maquettes.PUZZLE]
+                    },
+                    {
+                        icon: 'live_help',
+                        title: 'Questions',
+                        text: "<p>Questions est un jeu où l'ont propose au joueur de placer sur le dessin qui s'affiche correctement un élément un produit, un impact sur environnement, un apport nutritionnel.</p><p>Le but est d'étonner avec des faits.</p>",
+                        maquette: [maquettes.QUESTION]
                     },
                     {
                         icon: 'control_point',
