@@ -1,21 +1,27 @@
 <template>
     <v-layout row class="not-too-small">
         <div class="grey lighten-5" style="min-width: 12em;">
-                <v-layout column align-center pa-1>
-                    <a @click="pathSelect(null)">Toutes les catégories</a>
-                    <v-icon v-if="anySelected" small>keyboard_arrow_down</v-icon>
-                    <template v-for="(cat, idx) in selection">
-                        <v-layout column v-if="idx < selection.length-1">
-                            <a @click="pathSelect(cat)">{{cat.name}}</a>
-                            <v-icon small>keyboard_arrow_down</v-icon>
-                        </v-layout>
-                        <a v-else><b>{{cat.name}}</b></a>
-                    </template>
-                    <v-layout column>
-                        <v-spacer/>
-                        <v-btn v-if="anySelected" color="primary" @click="emitSelect">Ok</v-btn>
+            <v-layout column align-center ma-2>
+
+
+
+                <a @click="pathSelect(null)">Toutes les catégories</a>
+                <v-icon v-if="anySelected" small>keyboard_arrow_down</v-icon>
+                <template v-for="(cat, idx) in selection">
+                    <v-layout column v-if="idx < selection.length-1">
+                        <a @click="pathSelect(cat)">{{cat.name}}</a>
+                        <v-icon small>keyboard_arrow_down</v-icon>
                     </v-layout>
+                    <a v-else><b>{{cat.name}}</b></a>
+                </template>
+                <v-layout column>
+                    <v-spacer/>
+                    <v-btn color="primary" @click="emitInput">Ok</v-btn>
                 </v-layout>
+
+
+
+            </v-layout>
         </div>
         <v-card-text v-if="loading || items.length > 0" class="not-too-small" >
             <v-layout column wrap>
@@ -67,9 +73,8 @@
                 }
                 this.loadCats(this.lastSelected && this.lastSelected._id)
             },
-            emitSelect() {
+            emitInput() {
                 this.$emit("input", this.selection.slice())
-                this.$nextTick(() => this.pathSelect(null))
             }
         },
         created: function () {

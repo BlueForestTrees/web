@@ -1,6 +1,6 @@
 <template>
     <v-select
-            label="Unité..." item-text="name" required :solo="solo" :outline="outline"
+            item-text="name" required :solo="solo" :outline="outline"
             :items="items" :value="value" @input="v => $emit('input',v)" :rules="rules"
             return-object
     />

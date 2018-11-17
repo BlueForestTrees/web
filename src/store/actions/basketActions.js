@@ -2,6 +2,7 @@ import router from "../../router/router"
 import {GO} from "../../const/go"
 import On from "../../const/on"
 import Do from "../../const/do"
+import Link from "../../const/link"
 // import {find} from "unit-manip"
 // import forage from "../../services/forage"
 
@@ -13,7 +14,7 @@ export default {
         dispatch(On.ADD_TO_BASKET, state.selection)
         const length = state.selection.length
         const s = state.selection.length > 1 ? 's' : ''
-        dispatch(On.SNACKBAR, {text: `${length} élément${s} ajouté${s} au panier`, color: "green"})
+        dispatch(On.SNACKBAR, {text: `${length} élément${s} sélectionné${s}`, color: "green", link: Link.GO_TO_SELECTION})
         dispatch(On.UNSELECT)
     },
     [On.ADD_TO_BASKET]: async ({commit, dispatch, state}, items) => {

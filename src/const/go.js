@@ -16,6 +16,8 @@ export const GO = {
     EQUIV: 'equiv',
     CREATE_TREE: 'createTree',
     ROOT: 'root',
+    TEAM: 'team',
+    MESSAGE: 'message',
     COMPARE_EMPTY: 'compareEmpty',
     COMPARE_PARTIAL: 'comparePartial',
     COMPARE: 'compare',

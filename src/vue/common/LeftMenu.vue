@@ -1,6 +1,65 @@
 <template>
     <v-navigation-drawer app v-model="nav.leftMenuVisible">
         <v-list dense>
+
+            <v-list-tile @click="goto(GO.BASKET)">
+                <v-list-tile-action>
+                    <v-icon color="primary">select_all</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                    <v-list-tile-title>Mes produits</v-list-tile-title>
+                </v-list-tile-content>
+            </v-list-tile>
+
+            <v-list-tile @click="goto(GO.MESSAGE)">
+                <v-list-tile-action>
+                    <v-icon color="primary">chat_bubble</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                    <v-list-tile-title>Mes messages</v-list-tile-title>
+                </v-list-tile-content>
+            </v-list-tile>
+
+
+            <v-list-group>
+
+                <v-list-tile slot="activator">
+                    <v-list-tile-action>
+                        <v-icon color="primary">settings</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <v-list-tile-title>Paramètres</v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+
+                <v-list-tile @click="show(Dial.ADD_IMPACT_ENTRY)">
+                    <v-list-tile-action>
+                        <v-icon color="primary">keyboard_tab</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <v-list-tile-title>Ajouter un type d'impact</v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+
+                <v-list-tile @click="show(Dial.FACET_ENTRY)">
+                    <v-list-tile-action>
+                        <v-icon color="primary">keyboard_backspace</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <v-list-tile-title>Ajouter une propriété au catalogue</v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+
+                <v-list-tile @click="goto(GO.TEAM)">
+                    <v-list-tile-action>
+                        <v-icon color="primary">flag</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <v-list-tile-title>Equipes<v-icon color="orange" small>new_releases</v-icon></v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+            </v-list-group>
+
             <v-list-tile @click="goCreateTree">
                 <v-list-tile-action>
                     <v-icon color="primary">panorama_fish_eye</v-icon>
@@ -10,23 +69,6 @@
                 </v-list-tile-content>
             </v-list-tile>
 
-            <v-list-tile @click="show(Dial.ADD_IMPACT_ENTRY)">
-                <v-list-tile-action>
-                    <v-icon color="primary">keyboard_tab</v-icon>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                    <v-list-tile-title>Ajouter un type d'impact</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
-
-            <v-list-tile @click="show(Dial.FACET_ENTRY)">
-                <v-list-tile-action>
-                    <v-icon color="primary">keyboard_backspace</v-icon>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                    <v-list-tile-title>Ajouter une propriété au catalogue</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
 
         </v-list>
 
@@ -49,7 +91,7 @@
             </v-list-tile>
             <v-list-tile @click="goto(GO.ROAD_MAP)">
                 <v-list-tile-action>
-                    <v-icon color="primary">chrome_reader_mode</v-icon>
+                    <v-icon color="orange">new_releases</v-icon>
                 </v-list-tile-action>
                 <v-list-tile-content>
                     <v-list-tile-title>Fonctions à venir</v-list-tile-title>

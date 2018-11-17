@@ -2,8 +2,8 @@
     <v-container>
         <v-form v-model="valid" v-on:submit.prevent="" ref="form">
             <v-layout row align-center @click.stop="">
-                <v-text-field type="number" label="Quantité" v-model="qt" :rules="[required, isNumber]" @keyup.enter="validate"/>
-                <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]" @keyup.enter="validate"/>
+                <v-text-field type="number" v-model="qt" :rules="[required, isNumber]" @keyup.enter="validate" class="chars-width-3"/>
+                <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]" @keyup.enter="validate" class="chars-width-15"/>
                 <v-icon large color="primary" @click.stop="validate">done</v-icon>
                 <v-icon large color="grey" @click.stop="close">close</v-icon>
             </v-layout>

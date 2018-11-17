@@ -3,8 +3,8 @@
         <template v-if="hasItems && item._id !== exceptId" v-for="item in items">
             <div :key="item._id" @click="toggleSelect(item)" class="v-list__tile" :style="{paddingTop:'8px',paddingBottom:'8px',height:'auto', background: isSelected(item) ? '#D8E9F5' : '', transition: 'background .2s ease'}">
                 <v-layout row>
-                    <v-icon v-if="isSelected(item)" color="primary" style="margin-right:0.3em">check_circle</v-icon>
-                    <v-icon v-else :style="'color: '+color(item)+';margin-right:0.3em'">panorama_fish_eye</v-icon>
+                    <!--<v-icon v-if="isSelected(item)" color="primary" style="margin-right:0.3em">check_circle</v-icon>-->
+                    <!--<v-icon v-else :style="'color: '+color(item)+';margin-right:0.3em'">panorama_fish_eye</v-icon>-->
                     <v-list-tile-content v-if="!noQt">{{qtUnitName(item)}}</v-list-tile-content>
                     <v-list-tile-content v-else>{{name(item)}}</v-list-tile-content>
                 </v-layout>

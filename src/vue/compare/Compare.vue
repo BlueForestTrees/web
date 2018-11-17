@@ -16,7 +16,7 @@
                 </v-card>
             </v-layout>
             <v-card class="ma-1">
-                <v-layout :column="$vuetify.breakpoint.xsOnly" align-content-center mx-auto>
+                <v-layout :column="$vuetify.breakpoint.xsOnly" align-content-center>
                         <v-checkbox v-model="selectedDomain" label="ENVIRONNEMENT" value="impactsTank"></v-checkbox>
                         <v-checkbox v-model="selectedDomain" label="RESSOURCES" value="tank"></v-checkbox>
                         <v-checkbox v-model="selectedDomain" label="PROPRIETES" value="facets"></v-checkbox>

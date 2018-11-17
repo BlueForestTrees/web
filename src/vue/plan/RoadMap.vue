@@ -2,7 +2,7 @@
     <card>
         <v-divider/>
         <v-card-title>
-            <v-icon large>chrome_reader_mode</v-icon>
+            <v-icon color="orange" large>new_releases</v-icon>
             <h6 class="title">Fonctions à venir</h6></v-card-title>
         <v-divider/>
         <v-container>

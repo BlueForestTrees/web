@@ -1,17 +1,10 @@
 <template>
     <v-toolbar v-if="!anySelected" dense app class="elevation-0" style='background-color:#FFFFFFBB'>
         <v-toolbar-side-icon @click="nav.leftMenuVisible = !nav.leftMenuVisible"></v-toolbar-side-icon>
-        <v-btn @click="goHome" flat icon color="primary">
-            <v-icon>home</v-icon>
-        </v-btn>
-
         <v-spacer/>
 
         <v-btn icon flat :to="{name: GO.SEARCH}">
             <v-icon large color="primary">search</v-icon>
-        </v-btn>
-        <v-btn icon flat :to="{name: GO.BASKET}">
-            <v-icon :large="notEmptyBasket" color="primary">shopping_basket</v-icon>
         </v-btn>
         <v-menu v-if="user">
             <v-avatar slot="activator" size="32px" :style="{backgroundColor:user.color}" class="ml-2">
@@ -44,19 +37,15 @@
     <v-toolbar v-else dense app dark class="elevation-5" color="primary" :extended="$vuetify.breakpoint.xsOnly">
 
         <span slot="extension" v-if="$vuetify.breakpoint.xsOnly">
-            <v-tooltip v-if="$route.name !== GO.BASKET && selectionCount" bottom>
-                <v-btn slot="activator" flat dense
-                       @click="addSelectionToBasket">Panier
-                    <v-icon x-large>arrow_right_alt</v-icon>
-                    <v-icon x-large>shopping_basket</v-icon>
-                </v-btn>
-                <span style="pointer-events: none">Ajouter au panier</span>
-            </v-tooltip>
+            <v-btn v-if="$route.name !== GO.BASKET && selectionCount" flat dense @click="addSelectionToBasket">
+                <v-icon x-large>select_all</v-icon>
+                <span>Sélectionner</span>
+            </v-btn>
              <v-tooltip v-if="$route.name === GO.BASKET" bottom>
                 <v-btn slot="activator" v-if="anySelected" flat @click="removeSelectionFromBasket">
-                    <v-icon x-large>shopping_basket</v-icon>
+                    <v-icon x-large>select_all</v-icon>
                     <v-icon x-large>arrow_right_alt</v-icon>
-                    retirer
+                    <span>retirer</span>
                 </v-btn>
                 <span style="pointer-events: none">Retirer du panier</span>
             </v-tooltip>
@@ -64,13 +53,10 @@
 
         <v-layout row align-center>
 
-            <v-tooltip v-if="oneSelected && selectionIsTree" bottom>
-                <v-btn slot="activator" flat @click="goTree(oneSelected)">
-                    <v-icon x-large>panorama_fish_eye</v-icon>
-                    détails
-                </v-btn>
-                <span style="pointer-events: none">Ouvrir</span>
-            </v-tooltip>
+            <v-btn v-if="oneSelected && selectionIsTree" flat @click="goTree(oneSelected)">
+                <v-icon x-large>crop_square</v-icon>
+                <span>détails</span>
+            </v-btn>
 
             <v-tooltip bottom v-if="twoSelected && selectionIsTree">
                 <v-btn slot="activator" flat @click="goCompare(twoSelected)">comparer
@@ -88,21 +74,17 @@
 
             <v-tooltip v-if="$vuetify.breakpoint.smAndUp && $route.name === GO.BASKET" bottom>
                 <v-btn slot="activator" v-if="anySelected" flat @click="removeSelectionFromBasket">
-                    <v-icon x-large>shopping_basket</v-icon>
+                    <v-icon x-large>select_all</v-icon>
                     <v-icon x-large>arrow_right_alt</v-icon>
-                    retirer
+                    <span>retirer</span>
                 </v-btn>
                 <span style="pointer-events: none">Retirer du panier</span>
             </v-tooltip>
 
-            <v-tooltip v-if="$vuetify.breakpoint.smAndUp && $route.name !== GO.BASKET && selectionCount" bottom>
-                <v-btn slot="activator" flat dense
-                       @click="addSelectionToBasket">Panier
-                    <v-icon x-large>arrow_right_alt</v-icon>
-                    <v-icon x-large>shopping_basket</v-icon>
-                </v-btn>
-                <span style="pointer-events: none">Ajouter au panier</span>
-            </v-tooltip>
+            <v-btn v-if="$vuetify.breakpoint.smAndUp && $route.name !== GO.BASKET && selectionCount" flat dense @click="addSelectionToBasket">
+                <v-icon x-large>select_all</v-icon>
+                <span>Sélectionner</span>
+            </v-btn>
 
 
             <v-tooltip v-if="$route.name === GO.TREE && oneSelected" bottom>
