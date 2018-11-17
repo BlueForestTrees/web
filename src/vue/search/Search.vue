@@ -5,7 +5,7 @@
             <img src="/img/logo.svg" style="width:20%">
             <img src="/img/forest.svg" style="width:14%">
         </v-layout>
-        <v-layout row wrap justify-center align-center mx-5 xs-4>
+        <v-layout row wrap justify-center align-center mx-5 xs-4 mb-1>
             <search-text :value="search.name" @input="nameChange" class="not-too-large"/>
         </v-layout>
         <v-layout :column="$vuetify.breakpoint.xsOnly" align-center justify-center class="mb-3">

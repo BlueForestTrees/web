@@ -6,32 +6,8 @@
         <v-btn icon flat :to="{name: GO.SEARCH}">
             <v-icon large color="primary">search</v-icon>
         </v-btn>
-        <v-menu v-if="user">
-            <v-avatar slot="activator" size="32px" :style="{backgroundColor:user.color}" class="ml-2">
-                <span :style="{color:overcolor(user.color)}">{{initiales(user.fullname)}}</span>
-            </v-avatar>
-            <v-list two-line>
-                <v-list-tile @click="">
-                    <v-list-tile-avatar size="64px" style="padding-right: 1em">
-                        <v-avatar slot="activator" size="64px" :style="{backgroundColor:user.color}"><h1
-                                :style="{color:overcolor(user.color)}">{{initiales(user.fullname)}}</h1></v-avatar>
-                    </v-list-tile-avatar>
-                    <v-list-tile-content>
-                        <v-list-tile-title>{{user.fullname}}</v-list-tile-title>
-                        <v-list-tile-sub-title>{{user.mail}}</v-list-tile-sub-title>
-                    </v-list-tile-content>
-                </v-list-tile>
-                <v-list-tile>
-                    <v-btn outline block class="elevation-0" @click="logout" v-if="user">Déconnexion</v-btn>
-                </v-list-tile>
-            </v-list>
-        </v-menu>
-        <v-menu v-else>
-            <v-btn slot="activator" icon dense>
-                <v-icon>person</v-icon>
-            </v-btn>
-            <login-suscribe-list style="width: 17em"/>
-        </v-menu>
+
+        <logged-in />
 
     </v-toolbar>
     <v-toolbar v-else dense app dark class="elevation-5" color="primary" :extended="$vuetify.breakpoint.xsOnly">
@@ -120,9 +96,9 @@
     import {Dial} from "../../const/dial"
     import On from "../../const/on"
     import {GO} from "../../const/go"
-    import {initiales, overcolor} from "../../services/calculations"
     import LoginSuscribeList from "./LoginSuscribeList"
     import selectable from "../mixin/Selectable"
+    import LoggedIn from "../user/LoggedIn"
 
     export default {
         data: function () {
@@ -132,6 +108,7 @@
         },
         mixins: [selectable],
         components: {
+            LoggedIn,
             LoginSuscribeList,
             MainDialog
         },
@@ -148,7 +125,6 @@
             ...mapGetters(['notEmptyBasket'])
         },
         methods: {
-            overcolor, initiales,
             go: function (p) {
                 this.$router.push(p)
             },
@@ -156,7 +132,6 @@
                 this.showDialog({dialog: Dial.ADD_RESSOURCE, data: {left: selection[0], right: selection[1]}})
             },
             ...mapActions({
-                logout: On.LOGOUT,
                 removeSelectionFromBasket: On.REMOVE_SELECTION_FROM_BASKET,
                 goSearch: On.GO_SEARCH,
                 goTree: On.GO_TREE,

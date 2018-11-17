@@ -6,7 +6,6 @@ export const GO = {
     LOGIN: 'login',
     PLAN_INTRO: 'planIntro',
     PLAN: 'plan',
-    HOME: 'home',
     IMPACT_ENTRY: 'impactEntry',
     FACET_ENTRY: 'facetEntry',
     SEARCH: 'search',
