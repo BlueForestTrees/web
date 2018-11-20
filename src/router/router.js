@@ -14,7 +14,7 @@ const Inscription = () => import(/* webpackChunkName: "Inscription" */ '../vue/u
 const Login = () => import(/* webpackChunkName: "Login" */ '../vue/user/Login')
 const Plan = () => import(/* webpackChunkName: "Plan" */ '../vue/plan/Plan')
 const RoadMap = () => import(/* webpackChunkName: "RoadMap" */ '../vue/plan/RoadMap')
-const BFCestQuoi = () => import(/* webpackChunkName: "BFCestQuoi" */ '../vue/plan/BFCestQuoi')
+const BFCestQuoi = () => import(/* webpackChunkName: "BFCestQuoi" */ '../vue/plan/PlanIntro')
 const CreateTree = () => import(/* webpackChunkName: "CreateTree" */ '../vue/tree/CreateTree')
 const DatasExplained = () => import(/* webpackChunkName: "DatasExplained" */ '../vue/explain/DataExplained')
 const MyTeam = () => import(/* webpackChunkName: "MyTeam" */ '../vue/home/MyTeam')

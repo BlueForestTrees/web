@@ -29,11 +29,13 @@
     import {GO} from "../const/go"
     import {mapState} from 'vuex'
     import Bar from "./common/Bar"
-    import Snack from "./common/Snack"
-    import AddRessourceDialog from "./dialog/AddRessourceDialog"
-    import AddFacetEntryDialog from "./dialog/AddFacetEntryDialog"
-    import AddImpactEntryDialog from "./dialog/AddImpactEntryDialog"
-    import ConnectToContinueDialog from "./dialog/ConnectToContinueDialog"
+
+    const Snack = () => import("./common/Snack")
+
+    const AddFacetEntryDialog = () => import("./dialog/AddFacetEntryDialog")
+    const AddImpactEntryDialog = () => import("./dialog/AddImpactEntryDialog")
+    const ConnectToContinueDialog = () => import("./dialog/ConnectToContinueDialog")
+    const AddRessourceDialog = () => import(/* webpackChunkName: "ARDialog"*/"./dialog/AddRessourceDialog")
 
     const LeftMenu = () => import(/* webpackChunkName: "LeftMenu" */ "./common/LeftMenu")
     const Messages = () => import(/* webpackChunkName: "Messages" */ "./messages/Messages")

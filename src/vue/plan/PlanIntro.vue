@@ -13,6 +13,9 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
+                    <v-icon>keyboard_arrow_right</v-icon>
+                    <v-icon>keyboard_arrow_right</v-icon>
+                    <v-icon>keyboard_arrow_right</v-icon>
                     <router-link :to="{name:GO.PLAN}">En savoir plus</router-link>
                 </v-card-actions>
             </template>

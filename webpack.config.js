@@ -32,7 +32,6 @@ var conf = {
         new CopyWebpackPlugin([{from: './src/browserconfig.xml', to: '.'}]),
         new LodashModuleReplacementPlugin(),
         new VueLoaderPlugin(),
-        // new ExtractTextPlugin("style.css")
     ],
     optimization: {
         splitChunks: {
