@@ -1,17 +1,19 @@
 <template>
-    <v-container @click="selectable && toggleSelect(tree)" :style="{background: isSelected(tree) ? '#D8E9F5' : '', height:'100%'}">
-        <v-layout column fill-height>
-            <v-layout justify-center>
-                <card3d :flipped="qtFlipped" v-if="trunk">
-                    <h1 slot="front" class="display-3 align" @click.stop="flip">{{qtUnit(trunk)}}</h1>
-                    <quantity-selection slot="back" :tree="tree" @close="flip" @change="changeQuantity"/>
-                </card3d>
-            </v-layout>
-            <v-flex>
-                <H3 class="display-1 align" v-html="name(trunk)"></H3>
-            </v-flex>
+    <span @click="selectable && !qtFlipped && toggleSelect(tree)" :style="{background: isSelected(tree) ? '#D8E9F5' : '', height:'100%'}">
+        <v-layout justify-center>
+            <card3d v-if="trunk" :flipped="qtFlipped">
+                <span slot="front">
+                    <h1 class="display-2 align" @click.stop="flip">{{qtUnit(trunk)}}</h1>
+                    <h3 class="display-1 align font-weight-thin" v-html="name(trunk)"></h3>
+                </span>
+                <v-card slot="back">
+                    <v-container my-0 py-0>
+                        <quantity-selection :tree="tree" @close="flip" @change="changeQuantity"/>
+                    </v-container>
+                </v-card>
+            </card3d>
         </v-layout>
-    </v-container>
+    </span>
 </template>
 
 <script>

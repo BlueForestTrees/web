@@ -29,7 +29,7 @@
 <style>
     .scene {
         width:400px;
-        height:100px;
+        height:280px;
         perspective: 600px;
     }
 

@@ -1,14 +1,28 @@
 <template>
-    <v-container>
-        <v-form v-model="valid" v-on:submit.prevent="" ref="form">
-            <v-layout row align-center @click.stop="">
-                <v-text-field type="number" v-model="qt" :rules="[required, isNumber]" @keyup.enter="validate" class="chars-width-3"/>
-                <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]" @keyup.enter="validate" class="chars-width-15"/>
-                <v-icon large color="primary" @click.stop="validate">done</v-icon>
-                <v-icon large color="grey" @click.stop="close">close</v-icon>
-            </v-layout>
-        </v-form>
-    </v-container>
+    <v-form v-model="valid" v-on:submit.prevent="" ref="form">
+        <v-layout row align-center>
+            <v-text-field type="number" v-model="qt" :rules="[required, isNumber]" @keyup.enter="validate" class="chars-width-3" label="Quantité"></v-text-field>
+            <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]" @keyup.enter="validate" class="chars-width-8" label="Unité"></unit-select>
+        </v-layout>
+        <v-layout row align-center>
+            <v-text-field :disabled="!isRegulier" type="number" v-model="qtDuree" :rules="isRegulier ? [required, isNumber] : []" @keyup.enter="validate" class="chars-width-3" label="Tou(te)s les:"></v-text-field>
+            <unit-select :disabled="!isRegulier" v-model="unitDuree" :grandeur="dureeGrandeur" :rules="isRegulier ? [required] : []" @keyup.enter="validate" class="chars-width-8"></unit-select>
+        </v-layout>
+        <v-layout row align-center>
+            <v-text-field :disabled="!isRegulier" type="number" v-model="qtDureeTotal" :rules="isRegulier ? [required, isNumber] : []" @keyup.enter="validate" class="chars-width-3" label="Pendant:"></v-text-field>
+            <unit-select :disabled="!isRegulier" v-model="unitDureeTotal" :grandeur="dureeGrandeur" :rules="isRegulier ? [required] : []" @keyup.enter="validate" class="chars-width-8"></unit-select>
+        </v-layout>
+        <v-layout row justify-center>
+            <v-checkbox v-model="isRegulier" label="répété"></v-checkbox>
+            <v-text-field :disabled="!isRegulier" type="text" v-model="name" :rules="isRegulier ? [required] : []" @keyup.enter="validate" class="chars-width-3" label="Nom"></v-text-field>
+            <v-btn flat icon @click.stop="validate">
+                <v-icon large color="primary">done</v-icon>
+            </v-btn>
+            <v-btn flat icon @click.stop="close">
+                <v-icon large color="grey">close</v-icon>
+            </v-btn>
+        </v-layout>
+    </v-form>
 </template>
 
 <script>
@@ -21,7 +35,6 @@
     import UnitSelect from "../common/UnitSelect"
     import GrandeurSelect from "../common/GrandeurSelect"
 
-
     export default {
         name: 'quantity-selection',
         components: {GrandeurSelect, UnitSelect, MainDialog, Destination},
@@ -31,9 +44,16 @@
             return {
                 qt: null,
                 unit: null,
+                qtDuree: 1,
+                unitDuree: unit("mois"),
+                qtDureeTotal: 1,
+                unitDureeTotal: unit("an"),
                 valid: null,
                 Dial,
-                grandeur: null
+                grandeur: null,
+                dureeGrandeur: getGrandeur("Duré"),
+                isRegulier: false,
+                name: null
             }
         },
         methods: {
@@ -53,11 +73,15 @@
             required, isNumber
         },
         mounted() {
-            let bqtG = this.tree.trunk.quantity
-            const qtUnit = bestQuantity(bqtGToQtUnit(bqtG))
-            this.qt = qtUnit.qt
-            this.unit = unit(qtUnit.unit)
-            this.grandeur = getGrandeur(bqtG.g)
+            if (this.tree.selection && this.tree.selection.repete) {
+
+            } else {
+                let bqtG = this.tree.trunk.quantity
+                const qtUnit = bestQuantity(bqtGToQtUnit(bqtG))
+                this.qt = qtUnit.qt
+                this.unit = unit(qtUnit.unit)
+                this.grandeur = getGrandeur(bqtG.g)
+            }
         }
     }
 </script>

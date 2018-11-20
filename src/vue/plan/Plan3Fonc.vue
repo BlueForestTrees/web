@@ -1,8 +1,21 @@
 <template>
     <div id="f">
         <h1 class="display-3 font-weight-thin">Offre</h1>
-        <p>BlueForest est une plateforme suivant un modèle d'économie collaboratif. Les données viennent d'importations de bases de données existantes, des saisies d'entreprises et de particuliers. L'inscription et l'usage y est libre. On y consulte les informations de tous, et on y modifie uniquement ses propres informations.</p>
-        <p>Blueforest gère le stockage des données et les services fournis autour de ces données. C'est un lieu d'argumentation, de démonstration, de pédagogie, de vulgarisation, de communication. On peut diffuser des résultats de démonstrations. Ceux-ci sont toujours liées aux détails de calculs, aux sources et aux auteurs.</p>
+        <p>BlueForest est une plateforme publique orientée autour du cycle de vie des produits. On se propose de répondre à des questions comme: quels sont les produits qui émettent 100kg de CO2, est-ce que je pollue plus avec un lave-vaisselle ou à la main? Combien d'éolienne pour faire autant qu'une centrale? etc.</p>
+        <p>Les données viennent d'importations de bases de données existantes (Ademe, OpenFoodFact, ...), des saisies d'entreprises et de particuliers. Les données n'ont bien sûr pas le même statut ni le même usage selon leur provenance</p>
+        <ul>
+            <li>L'inscription et l'usage est libre.</li>
+            <li>Chacun peut consulter les informations de tous.</li>
+            <li>On ne peut modifier que ses propres informations.</li>
+            <li>On peut proposer des modifications sur les informations des autres.</li>
+        </ul>
+        <p></p>
+        <p>Blueforest gère le stockage des données et les services fournis autour de ces données, c'est tout.</p>
+        <p>Le projet n'a pas l'ambition de garantir "l'absolue vérité" à propos des informations environnementales. La simple raison est simple: cela est impossible et pas souhaitable. Cela retirerait la reflexion et l'esprit critique de l'utilisateur, alors même que l'on cherche à le contraire. Au lieu de garantir une vérité pure, nous préférons garantir la présence des sources des informations, l'accès à celles-ci, et cela sur tout les écrans de l'application (et pas dans une interligne écrite en police grise 6pt)</p>
+        <p>Les axes choisis sont l'argumentation, la démonstration, la transparence, la pédagogie, la vulgarisation, la communication. On peut diffuser des résultats de démonstrations. Ceux-ci sont toujours liées aux détails de calculs, aux sources et aux auteurs.</p>
+
+
+        <p><b>TODO: parler des jeux pour le grand public, de l'intérêt pour les entreprises, de la connexion avec des experts en ACV.</b></p>
 
         <h2 class="display-1 font-weight-thin">Equivalences</h2>
         <p>Les équivalences nous permettent de prendre conscience de l’importance d’une chose en la comparant avec une autre de même importance (X équivaut Y). Exemple d’équivalence: On génère autant de réchauffement climatique en utilisant chaque jour le rouge à lèvre X qu’en mangeant une fois par semaine la pâtisserie Y.</p>

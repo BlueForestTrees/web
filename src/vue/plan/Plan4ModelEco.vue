@@ -2,7 +2,8 @@
     <div id="m">
         <h1 class="display-3 font-weight-thin">Modèle économique</h1>
 
-        Pim, Pam, Poum
+        <p>pim pam poum</p>
+        <p>Les entreprises qui mettent leur produits sur la plateforme la subventionne dans un abonnement.</p>
 
         <open-message :section="secs.MODEL_ECO"/>
     </div>

@@ -1,15 +1,14 @@
 <template>
-    <v-select
-            item-text="name" required :solo="solo" :outline="outline"
+    <v-select :disabled="disabled"
+            item-text="name" required :solo="solo" :outline="outline" :label="label"
             :items="items" :value="value" @input="v => $emit('input',v)" :rules="rules"
-            return-object
-    />
+            return-object></v-select>
 </template>
 
 <script>
     export default {
         name: 'unit-select',
-        props: ['value', 'grandeur', 'rules', 'solo', 'outline'],
+        props: ['value', 'grandeur', 'rules', 'solo', 'outline','disabled', 'label'],
         computed: {
             items: function () {
                 if (this.grandeur && this.grandeur.units) {
