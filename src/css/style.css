@@ -6,12 +6,28 @@ a {
     text-decoration: none;
 }
 
+.bold-font{
+    font-weight: bold;
+}
+
+.label-command {
+    position:absolute;
+    top:0;
+    text-align: right;
+    transform: rotate(-45deg);
+    transform-origin: right;
+    width:130px;
+    margin-left:-70px;
+}
+
 .chars-width-3 {
     width: 3em
 }
+
 .chars-width-8 {
     width: 8em
 }
+
 .chars-width-15 {
     width: 15em
 }

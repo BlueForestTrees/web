@@ -1,61 +1,70 @@
 <template>
-    <v-container>
-        <v-window v-model="window">
-            <v-window-item key="c">
-                <plan-constat/>
-            </v-window-item>
-            <v-window-item key="b">
-                <plan-besoin/>
-            </v-window-item>
-            <v-window-item key="f">
-                <plan-func/>
-            </v-window-item>
-            <v-window-item key="m">
-                <plan-model-eco/>
-            </v-window-item>
-            <v-window-item key="t">
-                <plan-tech/>
-            </v-window-item>
-        </v-window>
-        <v-item-group v-model="window" class="mt-4" mandatory tag="v-flex">
-            <v-layout row justify-center>
-                <v-item key="bb">
-                    <div slot-scope="{ active, toggle }">
-                        <v-btn :input-value="active" icon @click="toggle">
-                            <v-icon color="primary">fiber_manual_record</v-icon>
-                        </v-btn>
-                    </div>
-                </v-item>
-                <v-item key="bc">
-                    <div slot-scope="{ active, toggle }">
-                        <v-btn :input-value="active" icon @click="toggle">
-                            <v-icon color="primary">fiber_manual_record</v-icon>
-                        </v-btn>
-                    </div>
-                </v-item>
-                <v-item key="bf">
-                    <div slot-scope="{ active, toggle }">
-                        <v-btn :input-value="active" icon @click="toggle">
-                            <v-icon color="primary">fiber_manual_record</v-icon>
-                        </v-btn>
-                    </div>
-                </v-item>
-                <v-item key="bm">
-                    <div slot-scope="{ active, toggle }">
-                        <v-btn :input-value="active" icon @click="toggle">
-                            <v-icon color="primary">fiber_manual_record</v-icon>
-                        </v-btn>
-                    </div>
-                </v-item>
-                <v-item key="bt">
-                    <div slot-scope="{ active, toggle }">
-                        <v-btn :input-value="active" icon @click="toggle">
-                            <v-icon color="primary">fiber_manual_record</v-icon>
-                        </v-btn>
-                    </div>
-                </v-item>
-            </v-layout>
-        </v-item-group>
+    <v-container pa-0>
+        <v-container>
+            <v-window v-model="window">
+                <v-window-item key="c">
+                    <plan-constat/>
+                </v-window-item>
+                <v-window-item key="b">
+                    <plan-besoin/>
+                </v-window-item>
+                <v-window-item key="f">
+                    <plan-func/>
+                </v-window-item>
+                <v-window-item key="m">
+                    <plan-model-eco/>
+                </v-window-item>
+                <v-window-item key="t">
+                    <plan-tech/>
+                </v-window-item>
+            </v-window>
+        </v-container>
+
+        <v-divider/>
+        <v-item-group v-model="window" mandatory>
+                <v-layout row style="max-width: 20em" mx-auto>
+                    <v-item key="bb">
+                        <v-flex slot-scope="{ active, toggle }">
+                            <span class="label-command">
+                                <span :class="active?'bold-font':''" @click="toggle">Intro</span>
+                                <v-btn :input-value="active" icon class="ml-0" @click="toggle"><v-icon color="primary">fiber_manual_record</v-icon></v-btn>
+                            </span>
+                        </v-flex>
+                    </v-item>
+                    <v-item key="bc">
+                        <v-flex slot-scope="{ active, toggle }">
+                            <span class="label-command">
+                                <span :class="active?'bold-font':''" @click="toggle">Besoin</span>
+                                <v-btn :input-value="active" icon class="ml-0" @click="toggle"><v-icon color="primary">fiber_manual_record</v-icon></v-btn>
+                            </span>
+                        </v-flex>
+                    </v-item>
+                    <v-item key="bf">
+                        <v-flex slot-scope="{ active, toggle }">
+                            <span class="label-command">
+                                <span :class="active?'bold-font':''" @click="toggle">Offre</span>
+                                <v-btn :input-value="active" icon class="ml-0" @click="toggle"><v-icon color="primary">fiber_manual_record</v-icon></v-btn>
+                            </span>
+                        </v-flex>
+                    </v-item>
+                    <v-item key="bm">
+                        <v-flex slot-scope="{ active, toggle }">
+                            <span class="label-command">
+                                <span :class="active?'bold-font':''" @click="toggle">Modèle éco.</span>
+                                <v-btn :input-value="active" icon class="ml-0" @click="toggle"><v-icon color="primary">fiber_manual_record</v-icon></v-btn>
+                            </span>
+                        </v-flex>
+                    </v-item>
+                    <v-item key="bt">
+                        <v-flex slot-scope="{ active, toggle }">
+                            <span class="label-command">
+                                <span :class="active?'bold-font':''" @click="toggle">Technique</span>
+                                <v-btn :input-value="active" icon class="ml-0" @click="toggle"><v-icon color="primary">fiber_manual_record</v-icon></v-btn>
+                            </span>
+                        </v-flex>
+                    </v-item>
+                </v-layout>
+            </v-item-group>
 
         <connect-to-continue-dialog can-stay/>
     </v-container>
