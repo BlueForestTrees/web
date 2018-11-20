@@ -1,19 +1,25 @@
 <template>
     <div id="b">
         <h1 class="display-3 font-weight-thin">Besoin</h1>
-        <p>L'impact environnemental est le sujet d'une communauté grandissante mais restreinte. Pourrait-on en faire une partie intégrante de l'économie?</p>
-        <p>L'économie circulaire n'aurait-elle pas besoin d'un accélérateur?</p>
-        <p>Toutes nos activités du quotidien et les impacts sur l'environnement sont liés. Nous avons besoin d'assumer les faits, ce qui impose de les connaître.</p>
-        <p>Une plateforme commune pour les relations privée-professionnel et les communautés qui s'en dégagent.</p>
-        <p>Commun: accessible aux plus petites entreprises et actions groupées</p>
-        <p>A l'instar de l'Open-Source des logiciels, les industries peuvent-ils profiter d'une certaine transparence?</p>
-        <p>Le grand public aurait-il besoin d'être réconcilié avec la question environnementale?</p>
-        <p>Le grand public, surtout les jeunes, ont-elles besoin d'une plus grande culture des écosystèmes?</p>
-        <p>Y a-t-il un intérêt à ce que les particuliers utilisent le même outil qu'un professionnel? (renseignement ludique et travail)</p>
-        <p>Peut-on amplifier le sentiment de responsabilisation et de déculpabilisation à la fois?</p>
-        <p>Faut-il prendre conscience de son profil de consommateur, points forts/points faibles?</p>
-        <p>Cela vous plairait-il d'avoir une idée de la proportion de la part individuelle dans la part de la ville? (ou du pays, ou de la planète)</p>
-        <p>Les experts en Analyse de Cycle de Vie des produits recherchent de bonnes méthodes pour rendre compte de la situation de manière "multi-critère".</p>
+        <p><v-icon color="orange">new_releases</v-icon><i>Ceci est une ébauche! Votre participation serait utile.</i></p>
+        <ul style="list-style-type:decimal">
+            <li>Besoin de toutes les idées possibles pour mettre en oeuvre <a href="https://www.ademe.fr/expertises/economie-circulaire" target="_blank">l'économie circulaire</a>.</li>
+            <li>Besoin d'un lieu où l'environnement est au centre, et les personnes et entreprises autour, se concertant, etc.. et laisser le résultat du travail accessible à d'autres.</li>
+            <li>L'impact environnemental est le sujet d'une communauté grandissante mais restreinte. Pourrait-on en faire une partie intégrante de l'économie?</li>
+            <li>Toutes nos activités du quotidien et les impacts sur l'environnement sont liés. Nous avons besoin d'assumer les faits, ce qui impose de les connaître.</li>
+            <li>Besoin d'un outil commun: accessible aux plus petites entreprises</li>
+            <li>Besoin de partager, et de relier des sources d'informations entre elles.</li>
+            <li>Selon ses goûts, besoin de se réunir autour d'une question pour des concertations, des actions groupées.</li>
+            <li>A l'instar de l'Open-Source et des logiciels libres, les entreprises peuvent-elles profiter d'une certaine transparence?</li>
+            <li>Le grand public aurait-il besoin d'être réconcilié avec la question environnementale?</li>
+            <li>Besoin de notions de bases dans le fonctionnement des écosystèmes. Basé sur des éléments réels, actuels et proches.</li>
+            <li>Y a-t-il un besoin à ce que les particuliers utilisent le même outil qu'un professionnel? (renseignement ludique et travail)</li>
+            <li>Une idée de la part individuelle / part collective</li>
+            <li>Besoin de perennité, d'un lieu où sont stockée toutes les informations s'accumulant (à l'opposé du système de news qui n'a pas de passé).</li>
+            <li>Besoin d'y voir clair dans des situations complexes, à "multi-critère"</li>
+            <li>...?</li>
+        </ul>
+
         <h2 class="display-1 font-weight-thin">Discussion</h2>
         <p><v-icon color="green" small>info</v-icon>Votre point de vue est essentiel à la poursuite de ce projet! :)</p>
         <open-message :section="secs.BESOIN"/>

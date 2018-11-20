@@ -3,7 +3,7 @@
         <selectable-list :items="items" no-qt><span slot="no-items"></span></selectable-list>
         <infinite-loading v-if="active" ref="iloading" @infinite="loadResults" spinner="spiral" :distance="500" style="padding-bottom: 3em">
             <span slot="no-more">{{items.length}} résultats</span>
-            <span slot="no-results"><slot name="no-results">Pas de résultats</slot></span>
+            <span slot="no-results"><slot name="no-results">Pas de résultats. <a>Enregistrer la recherche pour que d'autres y répondent.</a><v-icon color="orange" small>new_releases</v-icon></slot></span>
             <span slot="spinner"><loader/></span>
         </infinite-loading>
     </v-flex>

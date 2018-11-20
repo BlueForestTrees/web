@@ -16,6 +16,7 @@
 
 
         <p><b>TODO: parler des jeux pour le grand public, de l'intérêt pour les entreprises, de la connexion avec des experts en ACV.</b></p>
+        <p><b>TODO: Un jeu sérieux qui se partage</b></p>
 
         <h2 class="display-1 font-weight-thin">Equivalences</h2>
         <p>Les équivalences nous permettent de prendre conscience de l’importance d’une chose en la comparant avec une autre de même importance (X équivaut Y). Exemple d’équivalence: On génère autant de réchauffement climatique en utilisant chaque jour le rouge à lèvre X qu’en mangeant une fois par semaine la pâtisserie Y.</p>
