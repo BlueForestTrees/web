@@ -95,17 +95,13 @@
     import On from "../../const/on"
     import TreeHead from "./TreeHead"
     import {qtUnit, qtUnitName} from "../../services/calculations"
-    import {find} from "lodash"
     import {isNumber, required} from "../../services/rules"
     import UnitSelect from "../common/UnitSelect"
     import SearchComp from "../search/SearchComp"
     import selectable from "../mixin/Selectable"
     import TreeSubHead from "./TreeSubHead"
     import Subheader from "./Subheader"
-    import {getGrandeur, unit} from 'unit-manip'
-    import {unit as lookupUnit} from 'unit-manip'
-    import {baseQt} from 'unit-manip'
-    import {bqtGToQtUnit} from "unit-manip"
+    import {bqtGToQtUnit, find, baseQt, getGrandeur, unit} from "unit-manip"
     import Destination from "../common/Destination"
 
     export default {
@@ -126,7 +122,7 @@
                 qt: null,
                 unit: null,
                 transportQt: null,
-                transportUnit: lookupUnit('km'),
+                transportUnit: unit('km'),
                 grandeur: null,
             }
         },
@@ -194,7 +190,7 @@
             refresh: async function () {
                 this.tree = await this.dispatchLoadTree({_id: this.treeId})
                 await this.tree.promises.roots
-                this.item = find(this.tree.roots, {_id: this.rootId})
+                this.item = find(this.tree.roots, "_id", this.rootId)
             },
             qtUnitName, qtUnit, required, isNumber,
         },
