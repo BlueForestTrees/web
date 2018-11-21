@@ -91,7 +91,6 @@
 </template>
 
 <script>
-    import MainDialog from "../dialog/MainDialog"
     import {mapActions, mapState, mapGetters} from "vuex"
     import {Dial} from "../../const/dial"
     import On from "../../const/on"
@@ -109,8 +108,7 @@
         mixins: [selectable],
         components: {
             LoggedIn,
-            LoginSuscribeList,
-            MainDialog
+            LoginSuscribeList
         },
         computed: {
             ...mapState(['nav', 'tree', 'user']),

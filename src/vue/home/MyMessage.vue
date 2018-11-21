@@ -8,7 +8,7 @@
             </v-list>
             <span v-if="messages.length === 0">
                 <p>Vous n'avez pas encore écrit de message.</p>
-                <p>Vous pouvez vous ballader dans l'application et laisser des messages d'encouragement sur les travaux en cours avec ce type de bouton:</p>
+                <p>Vous pouvez laisser des messages dans l'application avec ce type de bouton:</p>
             </span>
             <v-layout column align-center>
                 <open-message :section="secs.MESSAGE"/>

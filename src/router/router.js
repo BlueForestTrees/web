@@ -19,6 +19,9 @@ const CreateTree = () => import(/* webpackChunkName: "CreateTree" */ '../vue/tre
 const DatasExplained = () => import(/* webpackChunkName: "DatasExplained" */ '../vue/explain/DataExplained')
 const MyTeam = () => import(/* webpackChunkName: "MyTeam" */ '../vue/home/MyTeam')
 const MyMessages = () => import(/* webpackChunkName: "MyMessages" */ '../vue/home/MyMessage')
+const AddImpactEntry = () => import(/* webpackChunkName: "AIE" */ '../vue/dialog/AddImpactEntry')
+const AddFacetEntry = () => import(/* webpackChunkName: "AFEDialog" */ "../vue/dialog/AddFacetEntry")
+const AddRessource = () => import(/* webpackChunkName: "ARDialog"*/ "../vue/dialog/AddRessource")
 
 Vue.use(VueRouter)
 
@@ -44,6 +47,9 @@ export default new VueRouter({
                 {name: GO.BASKET, path: "selection", component: Selection},
                 {name: GO.COMPARE_EMPTY, path: "compare", component: Compare},
                 {name: GO.COMPARE_PARTIAL, path: "compare/:leftId", component: Compare, props: true},
+                {name: GO.ADD_IMPACT_ENTRY, path: "add/entry/impact", component: AddImpactEntry},
+                {name: GO.ADD_FACET_ENTRY, path: "add/entry/facet", component: AddFacetEntry},
+                {name: GO.ADD_RESSOURCE, path: "add/ressource", component: AddRessource},
                 {name: GO.COMPARE, path: "compare/:leftId/:rightId", component: Compare, props: true}
             ]
         },

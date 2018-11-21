@@ -32,7 +32,7 @@
                     </v-list-tile-content>
                 </v-list-tile>
 
-                <v-list-tile @click="show(Dial.ADD_IMPACT_ENTRY)">
+                <v-list-tile @click="goto(GO.ADD_IMPACT_ENTRY)">
                     <v-list-tile-action>
                         <v-icon color="primary">keyboard_tab</v-icon>
                     </v-list-tile-action>
@@ -41,7 +41,7 @@
                     </v-list-tile-content>
                 </v-list-tile>
 
-                <v-list-tile @click="show(Dial.FACET_ENTRY)">
+                <v-list-tile @click="goto(GO.ADD_FACET_ENTRY)">
                     <v-list-tile-action>
                         <v-icon color="primary">keyboard_backspace</v-icon>
                     </v-list-tile-action>
@@ -55,7 +55,9 @@
                         <v-icon color="primary">flag</v-icon>
                     </v-list-tile-action>
                     <v-list-tile-content>
-                        <v-list-tile-title>Equipes<v-icon color="orange" small>new_releases</v-icon></v-list-tile-title>
+                        <v-list-tile-title>Equipes
+                            <v-icon color="orange" small>new_releases</v-icon>
+                        </v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
             </v-list-group>
@@ -149,9 +151,6 @@
             ...mapState(['tree', 'nav', 'version'])
         },
         methods: {
-            show(dialog) {
-                this.showDialog({dialog})
-            },
             switchColors() {
                 this.nav.dark = !this.nav.dark
                 localStorage.setItem("dark", this.nav.dark)

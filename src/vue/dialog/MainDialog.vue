@@ -1,8 +1,7 @@
 <template>
     <v-dialog v-model="visible" fullscreen transition="dialog-bottom-transition" scrollable
               :overlay="false"
-              @keydown.esc="$emit('esc')" @keydown.ctrl.enter="$emit('enter')"
-    >
+              @keydown.esc="$emit('esc')" @keydown.ctrl.enter="$emit('enter')">
         <v-card>
             <v-toolbar dense card dark color="primary">
                 <v-icon>{{icon}}</v-icon>

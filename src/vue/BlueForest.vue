@@ -11,14 +11,10 @@
                 </transition>
             </v-content>
 
-            <snack :snack="snack"/>
-
-            <add-facet-entry-dialog/>
-            <add-impact-entry-dialog/>
-            <add-ressource-dialog/>
-            <connect-to-continue-dialog/>
-
         </span>
+
+        <snack :snack="snack" v-if="snack.visible"/>
+        <connect-to-continue-dialog v-if="dialogs[Dial.CONNECT_TO_CONTINUE].visible"/>
 
     </span>
 </template>
@@ -29,13 +25,11 @@
     import {GO} from "../const/go"
     import {mapState} from 'vuex'
     import Bar from "./common/Bar"
+    import {Dial} from "../const/dial"
 
-    const Snack = () => import("./common/Snack")
+    const Snack = () => import(/* webpackChunkName: "Snack" */ "./common/Snack")
 
-    const AddFacetEntryDialog = () => import("./dialog/AddFacetEntryDialog")
-    const AddImpactEntryDialog = () => import("./dialog/AddImpactEntryDialog")
-    const ConnectToContinueDialog = () => import("./dialog/ConnectToContinueDialog")
-    const AddRessourceDialog = () => import(/* webpackChunkName: "ARDialog"*/"./dialog/AddRessourceDialog")
+    const ConnectToContinueDialog = () => import(/* webpackChunkName: "CTCDialog"*/ "./dialog/ConnectToContinueDialog")
 
     const LeftMenu = () => import(/* webpackChunkName: "LeftMenu" */ "./common/LeftMenu")
     const Messages = () => import(/* webpackChunkName: "Messages" */ "./messages/Messages")
@@ -45,19 +39,17 @@
             return {
                 show: false,
                 transitionName: null,
-                routes: Object.values(GO)
+                routes: Object.values(GO),
+                Dial
             }
         },
         computed: {
-            ...mapState(['nav', 'basket', 'snack', 'dispo'])
+            ...mapState(['nav', 'basket', 'snack', 'dispo', 'dialogs'])
         },
         components: {
             Messages,
             ConnectToContinueDialog,
             Snack,
-            AddImpactEntryDialog,
-            AddFacetEntryDialog,
-            AddRessourceDialog,
             Bar,
             LeftMenu
         },

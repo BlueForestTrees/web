@@ -31,13 +31,12 @@
     import Destination from "../common/Destination"
     import {Dial} from "../../const/dial"
     import {bqtGToQtUnit, getGrandeur, unit, toBqtG, bestQuantity} from 'unit-manip'
-    import MainDialog from "./MainDialog"
     import UnitSelect from "../common/UnitSelect"
     import GrandeurSelect from "../common/GrandeurSelect"
 
     export default {
         name: 'quantity-selection',
-        components: {GrandeurSelect, UnitSelect, MainDialog, Destination},
+        components: {GrandeurSelect, UnitSelect, Destination},
         mixins: [closable],
         props: ['tree'],
         data: function () {

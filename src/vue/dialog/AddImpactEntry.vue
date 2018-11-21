@@ -1,31 +1,37 @@
 <template>
-    <main-dialog :dialog="Dial.ADD_IMPACT_ENTRY" title="Nouvelle catégorie d'impact" ref="dialog"
-                 @esc="close" @enter="validate" @focus="focus"
-    >
-        <v-card-text>
+    <card>
+        <v-toolbar class="elevation-0" color="primary" dark>
+            <v-icon>add</v-icon>
+            <v-toolbar-title>Créer un nouveau type d'impact</v-toolbar-title>
+        </v-toolbar>
+        <v-container>
             <v-form v-model="valid" v-on:submit.prevent="" ref="form">
                 <color-picker v-model="color"/>
-                <v-text-field ref="nom" label="Nom" required :rules="[length2min]" v-model="name"/>
+                <v-text-field ref="nom" label="Nom" required :rules="[length2min]" v-model="name"></v-text-field>
                 <grandeur-select v-model="grandeur"/>
             </v-form>
-        </v-card-text>
-    </main-dialog>
+        </v-container>
+        <v-layout row>
+            <v-spacer/>
+            <v-btn color="primary" @click="validate">OK</v-btn>
+        </v-layout>
+    </card>
 </template>
 
 <script>
-    import MainDialog from "./MainDialog"
     import On from "../../const/on"
     import {mapActions} from "vuex"
     import {Dial} from "../../const/dial"
     import GrandeurSelect from "../common/GrandeurSelect"
     import {length2min} from "../../services/rules"
-    import closable from "../mixin/Closable"
     import ColorPicker from "../common/ColorPicker"
     import {createStringObjectId} from "../../services/calculations"
+    import Card from "../common/Card"
+    import Connected from "../mixin/Connected"
 
     export default {
-        mixins: [closable],
-        name: 'add-impact-entry-dialog',
+        name: 'add-impact-entry',
+        mixins:[Connected],
         data() {
             return {
                 Dial,
@@ -36,9 +42,9 @@
             }
         },
         components: {
+            Card,
             ColorPicker,
-            GrandeurSelect,
-            MainDialog
+            GrandeurSelect
         },
         props: ['data'],
         methods: {
@@ -55,8 +61,9 @@
                         color: this.color,
                         name: this.name,
                         g: this.grandeur.key
-                    }).then(() => this.snack({text: `Le type de propriété "${this.name}" a été crée`}))
-                    this.close()
+                    })
+                        .then(() => this.snack({text: `Le type de propriété "${this.name}" a été crée`}))
+                        .then(() => this.focus())
                 }
             },
             focus() {

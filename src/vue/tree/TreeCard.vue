@@ -21,7 +21,7 @@
     import {qtUnit, name} from "../../services/calculations"
     import selectable from "../mixin/Selectable"
     import Card3d from "../common/Card3d"
-    import QuantitySelection from "../dialog/QuantitySelection"
+    import QuantitySelection from "./QuantitySelection"
     import On from "../../const/on"
 
     export default {
