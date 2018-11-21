@@ -6,19 +6,17 @@
         </v-layout>
         <v-card-text v-if="!compare.left || !compare.right" class="text-md-center">Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche</span> ou prenez des produits du <span><v-icon @click="goBasket" color="primary">shopping_basket</v-icon> panier pour les comparer.</span></v-card-text>
 
-        <span v-else>
-            <v-card>
-                <v-layout :column="$vuetify.breakpoint.xsOnly" align-content-center justify-center>
-                    <tree-card :tree="compare.left" @nav="goTree(compare.left)" :style="{cursor: 'pointer'}" selectable/>
-                    <tree-card :tree="compare.right" @nav="goTree(compare.right)" :style="{cursor: 'pointer'}" selectable/>
-                </v-layout>
-                <v-layout :column="$vuetify.breakpoint.xsOnly" align-content-center>
-                        <v-checkbox v-model="selectedDomain" label="ENVIRONNEMENT" value="impactsTank"></v-checkbox>
-                        <v-checkbox v-model="selectedDomain" label="RESSOURCES" value="tank"></v-checkbox>
-                        <v-checkbox v-model="selectedDomain" label="PROPRIETES" value="facets"></v-checkbox>
-                </v-layout>
-            </v-card>
-        </span>
+        <v-card v-else class="pt-4">
+            <v-layout :column="$vuetify.breakpoint.xsOnly" align-content-center justify-center>
+                <tree-card :tree="compare.left" @nav="goTree(compare.left)" :style="{cursor: 'pointer'}" selectable/>
+                <tree-card :tree="compare.right" @nav="goTree(compare.right)" :style="{cursor: 'pointer'}" selectable/>
+            </v-layout>
+            <v-layout :column="$vuetify.breakpoint.xsOnly" align-content-center>
+                    <v-checkbox v-model="selectedDomain" label="ENVIRONNEMENT" value="impactsTank"></v-checkbox>
+                    <v-checkbox v-model="selectedDomain" label="RESSOURCES" value="tank"></v-checkbox>
+                    <v-checkbox v-model="selectedDomain" label="PROPRIETES" value="facets"></v-checkbox>
+            </v-layout>
+        </v-card>
 
         <v-card v-if="hasAxises">
             <v-layout row align-center pl-4 pt-4>

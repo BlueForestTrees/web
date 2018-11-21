@@ -100,8 +100,13 @@ export default {
             }
         }
     },
-    [On.CHANGE_QUANTITY]: ({dispatch}, {tree, quantity}) => {
-        const coef = quantity.bqt / tree.trunk.quantity.bqt
+    [On.CHANGE_QUANTITY]: ({dispatch}, {tree, quantity, selection}) => {
+        let coef = null
+        if (selection) {
+            coef = (selection.duree / selection.freq) * selection.quantity.bqt / tree.trunk.quantity.bqt
+        } else if (quantity) {
+            coef = quantity.bqt / tree.trunk.quantity.bqt
+        }
 
         dispatch(On.CHANGE_COMPARE_QUANTITY, {tree, quantity})
 

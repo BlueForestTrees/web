@@ -59,10 +59,19 @@
             validate() {
                 this.$refs.form.validate()
                 if (this.valid) {
-                    this.$emit("change", {
-                        tree: this.tree,
-                        quantity: toBqtG({qt: this.qt, unit: this.unit.shortname})
-                    })
+                    const change = {tree: this.tree}
+                    const quantity = toBqtG({qt: this.qt, unit: this.unit.shortname})
+                    if (this.isRegulier) {
+                        change.selection = {
+                            quantity,
+                            freq: this.qtDuree * this.unitDuree.coef,
+                            duree: this.qtDureeTotal * this.unitDureeTotal.coef,
+                            name: this.name
+                        }
+                    } else {
+                        change.quantity = quantity
+                    }
+                    this.$emit("change", change)
                     this.close()
                 }
             },
@@ -72,14 +81,14 @@
             required, isNumber
         },
         mounted() {
-            if (this.tree.selection && this.tree.selection.repete) {
-
-            } else {
+            if (!this.tree.selection) {
                 let bqtG = this.tree.trunk.quantity
                 const qtUnit = bestQuantity(bqtGToQtUnit(bqtG))
                 this.qt = qtUnit.qt
                 this.unit = unit(qtUnit.unit)
                 this.grandeur = getGrandeur(bqtG.g)
+            } else {
+
             }
         }
     }
