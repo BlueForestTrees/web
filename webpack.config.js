@@ -5,7 +5,6 @@ var Visualizer = require('webpack-visualizer-plugin')
 var LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 var VueLoaderPlugin = require('vue-loader').VueLoaderPlugin
 var versions = require('./package.json').dependencies
-
 var NODE_ENV = process.env.NODE_ENV
 
 console.log("NODE_ENV === ", NODE_ENV)
@@ -50,17 +49,10 @@ if (conf.mode === "development") {
 
     conf.serve = {
         add: function (app, middleware, options) {
-            app.use(convert(proxy('/api/correlation', {target: 'http://localhost:8091'})))
-            app.use(convert(proxy('/api/damage', {target: 'http://localhost:8090'})))
-            app.use(convert(proxy('/api/film', {target: 'http://localhost:8089'})))
-            app.use(convert(proxy('/api/impact', {target: 'http://localhost:8088'})))
-            app.use(convert(proxy('/api/message', {target: 'http://localhost:8087'})))
-            app.use(convert(proxy('/api/facet', {target: 'http://localhost:8086'})))
-            app.use(convert(proxy('/api/user', {target: 'http://localhost:8084'})))
-            app.use(convert(proxy('/api/grandeur', {target: 'http://localhost:8083'})))
-            app.use(convert(proxy('/api/import', {target: 'http://localhost:8082'})))
-            app.use(convert(proxy('/api/categorie', {target: 'http://localhost:8081'})))
-            app.use(convert(proxy('/api/tree', {target: 'http://localhost:8080'})))
+            const targets = require("./targets.json")[process.env.TARGET || "dev"]
+            for (let i = 0; i < targets.length; i++) {
+                app.use(convert(proxy(targets[i].path, {target: targets[i].host, secure: false, changeOrigin: true})))
+            }
             app.use(convert(history()))
         }
     }
@@ -95,11 +87,11 @@ if (conf.mode === "production") {
 }
 
 function other() {
-    if(process.env.STATS) {
+    if (process.env.STATS) {
         const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
         conf.plugins.push(new BundleAnalyzerPlugin({analyzerMode: "static", reportFilename: "../report.html", openAnalyzer: false}))
         conf.plugins.push(new Visualizer({filename: '../statistics.html'}))
-    }else{
+    } else {
         console.log("no STATS flag, no stats")
     }
     conf.plugins.push(new CopyWebpackPlugin([

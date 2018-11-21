@@ -7,6 +7,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-serve --port 8079 --config webpack.config.js",
+    "dev-on-integ": "cross-env NODE_ENV=development TARGET=integ webpack-serve --port 8079 --config webpack.config.js",
+    "dev-on-prod": "cross-env NODE_ENV=development TARGET=prod webpack-serve --port 8079 --config webpack.config.js",
     "test": "cross-env NODE_ENV=development mocha --recursive --require @babel/register --exit \"test/test*.js\"",
     "build": "rimraf dist && cross-env NODE_ENV=production webpack",
     "build-stats": "rimraf dist && cross-env NODE_ENV=production STATS=true node --trace-deprecation node_modules/webpack/bin/webpack",

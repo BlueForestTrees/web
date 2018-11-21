@@ -1,0 +1,41 @@
+{
+  "prod": [
+    {"path":"/api/correlation", "host": "https://blueforest.org"},
+    {"path":"/api/damage", "host": "https://blueforest.org"},
+    {"path":"/api/film", "host": "https://blueforest.org"},
+    {"path":"/api/impact", "host": "https://blueforest.org"},
+    {"path":"/api/message", "host": "https://blueforest.org"},
+    {"path":"/api/facet", "host": "https://blueforest.org"},
+    {"path":"/api/user", "host": "https://blueforest.org"},
+    {"path":"/api/grandeur", "host": "https://blueforest.org"},
+    {"path":"/api/import", "host": "https://blueforest.org"},
+    {"path":"/api/categorie", "host": "https://blueforest.org"},
+    {"path":"/api/tree", "host": "https://blueforest.org"}
+  ],
+  "integ": [
+    {"path":"/api/correlation", "host":"http://integ.blueforest.org"},
+    {"path":"/api/damage", "host":"http://integ.blueforest.org"},
+    {"path":"/api/film", "host":"http://integ.blueforest.org"},
+    {"path":"/api/impact", "host":"http://integ.blueforest.org"},
+    {"path":"/api/message", "host":"http://integ.blueforest.org"},
+    {"path":"/api/facet", "host":"http://integ.blueforest.org"},
+    {"path":"/api/user", "host":"http://integ.blueforest.org"},
+    {"path":"/api/grandeur", "host":"http://integ.blueforest.org"},
+    {"path":"/api/import", "host":"http://integ.blueforest.org"},
+    {"path":"/api/categorie", "host":"http://integ.blueforest.org"},
+    {"path":"/api/tree", "host":"http://integ.blueforest.org"}
+  ],
+  "dev": [
+    {"path":"/api/correlation", "host":"http://localhost:8091"},
+    {"path":"/api/damage", "host":"http://localhost:8090"},
+    {"path":"/api/film", "host":"http://localhost:8089"},
+    {"path":"/api/impact", "host":"http://localhost:8088"},
+    {"path":"/api/message", "host":"http://localhost:8087"},
+    {"path":"/api/facet", "host":"http://localhost:8086"},
+    {"path":"/api/user", "host":"http://localhost:8084"},
+    {"path":"/api/grandeur", "host":"http://localhost:8083"},
+    {"path":"/api/import", "host":"http://localhost:8082"},
+    {"path":"/api/categorie", "host":"http://localhost:8081"},
+    {"path":"/api/tree", "host":"http://localhost:8080"}
+  ]
+}
