@@ -1,5 +1,14 @@
 import {map, bqtGToQtUnit, bestQuantity, unitCoef, changeUnit, grandeur, baseQt} from "unit-manip"
 
+export const remove = (source, filter) => {
+    const dest = []
+    for (let i = 0; i < source.length; i++) {
+        if (!filter(source[i])) {
+            dest.push(source[i])
+        }
+    }
+    return dest
+}
 export const isNil = v => v === null || v === undefined
 export const createStringObjectId = () => (new Date().getTime() / 1000 | 0).toString(16) + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, () => (Math.random() * 16 | 0).toString(16)).toLowerCase()
 

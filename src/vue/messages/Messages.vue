@@ -37,11 +37,7 @@
                         </v-flex>
                     </template>
                 </template>
-                <infinite-loading ref="iloading" @infinite="moreMessages" v-if="messages.hasMore" spinner="spiral" :distance="500" style="padding-bottom: 3em">
-                    <span slot="no-more"></span>
-                    <span slot="no-results"></span>
-                    <span slot="spinner"><loader/></span>
-                </infinite-loading>
+                <loader v-if="loading"/>
             </v-layout>
         </span>
 
@@ -49,7 +45,7 @@
         <span style="flex:0 1 auto">
             <v-divider/>
             <v-layout row v-if="user">
-                <v-textarea ref="editor" style="margin-top:0.5em" :error-messages="errorMessages" height="1em" auto-grow @keydown.ctrl.enter="trySendMessage" @keydown.esc.stop.native="cancelAny" v-model="message" :label="editorLabel" maxlength="1000" full-width></v-textarea>
+                <v-textarea ref="editor" :error-messages="errorMessages" auto-grow @keydown.ctrl.enter="trySendMessage" @keydown.esc.stop.native="cancelAny" v-model="message" :label="editorLabel" maxlength="1000" full-width></v-textarea>
                 <v-layout column ma-1 justify-center>
                     <v-icon color="primary" @click="trySendMessage">send</v-icon>
                     <v-icon v-if="editMsg || respondMsg" color="grey" large @click="cancelAny">close</v-icon>
@@ -64,20 +60,19 @@
     import {mapActions, mapState} from "vuex"
     import On from "../../const/on"
     import {createStringObjectId, deltaTime} from "../../services/calculations"
-    import InfiniteLoading from 'vue-infinite-loading'
-    import debounce from 'lodash.debounce'
     import Loader from "../loader/Loader"
 
     export default {
         name: "messages",
-        components: {Loader, InfiniteLoading},
+        components: {Loader},
         data() {
             return {
                 message: null,
                 errorMessages: [],
                 editMsg: null,
                 editRep: null,
-                respondMsg: null
+                respondMsg: null,
+                loading: false
             }
         },
         computed: {
@@ -92,6 +87,9 @@
                 }
             }
         },
+        mounted() {
+            this.moreMessages()
+        },
         methods: {
             deltaTime,
             ...mapActions({
@@ -104,23 +102,15 @@
                 dispatchDeleteReply: On.DELETE_REPLY,
                 checkAuth: On.CHECK_AUTH
             }),
-            moreMessages: debounce(function ($state) {
+            moreMessages: function () {
+                this.loading = true
                 if (this.messages.list.length > 0) {//on place aid si on a déjà chargé des messages, pour la pagination.
                     this.messages.filter.aid = this.messages.list[this.messages.list.length - 1]._id
                 } else {
                     this.messages.filter.aid = null
                 }
                 this.loadMessages(this.messages.filter)
-                    .then(() => $state && (this.messages.hasMore ? $state.loaded() : $state.complete()))
-                    // .then(() => !this.messages.hasMore && this.poll($state))
-            }, 400),
-            poll($state) {
-                if (this.nav.rightMenuVisible) {
-                    setTimeout(() => {
-                        $state.reset()
-                        this.messages.hasMore = true
-                    }, 10000)
-                }
+                    .then(() => this.loading = false)
             },
             cancelAny() {
                 this.message = this.editMsg = this.respondMsg = null

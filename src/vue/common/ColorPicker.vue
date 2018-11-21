@@ -8,7 +8,6 @@
             <v-btn slot="activator" x-large fab :style="{backgroundColor:color}">
                 <v-icon :color="arrowColor">edit</v-icon>
             </v-btn>
-            <swatches v-model="color" inline colors="text-advanced" popover-to="left"/>
         </v-menu>
     </v-layout>
 </template>
@@ -16,7 +15,6 @@
 <script>
     import {getRandomColor, overcolor} from "../../services/calculations"
     import {isColor, required} from "../../services/rules"
-    import Swatches from 'vue-swatches'
 
     export default {
         name: 'color-picker',
@@ -25,9 +23,6 @@
             return {
                 c: null
             }
-        },
-        components: {
-            Swatches
         },
         mounted() {
             this.emitColorChange()

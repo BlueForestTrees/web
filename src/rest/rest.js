@@ -2,8 +2,8 @@ import Vue from 'vue'
 import VueRessource from 'vue-resource'
 import root from 'window-or-global'
 import {X_ACCESS_TOKEN, X_CORRELATION_ID} from "../const/headers"
-import isNil from 'lodash.isnil'
 import state from '../store/state'
+import {isNil} from '../services/calculations'
 
 Vue.use(VueRessource)
 

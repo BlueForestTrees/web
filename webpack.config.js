@@ -10,6 +10,8 @@ var NODE_ENV = process.env.NODE_ENV
 
 console.log("NODE_ENV === ", NODE_ENV)
 
+process.traceDeprecation = true
+
 var conf = {
     mode: NODE_ENV,
     entry: './src/index.js',
@@ -93,7 +95,13 @@ if (conf.mode === "production") {
 }
 
 function other() {
-    conf.plugins.push(new Visualizer({filename: '../statistics.html'}))
+    if(process.env.STATS) {
+        const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+        conf.plugins.push(new BundleAnalyzerPlugin({analyzerMode: "static", reportFilename: "../report.html", openAnalyzer: false}))
+        conf.plugins.push(new Visualizer({filename: '../statistics.html'}))
+    }else{
+        console.log("no STATS flag, no stats")
+    }
     conf.plugins.push(new CopyWebpackPlugin([
         {from: 'nginx/mime.types', to: '../nginx'},
         {from: 'nginx/nginx.conf', to: '../nginx'}

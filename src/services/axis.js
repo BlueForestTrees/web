@@ -1,8 +1,6 @@
-import find from 'lodash.find'
-import isNil from 'lodash.isnil'
 import {map} from 'unit-manip'
-import remove from 'lodash.remove'
-import {format, quantity, name as _name, applyAxisCoef} from "./calculations"
+import {quantity, name as _name, isNil, remove} from "./calculations"
+import {find} from 'unit-manip'
 import Vue from 'vue'
 
 /**
