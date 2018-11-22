@@ -1,9 +1,9 @@
 <template>
     <div class="scene">
         <div :class="cardClass">
-            <div class="card__face card__face--front">
+            <v-layout column justify-center class="card__face card__face--front">
                 <slot name="front"></slot>
-            </div>
+            </v-layout>
             <div class="card__face card__face--back">
                 <slot name="back"></slot>
             </div>

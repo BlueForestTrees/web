@@ -5,12 +5,12 @@
             <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]" @keyup.enter="validate" class="chars-width-8" label="Unité"></unit-select>
         </v-layout>
         <v-layout row align-center>
-            <v-text-field :disabled="!isRegulier" type="number" v-model="qtDuree" :rules="isRegulier ? [required, isNumber] : []" @keyup.enter="validate" class="chars-width-3" label="Tou(te)s les:"></v-text-field>
-            <unit-select :disabled="!isRegulier" v-model="unitDuree" :grandeur="dureeGrandeur" :rules="isRegulier ? [required] : []" @keyup.enter="validate" class="chars-width-8"></unit-select>
+            <v-text-field :disabled="!isRegulier" type="number" v-model="qtFreq" :rules="isRegulier ? [required, isNumber] : []" @keyup.enter="validate" class="chars-width-3" label="Tou(te)s les:"></v-text-field>
+            <unit-select :disabled="!isRegulier" v-model="unitFreq" :grandeur="dureeGrandeur" :rules="isRegulier ? [required] : []" @keyup.enter="validate" class="chars-width-8"></unit-select>
         </v-layout>
         <v-layout row align-center>
-            <v-text-field :disabled="!isRegulier" type="number" v-model="qtDureeTotal" :rules="isRegulier ? [required, isNumber] : []" @keyup.enter="validate" class="chars-width-3" label="Pendant:"></v-text-field>
-            <unit-select :disabled="!isRegulier" v-model="unitDureeTotal" :grandeur="dureeGrandeur" :rules="isRegulier ? [required] : []" @keyup.enter="validate" class="chars-width-8"></unit-select>
+            <v-text-field :disabled="!isRegulier" type="number" v-model="qtDuree" :rules="isRegulier ? [required, isNumber] : []" @keyup.enter="validate" class="chars-width-3" label="Pendant:"></v-text-field>
+            <unit-select :disabled="!isRegulier" v-model="unitDuree" :grandeur="dureeGrandeur" :rules="isRegulier ? [required] : []" @keyup.enter="validate" class="chars-width-8"></unit-select>
         </v-layout>
         <v-layout row justify-center>
             <v-checkbox v-model="isRegulier" label="répété"></v-checkbox>
@@ -43,10 +43,10 @@
             return {
                 qt: null,
                 unit: null,
+                qtFreq: 1,
+                unitFreq: unit("mois"),
                 qtDuree: 1,
-                unitDuree: unit("mois"),
-                qtDureeTotal: 1,
-                unitDureeTotal: unit("an"),
+                unitDuree: unit("an"),
                 valid: null,
                 Dial,
                 grandeur: null,
@@ -57,21 +57,19 @@
         },
         methods: {
             validate() {
+
                 this.$refs.form.validate()
                 if (this.valid) {
-                    const change = {tree: this.tree}
+                    const tree = this.tree
                     const quantity = toBqtG({qt: this.qt, unit: this.unit.shortname})
-                    if (this.isRegulier) {
-                        change.selection = {
-                            quantity,
-                            freq: this.qtDuree * this.unitDuree.coef,
-                            duree: this.qtDureeTotal * this.unitDureeTotal.coef,
-                            name: this.name
-                        }
+                    if (!this.isRegulier) {
+                        this.$emit("changeQuantity", {tree, quantity})
                     } else {
-                        change.quantity = quantity
+                        const freq = toBqtG({qt: this.qtFreq, unit: this.unitFreq.shortname})
+                        const duree = toBqtG({qt: this.qtDuree, unit: this.unitDuree.shortname})
+                        const name = this.name
+                        this.$emit("changeSelection", {tree, selection: {quantity, freq, duree, name}})
                     }
-                    this.$emit("change", change)
                     this.close()
                 }
             },
@@ -81,14 +79,26 @@
             required, isNumber
         },
         mounted() {
-            if (!this.tree.selection) {
+            if (this.tree.selection) {
+                let bqtG = this.tree.selection.quantity
+                const qtUnit = bestQuantity(bqtGToQtUnit(bqtG))
+                this.qt = qtUnit.qt
+                this.unit = unit(qtUnit.unit)
+                this.grandeur = getGrandeur(bqtG.g)
+
+                const qtUnitFreq = bestQuantity(bqtGToQtUnit(bqtG))
+                this.qtFreq = qtUnitFreq.qt
+                this.unitFreq = unit(qtUnitFreq.unit)
+
+                const qtUnitDuree = bestQuantity(bqtGToQtUnit(bqtG))
+                this.qtDuree = qtUnitDuree.qt
+                this.unitDuree = unit(qtUnitDuree.unit)
+            } else {
                 let bqtG = this.tree.trunk.quantity
                 const qtUnit = bestQuantity(bqtGToQtUnit(bqtG))
                 this.qt = qtUnit.qt
                 this.unit = unit(qtUnit.unit)
                 this.grandeur = getGrandeur(bqtG.g)
-            } else {
-
             }
         }
     }

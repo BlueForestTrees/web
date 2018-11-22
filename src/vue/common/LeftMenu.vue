@@ -159,10 +159,8 @@
             showChat(section) {
                 this.dispatchShowMessages(section)
             },
-            goto(routeName) {
-                this.$router.push({name: routeName})
-            },
             ...mapActions({
+                goto: On.GO_TO,
                 showDialog: On.SHOW_DIALOG,
                 dispatchDeleteTrunk: On.DELETE_TREE,
                 goImpactEntry: On.GO_IMPACT_ENTRY,

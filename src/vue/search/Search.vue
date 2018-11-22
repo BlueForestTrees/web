@@ -83,6 +83,7 @@
     import {mapActions, mapGetters, mapState} from "vuex"
     import SearchCat from "./SearchCat"
     import SearchText from "./SearchText"
+    import {GO} from "../../const/go"
 
     const SearchComp = () => import(/* webpackChunkName: "SearchComp" */ './SearchComp')
     const ImpactEntries = () => import(/* webpackChunkName: "ImpactEntries" */ '../impact/ImpactEntries')
@@ -90,9 +91,18 @@
 
     export default {
         name: "search",
+        data: () => ({
+            On, GO,
+            showCat: false,
+            showEnv: false,
+            showRes: false,
+            showFac: false,
+            type: null
+        }),
         components: {ImpactEntries, FacetEntries, SearchText, SearchCat, SearchComp},
         methods: {
             ...mapActions({
+                goto: On.GO_TO,
                 goTree: On.GO_TREE,
                 addToBasket: On.ADD_TO_BASKET,
                 compare: On.GO_COMPARE,
@@ -106,16 +116,6 @@
             catChange(cats) {
                 this.search.cats = cats
                 this.showCat = false
-            }
-        },
-        data: function () {
-            return {
-                On,
-                showCat: false,
-                showEnv: false,
-                showRes: false,
-                showFac: false,
-                type: null
             }
         },
         computed: {

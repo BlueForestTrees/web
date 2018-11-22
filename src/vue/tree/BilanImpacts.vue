@@ -20,7 +20,7 @@
             },
             section: function () {
                 return {
-                    title: `Les impacts sur l'environnement de ce produit ne sont pas fournis. Indiquez si souhaitez les connaitre.`,
+                    title: `Les informations de l'impact sur l'environnement manquent. Indiquez si souhaitez les connaitre!`,
                     filter: {
                         type: 'trunk-impact',
                         topicId: this.tree._id

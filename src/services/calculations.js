@@ -19,13 +19,13 @@ export const format = v => v < 10 ? Math.round(v * 100) / 100 : Math.round(v * 1
 export const treefyAll = items => map(items, treefy)
 export const treefy = trunk => ({_id: trunk._id, trunk})
 export const idQtFrom = item => ({_id: item._id, quantity: item.quantity})
-export const qtUnit = item => {
+export const qtUnit = (item, opts = {}) => {
     const bqtG = quantity(item)
     if (bqtG) {
         const qtUnit = bqtGToQtUnit(bqtG)
         if (qtUnit.qt && qtUnit.unit) {
             const best = bestQuantity(qtUnit)
-            return `${best.qt} ${grandeur(best.unit) !== "Nomb" ? best.unit : ''}`
+            return `${(best.qt === 1 && opts.hideOne) ? '' : best.qt} ${grandeur(best.unit) !== "Nomb" ? best.unit : ''}`
         } else {
             return `${isNil(qtUnit.qt) ? "?" : qtUnit.qt} ${qtUnit.unit || " ?"}`
         }
@@ -33,8 +33,18 @@ export const qtUnit = item => {
         return "??"
     }
 }
-export const quantity = item => item && ((item.trunk && item.trunk.quantity) || item.quantity || item)
-export const name = item => item && (item.name || item.trunk && item.trunk.name) || '?'
+export const quantity = item => item && (
+    (item.selection && item.selection.duree)
+    ||
+    (item.trunk && item.trunk.quantity)
+    ||
+    item.quantity
+    ||
+    item
+)
+
+export const name = item => item && (item.selection && item.selection.name) || (item.name || item.trunk && item.trunk.name) || '?'
+
 export const color = item => item.color || item.trunk.color
 export const removeUseless = name => name.replace(/\([^)]*\)/, "...")
 export const equiv = item => item.eq ? `(éq. ${item.eq})` : ""

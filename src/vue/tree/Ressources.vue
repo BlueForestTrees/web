@@ -80,7 +80,7 @@
             },
             section: function () {
                 return {
-                    title: `On ne sait pas encore ce qui entre dans la composition de ce produit. Indiquez que vous aimeriez le savoir.`,
+                    title: `Il n'y a pas d'informations sur les ressources.`,
                     filter: {
                         type: 'trunk-root',
                         topicId: this.tree._id

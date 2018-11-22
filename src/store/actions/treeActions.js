@@ -46,7 +46,6 @@ export default {
         } else {
             tree = {_id}
             tree.promises = {}
-            tree.promises.selection = Promise.resolve(null).then(selection => Vue.set(tree, "selection", selection) && selection)
             tree.promises.trunk = dispatch(On.LOAD_TRUNK, {_id, bqt}).then(trunk => Vue.set(tree, "trunk", trunk) && trunk)
             tree.promises.owner = tree.promises.trunk.then(trunk => dispatch(On.LOAD_USER, trunk.oid).then(owner => Vue.set(tree, "owner", owner)))
             tree.promises.roots = dispatch(On.LOAD_ROOTS, {_id, bqt}).then(roots => Vue.set(tree, "roots", roots))
@@ -100,16 +99,7 @@ export default {
             }
         }
     },
-    [On.CHANGE_QUANTITY]: ({dispatch}, {tree, quantity, selection}) => {
-        let coef = null
-        if (selection) {
-            coef = (selection.duree / selection.freq) * selection.quantity.bqt / tree.trunk.quantity.bqt
-        } else if (quantity) {
-            coef = quantity.bqt / tree.trunk.quantity.bqt
-        }
-
-        dispatch(On.CHANGE_COMPARE_QUANTITY, {tree, quantity})
-
+    [On.APPLY_QUANTITY_COEF]: ({dispatch}, {tree, coef}) => {
         applyRessourceCoef(coef, [tree])
         applyRessourceCoef(coef, tree.roots)
         applyRessourceCoef(coef, tree.tank)
@@ -121,5 +111,20 @@ export default {
         applyAspectCoef(coef, tree.impactsTank)
         applyAspectCoef(coef, tree.damagesTank)
 
+        // dispatch(On.CHANGE_COMPARE_QUANTITY, {tree, coef})
+    },
+
+    [On.CHANGE_QUANTITY]: ({dispatch}, {tree, quantity}) => {
+        let coef = quantity.bqt / tree.trunk.quantity.bqt
+        console.log(`CHANGE_QUANTITY x${coef} `, quantity)
+        Vue.set(tree, "selection", null)
+        dispatch(On.APPLY_QUANTITY_COEF, {tree, coef})
+    },
+
+    [On.CHANGE_SELECTION]: ({dispatch}, {tree, selection}) => {
+        let coef = (selection.duree.bqt / selection.freq.bqt) * selection.quantity.bqt / tree.trunk.quantity.bqt
+        console.log(`CHANGE_SELECTION x${coef} `, selection)
+        Vue.set(tree, "selection", selection)
+        dispatch(On.APPLY_QUANTITY_COEF, {tree, coef})
     }
 }

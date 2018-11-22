@@ -3,12 +3,13 @@
         <v-layout justify-center>
             <card3d v-if="trunk" :flipped="qtFlipped">
                 <span slot="front">
-                    <h1 class="display-2 align" @click.stop="flip">{{qtUnit(trunk)}}</h1>
-                    <h3 class="display-1 align font-weight-thin" v-html="name(trunk)"></h3>
+                    <h1 class="display-2 align" @click.stop="flip">{{qtUnit(tree)}}</h1>
+                    <h5 v-if="qtSelection" class="align font-weight-thin">{{qtUnit(qtSelection.quantity)}} / {{qtUnit(qtSelection.freq,{hideOne:true})}}</h5>
+                    <h3 class="display-1 align font-weight-thin">{{name(tree)}}</h3>
                 </span>
                 <v-card slot="back">
                     <v-container my-0 py-0>
-                        <quantity-selection :tree="tree" @close="flip" @change="changeQuantity"/>
+                        <quantity-selection :tree="tree" @close="flip" @changeQuantity="changeQuantity" @changeSelection="changeSelection"/>
                     </v-container>
                 </v-card>
             </card3d>
@@ -41,6 +42,7 @@
         methods: {
             ...mapActions({
                 changeQuantity: On.CHANGE_QUANTITY,
+                changeSelection: On.CHANGE_SELECTION,
                 unselect: On.UNSELECT
             }),
             flip() {
@@ -52,6 +54,9 @@
         computed: {
             trunk: function () {
                 return this.tree && this.tree.trunk
+            },
+            qtSelection: function () {
+                return this.tree && this.tree.selection
             }
         }
     }

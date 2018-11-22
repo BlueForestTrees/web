@@ -40,7 +40,7 @@ export default new VueRouter({
                 {name: GO.ROAD_MAP, path: 'roadmap', component: RoadMap},
                 {name: GO.DATA_EXPLAINED, path: 'explain/datas', component: DatasExplained},
                 {name: GO.CREATE_TREE, path: "tree/create", component: CreateTree},
-                {name: GO.TREE, path: "tree/:bqt/:_id", component: Tree, props: true},
+                {name: GO.TREE, path: "tree/:bqt/:_id", component: Tree, props: (route) => ({_id: route.params._id, bqt: Number(Number.parseFloat(route.params.bqt))})},
                 {name: GO.EQUIV, path: "equiv/:bqt/:_id/:sbqt/:s_id", component: Equivalence, props: true},
                 {name: GO.TREE_EMPTY, path: "tree", component: Tree},
                 {name: GO.ROOT, path: "root/:treeId/:rootId", component: Root, props: true},

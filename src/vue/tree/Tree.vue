@@ -7,31 +7,33 @@
                 <div>Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche</span> ou prenez
                     un produit du <span><v-icon @click="goBasket" color="primary">shopping_basket</v-icon> panier pour voir sa composition.</span>
                     <br>
-                    Vous pouvez aussi <span @click="goCreateTree" style="cursor:pointer"><v-icon class="icon-line"
-                                                                                                 color="primary">add</v-icon>Créer un produit ou un service</span>
-                    depuis le <span @click="switchLeftMenu" style="cursor:pointer"><v-icon class="icon-line"
-                                                                                           color="primary">menu</v-icon>menu de gauche.</span>
+                    Vous pouvez aussi <span @click="goCreateTree" style="cursor:pointer"><v-icon class="icon-line" color="primary">add</v-icon>Créer un produit ou un service</span>
+                    depuis le <span @click="switchLeftMenu" style="cursor:pointer"><v-icon class="icon-line" color="primary">menu</v-icon>menu de gauche.</span>
                 </div>
             </v-card-text>
         </v-layout>
 
-        <v-layout column v-else>
+        <div v-else>
 
             <v-card>
-                <tree-card :tree="tree" />
-                <select-attribute-bar @change="v => current = v"/>
+                <v-layout :column="$vuetify.breakpoint.smAndDown" align-center>
+                    <description :tree="tree"/>
+                    <v-layout column align-center>
+                        <tree-card :tree="tree"/>
+                        <v-select v-model="current" :items="['Environnement','Ressources','Propriétés']" class="not-too-half"/>
+                    </v-layout>
+                </v-layout>
             </v-card>
 
-            <ressources v-if="current === 'root'" :tree="tree" :selection="selection"/>
+            <ressources v-if="current === 'Ressources'" :tree="tree" :selection="selection"/>
             <card>
-                <description v-if="!current" :tree="tree"/>
-                <facets v-if="current === 'facet'" :tree="tree" :selection="selection"/>
-                <bilan-impacts v-if="current === 'impact'" :tree="tree" :selection="selection"/>
+                <facets v-if="current === 'Propriétés'" :tree="tree" :selection="selection"/>
+                <bilan-impacts v-if="current === 'Environnement'" :tree="tree" :selection="selection"/>
                 <branches v-if="current === 'branch'" :tree="tree"/>
             </card>
 
             <tree-fab :tree="tree"></tree-fab>
-        </v-layout>
+        </div>
 
 
     </v-flex>
@@ -43,7 +45,6 @@
     import TreeFab from "./TreeFab"
     import TreeCard from "./TreeCard"
     import Card from "../common/Card"
-    import SelectAttributeBar from "./SelectAttributeBar"
 
     const Description = () => import(/* webpackChunkName: "Description" */ "./Description")
     const Ressources = () => import(/* webpackChunkName: "Ressources" */ "./Ressources")
@@ -53,7 +54,6 @@
 
     export default {
         components: {
-            SelectAttributeBar,
             Card,
             TreeCard,
             Description,
@@ -66,7 +66,7 @@
         data() {
             return {
                 selection: [],
-                current: null
+                current: "Environnement"
             }
         },
         props: ['_id', 'bqt'],
@@ -89,6 +89,8 @@
                         .catch(e => {
                             this.snack({text: "Cet élement n'existe pas ou plus", color: "orange"})
                         })
+                } else {
+                    console.warn(`bad params. bqt:${this.bqt}, _id:${this._id}`)
                 }
             }
         },

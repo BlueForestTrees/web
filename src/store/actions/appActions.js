@@ -2,8 +2,12 @@ import On from "../../const/on"
 import Do from "../../const/do"
 import {X_CORRELATION_ID} from "../../const/headers"
 import api from "../../rest/api"
+import router from "../../router/router"
 
 export default {
+    [On.GO_TO]: ({}, route) => {
+        router.push({name: route})
+    },
     [On.MOUNT_APP]: async ({dispatch}) => {
         //await dispatch(On.INIT_CORRELATION_ID)
         dispatch(On.DARK_FROM_STORAGE)
