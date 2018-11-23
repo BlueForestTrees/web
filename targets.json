@@ -1,5 +1,6 @@
 {
   "prod": [
+    {"path":"/api/selection", "host": "https://blueforest.org"},
     {"path":"/api/correlation", "host": "https://blueforest.org"},
     {"path":"/api/damage", "host": "https://blueforest.org"},
     {"path":"/api/film", "host": "https://blueforest.org"},
@@ -13,6 +14,7 @@
     {"path":"/api/tree", "host": "https://blueforest.org"}
   ],
   "integ": [
+    {"path":"/api/selection", "host":"http://integ.blueforest.org"},
     {"path":"/api/correlation", "host":"http://integ.blueforest.org"},
     {"path":"/api/damage", "host":"http://integ.blueforest.org"},
     {"path":"/api/film", "host":"http://integ.blueforest.org"},
@@ -26,6 +28,7 @@
     {"path":"/api/tree", "host":"http://integ.blueforest.org"}
   ],
   "dev": [
+    {"path":"/api/selection", "host":"http://localhost:8092"},
     {"path":"/api/correlation", "host":"http://localhost:8091"},
     {"path":"/api/damage", "host":"http://localhost:8090"},
     {"path":"/api/film", "host":"http://localhost:8089"},

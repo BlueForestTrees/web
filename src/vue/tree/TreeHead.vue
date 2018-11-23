@@ -5,7 +5,7 @@
         <v-icon v-if="!noIcon && isSelected(tree)" x-large color="primary">check_circle</v-icon>
         <v-icon v-else-if="!noIcon" x-large :style="`color: ${color(tree)}`">panorama_fish_eye</v-icon>
 
-        <span class="subheading" v-html="qtUnitName(trunk)"></span>
+        <span class="subheading" v-html="qtUnitName(tree)"></span>
     </v-layout>
 </template>
 <script>

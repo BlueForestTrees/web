@@ -1,13 +1,16 @@
 <template>
     <v-container key="search" grid-list-md text-xs-center>
+
         <v-layout row justify-center mb-3 xs-6>
             <img src="/img/blue.svg" style="width:10%">
             <img src="/img/logo.svg" style="width:20%">
             <img src="/img/forest.svg" style="width:14%">
         </v-layout>
+
         <v-layout row wrap justify-center align-center mx-5 xs-4 mb-1>
             <search-text :value="search.name" @input="nameChange" class="not-too-large"/>
         </v-layout>
+
         <v-layout :column="$vuetify.breakpoint.xsOnly" align-center justify-center class="mb-3">
             <v-menu v-model="showCat" :close-on-content-click="false" max-width="500px" offset-y class="ml-3">
                 <div slot="activator" class="subheading">
@@ -18,11 +21,7 @@
                     </v-layout>
                 </div>
                 <v-card>
-
-
                     <search-cat @input="catChange" map="catSelection"/>
-
-
                 </v-card>
             </v-menu>
             <v-menu v-model="showEnv" offset-y class="ml-3">
@@ -100,6 +99,9 @@
             type: null
         }),
         components: {ImpactEntries, FacetEntries, SearchText, SearchCat, SearchComp},
+        created(){
+            console.log(this.term)
+        },
         methods: {
             ...mapActions({
                 goto: On.GO_TO,

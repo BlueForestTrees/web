@@ -35,6 +35,9 @@
                 GO
             }
         },
+        created(){
+            console.log(this.term)
+        },
         methods: {}
     }
 </script>
