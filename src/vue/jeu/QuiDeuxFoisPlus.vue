@@ -3,7 +3,7 @@
         <v-layout column wrap justify-center align-center class="ma-4">
             <h2 class="font-weight-thin">
                 <v-layout row align>
-                    <span>Trouver lequel a deux fois moins de...&nbsp;</span>
+                    <span>Quel est celui qui a deux fois <b>plus de</b>&nbsp;</span>
                     <b v-if="filter" class="font-weight-medium">{{ name(filter)}}</b>
                     <loader v-else/>
                     <span>?</span>
@@ -16,11 +16,11 @@
                 <v-card style="min-width: 320px" class="ma-3 pa-3">
                     <v-flex v-if="tree">
                         <v-layout column align-center>
-                            <v-flex>
+                            <v-flex @click="goTree(tree)">
                                 <photo :trunk="tree.trunk" size="200"/>
                             </v-flex>
                         </v-layout>
-                        <tree-card-front :tree="tree" miniPhoto></tree-card-front>
+                        <tree-card-front :tree="tree"></tree-card-front>
                         <v-layout column align-center>
                             <span v-if="filter">({{qtUnitName(filter)}})</span>
                         </v-layout>
@@ -31,11 +31,11 @@
                 <v-card style="min-width: 320px" class="ma-3 pa-3">
                     <v-flex v-if="other">
                         <v-layout column align-center>
-                            <v-flex>
+                            <v-flex @click="goTree(other)">
                                 <photo :trunk="other.trunk" size="200"/>
                             </v-flex>
                         </v-layout>
-                        <tree-card-front v-if="other" :tree="other" miniPhoto></tree-card-front>
+                        <tree-card-front v-if="other" :tree="other"></tree-card-front>
                         <v-layout column align-center>
                             <h3 v-if="state === 'answered' && filterRight">({{qtUnitName(filterRight)}})</h3>
                         </v-layout>
@@ -50,21 +50,36 @@
         </v-layout>
 
         <v-layout row justify-center align-center>
-            <span>Réponses:</span>
-            <template v-for="n in 10">
+            <span v-if="!finished">Réponses:</span>
+            <template v-for="n in nbReponses">
                 <v-icon x-large v-if="reponses[n-1] !== undefined" :color="reponses[n-1] ? 'green' : 'red'">check_circle</v-icon>
                 <v-icon v-else x-large>panorama_fish_eye</v-icon>
             </template>
         </v-layout>
 
         <v-layout row>
-            <v-btn v-if="state === 'playing'" block flat @click="refresh">je passe</v-btn>
+            <v-btn v-if="state === 'playing'" :disabled="abandonsChances === 0" block flat @click="passQuestion">
+                <span>passer cette question</span>
+                <template v-for="n in abandonsChances">
+                    <v-icon small>delete_outline</v-icon>
+                </template>
+            </v-btn>
         </v-layout>
 
-        <v-layout align-center justify-center v-if="state === 'answered' && lastWasGood !== undefined">
+        <v-layout align-center justify-center v-if="!finished && state === 'answered' && lastWasGood !== undefined">
             <h1 v-if="lastWasGood" class="font-weight-medium">Bravo!!</h1>
             <h1 v-else class="font-weight-thin">Dommage!!!</h1>
             <v-btn color="primary" @click="refresh">suivant</v-btn>
+        </v-layout>
+
+        <v-layout v-if="finished" align-center justify-center column>
+            <h1 class="font-weight-thin">score final: {{bonnesReponses}}/{{nbReponses}}</h1>
+            <h1 v-if="bonnesReponses === nbReponses" class="font-weight-thin">Score parfait! <b>Félicitations!!</b> Vous remportez la médaille "initié au {{name(filter)}}" BlueForest :)</h1>
+            <h1 v-else-if="bonnesReponses / nbReponses> 0.7" class="font-weight-thin">Vraiment bon! <b>Bravo!!</b></h1>
+            <h1 v-else-if="bonnesReponses / nbReponses > 0.5" class="font-weight-thin">De bonnes connaissances! <b>Poursuivez!!</b></h1>
+            <h1 v-else-if="bonnesReponses / nbReponses > 0.3" class="font-weight-thin">Oups! <b>Réessayons.</b></h1>
+            <h1 v-else class="font-weight-thin">Le but du jeu était de trouver là où il y avait plus de sucre :(</h1>
+            <v-btn @click="replay">rejouer</v-btn>
         </v-layout>
     </v-flex>
 </template>
@@ -86,6 +101,7 @@
         components: {Photo, Card, TreeCardFront, TreeCard, SelectableList, TreeHead, Loader},
         data() {
             return {
+                nbReponses: 5,
                 tree: null,
                 type: null,
                 filter: null,
@@ -93,8 +109,9 @@
                 plus: null,
                 equivalences: [],
                 reponses: [],
-                abandons: [],
+                abandonsChances: 2,
                 state: 'playing',
+                plusADroite: null
             }
         },
         props: ['_id', 'bqt', 'sbqt', 's_id'],
@@ -104,6 +121,16 @@
             }
         },
         computed: {
+            bonnesReponses() {
+                let res = 0
+                for (let i = 0; i < this.reponses.length; i++) {
+                    if (this.reponses[i]) res++
+                }
+                return res
+            },
+            finished() {
+                return this.reponses.length >= this.nbReponses
+            },
             other() {
                 return this.equivalences && this.equivalences[0]
             },
@@ -136,15 +163,26 @@
                 showDialog: On.SHOW_DIALOG
             }),
             playLeft() {
-                this.reponses.push(this.plusADroite)
+                this.reponses.push(!this.plusADroite)
                 this.state = 'answered'
             },
             playRight() {
-                this.reponses.push(!this.plusADroite)
+                this.reponses.push(this.plusADroite)
                 this.state = 'answered'
             },
             addToBasket: function (selection) {
                 this.dispatchAddToBasket(map(selection, e => ({_id: e._id, trunk: e})))
+            },
+            passQuestion() {
+                this.abandonsChances--
+                this.refresh()
+            },
+            replay() {
+                this.reponses = []
+                this.state = 'playing'
+                this.plusADroite = null
+                this.abandonsChances = 2
+                this.refresh()
             },
             refresh: async function () {
                 this.state = 'refreshing'

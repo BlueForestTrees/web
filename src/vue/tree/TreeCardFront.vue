@@ -13,7 +13,6 @@
         name: "tree-card-front",
         props: {
             tree: Object,
-            miniPhoto: {type: Boolean, default: false}
         },
         methods: {
             qtUnit, name
