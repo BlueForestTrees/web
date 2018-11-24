@@ -1,13 +1,5 @@
 <template>
     <v-flex key="equiv">
-        <v-layout column wrap justify-center align-center class="ma-4">
-            <h2 class="font-weight-thin">
-                <v-layout row align v-if="filter">
-                    <span>Quel est celui qui a deux fois <b>plus de {{ name(filter)}}</b>?</span>
-                </v-layout>
-                <loader v-else/>
-            </h2>
-        </v-layout>
 
         <v-layout column align-center>
             <v-layout :column="$vuetify.breakpoint.xsOnly">
@@ -45,6 +37,15 @@
                     <v-btn :disabled="state !== 'playing'" block color="primary" @click="playRight">moi</v-btn>
                 </v-card>
             </v-layout>
+        </v-layout>
+
+        <v-layout column wrap justify-center align-center class="ma-4">
+            <h2 class="font-weight-thin">
+                <v-layout row align v-if="filter">
+                    <span>Quel est celui qui a deux fois <b>plus de {{ name(filter)}}</b>?</span>
+                </v-layout>
+                <loader v-else/>
+            </h2>
         </v-layout>
 
         <v-layout row justify-center align-center>

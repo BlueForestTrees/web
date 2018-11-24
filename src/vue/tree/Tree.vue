@@ -66,7 +66,7 @@
         data() {
             return {
                 selection: [],
-                current: "Environnement"
+                current: "Propriétés"
             }
         },
         props: ['_id', 'bqt'],
@@ -86,6 +86,16 @@
             refresh: function () {
                 if (this.bqt && this._id) {
                     this.dispatchLoad({bqt: this.bqt, _id: this._id})
+                        .then(async tree=>{
+                            await tree.promises.all
+                            if(tree.tank.length > 0){
+                                this.current = "Ressources"
+                            }else if(tree.impacts.length > 0){
+                                this.current = "Environnement"
+                            }else if(tree.facets.length > 0){
+                                this.current = "Propriétés"
+                            }
+                        })
                         .catch(e => {
                             this.snack({text: "Cet élement n'existe pas ou plus", color: "orange"})
                         })
