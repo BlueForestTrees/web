@@ -16,6 +16,10 @@ export default {
         dispatch(On.UNSELECT)
         return router.push({name: GO.EQUIV, params: {_id, bqt, sbqt, s_id}})
     },
+    [On.GO_QUI_DEUX_FOIS_PLUS]: ({dispatch}, {_id, bqt, sbqt, s_id}) => {
+        dispatch(On.UNSELECT)
+        return router.push({name: GO.QUI_2, params: {_id, bqt, sbqt, s_id}})
+    },
     [On.SEARCH_EQUIV]: ({dispatch}, {_id, bqt, type, results}) => {
         results.splice(0)
         if (type === "facet") {

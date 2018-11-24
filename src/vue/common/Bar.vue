@@ -15,7 +15,7 @@
         <span slot="extension" v-if="$vuetify.breakpoint.xsOnly">
             <v-btn v-if="$route.name !== GO.BASKET && selectionCount" flat dense @click="addSelectionToBasket">
                 <v-icon x-large>select_all</v-icon>
-                <span>Sélectionner</span>
+                <span>Mettre de côté</span>
             </v-btn>
              <v-tooltip v-if="$route.name === GO.BASKET" bottom>
                 <v-btn slot="activator" v-if="anySelected" flat @click="removeSelectionFromBasket">
@@ -30,8 +30,8 @@
         <v-layout row align-center>
 
             <v-btn v-if="oneSelected && selectionIsTree" flat @click="goTree(oneSelected)">
-                <v-icon x-large>crop_square</v-icon>
-                <span>détails</span>
+                <v-icon x-large>open_in_new</v-icon>
+                <span>Consulter</span>
             </v-btn>
 
             <v-tooltip bottom v-if="twoSelected && selectionIsTree">
@@ -59,24 +59,21 @@
 
             <v-btn v-if="$vuetify.breakpoint.smAndUp && $route.name !== GO.BASKET && selectionCount" flat dense @click="addSelectionToBasket">
                 <v-icon x-large>select_all</v-icon>
-                <span>Sélectionner</span>
+                <span>Mettre de côté</span>
             </v-btn>
 
+            <v-btn v-if="$route.name === GO.TREE && oneSelected" flat dense @click="goEquiv(oneSelected)">Equivalence
+                <v-icon x-large>arrow_right_alt</v-icon>
+                <v-icon x-large>search</v-icon>
+            </v-btn>
 
-            <v-tooltip v-if="$route.name === GO.TREE && oneSelected" bottom>
-                <v-btn slot="activator" flat dense @click="goEquiv(oneSelected)">Equivalence
-                    <v-icon x-large>arrow_right_alt</v-icon>
-                    <v-icon x-large>search</v-icon>
-                </v-btn>
-                <span style="pointer-events: none">Trouver des équivalences</span>
-            </v-tooltip>
+            <v-btn v-if="$route.name === GO.TREE && oneSelected" flat dense @click="goQuiDeuxFoisPlus(oneSelected)">Jouer
+                <v-icon x-large>games</v-icon>
+            </v-btn>
 
-            <v-tooltip v-if="$route.name === GO.IMPACT_ENTRY && oneSelected" bottom>
-                <v-btn slot="activator" flat dense @click="nav.detailsDialog = true">Détails
-                    <v-icon>aspect_ratio</v-icon>
-                </v-btn>
-                <span style="pointer-events: none">Détails</span>
-            </v-tooltip>
+            <v-btn slot="activator" v-if="$route.name === GO.IMPACT_ENTRY && oneSelected" flat dense @click="nav.detailsDialog = true">Consulter
+                <v-icon>receipt</v-icon>
+            </v-btn>
 
             <v-spacer/>
             <v-tooltip bottom>
@@ -136,11 +133,20 @@
                 goHome: On.GO_HOME,
                 addSelectionToBasket: On.ADD_SELECTION_TO_BASKET,
                 goCompare: On.GO_COMPARE,
-                showDialog: On.SHOW_DIALOG
+                showDialog: On.SHOW_DIALOG,
+                dispatchGoEquiv: On.GO_EQUIV,
+                dispatchGoQuiDeuxFoisPlus: On.GO_QUI_DEUX_FOIS_PLUS
             }),
-            ...mapActions({dispatchGoEquiv: On.GO_EQUIV}),
             goEquiv(e) {
                 this.dispatchGoEquiv({
+                    _id: this.tree._id,
+                    bqt: this.tree.trunk.quantity.bqt,
+                    s_id: e._id,
+                    sbqt: e.trunk ? e.trunk.quantity.bqt : e.quantity.bqt
+                })
+            },
+            goQuiDeuxFoisPlus(e) {
+                this.dispatchGoQuiDeuxFoisPlus({
                     _id: this.tree._id,
                     bqt: this.tree.trunk.quantity.bqt,
                     s_id: e._id,

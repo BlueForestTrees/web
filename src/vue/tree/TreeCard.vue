@@ -2,10 +2,8 @@
     <span @click="selectable && !qtFlipped && toggleSelect(tree)" :style="{background: isSelected(tree) ? '#D8E9F5' : '', height:'100%'}">
         <v-layout justify-center>
             <card3d v-if="trunk" :flipped="qtFlipped">
-                <span slot="front">
-                    <h1 class="display-2 align" @click.stop="flip">{{qtUnit(tree)}}</h1>
-                    <h5 v-if="qtSelection" class="align font-weight-thin">{{qtUnit(qtSelection.quantity)}} / {{qtUnit(qtSelection.freq,{hideOne:true})}}</h5>
-                    <h3 class="display-1 align font-weight-thin">{{name(tree)}}</h3>
+                <span slot="front" @click.stop="flip">
+                    <tree-card-front :tree="tree"/>
                 </span>
                 <v-card slot="back">
                     <v-container my-0 py-0>
@@ -24,10 +22,13 @@
     import Card3d from "../common/Card3d"
     import QuantitySelection from "./QuantitySelection"
     import On from "../../const/on"
+    import TreeCardFront from "./TreeCardFront"
+    const Photo = () => import(/* webpackChunkName: "Photo" */ "../common/Photo")
+
 
     export default {
         name: "tree-card",
-        components: {QuantitySelection, Card3d},
+        components: {Photo, TreeCardFront, QuantitySelection, Card3d},
         mixins: [selectable],
         props: {
             tree: Object,
@@ -54,9 +55,6 @@
         computed: {
             trunk: function () {
                 return this.tree && this.tree.trunk
-            },
-            qtSelection: function () {
-                return this.tree && this.tree.selection
             }
         }
     }

@@ -25,39 +25,3 @@
         }
     }
 </script>
-
-<style>
-    .scene {
-        width:400px;
-        height:280px;
-        perspective: 600px;
-    }
-
-    .card {
-        width: 100%;
-        height: 100%;
-        transition: transform 0.3s;
-        transform-style: preserve-3d;
-        cursor: pointer;
-        position: relative;
-    }
-
-    .card.flipped {
-        transform: rotateY(180deg);
-    }
-
-    .card__face {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        backface-visibility: hidden;
-    }
-
-    .card__face--front {
-    }
-
-    .card__face--back {
-        transform: rotateY(180deg);
-    }
-
-</style>

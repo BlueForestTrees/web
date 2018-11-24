@@ -35,6 +35,7 @@ export default {
     GO_FACET_ENTRY: 'goFacetEntry',
     GO_CREATE_TREE: "goCreateTree",
     GO_EQUIV: "goEquiv",
+    GO_QUI_DEUX_FOIS_PLUS: "goQui2",
     GO_HOME: 'goHome',
     GO_TREE: 'goTree',
     GO_ROOT: 'goRoot',

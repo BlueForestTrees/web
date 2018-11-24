@@ -15,6 +15,7 @@ export const GO = {
     TREE_EMPTY: 'emptyTree',
     TREE: 'tree',
     EQUIV: 'equiv',
+    QUI_2: 'qui2',
     CREATE_TREE: 'createTree',
     ROOT: 'root',
     TEAM: 'team',
