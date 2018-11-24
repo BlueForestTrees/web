@@ -2,17 +2,15 @@
     <v-flex key="equiv">
         <v-layout column wrap justify-center align-center class="ma-4">
             <h2 class="font-weight-thin">
-                <v-layout row align>
-                    <span>Quel est celui qui a deux fois <b>plus de</b>&nbsp;</span>
-                    <b v-if="filter" class="font-weight-medium">{{ name(filter)}}</b>
-                    <loader v-else/>
-                    <span>?</span>
+                <v-layout row align v-if="filter">
+                    <span>Quel est celui qui a deux fois <b>plus de {{ name(filter)}}</b>?</span>
                 </v-layout>
+                <loader v-else/>
             </h2>
         </v-layout>
 
         <v-layout column align-center>
-            <v-layout row>
+            <v-layout :column="$vuetify.breakpoint.xsOnly">
                 <v-card style="min-width: 320px" class="ma-3 pa-3">
                     <v-flex v-if="tree">
                         <v-layout column align-center>
@@ -26,7 +24,7 @@
                         </v-layout>
                     </v-flex>
                     <loader v-else/>
-                    <v-btn v-if="other && state === 'playing'" block color="primary" @click="playLeft">moi</v-btn>
+                    <v-btn :disabled="state !== 'playing'" block color="primary" @click="playLeft">moi</v-btn>
                 </v-card>
                 <v-card style="min-width: 320px" class="ma-3 pa-3">
                     <v-flex v-if="other">
@@ -44,7 +42,7 @@
                         <v-spacer></v-spacer>
                         <loader></loader>
                     </v-layout>
-                    <v-btn v-if="other && state === 'playing'" block color="primary" @click="playRight">moi</v-btn>
+                    <v-btn :disabled="state !== 'playing'" block color="primary" @click="playRight">moi</v-btn>
                 </v-card>
             </v-layout>
         </v-layout>
@@ -57,16 +55,13 @@
             </template>
         </v-layout>
 
-        <v-layout row>
-            <v-btn v-if="state === 'playing'" :disabled="abandonsChances === 0" block flat @click="passQuestion">
+        <v-layout row mt-5>
+            <v-btn v-if="state === 'playing'"  block flat @click="passQuestion">
                 <span>passer cette question</span>
-                <template v-for="n in abandonsChances">
-                    <v-icon small>delete_outline</v-icon>
-                </template>
             </v-btn>
         </v-layout>
 
-        <v-layout align-center justify-center v-if="!finished && state === 'answered' && lastWasGood !== undefined">
+        <v-layout align-center justify-center v-if="!finished && state === 'answered' && lastWasGood !== undefined" mb-5>
             <h1 v-if="lastWasGood" class="font-weight-medium">Bravo!!</h1>
             <h1 v-else class="font-weight-thin">Dommage!!!</h1>
             <v-btn color="primary" @click="refresh">suivant</v-btn>
