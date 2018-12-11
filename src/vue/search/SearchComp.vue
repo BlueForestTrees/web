@@ -1,8 +1,8 @@
 <template>
-    <v-flex>
+    <v-flex v-if="active">
         <v-list two-lines>
-            <template v-for="item in items" >
-                <v-list-tile :key="item._id" avatar @click="$emit('select',item)">
+            <template v-for="item in items">
+                <v-list-tile :key="item._id" avatar @click="select(item)">
                     <v-list-tile-content>
                         <v-list-tile-title>{{ name(item) }}</v-list-tile-title>
                         <v-list-tile-sub-title>quantité: {{ qtUnit(item) }}</v-list-tile-sub-title>
@@ -11,7 +11,7 @@
                 <v-divider/>
             </template>
         </v-list>
-        <infinite-loading v-if="active" ref="iloading" @infinite="loadResults" spinner="spiral" :distance="500" style="padding-bottom: 3em">
+        <infinite-loading v-if="active" ref="iloading" @infinite="loadResults" :distance="500" style="padding-bottom: 3em">
             <span slot="no-more">{{items.length}} résultats</span>
             <span slot="no-results"><slot name="no-results">Pas de résultats. <a>Enregistrer la recherche pour que d'autres y répondent.</a><v-icon color="orange" small>new_releases</v-icon></slot></span>
             <span slot="spinner"><loader/></span>
@@ -66,6 +66,9 @@
         },
         methods: {
             name, qtUnit,
+            select(item){
+                this.$emit('select',item)
+            },
             dispatchSearch: function (query) {
                 return this.$store.dispatch(this.type, query)
             },
@@ -74,7 +77,7 @@
                 this.items = []
                 if (this.active) {
                     this.$nextTick(() => {
-                        this.$refs.iloading.$emit('$InfiniteLoading:reset')
+                        this.$refs.iloading && this.$refs.iloading.$emit('$InfiniteLoading:reset')
                     })
                 }
             },
