@@ -72,7 +72,9 @@
             </v-menu>
         </v-layout>
 
-        <search-comp :filter="filter"/>
+        <v-card>
+            <search-comp :filter="filter" @select="goTree"/>
+        </v-card>
 
     </v-container>
 </template>
@@ -99,9 +101,6 @@
             type: null
         }),
         components: {ImpactEntries, FacetEntries, SearchText, SearchCat, SearchComp},
-        created(){
-            console.log(this.term)
-        },
         methods: {
             ...mapActions({
                 goto: On.GO_TO,

@@ -33,12 +33,7 @@ export default new VueRouter({
         {
             path: "/", component: BlueForest,
             children: [
-                {
-                    name: GO.SEARCH, path: "", component: Search, props: (route) => {
-                        console.log(route.query.q)
-                        return {term: route.query.q}
-                    }
-                },
+                {name: GO.SEARCH, path: "", component: Search},
                 {name: GO.PLAN_INTRO, path: "/plan/intro", component: BFCestQuoi},
                 {name: GO.PLAN, path: "/plan", component: Plan},
                 {name: GO.TEAM, path: "/equipe", component: MyTeam},

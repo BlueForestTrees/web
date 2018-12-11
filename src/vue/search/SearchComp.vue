@@ -1,6 +1,16 @@
 <template>
     <v-flex>
-        <selectable-list :items="items"><span slot="no-items"></span></selectable-list>
+        <v-list two-lines>
+            <template v-for="item in items" >
+                <v-list-tile :key="item._id" avatar @click="$emit('select',item)">
+                    <v-list-tile-content>
+                        <v-list-tile-title>{{ name(item) }}</v-list-tile-title>
+                        <v-list-tile-sub-title>quantité: {{ qtUnit(item) }}</v-list-tile-sub-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+                <v-divider/>
+            </template>
+        </v-list>
         <infinite-loading v-if="active" ref="iloading" @infinite="loadResults" spinner="spiral" :distance="500" style="padding-bottom: 3em">
             <span slot="no-more">{{items.length}} résultats</span>
             <span slot="no-results"><slot name="no-results">Pas de résultats. <a>Enregistrer la recherche pour que d'autres y répondent.</a><v-icon color="orange" small>new_releases</v-icon></slot></span>
@@ -16,6 +26,7 @@
     import debounce from 'lodash.debounce'
     import Loader from "../loader/Loader"
     import SelectableList from "../common/SelectableList"
+    import {name, qtUnit} from "../../services/calculations"
 
     export default {
         name: 'search-comp',
@@ -54,6 +65,7 @@
             this.reset()
         },
         methods: {
+            name, qtUnit,
             dispatchSearch: function (query) {
                 return this.$store.dispatch(this.type, query)
             },
