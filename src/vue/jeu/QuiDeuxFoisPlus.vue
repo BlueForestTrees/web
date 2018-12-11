@@ -57,7 +57,7 @@
         </v-layout>
 
         <v-layout row mt-5>
-            <v-btn v-if="state === 'playing'"  block flat @click="passQuestion">
+            <v-btn v-if="state === 'playing'" block flat @click="passQuestion">
                 <span>passer cette question</span>
             </v-btn>
         </v-layout>
@@ -74,7 +74,7 @@
             <h1 v-else-if="bonnesReponses / nbReponses> 0.7" class="font-weight-thin">Vraiment bon! <b>Bravo!!</b></h1>
             <h1 v-else-if="bonnesReponses / nbReponses > 0.5" class="font-weight-thin">De bonnes connaissances! <b>Poursuivez!!</b></h1>
             <h1 v-else-if="bonnesReponses / nbReponses > 0.3" class="font-weight-thin">Oups! <b>Réessayons.</b></h1>
-            <h1 v-else class="font-weight-thin">Le but du jeu était de trouver là où il y avait plus de sucre :(</h1>
+            <h1 v-else class="font-weight-thin">Le but du jeu était de trouver là où il y avait plus de {{name(filter)}} :(</h1>
             <v-btn @click="replay">rejouer</v-btn>
         </v-layout>
     </v-flex>

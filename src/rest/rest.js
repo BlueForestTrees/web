@@ -18,7 +18,7 @@ Vue.http.options.root = root.location ? root.location.origin : 'tests/'
 export const arrayOf = (param, values) => {
     const arr = []
     for (let i = 0; i < values.length; i++) {
-        arr.push(`${param}=${values[i]}`)
+        arr.push(`${param}=${encodeURIComponent(values[i])}`)
     }
     return arr.join("&")
 }
@@ -29,7 +29,7 @@ export const paramsOf = params => {
     for (let i = 0; i < keys.length; i++) {
         const rawValue = params[keys[i]]
         if (!isNil(rawValue)) {
-            arr.push(Array.isArray(rawValue) ? arrayOf(keys[i], rawValue) : `${keys[i]}=${rawValue}`)
+            arr.push(Array.isArray(rawValue) ? arrayOf(keys[i], rawValue) : `${keys[i]}=${encodeURIComponent(rawValue)}`)
         }
     }
     return arr.length > 0 ? "?" + arr.join("&") : ""
