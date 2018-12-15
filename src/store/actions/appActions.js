@@ -34,7 +34,7 @@ export default {
         }else{
             console.log("x-request-id is", xRequestId)
         }
-        state.correlationId = xRequestId
+        state.xRequestId = xRequestId
     }
 
 }
