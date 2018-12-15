@@ -94,5 +94,6 @@ export default {
     UPDATE_REPLY: 'updateReply',
     USER_FROM_STORAGE: 'restoreUserFromStorage',
     USER_TO_STORAGE: 'userToStorage',
+    VOTE_FOR: "voteFor",
     WANT_SUSCRIBE: 'wantSuscribe'
 }

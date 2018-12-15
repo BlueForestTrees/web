@@ -2,6 +2,10 @@ html {
     overflow-y: auto
 }
 
+.no-photo {
+    border: 1px dashed;
+}
+
 .scene {
     width:400px;
     height:280px;

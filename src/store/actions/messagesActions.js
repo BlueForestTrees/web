@@ -2,6 +2,7 @@ import On from "../../const/on"
 import Do from "../../const/do"
 import {messages} from "../state"
 import api from "../../rest/api"
+import {createStringObjectId} from "../../services/calculations"
 
 export default {
     [On.SHOW_MESSAGES]: ({commit}, {title, filter}) => {
@@ -51,5 +52,10 @@ export default {
     [On.DELETE_REPLY]: ({state, commit}, reply) => {
         return api.deleteReply(reply)
             .then(() => commit(Do.DELETE_REPLY, reply))
-    }
+    },
+    [On.VOTE_FOR]: async ({dispatch}, {feature, message}) => dispatch(On.SEND_MESSAGE, {
+        _id: createStringObjectId(),
+        type: feature,
+        message
+    })
 }

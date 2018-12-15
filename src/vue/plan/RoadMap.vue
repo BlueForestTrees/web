@@ -20,11 +20,14 @@
                     </template>
                     <v-divider/>
                     <v-divider/>
-                    <open-message :section="{title: `Votre avis sur '${item.title}'`, filter: {type: `${item.icon}.feature`}}"/>
+                    <v-layout row justify-end>
+                        <open-message :section="{title: `Votre avis sur '${item.title}'`, filter: {type: `${item.icon}.feature`}}"/>
+                        <v-spacer/>
+                        <vote-btn text="VOTE" text-voted="merci!" :feature="`${item.title}.vote`"/>
+                    </v-layout>
                 </v-expansion-panel-content>
             </v-expansion-panel>
-
-            <open-message :section="secs.FEATURE"/>
+                <open-message :section="secs.FEATURE"/>
         </v-container>
     </card>
 </template>
@@ -35,10 +38,11 @@
     import maquettes from "../../const/maquettes"
     import Maquette from "../maquette/Maquette"
     import Card from "../common/Card"
+    import VoteBtn from "../messages/VoteBtn"
 
     export default {
         name: "road-map",
-        components: {Card, Maquette, OpenMessage},
+        components: {VoteBtn, Card, Maquette, OpenMessage},
         data() {
             return {
                 secs,
@@ -99,7 +103,7 @@
                     {
                         icon: 'crop_free',
                         title: 'Périmètre',
-                        text: "<p>Pouvoir assigner les parties d'un produit à sa phase: extraction ressources, production, traitement fin de vie, etc.</p>"
+                        text: "<p>Pouvoir assigner les parties d'un produit à sa phase: extraction ressources, production, utilisation, traitement fin de vie, etc.</p>"
                     },
                     {
                         icon: 'shopping_basket',

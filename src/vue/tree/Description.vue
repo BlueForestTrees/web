@@ -1,19 +1,28 @@
 <template>
-    <v-layout column align-center>
-        <v-flex>
-            <photo :trunk="trunk"/>
-        </v-flex>
-        <v-layout row align-center v-if="owner">
-            <v-flex>Propriétaire:</v-flex>
-            <v-spacer/>
-            <v-flex><a :href="owner.site" target="_blank">{{owner.fullname}}</a></v-flex>
-        </v-layout>
-        <v-layout row align-center v-if="code">
-            <v-flex>Code:</v-flex>
-            <v-spacer/>
-            <span>{{code}}</span>
-        </v-layout>
-    </v-layout>
+    <table>
+        <tbody>
+        <tr>
+            <td colspan="2">
+                <photo :trunk="trunk"/>
+            </td>
+        </tr>
+        <tr>
+            <th class="width-20">Propriétaire:</th>
+            <td><a :href="owner.site" target="_blank">{{owner.fullname}}</a></td>
+        </tr>
+        <tr>
+            <th>Source:</th>
+            <td>
+                <a v-if="isOff" :href="`https://world.openfoodfacts.org/product/${code}`">voir site</a>
+                <span v-else>{{origin}}</span>
+            </td>
+        </tr>
+        <tr>
+            <th>Code:</th>
+            <td>{{code}}</td>
+        </tr>
+        </tbody>
+    </table>
 </template>
 <script>
     const Photo = () => import(/* webpackChunkName: "Photo" */ "../common/Photo")
@@ -22,6 +31,12 @@
         components: {Photo},
         props: ['tree'],
         computed: {
+            isOff() {
+                return this.origin === "off"
+            },
+            origin() {
+                return this.trunk && this.trunk.origin
+            },
             trunk() {
                 return this.tree && this.tree.trunk
             },

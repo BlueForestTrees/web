@@ -11,9 +11,11 @@
         </v-window>
         <v-divider v-if="!noDiv"/>
         <v-card-actions class="justify-space-between">
-            <v-btn flat @click="prev"><v-icon>keyboard_arrow_left</v-icon></v-btn>
+            <v-btn v-if="manySlides" flat @click="prev"><v-icon>keyboard_arrow_left</v-icon></v-btn>
+            <span v-else></span>
             <span class="display-1 font-weight-thin">{{maquette}}</span>
-            <v-btn flat @click="next"><v-icon>keyboard_arrow_right</v-icon></v-btn>
+            <v-btn v-if="manySlides" flat @click="next"><v-icon>keyboard_arrow_right</v-icon></v-btn>
+            <span v-else></span>
         </v-card-actions>
         <v-card-actions class="justify-center">
             <v-icon color="blue">live_help</v-icon>
@@ -28,7 +30,7 @@
         name: "maquette",
         props: {
             maquette: {type: String},
-            noDiv:{type:Boolean}
+            noDiv: {type: Boolean}
         },
         data: () => ({
             window: null
@@ -37,6 +39,9 @@
             ...mapState({maquettes: 'maquettes'}),
             slides() {
                 return this.maquettes[this.maquette].slides
+            },
+            manySlides() {
+                return this.slides && this.slides.length > 1
             },
             text() {
                 return this.maquettes[this.maquette].text

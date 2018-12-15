@@ -17,7 +17,7 @@
 
             <v-card>
                 <v-layout :column="$vuetify.breakpoint.smAndDown" align-center>
-                    <description :tree="tree"/>
+                    <description :tree="tree" class="ma-5"/>
                     <v-layout column align-center>
                         <tree-card :tree="tree"/>
                         <v-select v-model="current" :items="['Environnement','Ressources','Propriétés']" class="not-too-half"/>

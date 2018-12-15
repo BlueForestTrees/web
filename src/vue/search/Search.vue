@@ -24,7 +24,7 @@
                     <search-cat @input="catChange" map="catSelection"/>
                 </v-card>
             </v-menu>
-            <v-menu v-model="showEnv" offset-y class="ml-3">
+            <v-menu v-model="showEnv" offset-y class="ml-3" :close-on-content-click="false">
                 <div slot="activator" class="subheading">
                     <v-layout row align-center>
                         <v-icon color="orange" small>new_releases</v-icon>
@@ -34,12 +34,11 @@
                 </div>
                 <v-card>
                     <v-layout align-center pa-2>
-                        <v-icon color="orange" large>new_releases</v-icon>
-                        Pouvoir rechercher un produit en fonction de ces impacts environnementaux.
+                        <vote-for text="Voter pour: la recherche de produit en fonction des impacts environnementaux." feature="impact.search.vote" @vote="showEnv=false"/>
                     </v-layout>
                 </v-card>
             </v-menu>
-            <v-menu v-model="showRes" offset-y class="ml-3">
+            <v-menu v-model="showRes" offset-y :close-on-content-click="false" class="ml-3">
                 <div slot="activator" class="subheading">
                     <v-layout row align-center>
                         <v-icon color="orange" small>new_releases</v-icon>
@@ -49,13 +48,11 @@
                 </div>
                 <v-card>
                     <v-layout align-center pa-2>
-                        <v-icon color="orange" small>new_releases</v-icon>
-                        <v-icon color="orange" large>new_releases</v-icon>
-                        Pouvoir rechercher un produit en fonction des ressources qui ont été utilisées pour le fabriquer/transporter/recycler.
+                        <vote-for text="Voter pour: la recherche de produit en fonction des ressources utilisées pour le fabrication, le transport, le recyclage..." feature="tank.search.vote" @vote="showRes=false"/>
                     </v-layout>
                 </v-card>
             </v-menu>
-            <v-menu v-model="showFac" offset-y class="ml-3">
+            <v-menu v-model="showFac" offset-y :close-on-content-click="false" class="ml-3">
                 <div slot="activator" class="subheading">
                     <v-layout row align-center>
                         <v-icon color="orange" small>new_releases</v-icon>
@@ -65,8 +62,7 @@
                 </div>
                 <v-card>
                     <v-layout align-center pa-2>
-                        <v-icon color="orange" large>new_releases</v-icon>
-                        Pouvoir rechercher un produit en fonction de ces propriétés. (dimensions, avantages/inconvénients, apports nutritionnels...)
+                        <vote-for text="Voter pour: la recherche de produit en fonction des propriétés comme le Prix, les apport Nutritionnels..." feature="facet.search.vote" @vote="showFac=false"/>
                     </v-layout>
                 </v-card>
             </v-menu>
@@ -85,6 +81,7 @@
     import SearchCat from "./SearchCat"
     import SearchText from "./SearchText"
     import {GO} from "../../const/go"
+    import VoteFor from "../messages/VoteFor"
 
     const SearchComp = () => import(/* webpackChunkName: "SearchComp" */ './SearchComp')
     const ImpactEntries = () => import(/* webpackChunkName: "ImpactEntries" */ '../impact/ImpactEntries')
@@ -100,7 +97,7 @@
             showFac: false,
             type: null
         }),
-        components: {ImpactEntries, FacetEntries, SearchText, SearchCat, SearchComp},
+        components: {VoteFor, ImpactEntries, FacetEntries, SearchText, SearchCat, SearchComp},
         methods: {
             ...mapActions({
                 goto: On.GO_TO,

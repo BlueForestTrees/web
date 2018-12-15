@@ -13,9 +13,12 @@
     <v-toolbar v-else dense app dark class="elevation-5" color="primary" :extended="$vuetify.breakpoint.xsOnly">
 
         <span slot="extension" v-if="$vuetify.breakpoint.xsOnly">
-            <v-btn v-if="$route.name !== GO.BASKET && selectionCount" flat dense @click="addSelectionToBasket">
-                <v-icon x-large>select_all</v-icon>
-                <span>Mettre de côté</span>
+            <!--<v-btn v-if="$route.name !== GO.BASKET && selectionCount" flat dense @click="addSelectionToBasket">-->
+                <!--<v-icon x-large>select_all</v-icon>-->
+                <!--<span>Mettre de côté</span>-->
+            <!--</v-btn>-->
+            <v-btn v-if="$route.name === GO.TREE && oneSelected" flat dense @click="goQuiDeuxFoisPlus(oneSelected)">Jouer
+                <v-icon x-large>games</v-icon>
             </v-btn>
              <v-tooltip v-if="$route.name === GO.BASKET" bottom>
                 <v-btn slot="activator" v-if="anySelected" flat @click="removeSelectionFromBasket">
@@ -57,17 +60,17 @@
                 <span style="pointer-events: none">Retirer du panier</span>
             </v-tooltip>
 
-            <v-btn v-if="$vuetify.breakpoint.smAndUp && $route.name !== GO.BASKET && selectionCount" flat dense @click="addSelectionToBasket">
-                <v-icon x-large>select_all</v-icon>
-                <span>Mettre de côté</span>
-            </v-btn>
+            <!--<v-btn v-if="$vuetify.breakpoint.smAndUp && $route.name !== GO.BASKET && selectionCount" flat dense @click="addSelectionToBasket">-->
+                <!--<v-icon x-large>select_all</v-icon>-->
+                <!--<span>Mettre de côté</span>-->
+            <!--</v-btn>-->
 
             <v-btn v-if="$route.name === GO.TREE && oneSelected" flat dense @click="goEquiv(oneSelected)">Equivalence
                 <v-icon x-large>arrow_right_alt</v-icon>
                 <v-icon x-large>search</v-icon>
             </v-btn>
 
-            <v-btn v-if="$route.name === GO.TREE && oneSelected" flat dense @click="goQuiDeuxFoisPlus(oneSelected)">Jouer
+            <v-btn v-if="$vuetify.breakpoint.smAndUp && $route.name === GO.TREE && oneSelected" flat dense @click="goQuiDeuxFoisPlus(oneSelected)">Jouer
                 <v-icon x-large>games</v-icon>
             </v-btn>
 
