@@ -55,5 +55,5 @@ export default {
     messages: {title: null, hasMore: false, filter: {}, list: []},
     myMessages: [],
     maquettes,
-    correlationId: null
+    xRequestId: null
 }

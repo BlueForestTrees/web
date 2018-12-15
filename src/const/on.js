@@ -47,7 +47,7 @@ export default {
     IMPORT_CATEGORIE_ADEME: 'importCategorieAdeme',
     IMPORT_IMPACT_ENTRY_ADEME: 'importImpactEntryAdeme',
     IMPORT_IMPACT_ADEME: 'importImpactAdeme',
-    INIT_CORRELATION_ID: 'initCorrelationId',
+    INIT_X_REQUEST_ID: 'initCorrelationId',
     LOAD_CATEGORIES: 'loadCategories',
     LOAD_FACETS: 'loadFacets',
     LOAD_IMPACTS: 'loadImpacts',

@@ -4,7 +4,7 @@ stages:
   - publishImageConfig:
       dockerfilePath: ./Dockerfile
       buildContext: .
-      tag: blueforest/web:1.7.12
+      tag: blueforest/web:1.7.13
       pushRemote: true
       registry: index.docker.io
 timeout: 60

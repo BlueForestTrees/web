@@ -157,3 +157,13 @@ export const deltaTime = time => {
                                 `${Math.floor(delta / (12 * 4 * 7 * 24 * 3600))} an`
 
 }
+
+const possible = "abcdefghijklmnopqrstuvwxyz0123456789"
+export const generateXRequestId = () => {
+    let xRequestId = ""
+
+    for (let i = 0; i < 32; i++)
+        xRequestId += possible.charAt(Math.floor(Math.random() * possible.length))
+
+    return xRequestId
+}

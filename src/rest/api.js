@@ -30,7 +30,6 @@ export default {
     getCategories: pid => cached(get, `/api/categorie${paramsOf({pid: pid || null})}`, categoriesCache),
     getMessageCount: filter => get(`/api/message/count${paramsOf(filter)}`),
     getMessages: filter => get(`/api/message${paramsOf(filter)}`),
-    getCorrelationId: () => get(`/api/correlationId`),
 
     putRoot: ({_id, trunkId, rootId, relativeTo, bqt}) => put(`/api/tree/root`, {_id, trunkId, rootId, relativeTo, bqt}),
     postRoot: ({_id, trunkId, rootId, relativeTo, bqt}) => post(`/api/tree/root`, {_id, trunkId, rootId, relativeTo, bqt}),

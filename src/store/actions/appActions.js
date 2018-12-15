@@ -1,15 +1,15 @@
 import On from "../../const/on"
 import Do from "../../const/do"
-import {X_CORRELATION_ID} from "../../const/headers"
-import api from "../../rest/api"
+import {X_REQUEST_ID} from "../../const/headers"
 import router from "../../router/router"
+import {generateXRequestId} from "../../services/calculations"
 
 export default {
     [On.GO_TO]: ({}, route) => {
         router.push({name: route})
     },
     [On.MOUNT_APP]: async ({dispatch}) => {
-        //await dispatch(On.INIT_CORRELATION_ID)
+        await dispatch(On.INIT_X_REQUEST_ID)
         dispatch(On.DARK_FROM_STORAGE)
         dispatch(On.USER_FROM_STORAGE)
         dispatch(On.LOAD_GRANDEUR)
@@ -25,13 +25,16 @@ export default {
     [On.DARK_FROM_STORAGE]: ({state}) => {
         state.nav.dark = localStorage.getItem("dark") === 'true'
     },
-    [On.INIT_CORRELATION_ID]: async ({state}) => {
-        let correlationId = localStorage.getItem(X_CORRELATION_ID)
-        if (!correlationId) {
-            correlationId = await api.getCorrelationId()
-            localStorage.setItem(X_CORRELATION_ID, correlationId)
+    [On.INIT_X_REQUEST_ID]: async ({state}) => {
+        let xRequestId = localStorage.getItem(X_REQUEST_ID)
+        if (!xRequestId) {
+            xRequestId = generateXRequestId()
+            localStorage.setItem(X_REQUEST_ID, xRequestId)
+            console.log("x-request-id inited to",xRequestId)
+        }else{
+            console.log("x-request-id is", xRequestId)
         }
-        state.correlationId = correlationId
+        state.correlationId = xRequestId
     }
 
 }
