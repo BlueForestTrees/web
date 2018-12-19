@@ -2,6 +2,10 @@ html {
     overflow-y: auto
 }
 
+.rounded{
+    border-radius:0.5em;
+}
+
 .no-photo {
     border: 1px dashed;
 }

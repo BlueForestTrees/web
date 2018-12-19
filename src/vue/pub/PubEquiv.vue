@@ -1,31 +1,31 @@
 <template>
     <v-container>
 
-        <v-layout row align-center>
-            <span class="font-weight-thin text-no-wrap display-1">Choisir</span>
-            <card>
+        <v-layout :column="$vuetify.breakpoint.xsOnly" align-center class="my-5">
+            <span class="font-weight-thin text-no-wrap display-1 ma-2">Préférer:</span>
+            <v-card class="mx-3 rounded">
                 <v-container>
-                    <tree-card-front :tree="leftTree"></tree-card-front>
+                    <tree-card :tree="leftTree"></tree-card>
                 </v-container>
-                <span class="mx-1">soit {{qtUnitName(selectedLeftAxis)}}</span>
-            </card>
-            <span class="font-weight-thin text-no-wrap display-1">au lieu de:</span>
-            <card>
+                <div class="ma-2">Soit {{qtUnitName(selectedLeftAxis)}}</div>
+            </v-card>
+            <span class="font-weight-thin text-no-wrap display-1 ma-2">Plutôt que:</span>
+            <v-card class="mx-3 rounded">
                 <v-container>
-                    <tree-card-front :tree="rightTree"></tree-card-front>
+                    <tree-card :tree="rightTree"></tree-card>
                 </v-container>
-                <span class="mx-1">soit {{qtUnitName(selectedRightAxis)}}</span>
-            </card>
+                <div class="ma-2">Soit {{qtUnitName(selectedRightAxis)}}</div>
+            </v-card>
         </v-layout>
 
-        <v-layout row align-center>
-            <span class="font-weight-thin text-no-wrap display-1">c'est éviter l'équivalent de :</span>
-            <card>
+        <v-layout :column="$vuetify.breakpoint.xsOnly" align-center>
+            <span class="font-weight-thin display-1  ma-2">C'est {{verb}} l'équivalent de :</span>
+            <v-card class="mx-3 rounded">
                 <v-container>
-                    <tree-card-front :tree="equivTree"></tree-card-front>
+                    <tree-card :tree="equivTree"></tree-card>
                 </v-container>
-                <span class="mx-1">soit {{qtUnitName(selectedEquivAxis)}}</span>
-            </card>
+                <div class="ma-2">Soit {{qtUnitName(selectedEquivAxis)}}</div>
+            </v-card>
         </v-layout>
 
 
@@ -42,10 +42,11 @@
     import Card from "../common/Card"
     import * as fragments from "../../const/fragments"
     import {qtUnitName} from "../../services/calculations"
+    import TreeCard from "../tree/TreeCard"
 
     export default {
         name: "pub-equiv",
-        components: {Card, TreeCardFront, Loader},
+        components: {TreeCard, Card, TreeCardFront, Loader},
         data: () => ({
             LOADING: states.LOADING,
             leftTree: null, rightTree: null, equivTree: null,
@@ -58,7 +59,7 @@
             },
             coef(v) {
                 if (v && v !== 1) {
-                    this.applyCoef({tree: this.equivTree, coef: v})
+                    this.applyCoef({tree: this.equivTree, coef: Math.abs(v)})
                 }
             }
         },
@@ -93,6 +94,9 @@
                 if (this.deltaAxis && this.selectedEquivAxis) {
                     return this.deltaAxis.quantity.bqt / this.selectedEquivAxis.quantity.bqt
                 }
+            },
+            verb() {
+                return this.coef && this.coef > 0 ? "éviter" : "créer"
             }
         },
         methods: {

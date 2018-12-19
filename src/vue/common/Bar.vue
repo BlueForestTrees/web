@@ -136,6 +136,7 @@
             },
             goAdd(selection) {
                 this.showDialog({dialog: Dial.ADD_RESSOURCE, data: {left: selection[0], right: selection[1]}})
+                this.unselect()
             },
             ...mapActions({
                 removeSelectionFromBasket: On.REMOVE_SELECTION_FROM_BASKET,

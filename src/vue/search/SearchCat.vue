@@ -12,8 +12,6 @@
                     </v-layout>
                     <a v-else><b>{{cat.name}}</b></a>
                 </template>
-
-
             </v-layout>
         </div>
         <v-card-text class="not-too-small" >
