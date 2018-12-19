@@ -70,6 +70,14 @@
                     <v-list-tile-title>Créer un produit ou un service</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
+            <v-list-tile @click="goCreatePub">
+                <v-list-tile-action>
+                    <v-icon color="primary">announcement</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                    <v-list-tile-title>Créer une Pub</v-list-tile-title>
+                </v-list-tile-content>
+            </v-list-tile>
 
 
         </v-list>
@@ -166,6 +174,7 @@
                 goImpactEntry: On.GO_IMPACT_ENTRY,
                 goFacetEntry: On.GO_FACET_ENTRY,
                 goCreateTree: On.GO_CREATE_TREE,
+                goCreatePub: On.GO_CREATE_PUB,
                 dispatchShowMessages: On.SHOW_MESSAGES
             })
         },

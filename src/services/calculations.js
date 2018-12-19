@@ -48,7 +48,7 @@ export const name = item => item && (item.selection && item.selection.name) || (
 export const color = item => item.color || item.trunk.color
 export const removeUseless = name => name.replace(/\([^)]*\)/, "...")
 export const equiv = item => item.eq ? `(éq. ${item.eq})` : ""
-export const qtUnitName = item => `${qtUnit(item)} ${name(item)} ${equiv((item.trunk && item.trunk.quantity) || item.quantity || item)}`
+export const qtUnitName = item => item && `${qtUnit(item)} ${name(item)} ${equiv((item.trunk && item.trunk.quantity) || item.quantity || item)}`
 
 export const getRandomColor = () => {
     const letters = '0123456789ABCDEF'
@@ -108,16 +108,20 @@ export const add = (q1, q2) => ({
 })
 
 export const applyRessourceCoef = (coef, items) => {
-    for (let i = 0; i < items.length; i++) {
-        items[i].trunk.quantity.bqt *= coef
+    if (items) {
+        for (let i = 0; i < items.length; i++) {
+            items[i].trunk.quantity.bqt *= coef
+        }
+        return items
     }
-    return items
 }
 export const applyAspectCoef = (coef, items) => {
-    for (let i = 0; i < items.length; i++) {
-        items[i].quantity.bqt *= coef
+    if (items) {
+        for (let i = 0; i < items.length; i++) {
+            items[i].quantity.bqt *= coef
+        }
+        return items
     }
-    return items
 }
 
 export const applyAxisCoef = (coef, items, prop) => {

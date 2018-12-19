@@ -6,6 +6,9 @@ export const createDialog = name => (dialogFactory[name] && dialogFactory[name](
 
 const dialogFactory = {
     [Dial.LOGIN]: () => ({noAuth: true, vivisible: false, data: {destination: null}}),
+    [Dial.FACET_ENTRY]: () => ({visible: false, data: {qt: null, unit: null, name: null}}),
+    [Dial.ADD_IMPACT_ENTRY]: () => ({visible: false, data: {qt: null, unit: null, name: null}}),
+    [Dial.ADD_RESSOURCE]: () => ({visible: false, data: {left: null, right: null}}),
     [Dial.CREATE]: () => ({visible: false, data: {}}),
     [Dial.SUSCRIBE]: () => ({noAuth: true, visible: false, data: {}}),
     [Dial.LOGIN]: () => ({noAuth: true, visible: false, data: {}}),
@@ -24,7 +27,7 @@ const dialogs = () => {
 export const snack = () => ({
     visible: false,
     multiline: false,
-    timeout: 300000,
+    timeout: 5000,
     vertical: false,
     text: "this message should be overriden.",
     color: "black"

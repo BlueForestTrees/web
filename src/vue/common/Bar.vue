@@ -7,16 +7,20 @@
             <v-icon large color="primary">search</v-icon>
         </v-btn>
 
-        <logged-in />
+        <logged-in/>
 
     </v-toolbar>
     <v-toolbar v-else dense app dark class="elevation-5" color="primary" :extended="$vuetify.breakpoint.xsOnly">
 
-        <span slot="extension" v-if="$vuetify.breakpoint.xsOnly">
-            <!--<v-btn v-if="$route.name !== GO.BASKET && selectionCount" flat dense @click="addSelectionToBasket">-->
-                <!--<v-icon x-large>select_all</v-icon>-->
-                <!--<span>Mettre de côté</span>-->
-            <!--</v-btn>-->
+        <span slot="extension" v-if="$vuetify.breakpoint.xsOnly">.
+            <v-btn v-if="$route.name !== GO.BASKET && selectionCount" flat dense @click="addSelectionToBasket">
+                <v-icon x-large>select_all</v-icon>
+                <span>Mettre de côté</span>
+            </v-btn>
+            <v-btn v-if="selectionCount === 4" flat dense @click="createPub(selection)">
+                <v-icon x-large>select_all</v-icon>
+                <span>PUB</span>
+            </v-btn>
             <v-btn v-if="$route.name === GO.TREE && oneSelected" flat dense @click="goQuiDeuxFoisPlus(oneSelected)">Jouer
                 <v-icon x-large>games</v-icon>
             </v-btn>
@@ -60,10 +64,14 @@
                 <span style="pointer-events: none">Retirer du panier</span>
             </v-tooltip>
 
-            <!--<v-btn v-if="$vuetify.breakpoint.smAndUp && $route.name !== GO.BASKET && selectionCount" flat dense @click="addSelectionToBasket">-->
-                <!--<v-icon x-large>select_all</v-icon>-->
-                <!--<span>Mettre de côté</span>-->
-            <!--</v-btn>-->
+            <v-btn v-if="$route.name !== GO.BASKET && selectionCount" flat dense @click="addSelectionToBasket">
+                <v-icon x-large>select_all</v-icon>
+                <span>Mettre de côté</span>
+            </v-btn>
+            <v-btn v-if="$vuetify.breakpoint.smAndUp && selectionCount === 4" flat dense @click="createPub(selection)">
+                <v-icon x-large>select_all</v-icon>
+                <span>PUB</span>
+            </v-btn>
 
             <v-btn v-if="$route.name === GO.TREE && oneSelected" flat dense @click="goEquiv(oneSelected)">Equivalence
                 <v-icon x-large>arrow_right_alt</v-icon>
@@ -138,7 +146,7 @@
                 goCompare: On.GO_COMPARE,
                 showDialog: On.SHOW_DIALOG,
                 dispatchGoEquiv: On.GO_EQUIV,
-                dispatchGoQuiDeuxFoisPlus: On.GO_QUI_DEUX_FOIS_PLUS
+                dispatchGoQuiDeuxFoisPlus: On.GO_QUI_DEUX_FOIS_PLUS,
             }),
             goEquiv(e) {
                 this.dispatchGoEquiv({
@@ -154,6 +162,19 @@
                     bqt: this.tree.trunk.quantity.bqt,
                     s_id: e._id,
                     sbqt: e.trunk ? e.trunk.quantity.bqt : e.quantity.bqt
+                })
+            },
+            createPub(selection) {
+                this.go({
+                    name: GO.PUB_EQUIV,
+                    params: {
+                        leftId: selection[0]._id,
+                        rightId: selection[1]._id,
+                        equivId: selection[2]._id
+                    },
+                    query: {
+                        iid: selection[3]._id
+                    }
                 })
             }
         }

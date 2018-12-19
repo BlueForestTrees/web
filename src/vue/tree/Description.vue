@@ -8,7 +8,7 @@
         </tr>
         <tr>
             <th class="width-20">Propriétaire:</th>
-            <td><a :href="owner.site" target="_blank">{{owner.fullname}}</a></td>
+            <td v-if="owner"><a :href="owner.site" target="_blank">{{owner.fullname}}</a></td>
         </tr>
         <tr>
             <th>Source:</th>

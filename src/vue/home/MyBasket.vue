@@ -1,16 +1,48 @@
 <template>
-    <span class="ma-1">
-        <v-card-text v-if="user" class="text-md-center">
-            <p>Vous n'avez pas de sélection enregistrée.</p>
-            <p>Vous pouvez enregistrer des selections de produits depuis la recherche et leur donner un nom.</p>
-            <p>Vous pourrez ensuite les partager ou les retrouver plus tard.</p>
-        </v-card-text>
-        <v-container v-else>Connectez-vous pour voir vos sélections enregistrées.</v-container>
+    <v-card-text v-if="emptyBasket" class="text-md-center">Cette liste est vide. <br>Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche pour trouver des choses intéressantes!</span></v-card-text>
+    <span v-else>
+        <span v-if="trunks.length">
+            <v-container>
+                <h2 class="font-weight-thin">Produits et services:</h2>
+                <basket-comp :items="trunks" title="Produits et services:"/>
+            </v-container>
+            <v-divider/>
+        </span>
+        <span v-if="impacts.length">
+            <v-container>
+                <h2 class="font-weight-thin">Environnement:</h2>
+                <basket-comp :items="impacts"/>
+            </v-container>
+            <v-divider/>
+        </span>
+        <span v-if="facets.length">
+            <v-container>
+                <h2 class="font-weight-thin">Propriétés:</h2>
+                <basket-comp :items="facets"/>
+            </v-container>
+            <v-divider/>
+        </span>
     </span>
 </template>
 <script>
+    import {mapActions} from "vuex"
+    import {mapGetters} from "vuex"
+    import BasketComp from "../basket/BasketComp"
+    import On from "../../const/on"
+
     export default {
-        name:"my-basket",
-        props: {user: Object},
+        name: "my-basket",
+        components: {BasketComp},
+        computed: {
+            ...mapGetters({
+                trunks: 'basketArray',
+                impacts: 'basketImpactArray',
+                facets: 'basketFacetArray',
+                emptyBasket: 'emptyBasket'
+            })
+        },
+        methods: {
+            ...mapActions({goSearch: On.GO_SEARCH})
+        }
     }
 </script>

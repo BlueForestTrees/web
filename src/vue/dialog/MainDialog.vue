@@ -7,7 +7,7 @@
                 <v-icon>{{icon}}</v-icon>
                 <v-toolbar-title>{{title}}</v-toolbar-title>
                 <v-spacer></v-spacer>
-                <v-btn icon @click.native="visible = false" dark>
+                <v-btn icon @click.native="close" dark>
                     <v-icon large>clear</v-icon>
                 </v-btn>
             </v-toolbar>

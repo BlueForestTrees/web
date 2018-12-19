@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid fill-height class="not-too-large">
+    <v-container fluid fill-height class="not-too-large not-too-small">
         <v-layout align-center justify-center>
             <v-flex xs12 sm8 md8>
                 <v-card class="elevation-2">

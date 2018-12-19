@@ -26,6 +26,7 @@ export default {
                 return this.$store.state.dialogs[this.dialog].visible
             },
             set: function (value) {
+                console.log("set visible", value)
                 if (value) {
                     this.commitEmptyData(this.dialog)
                 }

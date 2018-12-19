@@ -22,7 +22,8 @@ const MyTeam = () => import(/* webpackChunkName: "MyTeam" */ '../vue/home/MyTeam
 const MyMessages = () => import(/* webpackChunkName: "MyMessages" */ '../vue/home/MyMessage')
 const AddImpactEntry = () => import(/* webpackChunkName: "AIE" */ '../vue/dialog/AddImpactEntry')
 const AddFacetEntry = () => import(/* webpackChunkName: "AFEDialog" */ "../vue/dialog/AddFacetEntry")
-const AddRessource = () => import(/* webpackChunkName: "ARDialog"*/ "../vue/dialog/AddRessource")
+const AddRessource = () => import(/* webpackChunkName: "ARDialog"*/ "../vue/dialog/AddRessourceDialog")
+const PubEquiv = () => import(/* webpackChunkName: "PubE"*/ "../vue/pub/PubEquiv")
 
 Vue.use(VueRouter)
 
@@ -43,6 +44,7 @@ export default new VueRouter({
                 {name: GO.CREATE_TREE, path: "tree/create", component: CreateTree},
                 {name: GO.TREE, path: "tree/:bqt/:_id", component: Tree, props: (route) => ({_id: route.params._id, bqt: Number(Number.parseFloat(route.params.bqt))})},
                 {name: GO.EQUIV, path: "equiv/:bqt/:_id/:sbqt/:s_id", component: Equivalence, props: true},
+                {name: GO.PUB_EQUIV, path: "eq/:leftId/:rightId/:equivId", component: PubEquiv, props: true},
                 {name: GO.QUI_2, path: "qui2fois/:bqt/:_id/:sbqt/:s_id", component: Qui2, props: true},
                 {name: GO.TREE_EMPTY, path: "tree", component: Tree},
                 {name: GO.ROOT, path: "root/:treeId/:rootId", component: Root, props: true},

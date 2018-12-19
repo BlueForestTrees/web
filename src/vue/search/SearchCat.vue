@@ -3,8 +3,6 @@
         <div class="grey lighten-5" style="min-width: 12em;">
             <v-layout column align-center ma-2>
 
-
-
                 <a @click="pathSelect(null)">Toutes les catégories</a>
                 <v-icon v-if="anySelected" small>keyboard_arrow_down</v-icon>
                 <template v-for="(cat, idx) in selection">
@@ -14,21 +12,17 @@
                     </v-layout>
                     <a v-else><b>{{cat.name}}</b></a>
                 </template>
-                <v-layout column>
-                    <v-spacer/>
-                    <v-btn color="primary" @click="emitInput">Ok</v-btn>
-                </v-layout>
-
 
 
             </v-layout>
         </div>
-        <v-card-text v-if="loading || items.length > 0" class="not-too-small" >
+        <v-card-text class="not-too-small" >
             <v-layout column wrap>
                 <loader v-if="loading"/>
                 <a v-else-if="items.length > 0" v-for="item in items" @click="select(item)" :key="'o'+item._id">
                     <v-layout row align-center><v-icon :style="'color: '+item.color">stop</v-icon><a style="padding-right:0.5em">{{item.name}}</a></v-layout>
                 </a>
+                <v-btn color="primary" @click="emitInput">Ok</v-btn>
             </v-layout>
         </v-card-text>
     </v-layout>

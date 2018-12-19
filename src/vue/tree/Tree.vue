@@ -45,6 +45,7 @@
     import TreeFab from "./TreeFab"
     import TreeCard from "./TreeCard"
     import Card from "../common/Card"
+    import {FACETS, IMPACT_TANK, TANK, treeFragments} from "../../const/fragments"
 
     const Description = () => import(/* webpackChunkName: "Description" */ "./Description")
     const Ressources = () => import(/* webpackChunkName: "Ressources" */ "./Ressources")
@@ -83,22 +84,17 @@
                 goBasket: On.GO_BASKET,
                 goCreateTree: On.GO_CREATE_TREE,
             }),
-            refresh: function () {
+            refresh: async function () {
                 if (this.bqt && this._id) {
-                    this.dispatchLoad({bqt: this.bqt, _id: this._id})
-                        .then(async tree=>{
-                            await tree.promises.all
-                            if(tree.tank.length > 0){
-                                this.current = "Ressources"
-                            }else if(tree.impacts.length > 0){
-                                this.current = "Environnement"
-                            }else if(tree.facets.length > 0){
-                                this.current = "Propriétés"
-                            }
-                        })
-                        .catch(e => {
-                            this.snack({text: "Cet élement n'existe pas ou plus", color: "orange"})
-                        })
+                    const tree = await this.dispatchLoad({bqt: this.bqt, _id: this._id, fragments: treeFragments})
+                    await tree.promises.all
+                    if (tree[TANK].length > 0) {
+                        this.current = "Ressources"
+                    } else if (tree[IMPACT_TANK].length > 0) {
+                        this.current = "Environnement"
+                    } else if (tree[FACETS].length > 0) {
+                        this.current = "Propriétés"
+                    }
                 } else {
                     console.warn(`bad params. bqt:${this.bqt}, _id:${this._id}`)
                 }
