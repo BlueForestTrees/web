@@ -28,6 +28,7 @@
     {"path":"/api/tree", "host":"http://integ.blueforest.org"}
   ],
   "dev": [
+    {"path":"/api/info", "host":"http://localhost:8093"},
     {"path":"/api/selection", "host":"http://localhost:8092"},
     {"path":"/api/correlation", "host":"http://localhost:8091"},
     {"path":"/api/damage", "host":"http://localhost:8090"},
