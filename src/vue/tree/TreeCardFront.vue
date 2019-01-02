@@ -19,7 +19,7 @@
                 return qtUnit(this.tree)
             },
             qtFreq() {
-                return qtFreq(this.tree)
+                return qtFreq(this.tree.selection)
             },
             name() {
                 return name(this.tree)

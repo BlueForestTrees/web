@@ -43,7 +43,9 @@ export const quantity = item => item && (
     item
 )
 
-export const qtFreq = item => item.selection && item.selection.repeted ? `${qtUnit(item.selection.quantity)} / ${qtUnit(item.selection.freq, {hideOne: true})}` : ""
+export const qtFreq = selection => selection && selection.repeted ? `${qtUnit(selection.quantity)} / ${qtUnit(selection.freq, {hideOne: true})}` : ""
+
+export const qtFreqOrUnit = item => qtFreq(item) || qtUnit(item)
 
 export const name = item => item && (item.selection && item.selection.repeted && item.selection.name) || (item.name || item.trunk && item.trunk.name) || '?'
 

@@ -7,7 +7,7 @@
                     <v-list-tile :key="item._id" avatar @click="goSelection(item)">
                         <v-list-tile-content>
                             <v-list-tile-title>{{ name(item) }}</v-list-tile-title>
-                            <v-list-tile-sub-title>quantité: {{ qtUnit(item) }}</v-list-tile-sub-title>
+                            <v-list-tile-sub-title>quantité: {{ qtFreqOrUnit(item) }}</v-list-tile-sub-title>
                         </v-list-tile-content>
                     </v-list-tile>
                     <v-divider/>
@@ -29,7 +29,7 @@
     import On from "../../const/on"
     import Loader from "../loader/Loader"
     import {mapActions} from "vuex"
-    import {qtUnit, name} from "../../services/calculations"
+    import {qtFreqOrUnit, name} from "../../services/calculations"
 
     export default {
         name: "my-selects",
@@ -42,7 +42,7 @@
             }
         },
         methods: {
-            name, qtUnit,
+            name, qtFreqOrUnit,
             ...mapActions({
                 goSelection: On.GO_SELECTION,
                 loadUserSelections: On.LOAD_SELECTION

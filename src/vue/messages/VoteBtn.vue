@@ -17,9 +17,8 @@
             ...mapActions({voteFor: On.VOTE_FOR}),
             async vote() {
                 this.voting = true
-                await this.voteFor({feature: this.feature, message: null})
+                this.voted = await this.voteFor({feature: this.feature, message: null})
                 this.voting = false
-                this.voted = true
                 this.$emit("vote")
             }
         }

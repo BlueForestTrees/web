@@ -53,7 +53,7 @@
                 grandeur: null,
                 dureeGrandeur: getGrandeur("Duré"),
                 isRegulier: false,
-                name: null
+                name: ""
             }
         },
         methods: {

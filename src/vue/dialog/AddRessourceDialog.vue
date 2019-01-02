@@ -184,7 +184,6 @@
                 }
             },
             focus() {
-                console.log("focus")
                 this.$refs.qtLeftForm.reset()
                 this.$refs.qtRightForm.reset()
 
