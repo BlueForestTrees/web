@@ -70,7 +70,7 @@
                 current: "Propriétés"
             }
         },
-        props: ['_id', 'bqt'],
+        props: ['_id', 'bqt', 'sid'],
         computed: {
             ...mapState(['tree'])
         },
@@ -79,14 +79,25 @@
                 showDialog: On.SHOW_DIALOG,
                 switchLeftMenu: On.SWITCH_LEFT_MENU,
                 dispatchLoad: On.LOAD_OPEN_TREE,
+                dispatchSelLoad: On.LOAD_OPEN_SELECTION,
                 snack: On.SNACKBAR,
                 goSearch: On.GO_SEARCH,
                 goBasket: On.GO_BASKET,
                 goCreateTree: On.GO_CREATE_TREE,
             }),
-            refresh: async function () {
+            getTreeLoad() {
                 if (this.bqt && this._id) {
-                    const tree = await this.dispatchLoad({bqt: this.bqt, _id: this._id, fragments: treeFragments})
+                    return this.dispatchLoad({bqt: this.bqt, _id: this._id, fragments: treeFragments})
+                } else if (this.sid) {
+                    return this.dispatchSelLoad({_id: this.sid, fragments: treeFragments})
+                } else {
+                    console.warn(`bad params. bqt:${this.bqt}, _id:${this._id}, sid:${this.sid}`)
+                }
+            },
+            refresh: async function () {
+                const treeLoad = this.getTreeLoad()
+                if (treeLoad) {
+                    const tree = await treeLoad
                     await tree.promises.all
                     if (tree[TANK].length > 0) {
                         this.current = "Ressources"
@@ -95,8 +106,6 @@
                     } else if (tree[FACETS].length > 0) {
                         this.current = "Propriétés"
                     }
-                } else {
-                    console.warn(`bad params. bqt:${this.bqt}, _id:${this._id}`)
                 }
             }
         },

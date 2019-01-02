@@ -1,25 +1,28 @@
 <template>
     <v-layout v-if="tree" column>
-        <h1 class="display-2 align">{{qtUnit(tree)}}</h1>
-        <h5 v-if="qtSelection" class="align font-weight-thin">{{qtUnit(qtSelection.quantity)}} / {{qtUnit(qtSelection.freq,{hideOne:true})}}</h5>
-        <h3 class="display-1 align font-weight-thin">{{name(tree)}}</h3>
+        <h1 class="display-2 align">{{qtUnit}}</h1>
+        <h5 v-if="qtFreq" class="align font-weight-thin">{{qtFreq}}</h5>
+        <h3 class="display-1 align font-weight-thin">{{name}}</h3>
     </v-layout>
 </template>
 
 <script>
-    import {qtUnit, name} from "../../services/calculations"
+    import {qtUnit, name, qtFreq} from "../../services/calculations"
 
     export default {
         name: "tree-card-front",
         props: {
             tree: Object,
         },
-        methods: {
-            qtUnit, name
-        },
         computed: {
-            qtSelection: function () {
-                return this.tree && this.tree.selection
+            qtUnit() {
+                return qtUnit(this.tree)
+            },
+            qtFreq() {
+                return qtFreq(this.tree)
+            },
+            name() {
+                return name(this.tree)
             }
         }
     }

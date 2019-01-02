@@ -53,9 +53,11 @@ export default {
         return api.deleteReply(reply)
             .then(() => commit(Do.DELETE_REPLY, reply))
     },
-    [On.VOTE_FOR]: async ({dispatch}, {feature, message}) => dispatch(On.SEND_MESSAGE, {
-        _id: createStringObjectId(),
-        type: feature,
-        message
-    })
+    [On.VOTE_FOR]: async ({dispatch}, {feature, message}) => dispatch(On.CHECK_AUTH)
+        .then(conn => conn && dispatch(On.SEND_MESSAGE, {
+            _id: createStringObjectId(),
+            type: feature,
+            message
+        }))
+
 }

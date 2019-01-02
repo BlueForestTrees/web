@@ -9,6 +9,12 @@ const userCache = cache({maxLength: 200})
 const cached = async (method, uri, cache) => cache.get(uri) || cache.put(uri, await get(uri))
 
 export default {
+
+    getSelection: _id => get(`api/selection/${_id}`),
+    selectionOf: oid => get(`api/selection/owner/${oid}`),
+    createSelection: selection => post(`/api/selection`, selection),
+    updateSelection: selection => put(`/api/selection`, selection),
+
     searchByFacet: ({bqt, _id}) => get(`/api/facet/equiv/${bqt}/${_id}`),
     searchByImpact: ({bqt, _id}) => get(`/api/impact/equiv/${bqt}/${_id}`),
     searchByRoot: ({bqt, _id}) => get(`/api/tree/root/equiv/${bqt}/${_id}`),

@@ -1,5 +1,6 @@
 {
   "prod": [
+    {"path":"/api/info", "host": "https://blueforest.org"},
     {"path":"/api/selection", "host": "https://blueforest.org"},
     {"path":"/api/correlation", "host": "https://blueforest.org"},
     {"path":"/api/damage", "host": "https://blueforest.org"},
@@ -14,6 +15,7 @@
     {"path":"/api/tree", "host": "https://blueforest.org"}
   ],
   "integ": [
+    {"path":"/api/info", "host":"http://integ.blueforest.org"},
     {"path":"/api/selection", "host":"http://integ.blueforest.org"},
     {"path":"/api/correlation", "host":"http://integ.blueforest.org"},
     {"path":"/api/damage", "host":"http://integ.blueforest.org"},

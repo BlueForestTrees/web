@@ -34,7 +34,7 @@ export const qtUnit = (item, opts = {}) => {
     }
 }
 export const quantity = item => item && (
-    (item.selection && item.selection.duree)
+    (item.selection && item.selection.repeted && item.selection.duree)
     ||
     (item.trunk && item.trunk.quantity)
     ||
@@ -43,7 +43,9 @@ export const quantity = item => item && (
     item
 )
 
-export const name = item => item && (item.selection && item.selection.name) || (item.name || item.trunk && item.trunk.name) || '?'
+export const qtFreq = item => item.selection && item.selection.repeted ? `${qtUnit(item.selection.quantity)} / ${qtUnit(item.selection.freq, {hideOne: true})}` : ""
+
+export const name = item => item && (item.selection && item.selection.repeted && item.selection.name) || (item.name || item.trunk && item.trunk.name) || '?'
 
 export const color = item => item.color || item.trunk.color
 export const removeUseless = name => name.replace(/\([^)]*\)/, "...")
@@ -171,3 +173,5 @@ export const generateXRequestId = () => {
 
     return xRequestId
 }
+
+export const totalQt = selection => selection.repeted ? selection.quantity.bqt * (selection.duree.bqt / selection.freq.bqt) : selection.quantity.bqt

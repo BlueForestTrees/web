@@ -1,9 +1,9 @@
 <template>
     <v-flex key="basket">
         <v-tabs v-model="tabModel" centered slider-color="primary">
-            <v-tab href="#panier">Vu récemment</v-tab>
-            <v-tab href="#mines">Vos produits et services</v-tab>
-            <v-tab href="#favoris">Favoris</v-tab>
+            <v-tab href="#panier">Récent</v-tab>
+            <v-tab href="#mines">Vos produits</v-tab>
+            <v-tab href="#favoris">Vos Sélections</v-tab>
         </v-tabs>
         <v-tabs-items v-model="tabModel">
             <v-tab-item value="panier">

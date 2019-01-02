@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import On from "../../const/on"
 import api from "../../rest/api"
-import {applyAspectCoef, applyRessourceCoef, createStringObjectId, transportQuantity, treefyAll} from "../../services/calculations"
+import {applyAspectCoef, applyRessourceCoef, createStringObjectId, totalQt, transportQuantity, treefyAll} from "../../services/calculations"
 import {bqtGToQtUnit, baseQt} from "unit-manip"
 import router from "../../router/router"
 import {GO} from "../../const/go"
@@ -9,12 +9,16 @@ import Do from "../../const/do"
 import {DAMAGE, FACET, IMPACT} from "../../const/attributesTypes"
 import {allFragments, OWNER} from "../../const/fragments"
 
+
 //on détecte que l'objet est à charger en se basant arbitrairement sur le champ branches
 const needRefresh = basketTree => !basketTree.branches
 
 export default {
     [On.GO_CREATE_TREE]: () => router.push({name: GO.CREATE_TREE}),
     [On.GO_CREATE_PUB]: () => router.push({name: GO.CREATE_PUB}),
+
+    [On.GO_SELECTION]: ({}, selection) => router.push({name: GO.SELECTION, params: {_id: selection._id}}),
+
     [On.GO_TREE]: ({commit, getters, dispatch}, tree) => {
         dispatch(On.UNSELECT)
         const dest = tree ?
@@ -32,6 +36,13 @@ export default {
         } else {
             return router.push({name: GO.TREE_EMPTY})
         }
+    },
+
+    [On.LOAD_OPEN_SELECTION]: async ({dispatch}, {_id, fragments}) => {
+        const sel = await api.getSelection(_id)
+        const tree = await dispatch(On.LOAD_OPEN_TREE, {_id: sel.trunkId, bqt: totalQt(sel), fragments})
+        Vue.set(tree, "selection", sel)
+        return tree
     },
 
     [On.LOAD_OPEN_TREE]: async ({state, dispatch, commit}, {_id, bqt, fragments = allFragments}) =>
@@ -102,6 +113,29 @@ export default {
             }
         }
     },
+
+    [On.APPLY_SELECTION]: ({dispatch}, {tree, selection}) => {
+
+        let coef = selection.repeted ?
+            (selection.duree.bqt / selection.freq.bqt) * selection.quantity.bqt / tree.trunk.quantity.bqt
+            :
+            selection.quantity.bqt / tree.trunk.quantity.bqt
+
+        const newSelection = {trunkId: tree._id, ...selection}
+        if (tree.selection) {
+            newSelection._id = tree.selection._id
+            api.updateSelection(newSelection)
+        } else {
+            newSelection._id = createStringObjectId()
+            api.createSelection(newSelection)
+        }
+        Vue.set(tree, "selection", newSelection)
+
+        dispatch(On.APPLY_QUANTITY_COEF, {tree, coef})
+
+        //router.replace({name: GO.SELECTION, params: {sid: newSelection._id}})
+    },
+
     [On.APPLY_QUANTITY_COEF]: ({dispatch}, {tree, coef}) => {
         applyRessourceCoef(coef, [tree])
         applyRessourceCoef(coef, tree.roots)
@@ -117,17 +151,5 @@ export default {
         // dispatch(On.CHANGE_COMPARE_QUANTITY, {tree, coef})
     },
 
-    [On.CHANGE_QUANTITY]: ({dispatch}, {tree, quantity}) => {
-        let coef = quantity.bqt / tree.trunk.quantity.bqt
-        console.log(`CHANGE_QUANTITY x${coef} `, quantity)
-        Vue.set(tree, "selection", null)
-        dispatch(On.APPLY_QUANTITY_COEF, {tree, coef})
-    },
-
-    [On.CHANGE_SELECTION]: ({dispatch}, {tree, selection}) => {
-        let coef = (selection.duree.bqt / selection.freq.bqt) * selection.quantity.bqt / tree.trunk.quantity.bqt
-        console.log(`CHANGE_SELECTION x${coef} `, selection)
-        Vue.set(tree, "selection", selection)
-        dispatch(On.APPLY_QUANTITY_COEF, {tree, coef})
-    }
+    [On.LOAD_SELECTION]: ({}, {oid}) => api.selectionOf(oid)
 }

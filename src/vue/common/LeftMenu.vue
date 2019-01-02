@@ -75,7 +75,7 @@
                     <v-icon color="primary">announcement</v-icon>
                 </v-list-tile-action>
                 <v-list-tile-content>
-                    <v-list-tile-title>Créer une Pub</v-list-tile-title>
+                    <v-list-tile-title>Créer une Info</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
 
@@ -113,14 +113,6 @@
                 </v-list-tile-action>
                 <v-list-tile-content>
                     <v-list-tile-title>D'où viennnent les données?</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile @click="showChat(secs.FEATURE)">
-                <v-list-tile-action>
-                    <v-icon color="primary">chat_bubble</v-icon>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                    <v-list-tile-title>{{secs.FEATURE.title}}</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
             <v-list-tile @click="showChat(secs.BUG)">

@@ -7,7 +7,7 @@
                 </span>
                 <v-card slot="back">
                     <v-container my-0 py-0>
-                        <quantity-selection :tree="tree" @close="flip" @changeQuantity="changeQuantity" @changeSelection="changeSelection"/>
+                        <quantity-selection :tree="tree" @close="flip" @change="changeSelection"/>
                     </v-container>
                 </v-card>
             </card3d>
@@ -42,8 +42,7 @@
         },
         methods: {
             ...mapActions({
-                changeQuantity: On.CHANGE_QUANTITY,
-                changeSelection: On.CHANGE_SELECTION,
+                changeSelection: On.APPLY_SELECTION,
                 unselect: On.UNSELECT
             }),
             flip() {
