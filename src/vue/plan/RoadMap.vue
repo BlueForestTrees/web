@@ -27,7 +27,7 @@
                     </v-layout>
                 </v-expansion-panel-content>
             </v-expansion-panel>
-                <open-message :section="secs.FEATURE"/>
+                <open-message :section="secs.FONCTION"/>
         </v-container>
     </card>
 </template>
@@ -60,7 +60,7 @@
                     {
                         icon: 'panorama_fish_eye',
                         title: 'Expliquer les impacts environnementaux',
-                        text: "<p>La liste des impatcs est longue et compliquée. Il faut l'expliquer et la présenter sous forme de synthèse.</p>"
+                        text: "<p>La liste des impatcs est longue et compliquée. Il faut l'expliquer et la présenter sous forme vulgarisée, ludique.</p>"
                     },
                     {
                         icon: 'search',

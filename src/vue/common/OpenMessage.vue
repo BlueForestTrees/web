@@ -1,7 +1,7 @@
 <template>
     <v-flex @click="showMessages" class="hand">
         <v-card-title>
-            <h3 class="font-weight-medium">{{this.section.title}}</h3>
+            <h3 class="font-weight-medium">{{section.title}}</h3>
             <v-btn flat icon>
                 <v-icon color="primary">chat_bubble</v-icon>
                 <span style="position:absolute;color:white;top:0em">{{count}}</span>
