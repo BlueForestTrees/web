@@ -6,7 +6,7 @@ import {hasQuantity, applyAspectCoef, applyRessourceCoef, multiplyTankBqt} from 
 export default {
     [On.LOAD_TANK]: async ({commit, state, dispatch}, {_id, bqt}) =>
         api.getTank(_id)
-            .then(tank => applyRessourceCoef(bqt, tank))
+            .then(tank => applyAspectCoef(bqt, tank))
 }
 
 

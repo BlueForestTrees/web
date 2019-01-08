@@ -1,37 +1,46 @@
 <template>
-    <v-flex key="basket">
-        <v-tabs v-model="tabModel" centered slider-color="primary">
-            <v-tab href="#panier">Récent</v-tab>
-            <v-tab href="#mines">Vos produits</v-tab>
-            <v-tab href="#favoris">Vos Sélections</v-tab>
-        </v-tabs>
-        <v-tabs-items v-model="tabModel">
-            <v-tab-item value="panier">
-                <my-basket v-if="tabModel==='panier'"/>
-            </v-tab-item>
-            <v-tab-item value="mines">
-                <my-product v-if="tabModel==='mines'" :user="user"/>
-            </v-tab-item>
-            <v-tab-item value="favoris">
-                <my-selects v-if="tabModel==='favoris'" :user="user"/>
-            </v-tab-item>
-        </v-tabs-items>
-    </v-flex>
+    <v-tabs-items v-model="tabModel">
+        <v-tab-item value="search" lazy>
+            <search v-if="tabModel==='search'" @select="select"/>
+        </v-tab-item>
+        <v-tab-item value="mines" lazy>
+            <my-product v-if="tabModel==='mines'" :user="user" @select="select"/>
+        </v-tab-item>
+        <v-tab-item value="favoris" lazy>
+            <my-selects v-if="tabModel==='favoris'" :user="user" @select="select"/>
+        </v-tab-item>
+        <v-tab-item value="recent" lazy>
+            <my-basket v-if="tabModel==='recent'" @select="select"/>
+        </v-tab-item>
+    </v-tabs-items>
 </template>
 
 <script>
     import {mapState} from "vuex"
 
+    const Search = () => import(/* webpackChunkName: "MyBasket"*/ "../search/Search")
     const MyBasket = () => import(/* webpackChunkName: "MyBasket"*/ "../home/MyBasket")
     const MyProduct = () => import(/* webpackChunkName: "MyProduct"*/ "../home/MyProduct")
     const MySelects = () => import(/* webpackChunkName: "MySelects"*/ "../home/MySelects")
 
     export default {
         name: 'selection',
-        components: {MyBasket, MySelects, MyProduct},
-        data: () => ({tabModel: null}),
+        components: {Search, MyBasket, MySelects, MyProduct},
         computed: {
-            ...mapState(['user'])
+            ...mapState({user: s => s.user, nav: s => s.nav}),
+            tabModel: {
+                get() {
+                    return this.nav.searchTab
+                },
+                set(v) {
+                    this.nav.searchTab = v
+                }
+            }
+        },
+        methods: {
+            select(item) {
+                this.$emit('select', item)
+            }
         }
     }
 </script>

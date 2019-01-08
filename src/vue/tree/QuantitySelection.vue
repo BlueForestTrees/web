@@ -13,8 +13,8 @@
             <unit-select :disabled="!isRegulier" v-model="unitDuree" :grandeur="dureeGrandeur" :rules="isRegulier ? [required] : []" @keyup.enter="validate" class="chars-width-8"></unit-select>
         </v-layout>
         <v-layout row justify-center>
-            <v-checkbox v-model="isRegulier" label="répété"></v-checkbox>
-            <v-text-field :disabled="!isRegulier" type="text" v-model="name" :rules="isRegulier ? [required] : []" @keyup.enter="validate" class="chars-width-3" label="Nom"></v-text-field>
+            <v-text-field type="text" v-model="name" @keyup.enter="validate" class="chars-width-3" label="Nom d'affichage"></v-text-field>
+            <v-checkbox v-model="isRegulier" label="répété" class="tiny"></v-checkbox>
             <v-btn flat icon @click.stop="validate">
                 <v-icon large color="primary">done</v-icon>
             </v-btn>
@@ -33,7 +33,6 @@
     import {bqtGToQtUnit, getGrandeur, unit, toBqtG, bestQuantity} from 'unit-manip'
     import UnitSelect from "../common/UnitSelect"
     import GrandeurSelect from "../common/GrandeurSelect"
-    import {createStringObjectId} from "../../services/calculations"
 
     export default {
         name: 'quantity-selection',

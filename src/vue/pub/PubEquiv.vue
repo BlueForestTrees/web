@@ -52,7 +52,7 @@
             leftTree: null, rightTree: null, equivTree: null,
             fragment: null
         }),
-        props: ['leftId', 'rightId', 'equivId'],
+        props: ['_id'],
         watch: {
             '$route'(to, from) {
                 this.refresh()
@@ -110,15 +110,15 @@
             }),
             refresh: async function () {
 
-                this.updateFragment()
-
-                this.leftTree = await this.loadTree({_id: this.leftId, fragments: ["trunk", this.fragment.type]})
-                this.rightTree = await this.loadTree({_id: this.rightId, fragments: ["trunk", this.fragment.type]})
-                this.equivTree = await this.loadTree({_id: this.equivId, fragments: ["trunk", this.fragment.type]})
-
-                await this.leftTree.promises.all
-                await this.rightTree.promises.all
-                await this.equivTree.promises.all
+                // this.updateFragment()
+                //
+                // this.leftTree = await this.loadTree({_id: this.leftId, fragments: ["trunk", this.fragment.type]})
+                // this.rightTree = await this.loadTree({_id: this.rightId, fragments: ["trunk", this.fragment.type]})
+                // this.equivTree = await this.loadTree({_id: this.equivId, fragments: ["trunk", this.fragment.type]})
+                //
+                // await this.leftTree.promises.all
+                // await this.rightTree.promises.all
+                // await this.equivTree.promises.all
 
 
             },

@@ -53,7 +53,7 @@ export default {
     tree: null,
     compare: {left: null, right: null, leftAxises: null, rightAxises: null, axis: null},
     dialogs: dialogs(),
-    nav: {leftMenuVisible: false, rightMenuVisible: false, dark: false, detailsDialog: false},
+    nav: {leftMenuVisible: false, rightMenuVisible: false, dark: false, detailsDialog: false, searchTab: null},
     snack: snack(),
     messages: {title: null, hasMore: false, filter: {}, list: []},
     myMessages: [],

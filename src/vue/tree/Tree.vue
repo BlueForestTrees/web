@@ -79,7 +79,7 @@
                 showDialog: On.SHOW_DIALOG,
                 switchLeftMenu: On.SWITCH_LEFT_MENU,
                 dispatchLoad: On.LOAD_OPEN_TREE,
-                dispatchSelLoad: On.LOAD_OPEN_SELECTION,
+                dispatchSelLoad: On.LOAD_SELECTION,
                 snack: On.SNACKBAR,
                 goSearch: On.GO_SEARCH,
                 goBasket: On.GO_BASKET,

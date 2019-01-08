@@ -1,8 +1,8 @@
 <template>
-    <span @click="selectable && !qtFlipped && toggleSelect(tree)" :style="{background: isSelected(tree) ? '#D8E9F5' : '', height:'100%'}">
+    <span class="fill-height">
         <v-layout justify-center>
             <card3d v-if="trunk" :flipped="qtFlipped">
-                <span slot="front" @click.stop="flip">
+                <span slot="front" @click.stop="flip" class="hand">
                     <tree-card-front :tree="tree"/>
                 </span>
                 <v-card slot="back">
@@ -18,7 +18,6 @@
 <script>
     import {mapActions} from "vuex"
     import {qtUnit, name} from "../../services/calculations"
-    import selectable from "../mixin/Selectable"
     import Card3d from "../common/Card3d"
     import QuantitySelection from "./QuantitySelection"
     import On from "../../const/on"
@@ -29,11 +28,9 @@
     export default {
         name: "tree-card",
         components: {Photo, TreeCardFront, QuantitySelection, Card3d},
-        mixins: [selectable],
         props: {
             tree: Object,
             noBar: {type: Boolean, default: false},
-            selectable: {type: Boolean, default: false}
         },
         data() {
             return {
@@ -42,12 +39,10 @@
         },
         methods: {
             ...mapActions({
-                changeSelection: On.APPLY_SELECTION,
-                unselect: On.UNSELECT
+                changeSelection: On.APPLY_SELECTION
             }),
             flip() {
                 this.qtFlipped = !this.qtFlipped
-                this.unselect()
             },
             qtUnit, name
         },

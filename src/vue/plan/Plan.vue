@@ -2,19 +2,19 @@
     <v-container pa-0>
         <v-container>
             <v-window v-model="window">
-                <v-window-item key="c">
+                <v-window-item key="c" lazy>
                     <plan-constat/>
                 </v-window-item>
-                <v-window-item key="b">
+                <v-window-item key="b" lazy>
                     <plan-besoin/>
                 </v-window-item>
-                <v-window-item key="f">
+                <v-window-item key="f" lazy>
                     <plan-func/>
                 </v-window-item>
-                <v-window-item key="m">
+                <v-window-item key="m" lazy>
                     <plan-model-eco/>
                 </v-window-item>
-                <v-window-item key="t">
+                <v-window-item key="t" lazy>
                     <plan-tech/>
                 </v-window-item>
             </v-window>
@@ -77,11 +77,12 @@
     import {mapActions, mapState} from "vuex"
     import Card from "../common/Card"
     import ConnectToContinueDialog from "../dialog/ConnectToContinueDialog"
-    import PlanConstat from "./Plan1Constat"
-    import PlanBesoin from "./Plan2Besoin"
-    import PlanFunc from "./Plan3Fonc"
-    import PlanTech from "./Plan4Tech"
-    import PlanModelEco from "./Plan4ModelEco"
+
+    const PlanConstat = () => import(/* webpackChunkName: "PlanConstat"*/ "./Plan1Constat")
+    const PlanBesoin = () => import(/* webpackChunkName: "PlanBesoin"*/ "./Plan2Besoin")
+    const PlanFunc = () => import(/* webpackChunkName: "PlanFunc"*/ "./Plan3Fonc")
+    const PlanTech = () => import(/* webpackChunkName: "PlanTech"*/ "./Plan4Tech")
+    const PlanModelEco = () => import(/* webpackChunkName: "PlanModelEco"*/ "./Plan4ModelEco")
 
     export default {
         name: "plan",

@@ -27,7 +27,7 @@
                     </v-layout>
                 </v-expansion-panel-content>
             </v-expansion-panel>
-                <open-message :section="secs.FONCTION"/>
+            <open-message :section="secs.FONCTION"/>
         </v-container>
     </card>
 </template>

@@ -4,7 +4,7 @@
         <v-spacer/>
 
         <v-btn icon flat :to="{name: GO.SEARCH}">
-            <v-icon large color="primary">search</v-icon>
+            <img src="/img/logo.svg" class="logo"/>
         </v-btn>
 
         <logged-in/>

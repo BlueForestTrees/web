@@ -1,29 +1,30 @@
 <template>
-    <span class="ma-1">
-
+    <v-container>
         <template v-if="user">
-            <v-list two-lines v-if="items.length">
-                <template v-for="item in items">
-                    <v-list-tile :key="item._id" avatar @click="goSelection(item)">
-                        <v-list-tile-content>
-                            <v-list-tile-title>{{ name(item) }}</v-list-tile-title>
-                            <v-list-tile-sub-title>quantité: {{ qtFreqOrUnit(item) }}</v-list-tile-sub-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
-                    <v-divider/>
-                </template>
-            </v-list>
-            <v-card-text v-else-if="loaded" class="text-md-center">
-                <p>Vous n'avez pas de sélection.</p>
-                <p>Vous pouvez enregistrer des selections de produits depuis la recherche et leur donner un nom.</p>
-                <p>Vous pourrez ensuite les utiliser plus tard.</p>
-            </v-card-text>
-            <loader v-else/>
+            <v-card>
+                <v-list two-lines v-if="items.length">
+                    <template v-for="item in items">
+                        <v-list-tile :key="item._id" avatar @click="select(item)">
+                            <v-list-tile-content>
+                                <v-list-tile-title>{{ name(item) }}</v-list-tile-title>
+                                <v-list-tile-sub-title>quantité: {{ qtFreqOrUnit(item) }}</v-list-tile-sub-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
+                        <v-divider/>
+                    </template>
+                </v-list>
+                <v-card-text v-else-if="loaded" class="text-md-center">
+                    <p>Vous n'avez pas de sélection.</p>
+                    <p>Vous pouvez enregistrer des selections de produits depuis la recherche et leur donner un nom.</p>
+                    <p>Vous pourrez ensuite les utiliser plus tard.</p>
+                </v-card-text>
+                <loader v-else/>
+            </v-card>
         </template>
 
         <v-container v-else>Connectez-vous pour voir vos sélections enregistrées.</v-container>
 
-    </span>
+    </v-container>
 </template>
 <script>
     import On from "../../const/on"
@@ -44,10 +45,10 @@
         methods: {
             name, qtFreqOrUnit,
             ...mapActions({
-                goSelection: On.GO_SELECTION,
-                loadUserSelections: On.LOAD_SELECTION
+                loadUserSelections: On.LOAD_SELECTIONS
             }),
             loadSelections() {
+                if (!this.ownerFilter) return
                 this.loaded = false
                 this.loading = true
                 this.loadUserSelections(this.ownerFilter).then(items => {
@@ -59,6 +60,9 @@
                     this.loading = false
                     console.error(e)
                 })
+            },
+            select(item) {
+                this.$emit('select', item)
             }
         },
         mounted() {

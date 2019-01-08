@@ -2,24 +2,31 @@
     <v-navigation-drawer app v-model="nav.leftMenuVisible">
         <v-list dense>
 
-            <v-list-tile @click="goto(GO.BASKET)">
+            <v-list-tile @click="goto(GO.SEARCH)">
                 <v-list-tile-action>
-                    <v-icon color="primary">select_all</v-icon>
+                    <img src="/img/logo.svg" class="logo"/>
                 </v-list-tile-action>
                 <v-list-tile-content>
-                    <v-list-tile-title>Mes produits</v-list-tile-title>
+                    <v-list-tile-title>Accueil</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
 
-            <v-list-tile @click="goto(GO.MESSAGE)">
+            <v-list-tile @click="goCreateTree">
                 <v-list-tile-action>
-                    <v-icon color="primary">chat_bubble</v-icon>
+                    <v-icon color="primary">panorama_fish_eye</v-icon>
                 </v-list-tile-action>
                 <v-list-tile-content>
-                    <v-list-tile-title>Mes messages</v-list-tile-title>
+                    <v-list-tile-title>Créer un produit ou un service</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
-
+            <v-list-tile @click="goCreateInfo">
+                <v-list-tile-action>
+                    <v-icon color="primary">announcement</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                    <v-list-tile-title>Créer une Information</v-list-tile-title>
+                </v-list-tile-content>
+            </v-list-tile>
 
             <v-list-group>
 
@@ -60,24 +67,16 @@
                         </v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
-            </v-list-group>
 
-            <v-list-tile @click="goCreateTree">
-                <v-list-tile-action>
-                    <v-icon color="primary">panorama_fish_eye</v-icon>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                    <v-list-tile-title>Créer un produit ou un service</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile @click="goCreatePub">
-                <v-list-tile-action>
-                    <v-icon color="primary">announcement</v-icon>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                    <v-list-tile-title>Créer une Info</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
+                <v-list-tile @click="goto(GO.MESSAGE)">
+                    <v-list-tile-action>
+                        <v-icon color="primary">chat_bubble</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <v-list-tile-title>Mes messages</v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+            </v-list-group>
 
 
         </v-list>
@@ -86,7 +85,7 @@
         <v-list style="position:absolute;bottom:0em;width:100%" dense>
             <v-layout ml-2 mb-2 row align-end>
                 <v-list-tile-action>
-                    <img src="/img/logo.svg" style="height:4em"/>
+                    <img src="/img/logo.svg" class="logo-big"/>
                 </v-list-tile-action>
                 BlueForest v{{version.web}}
             </v-layout>
@@ -166,7 +165,7 @@
                 goImpactEntry: On.GO_IMPACT_ENTRY,
                 goFacetEntry: On.GO_FACET_ENTRY,
                 goCreateTree: On.GO_CREATE_TREE,
-                goCreatePub: On.GO_CREATE_PUB,
+                goCreateInfo: On.GO_CREATE_INFO,
                 dispatchShowMessages: On.SHOW_MESSAGES
             })
         },

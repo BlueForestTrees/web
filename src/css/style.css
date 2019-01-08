@@ -2,6 +2,10 @@ html {
     overflow-y: auto
 }
 
+.tiny{
+    width: 1.5em;
+}
+
 .rounded{
     border-radius:0.5em;
 }
@@ -21,7 +25,6 @@ html {
     height: 100%;
     transition: transform 0.3s;
     transform-style: preserve-3d;
-    cursor: pointer;
     position: relative;
 }
 
@@ -71,6 +74,14 @@ a {
 
 .chars-width-15 {
     width: 15em
+}
+
+.logo {
+    height:2.5em
+}
+
+.logo-big {
+    height:4em
 }
 
 .not-too-small {

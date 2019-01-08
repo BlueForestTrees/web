@@ -44,7 +44,7 @@
 
         <h2 class="display-1 font-weight-thin">Discussion</h2>
         <p><v-icon color="green" small>info</v-icon>Votre point de vue est essentiel à la poursuite de ce projet! :)</p>
-        <open-message :section="secs.FEATURE"/>
+        <open-message :section="secs.FONCTION"/>
     </div>
 </template>
 

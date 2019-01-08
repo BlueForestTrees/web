@@ -12,7 +12,7 @@
             </template>
         </v-list>
         <infinite-loading v-if="active" ref="iloading" @infinite="loadResults" :distance="500" style="padding-bottom: 3em">
-            <span slot="no-more">{{items.length}} résultats</span>
+            <span slot="no-more">{{items.length}} résultat{{items.length > 1 ? 's':''}}</span>
             <span slot="no-results"><slot name="no-results">Pas de résultats. <br><v-icon color="orange" small>new_releases</v-icon>Voter pour: <a>Enregistrer cette recherche comme manquante.</a></slot></span>
             <span slot="spinner"><loader/></span>
         </infinite-loading>

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import On from "../../const/on"
 import api from "../../rest/api"
-import {applyAspectCoef, applyRessourceCoef, createStringObjectId, totalQt, transportQuantity, treefyAll} from "../../services/calculations"
+import {applyAspectCoef, applyRessourceCoef, coefFromTrunkToSelection, createStringObjectId, totalQt, transportQuantity, treefyAll, treeTotalQt} from "../../services/calculations"
 import {bqtGToQtUnit, baseQt} from "unit-manip"
 import router from "../../router/router"
 import {GO} from "../../const/go"
@@ -15,7 +15,9 @@ const needRefresh = basketTree => !basketTree.branches
 
 export default {
     [On.GO_CREATE_TREE]: () => router.push({name: GO.CREATE_TREE}),
-    [On.GO_CREATE_PUB]: () => router.push({name: GO.CREATE_PUB}),
+    [On.GO_CREATE_INFO]: () => router.push({name: GO.CREATE_INFO}),
+
+    [On.GO_ANY]: ({dispatch}, item) => item.repeted ? dispatch(On.GO_SELECTION, item) : dispatch(On.GO_TREE, item),
 
     [On.GO_SELECTION]: ({}, selection) => router.push({name: GO.SELECTION, params: {_id: selection._id}}),
 
@@ -38,10 +40,10 @@ export default {
         }
     },
 
-    [On.LOAD_OPEN_SELECTION]: async ({dispatch}, {_id, fragments}) => {
+    [On.LOAD_SELECTION]: async ({dispatch}, {_id, fragments}) => {
         const sel = await api.getSelection(_id)
         const tree = await dispatch(On.LOAD_OPEN_TREE, {_id: sel.trunkId, bqt: totalQt(sel), fragments})
-        Vue.set(tree, "selection", sel)
+        tree.selection = sel
         return tree
     },
 
@@ -54,25 +56,29 @@ export default {
 
     [On.LOAD_TREE]: ({commit, state, dispatch}, {_id, bqt = 1, fragments = allFragments}) => {
         const basketItem = state.basket[_id]
-        let tree = null
         if (basketItem && !needRefresh(basketItem)) {
-            tree = basketItem
+            return basketItem
         } else {
-            tree = {_id}
-            tree.promises = {}
-
-            for (let i = 0; i < fragments.length; i++) {
-                if (fragments[i] !== OWNER) {
-                    tree.promises[fragments[i]] = dispatch(On.load(fragments[i]), {_id, bqt}).then(fragment => Vue.set(tree, fragments[i], fragment))
-                } else {
-                    tree.promises.owner = tree.promises.trunk.then(trunk => dispatch(On.LOAD_USER, trunk.oid).then(owner => Vue.set(tree, "owner", owner)))
-                }
-            }
-
-            tree.promises.all = Promise.all(Object.values(tree.promises))
+            const tree = {_id}
+            dispatch(On.UPDATE_TREE, {tree, bqt, fragments})
             dispatch(On.ADD_TO_BASKET, [tree])
+            return tree
         }
-        return tree
+    },
+
+    [On.UPDATE_TREES]: ({dispatch}, {trees, fragments = allFragments}) => {
+        return Promise.all(trees.map(tree => dispatch(On.UPDATE_TREE, {tree, bqt: treeTotalQt(tree), fragments})))
+    },
+    [On.UPDATE_TREE]: ({dispatch}, {tree, bqt = 1, fragments = allFragments}) => {
+        tree.promises = {}
+        for (let i = 0; i < fragments.length; i++) {
+            if (fragments[i] !== OWNER) {
+                tree.promises[fragments[i]] = dispatch(On.load(fragments[i]), {_id: tree._id, bqt}).then(fragment => Vue.set(tree, fragments[i], fragment))
+            } else {
+                tree.promises.owner = tree.promises.trunk.then(trunk => dispatch(On.LOAD_USER, trunk.oid).then(owner => Vue.set(tree, "owner", owner)))
+            }
+        }
+        return tree.promises.all = Promise.all(Object.values(tree.promises))
     },
 
 
@@ -115,11 +121,7 @@ export default {
     },
 
     [On.APPLY_SELECTION]: ({dispatch}, {tree, selection}) => {
-
-        let coef = selection.repeted ?
-            (selection.duree.bqt / selection.freq.bqt) * selection.quantity.bqt / tree.trunk.quantity.bqt
-            :
-            selection.quantity.bqt / tree.trunk.quantity.bqt
+        const coef = coefFromTrunkToSelection(selection, tree)
 
         const newSelection = {trunkId: tree._id, ...selection}
         if (tree.selection) {
@@ -139,17 +141,15 @@ export default {
     [On.APPLY_QUANTITY_COEF]: ({dispatch}, {tree, coef}) => {
         applyRessourceCoef(coef, [tree])
         applyRessourceCoef(coef, tree.roots)
-        applyRessourceCoef(coef, tree.tank)
         applyRessourceCoef(coef, tree.branches)
 
+        applyAspectCoef(coef, tree.tank)
         applyAspectCoef(coef, tree.impacts)
         applyAspectCoef(coef, tree.damages)
         applyAspectCoef(coef, tree.facets)
         applyAspectCoef(coef, tree.impactsTank)
         applyAspectCoef(coef, tree.damagesTank)
-
-        // dispatch(On.CHANGE_COMPARE_QUANTITY, {tree, coef})
     },
 
-    [On.LOAD_SELECTION]: ({}, {oid}) => api.selectionOf(oid)
+    [On.LOAD_SELECTIONS]: ({}, {oid}) => api.selectionOf(oid)
 }
