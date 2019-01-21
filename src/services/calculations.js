@@ -48,7 +48,7 @@ export const qtFreq = selection => selection && selection.repeted ? `${qtUnit(se
 
 export const qtFreqOrUnit = item => qtFreq(item) || qtUnit(item)
 
-export const name = item => item && (item.selection && item.selection.repeted && item.selection.name) || (item.name || item.trunk && item.trunk.name) || '?'
+export const name = item => item && (item.selection && item.selection.name) || (item.name || item.trunk && item.trunk.name) || '?'
 
 export const color = item => item.color || item.trunk.color
 export const removeUseless = name => name.replace(/\([^)]*\)/, "...")

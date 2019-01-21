@@ -1,11 +1,10 @@
 <template>
     <v-flex @click="showMessages" class="hand">
         <v-card-title>
-            <h3 class="font-weight-medium">{{section.title}}</h3>
             <v-btn flat icon>
                 <v-icon color="primary">chat_bubble</v-icon>
-                <span v-if="showCount" style="position:absolute;color:white;top:0em">{{count}}</span>
             </v-btn>
+            <h3 class="font-weight-thin">{{section.title}}</h3>
         </v-card-title>
     </v-flex>
 </template>
@@ -18,21 +17,12 @@
     export default {
         name: "open-message",
         props: {section: {type: Object}, showCount: false},
-        data() {
-            return {
-                count: null
-            }
-        },
-        mounted() {
-            this.countMessages(this.section.filter).then(c => this.count = c)
-        },
         methods: {
             showMessages() {
                 this.dispatchShowMessages(this.section)
             },
             ...mapActions({
-                dispatchShowMessages: On.SHOW_MESSAGES,
-                countMessages: On.COUNT_MESSAGES
+                dispatchShowMessages: On.SHOW_MESSAGES
             })
         }
     }

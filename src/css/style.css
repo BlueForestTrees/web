@@ -2,6 +2,12 @@ html {
     overflow-y: auto
 }
 
+.bottom-right {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
 .tiny {
     width: 1.5em;
 }

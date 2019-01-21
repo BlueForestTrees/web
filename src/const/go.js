@@ -17,7 +17,7 @@ export const GO = {
     NOT_FOUND: 'notFound',
     SELECTION: 'selection',
     EQUIV: 'equiv',
-    PUB_EQUIV: 'pubEquiv',
+    INFO: 'info',
     QUI_2: 'qui2',
     CREATE_TREE: 'createTree',
     CREATE_INFO: 'createInfo',

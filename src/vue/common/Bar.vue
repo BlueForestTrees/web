@@ -167,7 +167,7 @@
             },
             createPub(selection) {
                 this.go({
-                    name: GO.PUB_EQUIV,
+                    name: GO.INFO,
                     params: {
                         leftId: selection[0]._id,
                         rightId: selection[1]._id,

@@ -24,7 +24,7 @@ const MyMessages = () => import(/* webpackChunkName: "MyMessages" */ '../vue/hom
 const AddImpactEntry = () => import(/* webpackChunkName: "AIE" */ '../vue/dialog/AddImpactEntry')
 const AddFacetEntry = () => import(/* webpackChunkName: "AFEDialog" */ "../vue/dialog/AddFacetEntry")
 const AddRessource = () => import(/* webpackChunkName: "ARDialog"*/ "../vue/dialog/AddRessourceDialog")
-const PubEquiv = () => import(/* webpackChunkName: "PubE"*/ "../vue/pub/PubEquiv")
+const Info = () => import(/* webpackChunkName: "Info"*/ "../vue/pub/Info")
 const CreateInfo = () => import(/* webpackChunkName: "Info"*/ "../vue/pub/CreateInfo")
 const CreateEq = () => import(/* webpackChunkName: "CreateEq"*/ "../vue/pub/CreateEq")
 const CreateCompens = () => import(/* webpackChunkName: "CreateCompens"*/ "../vue/pub/CreateCompens")
@@ -55,7 +55,7 @@ export default new VueRouter({
                 {name: GO.EQUIV, path: "equiv/:bqt/:_id/:sbqt/:s_id", component: Equivalence, props: true},
 
                 {name: GO.CREATE_INFO, path: "info", component: CreateInfo},
-                {name: GO.PUB_EQUIV, path: "info/:_id", component: PubEquiv, props: true},
+                {name: GO.INFO, path: "info/:path", component: Info, props: true},
                 {name: GO.CREATE_EQUIV, path: "create/eq", component: CreateEq},
                 {name: GO.CREATE_COMPENS, path: "create/co", component: CreateCompens},
                 {name: GO.CREATE_ALT, path: "create/alt", component: CreateAlt},

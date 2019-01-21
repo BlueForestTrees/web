@@ -12,6 +12,8 @@ export default {
 
     checkInfoAvailable: path => get(`api/info/check/${path}`),
     postInfo: info => post(`api/info`, info),
+    putInfo: info => put(`api/info`, info),
+    getInfo: path => get(`api/info/path/${path}`),
     getSelection: _id => get(`api/selection/${_id}`),
     selectionOf: oid => get(`api/selection/owner/${oid}`),
     createSelection: selection => post(`/api/selection`, selection),

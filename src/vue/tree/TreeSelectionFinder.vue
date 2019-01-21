@@ -1,13 +1,15 @@
 <template>
-    <span v-if="!tree">
-        <selection-command/>
-        <v-divider/>
+    <span v-if="changeTree || !curTree">
+        <v-card><selection-command/></v-card>
         <selection @select="selectTree"/>
     </span>
-    <v-layout align-center column v-else>
-        <div class="font-weight-medium pa-3"><v-icon color="green" class="mr-2">info</v-icon>Choisissez la quantité:</div>
+    <v-layout v-else align-center column>
+        <div class="font-weight-medium pa-3">
+            <v-icon color="green" class="mr-2">info</v-icon>
+            Choisissez la quantité:
+        </div>
         <card>
-            <quantity-selection class="pa-3" :tree="tree" @change="selectionChange" @close="closeSelection"/>
+            <quantity-selection class="pa-3" :tree="curTree" @change="selectionChange" @close="closeQtSelection"/>
         </card>
     </v-layout>
 </template>
@@ -23,7 +25,11 @@
     export default {
         name: "tree-selection-finder",
         components: {Card, QuantitySelection, Selection, SelectionCommand},
-        data: () => ({tree: null}),
+        props: ['tree'],
+        data: () => ({selectedTree: null, changeTree: false}),
+        mounted(){
+            console.log("mounted")
+        },
         methods: {
             name,
             ...mapActions({
@@ -34,14 +40,21 @@
                 if (item.repeted) {
                     item = await this.loadTreeFromSelection({_id: item._id, fragments: ["trunk"]})
                 }
-                this.tree = item
+                this.selectedTree = item
+                this.changeTree = false
             },
             selectionChange(sel) {
                 this.applySelection(sel)
-                this.$emit("select", this.tree)
+                this.$emit("select", this.curTree)
+                this.changeTree = false
             },
-            closeSelection() {
-                this.tree = null
+            closeQtSelection() {
+                this.changeTree = true
+            }
+        },
+        computed: {
+            curTree() {
+                return this.selectedTree || this.tree
             }
         }
     }

@@ -1,5 +1,5 @@
 <template>
-    <span>
+    <v-container>
         <loader v-if="!commons" :text="loading"/>
         <v-list v-else-if="commons.length > 0" subheader>
             <v-list-tile :key="item._id" v-for="item in commons" @click="$emit('select',item)">
@@ -16,7 +16,7 @@
                 </p>
             </v-layout>
         </v-container>
-    </span>
+    </v-container>
 </template>
 <script>
     import Loader from "../loader/Loader"

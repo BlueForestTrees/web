@@ -13,7 +13,7 @@
             <unit-select :disabled="!isRegulier" v-model="unitDuree" :grandeur="dureeGrandeur" :rules="isRegulier ? [required] : []" @keyup.enter="validate" class="chars-width-8"></unit-select>
         </v-layout>
         <v-layout row justify-center>
-            <v-text-field type="text" v-model="name" @keyup.enter="validate" class="chars-width-3" label="Nom d'affichage"></v-text-field>
+            <v-text-field counter="30" type="text" v-model="name" :rules="[required, noMore30]" @keyup.enter="validate" class="chars-width-3" label="Nom d'affichage"></v-text-field>
             <v-checkbox v-model="isRegulier" label="répété" class="tiny"></v-checkbox>
             <v-btn flat icon @click.stop="validate">
                 <v-icon large color="primary">done</v-icon>
@@ -66,13 +66,13 @@
                     const duree = toBqtG({qt: this.qtDuree, unit: this.unitDuree.shortname})
                     const name = this.name
                     this.$emit("change", {tree, selection: {quantity, repeted, freq, duree, name}})
-                    this.close()
                 }
             },
             close() {
                 this.$emit('close')
             },
-            required, isNumber
+            required, isNumber,
+            noMore30: v=>v && v.length <= 30 || "trop long"
         },
         mounted() {
             if (this.tree.selection) {
@@ -91,13 +91,14 @@
                 this.unitDuree = unit(qtUnitDuree.unit)
 
                 this.isRegulier = this.tree.selection.repeted
-                this.name = this.tree.selection.name
+                this.name = this.tree.selection.name || this.tree.trunk.name
             } else {
                 let bqtG = this.tree.trunk.quantity
                 const qtUnit = bestQuantity(bqtGToQtUnit(bqtG))
                 this.qt = qtUnit.qt
                 this.unit = unit(qtUnit.unit)
                 this.grandeur = getGrandeur(bqtG.g)
+                this.name = this.tree.trunk.name
             }
         }
     }

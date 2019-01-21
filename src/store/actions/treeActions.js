@@ -122,7 +122,11 @@ export default {
 
     [On.APPLY_SELECTION]: ({dispatch}, {tree, selection}) => {
         const coef = coefFromTrunkToSelection(selection, tree)
+        Vue.set(tree, "selection", {...selection, trunkId: tree._id})
+        dispatch(On.APPLY_QUANTITY_COEF, {tree, coef})
+    },
 
+    [On.SAVE_SELECTION]: ({dispatch}, {tree, selection}) => {
         const newSelection = {trunkId: tree._id, ...selection}
         if (tree.selection) {
             newSelection._id = tree.selection._id
@@ -131,10 +135,6 @@ export default {
             newSelection._id = createStringObjectId()
             api.createSelection(newSelection)
         }
-        Vue.set(tree, "selection", newSelection)
-
-        dispatch(On.APPLY_QUANTITY_COEF, {tree, coef})
-
     },
 
     [On.LOAD_SELECTIONS]: ({}, {oid}) => api.selectionOf(oid)

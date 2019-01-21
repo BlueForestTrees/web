@@ -7,7 +7,7 @@
                 </span>
                 <v-card slot="back">
                     <v-container my-0 py-0>
-                        <quantity-selection :tree="tree" @close="flip" @change="changeSelection"/>
+                        <quantity-selection :tree="tree" @close="flip" @change="selectionChanged"/>
                     </v-container>
                 </v-card>
             </card3d>
@@ -22,6 +22,7 @@
     import QuantitySelection from "./QuantitySelection"
     import On from "../../const/on"
     import TreeCardFront from "./TreeCardFront"
+
     const Photo = () => import(/* webpackChunkName: "Photo" */ "../common/Photo")
 
 
@@ -39,8 +40,14 @@
         },
         methods: {
             ...mapActions({
-                changeSelection: On.APPLY_SELECTION
+                saveSelection: On.SAVE_SELECTION,
+                applySelection: On.APPLY_SELECTION
             }),
+            selectionChanged(selection) {
+                this.saveSelection(selection)
+                this.applySelection(selection)
+                this.flip()
+            },
             flip() {
                 this.qtFlipped = !this.qtFlipped
             },

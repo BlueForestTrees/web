@@ -78,6 +78,19 @@
                                         </v-btn>
                                     </v-list-tile-action>
                                 </v-list-tile>
+                                <v-list-tile v-if="!editing || idx === 5" key="5" class="list-complete-item">
+                                    <v-list-tile-content>
+                                        <v-list-tile-title>Description (optionnel):<span class="font-weight-medium ml-3">{{description}}</span></v-list-tile-title>
+                                    </v-list-tile-content>
+                                    <v-list-tile-action>
+                                        <v-btn v-if="editing" icon @click="close">
+                                            <v-icon color="grey" large>close</v-icon>
+                                        </v-btn>
+                                        <v-btn v-else icon @click="idx = 5">
+                                            <v-icon color="primary">edit</v-icon>
+                                        </v-btn>
+                                    </v-list-tile-action>
+                                </v-list-tile>
                             </transition-group>
                         </v-list>
                     </v-layout>
@@ -85,24 +98,34 @@
                 <v-window v-model="idx">
                     <v-window-item></v-window-item>
                     <v-window-item lazy transition="fade-transition">
-                        <tree-selection-finder @select="selectProductA"/>
+                        <tree-selection-finder @select="selectProductA" :tree="aTree"/>
                     </v-window-item>
                     <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
-                        <tree-selection-finder @select="selectProductB"/>
+                        <tree-selection-finder @select="selectProductB" :tree="bTree"/>
                     </v-window-item>
                     <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
                         <attribute-finder :trees="[aTree, bTree]" @select="selectFragment"/>
                     </v-window-item>
                     <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
-                        <name-checker @save="save"/>
+                        <name-checker @save="selectPath"/>
+                    </v-window-item>
+                    <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
+                        <description-input @save="selectDescription"/>
                     </v-window-item>
                 </v-window>
+                <v-container v-if="!editing">
+                    <v-layout column align-center>
+                        <v-btn :disabled="!canSave" color="primary" @click="save">Enregistrer</v-btn>
+                        <div v-if="accessible">Accès à l'équivalence: <a :href="url">{{url}}</a></div>
+                    </v-layout>
+                </v-container>
             </v-card>
         </v-container>
 
     </div>
 </template>
 <script>
+    import Vue from 'vue'
     import Card from "../common/Card"
     import TreeCard from "../tree/TreeCard"
     import TreeSelectionFinder from "../tree/TreeSelectionFinder"
@@ -111,11 +134,16 @@
     import On from "../../const/on"
     import {mapActions} from "vuex"
     import NameChecker from "./NameChecker"
+    import DescriptionInput from "./DescriptionInput"
 
     export default {
         name: "create-eq",
-        components: {NameChecker, AttributeFinder, TreeSelectionFinder, TreeCard, Card},
-        data: () => ({idx: 0, aTree: null, bTree: null, fragment: null, saved: null, path: null}),
+        components: {DescriptionInput, NameChecker, AttributeFinder, TreeSelectionFinder, TreeCard, Card},
+        data: () => ({
+            idx: 0, saved: true,
+            aTree: null, bTree: null, fragment: null,
+            path: null, description: null
+        }),
         methods: {
             qtUnitName, name,
             close() {
@@ -123,62 +151,73 @@
             },
             selectProductA(tree) {
                 this.aTree = tree
+                this.saved = false
                 this.close()
             },
             selectProductB(tree) {
                 this.bTree = tree
+                this.saved = false
                 this.close()
             },
             selectFragment(fragment) {
-                this.fragment = fragment
+                if (this.fragment !== fragment) {
+                    this.fragment = fragment
+                    this.saved = false
+                }
                 this.close()
             },
-            save(name) {
-                this.saveInfo({
-                    _id: createStringObjectId(),
-                    type: "eq",
-                    path: name,
-                    leftSelectionId: this.aTree.selection._id,
-                    rightSelectionId: this.aTree.selection._id,
-                    fragmentType: this.fragment.type,
-                    fragmentId: this.fragment._id
-                }).then(() => {
-                    this.path = name
-                    this.saved = true
-                    this.close()
-                })
+            selectPath(path) {
+                if (this.path !== path) {
+                    this.path = path
+                    this.saved = false
+                }
+                this.close()
+            },
+            selectDescription(description) {
+                if (this.description !== description) {
+                    this.description = description
+                    this.saved = false
+                }
+                this.close()
+            },
+            save() {
+                if (!this._id) {
+                    const _id = createStringObjectId()
+                    this.saveInfo({
+                        _id,
+                        type: "eq",
+                        path: this.path,
+                        leftSelection: this.aTree.selection,
+                        rightSelection: this.bTree.selection,
+                        fragmentType: this.fragment.type,
+                        fragmentId: this.fragment._id,
+                        fragmentName: this.fragment.name,
+                        description: this.description
+                    }).then(() => {
+                        this._id = _id
+                        this.saved = true
+                    })
+                } else {
+                    this.updateInfo({
+                        _id: this._id,
+                        type: "eq",
+                        path: this.path,
+                        leftSelection: this.aTree.selection,
+                        rightSelection: this.aTree.selection,
+                        fragmentType: this.fragment.type,
+                        fragmentId: this.fragment._id,
+                        fragmentName: this.fragment.name,
+                        description: this.description
+                    }).then(() => {
+                        this.saved = true
+                    })
+                }
             },
             ...mapActions({
                 applyCoef: On.APPLY_QUANTITY_COEF,
-                saveInfo: On.SAVE_INFO
+                saveInfo: On.SAVE_INFO,
+                updateInfo: On.UPDATE_INFO,
             }),
-
-
-
-            beforeEnter: function (el) {
-                el.style.opacity = 0
-                el.style.height = 0
-            },
-            enter: function (el, done) {
-                var delay = el.dataset.index * 150
-                setTimeout(function () {
-                    Velocity(
-                        el,
-                        { opacity: 1, height: '1.6em' },
-                        { complete: done }
-                    )
-                }, delay)
-            },
-            leave: function (el, done) {
-                var delay = el.dataset.index * 150
-                setTimeout(function () {
-                    Velocity(
-                        el,
-                        { opacity: 0, height: 0 },
-                        { complete: done }
-                    )
-                }, delay)
-            }
 
 
         },
@@ -190,7 +229,16 @@
             },
             editing() {
                 return this.idx !== 0
-            }
+            },
+            accessible() {
+                return this.url && this.saved
+            },
+            url() {
+                return this.path && `${Vue.http.options.root}/info/${this.path}`
+            },
+            canSave() {
+                return this.path && this.aTree && this.bTree && this.fragment && !this.saved
+            },
         },
         watch: {
             coef(c) {
