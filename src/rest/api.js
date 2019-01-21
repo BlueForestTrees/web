@@ -10,6 +10,8 @@ const cached = async (method, uri, cache) => cache.get(uri) || cache.put(uri, aw
 
 export default {
 
+    checkInfoAvailable: path => get(`api/info/check/${path}`),
+    postInfo: info => post(`api/info`, info),
     getSelection: _id => get(`api/selection/${_id}`),
     selectionOf: oid => get(`api/selection/owner/${oid}`),
     createSelection: selection => post(`/api/selection`, selection),

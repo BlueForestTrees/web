@@ -4,7 +4,7 @@
             <h3 class="font-weight-medium">{{section.title}}</h3>
             <v-btn flat icon>
                 <v-icon color="primary">chat_bubble</v-icon>
-                <span style="position:absolute;color:white;top:0em">{{count}}</span>
+                <span v-if="showCount" style="position:absolute;color:white;top:0em">{{count}}</span>
             </v-btn>
         </v-card-title>
     </v-flex>
@@ -17,7 +17,7 @@
 
     export default {
         name: "open-message",
-        props: ['section'],
+        props: {section: {type: Object}, showCount: false},
         data() {
             return {
                 count: null

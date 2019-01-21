@@ -1,18 +1,18 @@
 <template>
-    <v-tabs-items v-model="tabModel">
-        <v-tab-item value="search" lazy>
+    <v-window v-model="tabModel">
+        <v-window-item value="search" lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
             <search v-if="tabModel==='search'" @select="select"/>
-        </v-tab-item>
-        <v-tab-item value="mines" lazy>
+        </v-window-item>
+        <v-window-item value="mines" lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
             <my-product v-if="tabModel==='mines'" :user="user" @select="select"/>
-        </v-tab-item>
-        <v-tab-item value="favoris" lazy>
+        </v-window-item>
+        <v-window-item value="favoris" lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
             <my-selects v-if="tabModel==='favoris'" :user="user" @select="select"/>
-        </v-tab-item>
-        <v-tab-item value="recent" lazy>
+        </v-window-item>
+        <v-window-item value="recent" lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
             <my-basket v-if="tabModel==='recent'" @select="select"/>
-        </v-tab-item>
-    </v-tabs-items>
+        </v-window-item>
+    </v-window>
 </template>
 
 <script>

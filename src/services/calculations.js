@@ -1,4 +1,4 @@
-import {map, bqtGToQtUnit, bestQuantity, unitCoef, changeUnit, grandeur, baseQt} from "unit-manip"
+import {map, bqtGToQtUnit, bestQuantity, unitCoef, changeUnit, grandeur, baseQt, find} from "unit-manip"
 import {entryKeyFromFragmentName} from "../const/fragments"
 
 export const remove = (source, filter) => {
@@ -181,6 +181,7 @@ export const totalQt = selection => selection.repeted ? selection.quantity.bqt *
 
 export const coefFromTrunkToSelection = (selection, tree) => selectionTotalQt(selection) / tree.trunk.quantity.bqt
 
+
 export const selectionTotalQt = selection =>
     selection.repeted ?
         selection.quantity.bqt * (selection.duree.bqt / selection.freq.bqt)
@@ -189,8 +190,8 @@ export const selectionTotalQt = selection =>
 
 export const treeTotalQt = tree => tree.selection ? selectionTotalQt(tree.selection) : tree.trunk.quantity.bqt
 
-//une liste d'arbre, un nom de fragment
-//un objet {_id:nom} avec tous les attributs en communs sur tout les arbres.
+//in: une liste d'arbre, un nom de fragment
+//out: un objet {_id:attrDeArbre1} avec tous les attributs en communs sur tout les arbres.
 export const extractCommons = (trees, fragment) => {
     const entryKey = entryKeyFromFragmentName[fragment]
     const treesFragment =
@@ -200,24 +201,27 @@ export const extractCommons = (trees, fragment) => {
             )
         )
 
-    let commons = {}
+    let commons = []
     const firstTreeFragment = treesFragment[0]
-    console.log("treesFragment", treesFragment)
-    console.log("firstTreeFragment", firstTreeFragment)
     for (let key in firstTreeFragment) {
         if (inAll(treesFragment, key)) {
-            commons[key] = firstTreeFragment[key]
+            commons.push({_id: key, type: fragment, name: firstTreeFragment[key].name})
         }
     }
-    console.log("commons", commons)
     return commons
 }
 
 const inAll = (treesFragment, key) => {
-    console.log("inall", "treesFragment", treesFragment, "key", key)
     for (let treeFragment of treesFragment) {
-        console.log("treeFragment", treeFragment)
         if (!treeFragment.hasOwnProperty(key)) return false
     }
     return true
 }
+
+export const coefByFragment = (left, right, fragment) => {
+    const leftAttribute = getAttributeByFragment(left, fragment)
+    const rightAttribute = getAttributeByFragment(right, fragment)
+    return quantity(leftAttribute).bqt / quantity(rightAttribute).bqt
+}
+
+export const getAttributeByFragment = (tree, {type, _id}) => find(tree[type], entryKeyFromFragmentName[type], _id)

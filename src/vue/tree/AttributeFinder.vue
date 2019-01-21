@@ -1,68 +1,39 @@
 <template>
-    <span>
-        <v-list subheader>
-            <v-subheader>Environnement</v-subheader>
-            <loader v-if="!impactCommons"/>
-            <v-list-tile v-else :key="key" v-for="(item, key) in impactCommons" @click="$emit('select',{type:IMPACT_TANK,_id:key,item})">
-                <v-list-tile-content>
-                    <v-list-tile-title>{{item.name}}</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
-        </v-list>
-        <v-divider></v-divider>
-        <v-list subheader>
-            <v-subheader>Propriétés</v-subheader>
-            <loader v-if="!facetCommons"/>
-            <v-list-tile v-else :key="key" v-for="item in facetCommons" @click="$emit('select',{fragment:FACETS,_id:key,item})">
-                <v-list-tile-content>
-                    <v-list-tile-title>{{item.name}}</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
-        </v-list>
-        <v-divider></v-divider>
-        <v-list subheader>
-            <v-subheader>Ressources</v-subheader>
-            <loader v-if="!ressourceCommons"/>
-            <v-list-tile v-else :key="key" v-for="(item, key) in ressourceCommons" @click="$emit('select',{fragment:FACETS,_id:key,item})">
-                <v-list-tile-content>
-                    <v-list-tile-title>{{item.name}}</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
-        </v-list>
-    </span>
+    <div>
+
+        <fragment-select v-model="viewDetail" class="pt-3"/>
+
+        <v-window v-model="viewDetail" class="pt-1">
+            <template v-for="fragment in fragments">
+                <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
+                    <common-attribute :key="fragment.type" :trees="trees" :type="fragment.type" :fragment="fragment.type" :noItem="fragment.noItem" @select="i => $emit('select', i)"/>
+                </v-window-item>
+            </template>
+        </v-window>
+    </div>
+
 </template>
 <script>
     import Loader from "../loader/Loader"
-    import On from "../../const/on"
-    import {mapActions} from "vuex"
     import {FACETS, IMPACT_TANK, TANK} from "../../const/fragments"
-    import {extractCommons} from "../../services/calculations"
+    import FragmentSelect from "./FragmentSelect"
+    import CommonAttribute from "./CommonAttribute"
 
     export default {
         name: "attribute-finder",
-        components: {Loader},
+        components: {CommonAttribute, FragmentSelect, Loader},
         props: ['trees'],
         data: () => ({
-            IMPACT_TANK, FACETS, TANK,
-            impactCommons: null,
+            viewDetail: 0,
+            commons: null,
             facetCommons: null,
-            ressourceCommons: null
-        }),
-        mounted() {
-            this.refresh()
-        },
-        methods: {
-            ...mapActions({updateTrees: On.UPDATE_TREES}),
-            async refresh() {
-                await this.updateTrees({trees: this.trees, fragments: [TANK]})
-                this.ressourceCommons = extractCommons(this.trees, TANK)
+            ressourceCommons: null,
 
-                await this.updateTrees({trees: this.trees, fragments: [IMPACT_TANK]})
-                this.impactCommons = extractCommons(this.trees, IMPACT_TANK)
-
-                await this.updateTrees({trees: this.trees, fragments: [FACETS]})
-                this.facetCommons = extractCommons(this.trees, FACETS)
-            }
-        }
+            fragments: [
+                {type: IMPACT_TANK, noItem: "Il n'y a pas d'information sur l'environnement commune à ces deux produits :(", loading: "analyse de l'environnement.."},
+                {type: TANK, noItem: "Il n'y a pas d'information sur les ressources commune à ces deux produits :(", loading: "analyse des ressources.."},
+                {type: FACETS, noItem: "Il n'y a pas d'information sur les propriétés commune à ces deux produits :(", loading: "analyse des propriétés.."},
+            ]
+        })
     }
 </script>

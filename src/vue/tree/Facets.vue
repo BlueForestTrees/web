@@ -1,7 +1,9 @@
 <template>
-    <selectable-list :items="facets" :maxSelectionSize="1" :selection="selection">
-        <open-message class="mt-5" slot="no-items" :section="section"/>
-    </selectable-list>
+    <card>
+        <selectable-list :items="facets" :maxSelectionSize="1" :selection="selection">
+            <open-message class="mt-5" slot="no-items" :section="section"/>
+        </selectable-list>
+    </card>
 </template>
 
 <script>
@@ -9,9 +11,11 @@
     import On from "../../const/on"
     import {mapActions} from 'vuex'
     import OpenMessage from "../common/OpenMessage"
+    import Card from "../common/Card"
 
     export default {
         components: {
+            Card,
             OpenMessage,
             SelectableList,
         },

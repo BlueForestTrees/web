@@ -13,12 +13,12 @@
             OpenMessage,
             SelectableList,
         },
-        props: ['tree','selection'],
+        props: ['tree', 'selection'],
         computed: {
-            items: function () {
+            items() {
                 return this.tree && this.tree.impactsTank
             },
-            section: function () {
+            section() {
                 return {
                     title: `Les informations de l'impact sur l'environnement manquent. Indiquez si souhaitez les connaitre!`,
                     filter: {

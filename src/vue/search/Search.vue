@@ -44,9 +44,6 @@
         data: () => ({
             On, GO,
             showCat: false,
-            showEnv: false,
-            showRes: false,
-            showFac: false,
             type: null
         }),
         components: {VoteFor, ImpactEntries, FacetEntries, SearchText, SearchCat, SearchComp},

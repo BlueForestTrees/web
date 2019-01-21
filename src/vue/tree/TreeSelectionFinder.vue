@@ -1,12 +1,15 @@
 <template>
     <span v-if="!tree">
         <selection-command/>
+        <v-divider/>
         <selection @select="selectTree"/>
     </span>
-    <v-container v-else>
-        <p class="align font-weight-black bold-font display-1">{{ name(tree) }}</p>
-        <quantity-selection :tree="tree" @change="selectionChange" @close="closeSelection"/>
-    </v-container>
+    <v-layout align-center column v-else>
+        <div class="font-weight-medium pa-3"><v-icon color="green" class="mr-2">info</v-icon>Choisissez la quantité:</div>
+        <card>
+            <quantity-selection class="pa-3" :tree="tree" @change="selectionChange" @close="closeSelection"/>
+        </card>
+    </v-layout>
 </template>
 <script>
     import SelectionCommand from "../basket/SelectionCommand"
@@ -15,10 +18,11 @@
     import {mapActions} from "vuex"
     import QuantitySelection from "./QuantitySelection"
     import {name} from "../../services/calculations"
+    import Card from "../common/Card"
 
     export default {
         name: "tree-selection-finder",
-        components: {QuantitySelection, Selection, SelectionCommand},
+        components: {Card, QuantitySelection, Selection, SelectionCommand},
         data: () => ({tree: null}),
         methods: {
             name,
@@ -34,7 +38,7 @@
             },
             selectionChange(sel) {
                 this.applySelection(sel)
-                this.$emit("select", sel.tree)
+                this.$emit("select", this.tree)
             },
             closeSelection() {
                 this.tree = null

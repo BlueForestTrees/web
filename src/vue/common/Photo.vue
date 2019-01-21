@@ -1,5 +1,5 @@
 <template>
-    <img v-if="img" :src="img"/>
+    <img v-if="img" :src="img" class="elevation-5"/>
     <v-layout v-else row justify-center>
         <v-menu v-model="photomenu" :close-on-content-click="false" offset-y>
             <div slot="activator" class="no-photo pa-5 mb-3 align">

@@ -3,7 +3,7 @@
     <v-layout v-else row>
         <v-form v-model="valid" v-on:submit.prevent="">
             <v-text-field autofocus
-                          :value="current" @input="current = $event"
+                          :value="current" @input="viewDetail = $event"
                           @keydown.esc.stop.native="ko" @keydown.enter.stop.native="ok" @blur="ko"
                           :rules="[required, isNumber]"
             />
@@ -23,7 +23,7 @@
         data: function () {
             return {
                 editing: false,
-                current: this.initial,
+                viewDetail: this.initial,
                 valid: false
             }
         },
@@ -35,7 +35,7 @@
             ok: function () {
             if (this.valid) {
                 this.editing = false
-                this.$emit("ok", this.current)
+                this.$emit("ok", this.viewDetail)
                 }
 
             },

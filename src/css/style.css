@@ -2,12 +2,12 @@ html {
     overflow-y: auto
 }
 
-.tiny{
+.tiny {
     width: 1.5em;
 }
 
-.rounded{
-    border-radius:0.5em;
+.rounded {
+    border-radius: 0.5em;
 }
 
 .no-photo {
@@ -15,8 +15,8 @@ html {
 }
 
 .scene {
-    width:400px;
-    height:280px;
+    width: 400px;
+    height: 280px;
     perspective: 600px;
 }
 
@@ -50,18 +50,18 @@ a {
     text-decoration: none;
 }
 
-.bold-font{
+.bold-font {
     font-weight: bold;
 }
 
 .label-command {
-    position:absolute;
-    top:0;
+    position: absolute;
+    top: 0;
     text-align: right;
     transform: rotate(-45deg);
     transform-origin: right;
-    width:130px;
-    margin-left:-70px;
+    width: 130px;
+    margin-left: -70px;
 }
 
 .chars-width-3 {
@@ -77,11 +77,24 @@ a {
 }
 
 .logo {
-    height:2.5em
+    height: 2.5em
 }
 
 .logo-big {
-    height:4em
+    height: 4em;
+    width: 4em;
+}
+
+.planet {
+    background: url(/img/planet.svg) no-repeat center;
+}
+
+.ressource {
+    background: url(/img/ressource.svg) no-repeat center bottom;
+}
+
+.facet {
+    background: url(/img/facet.svg) no-repeat center;
 }
 
 .not-too-small {
@@ -193,4 +206,18 @@ a {
 .loader {
     width: 1.8em;
     height: 1.8em;
+}
+
+
+.list-complete-item {
+    transition: all 0.3s;
+}
+
+.list-complete-enter, .list-complete-leave-to {
+    opacity: 0;
+    /*transform: translateY(30px);*/
+}
+
+.list-complete-leave-active {
+    position: absolute;
 }

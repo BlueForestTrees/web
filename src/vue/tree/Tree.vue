@@ -1,42 +1,36 @@
 <template>
-    <v-flex key="tree">
+    <v-layout v-if="!tree" row wrap justify-center align-center class="ma-4">
+        <span class="title">Composition</span>
+        <v-card-text class="text-md-center">
+            <div>Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche</span> ou prenez
+                un produit du <span><v-icon @click="goBasket" color="primary">shopping_basket</v-icon> panier pour voir sa composition.</span>
+                <br>
+                Vous pouvez aussi <span @click="goCreateTree" style="cursor:pointer"><v-icon class="icon-line" color="primary">add</v-icon>Créer un produit ou un service</span>
+                depuis le <span @click="switchLeftMenu" style="cursor:pointer"><v-icon class="icon-line" color="primary">menu</v-icon>menu de gauche.</span>
+            </div>
+        </v-card-text>
+    </v-layout>
 
-        <v-layout v-if="!tree" row wrap justify-center align-center class="ma-4">
-            <span class="title">Composition</span>
-            <v-card-text class="text-md-center">
-                <div>Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche</span> ou prenez
-                    un produit du <span><v-icon @click="goBasket" color="primary">shopping_basket</v-icon> panier pour voir sa composition.</span>
-                    <br>
-                    Vous pouvez aussi <span @click="goCreateTree" style="cursor:pointer"><v-icon class="icon-line" color="primary">add</v-icon>Créer un produit ou un service</span>
-                    depuis le <span @click="switchLeftMenu" style="cursor:pointer"><v-icon class="icon-line" color="primary">menu</v-icon>menu de gauche.</span>
-                </div>
-            </v-card-text>
-        </v-layout>
-
-        <div v-else>
-
-            <v-card>
-                <v-layout :column="$vuetify.breakpoint.smAndDown" align-center>
-                    <description :tree="tree" class="ma-5"/>
-                    <v-layout column align-center>
-                        <tree-card :tree="tree"/>
-                        <v-select v-model="current" :items="['Environnement','Ressources','Propriétés']" class="not-too-half"/>
-                    </v-layout>
+    <div v-else>
+        <v-card>
+            <v-layout :column="$vuetify.breakpoint.smAndDown" align-center>
+                <description :tree="tree" class="ma-5"/>
+                <v-layout column align-center>
+                    <tree-card :tree="tree"/>
+                    <fragment-select v-model="viewDetail"/>
                 </v-layout>
-            </v-card>
+            </v-layout>
+        </v-card>
 
-            <ressources v-if="current === 'Ressources'" :tree="tree" :selection="selection"/>
-            <card>
-                <facets v-if="current === 'Propriétés'" :tree="tree" :selection="selection"/>
-                <bilan-impacts v-if="current === 'Environnement'" :tree="tree" :selection="selection"/>
-                <branches v-if="current === 'branch'" :tree="tree"/>
-            </card>
+        <v-window v-model="viewDetail">
+            <v-window-item lazy><bilan-impacts :tree="tree" :selection="selection"/></v-window-item>
+            <v-window-item lazy><ressources :tree="tree" :selection="selection"/></v-window-item>
+            <v-window-item lazy><facets :tree="tree" :selection="selection"/></v-window-item>
+        </v-window>
 
-            <tree-fab :tree="tree"></tree-fab>
-        </div>
+        <tree-fab :tree="tree"></tree-fab>
+    </div>
 
-
-    </v-flex>
 </template>
 
 <script>
@@ -46,6 +40,7 @@
     import TreeCard from "./TreeCard"
     import Card from "../common/Card"
     import {FACETS, IMPACT_TANK, TANK, treeFragments} from "../../const/fragments"
+    import FragmentSelect from "./FragmentSelect"
 
     const Description = () => import(/* webpackChunkName: "Description" */ "./Description")
     const Ressources = () => import(/* webpackChunkName: "Ressources" */ "./Ressources")
@@ -55,6 +50,7 @@
 
     export default {
         components: {
+            FragmentSelect,
             Card,
             TreeCard,
             Description,
@@ -64,12 +60,10 @@
             Branches,
             Facets
         },
-        data() {
-            return {
-                selection: [],
-                current: "Propriétés"
-            }
-        },
+        data: () => ({
+            selection: [],
+            viewDetail: 0
+        }),
         props: ['_id', 'bqt', 'sid'],
         computed: {
             ...mapState(['tree'])
@@ -100,11 +94,11 @@
                     const tree = await treeLoad
                     await tree.promises.all
                     if (tree[TANK].length > 0) {
-                        this.current = "Ressources"
+                        this.viewDetail = 1
                     } else if (tree[IMPACT_TANK].length > 0) {
-                        this.current = "Environnement"
+                        this.viewDetail = 0
                     } else if (tree[FACETS].length > 0) {
-                        this.current = "Propriétés"
+                        this.viewDetail = 2
                     }
                 }
             }

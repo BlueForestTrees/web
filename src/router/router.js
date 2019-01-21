@@ -2,6 +2,7 @@ import {GO} from "../const/go"
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+const NotFound = () => import(/* webpackChunkName: "NotFound" */ "../vue/NotFound")
 const Tree = () => import(/* webpackChunkName: "Tree" */ '../vue/tree/Tree.vue')
 const Equivalence = () => import(/* webpackChunkName: "Equivalence" */ '../vue/equivalence/Equivalence')
 const Qui2 = () => import(/* webpackChunkName: "Qui2" */ '../vue/jeu/QuiDeuxFoisPlus')
@@ -48,7 +49,6 @@ export default new VueRouter({
                 {name: GO.CREATE_TREE, path: "create/tree", component: CreateTree},
 
 
-
                 {name: GO.TREE, path: "tree/:bqt/:_id", component: Tree, props: (route) => ({_id: route.params._id, bqt: Number(Number.parseFloat(route.params.bqt))})},
                 {name: GO.SELECTION, path: "sel/:_id", component: Tree, props: (route) => ({sid: route.params._id})},
 
@@ -69,11 +69,13 @@ export default new VueRouter({
                 {name: GO.ADD_IMPACT_ENTRY, path: "add/entry/impact", component: AddImpactEntry},
                 {name: GO.ADD_FACET_ENTRY, path: "add/entry/facet", component: AddFacetEntry},
                 {name: GO.ADD_RESSOURCE, path: "add/ressource", component: AddRessource},
-                {name: GO.COMPARE, path: "compare/:leftId/:rightId", component: Compare, props: true}
+                {name: GO.COMPARE, path: "compare/:leftId/:rightId", component: Compare, props: true},
+                {name: GO.NOT_FOUND, path: '/404', component: NotFound},
             ]
         },
         {name: GO.LOGIN, path: "/login", component: Login},
         {name: GO.SUSCRIBE, path: "/suscribe", component: Inscription},
-        {name: GO.CONFIRM, path: "/confirm/:token", component: Confirmation, props: true}
+        {name: GO.CONFIRM, path: "/confirm/:token", component: Confirmation, props: true},
+        {path: '*', redirect: '/404'},
     ]
 })

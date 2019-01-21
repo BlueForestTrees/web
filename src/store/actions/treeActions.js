@@ -135,20 +135,6 @@ export default {
 
         dispatch(On.APPLY_QUANTITY_COEF, {tree, coef})
 
-        //router.replace({name: GO.SELECTION, params: {sid: newSelection._id}})
-    },
-
-    [On.APPLY_QUANTITY_COEF]: ({dispatch}, {tree, coef}) => {
-        applyRessourceCoef(coef, [tree])
-        applyRessourceCoef(coef, tree.roots)
-        applyRessourceCoef(coef, tree.branches)
-
-        applyAspectCoef(coef, tree.tank)
-        applyAspectCoef(coef, tree.impacts)
-        applyAspectCoef(coef, tree.damages)
-        applyAspectCoef(coef, tree.facets)
-        applyAspectCoef(coef, tree.impactsTank)
-        applyAspectCoef(coef, tree.damagesTank)
     },
 
     [On.LOAD_SELECTIONS]: ({}, {oid}) => api.selectionOf(oid)

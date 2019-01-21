@@ -14,6 +14,7 @@ export const GO = {
     BASKET: 'basket',
     TREE_EMPTY: 'emptyTree',
     TREE: 'tree',
+    NOT_FOUND: 'notFound',
     SELECTION: 'selection',
     EQUIV: 'equiv',
     PUB_EQUIV: 'pubEquiv',

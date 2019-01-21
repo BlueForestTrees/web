@@ -1,7 +1,7 @@
 <template>
     <v-text-field
             :value="value" @input="update" class="mb-1"
-            solo hide-details autofocus append-icon="search"
+            :solo="!notSolo" hide-details autofocus append-icon="search"
             @click:append="emitInput" @enter="emitInput" v-on:keyup.enter="emitInput"
     ></v-text-field>
 </template>
@@ -10,7 +10,7 @@
 
     export default {
         name: "search-text",
-        props: ['value'],
+        props: ['value','not-solo'],
         data: () => ({v: null}),
         methods: {
             update(v) {
