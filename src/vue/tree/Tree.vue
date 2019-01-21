@@ -23,9 +23,15 @@
         </v-card>
 
         <v-window v-model="viewDetail">
-            <v-window-item lazy><bilan-impacts :tree="tree" :selection="selection"/></v-window-item>
-            <v-window-item lazy><ressources :tree="tree" :selection="selection"/></v-window-item>
-            <v-window-item lazy><facets :tree="tree" :selection="selection"/></v-window-item>
+            <v-window-item lazy>
+                <bilan-impacts :tree="tree" :selection="selection"/>
+            </v-window-item>
+            <v-window-item lazy>
+                <ressources :tree="tree" :selection="selection"/>
+            </v-window-item>
+            <v-window-item lazy>
+                <facets :tree="tree" :selection="selection"/>
+            </v-window-item>
         </v-window>
 
         <tree-fab :tree="tree"></tree-fab>
@@ -41,6 +47,7 @@
     import Card from "../common/Card"
     import {FACETS, IMPACT_TANK, TANK, treeFragments} from "../../const/fragments"
     import FragmentSelect from "./FragmentSelect"
+    import {GO as Go} from "../../const/go"
 
     const Description = () => import(/* webpackChunkName: "Description" */ "./Description")
     const Ressources = () => import(/* webpackChunkName: "Ressources" */ "./Ressources")
@@ -86,19 +93,26 @@
                     return this.dispatchSelLoad({_id: this.sid, fragments: treeFragments})
                 } else {
                     console.warn(`bad params. bqt:${this.bqt}, _id:${this._id}, sid:${this.sid}`)
+                    this.$router.push({name: Go.NOT_FOUND})
                 }
             },
             refresh: async function () {
-                const treeLoad = this.getTreeLoad()
+                const treeLoad = await this.getTreeLoad()
                 if (treeLoad) {
                     const tree = await treeLoad
-                    await tree.promises.all
-                    if (tree[TANK].length > 0) {
-                        this.viewDetail = 1
-                    } else if (tree[IMPACT_TANK].length > 0) {
-                        this.viewDetail = 0
-                    } else if (tree[FACETS].length > 0) {
-                        this.viewDetail = 2
+                    try {
+                        await tree.promises.all
+                        if (tree[TANK].length > 0) {
+                            this.viewDetail = 1
+                        } else if (tree[IMPACT_TANK].length > 0) {
+                            this.viewDetail = 0
+                        } else if (tree[FACETS].length > 0) {
+                            this.viewDetail = 2
+                        }
+                    } catch (e) {
+                        if (e.status === 404) {
+                            this.$router.push({name: Go.NOT_FOUND})
+                        }
                     }
                 }
             }

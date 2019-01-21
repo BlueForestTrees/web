@@ -16,7 +16,7 @@
                         </v-layout>
                     </v-flex>
                     <loader v-else/>
-                    <v-btn :disabled="state !== 'playing'" block color="primary" @click="playLeft">moi</v-btn>
+                    <v-btn :disabled="!canAnswer" color="primary" @click="playRight" style="position: absolute; bottom: 0px; right: 0px">moi</v-btn>
                 </v-card>
                 <v-card style="min-width: 320px" class="ma-3 pa-3">
                     <v-flex v-if="other">
@@ -29,12 +29,12 @@
                         <v-layout column align-center>
                             <h3 v-if="state === 'answered' && filterRight">({{qtUnitName(filterRight)}})</h3>
                         </v-layout>
+                        <v-btn :disabled="!canAnswer" color="primary" @click="playRight" style="position: absolute; bottom: 0px; right: 0px">moi</v-btn>
                     </v-flex>
                     <v-layout v-else column align-center>
                         <v-spacer></v-spacer>
                         <loader></loader>
                     </v-layout>
-                    <v-btn :disabled="state !== 'playing'" block color="primary" @click="playRight">moi</v-btn>
                 </v-card>
             </v-layout>
         </v-layout>
@@ -42,10 +42,20 @@
         <v-layout column wrap justify-center align-center class="ma-4">
             <h2 class="font-weight-thin">
                 <v-layout row align v-if="filter">
-                    <span>Quel est celui qui a deux fois <b>plus de {{ name(filter)}}</b>?</span>
+                    <span>Quel est celui qui a <b>plus de {{ name(filter)}}</b>?</span>
                 </v-layout>
                 <loader v-else/>
             </h2>
+        </v-layout>
+
+        <v-layout row mt-5 v-if="canAnswer">
+            <v-btn  block flat @click="passQuestion">je passe</v-btn>
+        </v-layout>
+
+        <v-layout row align-center justify-center v-if="!finished && state === 'answered' && lastWasGood !== undefined" mb-4>
+            <h1 v-if="lastWasGood" class="font-weight-thin display-3">Bravo!!</h1>
+            <h1 v-else class="font-weight-thin  display-3">Non, dommage!!!</h1>
+            <v-btn color="primary" @click="refresh" icon><v-icon large>play_arrow</v-icon></v-btn>
         </v-layout>
 
         <v-layout row justify-center align-center>
@@ -54,18 +64,6 @@
                 <v-icon x-large v-if="reponses[n-1] !== undefined" :color="reponses[n-1] ? 'green' : 'red'">check_circle</v-icon>
                 <v-icon v-else x-large>panorama_fish_eye</v-icon>
             </template>
-        </v-layout>
-
-        <v-layout row mt-5>
-            <v-btn v-if="state === 'playing'" block flat @click="passQuestion">
-                <span>passer cette question</span>
-            </v-btn>
-        </v-layout>
-
-        <v-layout align-center justify-center v-if="!finished && state === 'answered' && lastWasGood !== undefined" mb-5>
-            <h1 v-if="lastWasGood" class="font-weight-medium">Bravo!!</h1>
-            <h1 v-else class="font-weight-thin">Dommage!!!</h1>
-            <v-btn color="primary" @click="refresh">suivant</v-btn>
         </v-layout>
 
         <v-layout v-if="finished" align-center justify-center column>
@@ -117,6 +115,9 @@
             }
         },
         computed: {
+            canAnswer() {
+                return this.state === 'playing' && this.tree && this.other
+            },
             bonnesReponses() {
                 let res = 0
                 for (let i = 0; i < this.reponses.length; i++) {
