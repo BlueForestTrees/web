@@ -57,6 +57,7 @@ export default new VueRouter({
                 {name: GO.CREATE_INFO, path: "info", component: CreateInfo},
                 {name: GO.INFO, path: "info/:path", component: Info, props: true},
                 {name: GO.CREATE_EQUIV, path: "create/eq", component: CreateEq},
+                {name: GO.EDIT_EQUIV, path: "edit/eq/:path", component: CreateEq, props: true},
                 {name: GO.CREATE_COMPENS, path: "create/co", component: CreateCompens},
                 {name: GO.CREATE_ALT, path: "create/alt", component: CreateAlt},
 

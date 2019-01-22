@@ -7,14 +7,14 @@
                 <v-container>
                     <tree-card :tree="leftTree"></tree-card>
                 </v-container>
-                <div class="ma-2">Soit {{qtUnitName(selectedLeftAxis)}}</div>
+                <div class="ma-2">Soit {{qtUnitName(leftAttribute)}}</div>
             </v-card>
             <span class="font-weight-thin text-no-wrap display-1 ma-2">Plutôt que:</span>
             <v-card class="mx-3 rounded">
                 <v-container>
                     <tree-card :tree="rightTree"></tree-card>
                 </v-container>
-                <div class="ma-2">Soit {{qtUnitName(selectedRightAxis)}}</div>
+                <div class="ma-2">Soit {{qtUnitName(rightAttribute)}}</div>
             </v-card>
         </v-layout>
 
@@ -24,7 +24,7 @@
                 <v-container>
                     <tree-card :tree="equivTree"></tree-card>
                 </v-container>
-                <div class="ma-2">Soit {{qtUnitName(selectedEquivAxis)}}</div>
+                <div class="ma-2">Soit {{qtUnitName(etalonAttribute)}}</div>
             </v-card>
         </v-layout>
 
@@ -41,7 +41,7 @@
     import TreeCardFront from "../tree/TreeCardFront"
     import Card from "../common/Card"
     import * as fragments from "../../const/fragments"
-    import {qtUnitName} from "../../services/calculations"
+    import {getAttribute, qtUnitName} from "../../services/calculations"
     import TreeCard from "../tree/TreeCard"
 
     export default {
@@ -64,35 +64,26 @@
             }
         },
         computed: {
-            leftAxises() {
-                return this.axises(this.leftTree, this.fragment)
+            leftAttribute() {
+                return this.leftTree && this.fragment && this.getAttribute(this.leftTree, this.fragment)
             },
-            selectedLeftAxis() {
-                return this.leftAxises && this.extractFragment(this.leftAxises, this.fragment)
+            rightAttribute() {
+                return this.rightTree && this.fragment && this.getAttribute(this.rightTree, this.fragment)
             },
-            rightAxises() {
-                return this.axises(this.rightTree, this.fragment)
-            },
-            selectedRightAxis() {
-                return this.rightAxises && this.extractFragment(this.rightAxises, this.fragment)
-            },
-            equivAxises() {
-                return this.axises(this.equivTree, this.fragment)
-            },
-            selectedEquivAxis() {
-                return this.equivAxises && this.extractFragment(this.equivAxises, this.fragment)
+            etalonAttribute() {
+                return this.equivTree && this.fragment && this.getAttribute(this.equivTree, this.fragment)
             },
             deltaAxis() {
-                if (this.selectedLeftAxis && this.selectedRightAxis) {
-                    const deltaBqt = this.selectedRightAxis.quantity.bqt - this.selectedLeftAxis.quantity.bqt
-                    const delta = JSON.parse(JSON.stringify(this.selectedRightAxis))
+                if (this.leftAttribute && this.rightAttribute) {
+                    const deltaBqt = this.rightAttribute.quantity.bqt - this.leftAttribute.quantity.bqt
+                    const delta = JSON.parse(JSON.stringify(this.rightAttribute))
                     delta.quantity.bqt = deltaBqt
                     return delta
                 }
             },
             coef() {
-                if (this.deltaAxis && this.selectedEquivAxis) {
-                    return this.deltaAxis.quantity.bqt / this.selectedEquivAxis.quantity.bqt
+                if (this.deltaAxis && this.etalonAttribute) {
+                    return this.deltaAxis.quantity.bqt / this.etalonAttribute.quantity.bqt
                 }
             },
             verb() {
@@ -100,9 +91,7 @@
             }
         },
         methods: {
-            qtUnitName,
-            axises: (tree, fragment) => tree && fragment && tree[fragment.type],
-            extractFragment: (axises, fragment) => filter(axises, axis => axis._id === fragment._id)[0],
+            qtUnitName, getAttribute,
             ...mapActions({
                 loadTree: On.LOAD_TREE,
                 snack: On.SNACKBAR,

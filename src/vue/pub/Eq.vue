@@ -4,7 +4,7 @@
             <v-layout column align-center>
                 <v-layout row align-center class="font-weight-medium pa-3">
                     <v-icon color="green" class="mr-2">info</v-icon>
-                    <div>Aspect pris en compte: {{info.fragmentName}}</div>
+                    <div>Aspect pris en compte: {{info.fragment.name}}</div>
                 </v-layout>
                 <v-layout :column="$vuetify.breakpoint.smAndDown" align-center justify-center my-5>
                     <selection-link :selection="info.leftSelection"/>
@@ -12,9 +12,9 @@
                     <selection-link :selection="info.rightSelection"/>
                 </v-layout>
             </v-layout>
-            <v-layout style="white-space: pre-line" column align-center>
-                {{info.description}}
-                <OpenMessage :section="{title: `Discuter sur ${info.path}`, filter: {topicId:info._id, type: `eq.info`}}" class="bottom-right"/>
+            <v-layout column align-center>
+                <div style="white-space: pre-line" class="font-weight-thin mb-3 align">{{info.description}}</div>
+                <OpenMessage :section="{title: `Discuter sur ${info.path}`, filter: {topicId:info._id, type: `eq.info`}}"/>
             </v-layout>
         </v-card>
         <v-container>

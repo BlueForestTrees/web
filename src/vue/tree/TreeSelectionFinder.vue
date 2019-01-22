@@ -9,7 +9,7 @@
             Choisissez la quantité:
         </div>
         <card>
-            <quantity-selection class="pa-3" :tree="curTree" @change="selectionChange" @close="closeQtSelection"/>
+            <selection-picker class="pa-3" :tree="curTree" @change="selectionChange" @close="closeQtSelection"></selection-picker>
         </card>
     </v-layout>
 </template>
@@ -18,18 +18,15 @@
     import Selection from "../basket/Selection"
     import On from "../../const/on"
     import {mapActions} from "vuex"
-    import QuantitySelection from "./QuantitySelection"
     import {name} from "../../services/calculations"
     import Card from "../common/Card"
+    import SelectionPicker from "./SelectionPicker"
 
     export default {
         name: "tree-selection-finder",
-        components: {Card, QuantitySelection, Selection, SelectionCommand},
+        components: {SelectionPicker, Card, Selection, SelectionCommand},
         props: ['tree'],
         data: () => ({selectedTree: null, changeTree: false}),
-        mounted(){
-            console.log("mounted")
-        },
         methods: {
             name,
             ...mapActions({

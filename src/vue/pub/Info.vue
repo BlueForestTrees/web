@@ -23,7 +23,7 @@
             ...mapActions({getInfo: On.GET_INFO}),
             async refresh() {
                 try {
-                    this.info = await this.getInfo(this.path)
+                    this.info = await this.getInfo({path: this.path})
                 } catch (e) {
                     console.error(e)
                 }

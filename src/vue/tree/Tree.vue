@@ -13,9 +13,9 @@
 
     <div v-else>
         <v-card>
-            <v-layout :column="$vuetify.breakpoint.smAndDown" align-center>
+            <v-layout :column="$vuetify.breakpoint.smAndDown" align-center justify-center>
                 <description :tree="tree" class="ma-5"/>
-                <v-layout column align-center>
+                <v-layout column align-center class="not-too-large">
                     <tree-card :tree="tree"/>
                     <fragment-select v-model="viewDetail"/>
                 </v-layout>

@@ -35,7 +35,7 @@
     import GrandeurSelect from "../common/GrandeurSelect"
 
     export default {
-        name: 'quantity-selection',
+        name: 'selection-picker',
         components: {GrandeurSelect, UnitSelect, Destination},
         mixins: [closable],
         props: ['tree'],

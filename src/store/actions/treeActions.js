@@ -17,7 +17,7 @@ export default {
     [On.GO_CREATE_TREE]: () => router.push({name: GO.CREATE_TREE}),
     [On.GO_CREATE_INFO]: () => router.push({name: GO.CREATE_INFO}),
 
-    [On.GO_ANY]: ({dispatch}, item) => item.repeted ? dispatch(On.GO_SELECTION, item) : dispatch(On.GO_TREE, item),
+    [On.GO_ANY]: ({dispatch}, item) => item.trunkId ? dispatch(On.GO_SELECTION, item) : dispatch(On.GO_TREE, item),
 
     [On.GO_SELECTION]: ({}, selection) => router.push({name: GO.SELECTION, params: {_id: selection._id}}),
 
@@ -40,10 +40,11 @@ export default {
         }
     },
 
-    [On.LOAD_SELECTION]: async ({dispatch}, {_id, fragments}) => {
-        const sel = await api.getSelection(_id)
-        const tree = await dispatch(On.LOAD_OPEN_TREE, {_id: sel.trunkId, bqt: totalQt(sel), fragments})
-        tree.selection = sel
+    [On.LOAD_SELECTION]: async ({dispatch}, {_id, fragments}) => dispatch(On.LOAD_SELECTION_TREE, {selection: await api.getSelection(_id), fragments}),
+
+    [On.LOAD_SELECTION_TREE]: async ({dispatch}, {selection, fragments}) => {
+        const tree = await dispatch(On.LOAD_OPEN_TREE, {_id: selection.trunkId, bqt: totalQt(selection), fragments})
+        tree.selection = selection
         return tree
     },
 

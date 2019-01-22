@@ -71,6 +71,7 @@ export default {
     LOAD_BASKET: 'loadBasket',
     LOAD_SELECTIONS: 'loadSelections',
     LOAD_SELECTION: 'loadSelection',
+    LOAD_SELECTION_TREE: 'loadSelectionTree',
     LOGIN: 'login',
     LOGOUT: 'logout',
     MOUNT_APP: 'mountApp',

@@ -7,7 +7,7 @@
                 </span>
                 <v-card slot="back">
                     <v-container my-0 py-0>
-                        <quantity-selection :tree="tree" @close="flip" @change="selectionChanged"/>
+                        <selection-picker :tree="tree" @close="flip" @change="selectionChanged"/>
                     </v-container>
                 </v-card>
             </card3d>
@@ -19,16 +19,16 @@
     import {mapActions} from "vuex"
     import {qtUnit, name} from "../../services/calculations"
     import Card3d from "../common/Card3d"
-    import QuantitySelection from "./QuantitySelection"
     import On from "../../const/on"
     import TreeCardFront from "./TreeCardFront"
+    import SelectionPicker from "./SelectionPicker"
 
     const Photo = () => import(/* webpackChunkName: "Photo" */ "../common/Photo")
 
 
     export default {
         name: "tree-card",
-        components: {Photo, TreeCardFront, QuantitySelection, Card3d},
+        components: {SelectionPicker, Photo, TreeCardFront, Card3d},
         props: {
             tree: Object,
             noBar: {type: Boolean, default: false},

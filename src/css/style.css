@@ -227,3 +227,24 @@ a {
 .list-complete-leave-active {
     position: absolute;
 }
+
+.slide-y-enter-active {
+    transition: all .2s;
+}
+.slide-y-enter, .slide-y-leave-to {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.expand-enter-active,
+.expand-leave-active {
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.expand-enter,
+.expand-leave-to {
+    height: 0;
+    opacity: 0;
+    transform: translateY(-30px);
+}

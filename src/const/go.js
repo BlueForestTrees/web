@@ -22,6 +22,7 @@ export const GO = {
     CREATE_TREE: 'createTree',
     CREATE_INFO: 'createInfo',
     CREATE_EQUIV: 'createEquiv',
+    EDIT_EQUIV: 'editEquiv',
     CREATE_COMPENS: 'createCompens',
     CREATE_ALT: 'createAlt',
     ROOT: 'root',

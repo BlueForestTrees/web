@@ -13,10 +13,8 @@ export const remove = (source, filter) => {
 export const isNil = v => v === null || v === undefined
 export const createStringObjectId = () => (new Date().getTime() / 1000 | 0).toString(16) + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, () => (Math.random() * 16 | 0).toString(16)).toLowerCase()
 
-export const idQuantity = tree => ({_id: tree._id, quantity: tree.trunk.quantity})
 export const hasQuantity = e => e && e.quantity && e.quantity.bqt && e.quantity.g
 export const transportQuantity = (masse, distance) => baseQt({qt: changeUnit(masse, "t") * changeUnit(distance, "km"), unit: "t*km"})
-export const format = v => v < 10 ? Math.round(v * 100) / 100 : Math.round(v * 10) / 10
 export const treefyAll = items => map(items, treefy)
 export const treefy = trunk => ({_id: trunk._id, trunk})
 export const idQtFrom = item => ({_id: item._id, quantity: item.quantity})
@@ -51,7 +49,6 @@ export const qtFreqOrUnit = item => qtFreq(item) || qtUnit(item)
 export const name = item => item && (item.selection && item.selection.name) || (item.name || item.trunk && item.trunk.name) || '?'
 
 export const color = item => item.color || item.trunk.color
-export const removeUseless = name => name.replace(/\([^)]*\)/, "...")
 export const equiv = item => item.eq ? `(éq. ${item.eq})` : ""
 export const qtUnitName = item => item && `${qtUnit(item)} ${name(item)} ${equiv((item.trunk && item.trunk.quantity) || item.quantity || item)}`
 
@@ -79,11 +76,6 @@ export const shadeColor = (color, percent) => {
     return "#" + (0x1000000 + (Math.round((t - R) * p) + R) * 0x10000 + (Math.round((t - G) * p) + G) * 0x100 + (Math.round((t - B) * p) + B)).toString(16).slice(1)
 }
 
-export const blendColors = (c0, c1, p) => {
-    const f = parseInt(c0.slice(1), 16), t = parseInt(c1.slice(1), 16), R1 = f >> 16, G1 = f >> 8 & 0x00FF, B1 = f & 0x0000FF, R2 = t >> 16, G2 = t >> 8 & 0x00FF, B2 = t & 0x0000FF
-    return "#" + (0x1000000 + (Math.round((R2 - R1) * p) + R1) * 0x10000 + (Math.round((G2 - G1) * p) + G1) * 0x100 + (Math.round((B2 - B1) * p) + B1)).toString(16).slice(1)
-}
-
 export const overcolor = c => getLuma(c) < 120 ? "white" : "black"
 
 export const initiales = fullname => {
@@ -96,7 +88,6 @@ export const initiales = fullname => {
 }
 
 export const rad = deg => deg * (Math.PI / 180)
-export const deg = rad => rad / (Math.PI / 180)
 
 export const range = (min, max) => {
     let array = [], j = 0
@@ -218,10 +209,8 @@ const inAll = (treesFragment, key) => {
     return true
 }
 
-export const coefByFragment = (left, right, fragment) => {
-    const leftAttribute = getAttributeByFragment(left, fragment)
-    const rightAttribute = getAttributeByFragment(right, fragment)
-    return quantity(leftAttribute).bqt / quantity(rightAttribute).bqt
-}
+export const attributeCoef = (leftAttribute, rightAttribute) => quantity(leftAttribute).bqt / quantity(rightAttribute).bqt
 
-export const getAttributeByFragment = (tree, {type, _id}) => find(tree[type], entryKeyFromFragmentName[type], _id)
+export const getAttributeByFragment = (tree, {type, _id}) => tree[type] && find(tree[type], entryKeyFromFragmentName[type], _id)
+
+export const getAttribute = (tree, {type, _id}) => find(tree[type], "_id", _id)
