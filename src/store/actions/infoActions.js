@@ -6,5 +6,5 @@ export default {
     [On.SAVE_INFO]: ({}, info) => api.postInfo(info),
     [On.UPDATE_INFO]: ({}, info) => api.putInfo(info),
     [On.GET_INFO]: ({}, {_id, path}) => _id ? api.getInfo(_id) : api.getInfoByPath(path),
-
+    [On.GET_USER_INFOS]: ({}, oid) => api.getInfoByUser(oid)
 }

@@ -35,7 +35,7 @@
             }),
             async selectTree(item) {
                 if (item.repeted) {
-                    item = await this.loadTreeFromSelection({_id: item._id, fragments: ["trunk"]})
+                    item = await this.loadTreeFromSelection({_id: item._id, fragments: []})
                 }
                 this.selectedTree = item
                 this.changeTree = false

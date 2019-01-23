@@ -1,7 +1,11 @@
 import On from "../../const/on"
-import {applyAspectCoef, applyRessourceCoef} from "../../services/calculations"
+import {applyAspectCoef, applyRessourceCoef, applySelectionCoef} from "../../services/calculations"
 
 export default {
+    [On.APPLY_QUANTITY_COEF_ALL]: ({dispatch}, {tree, coef}) => {
+        dispatch(On.APPLY_QUANTITY_COEF, {tree, coef})
+        applySelectionCoef(coef, tree.selection)
+    },
     [On.APPLY_QUANTITY_COEF]: ({dispatch}, {tree, coef}) => {
         applyRessourceCoef(coef, [tree])
         applyRessourceCoef(coef, tree.roots)

@@ -35,6 +35,8 @@ export const qtUnit = (item, opts = {}) => {
 export const quantity = item => item && (
     (item.selection && item.selection.repeted && item.selection.duree)
     ||
+    (item.repeted && item.duree)
+    ||
     (item.trunk && item.trunk.quantity)
     ||
     item.quantity
@@ -106,7 +108,9 @@ export const add = (q1, q2) => ({
 export const applyRessourceCoef = (coef, items) => {
     if (items) {
         for (let i = 0; i < items.length; i++) {
-            items[i].trunk.quantity.bqt *= coef
+            if (items[i].trunk) {
+                items[i].trunk.quantity.bqt *= coef
+            }
         }
         return items
     }
@@ -129,6 +133,16 @@ export const applyAxisCoef = (coef, items, prop) => {
         }
     }
     return items
+}
+
+export const applySelectionCoef = (coef, selection) => {
+    if (selection) {
+        if (selection.repeted) {
+            applyAxisCoef(coef, [selection], "duree")
+        } else {
+            applyAspectCoef(coef, [selection])
+        }
+    }
 }
 
 export const deltaTime = time => {
@@ -168,17 +182,13 @@ export const generateXRequestId = () => {
     return xRequestId
 }
 
-export const totalQt = selection => selection.repeted ? selection.quantity.bqt * (selection.duree.bqt / selection.freq.bqt) : selection.quantity.bqt
-
-export const coefFromTrunkToSelection = (selection, tree) => selectionTotalQt(selection) / tree.trunk.quantity.bqt
-
-
 export const selectionTotalQt = selection =>
     selection.repeted ?
         selection.quantity.bqt * (selection.duree.bqt / selection.freq.bqt)
         :
         selection.quantity.bqt
 
+export const coefFromTrunkToSelection = (selection, tree) => selectionTotalQt(selection) / tree.trunk.quantity.bqt
 export const treeTotalQt = tree => tree.selection ? selectionTotalQt(tree.selection) : tree.trunk.quantity.bqt
 
 //in: une liste d'arbre, un nom de fragment
@@ -195,7 +205,7 @@ export const extractCommons = (trees, fragment) => {
     let commons = []
     const firstTreeFragment = treesFragment[0]
     for (let key in firstTreeFragment) {
-        if (inAll(treesFragment, key)) {
+        if (inAll(treesFragment, key) && allValued(treesFragment, key)) {
             commons.push({_id: key, type: fragment, name: firstTreeFragment[key].name})
         }
     }
@@ -208,8 +218,14 @@ const inAll = (treesFragment, key) => {
     }
     return true
 }
+const allValued = (treesFragment, key) => {
+    for (let treeFragment of treesFragment) {
+        if (!hasQuantity(treeFragment[key])) return false
+    }
+    return true
+}
 
-export const attributeCoef = (leftAttribute, rightAttribute) => quantity(leftAttribute).bqt / quantity(rightAttribute).bqt
+export const attributeCoef = (leftAttribute, rightAttribute) => (quantity(leftAttribute).bqt / quantity(rightAttribute).bqt)
 
 export const getAttributeByFragment = (tree, {type, _id}) => tree[type] && find(tree[type], entryKeyFromFragmentName[type], _id)
 

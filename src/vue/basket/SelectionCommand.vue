@@ -1,9 +1,9 @@
 <template>
-    <v-tabs v-model="tabModel" centered slider-color="primary">
-        <v-tab href="#search">Recherche</v-tab>
+    <v-tabs v-model="tabModel" centered slider-color="primary" >
+        <v-tab href="#search">Tous les produits</v-tab>
         <v-tab href="#mines">Vos produits</v-tab>
-        <v-tab href="#favoris">Vos Sélections</v-tab>
-        <v-tab href="#recent">Vu récemment</v-tab>
+        <v-tab href="#favoris">Favoris</v-tab>
+        <v-tab href="#infos">Informations</v-tab>
     </v-tabs>
 </template>
 

@@ -15,6 +15,7 @@ export default {
     putInfo: info => put(`api/info`, info),
     getInfo: _id => get(`api/info/${_id}`),
     getInfoByPath: path => get(`api/info/path/${path}`),
+    getInfoByUser: oid => get(`api/info/owner/${oid}`),
     getSelection: _id => get(`api/selection/${_id}`),
     selectionOf: oid => get(`api/selection/owner/${oid}`),
     createSelection: selection => post(`/api/selection`, selection),

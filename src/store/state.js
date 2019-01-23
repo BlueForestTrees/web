@@ -55,7 +55,7 @@ export default {
     dialogs: dialogs(),
     nav: {leftMenuVisible: false, rightMenuVisible: false, dark: false, detailsDialog: false, searchTab: null},
     snack: snack(),
-    messages: {title: null, hasMore: false, filter: {}, list: []},
+    messages: {title: null, description: null, hasMore: false, filter: {}, list: []},
     myMessages: [],
     maquettes,
     xRequestId: null

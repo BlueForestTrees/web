@@ -1,7 +1,7 @@
 <template>
-    <span v-if="info">
+    <div v-if="info">
         <eq-show v-if="info.type === 'eq'" :info="info"/>
-    </span>
+    </div>
     <loader v-else/>
 </template>
 
@@ -9,12 +9,12 @@
     import On from "../../const/on"
     import {mapActions} from "vuex"
     import EqShow from "./Eq"
-    import {qtUnitName} from "../../services/calculations"
     import Loader from "../loader/Loader"
+    import OpenMessage from "../common/OpenMessage"
 
     export default {
         name: "info",
-        components: {Loader, EqShow},
+        components: {OpenMessage, Loader, EqShow},
         props: ['path'],
         data: () => ({
             info: null

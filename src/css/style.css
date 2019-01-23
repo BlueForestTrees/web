@@ -8,6 +8,12 @@ html {
     right: 0;
 }
 
+.top-right {
+    position: absolute;
+    top: 50;
+    right: 0;
+}
+
 .tiny {
     width: 1.5em;
 }

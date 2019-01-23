@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <fragment-select v-model="viewDetail" class="pt-3"/>
 
         <v-window v-model="viewDetail" class="pt-1">

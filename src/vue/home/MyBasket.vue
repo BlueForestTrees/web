@@ -43,6 +43,9 @@
         },
         methods: {
             ...mapActions({goSearch: On.GO_SEARCH})
+        },
+        mounted(){
+            console.log("BAS mounted")
         }
     }
 </script>

@@ -3,6 +3,7 @@
         <v-layout justify-center>
             <card3d v-if="trunk" :flipped="qtFlipped">
                 <span slot="front" @click.stop="flip" class="hand">
+                    <v-rating v-model="rating" background-color="orange lighten-3" color="orange" large length="1" clearable @click.native.stop="" class="top-right"></v-rating>
                     <tree-card-front :tree="tree"/>
                 </span>
                 <v-card slot="back">
@@ -35,7 +36,8 @@
         },
         data() {
             return {
-                qtFlipped: false
+                qtFlipped: false,
+                rating: null
             }
         },
         methods: {

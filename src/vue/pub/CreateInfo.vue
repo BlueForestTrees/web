@@ -55,7 +55,7 @@
     import {GO} from "../../const/go"
 
     export default {
-        name: "info",
+        name: "create-info",
         components: {Card},
         data: () => ({GO})
     }

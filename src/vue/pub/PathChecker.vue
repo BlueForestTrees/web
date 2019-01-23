@@ -18,11 +18,12 @@
     import debounce from 'lodash.debounce'
 
     export default {
-        name: "name-checker",
+        name: "path-checker",
+        props: ['path'],
         components: {Loader},
         data: () => ({name: null, valid: false, errors: null, loading: false}),
         methods: {
-            check: debounce(function() {
+            check: debounce(function () {
                 this.errors = null
                 if (this.name) {
                     this.loading = true
@@ -43,6 +44,9 @@
                     this.$emit("save", this.name)
             },
             ...mapActions({checkAvailable: On.CHECK_NAME_AVAILABLE})
+        },
+        mounted() {
+            this.name = this.path
         }
     }
 </script>

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import On from "../../const/on"
 import api from "../../rest/api"
-import {applyAspectCoef, applyRessourceCoef, coefFromTrunkToSelection, createStringObjectId, totalQt, transportQuantity, treefyAll, treeTotalQt} from "../../services/calculations"
+import {coefFromTrunkToSelection, createStringObjectId, selectionTotalQt, transportQuantity, treefyAll, treeTotalQt} from "../../services/calculations"
 import {bqtGToQtUnit, baseQt} from "unit-manip"
 import router from "../../router/router"
 import {GO} from "../../const/go"
@@ -43,7 +43,7 @@ export default {
     [On.LOAD_SELECTION]: async ({dispatch}, {_id, fragments}) => dispatch(On.LOAD_SELECTION_TREE, {selection: await api.getSelection(_id), fragments}),
 
     [On.LOAD_SELECTION_TREE]: async ({dispatch}, {selection, fragments}) => {
-        const tree = await dispatch(On.LOAD_OPEN_TREE, {_id: selection.trunkId, bqt: totalQt(selection), fragments})
+        const tree = await dispatch(On.LOAD_OPEN_TREE, {_id: selection.trunkId, bqt: selectionTotalQt(selection), fragments})
         tree.selection = selection
         return tree
     },

@@ -9,11 +9,16 @@
                 <span style="margin-left:1em;margin-right:0.5em">
                     <v-icon color="primary">chat_bubble</v-icon>
                 </span>
-                <span class="subheading">{{messages.title}}</span>
+                <span class="subheading font-weight-thin">{{messages.title}}</span>
             </v-layout>
             <v-divider/>
+            <template v-if="messages.description">
+                <v-container>
+                    <div style="white-space: pre-line" class="subheading font-weight-thin"><b>Commentaire de l'auteur:</b> {{messages.description}}</div>
+                </v-container>
+                <v-divider/>
+            </template>
         </span>
-
         <span ref="messages" style="overflow-x:hidden;overflow-y:scroll;flex:1 1 auto">
             <v-layout ref="messages" column mx-2>
                 <template v-for="m in messages.list">

@@ -12,6 +12,7 @@
 
     export default {
         name: "description-input",
+        props: ['value'],
         data: () => ({
             description: null,
             errors: null,
@@ -26,6 +27,9 @@
                 if (!this.errors)
                     this.$emit("save", this.description)
             },
+        },
+        mounted() {
+            this.description = this.value
         }
     }
 </script>

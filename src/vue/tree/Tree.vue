@@ -22,9 +22,16 @@
             </v-layout>
         </v-card>
 
-        <v-window v-model="viewDetail">
+        <v-window v-model="viewDetail" v-if="tree && tree.trunk">
             <v-window-item lazy>
-                <bilan-impacts :tree="tree" :selection="selection"/>
+                <v-container>
+                    <v-card>
+                        <v-container>
+                            <div class="display-1 font-weight-thin">Impacts sur l'environnement</div>
+                        </v-container>
+                        <bilan-impacts :tree="tree" :selection="selection"/>
+                    </v-card>
+                </v-container>
             </v-window-item>
             <v-window-item lazy>
                 <ressources :tree="tree" :selection="selection"/>
@@ -48,6 +55,7 @@
     import {FACETS, IMPACT_TANK, TANK, treeFragments} from "../../const/fragments"
     import FragmentSelect from "./FragmentSelect"
     import {GO as Go} from "../../const/go"
+    import TransitionExpand from "../common/TransitionExpand"
 
     const Description = () => import(/* webpackChunkName: "Description" */ "./Description")
     const Ressources = () => import(/* webpackChunkName: "Ressources" */ "./Ressources")
@@ -57,6 +65,7 @@
 
     export default {
         components: {
+            TransitionExpand,
             FragmentSelect,
             Card,
             TreeCard,
@@ -69,7 +78,7 @@
         },
         data: () => ({
             selection: [],
-            viewDetail: 0
+            viewDetail: null
         }),
         props: ['_id', 'bqt', 'sid'],
         computed: {
@@ -111,7 +120,7 @@
                         }
                     } catch (e) {
                         if (e.status === 404) {
-                            this.$router.push({name: Go.NOT_FOUND})
+                            this.snack({text: "L'élément n'a pas été trouvé :(", color: "orange"})
                         }
                     }
                 }
