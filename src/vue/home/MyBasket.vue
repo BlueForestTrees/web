@@ -1,5 +1,5 @@
 <template>
-    <v-card-text v-if="emptyBasket" class="text-md-center"><br>Vous n'avez rien consulté récemment. <br><br>Faites une recherche pour trouver des choses intéressantes!</span></v-card-text>
+    <v-card-text v-if="emptyBasket" class="text-md-center"><br>Vous n'avez rien consulté récemment. <br><br>Faites une recherche pour trouver des choses intéressantes!</v-card-text>
     <span v-else>
         <span v-if="trunks.length">
             <v-container>

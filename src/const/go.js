@@ -25,6 +25,7 @@ export const GO = {
     EDIT_EQUIV: 'editEquiv',
     CREATE_COMPENS: 'createCompens',
     CREATE_ALT: 'createAlt',
+    CREATE_GROUP: 'createGroup',
     ROOT: 'root',
     TEAM: 'team',
     MESSAGE: 'message',

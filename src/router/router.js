@@ -29,6 +29,7 @@ const CreateInfo = () => import(/* webpackChunkName: "Info"*/ "../vue/pub/Create
 const CreateEq = () => import(/* webpackChunkName: "CreateEq"*/ "../vue/pub/CreateEq")
 const CreateCompens = () => import(/* webpackChunkName: "CreateCompens"*/ "../vue/pub/CreateCompens")
 const CreateAlt = () => import(/* webpackChunkName: "CreateAlt"*/ "../vue/pub/CreateAlt")
+const CreateGroup = () => import(/* webpackChunkName: "CreateGroup"*/ "../vue/pub/CreateGroup")
 
 Vue.use(VueRouter)
 
@@ -60,6 +61,7 @@ export default new VueRouter({
                 {name: GO.EDIT_EQUIV, path: "edit/eq/:path", component: CreateEq, props: true},
                 {name: GO.CREATE_COMPENS, path: "create/co", component: CreateCompens},
                 {name: GO.CREATE_ALT, path: "create/alt", component: CreateAlt},
+                {name: GO.CREATE_GROUP, path: "create/g", component: CreateGroup},
 
                 {name: GO.QUI_2, path: "qui2fois/:bqt/:_id/:sbqt/:s_id", component: Qui2, props: true},
                 {name: GO.TREE_EMPTY, path: "tree", component: Tree},

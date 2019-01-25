@@ -28,7 +28,7 @@
     const MyBasket = () => import(/* webpackChunkName: "MyBasket"*/ "../home/MyBasket")
     const MyProduct = () => import(/* webpackChunkName: "MyProduct"*/ "../home/MyProduct")
     const MySelects = () => import(/* webpackChunkName: "MySelects"*/ "../home/MySelects")
-    const MyInfos = () => import(/* webpackChunkName: "MySelects"*/ "../home/MyInfos")
+    const MyInfos = () => import(/* webpackChunkName: "MyInfos"*/ "../home/MyInfos")
 
     export default {
         name: 'selection',

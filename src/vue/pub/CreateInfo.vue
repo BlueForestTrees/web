@@ -45,6 +45,16 @@
                         <v-btn color="primary" class="ma-3" :to="{name:GO.CREATE_ALT}">Créer une alternative</v-btn>
                     </v-layout>
                 </v-expansion-panel-content>
+                <v-expansion-panel-content>
+                    <div slot="header" class="bold-font font-weight-thin display-1">Groupe</div>
+                    <v-container>
+                        <p><span class="bold-font">Définition:</span> Un groupe est un rassemblement de plusieurs autres informations pour former une suite.</p>
+                    </v-container>
+                    <v-layout row justify-end>
+                        <v-spacer/>
+                        <v-btn color="primary" class="ma-3" :to="{name:GO.CREATE_GROUP}">Créer un groupe</v-btn>
+                    </v-layout>
+                </v-expansion-panel-content>
             </v-expansion-panel>
         </v-container>
 

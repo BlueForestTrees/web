@@ -115,7 +115,7 @@
                             <v-btn v-if="canSaveCopy" color="primary" @click="save">Enregistrer une copie</v-btn>
                         </v-layout>
                         <div v-if="canBrowseToEqPage">Accès à l'équivalence:
-                            <router-link :to="{name:GO.INFO, path:info.path}">{{url}}</router-link>
+                            <router-link :to="{name:GO.INFO, params:{path:info.path}}">{{url}}</router-link>
                         </div>
                     </v-layout>
                 </v-container>
