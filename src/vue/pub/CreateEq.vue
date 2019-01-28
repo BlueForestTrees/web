@@ -108,28 +108,17 @@
                         <description-input @save="selectDescription" :value="info && info.description"/>
                     </v-window-item>
                 </v-window>
-                <v-container v-if="!editing">
-                    <v-layout column align-center>
-                        <v-layout>
-                            <v-btn :disabled="!canSave" color="primary" @click="saveOrUpdate">Enregistrer</v-btn>
-                            <v-btn v-if="canSaveCopy" color="primary" @click="save">Enregistrer une copie</v-btn>
-                        </v-layout>
-                        <div v-if="canBrowseToEqPage">Accès à l'équivalence:
-                            <router-link :to="{name:GO.INFO, params:{path:info.path}}">{{url}}</router-link>
-                        </div>
-                    </v-layout>
-                </v-container>
+                <info-saver v-if="!editing" v-model="canSave" :info="info"/>
             </v-card>
         </v-container>
     </div>
 </template>
 <script>
-    import Vue from 'vue'
     import Card from "../common/Card"
     import TreeCard from "../tree/TreeCard"
     import TreeSelectionFinder from "../tree/TreeSelectionFinder"
     import AttributeFinder from "../tree/AttributeFinder"
-    import {createStringObjectId, getAttributeByFragment, name, qtUnitName, qtFreq, attributeCoef} from "../../services/calculations"
+    import {getAttributeByFragment, name, qtUnitName, qtFreq, attributeCoef} from "../../services/calculations"
     import On from "../../const/on"
     import {mapActions} from "vuex"
     import PathChecker from "./PathChecker"
@@ -139,14 +128,18 @@
     import TransitionExpand from "../common/TransitionExpand"
     import SelectionCardFront from "../tree/SelectionCardFront"
     import {GO} from "../../const/go"
+    import InfoSaver from "./InfoSaver"
+    import InfoLoader from "./InfoLoader"
 
     export default {
         name: "create-eq",
-        components: {SelectionCardFront, TransitionExpand, SelectionLink, DescriptionInput, PathChecker, AttributeFinder, TreeSelectionFinder, TreeCard, Card},
+        components: {InfoSaver, SelectionCardFront, TransitionExpand, SelectionLink, DescriptionInput, PathChecker, AttributeFinder, TreeSelectionFinder, TreeCard, Card},
         props: ['path'],
+        mixins: [InfoLoader],
         data: () => ({
             GO,
-            idx: 0, saved: true, pathChanged: false,
+            idx: 0,
+            canSave: false,
             info: {type: "eq", fragment: null, leftSelection: null, rightSelection: null, path: null, description: null},
             leftTree: null, rightTree: null
         }),
@@ -155,10 +148,6 @@
             ...mapActions({
                 loadSelectionTree: On.LOAD_SELECTION_TREE,
                 applyCoefAll: On.APPLY_QUANTITY_COEF_ALL,
-                saveInfo: On.SAVE_INFO,
-                updateInfo: On.UPDATE_INFO,
-                getInfo: On.GET_INFO,
-                snack: On.SNACKBAR,
             }),
             close() {
                 this.idx = 0
@@ -166,90 +155,44 @@
             selectProductA({selection}) {
                 this.info.leftSelection = selection
                 this.refreshTree(this.info.leftSelection).then(leftTree => this.leftTree = leftTree)
-                this.saved = false
+                this.canSave = true
                 this.close()
             },
             selectProductB({selection}) {
                 this.info.rightSelection = selection
                 this.refreshTree(this.info.rightSelection).then(rightTree => this.rightTree = rightTree)
-                this.saved = false
+                this.canSave = true
                 this.close()
             },
             selectFragment(fragment) {
                 this.info.fragment = fragment
-                this.saved = false
+                this.canSave = true
                 this.close()
             },
             selectPath(path) {
-                if (this.info.path) {
-                    this.pathChanged = true
-                }
                 this.info.path = path
-                this.saved = false
+                this.canSave = true
                 this.close()
             },
             selectDescription(description) {
                 this.info.description = description
-                this.saved = false
+                this.canSave = true
                 this.close()
             },
-            saveOrUpdate() {
-                if (this.info._id) {
-                    this.update()
-                } else {
-                    this.save()
-                }
-            },
-            save() {
-                const _id = createStringObjectId()
-                return this.saveInfo({...this.info, _id}).then(() => {
-                    this.info._id = _id
-                    this.saved = true
-                    this.$router.push({name: GO.EDIT_EQUIV, params: {path: this.info.path}})
-                }).catch(e => {
-                    console.error(e)
-                    this.snack({text: e.body.message, color: "red"})
-                })
-            },
-            update() {
-                this.updateInfo(this.info).then(() => {
-                    this.saved = true
-                    this.$router.push({name: GO.EDIT_EQUIV, params: {path: this.info.path}})
-                })
-            },
-
-            async refresh() {
-                if (this.path) {
-                    const info = await this.getInfo({path: this.path})
-                    if (info) {
-                        this.info = info
-                        this.leftTree = await this.refreshTree(this.info.leftSelection)
-                        this.rightTree = await this.refreshTree(this.info.rightSelection)
-                    }
+            async infoChanged(info) {
+                if (info) {
+                    this.info = info
+                    this.leftTree = await this.refreshTree(this.info.leftSelection)
+                    this.rightTree = await this.refreshTree(this.info.rightSelection)
                 }
             },
             refreshTree(selection) {
                 return this.loadSelectionTree({selection, fragments: infoFragments})
             },
         },
-        mounted() {
-            this.refresh()
-        },
         computed: {
             editing() {
                 return this.idx !== 0
-            },
-            canBrowseToEqPage() {
-                return this.url && this.saved
-            },
-            url() {
-                return this.info && this.info.path && `${Vue.http.options.root}/info/${this.info.path}`
-            },
-            canSave() {
-                return !this.saved && this.info.path && this.info.leftSelection && this.info.rightSelection && this.info.fragment
-            },
-            canSaveCopy() {
-                return this.canSave && this.pathChanged
             },
             leftAttribute() {
                 return this.leftTree && this.info.fragment && getAttributeByFragment(this.leftTree, this.info.fragment)
@@ -269,9 +212,6 @@
                 if (c && c !== 1) {
                     this.applyCoefAll({tree: this.rightTree, coef: c})
                 }
-            },
-            '$route'(to, from) {
-                this.refresh()
             }
         }
     }

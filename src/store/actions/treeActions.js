@@ -17,7 +17,14 @@ export default {
     [On.GO_CREATE_TREE]: () => router.push({name: GO.CREATE_TREE}),
     [On.GO_CREATE_INFO]: () => router.push({name: GO.CREATE_INFO}),
 
-    [On.GO_ANY]: ({dispatch}, item) => item.trunkId ? dispatch(On.GO_SELECTION, item) : dispatch(On.GO_TREE, item),
+    [On.GO_ANY]: ({dispatch}, item) =>
+        item.trunkId ?
+            dispatch(On.GO_SELECTION, item)
+            :
+            item.path ?
+                router.push({name: GO.INFO, params: {path: item.path}})
+                :
+                dispatch(On.GO_TREE, item),
 
     [On.GO_SELECTION]: ({}, selection) => router.push({name: GO.SELECTION, params: {_id: selection._id}}),
 

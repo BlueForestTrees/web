@@ -14,6 +14,12 @@ html {
     left: 0;
 }
 
+.drag {
+    background-color: #E9F1F9;
+    border: #7FABDC 2px dashed;
+    border-radius: 5px
+}
+
 .top-right {
     position: absolute;
     top: 0;
@@ -243,6 +249,7 @@ a {
 .slide-y-enter-active {
     transition: all .2s;
 }
+
 .slide-y-enter, .slide-y-leave-to {
     opacity: 0;
     transform: translateY(-10px);
@@ -259,4 +266,17 @@ a {
     height: 0;
     opacity: 0;
     transform: translateY(-30px);
+}
+
+.flip-list-move {
+    transition: transform 0.3s;
+}
+
+
+.chosenClass {
+    opacity: 0;
+}
+
+.dragClass {
+    opacity: 1;
 }

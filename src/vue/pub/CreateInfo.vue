@@ -24,7 +24,7 @@
                 <v-expansion-panel-content>
                     <div slot="header" class="bold-font font-weight-thin display-1">Compensation</div>
                     <v-container>
-                        <p class="bold-font align display-2">A = -B</p>
+                        <p class="bold-font align display-2">-A = B</p>
                         <p><span class="bold-font">Définition:</span> Les compensations nous permettent de nous apercevoir qu’une activité envisageable “annule” les effets d’une autre activité dont on a du mal à se passer.</p>
                         <p><span class="bold-font">Exemple:</span> Réduire de 3 minutes la durée de sa douche chaque jour compense l’énergie utilisée pour éclairer une soirée poker une fois par mois.</p>
                     </v-container>

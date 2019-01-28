@@ -230,3 +230,5 @@ export const attributeCoef = (leftAttribute, rightAttribute) => (quantity(leftAt
 export const getAttributeByFragment = (tree, {type, _id}) => tree[type] && find(tree[type], entryKeyFromFragmentName[type], _id)
 
 export const getAttribute = (tree, {type, _id}) => find(tree[type], "_id", _id)
+
+export const needS = count => count > 1 ? 's' : ''

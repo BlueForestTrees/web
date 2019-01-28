@@ -61,7 +61,9 @@ export default new VueRouter({
                 {name: GO.EDIT_EQUIV, path: "edit/eq/:path", component: CreateEq, props: true},
                 {name: GO.CREATE_COMPENS, path: "create/co", component: CreateCompens},
                 {name: GO.CREATE_ALT, path: "create/alt", component: CreateAlt},
+                {name: GO.EDIT_ALT, path: "edit/alt/:path", component: CreateAlt, props: true},
                 {name: GO.CREATE_GROUP, path: "create/g", component: CreateGroup},
+                {name: GO.EDIT_GROUP, path: "edit/g/:path", component: CreateGroup, props: true},
 
                 {name: GO.QUI_2, path: "qui2fois/:bqt/:_id/:sbqt/:s_id", component: Qui2, props: true},
                 {name: GO.TREE_EMPTY, path: "tree", component: Tree},

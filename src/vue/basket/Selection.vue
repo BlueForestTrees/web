@@ -12,7 +12,7 @@
             <my-selects v-if="tabModel==='favoris'" :user="user" @select="select"/>
         </v-window-item>
         <v-window-item value="infos" lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
-            <my-infos v-if="tabModel==='infos'" :user="user" />
+            <my-infos v-if="tabModel==='infos'" :user="user" @select="select"/>
         </v-window-item>
         <!--<v-window-item value="recent" lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">-->
             <!--<my-basket v-if="tabModel==='recent'" @select="select"/>-->

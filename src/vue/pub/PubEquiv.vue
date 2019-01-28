@@ -73,7 +73,7 @@
             etalonAttribute() {
                 return this.equivTree && this.fragment && this.getAttribute(this.equivTree, this.fragment)
             },
-            deltaAxis() {
+            deltaAttribute() {
                 if (this.leftAttribute && this.rightAttribute) {
                     const deltaBqt = this.rightAttribute.quantity.bqt - this.leftAttribute.quantity.bqt
                     const delta = JSON.parse(JSON.stringify(this.rightAttribute))
@@ -82,8 +82,8 @@
                 }
             },
             coef() {
-                if (this.deltaAxis && this.etalonAttribute) {
-                    return this.deltaAxis.quantity.bqt / this.etalonAttribute.quantity.bqt
+                if (this.deltaAttribute && this.etalonAttribute) {
+                    return this.deltaAttribute.quantity.bqt / this.etalonAttribute.quantity.bqt
                 }
             },
             verb() {

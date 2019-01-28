@@ -5,7 +5,7 @@ import router from "../../router/router"
 import {generateXRequestId} from "../../services/calculations"
 
 export default {
-    [On.GO_TO]: ({}, route) => {
+    [On.GO_TO]({}, route) {
         router.push({name: route})
     },
     [On.MOUNT_APP]: async ({dispatch}) => {
@@ -30,8 +30,8 @@ export default {
         if (!xRequestId) {
             xRequestId = generateXRequestId()
             localStorage.setItem(X_REQUEST_ID, xRequestId)
-            console.log("x-request-id inited to",xRequestId)
-        }else{
+            console.log("x-request-id inited to", xRequestId)
+        } else {
             console.log("x-request-id is", xRequestId)
         }
         state.xRequestId = xRequestId
