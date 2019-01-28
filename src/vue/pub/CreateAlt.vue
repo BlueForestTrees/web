@@ -2,18 +2,19 @@
     <div>
         <v-card>
             <v-layout column align-center>
-                <v-layout :column="$vuetify.breakpoint.smAndDown" align-center justify-center my-5>
-                    <span class="font-weight-thin text-no-wrap display-1 ma-2">Préférer:</span>
+                <v-layout column align-center justify-center my-5>
+                    <span class="font-weight-thin text-no-wrap display-1 ma-2">Choisir:</span>
                     <selection-card-front v-if="leftTree && leftTree.selection" :selection="leftTree.selection" :attribute="leftAttribute"/>
                     <v-flex v-else class="bold-font display-2 mx-3">A</v-flex>
                     <span class="font-weight-thin text-no-wrap display-1 ma-2">Au lieu de:</span>
                     <selection-card-front v-if="rightTree && rightTree.selection" :selection="rightTree.selection" :attribute="rightAttribute"/>
                     <v-flex v-else class="bold-font display-2 mx-3">B</v-flex>
                 </v-layout>
-                <v-layout :column="$vuetify.breakpoint.xsOnly" align-center my-5 class="align">
-                    <span class="font-weight-thin display-1  ma-2">C'est {{verb}} l'équivalent de :</span>
+                <v-layout column align-center my-5 class="align">
+                    <span class="font-weight-thin display-1  ma-2">C'est éviter l'équivalent de :</span>
                     <selection-card-front v-if="equivTree && equivTree.selection" :selection="equivTree.selection" :attribute="equivAttribute"/>
                     <v-flex v-else class="bold-font display-2 mx-3">C</v-flex>
+                    <v-layout align-center class="font-weight-thin"><v-icon color="orange" large>warning</v-icon>Le résultat est négatif</v-layout>
                 </v-layout>
             </v-layout>
         </v-card>
@@ -128,9 +129,10 @@
                         <description-input @save="selectDescription" :value="info && info.description"/>
                     </v-window-item>
                 </v-window>
-                <info-saver v-if="!editing" v-model="canSave" :info="info"/>
             </v-card>
         </v-container>
+
+        <info-saver v-if="!editing" v-model="canSave" :info="info" @delete="remove"/>
 
     </div>
 </template>
@@ -149,6 +151,8 @@
     import {infoFragments} from "../../const/fragments"
     import InfoLoader from "./InfoLoader"
 
+    const createInfo = () => ({type: "alt", fragment: null, leftSelection: null, rightSelection: null, equivSelection: null, path: null, description: null})
+
     export default {
         name: "create-alt",
         components: {InfoSaver, DescriptionInput, PathChecker, AttributeFinder, TreeSelectionFinder, SelectionCardFront, Card},
@@ -157,11 +161,11 @@
             GO,
             idx: 0,
             canSave: false,
-            info: {type: "eq", fragment: null, leftSelection: null, rightSelection: null, equivSelection: null, path: null, description: null},
+            info: createInfo(),
             leftTree: null, rightTree: null, equivTree: null
         }),
         methods: {
-            qtUnitName, name, qtFreq,
+            qtUnitName, name, qtFreq, createInfo,
             ...mapActions({
                 loadSelectionTree: On.LOAD_SELECTION_TREE,
                 applyCoefAll: On.APPLY_QUANTITY_COEF_ALL,
@@ -213,6 +217,12 @@
                     this.equivTree = await this.refreshTree(this.info.equivSelection)
                 }
             },
+            remove() {
+                this.info = createInfo()
+                this.leftTree = null
+                this.rightTree = null
+                this.equivTree = null
+            }
         },
         computed: {
             leftAttribute() {
@@ -226,7 +236,7 @@
             },
             deltaAttribute() {
                 if (this.leftAttribute && this.rightAttribute) {
-                    const deltaBqt = this.leftAttribute.quantity.bqt - this.rightAttribute.quantity.bqt
+                    const deltaBqt = this.rightAttribute.quantity.bqt - this.leftAttribute.quantity.bqt
                     const delta = JSON.parse(JSON.stringify(this.rightAttribute))
                     delta.quantity.bqt = deltaBqt
                     return delta
@@ -236,9 +246,6 @@
                 if (this.deltaAttribute && this.equivAttribute) {
                     return this.deltaAttribute.quantity.bqt / this.equivAttribute.quantity.bqt
                 }
-            },
-            verb() {
-                return isNaN(this.coef) ? '...' : this.coef > 0 ? "éviter" : "créer"
             },
             editing() {
                 return this.idx !== 0

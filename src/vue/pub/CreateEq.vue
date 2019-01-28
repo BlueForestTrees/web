@@ -108,9 +108,9 @@
                         <description-input @save="selectDescription" :value="info && info.description"/>
                     </v-window-item>
                 </v-window>
-                <info-saver v-if="!editing" v-model="canSave" :info="info"/>
             </v-card>
         </v-container>
+        <info-saver v-if="!editing" v-model="canSave" :info="info" @delete="remove"/>
     </div>
 </template>
 <script>
@@ -131,6 +131,8 @@
     import InfoSaver from "./InfoSaver"
     import InfoLoader from "./InfoLoader"
 
+    const createInfo = () => ({type: "eq", fragment: null, leftSelection: null, rightSelection: null, path: null, description: null})
+
     export default {
         name: "create-eq",
         components: {InfoSaver, SelectionCardFront, TransitionExpand, SelectionLink, DescriptionInput, PathChecker, AttributeFinder, TreeSelectionFinder, TreeCard, Card},
@@ -140,11 +142,11 @@
             GO,
             idx: 0,
             canSave: false,
-            info: {type: "eq", fragment: null, leftSelection: null, rightSelection: null, path: null, description: null},
+            info: createInfo(),
             leftTree: null, rightTree: null
         }),
         methods: {
-            qtUnitName, name, qtFreq,
+            qtUnitName, name, qtFreq, createInfo,
             ...mapActions({
                 loadSelectionTree: On.LOAD_SELECTION_TREE,
                 applyCoefAll: On.APPLY_QUANTITY_COEF_ALL,
@@ -189,6 +191,11 @@
             refreshTree(selection) {
                 return this.loadSelectionTree({selection, fragments: infoFragments})
             },
+            remove() {
+                this.info = createInfo()
+                this.leftTree = null
+                this.rightTree = null
+            }
         },
         computed: {
             editing() {

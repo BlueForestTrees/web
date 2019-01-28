@@ -32,8 +32,17 @@
         methods: {
             ...mapActions({updateTrees: On.UPDATE_TREES}),
             async refresh() {
-                await this.updateTrees({trees: this.trees, fragments: [this.type]})
-                this.commons = extractCommons(this.trees, this.type)
+                if (this.trees && this.trees.length > 1) {
+                    await this.updateTrees({trees: this.trees, fragments: [this.type]})
+                    this.commons = extractCommons(this.trees, this.type)
+                } else {
+                    this.commons = null
+                }
+            }
+        },
+        watch: {
+            trees() {
+                this.refresh()
             }
         },
         mounted() {

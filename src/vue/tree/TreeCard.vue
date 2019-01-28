@@ -2,8 +2,8 @@
     <span class="fill-height">
         <v-layout justify-center>
             <card3d v-if="trunk" :flipped="qtFlipped">
-                <span slot="front" @click.stop="flip" class="hand">
-                    <v-rating v-model="rating" background-color="orange lighten-3" color="orange" large length="1" clearable @click.native.stop="" class="top-right"></v-rating>
+                <span slot="front">
+                    <v-icon color="orange lighten-3" large @click.native.stop="flip" class="top-right hand">{{starIcon}}</v-icon>
                     <tree-card-front :tree="tree"/>
                 </span>
                 <v-card slot="back">
@@ -36,8 +36,7 @@
         },
         data() {
             return {
-                qtFlipped: false,
-                rating: null
+                qtFlipped: false
             }
         },
         methods: {
@@ -58,6 +57,12 @@
         computed: {
             trunk: function () {
                 return this.tree && this.tree.trunk
+            },
+            selection: function () {
+                return this.tree && this.tree.selection
+            },
+            starIcon() {
+                return this.selection ? "star" : "star_border"
             }
         }
     }

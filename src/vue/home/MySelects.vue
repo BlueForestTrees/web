@@ -14,9 +14,8 @@
                     </template>
                 </v-list>
                 <v-card-text v-else-if="loaded" class="text-md-center">
-                    <p>Vous n'avez pas de sélection.</p>
-                    <p>Vous pouvez enregistrer des selections de produits depuis la recherche et leur donner un nom.</p>
-                    <p>Vous pourrez ensuite les utiliser plus tard.</p>
+                    <p>Vous n'avez pas de favoris.</p>
+                    <p>Vous pouvez enregistrer comme favoris des produits depuis leur fiche.</p>
                 </v-card-text>
                 <loader v-else/>
             </v-card>

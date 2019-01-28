@@ -83,8 +83,8 @@
                     </v-window-item>
                 </v-window>
             </v-card>
-            <info-saver v-if="!editing" v-model="canSave" :info="info"/>
         </v-container>
+        <info-saver v-if="!editing" v-model="canSave" :info="info" @delete="info = createInfo()"/>
     </div>
 </template>
 <script>
@@ -100,6 +100,8 @@
     import InfoLoader from "./InfoLoader"
     import InfoIdDense from "../home/InfoIdDense"
 
+    const createInfo = () => ({type: "gr", path: null, description: null, items: []})
+
     export default {
         name: "create-group",
         mixins: [InfoLoader],
@@ -108,9 +110,10 @@
             GO,
             idx: 0,
             canSave: false,
-            info: {type: "gr", path: null, description: null, items: []}
+            info: createInfo(),
         }),
         methods: {
+            createInfo,
             ...mapActions({
                 snack: On.SNACKBAR,
                 getInfo: On.GET_INFO

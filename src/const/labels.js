@@ -1,4 +1,5 @@
 export const infoType = {
     "eq": "Equivalence",
-    "gr": "Groupe"
+    "gr": "Groupe",
+    "alt": "Alternative"
 }

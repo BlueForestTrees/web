@@ -1,12 +1,14 @@
 <template>
     <div v-if="info">
         <eq-show v-if="info && info.type === 'eq'" :info="info"/>
+        <alt-show v-else-if="info && info.type === 'alt'" :info="info"/>
         <info v-else-if="info && info.type === 'gr'" v-for="id in info.items" :_id="id" :key="id"></info>
     </div>
     <v-container v-else>
         <v-card>
-            <v-layout row align-center justify-center style="height:15em">
-                <loader/>
+            <v-layout row align-center justify-center style="height:10em">
+                <loader v-if="loading"/>
+                <p v-else>Cette info n'existe plus :(</p>
             </v-layout>
         </v-card>
     </v-container>
@@ -19,19 +21,23 @@
     import OpenMessage from "../common/OpenMessage"
 
     const EqShow = () => import(/* webpackChunkName: "EqShow"*/ "./Eq")
+    const AltShow = () => import(/* webpackChunkName: "AltShow"*/ "./Alt")
 
     export default {
         name: "info",
-        components: {OpenMessage, Loader, EqShow},
+        components: {OpenMessage, Loader, EqShow, AltShow},
         props: ['path', '_id'],
         data: () => ({
-            info: null
+            info: null,
+            loading: true
         }),
         methods: {
             ...mapActions({getInfo: On.GET_INFO}),
             async refresh() {
                 try {
+                    this.loading = true
                     this.info = await this.getInfo(this.path ? {path: this.path} : {_id: this._id})
+                    this.loading = false
                 } catch (e) {
                     console.error(e)
                 }

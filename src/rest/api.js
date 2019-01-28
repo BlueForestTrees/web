@@ -14,9 +14,10 @@ export default {
     postInfo: info => post(`api/info`, info),
     putInfo: info => put(`api/info`, info),
     getInfo: _id => get(`api/info/${_id}`),
+    searchInfo: ({term, type, aidx, ps, oid}) => get(`/api/info${paramsOf({q: term, t: type, aidx, ps, oid})}`),
+
+    deleteInfo: _id => del(`api/info/${_id}`),
     getInfoByPath: path => get(`api/info/path/${path}`),
-    getInfoByUser: oid => get(`api/info/owner/${oid}`),
-    getAllInfos: () => get(`api/info`),
     getSelection: _id => get(`api/selection/${_id}`),
     selectionOf: oid => get(`api/selection/owner/${oid}`),
     createSelection: selection => post(`/api/selection`, selection),
