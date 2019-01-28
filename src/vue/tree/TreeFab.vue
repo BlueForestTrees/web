@@ -68,7 +68,7 @@
                 this.dispatchDeleteTrunk(tree)
                     .then(this.closeTree)
                     .then(this.goHome)
-                    .then(this.snack({text: "1 élement supprimé a été supprimé définitivement"}))
+                    .then(this.snack({text: "1 élement supprimé"}))
             }
         }
     }

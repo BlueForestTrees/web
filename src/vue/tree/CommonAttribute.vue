@@ -40,11 +40,6 @@
                 }
             }
         },
-        watch: {
-            trees() {
-                this.refresh()
-            }
-        },
         mounted() {
             this.refresh()
         }

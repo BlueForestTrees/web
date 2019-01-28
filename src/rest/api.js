@@ -28,7 +28,7 @@ export default {
     searchByRoot: ({bqt, _id}) => get(`/api/tree/root/equiv/${bqt}/${_id}`),
     searchFacetEntry: namepart => get(`/api/facetEntry${paramsOf({q: namepart})}`),
     searchImpactEntry: namepart => get(`/api/impactEntry${paramsOf({q: namepart})}`),
-    searchTrunk: ({g, term, type, aidx, ps, cat, oid}) => cached(get, `/api/tree/trunks${paramsOf({g, q: term, t: type, aidx, ps, ...cat, oid})}`, searchTrunkCache),
+    searchTrunk: ({g, term, type, aidx, ps, cat, oid}) => get(`/api/tree/trunks${paramsOf({g, q: term, t: type, aidx, ps, ...cat, oid})}`),
 
     getUser: _id => cached(get, `/api/user/${_id}`, userCache),
     getTrunk: _id => get(`/api/tree/trunk/${_id}`),
