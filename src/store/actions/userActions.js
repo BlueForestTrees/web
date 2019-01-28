@@ -8,6 +8,12 @@ export default {
 
     [On.USER_FROM_STORAGE]: async ({commit}) => commit(Do.SET_TOKEN, await forage.getAccessToken()),
 
+    [On.LOGOUT]: async ({commit, dispatch}) => {
+        forage.clearAccessToken()
+        commit(Do.SET_TOKEN, null)
+        dispatch(On.GO_HOME)
+    },
+
     [On.WANT_SUSCRIBE]: ({}, {mail}) => api.postSuscription({mail}),
 
     [On.CONFIRM_SUSCRIBE]: async ({commit}, {token, fullname, password}) => api.postConfirm({token, fullname, password})
@@ -24,11 +30,7 @@ export default {
             dispatch(On.CHECK_AUTH)
         }),
 
-    [On.LOGOUT]: async ({commit, dispatch}) => {
-        forage.clearAccessToken()
-        commit(Do.SET_TOKEN, null)
-        dispatch(On.GO_HOME)
-    },
+
 
     [On.CHECK_AUTH]: ({state, commit}) => {
         if (!state.user) {

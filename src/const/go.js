@@ -1,6 +1,7 @@
 export const GO = {
     DATA_EXPLAINED: "datasExplained",
     ROAD_MAP: "roadMap",
+    RECENT: 'recent',
     SUSCRIBE: 'suscribe',
     CONFIRM: 'confirm',
     LOGIN: 'login',

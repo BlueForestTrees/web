@@ -78,7 +78,14 @@
                 </v-list-tile>
             </v-list-group>
 
-
+            <v-list-tile @click="goto(GO.RECENT)">
+                <v-list-tile-action>
+                    <v-icon color="primary">dashboard</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                    <v-list-tile-title>Vu récemment</v-list-tile-title>
+                </v-list-tile-content>
+            </v-list-tile>
         </v-list>
 
 

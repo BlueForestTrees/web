@@ -30,6 +30,7 @@ const CreateEq = () => import(/* webpackChunkName: "CreateEq"*/ "../vue/pub/Crea
 const CreateCompens = () => import(/* webpackChunkName: "CreateCompens"*/ "../vue/pub/CreateCompens")
 const CreateAlt = () => import(/* webpackChunkName: "CreateAlt"*/ "../vue/pub/CreateAlt")
 const CreateGroup = () => import(/* webpackChunkName: "CreateGroup"*/ "../vue/pub/CreateGroup")
+const MyBasket = () => import(/* webpackChunkName: "MyBasket"*/ "../vue/home/MyBasket")
 
 Vue.use(VueRouter)
 
@@ -69,6 +70,7 @@ export default new VueRouter({
                 {name: GO.TREE_EMPTY, path: "tree", component: Tree},
                 {name: GO.ROOT, path: "root/:treeId/:rootId", component: Root, props: true},
                 {name: GO.BASKET, path: "selection", component: Selection},
+                {name: GO.RECENT, path: "recent", component: MyBasket},
                 {name: GO.COMPARE_EMPTY, path: "compare", component: Compare},
                 {name: GO.COMPARE_PARTIAL, path: "compare/:leftId", component: Compare, props: true},
                 {name: GO.ADD_IMPACT_ENTRY, path: "add/entry/impact", component: AddImpactEntry},
