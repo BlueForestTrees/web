@@ -58,6 +58,7 @@
     import RootsMenu from "../root/RootsMenu"
 
     export default {
+        name:"ressources-subpage",
         components: {
             RootsMenu,
             Card,

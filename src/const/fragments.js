@@ -4,11 +4,13 @@ export const TANK = "tank"
 export const OWNER = "owner"
 export const IMPACTS = "impacts"
 export const ROOTS = "roots"
+export const TRUNK = "trunk"
 
 
-export const allFragments = ["trunk", OWNER, ROOTS, "branches", IMPACTS, "damages", IMPACT_TANK, "damagesTank", FACETS, TANK]
-export const treeFragments = ["trunk", OWNER, TANK, IMPACT_TANK, FACETS]
-export const infoFragments = ["trunk", TANK, IMPACT_TANK, FACETS]
+export const allFragments = [TRUNK, OWNER, ROOTS, "branches", IMPACTS, "damages", IMPACT_TANK, "damagesTank", FACETS, TANK]
+export const treeHeadFragments = [TRUNK, OWNER]
+export const treeFragments = [TRUNK, OWNER, TANK, IMPACT_TANK, FACETS]
+export const infoFragments = [TRUNK, TANK, IMPACT_TANK, FACETS]
 
 //Lien entre les fragments et les id d'entry de chaque fragment.
 export const entryKeyFromFragmentName = {

@@ -37,7 +37,6 @@
         },
         methods: {
             emitInput(idx) {
-                console.log("emit input", idx)
                 this.$emit('input', idx)
             }
         }

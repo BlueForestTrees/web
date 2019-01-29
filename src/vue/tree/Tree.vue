@@ -1,49 +1,15 @@
 <template>
-    <v-layout v-if="!tree" row wrap justify-center align-center class="ma-4">
-        <span class="title">Composition</span>
-        <v-card-text class="text-md-center">
-            <div>Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche</span> ou prenez
-                un produit du <span><v-icon @click="goBasket" color="primary">shopping_basket</v-icon> panier pour voir sa composition.</span>
-                <br>
-                Vous pouvez aussi <span @click="goCreateTree" style="cursor:pointer"><v-icon class="icon-line" color="primary">add</v-icon>Créer un produit ou un service</span>
-                depuis le <span @click="switchLeftMenu" style="cursor:pointer"><v-icon class="icon-line" color="primary">menu</v-icon>menu de gauche.</span>
-            </div>
-        </v-card-text>
-    </v-layout>
+    <div v-if="tree">
+        <tree-headpage :tree="tree" :value="currentSubPage" @input="changeSubPage"/>
 
-    <div v-else>
-        <v-card>
-            <v-layout column>
-                <v-layout :column="$vuetify.breakpoint.smAndDown" align-center justify-center>
-                    <description :tree="tree" class="ma-5"/>
-                    <tree-card :tree="tree"/>
-                </v-layout>
-                <fragment-select :value="currentFragment" @input="navFragment"/>
-            </v-layout>
-        </v-card>
+        <v-container style="min-height: 50em">
 
-        <v-container v-if="tree && tree.trunk" style="min-height: 50em">
-            <template v-if="currentFragment === IMPACTS">
-                <impact-adder v-if="modeAdd" :tree="tree" :selection="selection"/>
-                <v-card v-else>
-                    <v-container>
-                        <div class="display-1 font-weight-thin">Impacts sur l'environnement</div>
-                    </v-container>
-                    <bilan-impacts :tree="tree" :selection="selection"/>
-                </v-card>
-            </template>
+            <impacts-sub-page v-if="currentSubPage === IMPACTS" :tree="tree" :selection="selection" :modeAdd="modeAdd"/>
 
-            <ressources v-if="currentFragment === ROOTS" :tree="tree" :selection="selection"/>
+            <ressources-sub-page v-if="currentSubPage === ROOTS" :tree="tree" :selection="selection" :modeAdd="modeAdd"/>
 
-            <template v-if="currentFragment === FACETS">
-                <facet-adder v-if="modeAdd" :tree="tree" :selection="selection"/>
-                <v-card v-else>
-                    <v-container>
-                        <div class="display-1 font-weight-thin">Propriétés</div>
-                    </v-container>
-                    <facets :tree="tree" :selection="selection"/>
-                </v-card>
-            </template>
+            <facets-sub-page v-if="currentSubPage === FACETS" :tree="tree" :selection="selection" :modeAdd="modeAdd"/>
+
         </v-container>
 
         <tree-fab :tree="tree" @nav="fabnav"></tree-fab>
@@ -55,40 +21,25 @@
     import {mapActions, mapState} from "vuex"
     import On from "../../const/on"
     import TreeFab from "./TreeFab"
-    import TreeCard from "./TreeCard"
-    import Card from "../common/Card"
-    import {FACETS, IMPACT_TANK, IMPACTS, ROOTS, TANK, treeFragments} from "../../const/fragments"
-    import FragmentSelect from "./FragmentSelect"
-    import {GO as Go} from "../../const/go"
-    import TransitionExpand from "../common/TransitionExpand"
-    import ImpactAdder from "../impact/ImpactAdder"
-    import FacetAdder from "../facet/FacetAdder"
+    import {FACETS, IMPACTS, ROOTS, treeHeadFragments} from "../../const/fragments"
+    import TreeHeadpage from "./TreeHeadPage"
 
-    const Description = () => import(/* webpackChunkName: "Description" */ "./Description")
-    const Ressources = () => import(/* webpackChunkName: "Ressources" */ "./Ressources")
-    const Facets = () => import(/* webpackChunkName: "Facets" */ "./Facets")
-    const BilanImpacts = () => import(/* webpackChunkName: "BilanImpacts" */ "./BilanImpacts")
-    const Branches = () => import(/* webpackChunkName: "Branches" */ "./Branches")
+    const RessourcesSubPage = () => import(/* webpackChunkName: "RessourcesSubPage" */ "./RessourcesSubPage")
+    const FacetsSubPage = () => import(/* webpackChunkName: "FacetsSubPage" */ "./FacetsSubPage")
+    const ImpactsSubPage = () => import(/* webpackChunkName: "ImpactsSubPage" */ "./ImpactsSubPage")
 
     export default {
         components: {
-            FacetAdder,
-            ImpactAdder,
-            TransitionExpand,
-            FragmentSelect,
-            Card,
-            TreeCard,
-            Description,
-            BilanImpacts,
+            TreeHeadpage,
+            ImpactsSubPage,
+            RessourcesSubPage,
+            FacetsSubPage,
             TreeFab,
-            Ressources,
-            Branches,
-            Facets
         },
         data: () => ({
             modeAdd: false,
             selection: [],
-            currentFragment: null,
+            currentSubPage: FACETS,
             IMPACTS, ROOTS, FACETS
         }),
         props: ['_id', 'bqt', 'sid'],
@@ -106,22 +57,21 @@
                 goBasket: On.GO_BASKET,
                 goCreateTree: On.GO_CREATE_TREE,
             }),
-            navFragment(v) {
+            changeSubPage(idx) {
                 this.modeAdd = false
-                this.currentFragment = v
+                this.currentSubPage = idx
             },
-            fabnav(fragment) {
-                this.currentFragment = fragment
+            fabnav(idx) {
+                this.currentSubPage = idx
                 this.modeAdd = true
             },
             getTreeLoad() {
                 if (this.bqt && this._id) {
-                    return this.dispatchLoad({bqt: this.bqt, _id: this._id, fragments: treeFragments})
+                    return this.dispatchLoad({bqt: this.bqt, _id: this._id, fragments: treeHeadFragments})
                 } else if (this.sid) {
-                    return this.dispatchSelLoad({_id: this.sid, fragments: treeFragments})
+                    return this.dispatchSelLoad({_id: this.sid, fragments: treeHeadFragments})
                 } else {
                     console.warn(`bad params. bqt:${this.bqt}, _id:${this._id}, sid:${this.sid}`)
-                    this.$router.push({name: Go.NOT_FOUND})
                 }
             },
             refresh: async function () {
@@ -130,16 +80,11 @@
                     const tree = await treeLoad
                     try {
                         await tree.promises.all
-                        if (tree[TANK].length > 0) {
-                            this.currentFragment = ROOTS
-                        } else if (tree[IMPACT_TANK].length > 0) {
-                            this.currentFragment = IMPACTS
-                        } else if (tree[FACETS].length > 0) {
-                            this.currentFragment = FACETS
-                        }
                     } catch (e) {
                         if (e.status === 404) {
                             this.snack({text: "L'élément n'a pas été trouvé :(", color: "orange"})
+                        } else if (e.status === 400) {
+                            this.snack({text: "L'url contient des éléments incorrects.", color: "orange"})
                         }
                     }
                 }

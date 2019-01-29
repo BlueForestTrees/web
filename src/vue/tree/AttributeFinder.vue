@@ -23,7 +23,7 @@
         components: {CommonAttribute, FragmentSelect, Loader},
         props: ['trees'],
         data: () => ({
-            currentFragment: 0,
+            currentSubPage: 0,
             commons: null,
             facetCommons: null,
             ressourceCommons: null,

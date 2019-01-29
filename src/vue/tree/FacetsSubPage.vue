@@ -1,12 +1,16 @@
 <template>
-    <span>
+    <facet-adder v-if="modeAdd" :tree="tree" :selection="selection"/>
+    <v-card v-else>
+        <v-container>
+            <div class="display-1 font-weight-thin">Propriétés</div>
+        </v-container>
         <selectable-list :items="facets" :maxSelectionSize="1" :selection="selection">
             <template slot="no-items">
                 <v-layout class="align-center justify-center my-5 font-weight-thin title"><img src="/img/broken-heart.svg" class="logo-petit ma-1"/>Pas encore d'informations sur les propriétés</v-layout>
             </template>
         </selectable-list>
         <open-message :section="section"/>
-    </span>
+    </v-card>
 </template>
 
 <script>
@@ -15,19 +19,22 @@
     import {mapActions} from 'vuex'
     import OpenMessage from "../common/OpenMessage"
     import Card from "../common/Card"
+    import FacetAdder from "../facet/FacetAdder"
 
     export default {
+        name: "facets-subpage",
         components: {
+            FacetAdder,
             Card,
             OpenMessage,
             SelectableList,
         },
-        props: ['tree', 'selection'],
+        props: ['tree', 'selection', 'modeAdd'],
         computed: {
-            facets: function () {
+            facets() {
                 return this.tree && this.tree.facets
             },
-            section: function () {
+            section() {
                 return {
                     title: `Participer`,
                     filter: {
