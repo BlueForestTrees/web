@@ -1,7 +1,12 @@
 <template>
-    <selectable-list :items="items" :maxSelectionSize="1" :selection="selection">
-        <open-message class="mt-5" slot="no-items" :section="section"/>
-    </selectable-list>
+    <span>
+        <selectable-list :items="items" :maxSelectionSize="1" :selection="selection">
+            <template slot="no-items">
+                <v-layout class="align-center justify-center my-5 font-weight-thin title"><img src="/img/broken-heart.svg" class="logo-petit ma-1"/>Pas encore d'informations sur les impacts</v-layout>
+            </template>
+        </selectable-list>
+        <open-message :section="section"/>
+    </span>
 </template>
 
 <script>
@@ -20,9 +25,9 @@
             },
             section() {
                 return {
-                    title: `Les informations de l'impact sur l'environnement manquent. Indiquez si souhaitez les connaitre!`,
+                    title: `Participer`,
                     filter: {
-                        type: 'trunk-impact',
+                        type: 'impact.trunk',
                         topicId: this.tree._id
                     }
                 }

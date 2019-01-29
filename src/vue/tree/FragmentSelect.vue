@@ -1,14 +1,22 @@
 <template>
-    <v-tabs centered :value="value" icons-and-text>
-        <v-tab class="logo-big planet" @click="$emit('input', 0)"/>
-        <v-tab class="logo-big ressource" @click="$emit('input', 1)"/>
-        <v-tab class="logo-big facet" @click="$emit('input', 2)"/>
+    <v-tabs centered :value="fragmentIdx" icons-and-text>
+        <v-tab class="logo-big planet" @click="$emit('input', IMPACTS)"/>
+        <v-tab class="logo-big ressource" @click="$emit('input', ROOTS)"/>
+        <v-tab class="logo-big facet" @click="$emit('input', FACETS)"/>
     </v-tabs>
 </template>
 
 <script>
+    import {FACETS, IMPACTS, ROOTS} from "../../const/fragments"
+
     export default {
         name: "fragment-select",
-        props:['value']
+        props: ['value'],
+        data: () => ({IMPACTS, ROOTS, FACETS}),
+        computed: {
+            fragmentIdx() {
+                return [IMPACTS, ROOTS, FACETS].indexOf(this.value)
+            }
+        }
     }
 </script>

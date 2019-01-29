@@ -1,6 +1,7 @@
 import {Dial} from "../const/dial"
 import ENV from "../env"
 import {maquettes} from "../const/maquettes"
+import {FACETS, IMPACT_TANK} from "../const/fragments"
 
 export const createDialog = name => (dialogFactory[name] && dialogFactory[name]()) || (console.warn(`state.js il manque dialogFactory['${name}']`) || {})
 
@@ -47,9 +48,8 @@ export default {
     expire: null,
     search: {name: null, cats: []},
     basket: {},
-    basketimpact: {},
-    basketfacet: {},
-    basketdamage: {},
+    ['basket' + IMPACT_TANK]: {},
+    ['basket' + FACETS]: {},
     tree: null,
     compare: {left: null, right: null, leftAxises: null, rightAxises: null, axis: null},
     dialogs: dialogs(),

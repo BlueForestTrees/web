@@ -1,10 +1,11 @@
+import {FACETS, IMPACT_TANK} from "../const/fragments"
+
 export default {
     basketArray: (state) => Object.values(state.basket),
-    basketDamageArray: (state) => Object.values(state.basketdamage),
-    basketImpactArray: (state) => Object.values(state.basketimpact),
-    basketFacetArray: (state) => Object.values(state.basketfacet),
+    basketImpactArray: (state) => Object.values(state['basket' + IMPACT_TANK]),
+    basketFacetArray: (state) => Object.values(state['basket' + FACETS]),
     emptyBasket: (state, getters) => !getters.notEmptyBasket,
-    notEmptyBasket: (s, getters) => getters.basketArray.length > 0 || getters.basketDamageArray.length > 0 || getters.basketImpactArray.length > 0 || getters.basketFacetArray.length > 0,
+    notEmptyBasket: (s, getters) => getters.basketArray.length > 0 || getters.basketImpactArray.length > 0 || getters.basketFacetArray.length > 0,
     filter: state => {
         const cat = {}
         const filter = {cat}

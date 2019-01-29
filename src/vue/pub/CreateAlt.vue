@@ -14,7 +14,7 @@
                     <span class="font-weight-thin display-1  ma-2">C'est éviter l'équivalent de :</span>
                     <selection-card-front v-if="equivTree && equivTree.selection" :selection="equivTree.selection" :attribute="equivAttribute"/>
                     <v-flex v-else class="bold-font display-2 mx-3">C</v-flex>
-                    <v-layout align-center class="font-weight-thin"><v-icon color="orange" large>warning</v-icon>Le résultat est négatif</v-layout>
+                    <v-layout align-center class="font-weight-thin" v-if="coef"><v-icon color="orange" large>warning</v-icon>Le résultat est négatif</v-layout>
                 </v-layout>
             </v-layout>
         </v-card>

@@ -1,13 +1,13 @@
 <template>
     <v-list v-if="hasItems">
-        <template v-if="hasItems && item._id !== exceptId" v-for="item in items">
+        <template v-if="hasItems && item._id !== exceptId" v-for="(item,i) in items">
             <div :key="item._id" @click="select(item)" class="v-list__tile" :style="{paddingTop:'8px',paddingBottom:'8px',height:'auto', background: isSelected(item) ? '#D8E9F5' : '', transition: 'background .2s ease'}">
                 <v-layout row>
                     <v-list-tile-content v-if="!noQt">{{qtUnitName(item)}}</v-list-tile-content>
                     <v-list-tile-content v-else>{{name(item)}}</v-list-tile-content>
                 </v-layout>
             </div>
-            <v-divider/>
+            <v-divider v-if="i+1 < items.length"/>
         </template>
     </v-list>
     <div v-else>

@@ -1,50 +1,47 @@
 <template>
-    <span>
-        <v-item-group v-model="window" class="mt-4" mandatory tag="v-flex">
-            <v-layout row justify-center>
-                <v-item key="bb">
-                    <div slot-scope="{ active, toggle }">
-                        <v-btn :input-value="active" icon @click="toggle">
-                            <v-icon color="primary">fiber_manual_record</v-icon>
-                        </v-btn>
-                    </div>
-                </v-item>
-                <v-item key="bc">
-                    <div slot-scope="{ active, toggle }">
-                        <v-btn :input-value="active" icon @click="toggle">
-                            <v-icon color="primary">fiber_manual_record</v-icon>
-                        </v-btn>
-                    </div>
-                </v-item>
-                <v-item key="bf">
-                    <div slot-scope="{ active, toggle }">
-                        <v-btn :input-value="active" icon @click="toggle">
-                            <v-icon color="primary">fiber_manual_record</v-icon>
-                        </v-btn>
-                    </div>
-                </v-item>
-            </v-layout>
-        </v-item-group>
-        <card>
-            <v-window v-model="window">
-                <v-window-item>
-                    <selectable-list :items="items" :selection="selection">
-                        <open-message slot="no-items" :section="section" class="mt-5"/>
-                    </selectable-list>
-                </v-window-item>
-                <v-window-item>
-                    <maquette :maquette="[maquettes.ARBRE_RESSOURCE, maquettes.ARBRE_USAGE][maqIdx]">
-                        <v-btn slot="corner" flat icon><v-icon color="blue" large @click="maqIdx ? maqIdx-- : maqIdx++">swap_vert</v-icon></v-btn>
-                    </maquette>
-                </v-window-item>
-                <v-window-item>
-                    <selectable-list :items="bilanItems" :selection="selection">
-                        <open-message slot="no-items" :section="section" class="mt-5"/>
-                    </selectable-list>
-                </v-window-item>
-            </v-window>
-        </card>
-    </span>
+    <v-card>
+        <v-layout row>
+            <v-container>
+                <div class="display-1 font-weight-thin">{{title}}</div>
+            </v-container>
+            <v-spacer></v-spacer>
+            <roots-menu v-model="window" :dense="$vuetify.breakpoint.xsOnly"/>
+        </v-layout>
+
+        <v-window v-model="window">
+            <v-window-item>
+                <selectable-list :items="items" :maxSelectionSize="1" :selection="selection">
+                    <template slot="no-items">
+                        <v-layout class="align-center justify-center my-5 font-weight-thin title"><img src="/img/broken-heart.svg" class="logo-petit ma-1"/>Pas encore d'informations sur les ressources</v-layout>
+                    </template>
+                </selectable-list>
+                <open-message :section="section"/>
+            </v-window-item>
+            <v-window-item>
+                <selectable-list :items="bilanItems" :maxSelectionSize="1" :selection="selection">
+                    <template slot="no-items">
+                        <v-layout class="align-center justify-center my-5 font-weight-thin title"><img src="/img/broken-heart.svg" class="logo-petit ma-1"/>Pas encore d'informations sur les ressources</v-layout>
+                    </template>
+                </selectable-list>
+                <open-message :section="section"/>
+            </v-window-item>
+            <v-window-item>
+                <maquette :maquette="[maquettes.ARBRE_RESSOURCE, maquettes.ARBRE_USAGE][maqIdx]">
+                    <v-btn slot="corner" flat icon>
+                        <v-icon color="blue" large @click="maqIdx ? maqIdx-- : maqIdx++">swap_vert</v-icon>
+                    </v-btn>
+                </maquette>
+            </v-window-item>
+            <v-window-item>
+                <selectable-list :items="bilanItems" :maxSelectionSize="1" :selection="selection">
+                    <template slot="no-items">
+                        <v-layout class="align-center justify-center my-5 font-weight-thin title"><img src="/img/broken-heart.svg" class="logo-petit ma-1"/>Pas encore d'informations sur les ressources</v-layout>
+                    </template>
+                </selectable-list>
+                <open-message :section="section"/>
+            </v-window-item>
+        </v-window>
+    </v-card>
 </template>
 
 <script>
@@ -58,9 +55,11 @@
     import Maquette from "../maquette/Maquette"
     import Card from "../common/Card"
     import maquettes from "../../const/maquettes"
+    import RootsMenu from "../root/RootsMenu"
 
     export default {
         components: {
+            RootsMenu,
             Card,
             Maquette,
             OpenMessage,
@@ -80,11 +79,23 @@
             },
             section: function () {
                 return {
-                    title: `Il n'y a pas d'informations sur les ressources.`,
+                    title: `Participer`,
                     filter: {
                         type: 'trunk-root',
                         topicId: this.tree._id
                     }
+                }
+            },
+            title() {
+                switch (this.window) {
+                    case 0:
+                        return "Ressources directes"
+                    case 1:
+                        return "Ressources premières"
+                    case 2:
+                        return "Ressources"
+                    case 3:
+                        return "Usages"
                 }
             }
         },

@@ -18,30 +18,35 @@
                     <description :tree="tree" class="ma-5"/>
                     <tree-card :tree="tree"/>
                 </v-layout>
-                <fragment-select v-model="viewDetail"/>
+                <fragment-select :value="currentFragment" @input="navFragment"/>
             </v-layout>
         </v-card>
 
-        <v-window v-model="viewDetail" v-if="tree && tree.trunk">
-            <v-window-item lazy>
-                <v-container>
-                    <v-card>
-                        <v-container>
-                            <div class="display-1 font-weight-thin">Impacts sur l'environnement</div>
-                        </v-container>
-                        <bilan-impacts :tree="tree" :selection="selection"/>
-                    </v-card>
-                </v-container>
-            </v-window-item>
-            <v-window-item lazy>
-                <ressources :tree="tree" :selection="selection"/>
-            </v-window-item>
-            <v-window-item lazy>
-                <facets :tree="tree" :selection="selection"/>
-            </v-window-item>
-        </v-window>
+        <v-container v-if="tree && tree.trunk" style="min-height: 50em">
+            <template v-if="currentFragment === IMPACTS">
+                <impact-adder v-if="modeAdd" :tree="tree" :selection="selection"/>
+                <v-card v-else>
+                    <v-container>
+                        <div class="display-1 font-weight-thin">Impacts sur l'environnement</div>
+                    </v-container>
+                    <bilan-impacts :tree="tree" :selection="selection"/>
+                </v-card>
+            </template>
 
-        <tree-fab :tree="tree"></tree-fab>
+            <ressources v-if="currentFragment === ROOTS" :tree="tree" :selection="selection"/>
+
+            <template v-if="currentFragment === FACETS">
+                <facet-adder v-if="modeAdd" :tree="tree" :selection="selection"/>
+                <v-card v-else>
+                    <v-container>
+                        <div class="display-1 font-weight-thin">Propriétés</div>
+                    </v-container>
+                    <facets :tree="tree" :selection="selection"/>
+                </v-card>
+            </template>
+        </v-container>
+
+        <tree-fab :tree="tree" @nav="fabnav"></tree-fab>
     </div>
 
 </template>
@@ -52,10 +57,12 @@
     import TreeFab from "./TreeFab"
     import TreeCard from "./TreeCard"
     import Card from "../common/Card"
-    import {FACETS, IMPACT_TANK, TANK, treeFragments} from "../../const/fragments"
+    import {FACETS, IMPACT_TANK, IMPACTS, ROOTS, TANK, treeFragments} from "../../const/fragments"
     import FragmentSelect from "./FragmentSelect"
     import {GO as Go} from "../../const/go"
     import TransitionExpand from "../common/TransitionExpand"
+    import ImpactAdder from "../impact/ImpactAdder"
+    import FacetAdder from "../facet/FacetAdder"
 
     const Description = () => import(/* webpackChunkName: "Description" */ "./Description")
     const Ressources = () => import(/* webpackChunkName: "Ressources" */ "./Ressources")
@@ -65,6 +72,8 @@
 
     export default {
         components: {
+            FacetAdder,
+            ImpactAdder,
             TransitionExpand,
             FragmentSelect,
             Card,
@@ -77,8 +86,10 @@
             Facets
         },
         data: () => ({
+            modeAdd: false,
             selection: [],
-            viewDetail: null
+            currentFragment: null,
+            IMPACTS, ROOTS, FACETS
         }),
         props: ['_id', 'bqt', 'sid'],
         computed: {
@@ -95,6 +106,14 @@
                 goBasket: On.GO_BASKET,
                 goCreateTree: On.GO_CREATE_TREE,
             }),
+            navFragment(v) {
+                this.modeAdd = false
+                this.currentFragment = v
+            },
+            fabnav(fragment) {
+                this.currentFragment = fragment
+                this.modeAdd = true
+            },
             getTreeLoad() {
                 if (this.bqt && this._id) {
                     return this.dispatchLoad({bqt: this.bqt, _id: this._id, fragments: treeFragments})
@@ -112,11 +131,11 @@
                     try {
                         await tree.promises.all
                         if (tree[TANK].length > 0) {
-                            this.viewDetail = 1
+                            this.currentFragment = ROOTS
                         } else if (tree[IMPACT_TANK].length > 0) {
-                            this.viewDetail = 0
+                            this.currentFragment = IMPACTS
                         } else if (tree[FACETS].length > 0) {
-                            this.viewDetail = 2
+                            this.currentFragment = FACETS
                         }
                     } catch (e) {
                         if (e.status === 404) {

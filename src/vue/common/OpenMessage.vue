@@ -1,10 +1,14 @@
 <template>
-    <v-layout row justify-center align-center @click="showMessages" class="hand">
-        <v-btn flat icon>
-            <v-icon color="primary">chat_bubble</v-icon>
-        </v-btn>
-        <h3 v-if="!dense" class="font-weight-thin">{{section.title}}</h3>
-    </v-layout>
+    <div @click="showMessages">
+        <slot>
+            <v-layout row justify-center align-center class="hand">
+                <v-btn v-if="!noicon" flat icon>
+                    <v-icon color="primary">chat_bubble</v-icon>
+                </v-btn>
+                <h3 v-if="!dense" class="font-weight-thin">{{section.title}}</h3>
+            </v-layout>
+        </slot>
+    </div>
 </template>
 
 <script>
@@ -14,7 +18,7 @@
 
     export default {
         name: "open-message",
-        props: {section: {type: Object}, dense: {type: Boolean, default: false}},
+        props: {section: {type: Object}, dense: {type: Boolean, default: false}, noicon: {type: Boolean, default: false}},
         methods: {
             showMessages() {
                 this.dispatchShowMessages(this.section)

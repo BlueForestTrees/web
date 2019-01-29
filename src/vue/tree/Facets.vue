@@ -1,9 +1,12 @@
 <template>
-    <card>
+    <span>
         <selectable-list :items="facets" :maxSelectionSize="1" :selection="selection">
-            <open-message class="mt-5" slot="no-items" :section="section"/>
+            <template slot="no-items">
+                <v-layout class="align-center justify-center my-5 font-weight-thin title"><img src="/img/broken-heart.svg" class="logo-petit ma-1"/>Pas encore d'informations sur les propriétés</v-layout>
+            </template>
         </selectable-list>
-    </card>
+        <open-message :section="section"/>
+    </span>
 </template>
 
 <script>
@@ -26,7 +29,7 @@
             },
             section: function () {
                 return {
-                    title: `Aucune propriété n'est spécifiée pour ce produit. Indiquez si vous aimeriez les connaître.`,
+                    title: `Participer`,
                     filter: {
                         type: 'trunk-facet',
                         topicId: this.tree._id
