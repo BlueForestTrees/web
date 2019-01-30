@@ -7,7 +7,7 @@ import router from "../../router/router"
 import {GO} from "../../const/go"
 import Do from "../../const/do"
 import {DAMAGE, FACET, IMPACT} from "../../const/attributesTypes"
-import {allFragments, OWNER} from "../../const/fragments"
+import {allFragments, IMPACTS, OWNER} from "../../const/fragments"
 
 
 //on détecte que l'objet est à charger en se basant arbitrairement sur le champ branches
@@ -75,9 +75,12 @@ export default {
     },
 
     [On.UPDATE_TREES]: ({dispatch}, {trees, fragments = allFragments}) => {
-        return Promise.all(trees.map(tree => dispatch(On.UPDATE_TREE, {tree, bqt: treeTotalQt(tree), fragments})))
+        return Promise.all(trees.map(tree => dispatch(On.UPDATE_TREE, {tree, fragments})))
     },
-    [On.UPDATE_TREE]: ({dispatch}, {tree, bqt = 1, fragments = allFragments}) => {
+    [On.UPDATE_TREE]: ({dispatch}, {tree, bqt = 0, fragments = allFragments}) => {
+        if (bqt === 0) {
+            bqt = treeTotalQt(tree)
+        }
         tree.promises = {}
         for (let i = 0; i < fragments.length; i++) {
             if (fragments[i] !== OWNER) {
@@ -146,4 +149,5 @@ export default {
     },
 
     [On.LOAD_SELECTIONS]: ({}, {oid}) => api.selectionOf(oid)
+
 }

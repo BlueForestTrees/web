@@ -62,8 +62,9 @@
                         name: this.name,
                         g: this.grandeur.key
                     })
-                        .then(() => this.snack({text: `Le type de propriété "${this.name}" a été crée`}))
+                        .then(() => this.snack({text: `Le type d'impact "${this.name}" a été crée`}))
                         .then(() => this.focus())
+                        .then(() => this.$router.go(-1))
                 }
             },
             focus() {

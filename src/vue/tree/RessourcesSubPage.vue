@@ -1,46 +1,19 @@
 <template>
     <v-card>
         <v-layout row>
-            <v-container>
-                <div class="display-1 font-weight-thin">{{title}}</div>
-            </v-container>
+            <div class="ma-3 display-1 font-weight-thin">{{title}}</div>
             <v-spacer></v-spacer>
-            <roots-menu v-model="window" :dense="$vuetify.breakpoint.xsOnly"/>
+            <scope-menu v-model="idx" :dense="$vuetify.breakpoint.xsOnly"/>
         </v-layout>
 
-        <v-window v-model="window">
-            <v-window-item>
-                <selectable-list :items="items" :maxSelectionSize="1" :selection="selection">
-                    <template slot="no-items">
-                        <v-layout class="align-center justify-center my-5 font-weight-thin title"><img src="/img/broken-heart.svg" class="logo-petit ma-1"/>Pas encore d'informations sur les ressources</v-layout>
-                    </template>
-                </selectable-list>
-                <open-message :section="section"/>
-            </v-window-item>
-            <v-window-item>
-                <selectable-list :items="bilanItems" :maxSelectionSize="1" :selection="selection">
-                    <template slot="no-items">
-                        <v-layout class="align-center justify-center my-5 font-weight-thin title"><img src="/img/broken-heart.svg" class="logo-petit ma-1"/>Pas encore d'informations sur les ressources</v-layout>
-                    </template>
-                </selectable-list>
-                <open-message :section="section"/>
-            </v-window-item>
-            <v-window-item>
-                <maquette :maquette="[maquettes.ARBRE_RESSOURCE, maquettes.ARBRE_USAGE][maqIdx]">
-                    <v-btn slot="corner" flat icon>
-                        <v-icon color="blue" large @click="maqIdx ? maqIdx-- : maqIdx++">swap_vert</v-icon>
-                    </v-btn>
-                </maquette>
-            </v-window-item>
-            <v-window-item>
-                <selectable-list :items="bilanItems" :maxSelectionSize="1" :selection="selection">
-                    <template slot="no-items">
-                        <v-layout class="align-center justify-center my-5 font-weight-thin title"><img src="/img/broken-heart.svg" class="logo-petit ma-1"/>Pas encore d'informations sur les ressources</v-layout>
-                    </template>
-                </selectable-list>
-                <open-message :section="section"/>
-            </v-window-item>
-        </v-window>
+        <transition name="slide-fade" mode="out-in">
+            <fragment-list v-if="idx === 0" :tree="tree" :selection="selection" :fragment="ROOTS" none="Pas encore d'informations sur les ingrédients" key="0"></fragment-list>
+            <fragment-list v-else-if="idx === 1" :tree="tree" :selection="selection" :fragment="TANK" none="Pas encore d'informations sur les matières premières" key="1"></fragment-list>
+            <!--<fragment-list v-else-if="idx === 2" :tree="tree" :selection="selection" :fragment="TANK" none="Pas encore d'informations sur les matières" key="1"></fragment-list>-->
+            <fragment-list v-else-if="idx === 3" :tree="tree" :selection="selection" :fragment="BRANCHES" none="Pas encore d'informations sur les usages" key="1"></fragment-list>
+        </transition>
+        <open-message :section="section"/>
+
     </v-card>
 </template>
 
@@ -55,12 +28,15 @@
     import Maquette from "../maquette/Maquette"
     import Card from "../common/Card"
     import maquettes from "../../const/maquettes"
-    import RootsMenu from "../root/RootsMenu"
+    import ScopeMenu from "../root/ScopeMenu"
+    import FragmentList from "./FragmentList"
+    import {BRANCHES, ROOTS, TANK} from "../../const/fragments"
 
     export default {
-        name:"ressources-subpage",
+        name: "ressources-subpage",
         components: {
-            RootsMenu,
+            FragmentList,
+            ScopeMenu,
             Card,
             Maquette,
             OpenMessage,
@@ -70,14 +46,11 @@
             tree: Object, selection: Array, bilan: {type: Boolean, default: false}
         },
         mixins: [goTree],
-        data: () => ({window: null, maquettes, maqIdx: 0}),
+        data: () => ({
+            idx: 0, maquettes, maqIdx: 0,
+            ROOTS, TANK, BRANCHES
+        }),
         computed: {
-            items() {
-                return this.tree && this.tree.roots
-            },
-            bilanItems() {
-                return this.tree && this.tree.tank
-            },
             section: function () {
                 return {
                     title: `Participer`,
@@ -88,11 +61,11 @@
                 }
             },
             title() {
-                switch (this.window) {
+                switch (this.idx) {
                     case 0:
-                        return "Ressources directes"
+                        return "Ingrédients"
                     case 1:
-                        return "Ressources premières"
+                        return "Matières premières"
                     case 2:
                         return "Ressources"
                     case 3:

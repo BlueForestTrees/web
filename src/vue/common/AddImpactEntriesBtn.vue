@@ -4,7 +4,7 @@
             <v-icon>add</v-icon>
         </v-btn>
         <v-list>
-            <v-list-tile @click="show(Dial.ADD_IMPACT_ENTRY)">
+            <v-list-tile @click="goto(GO.ADD_IMPACT_ENTRY)">
                 <v-list-tile-avatar>
                     <v-icon>keyboard_tab</v-icon>
                 </v-list-tile-avatar>
@@ -18,17 +18,17 @@
     import {Dial} from "../../const/dial"
     import {mapActions} from 'vuex'
     import On from "../../const/on"
+    import {GO} from "../../const/go"
 
     export default {
         name: "add-impact-entries-btn",
-        data: function () {
-            return {Dial}
-        },
+        data: ()=>({
+            Dial, GO
+        }),
         methods: {
-            ...mapActions([On.SHOW_DIALOG]),
-            show(dialog) {
-                this.showDialog({dialog, data: {tree: this.tree}})
-            }
+            ...mapActions({
+                goto: On.GO_TO
+            })
         }
     }
 </script>

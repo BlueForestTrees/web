@@ -4,11 +4,7 @@
         <v-container>
             <div class="display-1 font-weight-thin">Propriétés</div>
         </v-container>
-        <selectable-list :items="facets" :maxSelectionSize="1" :selection="selection">
-            <template slot="no-items">
-                <v-layout class="align-center justify-center my-5 font-weight-thin title"><img src="/img/broken-heart.svg" class="logo-petit ma-1"/>Pas encore d'informations sur les propriétés</v-layout>
-            </template>
-        </selectable-list>
+        <fragment-list :tree="tree" :selection="selection" :fragment="FACETS" none="Pas encore d'informations sur les propriétés"></fragment-list>
         <open-message :section="section"/>
     </v-card>
 </template>
@@ -20,16 +16,22 @@
     import OpenMessage from "../common/OpenMessage"
     import Card from "../common/Card"
     import FacetAdder from "../facet/FacetAdder"
+    import {FACETS} from "../../const/fragments"
+    import FragmentList from "./FragmentList"
 
     export default {
         name: "facets-subpage",
         components: {
+            FragmentList,
             FacetAdder,
             Card,
             OpenMessage,
             SelectableList,
         },
         props: ['tree', 'selection', 'modeAdd'],
+        data: () => ({
+            FACETS
+        }),
         computed: {
             facets() {
                 return this.tree && this.tree.facets
@@ -53,7 +55,16 @@
                     s_id: facet._id,
                     sbqt: facet.quantity.bqt
                 })
+            },
+            ...mapActions({updateTree: On.UPDATE_TREE}),
+            refresh: async function () {
+                this.loading = true
+                this.updateTree({tree: this.tree, fragments: [FACETS]})
+                this.loading = false
             }
+        },
+        created() {
+            this.refresh()
         }
     }
 </script>

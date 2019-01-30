@@ -96,6 +96,10 @@ a {
     width: 8em
 }
 
+.chars-width-5 {
+    width: 5em
+}
+
 .chars-width-15 {
     width: 15em
 }

@@ -1,4 +1,5 @@
 export default {
+    ADD_IMPACT: 'addImpact',
     ADD_TO_BASKET: 'addToBasket',
     ADD_SELECTION_TO_BASKET: 'addSelectionToBasket',
     ADD_TRANSPORT: 'addTransport',
@@ -6,6 +7,8 @@ export default {
     APPLY_QUANTITY_COEF: 'applyQtCoef',
     APPLY_QUANTITY_COEF_ALL: 'applyQtCoefAll',
     APPLY_SELECTION: 'applySelection',
+    ADD_CALLBACK: 'addCallback',
+    POP_CALLBACK: 'PopCallback',
     CHANGE_COMPARE_QUANTITY: 'changeCompareQuantity',
     CHECK_AUTH: "checkAuth",
     CHECK_OWNERSHIP: "checkOwnership",

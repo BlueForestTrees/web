@@ -2,27 +2,32 @@
     <div v-if="tree">
         <tree-headpage :tree="tree" :value="currentSubPage" @input="changeSubPage"/>
 
-        <v-container style="min-height: 50em">
+        <v-container style="min-height: 50em" v-if="tree.trunk">
 
-            <impacts-sub-page v-if="currentSubPage === IMPACTS" :tree="tree" :selection="selection" :modeAdd="modeAdd"/>
+            <transition name="slide-fade" mode="out-in">
 
-            <ressources-sub-page v-if="currentSubPage === ROOTS" :tree="tree" :selection="selection" :modeAdd="modeAdd"/>
+                <impacts-sub-page v-if="currentSubPage === IMPACTS" :tree="tree" :selection="selection" :modeAdd="modeAdd" @close="setModeAdd(false)"/>
 
-            <facets-sub-page v-if="currentSubPage === FACETS" :tree="tree" :selection="selection" :modeAdd="modeAdd"/>
+                <ressources-sub-page v-else-if="currentSubPage === ROOTS" :tree="tree" :selection="selection" :modeAdd="modeAdd"/>
+
+                <facets-sub-page v-else-if="currentSubPage === FACETS" :tree="tree" :selection="selection" :modeAdd="modeAdd"/>
+
+            </transition>
 
         </v-container>
 
-        <tree-fab :tree="tree" @nav="fabnav"></tree-fab>
+        <tree-fab v-if="!modeAdd" :tree="tree" @nav="fabnav"></tree-fab>
     </div>
 
 </template>
 
 <script>
-    import {mapActions, mapState} from "vuex"
+    import {mapActions, mapState, mapMutations} from "vuex"
     import On from "../../const/on"
     import TreeFab from "./TreeFab"
     import {FACETS, IMPACTS, ROOTS, treeHeadFragments} from "../../const/fragments"
     import TreeHeadpage from "./TreeHeadPage"
+    import Do from "../../const/do"
 
     const RessourcesSubPage = () => import(/* webpackChunkName: "RessourcesSubPage" */ "./RessourcesSubPage")
     const FacetsSubPage = () => import(/* webpackChunkName: "FacetsSubPage" */ "./FacetsSubPage")
@@ -37,16 +42,22 @@
             TreeFab,
         },
         data: () => ({
-            modeAdd: false,
             selection: [],
-            currentSubPage: FACETS,
             IMPACTS, ROOTS, FACETS
         }),
         props: ['_id', 'bqt', 'sid'],
         computed: {
-            ...mapState(['tree'])
+            ...mapState({
+                tree: s => s.tree,
+                currentSubPage: s => s.nav.tree.currentSubPage,
+                modeAdd: s => s.nav.tree.modeAdd
+            }),
         },
         methods: {
+            ...mapMutations({
+                setCurrentSubpage: Do.SET_CURRENT_TREE_SUBPAGE,
+                setModeAdd: Do.SET_TREE_MODEADD
+            }),
             ...mapActions({
                 showDialog: On.SHOW_DIALOG,
                 switchLeftMenu: On.SWITCH_LEFT_MENU,
@@ -57,13 +68,13 @@
                 goBasket: On.GO_BASKET,
                 goCreateTree: On.GO_CREATE_TREE,
             }),
-            changeSubPage(idx) {
-                this.modeAdd = false
-                this.currentSubPage = idx
+            changeSubPage(name) {
+                this.setModeAdd(false)
+                this.setCurrentSubpage(name)
             },
-            fabnav(idx) {
-                this.currentSubPage = idx
-                this.modeAdd = true
+            fabnav(name) {
+                this.setCurrentSubpage(name)
+                this.setModeAdd(true)
             },
             getTreeLoad() {
                 if (this.bqt && this._id) {

@@ -1,28 +1,27 @@
 <template>
-    <table>
-        <tbody>
-        <tr>
-            <td colspan="2">
-                <photo :trunk="trunk"/>
-            </td>
-        </tr>
-        <tr>
-            <th class="width-20">Propriétaire:</th>
-            <td v-if="owner"><a :href="owner.site" target="_blank">{{owner.fullname}}</a></td>
-        </tr>
-        <tr>
-            <th>Source:</th>
-            <td>
+    <v-layout column align-center>
+        <photo :trunk="trunk" size="200" class="mb-2"/>
+
+        <div style="min-width: 17em">
+
+            <v-layout align-center justify-space-between>
+                <h5 class="font-weight-thin subheading">Propriétaire:</h5>
+                <a v-if="owner" :href="owner.site" target="_blank">{{owner.fullname}}</a>
+            </v-layout>
+
+            <v-layout align-center justify-space-between>
+                <h5 class="font-weight-thin subheading flex">Source:</h5>
                 <a v-if="isOff" :href="`https://world.openfoodfacts.org/product/${code}`">voir site</a>
-                <span v-else>{{origin}}</span>
-            </td>
-        </tr>
-        <tr>
-            <th>Code:</th>
-            <td>{{code}}</td>
-        </tr>
-        </tbody>
-    </table>
+                <h5 class="font-weight-thin subheading" v-else>{{origin}}</h5>
+            </v-layout>
+
+            <v-layout align-center justify-space-between>
+                <h5 class="font-weight-thin subheading">Code:</h5>
+                <h5 class="font-weight-thin subheading">{{code}}</h5>
+            </v-layout>
+
+        </div>
+    </v-layout>
 </template>
 <script>
     const Photo = () => import(/* webpackChunkName: "Photo" */ "../common/Photo")

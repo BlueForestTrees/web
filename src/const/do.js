@@ -17,6 +17,8 @@ export default {
     RESPOND_MESSAGE: "respondMessage",
     RIGHT_MENU_VISIBLE: 'rightMenuVisible',
     OPEN_TREE: 'openTree',
+    SET_CURRENT_TREE_SUBPAGE: "setCurrentTreeSubpage",
+    SET_TREE_MODEADD: 'setTreeModeAdd',
     SET_MESSAGES_FILTER: 'setMessagesFilter',
     SET_ROOTS: 'setRoots',
     SET_BRANCHES: 'setBranches',

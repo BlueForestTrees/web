@@ -1,19 +1,17 @@
 <template>
-    <span class="fill-height">
-        <v-layout justify-center>
-            <card3d v-if="trunk" :flipped="qtFlipped">
-                <span slot="front">
-                    <v-icon color="orange lighten-3" large @click.native.stop="flip" class="top-right hand">{{starIcon}}</v-icon>
-                    <tree-card-front :tree="tree"/>
-                </span>
-                <v-card slot="back">
-                    <v-container my-0 py-0>
-                        <selection-picker :tree="tree" @close="flip" @change="selectionChanged"/>
-                    </v-container>
-                </v-card>
-            </card3d>
-        </v-layout>
-    </span>
+    <v-layout justify-center>
+        <card3d v-if="trunk" :flipped="qtFlipped">
+            <span slot="front">
+                <v-icon color="orange lighten-3" large @click.native.stop="flip" class="top-right hand">{{starIcon}}</v-icon>
+                <tree-card-front :tree="tree"/>
+            </span>
+            <v-card slot="back">
+                <v-container my-0 py-0>
+                    <selection-picker :tree="tree" @close="flip" @change="selectionChanged"/>
+                </v-container>
+            </v-card>
+        </card3d>
+    </v-layout>
 </template>
 
 <script>

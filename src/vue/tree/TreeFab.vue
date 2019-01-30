@@ -3,7 +3,7 @@
         <v-btn class="elevation-3" fab bottom right color="primary" dark fixed slot="activator">
             <v-icon>add</v-icon>
         </v-btn>
-        <v-list v-if="tree">
+        <v-list v-if="tree" class="font-weight-thin subheading">
             <v-list-tile @click="$emit('nav', IMPACTS)">
                 <v-list-tile-title>Ajouter un impact environnemental...</v-list-tile-title>
             </v-list-tile>
@@ -24,7 +24,6 @@
                 </v-list-tile-content>
                 <v-list-tile-avatar>
                     <v-icon large color="red">warning</v-icon>
-                    <v-icon large color="red">delete</v-icon>
                 </v-list-tile-avatar>
             </v-list-tile>
         </v-list>

@@ -1,8 +1,8 @@
 <template>
     <div>
-        <fragment-select v-model="viewDetail" class="pt-3"/>
+        <fragment-select v-model="currentSubPage" class="pt-3"/>
 
-        <v-window v-model="viewDetail" class="pt-1">
+        <v-window v-model="currentSubPage" class="pt-1">
             <template v-for="fragment in fragments">
                 <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
                     <common-attribute :key="fragment.type" :trees="trees" :type="fragment.type" :fragment="fragment.type" :noItem="fragment.noItem" @select="i => $emit('select', i)"/>

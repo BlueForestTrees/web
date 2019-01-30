@@ -35,6 +35,15 @@ export default {
             console.log("x-request-id is", xRequestId)
         }
         state.xRequestId = xRequestId
-    }
+    },
+    [On.ADD_CALLBACK]: ({dispatch, state}, callback) => {
+        state.callback.push(callback)
+    },
+    [On.POP_CALLBACK]: ({dispatch, state}) => {
+        const callback = state.callback.pop()
+        if (callback) {
+            dispatch(callback.action, callback.params)
+        }
+    },
 
 }

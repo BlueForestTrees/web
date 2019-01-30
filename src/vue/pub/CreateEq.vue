@@ -27,9 +27,7 @@
                                     <v-list-tile-title>Produit A:<span v-if="leftTree && leftTree.selection" class="font-weight-medium ml-3">{{qtUnitName(leftTree.selection)}}</span></v-list-tile-title>
                                 </v-list-tile-content>
                                 <v-list-tile-action>
-                                    <v-btn v-if="editing" icon @click="close">
-                                        <v-icon color="grey" large>close</v-icon>
-                                    </v-btn>
+                                    <closer v-if="editing" @close="close"/>
                                     <v-btn v-else icon @click="idx = 1">
                                         <v-icon color="primary">edit</v-icon>
                                     </v-btn>
@@ -40,9 +38,7 @@
                                     <v-list-tile-title>Produit B:<span v-if="rightTree && rightTree.selection" class="font-weight-medium ml-3">{{name(rightTree.selection)}}</span></v-list-tile-title>
                                 </v-list-tile-content>
                                 <v-list-tile-action>
-                                    <v-btn v-if="editing" icon @click="close">
-                                        <v-icon color="grey" large>close</v-icon>
-                                    </v-btn>
+                                    <closer v-if="editing" @close="close"/>
                                     <v-btn v-else icon @click="idx = 2">
                                         <v-icon color="primary">edit</v-icon>
                                     </v-btn>
@@ -53,9 +49,7 @@
                                     <v-list-tile-title>Aspect pris en compte:<span v-if="info && info.fragment" class="font-weight-medium ml-3">{{info.fragment.name}}</span></v-list-tile-title>
                                 </v-list-tile-content>
                                 <v-list-tile-action>
-                                    <v-btn v-if="editing" icon @click="close">
-                                        <v-icon color="grey" large>close</v-icon>
-                                    </v-btn>
+                                    <closer v-if="editing" @close="close"/>
                                     <v-btn v-else icon @click="idx = 3">
                                         <v-icon color="primary">edit</v-icon>
                                     </v-btn>
@@ -66,9 +60,7 @@
                                     <v-list-tile-title>Nom:<span class="font-weight-medium ml-3">{{info && info.path}}</span></v-list-tile-title>
                                 </v-list-tile-content>
                                 <v-list-tile-action>
-                                    <v-btn v-if="editing" icon @click="close">
-                                        <v-icon color="grey" large>close</v-icon>
-                                    </v-btn>
+                                    <closer v-if="editing" @close="close"/>
                                     <v-btn v-else icon @click="idx = 4">
                                         <v-icon color="primary">edit</v-icon>
                                     </v-btn>
@@ -79,9 +71,7 @@
                                     <v-list-tile-title>Commentaire (optionnel):<span class="font-weight-medium ml-3">{{info && info.description}}</span></v-list-tile-title>
                                 </v-list-tile-content>
                                 <v-list-tile-action>
-                                    <v-btn v-if="editing" icon @click="close">
-                                        <v-icon color="grey" large>close</v-icon>
-                                    </v-btn>
+                                    <closer v-if="editing" @close="close"/>
                                     <v-btn v-else icon @click="idx = 5">
                                         <v-icon color="primary">edit</v-icon>
                                     </v-btn>
@@ -130,12 +120,13 @@
     import {GO} from "../../const/go"
     import InfoSaver from "./InfoSaver"
     import InfoLoader from "./InfoLoader"
+    import Closer from "../common/Closer"
 
     const createInfo = () => ({type: "eq", fragment: null, leftSelection: null, rightSelection: null, path: null, description: null})
 
     export default {
         name: "create-eq",
-        components: {InfoSaver, SelectionCardFront, TransitionExpand, SelectionLink, DescriptionInput, PathChecker, AttributeFinder, TreeSelectionFinder, TreeCard, Card},
+        components: {Closer, InfoSaver, SelectionCardFront, TransitionExpand, SelectionLink, DescriptionInput, PathChecker, AttributeFinder, TreeSelectionFinder, TreeCard, Card},
         props: ['path'],
         mixins: [InfoLoader],
         data: () => ({
