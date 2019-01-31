@@ -38,7 +38,7 @@
     import On from "../../const/on"
     import states from "../../const/states"
     import {mapActions} from "vuex"
-    import TreeCardFront from "../tree/TreeCardFront"
+    import TreeCardFront from "../tree/QtUnitName"
     import Card from "../common/Card"
     import * as fragments from "../../const/fragments"
     import {getAttribute, qtUnitName} from "../../services/calculations"

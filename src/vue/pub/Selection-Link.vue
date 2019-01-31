@@ -7,7 +7,7 @@
 <script>
     import {qtUnit, qtUnitName, name, selectionTotalQt} from "../../services/calculations"
     import {GO} from "../../const/go"
-    import TreeCardFront from "../tree/TreeCardFront"
+    import TreeCardFront from "../tree/QtUnitName"
 
     export default {
         name: "selection-link",

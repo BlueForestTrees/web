@@ -1,8 +1,8 @@
 <template>
     <v-layout v-if="tree" column>
-        <h1 class="display-2 align">{{qtUnit}}</h1>
+        <h1 class="headline align font-weight-black">{{qtUnit}}</h1>
         <h5 v-if="qtFreq" class="align font-weight-thin">{{qtFreq}}</h5>
-        <h3 class="display-1 align font-weight-thin">{{name}}</h3>
+        <h3 class="subtitle align font-weight-medium">{{name}}</h3>
     </v-layout>
 </template>
 
@@ -10,9 +10,9 @@
     import {qtUnit, name, qtFreq} from "../../services/calculations"
 
     export default {
-        name: "tree-card-front",
+        name: "qt-unit-name",
         props: {
-            tree: Object,
+            tree: Object, editable: Boolean
         },
         computed: {
             qtUnit() {
@@ -24,6 +24,13 @@
             name() {
                 return name(this.tree)
             }
-        }
+        },
+        methods: {
+            click() {
+                if (this.editable) {
+                    this.$emit('click')
+                }
+            }
+        },
     }
 </script>

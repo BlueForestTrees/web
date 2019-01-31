@@ -59,14 +59,9 @@
                 setModeAdd: Do.SET_TREE_MODEADD
             }),
             ...mapActions({
-                showDialog: On.SHOW_DIALOG,
-                switchLeftMenu: On.SWITCH_LEFT_MENU,
                 dispatchLoad: On.LOAD_OPEN_TREE,
                 dispatchSelLoad: On.LOAD_SELECTION,
-                snack: On.SNACKBAR,
-                goSearch: On.GO_SEARCH,
-                goBasket: On.GO_BASKET,
-                goCreateTree: On.GO_CREATE_TREE,
+                snack: On.SNACKBAR
             }),
             changeSubPage(name) {
                 this.setModeAdd(false)

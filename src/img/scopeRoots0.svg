@@ -1,20 +1,22 @@
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="-15 -5 30 30" style="fill:#FFFFFF;stroke:#444444">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="-25 -14.5 30 30" style="fill:#FFFFFF;stroke:#444444">
+    <g transform="rotate(90)">
 
-    <line x1="0" y1="0" x2="-5" y2="10"/>
-    <line x1="0" y1="0" x2="5" y2="10"/>
+        <line x1="0" y1="0" x2="-5" y2="10"/>
+        <line x1="0" y1="0" x2="5" y2="10"/>
 
-    <line x1="-9" y1="20" x2="-5" y2="10"/>
-    <line x1="1" y1="20" x2="5" y2="10"/>
-    <line x1="9" y1="20" x2="5" y2="10"/>
+        <line x1="-9" y1="20" x2="-5" y2="10"/>
+        <line x1="1" y1="20" x2="5" y2="10"/>
+        <line x1="9" y1="20" x2="5" y2="10"/>
 
-    <circle cx="0" cy="0" r="2"/>
+        <circle cx="0" cy="0" r="2"/>
 
-    <circle cx="-5" cy="10" r="2"/>
-    <circle cx="5" cy="10" r="2"/>
+        <circle cx="-5" cy="10" r="2"/>
+        <circle cx="5" cy="10" r="2"/>
 
-    <circle cx="-9" cy="20" r="2"/>
-    <circle cx="1" cy="20" r="2"/>
-    <circle cx="9" cy="20" r="2"/>
+        <circle cx="-9" cy="20" r="2"/>
+        <circle cx="1" cy="20" r="2"/>
+        <circle cx="9" cy="20" r="2"/>
 
-    <rect x="-13" y="-4" width="26" height="8" rx="10" ry="3" fill="none" stroke="#D21E1E"/>
+        <rect x="-13" y="-4" width="26" height="8" rx="10" ry="3" fill="none" stroke="#D21E1E"/>
+    </g>
 </svg>

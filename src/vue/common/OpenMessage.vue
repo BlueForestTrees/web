@@ -3,7 +3,7 @@
         <slot>
             <v-layout row justify-center align-center class="hand">
                 <v-btn v-if="!noicon" flat icon>
-                    <v-icon color="primary">chat_bubble</v-icon>
+                    <v-icon color="primary">message</v-icon>
                 </v-btn>
                 <h3 v-if="!dense" class="font-weight-thin">{{section.title}}</h3>
             </v-layout>

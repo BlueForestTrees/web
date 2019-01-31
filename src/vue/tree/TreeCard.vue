@@ -1,12 +1,13 @@
 <template>
     <v-layout justify-center>
-        <card3d v-if="trunk" :flipped="qtFlipped">
-            <span slot="front">
-                <v-icon color="orange lighten-3" large @click.native.stop="flip" class="top-right hand">{{starIcon}}</v-icon>
-                <tree-card-front :tree="tree"/>
-            </span>
+        <card3d v-if="trunk" :flipped="flipped">
+            <template slot="front">
+                <photo :trunk="trunk" size="200" class="mb-2"/>
+                <qt-unit-name :tree="tree"/>
+                <slot name="bottom"></slot>
+            </template>
             <v-card slot="back">
-                <v-container my-0 py-0>
+                <v-container>
                     <selection-picker :tree="tree" @close="flip" @change="selectionChanged"/>
                 </v-container>
             </v-card>
@@ -15,44 +16,42 @@
 </template>
 
 <script>
-    import {mapActions} from "vuex"
+    import {mapActions, mapMutations, mapState} from "vuex"
     import {qtUnit, name} from "../../services/calculations"
     import Card3d from "../common/Card3d"
     import On from "../../const/on"
-    import TreeCardFront from "./TreeCardFront"
     import SelectionPicker from "./SelectionPicker"
+    import QtUnitName from "./QtUnitName"
+    import Do from "../../const/do"
 
     const Photo = () => import(/* webpackChunkName: "Photo" */ "../common/Photo")
 
 
     export default {
         name: "tree-card",
-        components: {SelectionPicker, Photo, TreeCardFront, Card3d},
+        components: {QtUnitName, SelectionPicker, Photo, Card3d},
         props: {
             tree: Object,
             noBar: {type: Boolean, default: false},
-        },
-        data() {
-            return {
-                qtFlipped: false
-            }
         },
         methods: {
             ...mapActions({
                 saveSelection: On.SAVE_SELECTION,
                 applySelection: On.APPLY_SELECTION
             }),
+            ...mapMutations({setFlipped: Do.SET_TREE_CARD_FLIPPED}),
             selectionChanged(selection) {
                 this.saveSelection(selection)
                 this.applySelection(selection)
                 this.flip()
             },
             flip() {
-                this.qtFlipped = !this.qtFlipped
+                this.setFlipped(!this.flipped)
             },
             qtUnit, name
         },
         computed: {
+            ...mapState({flipped: s => s.nav.tree.cardFlipped}),
             trunk: function () {
                 return this.tree && this.tree.trunk
             },

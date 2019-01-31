@@ -39,8 +39,8 @@ html {
 }
 
 .scene {
-    width: 400px;
-    height: 280px;
+    width: 420px;
+    height: 300px;
     perspective: 600px;
 }
 
@@ -138,6 +138,9 @@ a {
     max-width: 700px;
 }
 
+.not-too-third {
+    max-width: 200px;
+}
 
 .not-too-half {
     max-width: 350px;

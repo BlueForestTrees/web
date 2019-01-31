@@ -1,12 +1,9 @@
 <template>
     <v-layout column align-center>
-        <photo :trunk="trunk" size="200" class="mb-2"/>
-
         <div style="min-width: 17em">
-
             <v-layout align-center justify-space-between>
                 <h5 class="font-weight-thin subheading">Propriétaire:</h5>
-                <a v-if="owner" :href="owner.site" target="_blank">{{owner.fullname}}</a>
+                <a v-if="owner" :href="owner.site" target="_blank" class="not-too-third">{{owner.fullname}}</a>
             </v-layout>
 
             <v-layout align-center justify-space-between>
@@ -19,15 +16,16 @@
                 <h5 class="font-weight-thin subheading">Code:</h5>
                 <h5 class="font-weight-thin subheading">{{code}}</h5>
             </v-layout>
-
         </div>
     </v-layout>
 </template>
 <script>
+    import TreeCardFront from "./QtUnitName"
+
     const Photo = () => import(/* webpackChunkName: "Photo" */ "../common/Photo")
 
     export default {
-        components: {Photo},
+        components: {TreeCardFront, Photo},
         props: ['tree'],
         computed: {
             isOff() {

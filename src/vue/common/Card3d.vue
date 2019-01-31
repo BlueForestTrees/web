@@ -1,7 +1,7 @@
 <template>
     <div class="scene">
         <div :class="cardClass">
-            <v-layout column justify-center class="card__face card__face--front">
+            <v-layout column align-center justify-center class="card__face card__face--front">
                 <slot name="front"></slot>
             </v-layout>
             <div class="card__face card__face--back">

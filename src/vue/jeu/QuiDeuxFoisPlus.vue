@@ -10,7 +10,7 @@
                                 <photo :trunk="tree.trunk" size="200"/>
                             </v-flex>
                         </v-layout>
-                        <tree-card-front :tree="tree"></tree-card-front>
+                        <qt-unit-name :tree="tree"></qt-unit-name>
                         <v-layout column align-center>
                             <span v-if="filter">({{qtUnitName(filter)}})</span>
                         </v-layout>
@@ -25,7 +25,7 @@
                                 <photo :trunk="other.trunk" size="200"/>
                             </v-flex>
                         </v-layout>
-                        <tree-card-front v-if="other" :tree="other"></tree-card-front>
+                        <qt-unit-name v-if="other" :tree="other"></qt-unit-name>
                         <v-layout column align-center>
                             <h3 v-if="state === 'answered' && filterRight">({{qtUnitName(filterRight)}})</h3>
                         </v-layout>
@@ -86,13 +86,13 @@
     import SelectableList from "../common/SelectableList"
     import {qtUnitName, name} from "../../services/calculations"
     import TreeCard from "../tree/TreeCard"
-    import TreeCardFront from "../tree/TreeCardFront"
     import Card from "../common/Card"
     import Photo from "../common/Photo"
+    import QtUnitName from "../tree/QtUnitName"
 
     export default {
         name: "qui-deux",
-        components: {Photo, Card, TreeCardFront, TreeCard, SelectableList, TreeHead, Loader},
+        components: {QtUnitName, Photo, Card, TreeCard, SelectableList, TreeHead, Loader},
         data() {
             return {
                 nbReponses: 5,

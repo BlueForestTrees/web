@@ -13,11 +13,6 @@
             <v-list-tile @click="$emit('nav', FACETS)">
                 <v-list-tile-title>Ajouter une propriété...</v-list-tile-title>
             </v-list-tile>
-            <v-list-tile>
-                <v-list-tile-title @click="">
-                    <open-message :section="section">Message...</open-message>
-                </v-list-tile-title>
-            </v-list-tile>
             <v-list-tile @click="deleteTrunk(tree)" v-if="!deleteAsked">
                 <v-list-tile-content>
                     <v-list-tile-title>Supprimer</v-list-tile-title>
@@ -37,7 +32,6 @@
     import On from "../../const/on"
     import Do from "../../const/do"
     import OpenMessage from "../common/OpenMessage"
-    import {name} from "../../services/calculations"
     import {FACETS, IMPACTS, ROOTS} from "../../const/fragments"
 
     export default {
@@ -51,19 +45,7 @@
             }
         },
         props: ['tree'],
-        computed: {
-            section: function () {
-                return {
-                    title: `Message pour "${name(this.tree)}"`,
-                    filter: {
-                        type: 'trunk',
-                        topicId: this.tree._id
-                    }
-                }
-            }
-        },
         methods: {
-            name,
             ...mapMutations({
                 closeTree: Do.CLOSE_TREE
             }),

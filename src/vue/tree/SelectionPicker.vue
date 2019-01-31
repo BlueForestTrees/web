@@ -1,5 +1,6 @@
 <template>
     <v-form v-model="valid" v-on:submit.prevent="" ref="form">
+        <v-icon @click.stop="close" large color="grey" class="top-right">close</v-icon>
         <v-layout row align-center>
             <v-text-field type="number" v-model="qt" :rules="[required, isNumber]" @keyup.enter="validate" class="chars-width-3" label="Quantité"></v-text-field>
             <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]" @keyup.enter="validate" class="chars-width-8"></unit-select>
@@ -16,10 +17,7 @@
             <v-text-field :counter="selectionNameMaxLength" type="text" v-model="name" :rules="[required, noMore30]" @keyup.enter="validate" class="chars-width-3" label="Nom d'affichage"></v-text-field>
             <v-checkbox v-model="isRegulier" label="répété" class="tiny"></v-checkbox>
             <v-btn flat icon @click.stop="validate">
-                <v-icon large color="primary">done</v-icon>
-            </v-btn>
-            <v-btn flat icon @click.stop="close">
-                <v-icon large color="grey">close</v-icon>
+                <v-icon color="primary">save</v-icon>
             </v-btn>
         </v-layout>
     </v-form>
