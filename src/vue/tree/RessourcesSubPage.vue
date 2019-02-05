@@ -8,9 +8,8 @@
         <transition name="slide-fade" mode="out-in">
             <fragment-list v-if="idx === 0" :tree="tree" :fragment="ROOTS" none="Pas encore d'informations sur les ressources" key="0"></fragment-list>
             <fragment-list v-else-if="idx === 1" :tree="tree" :fragment="TANK" none="Pas encore d'informations sur les matières premières" key="1"></fragment-list>
-            <tree-nav v-else-if="idx === 2" :tree="tree" :fragment="ROOTS" key="2"/>
-            <tree-nav v-else-if="idx === 3" :tree="tree" :fragment="BRANCHES" key="3"/>
-            <fragment-list v-else-if="idx === 4" :tree="tree" :fragment="BRANCHES" none="Pas encore d'informations sur les usages" key="4"></fragment-list>
+            <tree-nav v-else-if="idx === 2" :tree="tree" key="2"/>
+            <fragment-list v-else-if="idx === 3" :tree="tree" :fragment="BRANCHES" none="Pas encore d'informations sur les usages" key="4"></fragment-list>
         </transition>
         <v-divider/>
         <open-message :section="section"/>

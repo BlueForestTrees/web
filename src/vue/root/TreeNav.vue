@@ -12,11 +12,14 @@
     import Static from "../mixin/Static"
     import On from "../../const/on"
     import {mapActions} from "vuex"
+    import Selectable from "../mixin/Selectable"
+    import {BRANCHES, ROOTS} from "../../const/fragments"
+    import {PRIMARY} from "../../const/colors"
 
     export default {
         name: "TreeNav",
-        mixins: [Static],
-        props: ['tree', 'fragment'],
+        mixins: [Static, Selectable],
+        props: ['tree'],
         static: () => ({
             options: {
                 interaction: {
@@ -25,7 +28,7 @@
                 edges: {
                     arrows: {
                         to: {
-                            enabled: false,
+                            enabled: true,
                             type: "arrow",
                         }
                     },
@@ -58,28 +61,50 @@
                 }
             },
             nodes: new DataSet([]),
-            edges: new DataSet([])
+            edges: new DataSet([]),
+            network: null,
+            itemsMap: {}
         }),
         mounted() {
-            new Network(this.$refs.network, {nodes: this.nodes, edges: this.edges}, this.options)
-            this.nodes.add({id: this.tree._id, label: qtUnitName(this.tree)})
-            this.expand(this.tree)
+            this.network = new Network(this.$refs.network, {nodes: this.nodes, edges: this.edges}, this.options)
+            this.network.on("selectNode", params => this.toggleSelect(this.itemsMap[params.nodes[0]]))
+            this.network.on("dragStart", params => {
+                const draggedId = params.nodes[0]
+                if (draggedId) {
+                    this.unselect()
+                    this.toggleSelect(this.itemsMap[draggedId])
+                }
+            })
+            this.network.on("deselectNode", params => this.toggleSelect(this.itemsMap[params.previousSelection.nodes[0]]))
+            this.addNode(this.tree, {color: {background: PRIMARY}})
+            this.expand(this.tree, ROOTS)
+            this.expand(this.tree, BRANCHES)
         },
         methods: {
-            async expand(tree) {
-
-                if (!tree[this.fragment]) {
-                    await this.updateTree({tree, fragments: [this.fragment]})
+            async expand(tree, scope) {
+                if (!tree[scope]) {
+                    await this.updateTree({tree, fragments: [scope]})
                 }
 
-                for (let i = 0; i < tree[this.fragment].length; i++) {
-                    this.traverse(tree, tree[this.fragment][i])
+                for (let i = 0; i < tree[scope].length; i++) {
+                    this.traverse(tree, tree[scope][i], scope)
                 }
             },
-            traverse(tree, root) {
-                this.nodes.add({id: root._id, label: qtUnitName(root)})
-                this.edges.add({from: root._id, to: tree._id})
-                this.expand(root)
+            traverse(tree, item, scope) {
+                this.addNode(item)
+                this.addEdge(tree, item, scope)
+                this.expand(item, scope)
+            },
+            addNode(tree, options) {
+                this.nodes.add({id: tree._id, label: qtUnitName(tree), ...options})
+                this.itemsMap[tree._id] = tree
+            },
+            addEdge(tree, item, scope) {
+                if (scope === ROOTS) {
+                    this.edges.add({from: item._id, to: tree._id})
+                } else if (scope === BRANCHES) {
+                    this.edges.add({from: tree._id, to: item._id})
+                }
             },
             ...mapActions({updateTree: On.UPDATE_TREE})
         },

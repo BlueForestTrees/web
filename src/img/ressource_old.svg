@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 85 512 310" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+<g>
+	<rect stroke="#333333" stroke-width="7" x="234.151" y="125.95" style="fill:#E8E8E8;" width="56.331" height="28.166"/>
+	<rect stroke="#333333" stroke-width="7" x="331.074" y="125.95" style="fill:#E8E8E8;" width="56.331" height="28.166"/>
+	<polygon stroke="#333333" stroke-width="7" style="fill:#E8E8E8;" points="406.097,154.116 406.097,270.081 308.146,270.081 215.465,270.081 215.465,154.116 234.153,154.116 290.485,154.116 331.077,154.116 387.408,154.116 	"/>
+</g>
+
+<g>
+	<rect stroke="#333333" stroke-width="7" x="425.778" y="241.915" style="fill:#F7B239;" width="56.331" height="28.166"/>
+	<polygon stroke="#333333" stroke-width="7" style="fill:#F7B239;" points="498.79,270.081 498.79,386.058 308.146,386.058 308.146,270.081 406.097,270.081 425.78,270.081 482.111,270.081 	"/>
+</g>
+
+<g>
+	<rect stroke="#333333" stroke-width="7" x="33.136" y="241.915" style="fill:#F95428;" width="56.32" height="28.166"/>
+	<rect stroke="#333333" stroke-width="7" x="130.048" y="241.915" style="fill:#F95428;" width="56.331" height="28.166"/>
+	<polygon stroke="#333333" stroke-width="7" style="fill:#F95428;" points="308.146,270.081 308.146,386.058 8.286,386.058 8.286,270.081 33.138,270.081 89.459,270.081 130.051,270.081 186.382,270.081 215.465,270.081 	"/>
+</g>
+
+
+
+<g transform="translate(190,68), scale(0.45,0.45)">
+	<path style="fill:#1565c0;" stroke="#333333" stroke-width="15" d="M315.426,347.748c0,32.82-26.606,59.426-59.426,59.426s-59.426-26.606-59.426-59.426 S256,239.844,256,239.844S315.426,314.928,315.426,347.748z"/>
+</g>
+
+<g transform="translate(290,240), scale(0.35,0.35)">
+	<polygon stroke="#4D3D36" stroke-width="20" style="fill:#FFAD61;" points="501.801,263.113 442.409,195.312 382.755,195.312 382.755,340.375 501.801,340.375 "/>
+	<rect stroke="#4D3D36" stroke-width="20" x="172.112" y="143.237" style="fill:#FFE6B8;" width="210.644" height="197.13"/>
+
+	<circle stroke="#4D3D36" stroke-width="20" style="fill:#FFAD61;" cx="230.604" cy="340.377" r="28.382"/>
+	<circle stroke="#4D3D36" stroke-width="20" style="fill:#FFAD61;" cx="441.095" cy="340.377" r="28.382"/>
+</g>
+
+<use xlink:href="#wheat" transform="translate(55,290), scale(0.15,0.15)"/>
+<use xlink:href="#wheat" transform="translate(120,290), scale(0.15,0.15)"/>
+<use xlink:href="#wheat" transform="translate(180,290), scale(0.15,0.15)"/>
+
+
+<symbol id="wheat">
+</symbol>
+
+
+
+
+
+</svg>

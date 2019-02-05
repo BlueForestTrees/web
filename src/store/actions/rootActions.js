@@ -18,10 +18,8 @@ export default {
             bqt: treeTotalQt(root) / treeTotalQt(tree),
         }
 
-        console.log(item)
-
         if (tree[ROOTS]) {
-            tree[ROOTS].push(item)
+            tree[ROOTS].push(root)
         }
 
         return dispatch(On.CREATE_ROOT, item)

@@ -1,6 +1,6 @@
 <template>
     <v-menu offset-y>
-        <v-btn class="elevation-3" fab bottom right color="primary" dark fixed slot="activator">
+        <v-btn class="elevation-3" fab bottom right color="primary" dark fixed slot="activator" @click="unselect">
             <v-icon>add</v-icon>
         </v-btn>
         <v-list v-if="tree" class="font-weight-thin subheading">
@@ -36,10 +36,12 @@
     import Do from "../../const/do"
     import OpenMessage from "../common/OpenMessage"
     import {FACETS, IMPACTS, ROOTS} from "../../const/fragments"
+    import Selectable from "../mixin/Selectable"
 
     export default {
         name: "tree-fab",
         components: {OpenMessage},
+        mixins:[Selectable],
         data: function () {
             return {
                 Dial,
