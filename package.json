@@ -1,6 +1,6 @@
 {
   "name": "web-blueforest",
-  "version": "1.8.2",
+  "version": "1.8.3",
   "description": "web for trees",
   "main": "index.js",
   "author": "slim",
@@ -58,6 +58,7 @@
     "jwt-decode": "2.2.0",
     "lodash.debounce": "4.0.8",
     "unit-manip": "^1.0.7",
+    "vis": "4.21.0",
     "vue": "2.5.17",
     "vue-infinite-loading": "2.3.1",
     "vue-resource": "1.5.1",

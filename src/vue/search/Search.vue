@@ -36,8 +36,8 @@
     import VoteFor from "../messages/VoteFor"
 
     const SearchComp = () => import(/* webpackChunkName: "SearchComp" */ './SearchComp')
-    const ImpactEntries = () => import(/* webpackChunkName: "ImpactEntries" */ '../impact/ImpactEntries')
-    const FacetEntries = () => import(/* webpackChunkName: "FacetEntries" */ '../facet/FacetEntries')
+    const ImpactEntries = () => import(/* webpackChunkName: "ImpactEntries" */ '../impact/ImpactEntriesPicker')
+    const FacetEntries = () => import(/* webpackChunkName: "FacetEntries" */ '../facet/FacetEntryPicker')
 
     export default {
         name: "search",

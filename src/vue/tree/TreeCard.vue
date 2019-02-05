@@ -46,6 +46,7 @@
                 this.flip()
             },
             flip() {
+                console.log("flip")
                 this.setFlipped(!this.flipped)
             },
             qtUnit, name

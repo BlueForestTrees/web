@@ -5,12 +5,15 @@
         </v-btn>
         <v-list v-if="tree" class="font-weight-thin subheading">
             <v-list-tile @click="$emit('nav', IMPACTS)">
+                <v-list-tile-avatar class="planet logo-petit"/>
                 <v-list-tile-title>Ajouter un impact environnemental...</v-list-tile-title>
             </v-list-tile>
             <v-list-tile @click="$emit('nav', ROOTS)">
+                <v-list-tile-avatar class="ressource logo-petit"/>
                 <v-list-tile-title>Ajouter une ressource...</v-list-tile-title>
             </v-list-tile>
             <v-list-tile @click="$emit('nav', FACETS)">
+                <v-list-tile-avatar class="facet logo-petit"/>
                 <v-list-tile-title>Ajouter une propriété...</v-list-tile-title>
             </v-list-tile>
             <v-list-tile @click="deleteTrunk(tree)" v-if="!deleteAsked">
@@ -27,7 +30,7 @@
 </template>
 
 <script>
-    import {mapActions, mapMutations} from 'vuex'
+    import {mapActions, mapMutations, mapState} from 'vuex'
     import {Dial} from "../../const/dial"
     import On from "../../const/on"
     import Do from "../../const/do"
@@ -44,7 +47,11 @@
                 IMPACTS, FACETS, ROOTS
             }
         },
-        props: ['tree'],
+        computed: {
+            ...mapState({
+                tree: s => s.tree
+            })
+        },
         methods: {
             ...mapMutations({
                 closeTree: Do.CLOSE_TREE

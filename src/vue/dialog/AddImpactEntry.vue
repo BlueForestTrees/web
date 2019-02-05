@@ -7,7 +7,7 @@
         <v-container>
             <v-form v-model="valid" v-on:submit.prevent="" ref="form">
                 <color-picker v-model="color"/>
-                <v-text-field ref="nom" label="Nom" required :rules="[length2min]" v-model="name"></v-text-field>
+                <v-text-field ref="nom" label="Nom" required :rules="[length2min]" :value="name" @input="setName"></v-text-field>
                 <grandeur-select v-model="grandeur"/>
             </v-form>
         </v-container>
@@ -20,7 +20,7 @@
 
 <script>
     import On from "../../const/on"
-    import {mapActions} from "vuex"
+    import {mapActions, mapState, mapMutations} from "vuex"
     import {Dial} from "../../const/dial"
     import GrandeurSelect from "../common/GrandeurSelect"
     import {length2min} from "../../services/rules"
@@ -28,16 +28,16 @@
     import {createStringObjectId} from "../../services/calculations"
     import Card from "../common/Card"
     import Connected from "../mixin/Connected"
+    import Do from "../../const/do"
 
     export default {
         name: 'add-impact-entry',
-        mixins:[Connected],
+        mixins: [Connected],
         data() {
             return {
                 Dial,
                 valid: false,
                 color: null,
-                name: null,
                 grandeur: null,
             }
         },
@@ -46,12 +46,19 @@
             ColorPicker,
             GrandeurSelect
         },
-        props: ['data'],
+        computed: {
+            ...mapState({
+                name: s => s.nav.tree.impact.addFilter
+            })
+        },
         methods: {
             length2min,
             ...mapActions({
                 createImpactEntry: On.CREATE_IMPACT_ENTRY,
                 snack: On.SNACKBAR
+            }),
+            ...mapMutations({
+                setName: Do.SET_TREE_IMPACT_FILTER
             }),
             validate: function () {
                 this.$refs.form.validate()
@@ -68,7 +75,6 @@
                 }
             },
             focus() {
-                this.name = null
                 this.grandeur = null
                 this.$nextTick(() => this.$refs.nom.focus())
             }

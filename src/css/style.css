@@ -22,8 +22,8 @@ html {
 
 .top-right {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 5px;
+    right: 5px;
 }
 
 .tiny {
@@ -127,6 +127,13 @@ a {
 
 .facet {
     background: url(/img/facet.svg) no-repeat center;
+}
+
+.enough-high {
+    min-height: 50em
+}
+.enough-high-small {
+    min-height: 20em
 }
 
 .not-too-small {

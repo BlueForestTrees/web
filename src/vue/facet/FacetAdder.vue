@@ -1,18 +1,70 @@
 <template>
     <v-container>
-        <v-card>
-            <v-container>
-                <div class="display-1 font-weight-thin">Ajouter une propriété</div>
-            </v-container>
-            <facet-entries/>
-        </v-card>
+        <v-layout row class="mb-5">
+            <div class="display-1 font-weight-thin">Ajouter une propriété</div>
+            <v-spacer/>
+            <closer @close="$emit('close')"/>
+        </v-layout>
+
+        <transition name="slide-fade" mode="out-in">
+
+            <facet-entry-picker v-if="changeItem || !selectedEntry" @select="select" :create-entry-route="GO.ADD_FACET_ENTRY"/>
+
+            <v-layout v-else align-center column>
+                <v-card>
+                    <v-container>
+                        <quantity-picker :item="selectedEntry" @change="validate" @close="closeQtPicker"></quantity-picker>
+                    </v-container>
+                </v-card>
+            </v-layout>
+
+        </transition>
+
     </v-container>
 </template>
 
 <script>
-    import FacetEntries from "./FacetEntries"
+    import Closer from "../common/Closer"
+    import {name} from "../../services/calculations"
+    import QuantityPicker from "../common/QuantityPicker"
+    import On from "../../const/on"
+    import {mapActions} from "vuex"
+    import {GO} from "../../const/go"
+    import FacetEntryPicker from "./FacetEntryPicker"
+
     export default {
         name: "facet-adder",
-        components: {FacetEntries}
+        props: ['tree'],
+        components: {FacetEntryPicker, QuantityPicker, Closer},
+        data: () => ({
+            selectedEntry: null, changeItem: false,
+            GO
+        }),
+        methods: {
+            name,
+            ...mapActions({
+                addToTree: On.ADD_FACET,
+                snack: On.SNACKBAR
+            }),
+            select(entry) {
+                this.selectedEntry = entry
+                this.changeItem = false
+            },
+            validate(quantity) {
+                this.addToTree({tree: this.tree, entry: this.selectedEntry, quantity})
+                    .then(() => {
+                        this.changeItem = false
+                        this.$emit('close')
+                        this.snack({text: "1 propriété ajoutée", color: "green"})
+                    })
+                    .catch(e => {
+                        this.snack({text: e.message, color: "orange"})
+                        console.error(e)
+                    })
+            },
+            closeQtPicker() {
+                this.changeItem = true
+            },
+        }
     }
 </script>

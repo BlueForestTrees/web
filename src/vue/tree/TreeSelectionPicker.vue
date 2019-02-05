@@ -9,7 +9,7 @@
             Choisissez la quantité:
         </div>
         <card>
-            <selection-picker class="pa-3" :tree="curTree" @change="selectionChange" @close="closeQtSelection"></selection-picker>
+            <selection-picker class="pa-3" :tree="curTree" @change="selectionChange" @close="closeSelectionPicker"></selection-picker>
         </card>
     </v-layout>
 </template>
@@ -23,7 +23,7 @@
     import SelectionPicker from "./SelectionPicker"
 
     export default {
-        name: "tree-selection-finder",
+        name: "tree-selection-picker",
         components: {SelectionPicker, Card, Selection, SelectionCommand},
         props: ['tree'],
         data: () => ({selectedTree: null, changeTree: false}),
@@ -45,7 +45,7 @@
                 this.$emit("select", this.curTree)
                 this.changeTree = false
             },
-            closeQtSelection() {
+            closeSelectionPicker() {
                 this.changeTree = true
             }
         },

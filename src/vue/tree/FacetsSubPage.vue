@@ -1,10 +1,9 @@
 <template>
-    <facet-adder v-if="modeAdd" :tree="tree" :selection="selection"/>
+    <facet-adder v-if="modeAdd" :tree="tree" @close="$emit('close')"/>
     <v-card v-else>
-        <v-container>
-            <div class="display-1 font-weight-thin">Propriétés</div>
-        </v-container>
-        <fragment-list :tree="tree" :selection="selection" :fragment="FACETS" none="Pas encore d'informations sur les propriétés"></fragment-list>
+        <subpage-title title="Propriétés"/>
+        <v-divider/>
+        <fragment-list :tree="tree" :fragment="FACETS" none="Pas encore d'informations sur les propriétés"></fragment-list>
         <open-message :section="section"/>
     </v-card>
 </template>
@@ -18,17 +17,19 @@
     import FacetAdder from "../facet/FacetAdder"
     import {FACETS} from "../../const/fragments"
     import FragmentList from "./FragmentList"
+    import SubpageTitle from "./SubpageTitle"
 
     export default {
         name: "facets-subpage",
         components: {
+            SubpageTitle,
             FragmentList,
             FacetAdder,
             Card,
             OpenMessage,
             SelectableList,
         },
-        props: ['tree', 'selection', 'modeAdd'],
+        props: ['tree', 'modeAdd'],
         data: () => ({
             FACETS
         }),
@@ -47,7 +48,10 @@
             }
         },
         methods: {
-            ...mapActions({dispatchGoEquiv: On.GO_EQUIV}),
+            ...mapActions({
+                dispatchGoEquiv: On.GO_EQUIV,
+                updateTree: On.UPDATE_TREE
+            }),
             goEquiv(facet) {
                 this.dispatchGoEquiv({
                     _id: this.tree._id,
@@ -56,7 +60,6 @@
                     sbqt: facet.quantity.bqt
                 })
             },
-            ...mapActions({updateTree: On.UPDATE_TREE}),
             refresh: async function () {
                 this.loading = true
                 this.updateTree({tree: this.tree, fragments: [FACETS]})

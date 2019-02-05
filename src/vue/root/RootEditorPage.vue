@@ -93,22 +93,20 @@
 
     import {mapActions} from "vuex"
     import On from "../../const/on"
-    import TreeHead from "./TreeHead"
     import {qtUnit, qtUnitName} from "../../services/calculations"
     import {isNumber, required} from "../../services/rules"
     import UnitSelect from "../common/UnitSelect"
     import SearchComp from "../search/SearchComp"
     import selectable from "../mixin/Selectable"
-    import TreeSubHead from "./TreeSubHead"
-    import Subheader from "./Subheader"
     import {bqtGToQtUnit, find, baseQt, getGrandeur, unit} from "unit-manip"
     import Destination from "../common/Destination"
+    import Subheader from "../tree/Subheader"
 
     export default {
-        name: 'root',
+        name: 'root-editor-page',
         props: ['treeId', 'rootId'],
         mixins: [selectable],
-        components: {Destination, Subheader, TreeSubHead, SearchComp, UnitSelect, TreeHead},
+        components: {Subheader, Destination,SearchComp, UnitSelect},
         data: function () {
             return {
                 qtUpdating:false,

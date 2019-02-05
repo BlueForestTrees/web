@@ -111,13 +111,13 @@
                 <v-window v-model="idx">
                     <v-window-item></v-window-item>
                     <v-window-item lazy transition="fade-transition">
-                        <tree-selection-finder @select="selectProductA" :tree="leftTree"/>
+                        <tree-selection-picker @select="selectProductA" :tree="leftTree"/>
                     </v-window-item>
                     <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
-                        <tree-selection-finder @select="selectProductB" :tree="rightTree"/>
+                        <tree-selection-picker @select="selectProductB" :tree="rightTree"/>
                     </v-window-item>
                     <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
-                        <tree-selection-finder @select="selectProductC" :tree="equivTree"/>
+                        <tree-selection-picker @select="selectProductC" :tree="equivTree"/>
                     </v-window-item>
                     <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
                         <attribute-finder :trees="[leftTree, rightTree, equivTree]" @select="selectFragment"/>
@@ -143,19 +143,19 @@
     import {getAttributeByFragment, qtFreq, name, qtUnitName} from "../../services/calculations"
     import On from "../../const/on"
     import {mapActions} from "vuex"
-    import TreeSelectionFinder from "../tree/TreeSelectionFinder"
     import AttributeFinder from "../tree/AttributeFinder"
     import PathChecker from "./PathChecker"
     import DescriptionInput from "./DescriptionInput"
     import InfoSaver from "./InfoSaver"
     import {infoFragments} from "../../const/fragments"
     import InfoLoader from "./InfoLoader"
+    import TreeSelectionPicker from "../tree/TreeSelectionPicker"
 
     const createInfo = () => ({type: "alt", fragment: null, leftSelection: null, rightSelection: null, equivSelection: null, path: null, description: null})
 
     export default {
         name: "create-alt",
-        components: {InfoSaver, DescriptionInput, PathChecker, AttributeFinder, TreeSelectionFinder, SelectionCardFront, Card},
+        components: {TreeSelectionPicker, InfoSaver, DescriptionInput, PathChecker, AttributeFinder, TreeSelectionFinder, SelectionCardFront, Card},
         mixins: [InfoLoader],
         data: () => ({
             GO,

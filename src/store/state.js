@@ -56,7 +56,12 @@ export default {
     dialogs: dialogs(),
     nav: {
         leftMenuVisible: false, rightMenuVisible: false, dark: false, detailsDialog: false, searchTab: null,
-        tree:{currentSubPage: FACETS, modeAdd: false, cardFlipped: false}
+        tree: {
+            currentSubPage: FACETS, modeAdd: false, cardFlipped: false,
+            impact: {idx: 0, addFilter: ""},
+            root: {idx: 0},
+            facet: {addFilter: ""}
+        }
     },
     snack: snack(),
     messages: {title: null, description: null, hasMore: false, filter: {}, list: []},

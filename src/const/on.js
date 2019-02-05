@@ -1,5 +1,7 @@
 export default {
     ADD_IMPACT: 'addImpact',
+    ADD_FACET: 'addFacet',
+    ADD_ROOT: 'addRoot',
     ADD_TO_BASKET: 'addToBasket',
     ADD_SELECTION_TO_BASKET: 'addSelectionToBasket',
     ADD_TRANSPORT: 'addTransport',

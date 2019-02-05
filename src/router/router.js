@@ -7,7 +7,7 @@ const Tree = () => import(/* webpackChunkName: "Tree" */ '../vue/tree/Tree.vue')
 const Equivalence = () => import(/* webpackChunkName: "Equivalence" */ '../vue/equivalence/Equivalence')
 const Qui2 = () => import(/* webpackChunkName: "Qui2" */ '../vue/jeu/QuiDeuxFoisPlus')
 const Selection = () => import (/* webpackChunkName: "Selection" */ '../vue/basket/Selection')
-const Root = () => import(/* webpackChunkName: "Root" */ '../vue/tree/Root')
+const RootEditor = () => import(/* webpackChunkName: "Root" */ '../vue/root/RootEditorPage')
 const SearchPage = () => import(/* webpackChunkName: "Search" */ '../vue/search/SearchPage')
 const BlueForest = () => import(/* webpackChunkName: "BlueForest" */ '../vue/BlueForest')
 const Compare = () => import(/* webpackChunkName: "Compare" */ '../vue/compare/Compare')
@@ -68,7 +68,7 @@ export default new VueRouter({
 
                 {name: GO.QUI_2, path: "qui2fois/:bqt/:_id/:sbqt/:s_id", component: Qui2, props: true},
                 {name: GO.TREE_EMPTY, path: "tree", component: Tree},
-                {name: GO.ROOT, path: "root/:treeId/:rootId", component: Root, props: true},
+                {name: GO.ROOT, path: "root/:treeId/:rootId", component: RootEditor, props: true},
                 {name: GO.BASKET, path: "selection", component: Selection},
                 {name: GO.RECENT, path: "recent", component: MyBasket},
                 {name: GO.COMPARE_EMPTY, path: "compare", component: Compare},

@@ -83,10 +83,10 @@
                 <v-window v-model="idx">
                     <v-window-item></v-window-item>
                     <v-window-item lazy transition="fade-transition">
-                        <tree-selection-finder @select="selectProductA" :tree="leftTree"/>
+                        <tree-selection-picker @select="selectProductA" :tree="leftTree"/>
                     </v-window-item>
                     <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
-                        <tree-selection-finder @select="selectProductB" :tree="rightTree"/>
+                        <tree-selection-picker @select="selectProductB" :tree="rightTree"/>
                     </v-window-item>
                     <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
                         <attribute-finder :trees="[leftTree, rightTree]" @select="selectFragment"/>
@@ -106,7 +106,6 @@
 <script>
     import Card from "../common/Card"
     import TreeCard from "../tree/TreeCard"
-    import TreeSelectionFinder from "../tree/TreeSelectionFinder"
     import AttributeFinder from "../tree/AttributeFinder"
     import {getAttributeByFragment, name, qtUnitName, qtFreq, attributeCoef} from "../../services/calculations"
     import On from "../../const/on"
@@ -121,12 +120,13 @@
     import InfoSaver from "./InfoSaver"
     import InfoLoader from "./InfoLoader"
     import Closer from "../common/Closer"
+    import TreeSelectionPicker from "../tree/TreeSelectionPicker"
 
     const createInfo = () => ({type: "eq", fragment: null, leftSelection: null, rightSelection: null, path: null, description: null})
 
     export default {
         name: "create-eq",
-        components: {Closer, InfoSaver, SelectionCardFront, TransitionExpand, SelectionLink, DescriptionInput, PathChecker, AttributeFinder, TreeSelectionFinder, TreeCard, Card},
+        components: {TreeSelectionPicker, Closer, InfoSaver, SelectionCardFront, TransitionExpand, SelectionLink, DescriptionInput, PathChecker, AttributeFinder, TreeCard, Card},
         props: ['path'],
         mixins: [InfoLoader],
         data: () => ({

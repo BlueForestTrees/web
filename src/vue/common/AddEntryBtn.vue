@@ -4,11 +4,11 @@
             <v-icon>add</v-icon>
         </v-btn>
         <v-list>
-            <v-list-tile @click="goto(GO.ADD_IMPACT_ENTRY)">
+            <v-list-tile @click="goto(action)">
                 <v-list-tile-avatar>
                     <v-icon>keyboard_tab</v-icon>
                 </v-list-tile-avatar>
-                <v-list-tile-title>Créer une catégorie d'impact</v-list-tile-title>
+                <v-list-tile-title>{{title}}</v-list-tile-title>
             </v-list-tile>
         </v-list>
     </v-menu>
@@ -21,8 +21,9 @@
     import {GO} from "../../const/go"
 
     export default {
-        name: "add-impact-entries-btn",
-        data: ()=>({
+        name: "add-entry-btn",
+        props: ['action', 'title'],
+        data: () => ({
             Dial, GO
         }),
         methods: {

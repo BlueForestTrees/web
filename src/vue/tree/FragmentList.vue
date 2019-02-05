@@ -1,5 +1,5 @@
 <template>
-    <selectable-list :items="items" :maxSelectionSize="1" :selection="selection">
+    <selectable-list :items="items" :maxSelectionSize="1" class="enough-high-small">
         <template slot="no-items">
             <v-layout class="align-center justify-center my-5 font-weight-thin title">
                 <img src="/img/broken-heart.svg" class="logo-petit ma-1"/>{{none}}
@@ -15,7 +15,7 @@
     export default {
         name: "fragment-list",
         components: {SelectableList},
-        props: ['tree', 'selection', 'fragment', 'none'],
+        props: ['tree', 'fragment', 'none'],
         created() {
             this.refresh()
         },

@@ -35,10 +35,10 @@ export default {
         return api.postImpactAdeme(formData)
     },
 
-    [On.ADD_IMPACT]: ({}, {tree, impactEntry, quantity}) => {
+    [On.ADD_IMPACT]: ({}, {tree, entry, quantity}) => {
         const impact = ({
-            _id: createStringObjectId(), type: "impact", color: impactEntry.color,
-            impactId: impactEntry._id, name: impactEntry.name, quantity
+            _id: createStringObjectId(), type: "impact", color: entry.color,
+            impactId: entry._id, name: entry.name, quantity
         })
         if (tree[IMPACTS]) {
             tree[IMPACTS].push(impact)

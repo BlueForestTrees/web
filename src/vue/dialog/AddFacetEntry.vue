@@ -7,7 +7,7 @@
         <v-container>
             <v-form v-model="valid" v-on:submit.prevent="" ref="form">
                 <color-picker v-model="color"/>
-                <v-text-field :rules="[length2min]" label="Nom du type de propriété" required v-model="name"></v-text-field>
+                <v-text-field :rules="[length2min]" label="Nom du type de propriété" required :value="name" @input="setName"></v-text-field>
                 <grandeur-select v-model="grandeur"/>
             </v-form>
         </v-container>
@@ -20,7 +20,7 @@
 
 <script>
     import On from "../../const/on"
-    import {mapActions} from "vuex"
+    import {mapActions, mapMutations, mapState} from "vuex"
     import {Dial} from "../../const/dial"
     import GrandeurSelect from "../common/GrandeurSelect"
     import {length2min} from "../../services/rules"
@@ -28,6 +28,7 @@
     import {createStringObjectId} from "../../services/calculations"
     import Card from "../common/Card"
     import Connected from "../mixin/Connected"
+    import Do from "../../const/do"
 
     export default {
         name: 'add-facet-entry',
@@ -37,7 +38,6 @@
                 Dial: Dial,
                 valid: false,
                 color: null,
-                name: null,
                 grandeur: null
             }
         },
@@ -46,12 +46,19 @@
             ColorPicker,
             GrandeurSelect
         },
-        props: ['data'],
+        computed: {
+            ...mapState({
+                name: s => s.nav.tree.facet.addFilter
+            })
+        },
         methods: {
             length2min,
             ...mapActions({
                 createFacetEntry: On.CREATE_FACET_ENTRY,
                 snack: On.SNACKBAR
+            }),
+            ...mapMutations({
+                setName: Do.SET_TREE_FACET_FILTER
             }),
             validate: function () {
                 this.$refs.form.validate()
@@ -64,14 +71,15 @@
                     })
                         .then(() => this.snack({text: `Le type de propriété "${this.name}" a été crée`}))
                         .then(() => this.focus())
+                        .then(() => this.$router.go(-1))
                 }
             },
             close: function () {
                 this.$refs.dialog.close()
             },
             focus: function () {
-                this.name = null
                 this.grandeur = null
+                this.$nextTick(() => this.$refs.nom.focus())
             }
         }
     }

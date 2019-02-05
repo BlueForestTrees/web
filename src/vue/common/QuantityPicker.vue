@@ -1,22 +1,29 @@
 <template>
-    <v-form v-model="valid" v-on:submit.prevent="" ref="form">
+    <span>
+        <div class="font-weight-medium subheading">
+            <v-icon color="green" class="mr-2">info</v-icon>{{name(item)}}
+        </div>
+        <v-icon large color="grey" @click.stop="close" class="top-right">close</v-icon>
 
-        <v-layout :column="$vuetify.breakpoint.xsOnly" align-center class="font-weight-thin subheading my-5">
-            <v-text-field type="number" v-model="qt" :rules="[required, isNumber]" @keyup.enter="validate" class="chars-width-5" label="Quantité"></v-text-field>
-            <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]" @keyup.enter="validate" class="chars-width-15" label="Unité"></unit-select>
-            <div v-if="item.eq" >eq. {{item.eq}}</div>
-        </v-layout>
+        <v-form v-model="valid" v-on:submit.prevent="" ref="form">
 
-        <v-layout row justify-center>
-            <v-btn flat icon @click.stop="validate"><v-icon large color="primary">done</v-icon></v-btn>
-            <v-btn flat icon @click.stop="close"><v-icon large color="grey">close</v-icon></v-btn>
-        </v-layout>
+            <v-layout :column="$vuetify.breakpoint.xsOnly" align-center class="font-weight-thin subheading my-5">
+                <v-text-field type="number" v-model="qt" :rules="[required, isNumber]" @keyup.enter="validate" class="chars-width-5" label="Quantité"></v-text-field>
+                <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]" @keyup.enter="validate" class="chars-width-15" label="Unité"></unit-select>
+                <div v-if="item.eq">eq. {{item.eq}}</div>
+            </v-layout>
 
-    </v-form>
+                <v-layout row justify-center class="mt-5">
+                    <v-btn flat icon @click.stop="validate"><v-icon large color="primary">done</v-icon></v-btn>
+                </v-layout>
+
+        </v-form>
+    </span>
 </template>
 
 <script>
     import closable from "../mixin/Closable"
+    import {name} from "../../services/calculations"
     import {isNumber, required} from "../../services/rules"
     import Destination from "../common/Destination"
     import {Dial} from "../../const/dial"
@@ -39,6 +46,7 @@
             }
         },
         methods: {
+            name,
             validate() {
                 this.$refs.form.validate()
                 if (this.valid) {

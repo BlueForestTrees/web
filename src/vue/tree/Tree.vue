@@ -2,21 +2,21 @@
     <div v-if="tree">
         <tree-headpage :tree="tree" :value="currentSubPage" @input="changeSubPage"/>
 
-        <v-container style="min-height: 50em" v-if="tree.trunk">
+        <v-container class="enought-high" v-if="tree.trunk">
 
             <transition name="slide-fade" mode="out-in">
 
-                <impacts-sub-page v-if="currentSubPage === IMPACTS" :tree="tree" :selection="selection" :modeAdd="modeAdd" @close="setModeAdd(false)"/>
+                <impacts-sub-page v-if="currentSubPage === IMPACTS" :tree="tree" :modeAdd="modeAdd" @close="unsetModeAdd"/>
 
-                <ressources-sub-page v-else-if="currentSubPage === ROOTS" :tree="tree" :selection="selection" :modeAdd="modeAdd"/>
+                <ressources-sub-page v-else-if="currentSubPage === ROOTS" :tree="tree" :modeAdd="modeAdd" @close="unsetModeAdd"/>
 
-                <facets-sub-page v-else-if="currentSubPage === FACETS" :tree="tree" :selection="selection" :modeAdd="modeAdd"/>
+                <facets-sub-page v-else-if="currentSubPage === FACETS" :tree="tree" :modeAdd="modeAdd" @close="unsetModeAdd"/>
 
             </transition>
 
         </v-container>
 
-        <tree-fab v-if="!modeAdd" :tree="tree" @nav="fabnav"></tree-fab>
+        <tree-fab v-if="tree.trunk && !modeAdd" @nav="fabnav"></tree-fab>
     </div>
 
 </template>
@@ -58,6 +58,9 @@
                 setCurrentSubpage: Do.SET_CURRENT_TREE_SUBPAGE,
                 setModeAdd: Do.SET_TREE_MODEADD
             }),
+            unsetModeAdd() {
+                this.setModeAdd(false)
+            },
             ...mapActions({
                 dispatchLoad: On.LOAD_OPEN_TREE,
                 dispatchSelLoad: On.LOAD_SELECTION,

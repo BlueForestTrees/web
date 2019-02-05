@@ -1,15 +1,14 @@
 <template>
     <impact-adder v-if="modeAdd" :tree="tree" @close="$emit('close')"/>
     <v-card v-else>
-        <v-layout row>
-            <div class="ma-3 display-1 font-weight-thin">Impacts sur l'environnement</div>
-            <v-spacer></v-spacer>
-            <scope-menu v-model="idx" :dense="$vuetify.breakpoint.xsOnly" :scope="impactScope"/>
-        </v-layout>
+        <subpage-title title="Impacts sur l'environnement">
+            <scope-menu :value="idx" @input="setIdx" :dense="$vuetify.breakpoint.xsOnly" :scope="impactScope"/>
+        </subpage-title>
+        <v-divider/>
 
         <transition name="slide-fade" mode="out-in">
-            <fragment-list v-if="idx === 0" :tree="tree" :selection="selection" :fragment="IMPACTS" none="Pas encore d'informations sur les impacts" key="0"></fragment-list>
-            <fragment-list v-else-if="idx === 1" :tree="tree" :selection="selection" :fragment="IMPACT_TANK" none="Pas encore d'informations sur les impacts globaux" key="1"></fragment-list>
+            <fragment-list v-if="idx === 0" :tree="tree" :fragment="IMPACTS" none="Pas encore d'informations sur les impacts" key="0"></fragment-list>
+            <fragment-list v-else-if="idx === 1" :tree="tree" :fragment="IMPACT_TANK" none="Pas encore d'informations sur les impacts globaux" key="1"></fragment-list>
         </transition>
 
         <open-message :section="section"/>
@@ -22,21 +21,23 @@
     import ImpactAdder from "../impact/ImpactAdder"
     import {IMPACT_TANK, IMPACTS} from "../../const/fragments"
     import On from "../../const/on"
-    import {mapActions} from "vuex"
+    import {mapActions, mapMutations, mapState} from "vuex"
     import Loader from "../loader/Loader"
     import ScopeMenu from "../root/ScopeMenu"
     import {impactScope} from "../../const/img"
+    import Do from "../../const/do"
+    import SubpageTitle from "./SubpageTitle"
 
     const FragmentList = () => import(/* webpackChunkName: "FragmentList"*/"./FragmentList")
 
     export default {
         name: "impacts-subpage",
         data: () => ({
-            idx: 0,
             loading: false,
             impactScope, IMPACTS, IMPACT_TANK
         }),
         components: {
+            SubpageTitle,
             FragmentList,
             ScopeMenu,
             Loader,
@@ -46,6 +47,7 @@
         },
         props: ['tree', 'selection', 'modeAdd'],
         computed: {
+            ...mapState({idx: s => s.nav.tree.impact.idx}),
             items() {
                 return this.tree && this.tree.impactsTank
             },
@@ -60,7 +62,12 @@
             }
         },
         methods: {
-            ...mapActions({updateTree: On.UPDATE_TREE}),
+            ...mapActions({
+                updateTree: On.UPDATE_TREE,
+            }),
+            ...mapMutations({
+                setIdx: Do.SET_TREE_IMPACT_IDX
+            }),
             refresh: async function () {
                 this.loading = true
                 this.updateTree({tree: this.tree, fragments: [IMPACT_TANK]})
