@@ -1,9 +1,5 @@
 <template>
-    <span>
-        <div ref="network" style="height:400px">
-        </div>
-        <v-icon class="bottom-right hand" large>fullscreen</v-icon>
-    </span>
+    <div ref="network" style="height:400px"></div>
 </template>
 
 <script>

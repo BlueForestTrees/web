@@ -9,7 +9,7 @@
                 <v-list-tile-title>Ajouter un impact environnemental...</v-list-tile-title>
             </v-list-tile>
             <v-list-tile @click="$emit('nav', ROOTS)">
-                <v-list-tile-avatar class="ressource logo-petit"/>
+                <v-list-tile-avatar class="scope-tree logo-petit"/>
                 <v-list-tile-title>Ajouter une ressource...</v-list-tile-title>
             </v-list-tile>
             <v-list-tile @click="$emit('nav', FACETS)">

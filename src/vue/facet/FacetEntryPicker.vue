@@ -2,7 +2,7 @@
     <v-layout column>
 
         <v-layout column align-center>
-            <v-text-field label="Filtrer par nom" autofocus :value="addFilter" @input="setFilter" clearable class="not-too-half"/>
+            <v-text-field label="Filtrer par nom" autofocus :value="term" @input="setTerm" clearable class="not-too-half"/>
         </v-layout>
 
         <v-divider/>
@@ -13,7 +13,7 @@
             </v-list-tile>
         </v-list>
 
-        <add-entry-btn title="Créer un type de propriété" :action="createEntryRoute"/>
+        <add-entry-fab title="Créer un type de propriété" :action="createEntryRoute"/>
 
     </v-layout>
 </template>
@@ -23,13 +23,13 @@
     import SelectableList from "../common/SelectableList"
     import {name} from "../../services/calculations"
     import On from "../../const/on"
-    import AddEntryBtn from "../common/AddEntryBtn"
     import Do from "../../const/do"
     import {GO} from "../../const/go"
+    import AddEntryFab from "../common/AddEntryFab"
 
     export default {
         name: 'facet-entry-picker',
-        components: {AddEntryBtn, SelectableList},
+        components: {AddEntryFab, SelectableList},
         props: {
             createEntryRoute: {type: String}
         },
@@ -50,11 +50,11 @@
         },
         computed: {
             ...mapState({
-                addFilter: s => s.nav.tree.facet.addFilter
+                term: s => s.nav.tree.facet.term
             }),
             query() {
                 return ({
-                    term: this.addFilter || undefined
+                    term: this.term || undefined
                 })
             }
         },
@@ -67,7 +67,7 @@
                 dispatchSearch: On.SEARCH_FACET_ENTRY,
             }),
             ...mapMutations({
-                setFilter: Do.SET_TREE_FACET_FILTER
+                setTerm: Do.SET_TREE_FACET_TERM
             }),
         }
     }

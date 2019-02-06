@@ -1,7 +1,7 @@
 import {Dial} from "../const/dial"
 import ENV from "../env"
 import {maquettes} from "../const/maquettes"
-import {FACETS, IMPACT_TANK} from "../const/fragments"
+import {FACETS, IMPACT_TANK, ROOTS} from "../const/fragments"
 
 export const createDialog = name => (dialogFactory[name] && dialogFactory[name]()) || (console.warn(`state.js il manque dialogFactory['${name}']`) || {})
 
@@ -55,12 +55,19 @@ export default {
     compare: {left: null, right: null, leftAxises: null, rightAxises: null, axis: null},
     dialogs: dialogs(),
     nav: {
-        leftMenuVisible: false, rightMenuVisible: false, dark: false, detailsDialog: false, searchTab: null,
+        main: {tab: null},
+        leftMenuVisible: false, rightMenuVisible: false, dark: false, detailsDialog: false,
         tree: {
             currentSubPage: FACETS, modeAdd: false, cardFlipped: false,
-            impact: {idx: 0, addFilter: ""},
-            root: {idx: 0},
-            facet: {addFilter: ""}
+            impact: {idx: 0, term: ""},
+            root: {idx: 0, term: "", scope: ROOTS},
+            facet: {term: ""},
+            picker: {tab: null}
+        },
+        create: {
+            tree: {
+                callback: null
+            }
         }
     },
     snack: snack(),

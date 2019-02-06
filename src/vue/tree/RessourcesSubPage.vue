@@ -58,7 +58,6 @@
             }),
             section: function () {
                 return {
-                    title: `Participer`,
                     filter: {
                         type: 'trunk-root',
                         topicId: this.tree._id
@@ -87,7 +86,7 @@
                 dispatchGoEquiv: On.GO_EQUIV
             }),
             ...mapMutations({
-                setIdx: Do.SET_TREE_ROOTS_IDX
+                setIdx: Do.SET_TREE_ROOT_IDX
             }),
             goRoot: function (root) {
                 this.dispatchGoRoot({treeId: this.tree._id, rootId: root._id})

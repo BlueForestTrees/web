@@ -2,7 +2,7 @@
     <v-layout column>
 
         <v-layout column align-center>
-            <v-text-field label="Filtrer par nom" autofocus :value="addFilter" @input="setFilter" clearable class="not-too-half"/>
+            <v-text-field label="Filtrer par nom" autofocus :value="term" @input="setTerm" clearable class="not-too-half"/>
         </v-layout>
 
         <v-divider/>
@@ -13,7 +13,7 @@
             </v-list-tile>
         </v-list>
 
-        <add-entry-btn title="Créer un type d'impact" :action="GO.ADD_IMPACT_ENTRY"/>
+        <add-entry-fab title="Créer un type d'impact" :action="GO.ADD_IMPACT_ENTRY"/>
     </v-layout>
 
     <!--<v-dialog v-model="detailsDialog" max-width="800">-->
@@ -40,12 +40,12 @@
     import SelectableList from "../common/SelectableList"
     import {name} from "../../services/calculations"
     import Do from "../../const/do"
-    import AddEntryBtn from "../common/AddEntryBtn"
     import {GO} from "../../const/go"
+    import AddEntryFab from "../common/AddEntryFab"
 
     export default {
         name:"impact-entry-picker",
-        components: {AddEntryBtn, SelectableList},
+        components: {AddEntryFab, SelectableList},
         data: function () {
             return {
                 GO,
@@ -63,11 +63,11 @@
         },
         computed: {
             ...mapState({
-                addFilter: s => s.nav.tree.impact.addFilter
+                term: s => s.nav.tree.impact.term
             }),
             query() {
                 return ({
-                    term: this.addFilter || undefined
+                    term: this.term || undefined
                 })
             }
         },
@@ -80,7 +80,7 @@
                 dispatchSearch: On.SEARCH_IMPACT_ENTRY,
             }),
             ...mapMutations({
-                setFilter: Do.SET_TREE_IMPACT_FILTER
+                setTerm: Do.SET_TREE_IMPACT_TERM
             }),
         }
     }

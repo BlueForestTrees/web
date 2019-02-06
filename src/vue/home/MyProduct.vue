@@ -2,7 +2,13 @@
     <v-container key="my-prods" grid-list-md text-xs-center>
         <v-container v-if="!user">Connectez-vous pour lister vos produits et services.</v-container>
         <v-card v-else>
-            <search-comp :filter="ownerFilter" @select="select">
+            <v-layout column align-center>
+                <v-text-field label="Filtrer par nom" autofocus :value="term" @input="setTerm" clearable class="not-too-half"/>
+            </v-layout>
+
+            <v-divider/>
+
+            <search-comp :filter="query" @select="select">
                 <v-card-text slot="no-results" class="text-md-center">
                     Vous ne possédez aucun produit.
                     <br>
@@ -17,11 +23,12 @@
 <script>
     import On from "../../const/on"
     import SearchComp from "../search/SearchComp"
-    import {mapActions} from "vuex"
+    import {mapActions, mapMutations, mapState} from "vuex"
     import OpenMessage from "../common/OpenMessage"
     import MyMessages from "./MyMessage"
     import MyTeam from "./MyTeam"
     import MyPuzzle from "./MyPuzzle"
+    import Do from "../../const/do"
 
     export default {
         name: "my-product",
@@ -32,14 +39,23 @@
                 switchLeftMenu: On.SWITCH_LEFT_MENU,
                 goCreateTree: On.GO_CREATE_TREE
             }),
+            ...mapMutations({
+                setTerm: Do.SET_TREE_ROOT_TERM
+            }),
             select(item) {
                 this.$emit('select', item)
             }
         },
         computed: {
-            ownerFilter() {
-                return this.user && {oid: this.user._id}
-            }
+            query() {
+                const query = {}
+                this.user && (query.oid = this.user._id)
+                this.term && (query.term = this.term)
+                return query
+            },
+            ...mapState({
+                term: s => s.nav.tree.root.term
+            })
         },
     }
 </script>

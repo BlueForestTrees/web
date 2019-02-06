@@ -1,7 +1,7 @@
 import On from "../../const/on"
 import api from "../../rest/api"
 import Do from "../../const/do"
-import {applyAspectCoef, createStringObjectId} from "../../services/calculations"
+import {applyAspectCoef, createStringObjectId, treeBqt} from "../../services/calculations"
 import {map} from 'unit-manip'
 import {IMPACTS} from "../../const/fragments"
 
@@ -36,9 +36,14 @@ export default {
     },
 
     [On.ADD_IMPACT]: ({}, {tree, entry, quantity}) => {
+
         const impact = ({
             _id: createStringObjectId(), type: "impact", color: entry.color,
-            impactId: entry._id, name: entry.name, quantity
+            impactId: entry._id, name: entry.name,
+            quantity: {
+                bqt: quantity.bqt / treeBqt(tree),
+                g: quantity.g,
+            }
         })
         if (tree[IMPACTS]) {
             tree[IMPACTS].push(impact)

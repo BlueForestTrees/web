@@ -1,0 +1,44 @@
+<template>
+    <v-flex key="search-page" grid-list-md text-xs-center>
+        <v-card class="elevation-4">
+            <welcome-panel/>
+            <v-tabs :value="tab" @change="setTab" centered slider-color="primary">
+                <v-tab href="#search">Recherche</v-tab>
+                <v-tab href="#mines">Vos produits</v-tab>
+                <v-tab href="#favoris">Favoris</v-tab>
+                <v-tab href="#infos">Informations</v-tab>
+            </v-tabs>
+        </v-card>
+        <search v-if="tab==='search'" @select="goAny" class="mt-5"/>
+        <my-product v-else-if="tab==='mines'" :user="user" @select="goAny"/>
+        <my-selects v-else-if="tab==='favoris'" :user="user" @select="goAny"/>
+        <my-infos v-else-if="tab==='infos'" :user="user" @select="goAny"/>
+    </v-flex>
+</template>
+
+<script>
+    import WelcomePanel from "./WelcomePanel"
+    import On from "../../const/on"
+    import {mapActions, mapState, mapMutations} from "vuex"
+    import Do from "../../const/do"
+
+    const Search = () => import(/* webpackChunkName: "MyBasket"*/ "../search/Search")
+    const MyProduct = () => import(/* webpackChunkName: "MyProduct"*/ "../home/MyProduct")
+    const MySelects = () => import(/* webpackChunkName: "MySelects"*/ "../home/MySelects")
+    const MyInfos = () => import(/* webpackChunkName: "MyInfos"*/ "../home/MyInfos")
+
+    export default {
+        name: "search-page",
+        components: {Search, MySelects, MyProduct, MyInfos, WelcomePanel},
+        methods: {
+            ...mapActions({goAny: On.GO_ANY}),
+            ...mapMutations({setTab: Do.SET_NAV_MAIN_TAB})
+        },
+        computed: {
+            ...mapState({
+                user: s => s.user,
+                tab: s => s.nav.main.tab
+            })
+        },
+    }
+</script>

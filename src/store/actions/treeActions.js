@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import On from "../../const/on"
 import api from "../../rest/api"
-import {coefFromTrunkToSelection, createStringObjectId, selectionTotalQt, transportQuantity, treefyAll, treeTotalQt} from "../../services/calculations"
+import {coefFromTrunkToSelection, createStringObjectId, selectionBqt, transportQuantity, treefyAll, treeBqt} from "../../services/calculations"
 import {bqtGToQtUnit, baseQt} from "unit-manip"
 import router from "../../router/router"
 import {GO} from "../../const/go"
@@ -50,7 +50,7 @@ export default {
     [On.LOAD_SELECTION]: async ({dispatch}, {_id, fragments}) => dispatch(On.LOAD_SELECTION_TREE, {selection: await api.getSelection(_id), fragments}),
 
     [On.LOAD_SELECTION_TREE]: async ({dispatch}, {selection, fragments}) => {
-        const tree = await dispatch(On.LOAD_OPEN_TREE, {_id: selection.trunkId, bqt: selectionTotalQt(selection), fragments})
+        const tree = await dispatch(On.LOAD_OPEN_TREE, {_id: selection.trunkId, bqt: selectionBqt(selection), fragments})
         tree.selection = selection
         return tree
     },
@@ -79,7 +79,8 @@ export default {
     },
     [On.UPDATE_TREE]: ({dispatch}, {tree, bqt = 0, fragments = allFragments}) => {
         if (bqt === 0) {
-            bqt = treeTotalQt(tree)
+            bqt = treeBqt(tree)
+            console.log("update @bqt=", bqt)
         }
         tree.promises = {}
         for (let i = 0; i < fragments.length; i++) {
@@ -131,21 +132,22 @@ export default {
         }
     },
 
+    [On.SAVE_APPLY_SELECTION]: ({dispatch}, {tree, selection}) => {
+        selection.trunkId = tree._id
+        if (tree.selection) {
+            selection._id = tree.selection._id
+            api.updateSelection(selection)
+        } else {
+            selection._id = createStringObjectId()
+            api.createSelection(selection)
+        }
+        return dispatch(On.APPLY_SELECTION, {tree, selection})
+    },
+
     [On.APPLY_SELECTION]: ({dispatch}, {tree, selection}) => {
         const coef = coefFromTrunkToSelection(selection, tree)
         Vue.set(tree, "selection", {...selection, trunkId: tree._id})
         dispatch(On.APPLY_QUANTITY_COEF, {tree, coef})
-    },
-
-    [On.SAVE_SELECTION]: ({dispatch}, {tree, selection}) => {
-        const newSelection = {trunkId: tree._id, ...selection}
-        if (tree.selection) {
-            newSelection._id = tree.selection._id
-            api.updateSelection(newSelection)
-        } else {
-            newSelection._id = createStringObjectId()
-            api.createSelection(newSelection)
-        }
     },
 
     [On.LOAD_SELECTIONS]: ({}, {oid}) => api.selectionOf(oid)

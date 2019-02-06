@@ -182,14 +182,14 @@ export const generateXRequestId = () => {
     return xRequestId
 }
 
-export const selectionTotalQt = selection =>
+export const selectionBqt = selection =>
     selection.repeted ?
         selection.quantity.bqt * (selection.duree.bqt / selection.freq.bqt)
         :
         selection.quantity.bqt
 
-export const coefFromTrunkToSelection = (selection, tree) => selectionTotalQt(selection) / tree.trunk.quantity.bqt
-export const treeTotalQt = tree => tree.selection ? selectionTotalQt(tree.selection) : tree.trunk.quantity.bqt
+export const coefFromTrunkToSelection = (selection, tree) => selectionBqt(selection) / tree.trunk.quantity.bqt
+export const treeBqt = tree => tree.selection ? selectionBqt(tree.selection) : tree.trunk.quantity.bqt
 
 //in: une liste d'arbre, un nom de fragment
 //out: un objet {_id:attrDeArbre1} avec tous les attributs en communs sur tout les arbres.

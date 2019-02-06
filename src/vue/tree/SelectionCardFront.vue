@@ -1,13 +1,11 @@
 <template>
-    <v-container align>
-        <v-layout column align-center>
-            <selection-link :selection="selection"/>
-            <h5 class="align font-weight-thin">{{qtFreq(selection)}}</h5>
-            <transition-expand>
-                <div v-if="attribute" class="font-weight-thin">Soit {{qtUnitName(attribute)}}</div>
-            </transition-expand>
-        </v-layout>
-    </v-container>
+    <v-layout column align-center>
+        <selection-link :selection="selection"/>
+        <h5 class="align font-weight-thin">{{qtFreq(selection)}}</h5>
+        <transition-expand>
+            <div v-if="attribute" class="font-weight-thin">Soit {{qtUnitName(attribute)}}</div>
+        </transition-expand>
+    </v-layout>
 </template>
 <script>
     import {qtUnitName, qtFreq} from "../../services/calculations"

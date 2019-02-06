@@ -39,7 +39,6 @@
             },
             section() {
                 return {
-                    title: `Participer`,
                     filter: {
                         type: 'trunk-facet',
                         topicId: this.tree._id

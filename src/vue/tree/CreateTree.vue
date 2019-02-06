@@ -131,9 +131,9 @@
                 }
             },
             validate() {
-                this.createTrunk(this.trunk).then(() => {
-                    this.goTree(treefy(this.trunk))
-                })
+                this.createTrunk(this.trunk)
+                    // .then(() => {this.goTree(treefy(this.trunk))})
+                    .then(() => this.$router.go(-1))
             },
             length2min, getRandomColor, required, isNumber
         }

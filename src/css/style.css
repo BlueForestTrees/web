@@ -1,5 +1,5 @@
 html {
-    overflow-y: auto
+    overflow-y: scroll
 }
 
 .bottom-right {
@@ -121,8 +121,8 @@ a {
     background: url(/img/planet.svg) no-repeat center;
 }
 
-.ressource {
-    background: url(/img/ressource.svg) no-repeat center bottom;
+.scope-tree {
+    background: url(/img/scopeTree.svg) no-repeat center bottom;
 }
 
 .facet {
@@ -297,4 +297,24 @@ a {
 
 .dragClass {
     opacity: 1;
+}
+
+
+
+.slide-bottom-enter-active {
+    transition: all .2s ease;
+}
+
+.slide-bottom-leave-active {
+    transition: all .2s ease;
+}
+
+.slide-bottom-enter {
+    transform: translateY(-10px);
+    opacity: 0;
+}
+
+.slide-bottom-leave-to {
+    transform: translateY(10px);
+    opacity: 0;
 }

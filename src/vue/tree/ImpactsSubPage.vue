@@ -53,7 +53,6 @@
             },
             section() {
                 return {
-                    title: `Participer`,
                     filter: {
                         type: 'impact.trunk',
                         topicId: this.tree._id

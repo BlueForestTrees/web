@@ -48,7 +48,7 @@
         },
         computed: {
             ...mapState({
-                name: s => s.nav.tree.facet.addFilter
+                name: s => s.nav.tree.facet.term
             })
         },
         methods: {
@@ -58,7 +58,7 @@
                 snack: On.SNACKBAR
             }),
             ...mapMutations({
-                setName: Do.SET_TREE_FACET_FILTER
+                setName: Do.SET_TREE_FACET_TERM
             }),
             validate: function () {
                 this.$refs.form.validate()

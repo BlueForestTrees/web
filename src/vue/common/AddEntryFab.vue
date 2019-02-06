@@ -21,7 +21,7 @@
     import {GO} from "../../const/go"
 
     export default {
-        name: "add-entry-btn",
+        name: "add-entry-fab",
         props: ['action', 'title'],
         data: () => ({
             Dial, GO

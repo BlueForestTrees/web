@@ -2,8 +2,8 @@ import On from "../../const/on"
 import api from "../../rest/api"
 import router from "../../router/router"
 import {GO} from "../../const/go"
-import {applyRessourceCoef, createStringObjectId, treeTotalQt} from "../../services/calculations"
-import {ROOTS} from "../../const/fragments"
+import {applyRessourceCoef, createStringObjectId, treeBqt} from "../../services/calculations"
+import {BRANCHES, ROOTS} from "../../const/fragments"
 
 export default {
 
@@ -15,11 +15,14 @@ export default {
             _id: createStringObjectId(),
             trunkId: tree._id,
             rootId: root._id,
-            bqt: treeTotalQt(root) / treeTotalQt(tree),
+            bqt: treeBqt(root) / treeBqt(tree),
         }
 
         if (tree[ROOTS]) {
             tree[ROOTS].push(root)
+        }
+        if (root[BRANCHES]) {
+            root[BRANCHES].push(tree)
         }
 
         return dispatch(On.CREATE_ROOT, item)

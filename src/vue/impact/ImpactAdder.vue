@@ -1,24 +1,26 @@
 <template>
     <v-container>
-        <v-layout row class="mb-5">
-            <div class="display-1 font-weight-thin">Ajouter un impact</div>
-            <v-spacer/>
-            <closer @close="$emit('close')"/>
-        </v-layout>
+        <v-card>
 
-        <transition name="slide-fade" mode="out-in">
+            <subpage-title title="Ajouter un impact">
+                <closer @close="$emit('close')"/>
+            </subpage-title>
+            <v-divider/>
 
-            <impact-entry-picker v-if="changeItem || !selectedEntry" @select="select"/>
+            <transition name="slide-fade" mode="out-in">
 
-            <v-layout v-else align-center column>
-                <v-card>
-                    <v-container>
-                        <quantity-picker :item="selectedEntry" @change="validate" @close="closeQtPicker"></quantity-picker>
-                    </v-container>
-                </v-card>
-            </v-layout>
+                <impact-entry-picker v-if="changeItem || !selectedEntry" @select="select"/>
 
-        </transition>
+                <v-layout v-else align-center column>
+                    <v-card>
+                        <v-container>
+                            <quantity-picker :item="selectedEntry" @change="validate" @close="closeQtPicker"></quantity-picker>
+                        </v-container>
+                    </v-card>
+                </v-layout>
+
+            </transition>
+        </v-card>
     </v-container>
 </template>
 
@@ -29,11 +31,12 @@
     import On from "../../const/on"
     import {mapActions} from "vuex"
     import ImpactEntryPicker from "./ImpactEntriesPicker"
+    import SubpageTitle from "../tree/SubpageTitle"
 
     export default {
         name: "impact-adder",
         props: ['tree'],
-        components: {ImpactEntryPicker, QuantityPicker, Closer},
+        components: {SubpageTitle, ImpactEntryPicker, QuantityPicker, Closer},
         data: () => ({selectedEntry: null, changeItem: false}),
         methods: {
             name,

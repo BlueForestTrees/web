@@ -1,24 +1,26 @@
 <template>
     <v-container>
-        <v-layout row class="mb-5">
-            <div class="display-1 font-weight-thin">Ajouter une propriété</div>
-            <v-spacer/>
-            <closer @close="$emit('close')"/>
-        </v-layout>
+        <v-card>
 
-        <transition name="slide-fade" mode="out-in">
+            <subpage-title title="Ajouter une propriété">
+                <closer @close="$emit('close')"/>
+            </subpage-title>
+            <v-divider/>
 
-            <facet-entry-picker v-if="changeItem || !selectedEntry" @select="select" :create-entry-route="GO.ADD_FACET_ENTRY"/>
+            <transition name="slide-fade" mode="out-in">
 
-            <v-layout v-else align-center column>
-                <v-card>
-                    <v-container>
-                        <quantity-picker :item="selectedEntry" @change="validate" @close="closeQtPicker"></quantity-picker>
-                    </v-container>
-                </v-card>
-            </v-layout>
+                <facet-entry-picker v-if="changeItem || !selectedEntry" @select="select" :create-entry-route="GO.ADD_FACET_ENTRY"/>
 
-        </transition>
+                <v-layout v-else align-center column>
+                    <v-card>
+                        <v-container>
+                            <quantity-picker :item="selectedEntry" @change="validate" @close="closeQtPicker"></quantity-picker>
+                        </v-container>
+                    </v-card>
+                </v-layout>
+
+            </transition>
+        </v-card>
 
     </v-container>
 </template>
@@ -31,11 +33,12 @@
     import {mapActions} from "vuex"
     import {GO} from "../../const/go"
     import FacetEntryPicker from "./FacetEntryPicker"
+    import SubpageTitle from "../tree/SubpageTitle"
 
     export default {
         name: "facet-adder",
         props: ['tree'],
-        components: {FacetEntryPicker, QuantityPicker, Closer},
+        components: {SubpageTitle, FacetEntryPicker, QuantityPicker, Closer},
         data: () => ({
             selectedEntry: null, changeItem: false,
             GO

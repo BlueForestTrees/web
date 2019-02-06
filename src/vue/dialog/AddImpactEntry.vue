@@ -48,7 +48,7 @@
         },
         computed: {
             ...mapState({
-                name: s => s.nav.tree.impact.addFilter
+                name: s => s.nav.tree.impact.term
             })
         },
         methods: {
@@ -58,7 +58,7 @@
                 snack: On.SNACKBAR
             }),
             ...mapMutations({
-                setName: Do.SET_TREE_IMPACT_FILTER
+                setName: Do.SET_TREE_IMPACT_TERM
             }),
             validate: function () {
                 this.$refs.form.validate()

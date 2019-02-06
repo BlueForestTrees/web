@@ -36,17 +36,14 @@
         },
         methods: {
             ...mapActions({
-                saveSelection: On.SAVE_SELECTION,
-                applySelection: On.APPLY_SELECTION
+                saveApplySelection: On.SAVE_APPLY_SELECTION,
             }),
             ...mapMutations({setFlipped: Do.SET_TREE_CARD_FLIPPED}),
             selectionChanged(selection) {
-                this.saveSelection(selection)
-                this.applySelection(selection)
+                this.saveApplySelection(selection)
                 this.flip()
             },
             flip() {
-                console.log("flip")
                 this.setFlipped(!this.flipped)
             },
             qtUnit, name

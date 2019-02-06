@@ -94,7 +94,7 @@ export default {
     PUT_TRUNK_QUANTITY: "putTrunkQuantity",
     SAVE_INFO: "saveInfo",
     SAVE_BASKET: 'saveBasket',
-    SAVE_SELECTION: 'saveSelection',
+    SAVE_APPLY_SELECTION: 'saveApplySelection',
     SEARCH_TREE: 'searchTree',
     SEARCH_INFO: 'searchInfo',
     SEARCH_FACET_ENTRY: 'searchFacetEntry',

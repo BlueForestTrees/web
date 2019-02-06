@@ -6,12 +6,10 @@
                     <span class="font-weight-thin text-no-wrap display-1 ma-2">Choisir:</span>
                     <selection-card-front v-if="leftTree && leftTree.selection" :selection="leftTree.selection" :attribute="leftAttribute"/>
                     <v-flex v-else class="bold-font display-2 mx-3">A</v-flex>
-                    <span class="font-weight-thin text-no-wrap display-1 ma-2">Au lieu de:</span>
+                    <span class="font-weight-thin text-no-wrap display-1 mt-5">Au lieu de:</span>
                     <selection-card-front v-if="rightTree && rightTree.selection" :selection="rightTree.selection" :attribute="rightAttribute"/>
                     <v-flex v-else class="bold-font display-2 mx-3">B</v-flex>
-                </v-layout>
-                <v-layout column align-center my-5 class="align">
-                    <span class="font-weight-thin display-1  ma-2">C'est éviter l'équivalent de :</span>
+                    <span class="font-weight-thin display-1  mt-5">C'est éviter l'équivalent de :</span>
                     <selection-card-front v-if="equivTree && equivTree.selection" :selection="equivTree.selection" :attribute="equivAttribute"/>
                     <v-flex v-else class="bold-font display-2 mx-3">C</v-flex>
                     <v-layout align-center class="font-weight-thin" v-if="coef"><v-icon color="orange" large>warning</v-icon>Le résultat est négatif</v-layout>
@@ -155,7 +153,7 @@
 
     export default {
         name: "create-alt",
-        components: {TreeSelectionPicker, InfoSaver, DescriptionInput, PathChecker, AttributeFinder, TreeSelectionFinder, SelectionCardFront, Card},
+        components: {TreeSelectionPicker, InfoSaver, DescriptionInput, PathChecker, AttributeFinder, SelectionCardFront, Card},
         mixins: [InfoLoader],
         data: () => ({
             GO,

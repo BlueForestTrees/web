@@ -9,11 +9,11 @@
             </v-layout>
             <v-layout column align-center>
                 <v-layout column align-center justify-center my-5>
-                    <div class="bold-font align display-2 ma-4">Choisir</div>
+                    <div class="font-weight-thin text-no-wrap display-1">Choisir</div>
                     <selection-card-front v-if="info && info.leftSelection" :selection="info.leftSelection" :attribute="leftAttribute"/>
-                    <div class="bold-font align display-2 ma-4">au lieu de</div>
+                    <div class="font-weight-thin text-no-wrap display-1 mt-5">au lieu de</div>
                     <selection-card-front v-if="info && info.rightSelection" :selection="info.rightSelection" :attribute="rightAttribute"/>
-                    <div class="bold-font align display-2 ma-4">c'est éviter l'équivalent de</div>
+                    <div class="font-weight-thin text-no-wrap display-1 mt-5">c'est éviter l'équivalent de</div>
                     <selection-card-front v-if="info && info.equivSelection" :selection="info.equivSelection" :attribute="equivAttribute"/>
                 </v-layout>
             </v-layout>
