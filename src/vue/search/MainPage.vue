@@ -3,14 +3,12 @@
         <v-card class="elevation-4">
             <welcome-panel/>
             <v-tabs :value="tab" @change="setTab" centered slider-color="primary">
-                <v-tab href="#infos">Informations</v-tab>
+                <v-tab href="#infos">Messages</v-tab>
                 <v-tab href="#search">Produits</v-tab>
-                <v-tab href="#favoris">Favoris</v-tab>
             </v-tabs>
         </v-card>
         <my-infos v-if="tab==='infos'" :user="user" @select="goAny" class="mt-5"/>
         <search v-else-if="tab==='search'" @select="goAny" class="mt-5"/>
-        <my-selects v-else-if="tab==='favoris'" :user="user" @select="goAny"/>
     </v-flex>
 </template>
 
@@ -21,13 +19,12 @@
     import Do from "../../const/do"
 
     const Search = () => import(/* webpackChunkName: "MyBasket"*/ "../search/Search")
-    const MyProduct = () => import(/* webpackChunkName: "MyProduct"*/ "../home/MyProduct")
     const MySelects = () => import(/* webpackChunkName: "MySelects"*/ "../home/MySelects")
     const MyInfos = () => import(/* webpackChunkName: "MyInfos"*/ "../home/MyInfos")
 
     export default {
         name: "search-page",
-        components: {Search, MySelects, MyProduct, MyInfos, WelcomePanel},
+        components: {Search, MySelects, MyInfos, WelcomePanel},
         methods: {
             ...mapActions({goAny: On.GO_ANY}),
             ...mapMutations({setTab: Do.SET_NAV_MAIN_TAB})

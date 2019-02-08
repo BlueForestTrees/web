@@ -1,7 +1,6 @@
 <template>
     <v-container>
         <template v-if="user">
-            <v-card>
                 <v-list two-lines v-if="items.length">
                     <template v-for="(item,i) in items">
                         <v-list-tile :key="item._id" avatar @click="select(item)">
@@ -14,11 +13,10 @@
                     </template>
                 </v-list>
                 <v-card-text v-else-if="loaded" class="text-md-center">
-                    <p>Vous n'avez pas de favoris.</p>
-                    <p>Vous pouvez enregistrer comme favoris des produits depuis leur fiche.</p>
+                    <div>Aucun favoris enregistré</div>
+                    <div>Vous pouvez créer des favoris de produits en cliquant sur <v-icon color="blue">edit</v-icon> lorsque vous consultez un produit.</div>
                 </v-card-text>
                 <loader v-else/>
-            </v-card>
         </template>
 
         <v-container v-else>Connectez-vous pour voir vos sélections enregistrées.</v-container>

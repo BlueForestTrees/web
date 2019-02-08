@@ -78,6 +78,7 @@
                                 </v-list-tile-action>
                             </v-list-tile>
                         </v-list>
+                        <v-divider v-if="editing"/>
                     </v-layout>
                 </v-container>
                 <v-window v-model="idx">
@@ -107,7 +108,7 @@
     import Card from "../common/Card"
     import TreeCard from "../tree/TreeCard"
     import AttributeFinder from "../tree/AttributeFinder"
-    import {getAttributeByFragment, name, qtUnitName, qtFreq, attributeCoef} from "../../services/calculations"
+    import {getAttributeByFragment, name, qtUnitName, qtFreq, attributeCoef, createSelection} from "../../services/calculations"
     import On from "../../const/on"
     import {mapActions} from "vuex"
     import PathChecker from "./PathChecker"
@@ -209,6 +210,16 @@
             coef(c) {
                 if (c && c !== 1) {
                     this.applyCoefAll({tree: this.rightTree, coef: c})
+                }
+            }
+        },
+        created() {
+            if (this.$store.state.tree) {
+                if (this.$store.state.tree.selection) {
+                    this.selectProductA(this.$store.state.tree)
+                } else {
+                    const selection = createSelection(this.$store.state.tree)
+                    this.selectProductA({selection})
                 }
             }
         }

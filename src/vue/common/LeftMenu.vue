@@ -24,7 +24,7 @@
                     <v-icon color="primary">announcement</v-icon>
                 </v-list-tile-action>
                 <v-list-tile-content>
-                    <v-list-tile-title>Créer une Information</v-list-tile-title>
+                    <v-list-tile-title>Créer un message</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
 

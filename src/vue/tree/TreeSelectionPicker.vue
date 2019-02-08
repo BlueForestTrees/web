@@ -1,14 +1,10 @@
 <template>
     <span v-if="changeTree || !curTree">
-        <v-card>
             <v-tabs :value="tab" @change="setTab" centered slider-color="primary">
                 <v-tab href="#search">Recherche</v-tab>
-                <v-tab href="#mines">Vos produits</v-tab>
                 <v-tab href="#favoris">Favoris</v-tab>
             </v-tabs>
-        </v-card>
         <search v-if="tab==='search'" @select="selectTree" class="mt-5"/>
-        <my-product v-else-if="tab==='mines'" :user="user" @select="selectTree"/>
         <my-selects v-else-if="tab==='favoris'" :user="user" @select="selectTree"/>
     </span>
     <v-layout v-else align-center column>

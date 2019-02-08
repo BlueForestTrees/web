@@ -75,5 +75,6 @@ export default {
     messages: {title: null, description: null, hasMore: false, filter: {}, list: []},
     myMessages: [],
     maquettes,
-    xRequestId: null
+    xRequestId: null,
+    info:{}
 }

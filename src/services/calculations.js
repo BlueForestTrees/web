@@ -1,5 +1,6 @@
 import {map, bqtGToQtUnit, bestQuantity, unitCoef, changeUnit, grandeur, baseQt, find} from "unit-manip"
 import {entryKeyFromFragmentName} from "../const/fragments"
+import {selectionNameMaxLength} from "../const/validation"
 
 export const remove = (source, filter) => {
     const dest = []
@@ -232,3 +233,10 @@ export const getAttributeByFragment = (tree, {type, _id}) => tree[type] && find(
 export const getAttribute = (tree, {type, _id}) => find(tree[type], "_id", _id)
 
 export const needS = count => count > 1 ? 's' : ''
+
+export const createSelection = tree => ({
+    trunkId: tree._id,
+    quantity: tree.trunk.quantity,
+    name: tree.trunk.name.substr(0, selectionNameMaxLength)
+
+})

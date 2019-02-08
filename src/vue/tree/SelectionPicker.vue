@@ -32,6 +32,7 @@
     import UnitSelect from "../common/UnitSelect"
     import GrandeurSelect from "../common/GrandeurSelect"
     import {selectionNameMaxLength} from "../../const/validation"
+    import {createSelection} from "../../services/calculations"
 
     export default {
         name: 'selection-picker',
@@ -93,12 +94,13 @@
                 this.isRegulier = this.tree.selection.repeted
                 this.name = this.tree.selection.name || this.tree.trunk.name.substr(0, selectionNameMaxLength)
             } else {
-                let bqtG = this.tree.trunk.quantity
-                const qtUnit = bestQuantity(bqtGToQtUnit(bqtG))
-                this.qt = qtUnit.qt
+                const selection = createSelection(this.tree)
+                const qtUnit = bestQuantity(bqtGToQtUnit(selection.quantity))
+
+                this.name = selection.name
+                this.grandeur = getGrandeur(selection.quantity.g)
                 this.unit = unit(qtUnit.unit)
-                this.grandeur = getGrandeur(bqtG.g)
-                this.name = this.tree.trunk.name.substr(0, selectionNameMaxLength)
+                this.qt = qtUnit.qt
             }
         }
     }

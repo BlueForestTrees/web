@@ -117,6 +117,10 @@ a {
     width: 4em;
 }
 
+.megaphone {
+    background: url(/img/megaphone.svg) no-repeat center;
+}
+
 .planet {
     background: url(/img/planet.svg) no-repeat center;
 }
