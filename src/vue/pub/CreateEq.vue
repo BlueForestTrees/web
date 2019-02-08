@@ -3,7 +3,7 @@
 
         <v-card>
             <v-layout column align-center>
-                <v-layout :column="$vuetify.breakpoint.smAndDown" align-center justify-center my-5>
+                <v-layout :column="$vuetify.breakpoint.smAndDown" align-center justify-center ma-5>
                     <selection-card-front v-if="leftTree && leftTree.selection" :selection="leftTree.selection" :attribute="leftAttribute"/>
                     <v-flex v-else class="bold-font display-2">A</v-flex>
                     <div class="bold-font align display-2 ma-4">=</div>

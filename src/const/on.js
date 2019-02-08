@@ -100,6 +100,7 @@ export default {
     SEARCH_FACET_ENTRY: 'searchFacetEntry',
     SEARCH_IMPACT_ENTRY: 'searchImpactEntry',
     SEARCH_EQUIV: 'searchEquiv',
+    SEARCH_USERS: 'searchUsers',
     SELECT_CONSULT: 'selectConsult',
     SEND_MESSAGE: 'sendMessage',
     SHOW_DIALOG: 'showDialog',

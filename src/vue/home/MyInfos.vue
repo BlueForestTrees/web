@@ -1,19 +1,15 @@
 <template>
     <v-container>
 
-        <div class="mb-3">
-            <v-card>
-                <v-container>
-                    <v-layout :column="$vuetify.breakpoint.smAndDown" align-center>
-                        <v-text-field v-model="uterm" hide-details placeholder="Contenant le terme"/>
-                        <v-checkbox v-model="mines" label="Les miennes"/>
-                    </v-layout>
-                </v-container>
-            </v-card>
-        </div>
+        <v-layout row wrap justify-center align-center mx-5 xs-4 mb-1>
+            <search-text :value="search.name" @input="pickName" class="not-too-large"/>
+        </v-layout>
 
-        <transition-group name="slide-fade">
-            <v-card v-if="items && items.length > 0" key="1">
+        <v-layout :column="$vuetify.breakpoint.xsOnly" align-center justify-center>
+            <owner-picker @input="pickOwner" :value="search.owner"/>
+        </v-layout>
+
+            <v-card v-if="items && items.length > 0" key="1" class="mt-3">
                 <v-list two-line>
                     <template v-for="(info, i) in items">
                         <v-list-tile @click="$emit('select',info)" avatar :key="info._id">
@@ -23,36 +19,37 @@
                     </template>
                 </v-list>
             </v-card>
-            <div v-else-if="items" class="font-weight-thin bold-font" key="2">Pas de résultats</div>
+            <div v-else-if="items" class="font-weight-thin bold-font mt-5" key="2">Pas de résultats</div>
             <loader v-else-if="loading" class="mt-5" key="3"></loader>
-        </transition-group>
 
     </v-container>
 </template>
 
 <script>
     import On from "../../const/on"
-    import {mapActions} from "vuex"
+    import {mapActions, mapState} from "vuex"
     import Info from "../pub/Info"
     import Loader from "../loader/Loader"
     import InfoDense from "./InfoDense"
     import debounce from 'lodash.debounce'
     import TransitionExpand from "../common/TransitionExpand"
+    import SearchText from "../search/SearchText"
+    import OwnerPicker from "../search/OwnerPicker"
 
     export default {
         name: "my-infos",
-        components: {TransitionExpand, InfoDense, Loader, Info},
+        components: {OwnerPicker, SearchText, TransitionExpand, InfoDense, Loader, Info},
         props: ['user'],
         data: () => ({
             items: [],
             loading: false,
-            mines: true,
             term: ""
         }),
         mounted() {
             this.refresh()
         },
         computed: {
+            ...mapState({search: s => s.search}),
             uterm: {
                 get() {
                     return this.term
@@ -63,8 +60,8 @@
             },
             query() {
                 return {
-                    oid: (this.mines && this.user && this.user._id) || null,
-                    term: this.term || null
+                    oid: (this.search.owner && this.search.owner._id) || null,
+                    term: this.search.name || null
                 }
             }
         },
@@ -77,7 +74,13 @@
                 this.loading = true
                 this.items = await this.searchInfos(this.query)
                 this.loading = false
-            }
+            },
+            pickName(name) {
+                this.search.name = name
+            },
+            pickOwner(owner) {
+                this.search.owner = owner
+            },
         },
         watch: {
             query() {

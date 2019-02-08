@@ -80,7 +80,6 @@ export default {
     [On.UPDATE_TREE]: ({dispatch}, {tree, bqt = 0, fragments = allFragments}) => {
         if (bqt === 0) {
             bqt = treeBqt(tree)
-            console.log("update @bqt=", bqt)
         }
         tree.promises = {}
         for (let i = 0; i < fragments.length; i++) {

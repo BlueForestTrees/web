@@ -31,7 +31,6 @@ export default {
         }),
 
 
-
     [On.CHECK_AUTH]: ({state, commit}) => {
         if (!state.user) {
             commit(Do.SHOW_DIALOG, {dialog: Dial.CONNECT_TO_CONTINUE, data: {message: "Vous devez être connecté pour continuer."}})
@@ -49,7 +48,9 @@ export default {
         if (!state.user && state.user._id !== tree._id) {
             throw {code: "bf403"}
         }
-    }
+    },
+
+    [On.SEARCH_USERS]: ({}, {term}) => api.searchUsers({term})
 }
 
 const saveToken = (commit, token) => {

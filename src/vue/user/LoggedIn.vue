@@ -3,19 +3,21 @@
         <v-avatar slot="activator" size="32px" :style="{backgroundColor:user.color}" class="ml-2">
             <span :style="{color:overcolor(user.color)}">{{initiales(user.fullname)}}</span>
         </v-avatar>
-        <v-list two-line>
+        <v-list>
             <v-list-tile @click="">
                 <v-list-tile-avatar size="64px" style="padding-right: 1em">
-                    <v-avatar slot="activator" size="64px" :style="{backgroundColor:user.color}"><h1
-                            :style="{color:overcolor(user.color)}">{{initiales(user.fullname)}}</h1></v-avatar>
+                    <v-avatar slot="activator" size="64px" :style="{backgroundColor:user.color}">
+                        <h1 :style="{color:overcolor(user.color)}">{{initiales(user.fullname)}}</h1>
+                    </v-avatar>
                 </v-list-tile-avatar>
                 <v-list-tile-content>
                     <v-list-tile-title>{{user.fullname}}</v-list-tile-title>
                     <v-list-tile-sub-title>{{user.mail}}</v-list-tile-sub-title>
                 </v-list-tile-content>
             </v-list-tile>
-            <v-list-tile>
-                <v-btn outline block class="elevation-0" @click="logout" v-if="user">Déconnexion</v-btn>
+            <v-list-tile @click="logout">
+                <v-list-tile-avatar><v-icon>power_off</v-icon></v-list-tile-avatar>
+                <v-list-tile-content>Déconnexion</v-list-tile-content>
             </v-list-tile>
         </v-list>
     </v-menu>

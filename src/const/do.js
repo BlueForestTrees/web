@@ -18,6 +18,8 @@ export default {
     RIGHT_MENU_VISIBLE: 'rightMenuVisible',
     SET_NAV_MAIN_TAB: "setNavMainTab",
     SET_NAV_TREE_PICKER_TAB: "setNavTreePickerTab",
+    SET_NAV_SEARCH_CAT_OPENED: "setNavTreeCatTab",
+    SET_NAV_SEARCH_OWNER_OPENED: "setNavTreeCatTab",
     OPEN_TREE: 'openTree',
     SET_CURRENT_TREE_SUBPAGE: "setCurrentTreeSubpage",
     SET_TREE_MODEADD: 'setTreeModeAdd',

@@ -3,14 +3,14 @@
         <template v-if="user">
             <v-card>
                 <v-list two-lines v-if="items.length">
-                    <template v-for="item in items">
+                    <template v-for="(item,i) in items">
                         <v-list-tile :key="item._id" avatar @click="select(item)">
                             <v-list-tile-content>
                                 <v-list-tile-title>{{ name(item) }}</v-list-tile-title>
                                 <v-list-tile-sub-title>quantité: {{ qtFreqOrUnit(item) }}</v-list-tile-sub-title>
                             </v-list-tile-content>
                         </v-list-tile>
-                        <v-divider/>
+                        <v-divider v-if="i+1 < items.length"/>
                     </template>
                 </v-list>
                 <v-card-text v-else-if="loaded" class="text-md-center">

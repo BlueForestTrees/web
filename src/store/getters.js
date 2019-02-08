@@ -18,6 +18,10 @@ export default {
             filter.term = state.search.name
             changes = true
         }
+        if (state.search.owner) {
+            filter.oid = state.search.owner._id
+            changes = true
+        }
         return changes ? filter : null
     },
 }

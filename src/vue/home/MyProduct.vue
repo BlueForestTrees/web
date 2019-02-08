@@ -3,7 +3,7 @@
         <v-container v-if="!user">Connectez-vous pour lister vos produits et services.</v-container>
         <v-card v-else>
             <v-layout column align-center>
-                <v-text-field label="Filtrer par nom" autofocus :value="term" @input="setTerm" clearable class="not-too-half"/>
+                <v-text-field placeholder="Recherche" autofocus :value="term" @input="setTerm" clearable class="not-too-half"/>
             </v-layout>
 
             <v-divider/>

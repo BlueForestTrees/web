@@ -1,6 +1,7 @@
 <template>
     <router-link :to="{name:GO.TREE, params:{_id:selection.trunkId, bqt:selectionBqt(selection)}}">
-        <div class="font-weight-thin display-1">{{qtUnit(selection)}} {{name(selection)}}</div>
+        <div class="align font-weight-medium display-1">{{qtUnit(selection)}}</div>
+        <div class="align font-weight-thin display-1">{{name(selection)}}</div>
     </router-link>
 </template>
 
@@ -15,7 +16,7 @@
         props: ['selection'],
         data: () => ({GO}),
         methods: {
-            qtUnitName, qtUnit, name, selectionTotalQt: selectionBqt
+            qtUnitName, qtUnit, name, selectionBqt
         }
     }
 </script>

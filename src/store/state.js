@@ -41,13 +41,13 @@ export default {
     version: {web: ENV.VERSION},
     dispo: {grandeurs: false},
     selection: [],
-    catSelection: [],
+    "menu.selection": [],
     maxSelectionSize: null,
     token: null,
     user: null,
     userStatus: null,
     expire: null,
-    search: {name: null, cats: []},
+    search: {name: null, cats: [], owner: null},
     basket: {},
     ['basket' + IMPACT_TANK]: {},
     ['basket' + FACETS]: {},
@@ -56,6 +56,7 @@ export default {
     dialogs: dialogs(),
     nav: {
         main: {tab: null},
+        search: {cat: {opened: false}, owner: {opened: false}},
         leftMenuVisible: false, rightMenuVisible: false, dark: false, detailsDialog: false,
         tree: {
             currentSubPage: FACETS, modeAdd: false, cardFlipped: false,

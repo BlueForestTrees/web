@@ -84,7 +84,7 @@
     import GrandeurSelect from "../common/GrandeurSelect"
     import SearchComp from "../search/SearchComp"
     import {createStringObjectId, color, name, quantity} from "../../services/calculations"
-    import SearchCat from "../search/SearchCat"
+    import SearchCat from "../search/CatPicker"
     import BasketComp from "../basket/BasketComp"
     import Tree from "../tree/Tree"
     import TreeHead from "../tree/TreeHead"

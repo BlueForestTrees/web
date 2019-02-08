@@ -3,16 +3,14 @@
         <v-card class="elevation-4">
             <welcome-panel/>
             <v-tabs :value="tab" @change="setTab" centered slider-color="primary">
-                <v-tab href="#search">Recherche</v-tab>
-                <v-tab href="#mines">Vos produits</v-tab>
-                <v-tab href="#favoris">Favoris</v-tab>
                 <v-tab href="#infos">Informations</v-tab>
+                <v-tab href="#search">Produits</v-tab>
+                <v-tab href="#favoris">Favoris</v-tab>
             </v-tabs>
         </v-card>
-        <search v-if="tab==='search'" @select="goAny" class="mt-5"/>
-        <my-product v-else-if="tab==='mines'" :user="user" @select="goAny"/>
+        <my-infos v-if="tab==='infos'" :user="user" @select="goAny" class="mt-5"/>
+        <search v-else-if="tab==='search'" @select="goAny" class="mt-5"/>
         <my-selects v-else-if="tab==='favoris'" :user="user" @select="goAny"/>
-        <my-infos v-else-if="tab==='infos'" :user="user" @select="goAny"/>
     </v-flex>
 </template>
 

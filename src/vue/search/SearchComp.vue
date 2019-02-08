@@ -1,6 +1,6 @@
 <template>
     <v-flex v-if="active">
-        <v-list two-lines>
+        <v-list two-lines v-if="items && items.length">
             <template v-for="item in items">
                 <v-list-tile :key="item._id" avatar @click="select(item)">
                     <v-list-tile-content>
@@ -13,8 +13,8 @@
         </v-list>
         <infinite-loading v-if="active" ref="iloading" @infinite="loadResults" :distance="500" style="padding-bottom: 3em">
             <span slot="no-more">{{items.length}} résultat{{items.length > 1 ? 's':''}}</span>
-            <span slot="no-results"><slot name="no-results">Pas de résultats. <br><v-icon color="orange" small>new_releases</v-icon>Voter pour: <a>Enregistrer cette recherche comme manquante.</a></slot></span>
-            <span slot="spinner"><loader/></span>
+            <span slot="no-results"><slot name="no-results"><div class="font-weight-thin bold-font mt-5">Pas de résultats</div></slot></span>
+            <span slot="spinner"><loader class="mt-5"/></span>
         </infinite-loading>
     </v-flex>
 </template>
@@ -66,8 +66,8 @@
         },
         methods: {
             name, qtUnit,
-            select(item){
-                this.$emit('select',item)
+            select(item) {
+                this.$emit('select', item)
             },
             dispatchSearch: function (query) {
                 return this.$store.dispatch(this.type, query)

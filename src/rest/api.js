@@ -31,6 +31,7 @@ export default {
     searchImpactEntry: namepart => get(`/api/impactEntry${paramsOf({q: namepart})}`),
 
     searchTrunk: ({g, term, type, aidx, ps, cat, oid}) => get(`/api/tree/trunks${paramsOf({g, q: term, t: type, aidx, ps, ...cat, oid})}`),
+    searchUsers: ({term}) => get(`/api/user/term/${term}`),
 
     getUser: _id => cached(get, `/api/user/${_id}`, userCache),
     getTrunk: _id => get(`/api/tree/trunk/${_id}`),

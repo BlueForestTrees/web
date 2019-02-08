@@ -1,13 +1,10 @@
 import {mapState} from "vuex"
 
 export default {
-    props: {
-        map: {type: String, default: "selection"}
-    },
     computed: {
         ...mapState({
             selection(state) {
-                return state[this.map]
+                return state[this.stateKey || "selection"]
             }
         }),
         selectionCount() {
