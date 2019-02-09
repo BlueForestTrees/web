@@ -1,8 +1,8 @@
 <template>
     <v-container>
 
-        <v-layout row wrap justify-center align-center mx-5 xs-4 mb-1>
-            <v-list-tile-avatar class="megaphone logo"></v-list-tile-avatar>
+        <v-layout row wrap justify-center align-center xs-4 mb-1>
+            <v-list-tile-avatar class="megaphone logo my-3"></v-list-tile-avatar>
             <search-text :value="search.name" @input="pickName" class="not-too-large"/>
         </v-layout>
 

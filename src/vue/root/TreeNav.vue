@@ -19,12 +19,13 @@
         static: () => ({
             options: {
                 interaction: {
-                    selectConnectedEdges: false
+                    selectConnectedEdges: false,
+                    zoomView: false
                 },
                 edges: {
                     arrows: {
                         to: {
-                            enabled: true,
+                            enabled: false,
                             type: "arrow",
                         }
                     },
@@ -35,13 +36,15 @@
                 layout: {
                     hierarchical: {
                         enabled: true,
-                        direction: 'LR',
+                        levelSeparation: 130,
+                        direction: 'DU',
                         sortMethod: 'directed'
                     }
                 },
                 nodes: {
                     shape: "dot",
                     size: 20,
+                    widthConstraint: 100,
                     color: {
                         border: "#444444",
                         background: "white",

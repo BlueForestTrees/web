@@ -1,10 +1,10 @@
 <template>
-    <v-flex key="search-page" grid-list-md text-xs-center>
+    <v-flex key="search-page">
         <v-card class="elevation-4">
             <welcome-panel/>
             <v-tabs :value="tab" @change="setTab" centered slider-color="primary">
-                <v-tab href="#infos">Messages</v-tab>
-                <v-tab href="#search">Produits</v-tab>
+                <v-tab href="#infos"><v-list-tile-avatar class="megaphone logo"/>Messages</v-tab>
+                <v-tab href="#search"><v-list-tile-avatar class="scope-tree logo"/>Produits</v-tab>
             </v-tabs>
         </v-card>
         <my-infos v-if="tab==='infos'" :user="user" @select="goAny" class="mt-5"/>

@@ -1,5 +1,5 @@
 <template>
-    <div v-if="tree">
+    <div v-if="tree" style="min-height: 1200px" class="mb-5">
         <tree-headpage :tree="tree" :value="currentSubPage" @input="changeSubPage"/>
 
         <v-container class="enought-high" v-if="tree.trunk">

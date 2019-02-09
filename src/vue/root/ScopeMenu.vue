@@ -5,22 +5,21 @@
         </v-btn>
         <v-card>
             <v-btn flat icon :input-value="i === value" @click="emitInput(i)" v-for="(icon, i) in scope" :key="i">
-                <img :src="icon" class="logo" :style="{opacity: i === value ? 1 : 0.5}"/>
+                <img :src="icon" class="logo" :style="{opacity: i === value ? 1 : 0.65}"/>
             </v-btn>
         </v-card>
     </v-menu>
     <div v-else>
         <v-btn flat icon :input-value="i === value" @click="emitInput(i)" v-for="(icon, i) in scope" :key="i">
-            <img :src="icon" class="logo" :style="{opacity: i === value ? 1 : 0.5}"/>
+            <img :src="icon" class="logo" :style="{opacity: i === value ? 1 : 0.65}"/>
         </v-btn>
     </div>
 </template>
 <script>
-    import {rootScope} from "../../const/img"
 
     export default {
         name: "scope-menu",
-        props: {value: {type: Number}, dense: {type: Boolean}, scope: {type: Array, default: () => rootScope}},
+        props: {value: {type: Number}, dense: {type: Boolean}, scope: {type: Array}},
         computed: {
             currentIcon() {
                 return this.scope[this.value]

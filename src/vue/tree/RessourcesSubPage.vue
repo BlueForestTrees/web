@@ -1,18 +1,21 @@
 <template>
     <ressource-adder v-if="modeAdd" :tree="tree" @close="$emit('close')"/>
     <v-card v-else>
-        <subpage-title :title="title">
-            <scope-menu :value="idx" @input="setIdx" :dense="$vuetify.breakpoint.xsOnly"/>
-        </subpage-title>
-        <v-divider/>
+        <subpage-title :title="title"/>
+
         <transition name="slide-fade" mode="out-in">
-            <fragment-list v-if="idx === 0" :tree="tree" :fragment="ROOTS" none="Pas encore d'informations sur les ressources" key="0"></fragment-list>
-            <fragment-list v-else-if="idx === 1" :tree="tree" :fragment="TANK" none="Pas encore d'informations sur les matières premières" key="1"></fragment-list>
-            <tree-nav v-else-if="idx === 2" :tree="tree" key="2"/>
+            <tree-nav v-if="idx === 0" :tree="tree" key="2"/>
+            <fragment-list v-if="idx === 1" :tree="tree" :fragment="ROOTS" none="Pas encore d'informations sur les ressources" key="0"></fragment-list>
+            <fragment-list v-else-if="idx === 2" :tree="tree" :fragment="TANK" none="Pas encore d'informations sur les matières premières" key="1"></fragment-list>
             <fragment-list v-else-if="idx === 3" :tree="tree" :fragment="BRANCHES" none="Pas encore d'informations sur les usages" key="4"></fragment-list>
         </transition>
+
         <v-divider/>
-        <open-message :section="section"/>
+        <v-layout>
+            <v-spacer/>
+            <scope-menu :value="idx" @input="setIdx" :dense="$vuetify.breakpoint.xsOnly" :scope="rootScope"/>
+            <open-message :section="section" dense/>
+        </v-layout>
     </v-card>
 </template>
 
@@ -28,6 +31,8 @@
     import {BRANCHES, ROOTS, TANK} from "../../const/fragments"
     import Do from "../../const/do"
     import SubpageTitle from "./SubpageTitle"
+    import {rootScope} from "../../const/img"
+    import {name} from "../../services/calculations"
 
     const TreeNav = () => import(/* webpackChunkName: "RootsNav"*/"../root/TreeNav")
     const RessourceAdder = () => import(/* webpackChunkName: "RessourceAdder"*/"../root/RessourceAdder")
@@ -50,7 +55,7 @@
         },
         mixins: [goTree],
         data: () => ({
-            ROOTS, TANK, BRANCHES
+            ROOTS, TANK, BRANCHES, rootScope
         }),
         computed: {
             ...mapState({
@@ -58,6 +63,7 @@
             }),
             section: function () {
                 return {
+                    title: `Discussion sur les ressources de \"${name(this.tree)}\"`,
                     filter: {
                         type: 'trunk-root',
                         topicId: this.tree._id
@@ -67,11 +73,11 @@
             title() {
                 switch (this.idx) {
                     case 0:
-                        return "Ressources"
-                    case 1:
-                        return "Matières premières"
-                    case 2:
                         return "Carte des ressources"
+                    case 1:
+                        return "Ressources"
+                    case 2:
+                        return "Matières premières"
                     case 3:
                         return "Usages"
                 }

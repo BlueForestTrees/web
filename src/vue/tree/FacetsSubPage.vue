@@ -2,9 +2,14 @@
     <facet-adder v-if="modeAdd" :tree="tree" @close="$emit('close')"/>
     <v-card v-else>
         <subpage-title title="Propriétés"/>
-        <v-divider/>
+
         <fragment-list :tree="tree" :fragment="FACETS" none="Pas encore d'informations sur les propriétés"></fragment-list>
-        <open-message :section="section"/>
+
+        <v-divider/>
+        <v-layout>
+            <v-spacer/>
+            <open-message :section="section" dense/>
+        </v-layout>
     </v-card>
 </template>
 
@@ -18,6 +23,7 @@
     import {FACETS} from "../../const/fragments"
     import FragmentList from "./FragmentList"
     import SubpageTitle from "./SubpageTitle"
+    import {name} from "../../services/calculations"
 
     export default {
         name: "facets-subpage",
@@ -39,6 +45,7 @@
             },
             section() {
                 return {
+                    title: `Discussion sur les propriétés de \"${name(this.tree)}\"`,
                     filter: {
                         type: 'trunk-facet',
                         topicId: this.tree._id

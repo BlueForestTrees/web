@@ -1,7 +1,7 @@
 <template>
     <card>
         <v-toolbar class="elevation-0">
-            <v-list-tile-avatar class="megaphone logo"></v-list-tile-avatar>
+            <v-list-tile-avatar class="megaphone logo"/>
             <v-toolbar-title>Créer un message</v-toolbar-title>
         </v-toolbar>
 

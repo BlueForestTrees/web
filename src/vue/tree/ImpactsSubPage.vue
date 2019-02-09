@@ -1,17 +1,19 @@
 <template>
     <impact-adder v-if="modeAdd" :tree="tree" @close="$emit('close')"/>
     <v-card v-else>
-        <subpage-title title="Impacts sur l'environnement">
-            <scope-menu :value="idx" @input="setIdx" :dense="$vuetify.breakpoint.xsOnly" :scope="impactScope"/>
-        </subpage-title>
-        <v-divider/>
+        <subpage-title title="Impacts sur l'environnement"/>
 
         <transition name="slide-fade" mode="out-in">
-            <fragment-list v-if="idx === 0" :tree="tree" :fragment="IMPACTS" none="Pas encore d'informations sur les impacts" key="0"></fragment-list>
+            <fragment-list v-if="idx === 0" :tree="tree" :fragment="IMPACTS" none="Pas encore d'informations sur les impacts locaux" key="0"></fragment-list>
             <fragment-list v-else-if="idx === 1" :tree="tree" :fragment="IMPACT_TANK" none="Pas encore d'informations sur les impacts globaux" key="1"></fragment-list>
         </transition>
 
-        <open-message :section="section"/>
+        <v-divider/>
+        <v-layout>
+            <v-spacer/>
+            <scope-menu :value="idx" @input="setIdx" :dense="$vuetify.breakpoint.xsOnly" :scope="impactScope"/>
+            <open-message :section="section" dense/>
+        </v-layout>
     </v-card>
 </template>
 
@@ -27,6 +29,7 @@
     import {impactScope} from "../../const/img"
     import Do from "../../const/do"
     import SubpageTitle from "./SubpageTitle"
+    import {name} from "../../services/calculations"
 
     const FragmentList = () => import(/* webpackChunkName: "FragmentList"*/"./FragmentList")
 
@@ -53,6 +56,7 @@
             },
             section() {
                 return {
+                    title: `Discussion sur les impacts de \"${name(this.tree)}\"`,
                     filter: {
                         type: 'impact.trunk',
                         topicId: this.tree._id

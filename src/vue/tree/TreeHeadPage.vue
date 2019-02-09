@@ -10,6 +10,7 @@
                 </v-layout>
             </tree-card>
             <description :tree="tree" class="my-5"/>
+            <v-divider/>
             <fragment-select :value="value" @input="emitInput"/>
         </v-layout>
     </v-card>

@@ -133,6 +133,14 @@ a {
     background: url(/img/facet.svg) no-repeat center;
 }
 
+.game {
+    background: url(/img/manette.svg) no-repeat center;
+}
+
+.balance {
+    background: url(/img/balance.svg) no-repeat center;
+}
+
 .enough-high {
     min-height: 50em
 }

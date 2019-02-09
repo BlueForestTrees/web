@@ -2,6 +2,10 @@
     <v-flex key="equiv">
 
         <v-layout column align-center>
+            <v-toolbar class="elevation-0" color="primary" dark>
+                <v-list-tile-avatar class="game logo"></v-list-tile-avatar>
+                <v-toolbar-title>Jouer avec "{{name(tree)}}"</v-toolbar-title>
+            </v-toolbar>
             <v-layout :column="$vuetify.breakpoint.xsOnly">
                 <v-card style="min-width: 320px" class="ma-3 pa-3">
                     <v-flex v-if="tree">
@@ -16,9 +20,9 @@
                         </v-layout>
                     </v-flex>
                     <loader v-else/>
-                    <v-btn :disabled="!canAnswer" color="primary" @click="playRight" style="position: absolute; bottom: 0px; right: 0px">moi</v-btn>
+                    <v-btn :disabled="!canAnswer" small color="primary" @click="playRight" style="position: absolute; bottom: 0px; right: 0px">moi</v-btn>
                 </v-card>
-                <v-card style="min-width: 320px" class="ma-3 pa-3">
+                <v-card style="min-width: 320px; min-height:20em" class="ma-3 pa-3">
                     <v-flex v-if="other">
                         <v-layout column align-center>
                             <v-flex @click="goTree(other)">
@@ -29,11 +33,10 @@
                         <v-layout column align-center>
                             <h3 v-if="state === 'answered' && filterRight">({{qtUnitName(filterRight)}})</h3>
                         </v-layout>
-                        <v-btn :disabled="!canAnswer" color="primary" @click="playRight" style="position: absolute; bottom: 0px; right: 0px">moi</v-btn>
+                        <v-btn :disabled="!canAnswer" small color="primary" @click="playRight" style="position: absolute; bottom: 0px; right: 0px" class="px-0">moi</v-btn>
                     </v-flex>
-                    <v-layout v-else column align-center>
-                        <v-spacer></v-spacer>
-                        <loader></loader>
+                    <v-layout v-else column align-center justify-center class="fill-height">
+                        <loader style="position:relative;top:8em"/>
                     </v-layout>
                 </v-card>
             </v-layout>

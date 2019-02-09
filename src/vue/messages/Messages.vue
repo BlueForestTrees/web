@@ -7,7 +7,7 @@
             </v-btn>
             <v-layout align-center pa-2>
                 <span style="margin-left:1em;margin-right:0.5em">
-                    <v-icon color="primary">chat_bubble</v-icon>
+                    <v-icon color="primary">message</v-icon>
                 </span>
                 <span class="subheading font-weight-thin">{{messages.title}}</span>
             </v-layout>
