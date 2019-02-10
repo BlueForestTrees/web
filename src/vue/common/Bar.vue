@@ -104,8 +104,8 @@
                 this.dispatchGoQuiDeuxFoisPlus({
                     _id: this.tree._id,
                     bqt: this.tree.trunk.quantity.bqt,
-                    s_id: e._id,
-                    sbqt: e.trunk ? e.trunk.quantity.bqt : e.quantity.bqt
+                    fid: e[`${e.type}Id`],
+                    f: e.type
                 })
             },
             createPub(selection) {

@@ -1,9 +1,8 @@
-import {del, get, arrayOf, post, put, paramsOf, postForm, upload} from './rest'
+import {del, get, post, put, paramsOf, upload} from './rest'
 import {X_ACCESS_TOKEN} from "../const/headers"
 import cache from "../services/cache"
 
 const categoriesCache = cache({maxLength: 30})
-const searchTrunkCache = cache({maxLength: 5})
 const userCache = cache({maxLength: 200})
 
 const cached = async (method, uri, cache) => cache.get(uri) || cache.put(uri, await get(uri))
@@ -23,9 +22,9 @@ export default {
     createSelection: selection => post(`/api/selection`, selection),
     updateSelection: selection => put(`/api/selection`, selection),
 
-    searchByFacet: ({bqt, _id}) => get(`/api/facet/equiv/${bqt}/${_id}`),
-    searchByImpact: ({bqt, _id}) => get(`/api/impact/equiv/${bqt}/${_id}`),
-    searchByRoot: ({bqt, _id}) => get(`/api/tree/root/equiv/${bqt}/${_id}`),
+    searchByFacet: ({bqt, _id, limit = 15}) => get(`/api/facet/equiv/${bqt}/${_id}/${limit}`),
+    searchByImpact: ({bqt, _id, limit = 15}) => get(`/api/impact/equiv/${bqt}/${_id}/${limit}`),
+    searchByRoot: ({bqt, _id, limit = 15}) => get(`/api/tree/root/equiv/${bqt}/${_id}/${limit}`),
 
     searchFacetEntry: namepart => get(`/api/facetEntry${paramsOf({q: namepart})}`),
     searchImpactEntry: namepart => get(`/api/impactEntry${paramsOf({q: namepart})}`),

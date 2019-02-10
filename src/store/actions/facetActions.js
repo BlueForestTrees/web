@@ -7,7 +7,7 @@ import {FACETS} from "../../const/fragments"
 
 export default {
 
-    [On.LOAD_FACETS]: ({commit}, {_id, bqt}) => api.getFacets(_id)
+    [On.LOAD_FACET]: ({commit}, {_id, bqt}) => api.getFacets(_id)
         .then(facets => applyAspectCoef(bqt, facets)),
 
     [On.DELETE_FACETS]:

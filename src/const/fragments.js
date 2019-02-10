@@ -1,5 +1,5 @@
 export const IMPACT_TANK = "impactsTank"
-export const FACETS = "facets"
+export const FACETS = "facet"
 export const TANK = "tank"
 export const OWNER = "owner"
 export const IMPACTS = "impacts"

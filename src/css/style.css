@@ -109,6 +109,7 @@ a {
 }
 
 .logo {
+    width: 2.5em;
     height: 2.5em
 }
 
@@ -144,6 +145,7 @@ a {
 .enough-high {
     min-height: 50em
 }
+
 .enough-high-small {
     min-height: 20em
 }
@@ -310,7 +312,6 @@ a {
 .dragClass {
     opacity: 1;
 }
-
 
 
 .slide-bottom-enter-active {

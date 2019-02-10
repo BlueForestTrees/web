@@ -6,77 +6,51 @@
                 <v-list-tile-avatar class="game logo"></v-list-tile-avatar>
                 <v-toolbar-title>Jouer avec "{{name(tree)}}"</v-toolbar-title>
             </v-toolbar>
+            <v-layout row justify-center align-center my-3>
+                <template v-for="n in nbReponses">
+                    <v-icon x-large v-if="reponses[n-1] !== undefined" :color="reponses[n-1] ? 'green' : 'red'">check_circle</v-icon>
+                    <v-icon v-else x-large>panorama_fish_eye</v-icon>
+                </template>
+            </v-layout>
+
             <v-layout :column="$vuetify.breakpoint.xsOnly">
-                <v-card style="min-width: 320px" class="ma-3 pa-3">
-                    <v-flex v-if="tree">
-                        <v-layout column align-center>
-                            <v-flex @click="goTree(tree)">
-                                <photo :trunk="tree.trunk" size="200"/>
-                            </v-flex>
-                        </v-layout>
-                        <qt-unit-name :tree="tree"></qt-unit-name>
-                        <v-layout column align-center>
-                            <span v-if="filter">({{qtUnitName(filter)}})</span>
-                        </v-layout>
-                    </v-flex>
-                    <loader v-else/>
-                    <v-btn :disabled="!canAnswer" small color="primary" @click="playRight" style="position: absolute; bottom: 0px; right: 0px">moi</v-btn>
-                </v-card>
-                <v-card style="min-width: 320px; min-height:20em" class="ma-3 pa-3">
-                    <v-flex v-if="other">
-                        <v-layout column align-center>
-                            <v-flex @click="goTree(other)">
-                                <photo :trunk="other.trunk" size="200"/>
-                            </v-flex>
-                        </v-layout>
-                        <qt-unit-name v-if="other" :tree="other"></qt-unit-name>
-                        <v-layout column align-center>
-                            <h3 v-if="state === 'answered' && filterRight">({{qtUnitName(filterRight)}})</h3>
-                        </v-layout>
-                        <v-btn :disabled="!canAnswer" small color="primary" @click="playRight" style="position: absolute; bottom: 0px; right: 0px" class="px-0">moi</v-btn>
-                    </v-flex>
-                    <v-layout v-else column align-center justify-center class="fill-height">
-                        <loader style="position:relative;top:8em"/>
-                    </v-layout>
-                </v-card>
+
+                <choix-produit :tree="tree" :fragment="leftFragment" showFragment
+                               @select="playLeft" :can-answer="canAnswer"/>
+                <choix-produit :tree="right" :fragment="rightFragment" :showFragment="state === 'answered'"
+                               @select="playRight" :can-answer="canAnswer"/>
+
             </v-layout>
         </v-layout>
 
-        <v-layout column wrap justify-center align-center class="ma-4">
+        <v-layout v-if="state === 'playing'" column wrap justify-center align-center class="ma-4">
             <h2 class="font-weight-thin">
-                <v-layout row align v-if="filter">
-                    <span>Quel est celui qui a <b>plus de {{ name(filter)}}</b>?</span>
+                <v-layout v-if="leftFragment" row align-center>
+                    <span>Quel est celui qui a <b>plus de {{ name(leftFragment)}}</b>?</span>
+                    <v-btn :disabled="!canAnswer" color="grey" flat small @click="passQuestion">je passe
+                        <v-icon>play_arrow</v-icon>
+                    </v-btn>
                 </v-layout>
                 <loader v-else/>
             </h2>
         </v-layout>
 
-        <v-layout row mt-5 v-if="canAnswer">
-            <v-btn  block flat @click="passQuestion">je passe</v-btn>
-        </v-layout>
-
-        <v-layout row align-center justify-center v-if="!finished && state === 'answered' && lastWasGood !== undefined" mb-4>
+        <v-layout v-if="state === 'answered' && lastWasGood !== undefined" row align-end justify-center mb-4>
             <h1 v-if="lastWasGood" class="font-weight-thin display-3">Bravo!!</h1>
-            <h1 v-else class="font-weight-thin  display-3">Non, dommage!!!</h1>
-            <v-btn color="primary" @click="refresh" icon><v-icon large>play_arrow</v-icon></v-btn>
-        </v-layout>
-
-        <v-layout row justify-center align-center>
-            <span v-if="!finished">Réponses:</span>
-            <template v-for="n in nbReponses">
-                <v-icon x-large v-if="reponses[n-1] !== undefined" :color="reponses[n-1] ? 'green' : 'red'">check_circle</v-icon>
-                <v-icon v-else x-large>panorama_fish_eye</v-icon>
-            </template>
+            <h1 v-else class="font-weight-thin  display-3">Perdu...</h1>
+            <v-btn v-if="!finished" color="primary" @click="nextRight" flat>suivant
+                <v-icon>play_arrow</v-icon>
+            </v-btn>
         </v-layout>
 
         <v-layout v-if="finished" align-center justify-center column>
-            <h1 class="font-weight-thin">score final: {{bonnesReponses}}/{{nbReponses}}</h1>
-            <h1 v-if="bonnesReponses === nbReponses" class="font-weight-thin">Score parfait! <b>Félicitations!!</b> Vous remportez la médaille "initié au {{name(filter)}}" BlueForest :)</h1>
-            <h1 v-else-if="bonnesReponses / nbReponses> 0.7" class="font-weight-thin">Vraiment bon! <b>Bravo!!</b></h1>
-            <h1 v-else-if="bonnesReponses / nbReponses > 0.5" class="font-weight-thin">De bonnes connaissances! <b>Poursuivez!!</b></h1>
-            <h1 v-else-if="bonnesReponses / nbReponses > 0.3" class="font-weight-thin">Oups! <b>Réessayons.</b></h1>
-            <h1 v-else class="font-weight-thin">Le but du jeu était de trouver là où il y avait plus de {{name(filter)}} :(</h1>
-            <v-btn @click="replay">rejouer</v-btn>
+            <h1 v-if="bonnesReponses !== nbReponses" class="font-weight-thin">Terminé! votre score: {{bonnesReponses}}/{{nbReponses}}</h1>
+            <h1 v-if="bonnesReponses === nbReponses" class="font-weight-thin align"><img src="/img/cup.svg" class="logo"/>Score parfait! <b>Félicitations!!</b><br> Vous remportez la coupe "initié au {{name(leftFragment)}}" BlueForest :)</h1>
+            <h1 v-else-if="bonnesReponses / nbReponses> 0.7" class="font-weight-thin align"><img src="/img/medal.svg" class="logo"/><br>Vraiment bon! <b>Bravo!!</b><br>La médaille d'encouragement est à vous :)</h1>
+            <h1 v-else-if="bonnesReponses / nbReponses > 0.5" class="font-weight-thin align"><img src="/img/thumb1.svg" class="logo"/>De bonnes connaissances! <b>Poursuivez!!</b></h1>
+            <h1 v-else-if="bonnesReponses / nbReponses > 0.3" class="font-weight-thin align"><img src="/img/thumb.svg" class="logo"/>Oups! <b>Réessayons.</b></h1>
+            <h1 v-else class="font-weight-thin"><img src="/img/broken-heart.svg" class="logo-petit"/>Il faut trouver là où il y a le plus de {{name(leftFragment)}} :(</h1>
+            <v-btn @click="replay" color="primary">rejouer</v-btn>
         </v-layout>
     </v-flex>
 </template>
@@ -92,26 +66,27 @@
     import Card from "../common/Card"
     import Photo from "../common/Photo"
     import QtUnitName from "../tree/QtUnitName"
+    import {TRUNK} from "../../const/fragments"
+    import ChoixProduit from "./ChoixProduit"
 
     export default {
         name: "qui-deux",
-        components: {QtUnitName, Photo, Card, TreeCard, SelectableList, TreeHead, Loader},
+        components: {ChoixProduit, QtUnitName, Photo, Card, TreeCard, SelectableList, TreeHead, Loader},
         data() {
             return {
                 nbReponses: 5,
                 tree: null,
+                right: null,
                 type: null,
-                filter: null,
-                loading: false,
+                coef: null,
+                leftFragment: null,
                 plus: null,
                 equivalences: [],
                 reponses: [],
-                abandonsChances: 2,
-                state: 'playing',
-                plusADroite: null
+                state: 'playing'
             }
         },
-        props: ['_id', 'bqt', 'sbqt', 's_id'],
+        props: ['leftId', 'leftBqt', 'fragment', 'fragmentId'],
         watch: {
             '$route'(to, from) {
                 this.refresh()
@@ -119,7 +94,7 @@
         },
         computed: {
             canAnswer() {
-                return this.state === 'playing' && this.tree && this.other
+                return !!(this.state === 'playing' && this.tree && this.right)
             },
             bonnesReponses() {
                 let res = 0
@@ -131,17 +106,13 @@
             finished() {
                 return this.reponses.length >= this.nbReponses
             },
-            other() {
-                return this.equivalences && this.equivalences[0]
-            },
-            filterRight() {
-                if (this.filter) {
-                    if (this.plusADroite) {
-                        return {name: this.filter.name, quantity: {bqt: this.filter.quantity.bqt * 2, g: this.filter.quantity.g}}
-                    } else {
-                        return {name: this.filter.name, quantity: {bqt: this.filter.quantity.bqt * 0.5, g: this.filter.quantity.g}}
-                    }
+            rightFragment() {
+                if (this.leftFragment) {
+                    return {name: this.leftFragment.name, quantity: {bqt: this.leftFragment.quantity.bqt * this.coef, g: this.leftFragment.quantity.g}}
                 }
+            },
+            plusADroite() {
+                return this.coef > 1
             },
             lastWasGood() {
                 if (!this.reponses.length) {
@@ -154,7 +125,8 @@
         methods: {
             qtUnitName, name,
             ...mapActions({
-                dispatchLoad: On.LOAD_OPEN_TREE,
+                loadTree: On.LOAD_OPEN_TREE,
+                loadRandomTreeFromFragment: On.RANDOM_TREE_FROM_FRAGMENT,
                 dispatchSearchEquiv: On.SEARCH_EQUIV,
                 snack: On.SNACKBAR,
                 goTree: On.GO_TREE,
@@ -174,64 +146,39 @@
                 this.dispatchAddToBasket(map(selection, e => ({_id: e._id, trunk: e})))
             },
             passQuestion() {
-                this.abandonsChances--
-                this.refresh()
+                this.nextRight()
             },
             replay() {
                 this.reponses = []
                 this.state = 'playing'
-                this.plusADroite = null
-                this.abandonsChances = 2
-                this.refresh()
+                this.nextRight()
             },
-            refresh: async function () {
-                this.state = 'refreshing'
+            async init() {
                 try {
-                    this.tree = await this.dispatchLoad({bqt: this.bqt, _id: this._id})
-                    await this.tree.promises.facets
-                    await this.tree.promises.impactsTank
-                    this.updateFilter()
-                    this.updateEquivalences()
-                    this.state = 'playing'
+                    this.tree = await this.loadTree({bqt: this.leftBqt, _id: this.leftId, fragments: [TRUNK, this.fragment]})
+                    await this.tree.promises.all
                 } catch (e) {
-                    this.snack({text: "Cet élement n'existe pas ou plus", color: "orange"})
+                    this.snack({text: "Certaines parties du jeu n'existe pas ou plus :(", color: "orange"})
+                    throw e
                 }
+                this.leftFragment = this.tree && this.tree[this.fragment] && find(this.tree[this.fragment], `${this.fragment}Id`, this.fragmentId)
             },
-            updateFilter() {
-                let attribut = this.tree && this.tree.facets && find(this.tree.facets, "_id", this.s_id)
-                if (attribut) {
-                    this.type = "facet"
-                    this.filter = attribut
-                    return
-                }
+            async nextRight() {
+                this.right = null
+                this.coef = 0.5 + (Math.random() * 1.5)//random de 0.5 à 2
+                this.right = await this.loadRandomTreeFromFragment({
+                    bqt: this.leftFragment.quantity.bqt * this.coef,
+                    entryId: this.fragmentId,
+                    type: this.fragment
+                })
+                await this.right.promises.all
 
-                attribut = this.tree && this.tree.impactsTank && find(this.tree.impactsTank, "_id", this.s_id)
-                if (attribut) {
-                    this.type = "impact"
-                    this.filter = attribut
-                    return
-                }
-
-                attribut = this.tree && this.tree.roots && find(this.tree.roots, "_id", this.s_id)
-                if (attribut) {
-                    this.type = "root"
-                    this.filter = attribut
-                    return
-                }
-                console.warn("update filter but no equiv attribute")
-            },
-            async updateEquivalences() {
-                if (this.filter) {
-                    this.loading = true
-                    this.plusADroite = Math.random() >= 0.5
-                    const bqt = this.plusADroite ? this.sbqt * 2 : this.sbqt * 0.5
-                    await this.dispatchSearchEquiv({results: this.equivalences, type: this.type, bqt, _id: this.filter[(this.type === "root" ? "_id" : `${this.type}Id`)]})
-                    this.loading = false
-                }
+                this.state = 'playing'
             }
         },
-        created: function () {
-            this.refresh()
+        async created() {
+            await this.init()
+            await this.nextRight()
         },
     }
 </script>
