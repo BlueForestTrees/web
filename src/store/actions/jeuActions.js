@@ -7,6 +7,9 @@ import {treefy} from "../../services/calculations"
 import {TRUNK} from "../../const/fragments"
 
 export default {
+    [On.LOAD_GAME]: ({}, {_id}) => api.loadGame(_id),
+    [On.SAVE_GAME]: ({}, game) => api.saveGame(game),
+    [On.SAVE_SCORE]: ({}, score) => api.saveScore(score),
     [On.GO_EQUIV]: ({dispatch}, {_id, bqt, sbqt, s_id}) => {
         dispatch(On.UNSELECT)
         return router.push({name: GO.EQUIV, params: {_id, bqt, sbqt, s_id}})
@@ -15,15 +18,15 @@ export default {
         dispatch(On.UNSELECT)
         return router.push({name: GO.QUI_2, params: {_id, bqt, f, fid}})
     },
-    [On.RANDOM_TREE_FROM_FRAGMENT]: ({dispatch}, {entryId, bqt, type}) => {
+    [On.RANDOM_TREE_FROM_FRAGMENT]: ({dispatch}, {entryId, bqt, type, trunkId}) => {
         if (type === "facet") {
-            return api.searchByFacet({bqt, _id: entryId, limit: 1})
+            return api.searchByFacet({bqt, _id: entryId, limit: 1, trunkId})
                 .then(idBqts => dispatch(On.LOAD_TREE, {...idBqts[0], fragments: [TRUNK]}))
         } else if (type === "impact") {
-            return api.searchByImpact({bqt, _id: entryId, limit: 1})
+            return api.searchByImpact({bqt, _id: entryId, limit: 1, trunkId})
                 .then(idBqts => dispatch(On.LOAD_TREE, {...idBqts[0], fragments: [TRUNK]}))
         } else if (type === "root") {
-            return api.searchByRoot({bqt, _id: entryId, limit: 1})
+            return api.searchByRoot({bqt, _id: entryId, limit: 1, trunkId})
                 .then(idBqts => dispatch(On.LOAD_TREE, {...idBqts[0], fragments: [TRUNK]}))
         } else {
             throw `type d'équivalence inconnu ${type} (${bqt}/${_id})`

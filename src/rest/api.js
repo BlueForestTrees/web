@@ -9,6 +9,10 @@ const cached = async (method, uri, cache) => cache.get(uri) || cache.put(uri, aw
 
 export default {
 
+    saveGame: game => post(`api/game`, game),
+    loadGame: _id => post(`api/game/${_id}`),
+    saveScore: partie => post(`api/game/score`, partie),
+
     checkInfoAvailable: path => get(`api/info/check/${path}`),
     postInfo: info => post(`api/info`, info),
     putInfo: info => put(`api/info`, info),
@@ -22,9 +26,9 @@ export default {
     createSelection: selection => post(`/api/selection`, selection),
     updateSelection: selection => put(`/api/selection`, selection),
 
-    searchByFacet: ({bqt, _id, limit = 15}) => get(`/api/facet/equiv/${bqt}/${_id}/${limit}`),
-    searchByImpact: ({bqt, _id, limit = 15}) => get(`/api/impact/equiv/${bqt}/${_id}/${limit}`),
-    searchByRoot: ({bqt, _id, limit = 15}) => get(`/api/tree/root/equiv/${bqt}/${_id}/${limit}`),
+    searchByFacet: ({bqt, _id, trunkId, limit = 15}) => get(`/api/facet/equiv/${bqt}/${_id}/${limit}${paramsOf({tid: trunkId})}`),
+    searchByImpact: ({bqt, _id, trunkId, limit = 15}) => get(`/api/impact/equiv/${bqt}/${_id}/${limit}${paramsOf({tid: trunkId})}`),
+    searchByRoot: ({bqt, _id, trunkId, limit = 15}) => get(`/api/tree/root/equiv/${bqt}/${_id}/${limit}${paramsOf({tid: trunkId})}`),
 
     searchFacetEntry: namepart => get(`/api/facetEntry${paramsOf({q: namepart})}`),
     searchImpactEntry: namepart => get(`/api/impactEntry${paramsOf({q: namepart})}`),

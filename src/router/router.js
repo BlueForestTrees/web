@@ -66,6 +66,7 @@ export default new VueRouter({
                 {name: GO.CREATE_GROUP, path: "create/g", component: CreateGroup},
                 {name: GO.EDIT_GROUP, path: "edit/g/:path", component: CreateGroup, props: true},
 
+                // {name: GO.QUI_2, path: "jeu/:_id", component: Jeu, props: true},
                 {name: GO.QUI_2, path: "qui2fois/:bqt/:_id/:f/:fid", component: Qui2, props: ({params}) => ({leftBqt: params.bqt, leftId: params._id, fragment: params.f, fragmentId: params.fid})},
                 {name: GO.TREE_EMPTY, path: "tree", component: Tree},
                 {name: GO.ROOT, path: "root/:treeId/:rootId", component: RootEditor, props: true},

@@ -1,0 +1,1 @@
+export const QUI2 = "qui2"

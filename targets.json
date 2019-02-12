@@ -1,5 +1,6 @@
 {
   "prod": [
+    {"path":"/api/game", "host": "https://blueforest.org"},
     {"path":"/api/info", "host": "https://blueforest.org"},
     {"path":"/api/selection", "host": "https://blueforest.org"},
     {"path":"/api/correlation", "host": "https://blueforest.org"},
@@ -15,6 +16,7 @@
     {"path":"/api/tree", "host": "https://blueforest.org"}
   ],
   "integ": [
+    {"path":"/api/game", "host":"http://integ.blueforest.org"},
     {"path":"/api/info", "host":"http://integ.blueforest.org"},
     {"path":"/api/selection", "host":"http://integ.blueforest.org"},
     {"path":"/api/correlation", "host":"http://integ.blueforest.org"},
@@ -30,6 +32,7 @@
     {"path":"/api/tree", "host":"http://integ.blueforest.org"}
   ],
   "dev": [
+    {"path":"/api/game", "host":"http://localhost:8094"},
     {"path":"/api/info", "host":"http://localhost:8093"},
     {"path":"/api/selection", "host":"http://localhost:8092"},
     {"path":"/api/correlation", "host":"http://localhost:8091"},

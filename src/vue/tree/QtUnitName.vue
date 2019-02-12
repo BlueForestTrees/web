@@ -1,9 +1,9 @@
 <template>
-    <v-layout v-if="tree" column>
+    <div v-if="tree">
         <h1 class="headline align font-weight-black">{{qtUnit}}</h1>
         <h5 v-if="qtFreq" class="align font-weight-thin">{{qtFreq}}</h5>
         <h3 class="subtitle align font-weight-medium">{{name}}</h3>
-    </v-layout>
+    </div>
 </template>
 
 <script>
