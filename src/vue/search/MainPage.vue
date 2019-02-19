@@ -4,11 +4,13 @@
             <welcome-panel/>
             <v-tabs :value="tab" @change="setTab" centered slider-color="primary">
                 <v-tab href="#search"><v-list-tile-avatar class="scope-tree logo"/>Produits</v-tab>
-                <v-tab href="#infos"><v-list-tile-avatar class="megaphone logo"/>Messages</v-tab>
+                <v-tab href="#infos"><v-list-tile-avatar class="voice logo"/>Messages</v-tab>
+                <v-tab href="#jeux"><v-list-tile-avatar class="game logo"/>Jeux</v-tab>
             </v-tabs>
         </v-card>
         <search v-if="tab==='search'" @select="goAny" class="mt-5"/>
         <my-infos v-else-if="tab==='infos'" :user="user" @select="goAny" class="mt-5"/>
+        <games v-else-if="tab==='jeux'" :user="user" @select="goAny" class="mt-5"/>
     </v-flex>
 </template>
 
@@ -19,12 +21,12 @@
     import Do from "../../const/do"
 
     const Search = () => import(/* webpackChunkName: "MyBasket"*/ "../search/Search")
-    const MySelects = () => import(/* webpackChunkName: "MySelects"*/ "../home/MySelects")
     const MyInfos = () => import(/* webpackChunkName: "MyInfos"*/ "../home/MyInfos")
+    const Games = () => import(/* webpackChunkName: "MyInfos"*/ "../jeu/Games")
 
     export default {
         name: "search-page",
-        components: {Search, MySelects, MyInfos, WelcomePanel},
+        components: {Games, Search, MyInfos, WelcomePanel},
         methods: {
             ...mapActions({goAny: On.GO_ANY}),
             ...mapMutations({setTab: Do.SET_NAV_MAIN_TAB})

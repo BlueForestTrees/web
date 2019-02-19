@@ -1,10 +1,9 @@
 <template>
     <card>
-        <v-divider/>
-        <v-card-title>
+        <v-toolbar class="elevation-0">
             <v-icon color="orange" large>new_releases</v-icon>
-            <h6 class="title">Fonctions à venir</h6></v-card-title>
-        <v-divider/>
+            <v-toolbar-title>Fonctions à venir</v-toolbar-title>
+        </v-toolbar>
         <v-container>
             <v-expansion-panel popout>
                 <v-expansion-panel-content v-for="item in items" :key="item.title">
@@ -21,13 +20,14 @@
                     <v-divider/>
                     <v-divider/>
                     <v-layout row justify-end>
-                        <open-message :section="{title: `Votre avis sur '${item.title}'`, filter: {type: `${item.icon}.feature`}}"/>
+                        <open-message class="mt-2" :section="{title: `Votre avis sur '${item.title}'`, filter: {type: `${item.icon}.feature`}}"/>
                         <v-spacer/>
                         <vote-btn text="VOTE" text-voted="merci!" :feature="`${item.title}.vote`"/>
                     </v-layout>
                 </v-expansion-panel-content>
             </v-expansion-panel>
-            <open-message :section="secs.FONCTION"/>
+                <v-divider class="mx-3"/>
+                <open-message :section="secs.FONCTION" class="mt-3 mx-0"/>
         </v-container>
     </card>
 </template>
@@ -48,7 +48,7 @@
                 secs,
                 items: [
                     {
-                        icon: 'flag',
+                        icon: 'group',
                         title: 'Equipes',
                         text: "<p>Sur blueforest on peut tout voir, mais ne modifier que ce qui nous appartient.</p><p>En formant une équipe, on peut travailler à plusieurs sur un produit/service.</p>"
                     },

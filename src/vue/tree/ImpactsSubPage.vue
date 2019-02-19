@@ -1,18 +1,20 @@
 <template>
     <impact-adder v-if="modeAdd" :tree="tree" @close="$emit('close')"/>
     <v-card v-else>
-        <subpage-title title="Impacts sur l'environnement"/>
+        <subpage-title title="Environnement" icon-class="planet logo"/>
 
         <transition name="slide-fade" mode="out-in">
-            <fragment-list v-if="idx === 0" :tree="tree" :fragment="IMPACTS" none="Pas encore d'informations sur les impacts locaux" key="0"></fragment-list>
-            <fragment-list v-else-if="idx === 1" :tree="tree" :fragment="IMPACT_TANK" none="Pas encore d'informations sur les impacts globaux" key="1"></fragment-list>
+            <fragment-list v-if="idx === 0" :tree="tree" :fragment="IMPACT_TANK" none="Pas encore d'informations sur les impacts sur l'environnement" key="0"></fragment-list>
+            <fragment-list v-else-if="idx === 1" :tree="tree" :fragment="IMPACTS" none="Pas encore d'informations sur les impacts sur l'environnement" key="1"
+                note="Note: Vous êtes en train de regarder les impacts déclarés au niveau du produit sans compter ceux de ces ressources."
+            ></fragment-list>
         </transition>
 
         <v-divider/>
         <v-layout>
             <v-spacer/>
             <scope-menu :value="idx" @input="setIdx" :dense="$vuetify.breakpoint.xsOnly" :scope="impactScope"/>
-            <open-message :section="section" dense/>
+            <open-message :section="section" no-text/>
         </v-layout>
     </v-card>
 </template>

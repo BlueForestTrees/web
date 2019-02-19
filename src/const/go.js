@@ -5,6 +5,7 @@ export const GO = {
     SUSCRIBE: 'suscribe',
     CONFIRM: 'confirm',
     LOGIN: 'login',
+    GAME:'game',
     PLAN_INTRO: 'planIntro',
     PLAN: 'plan',
     IMPACT_ENTRY: 'impactEntry',

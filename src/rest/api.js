@@ -10,13 +10,16 @@ const cached = async (method, uri, cache) => cache.get(uri) || cache.put(uri, aw
 export default {
 
     saveGame: game => post(`api/game`, game),
-    loadGame: _id => post(`api/game/${_id}`),
+    loadGame: _id => get(`api/game/${_id}`),
     saveScore: partie => post(`api/game/score`, partie),
 
     checkInfoAvailable: path => get(`api/info/check/${path}`),
     postInfo: info => post(`api/info`, info),
     putInfo: info => put(`api/info`, info),
     getInfo: _id => get(`api/info/${_id}`),
+
+    searchGames: ({aidx, ps, oid, term}) => get(`/api/game${paramsOf({q: term, aidx, ps, oid})}`),
+
     searchInfo: ({term, type, aidx, ps, oid}) => get(`/api/info${paramsOf({q: term, t: type, aidx, ps, oid})}`),
 
     deleteInfo: _id => del(`api/info/${_id}`),

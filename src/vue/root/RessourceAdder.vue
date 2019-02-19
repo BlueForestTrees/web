@@ -2,29 +2,17 @@
     <v-container>
         <v-card>
             <subpage-title :title="title">
-                <closer @close="$emit('close')"/>
+                <closer slot="right" @close="$emit('close')"/>
             </subpage-title>
+            <v-divider/>
+
+            <tree-selection-picker v-if="!selection" @select="select" :tree="selection"/>
+
+            <order-picker v-else @revert="revert" @validate="validate" :up="up" :down="down"/>
         </v-card>
 
-        <v-card v-if="selection">
-            <v-container>
-                <v-layout column align-center>
-                    <destination noqt :tree="effectiveTree"/>
-                    <v-list-tile>
-                        <v-icon x-large>call_merge</v-icon>
-                    </v-list-tile>
-                    <destination noqt :tree="effectiveRoot"/>
-                </v-layout>
-            </v-container>
-            <v-layout>
-                <v-spacer/>
-                <v-btn dense @click="revert"><v-icon>swap_horiz</v-icon>inverser</v-btn>
-                <v-btn :disabled="!selection" color="primary" @click="validate">Ok</v-btn>
-            </v-layout>
-        </v-card>
+        <add-entry-fab title="Créer un produit ou un service" :route="GO.CREATE_TREE" :callback="On.NAV_PREVIOUS"/>
 
-        <tree-selection-picker v-if="!selection" @select="select" :tree="selection"/>
-        <add-entry-fab title="Créer un produit ou un service" :action="GO.CREATE_TREE"/>
     </v-container>
 </template>
 
@@ -41,28 +29,30 @@
     import {BRANCHES, ROOTS} from "../../const/fragments"
     import Do from "../../const/do"
     import Destination from "../common/Destination"
+    import OrderPicker from "../common/OrderPicker"
+    import TreePicker from "../tree/TreePicker"
 
     export default {
         name: "ressource-adder",
         props: ['tree'],
-        components: {Destination, AddEntryFab, SubpageTitle, TreeSelectionPicker, QuantityPicker, Closer},
+        components: {TreePicker, OrderPicker, Destination, AddEntryFab, SubpageTitle, TreeSelectionPicker, QuantityPicker, Closer},
         data: () => ({
             selection: null,
-            GO
+            GO, On
         }),
         computed: {
             ...mapState({scope: s => s.nav.tree.root.scope}),
-            addingRoot() {
+            trunkRootOrder() {
                 return this.scope === ROOTS
             },
             title() {
-                return this.addingRoot ? "Ajouter une ressource" : "Ajouter un usage"
+                return this.trunkRootOrder ? "Ajouter une ressource" : "Ajouter un usage"
             },
-            effectiveTree() {
-                return this.addingRoot ? this.tree : this.selection
+            up() {
+                return this.trunkRootOrder ? this.tree : this.selection
             },
-            effectiveRoot() {
-                return this.addingRoot ? this.selection : this.tree
+            down() {
+                return this.trunkRootOrder ? this.selection : this.tree
             }
         },
         methods: {
@@ -78,10 +68,10 @@
                 setScope: Do.SET_TREE_ROOT_SCOPE
             }),
             select(item) {
-                this.selection = item
+               this.selection = item
             },
             validate() {
-                this.addToTree({tree: this.effectiveTree, root: this.effectiveRoot})
+                this.addToTree({tree: this.up, root: this.down})
                     .then(() => {
                         this.$emit('close')
                         this.snack({text: `1 ${this.title} ajoutée`, color: "green"})

@@ -37,12 +37,12 @@ export default {
         state.xRequestId = xRequestId
     },
     [On.ADD_CALLBACK]: ({dispatch, state}, callback) => {
-        state.callback.push(callback)
+        state.nav.callback.push(callback)
     },
-    [On.POP_CALLBACK]: ({dispatch, state}) => {
-        const callback = state.callback.pop()
+    [On.POP_CALLBACK]: ({dispatch, state}, params) => {
+        const callback = state.nav.callback.pop()
         if (callback) {
-            dispatch(callback.action, callback.params)
+            dispatch(callback, params)
         }
     },
 

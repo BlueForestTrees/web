@@ -69,6 +69,7 @@ export default {
     LOAD_DAMAGES_TANK: 'loadDamagesTank',
     LOAD_BRANCHES: 'loadBranches',
     LOAD_GAME: 'loadGame',
+    SEARCH_GAMES: 'loadGames',
     SAVE_GAME: 'saveGame',
     SAVE_SCORE: 'saveScore',
     LOAD_GRANDEUR: 'loadGrandeurs',
@@ -123,5 +124,6 @@ export default {
     USER_FROM_STORAGE: 'restoreUserFromStorage',
     USER_TO_STORAGE: 'userToStorage',
     VOTE_FOR: "voteFor",
-    WANT_SUSCRIBE: 'wantSuscribe'
+    WANT_SUSCRIBE: 'wantSuscribe',
+    NAV_PREVIOUS: 'navPrevious'
 }

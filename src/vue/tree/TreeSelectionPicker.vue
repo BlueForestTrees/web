@@ -1,68 +1,56 @@
 <template>
-    <span v-if="changeTree || !curTree">
-            <v-tabs :value="tab" @change="setTab" centered slider-color="primary">
-                <v-tab href="#search">Recherche</v-tab>
-                <v-tab href="#favoris">Favoris</v-tab>
-            </v-tabs>
-        <search v-if="tab==='search'" @select="selectTree" class="mt-5"/>
-        <my-selects v-else-if="tab==='favoris'" :user="user" @select="selectTree"/>
-    </span>
-    <v-layout v-else align-center column>
-        <div class="font-weight-medium pa-3">
-            <v-icon color="green" class="mr-2">info</v-icon>
-            Choisissez la quantité:
-        </div>
-        <card>
-            <selection-picker class="pa-3" :tree="curTree" @change="selectionChange" @close="closeSelectionPicker"></selection-picker>
-        </card>
-    </v-layout>
+    <transition name="slide-fade" mode="out-in">
+        <tree-picker v-if="showTreePicker" @pick="pickTree"/>
+
+        <selection-picker v-else
+                          :tree="pickedTree" @pick="pickSelection"
+                          @close="closeSelectionPicker">
+
+        </selection-picker>
+    </transition>
 </template>
 <script>
     import On from "../../const/on"
-    import {mapActions, mapState, mapMutations} from "vuex"
-    import {name} from "../../services/calculations"
+    import {mapActions, mapState} from "vuex"
+    import {name, treefySelection} from "../../services/calculations"
     import Card from "../common/Card"
     import SelectionPicker from "./SelectionPicker"
-    import Do from "../../const/do"
-    const Search = () => import(/* webpackChunkName: "MyBasket"*/ "../search/Search")
-    const MyProduct = () => import(/* webpackChunkName: "MyProduct"*/ "../home/MyProduct")
-    const MySelects = () => import(/* webpackChunkName: "MySelects"*/ "../home/MySelects")
+    import TreePicker from "./TreePicker"
+    import {TRUNK} from "../../const/fragments"
 
     export default {
         name: "tree-selection-picker",
-        components: {Search, MySelects, MyProduct, SelectionPicker, Card},
+        components: {TreePicker, SelectionPicker, Card},
         props: ['tree'],
-        data: () => ({selectedTree: null, changeTree: false}),
+        data: () => ({selectedTree: null, selectionPickerClosed: false}),
         methods: {
             name,
             ...mapActions({
                 loadTreeFromSelection: On.LOAD_SELECTION,
                 applySelection: On.APPLY_SELECTION
             }),
-            ...mapMutations({setTab: Do.SET_NAV_TREE_PICKER_TAB}),
-            async selectTree(item) {
-                if (item.repeted) {
-                    item = await this.loadTreeFromSelection({_id: item._id, fragments: []})
-                }
-                this.selectedTree = item
-                this.changeTree = false
+            async pickTree(item) {
+                this.selectedTree = treefySelection(item)
+                this.selectionPickerClosed = false
             },
-            selectionChange({tree, selection}) {
+            pickSelection({tree, selection}) {
                 this.applySelection({tree, selection})
-                this.$emit("select", this.curTree)
-                this.changeTree = false
+                this.$emit("select", this.pickedTree)
+                this.selectionPickerClosed = false
             },
             closeSelectionPicker() {
-                this.changeTree = true
+                this.selectionPickerClosed = true
             }
         },
         computed: {
-            curTree() {
+            showTreePicker() {
+                return this.selectionPickerClosed || !this.pickedTree
+            },
+            pickedTree() {
                 return this.selectedTree || this.tree
             },
             ...mapState({
-                user: s => s.user,
-                tab: s => s.nav.tree.picker.tab
+                user: s => s.user
             })
         }
     }

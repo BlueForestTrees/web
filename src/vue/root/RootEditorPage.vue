@@ -64,7 +64,7 @@
                         <v-card-text>
                         <v-layout column>
                             <template v-if="addingTransport">
-                                <search-comp :filter="{g:'Tran'}" v-if="!transport" :maxSelectionSize="1"/>
+                                <search-tree :filter="{g:'Tran'}" v-if="!transport" :maxSelectionSize="1"/>
                                 <template v-else>
                                     <v-card-title><v-icon large :style="{color: transport.trunk.color,marginRight:'0.2em'}">panorama_fish_eye</v-icon>{{transport.trunk.name}}</v-card-title>
                                     <v-card-text>
@@ -96,7 +96,7 @@
     import {qtUnit, qtUnitName} from "../../services/calculations"
     import {isNumber, required} from "../../services/rules"
     import UnitSelect from "../common/UnitSelect"
-    import SearchComp from "../search/SearchComp"
+    import SearchComp from "../search/SearchTree"
     import selectable from "../mixin/Selectable"
     import {bqtGToQtUnit, find, baseQt, getGrandeur, unit} from "unit-manip"
     import Destination from "../common/Destination"
@@ -135,7 +135,7 @@
         },
         methods: {
             ...mapActions({
-                dispatchLoadTree: On.LOAD_OPEN_TREE,
+                dispatchLoadTree: On.LOAD_TREE,
                 dispatchGoTree: On.GO_TREE,
                 dispatchCreateRoot: On.UPDATE_ROOT,
                 dispatchDeleteLink: On.DELETE_ROOT,

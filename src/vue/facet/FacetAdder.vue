@@ -3,7 +3,7 @@
         <v-card>
 
             <subpage-title title="Ajouter une propriété">
-                <closer @close="$emit('close')"/>
+                <closer slot="right" @close="$emit('close')"/>
             </subpage-title>
             <v-divider/>
 

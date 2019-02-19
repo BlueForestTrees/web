@@ -5,7 +5,7 @@
                 <v-btn color="primary" flat icon @click="gotoEq(info)">
                     <v-icon>edit</v-icon>
                 </v-btn>
-                <open-message dense :section="{title: `Discuter sur ${info.path}`, description:info.description, filter: {topicId:info._id, type: `eq.info`}}"/>
+                <open-message no-text :section="{title: `Discuter sur ${info.path}`, description:info.description, filter: {topicId:info._id, type: `eq.info`}}"/>
             </v-layout>
             <v-layout column align-center>
                 <v-layout :column="$vuetify.breakpoint.smAndDown" align-center justify-center my-5>

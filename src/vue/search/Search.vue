@@ -1,19 +1,19 @@
 <template>
-    <v-container key="search" grid-list-md text-xs-center>
+    <v-container key="search">
 
-        <v-layout row wrap justify-center align-center mx-5 xs-4 mb-1>
-            <v-list-tile-avatar class="scope-tree logo"></v-list-tile-avatar>
-            <search-text :value="search.name" @input="pickName" class="not-too-large"/>
+        <v-layout row wrap justify-center align-center xs-4 mb-1>
+            <v-list-tile-avatar class="scope-tree logo my-3"></v-list-tile-avatar>
+            <search-text :value="search.name" @input="pickName" class="not-too-half"/>
         </v-layout>
 
         <v-layout :column="$vuetify.breakpoint.xsOnly" align-center justify-center>
-
             <cat-picker @input="pickCat" :value="search.cats"/>
             <owner-picker @input="pickOwner" :value="search.owner"/>
-
         </v-layout>
 
-        <search-comp :filter="filter" @select="select" class="mt-3"/>
+        <v-card class="mt-3">
+            <search-tree :filter="filter" @select="select" />
+        </v-card>
 
     </v-container>
 </template>
@@ -27,7 +27,7 @@
     import CatPicker from "./CatPicker"
     import OwnerPicker from "./OwnerPicker"
 
-    const SearchComp = () => import(/* webpackChunkName: "SearchComp" */ './SearchComp')
+    const SearchTree = () => import(/* webpackChunkName: "SearchComp" */ './SearchTree')
     const ImpactEntries = () => import(/* webpackChunkName: "ImpactEntries" */ '../impact/ImpactEntriesPicker')
     const FacetEntries = () => import(/* webpackChunkName: "FacetEntries" */ '../facet/FacetEntryPicker')
 
@@ -37,7 +37,7 @@
             On, GO,
             type: null
         }),
-        components: {OwnerPicker, CatPicker, VoteFor, ImpactEntries, FacetEntries, SearchText, SearchComp},
+        components: {OwnerPicker, CatPicker, VoteFor, ImpactEntries, FacetEntries, SearchText, SearchTree},
         methods: {
             ...mapActions({
                 goto: On.GO_TO,
@@ -61,7 +61,7 @@
             }
         },
         computed: {
-            ...mapGetters(['filter', 'hasFilter']),
+            ...mapGetters(['filter']),
             ...mapState({search: s => s.search}),
         }
     }

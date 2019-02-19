@@ -1,5 +1,6 @@
 <template>
-    <v-card class="ma-1">
+    <v-card class="ma-5">
+        <subpage-title title="Mes discussions" icon="chat"/>
         <v-card-text v-if="user" class="text-md-center">
             <v-list>
                 <v-list-tile v-for="m in messages" :key="m._id" @click="">
@@ -24,10 +25,11 @@
     import {secs} from "../../const/sections"
     import On from "../../const/on"
     import {deltaTime} from "../../services/calculations"
+    import SubpageTitle from "../tree/SubpageTitle"
 
     export default {
         name: 'my-messages',
-        components: {OpenMessage},
+        components: {SubpageTitle, OpenMessage},
         data() {
             return {
                 secs

@@ -82,7 +82,7 @@
     import UnitSelect from "../common/UnitSelect"
     import closable from "../mixin/Closable"
     import GrandeurSelect from "../common/GrandeurSelect"
-    import SearchComp from "../search/SearchComp"
+    import SearchComp from "../search/SearchTree"
     import {createStringObjectId, color, name, quantity} from "../../services/calculations"
     import SearchCat from "../search/CatPicker"
     import BasketComp from "../basket/BasketComp"

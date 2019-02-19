@@ -1,48 +1,45 @@
 <template>
     <card>
-        <v-toolbar class="elevation-0" color="primary" dark>
-            <v-icon>add</v-icon>
-            <v-toolbar-title>Créer un produit ou un service</v-toolbar-title>
-        </v-toolbar>
+        <subpage-title title="Créer un produit" icon-class="scope-tree logo"/>
 
-    <v-layout key="create-tree" column wrap justify-center align-center>
-        <v-stepper v-model="idx" vertical @input="next" class="elevation-0">
-            <v-stepper-step step="1" :complete="idx > 1">Choisir un nom</v-stepper-step>
-            <v-stepper-content step="1">
-                <v-form v-model="nameValid" v-on:submit.prevent="" ref="nameForm">
-                    <v-text-field mb-5 autofocus ref="nom" label="Nom" required v-model="name" :rules="[length2min]" @keydown.enter="validName"></v-text-field>
-                </v-form>
-                <v-btn color="primary" @click="validName">Ok</v-btn>
-            </v-stepper-content>
+        <v-layout key="create-tree" column wrap justify-center align-center>
+            <v-stepper v-model="idx" vertical @input="next" class="elevation-0">
+                <v-stepper-step step="1" :complete="idx > 1">Choisir un nom</v-stepper-step>
+                <v-stepper-content step="1">
+                    <v-form v-model="nameValid" v-on:submit.prevent="" ref="nameForm">
+                        <v-text-field mb-5 autofocus ref="nom" label="Nom" required v-model="name" :rules="[length2min]" @keydown.enter="validName"></v-text-field>
+                    </v-form>
+                    <v-btn color="primary" @click="validName">Ok</v-btn>
+                </v-stepper-content>
 
-            <v-stepper-step step="2" :complete="idx > 2">La quantité</v-stepper-step>
-            <v-stepper-content step="2">
-                <v-form v-model="qtValid" v-on:submit.prevent="" ref="qtForm">
-                    <v-layout :column="$vuetify.breakpoint.xsOnly">
-                        <v-text-field autofocus type="number" label="Quantité... (ex.: 10)" v-model="qt" :rules="[required, isNumber]" @keydown.enter="validQt"></v-text-field>
-                        <grandeur-select v-model="grandeur" />
-                        <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]"/>
+                <v-stepper-step step="2" :complete="idx > 2">La quantité</v-stepper-step>
+                <v-stepper-content step="2">
+                    <v-form v-model="qtValid" v-on:submit.prevent="" ref="qtForm">
+                        <v-layout :column="$vuetify.breakpoint.xsOnly">
+                            <v-text-field autofocus type="number" label="Quantité... (ex.: 10)" v-model="qt" :rules="[required, isNumber]" @keydown.enter="validQt"></v-text-field>
+                            <grandeur-select v-model="grandeur"/>
+                            <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]"/>
+                        </v-layout>
+                    </v-form>
+                    <v-btn color="primary" @click="validQt">Ok</v-btn>
+                    <v-btn flat @click="idx--">retour</v-btn>
+                </v-stepper-content>
+
+                <v-stepper-step step="3">La couleur</v-stepper-step>
+                <v-stepper-content step="3">
+                    <v-form v-model="colorValid" v-on:submit.prevent="" ref="colorForm">
+                        <color-picker v-model="color"/>
+                    </v-form>
+                    <v-btn color="primary" @click="validColor">ok</v-btn>
+                    <v-btn flat @click="idx--">retour</v-btn>
+                    <v-layout row wrap justify-center align-center class="ma-4">
+                        <v-card class="pl-2 pr-3 py-2 ma-1" style="border-radius:2em">
+                            <tree-head :tree="tree"/>
+                        </v-card>
                     </v-layout>
-                </v-form>
-                <v-btn color="primary" @click="validQt">Ok</v-btn>
-                <v-btn flat @click="idx--">retour</v-btn>
-            </v-stepper-content>
-
-            <v-stepper-step step="3">La couleur</v-stepper-step>
-            <v-stepper-content step="3">
-                <v-form v-model="colorValid" v-on:submit.prevent="" ref="colorForm">
-                    <color-picker v-model="color"/>
-                </v-form>
-                <v-btn color="primary" @click="validColor">ok</v-btn>
-                <v-btn flat @click="idx--">retour</v-btn>
-                <v-layout row wrap justify-center align-center class="ma-4">
-                    <v-card class="pl-2 pr-3 py-2 ma-1" style="border-radius:2em">
-                        <tree-head :tree="tree"/>
-                    </v-card>
-                </v-layout>
-            </v-stepper-content>
-        </v-stepper>
-    </v-layout>
+                </v-stepper-content>
+            </v-stepper>
+        </v-layout>
     </card>
 
 </template>
@@ -60,11 +57,12 @@
     import Connected from "../mixin/Connected"
     import GrandeurSelect from "../common/GrandeurSelect"
     import Card from "../common/Card"
+    import SubpageTitle from "./SubpageTitle"
 
     export default {
         name: 'create-trunk',
-        components: {Card, GrandeurSelect, ColorPicker, UnitSelect, TreeHead},
-        mixins:[Connected],
+        components: {SubpageTitle, Card, GrandeurSelect, ColorPicker, UnitSelect, TreeHead},
+        mixins: [Connected],
         data() {
             return {
                 Dial,
@@ -84,7 +82,8 @@
             trunk() {
                 return {
                     _id: createStringObjectId(),
-                    color: this.color, name: this.name,
+                    color: this.color,
+                    name: this.name,
                     quantity: this.unit && toBqtG({qt: this.qt, unit: this.unit.shortname})
                 }
             },
@@ -92,7 +91,7 @@
                 return {trunk: this.trunk}
             }
         },
-        mounted () {
+        mounted() {
             this.$refs.nameForm.reset()
             this.$refs.qtForm.reset()
             this.$refs.colorForm.reset()
@@ -102,15 +101,15 @@
             this.idx = 1
         },
         methods: {
-            next(v){
-                if(v === 4){
+            next(v) {
+                if (v === 4) {
                     this.validColor()
                 }
             },
             ...mapActions({
                 createTrunk: On.CREATE_TRUNK,
                 putQuantity: On.PUT_TRUNK_QUANTITY,
-                goTree: On.GO_TREE
+                callback: On.POP_CALLBACK
             }),
             validName() {
                 this.$refs.nameForm.validate()
@@ -132,8 +131,9 @@
             },
             validate() {
                 this.createTrunk(this.trunk)
-                    // .then(() => {this.goTree(treefy(this.trunk))})
-                    .then(() => this.$router.go(-1))
+                    .then(() => {
+                        this.callback(treefy(this.trunk))
+                    })
             },
             length2min, getRandomColor, required, isNumber
         }

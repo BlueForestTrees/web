@@ -2,14 +2,14 @@
     <v-card>
         <v-layout column>
             <tree-card :tree="tree" class="mt-3">
-                <v-layout slot="bottom" align-center justify-center>
-                    <v-btn icon flat @click="setFlipped(true)">
-                        <v-icon color="primary">edit</v-icon>
-                    </v-btn>
-                    <open-message :section="section" dense/>
-                </v-layout>
+                <v-card-actions>
+                    <v-btn icon flat @click="setFlipped(true)"><v-icon color="red">favorite_border</v-icon></v-btn>
+                    <open-message :section="section" no-text/>
+                </v-card-actions>
             </tree-card>
+
             <description :tree="tree" class="my-5"/>
+
             <v-divider/>
             <fragment-select :value="value" @input="emitInput"/>
         </v-layout>

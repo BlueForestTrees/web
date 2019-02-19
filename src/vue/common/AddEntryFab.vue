@@ -4,7 +4,7 @@
             <v-icon>add</v-icon>
         </v-btn>
         <v-list>
-            <v-list-tile @click="goto(action)">
+            <v-list-tile @click="go">
                 <v-list-tile-avatar>
                     <v-icon>keyboard_tab</v-icon>
                 </v-list-tile-avatar>
@@ -22,14 +22,19 @@
 
     export default {
         name: "add-entry-fab",
-        props: ['action', 'title'],
+        props: {route: String, title: String, callback: String},
         data: () => ({
             Dial, GO
         }),
         methods: {
             ...mapActions({
+                addCallback: On.ADD_CALLBACK,
                 goto: On.GO_TO
-            })
+            }),
+            go() {
+                this.callback && this.addCallback(this.callback)
+                this.goto(this.route)
+            }
         }
     }
 </script>

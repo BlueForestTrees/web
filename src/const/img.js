@@ -5,4 +5,4 @@ export const TREE = "/img/scopeRoots3.svg"
 export const BRANCH = "/img/scopeBranch1.svg"
 
 export const rootScope = [TREE, ROOTS, TANK, BRANCH]
-export const impactScope = [TRUNK, TREE]
+export const impactScope = [TREE, TRUNK]

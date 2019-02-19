@@ -1,6 +1,11 @@
 <template>
     <div id="f">
-        <h1 class="display-3 font-weight-thin">Offre</h1>
+
+        <v-layout class="display-2 font-weight-thin mb-3">
+            Offre
+            <v-icon color="primary" x-large class="ml-2">fiber_manual_record</v-icon>
+        </v-layout>
+
         <p>BlueForest est une plateforme publique orientée autour du cycle de vie des produits. On se propose de répondre à des questions comme: quels sont les produits qui émettent 100kg de CO2, est-ce que je pollue plus avec un lave-vaisselle ou à la main? Combien d'éolienne pour faire autant qu'une centrale? etc.</p>
         <p>Les données viennent d'importations de bases de données existantes (Ademe, OpenFoodFact, ...), des saisies d'entreprises et de particuliers. Les données n'ont bien sûr pas le même statut ni le même usage selon leur provenance</p>
         <ul>
@@ -15,8 +20,7 @@
         <p>Les axes choisis sont l'argumentation, la démonstration, la transparence, la pédagogie, la vulgarisation, la communication. On peut diffuser des résultats de démonstrations. Ceux-ci sont toujours liées aux détails de calculs, aux sources et aux auteurs.</p>
 
 
-        <p><b>TODO: parler des jeux pour le grand public, de l'intérêt pour les entreprises, de la connexion avec des experts en ACV.</b></p>
-        <p><b>TODO: Un jeu sérieux qui se partage</b></p>
+        <p><b>Gamification & sourcing.</b></p>
 
         <h2 class="display-1 font-weight-thin">Equivalences</h2>
         <p>Les équivalences nous permettent de prendre conscience de l’importance d’une chose en la comparant avec une autre de même importance (X équivaut Y). Exemple d’équivalence: On génère autant de réchauffement climatique en utilisant chaque jour le rouge à lèvre X qu’en mangeant une fois par semaine la pâtisserie Y.</p>
@@ -38,12 +42,11 @@
         <p>Pour prendre conscience au niveau individuel (ou au niveau familial, ou au niveau d’une rue, etc.) les informations doivent être personnalisées à échelle évocatrice par le lecteur. Exemple incorrect:  de Cola contient le sucre produit en une année par 0,001 hectare de champ de canne à sucre. Exemple correct: Boire deux bouteilles de Cola par semaine nécessite pour la production de son sucre la surface d’une petite terrasse.</p>
 
         <h2 class="display-1 font-weight-thin">Partage</h2>
-        <p>Le partage c'est important</p>
+        <p>Le partage constitue le coeur du mécanisme de fonctionnement de BlueForest</p>
 
 
 
-        <h2 class="display-1 font-weight-thin">Discussion</h2>
-        <p><v-icon color="green" small>info</v-icon>Votre point de vue est essentiel à la poursuite de ce projet! :)</p>
+        <p class="mt-5"><v-icon color="orange">new_releases</v-icon>Plusieurs idées valent mieux qu'une:</p>
         <open-message :section="secs.FONCTION"/>
     </div>
 </template>

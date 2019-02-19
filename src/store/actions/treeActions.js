@@ -14,7 +14,10 @@ import {allFragments, IMPACTS, OWNER} from "../../const/fragments"
 const needRefresh = basketTree => !basketTree.branches
 
 export default {
-    [On.GO_CREATE_TREE]: () => router.push({name: GO.CREATE_TREE}),
+    [On.GO_CREATE_TREE]: ({dispatch}, {callback}) => {
+        dispatch(On.ADD_CALLBACK, callback)
+        router.push({name: GO.CREATE_TREE})
+    },
     [On.GO_CREATE_INFO]: () => router.push({name: GO.CREATE_INFO}),
 
     [On.GO_ANY]: ({dispatch}, item) =>
@@ -50,7 +53,7 @@ export default {
     [On.LOAD_SELECTION]: async ({dispatch}, {_id, fragments}) => dispatch(On.LOAD_SELECTION_TREE, {selection: await api.getSelection(_id), fragments}),
 
     [On.LOAD_SELECTION_TREE]: async ({dispatch}, {selection, fragments}) => {
-        const tree = await dispatch(On.LOAD_OPEN_TREE, {_id: selection.trunkId, bqt: selectionBqt(selection), fragments})
+        const tree = await dispatch(On.LOAD_TREE, {_id: selection.trunkId, bqt: selectionBqt(selection), fragments})
         tree.selection = selection
         return tree
     },

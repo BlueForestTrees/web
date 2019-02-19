@@ -1,7 +1,11 @@
 <template>
     <div id="b">
-        <h1 class="display-3 font-weight-thin">Besoin</h1>
-        <p><v-icon color="orange">new_releases</v-icon><i>Ceci est une ébauche! Votre participation serait utile.</i></p>
+
+        <v-layout class="display-2 font-weight-thin mb-3">
+            Besoin
+            <v-icon color="primary" x-large class="ml-2">fiber_manual_record</v-icon>
+        </v-layout>
+
         <ul style="list-style-type:decimal">
             <li>Besoin de toutes les idées possibles pour mettre en oeuvre <a href="https://www.ademe.fr/expertises/economie-circulaire" target="_blank">l'économie circulaire</a>.</li>
             <li>Besoin d'un lieu où l'environnement est au centre, et les personnes et entreprises autour, se concertant, etc.. et laisser le résultat du travail accessible à d'autres.</li>
@@ -20,8 +24,7 @@
             <li>...?</li>
         </ul>
 
-        <h2 class="display-1 font-weight-thin">Discussion</h2>
-        <p><v-icon color="green" small>info</v-icon>Votre point de vue est essentiel à la poursuite de ce projet! :)</p>
+        <p class="mt-5"><v-icon color="orange">new_releases</v-icon><i>Ceci est une ébauche! Votre participation serait utile:</i></p>
         <open-message :section="secs.BESOIN"/>
     </div>
 </template>

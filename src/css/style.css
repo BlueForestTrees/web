@@ -4,14 +4,14 @@ html {
 
 .bottom-right {
     position: absolute;
-    bottom: 0;
-    right: 0;
+    bottom: 5px;
+    right: 5px;
 }
 
 .top-left {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 5px;
+    left: 5px;
 }
 
 .drag {
@@ -105,12 +105,13 @@ a {
 }
 
 .logo-petit {
-    height: 1.5em
+    height: 1.5em;
+    width: 1.5em
 }
 
 .logo {
+    height: 2.5em;
     width: 2.5em;
-    height: 2.5em
 }
 
 .logo-big {
@@ -118,8 +119,8 @@ a {
     width: 4em;
 }
 
-.megaphone {
-    background: url(/img/megaphone.svg) no-repeat center;
+.voice {
+    background: url(/img/voice.svg) no-repeat center;
 }
 
 .planet {
@@ -140,6 +141,10 @@ a {
 
 .balance {
     background: url(/img/balance.svg) no-repeat center;
+}
+
+.carton {
+    background: url(/img/carton.svg) no-repeat center;
 }
 
 .enough-high {

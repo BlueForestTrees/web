@@ -54,7 +54,7 @@
         methods: {
             qtUnitName,
             ...mapActions({
-                dispatchLoad: On.LOAD_OPEN_TREE,
+                dispatchLoad: On.LOAD_TREE,
                 dispatchSearchEquiv: On.SEARCH_EQUIV,
                 snack: On.SNACKBAR,
                 goTree: On.GO_TREE,

@@ -1,9 +1,6 @@
 <template>
     <card>
-        <v-toolbar class="elevation-0">
-            <v-list-tile-avatar class="megaphone logo"/>
-            <v-toolbar-title>Créer un message</v-toolbar-title>
-        </v-toolbar>
+        <subpage-title title="Créer un message" icon-class="voice logo-petit"/>
 
         <div class="pa-3">Enregistrez les informations que vous trouvez intéressantes pour les diffuser et les soumettre au débat. <br>Vous pouvez créer différents types d'informations:</div>
 
@@ -63,10 +60,11 @@
 <script>
     import Card from "../common/Card"
     import {GO} from "../../const/go"
+    import SubpageTitle from "../tree/SubpageTitle"
 
     export default {
         name: "create-info",
-        components: {Card},
+        components: {SubpageTitle, Card},
         data: () => ({GO})
     }
 </script>

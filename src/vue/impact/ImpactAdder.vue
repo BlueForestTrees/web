@@ -3,7 +3,7 @@
         <v-card>
 
             <subpage-title title="Ajouter un impact">
-                <closer @close="$emit('close')"/>
+                <closer slot="right" @close="$emit('close')"/>
             </subpage-title>
             <v-divider/>
 
@@ -12,11 +12,7 @@
                 <impact-entry-picker v-if="changeItem || !selectedEntry" @select="select"/>
 
                 <v-layout v-else align-center column>
-                    <v-card>
-                        <v-container>
-                            <quantity-picker :item="selectedEntry" @change="validate" @close="closeQtPicker"></quantity-picker>
-                        </v-container>
-                    </v-card>
+                    <quantity-picker :item="selectedEntry" @change="validate" @close="closeQtPicker"></quantity-picker>
                 </v-layout>
 
             </transition>

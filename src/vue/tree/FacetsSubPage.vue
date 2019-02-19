@@ -1,14 +1,14 @@
 <template>
     <facet-adder v-if="modeAdd" :tree="tree" @close="$emit('close')"/>
     <v-card v-else>
-        <subpage-title title="Propriétés"/>
+        <subpage-title title="Propriétés" icon-class="facet logo"/>
 
         <fragment-list :tree="tree" :fragment="FACETS" none="Pas encore d'informations sur les propriétés"></fragment-list>
 
         <v-divider/>
         <v-layout>
             <v-spacer/>
-            <open-message :section="section" dense/>
+            <open-message :section="section" no-text/>
         </v-layout>
     </v-card>
 </template>

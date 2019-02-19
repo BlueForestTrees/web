@@ -240,3 +240,10 @@ export const createSelection = tree => ({
     name: tree.trunk.name.substr(0, selectionNameMaxLength)
 
 })
+
+//TODO les bonnes quantités
+export const treefySelection = item => item.freq && {
+    _id: item.trunkId,
+    trunk: {_id: item.trunkId, name: item.name, quantity: item.quantity},
+    selection: item
+} || item

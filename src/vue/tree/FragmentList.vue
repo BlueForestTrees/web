@@ -1,21 +1,25 @@
 <template>
-    <selectable-list :items="items" :maxSelectionSize="1">
-        <template slot="no-items">
-            <v-layout class="align-center justify-center my-5 font-weight-thin title">
-                <img src="/img/broken-heart.svg" class="logo-petit ma-1"/>{{none}}
-            </v-layout>
-        </template>
-    </selectable-list>
+    <span>
+        <note v-if="note" :text="note" />
+        <selectable-list :items="items" :maxSelectionSize="1">
+            <template slot="no-items">
+                <v-layout class="align-center justify-center my-5 font-weight-thin title">
+                    <img src="/img/broken-heart.svg" class="logo-petit ma-1"/>{{none}}
+                </v-layout>
+            </template>
+        </selectable-list>
+    </span>
 </template>
 <script>
     import SelectableList from "../common/SelectableList"
     import On from "../../const/on"
     import {mapActions} from "vuex"
+    import Note from "../common/Note"
 
     export default {
         name: "fragment-list",
-        components: {SelectableList},
-        props: ['tree', 'fragment', 'none'],
+        components: {Note, SelectableList},
+        props: ['tree', 'fragment', 'none', 'note'],
         created() {
             this.refresh()
         },

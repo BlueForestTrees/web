@@ -37,7 +37,6 @@ export const snack = () => ({
 export const tree = () => ({_id: null, trunk: null, selection: null, facets: null})
 
 export default {
-    callback: [],
     version: {web: ENV.VERSION},
     dispo: {grandeurs: false},
     selection: [],
@@ -55,6 +54,7 @@ export default {
     compare: {left: null, right: null, leftAxises: null, rightAxises: null, axis: null},
     dialogs: dialogs(),
     nav: {
+        callback: [],
         main: {tab: null},
         search: {cat: {opened: false}, owner: {opened: false}},
         leftMenuVisible: false, rightMenuVisible: false, dark: false, detailsDialog: false,
@@ -64,11 +64,6 @@ export default {
             root: {idx: 0, term: "", scope: ROOTS},
             facet: {term: ""},
             picker: {tab: null}
-        },
-        create: {
-            tree: {
-                callback: null
-            }
         }
     },
     snack: snack(),
@@ -76,5 +71,7 @@ export default {
     myMessages: [],
     maquettes,
     xRequestId: null,
-    info:{}
+    info: {},
+
+
 }

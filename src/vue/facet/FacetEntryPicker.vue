@@ -13,7 +13,7 @@
             </v-list-tile>
         </v-list>
 
-        <add-entry-fab title="Créer un type de propriété" :action="createEntryRoute"/>
+        <add-entry-fab title="Créer un type de propriété" :route="createEntryRoute"/>
 
     </v-layout>
 </template>

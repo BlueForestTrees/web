@@ -1,12 +1,14 @@
 <template>
     <div id="c">
-        <p><v-icon color="green">info</v-icon>Temps de lecture: 2-3 min.</p>
-        <p></p>
 
-        <p><v-icon color="orange">new_releases</v-icon><i>Cette page et les suivantes forment une ébauche de business plan, c'est en construction et votre participation permettra de l'améliorer ;)</i></p>
-        <h1 class="display-3 font-weight-thin">Aujourd'hui</h1>
+        <v-layout class="display-2 font-weight-thin mb-3">
+            Aujourd'hui
+            <v-icon color="primary" x-large class="ml-2">fiber_manual_record</v-icon>
+        </v-layout>
 
-        <p>La planète est petite. Nous commençons à tenir compte (ou pas) de cette limite dans nos façons de faire. Nous savons que nous consommons les ressources plus vite qu'elle ne se créent. L'idée de ressources est très concrète là où on les extrait (<a href="https://www.geo.fr/environnement/definition-terres-rares-scandium-yttrium-et-lanthanides-124433" target="_blank">comme cette mine de terres rares</a>). Par contre, elles sont invisibles dans les lieux où elles s'achètent (<a href="https://slice42.com/apple/2014/07/photo-foule-incroyable-a-chongqing-pour-apple-store-3097/" target="_blank">comme dans les téléphones de ce magasin high-tech</a>).<p>
+        <p>La planète est petite.</p>
+        <p>Nous commençons à tenir compte (ou pas) de cette limite dans nos façons de faire. Nous savons que nous consommons des ressources plus rapidement que leur renouvellement.</p>
+        <p>Là où on les extrait (<a href="https://www.geo.fr/environnement/definition-terres-rares-scandium-yttrium-et-lanthanides-124433" target="_blank">comme dans cette mine</a>), le fait que la ressource soit précieuse est une évidence. Par contre, dans les lieux où on les achète (<a href="https://slice42.com/apple/2014/07/photo-foule-incroyable-a-chongqing-pour-apple-store-3097/" target="_blank">comme dans les téléphones à vendre ici</a>), les ressources sont invisibles.<p>
         <p>Une espèce de risque et de responsabilité environnementale nous parvient. Cette responsabilité n'est-elle pas vécue comme une peine par les citoyens, par le sentiment d'impuissance de l'individu? Surinformés/désinformés, savons-nous au moins distinguer ce qui est réellement propre de ce qui l'est moins?</p>
         <p>L'idée "d'environnement" est un mauvais concept: l'homme est au centre et le reste est autour. Ne sommes-nous pas plutôt le maillon d'une chaîne? Peut-on imaginer quelque chose pour améliorer la cohérence entre ce que l'on sait et ce que l'on fait?</p>
 
@@ -68,9 +70,8 @@
         <p>Surtout, ces organisations sont <b>séparées</b> les une des autres et souvent <b>peu connues</b>. Connaître à peu près correctement toutes ces choses est "un job à plein temps".</p>
 
 
-        <h2 class="display-1 font-weight-thin">Discussion</h2>
+        <p class="mt-5"><v-icon color="orange">new_releases</v-icon><i>Ce projet est en incubation, votre participation permettra de l'améliorer:</i></p>
         <open-message :section="secs.CONSTAT"/>
-        <p><v-icon color="green" small>info</v-icon>Votre point de vue est essentiel à la poursuite de ce projet! :)</p>
     </div>
 </template>
 

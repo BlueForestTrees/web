@@ -1,7 +1,6 @@
 <template>
     <v-flex key="equiv">
 
-
         <v-layout column align-center>
             <v-toolbar class="elevation-0" color="primary" dark>
                 <v-list-tile-avatar class="game logo"></v-list-tile-avatar>
@@ -40,16 +39,20 @@
 
         <transition name="slide-fade" mode="out-in">
             <v-layout v-if="state === 'answered' && lastWasGood !== undefined"
-                      @click="nextQuestion" class="hand"
                       row align-center justify-center mb-4>
-                <h1 v-if="lastWasGood" class="font-weight-thin display-3">Bravo!!</h1>
-                <span v-else-if="resteQuestions" class="font-weight-thin display-1">
-                    Perdu...
-                    <img src="/img/broken-heart.svg" class="logo-petit"/>
-                </span>
-                <v-btn v-if="resteQuestions" color="primary" flat icon>
-                    <v-icon x-large>play_arrow</v-icon>
-                </v-btn>
+                <v-layout class="font-weight-thin display-1" align-center justify-center>
+                    <template v-if="lastWasGood">
+                        <img src="/img/heart.svg" class="logo-petit mr-3"/>
+                        <h1 class="font-weight-thin display-3">Bravo!!</h1>
+                    </template>
+                    <template v-else>
+                        <img src="/img/broken-heart.svg" class="logo-petit mr-3"/>
+                        <span>C'était l'autre...</span>
+                    </template>
+                    <v-btn v-if="resteQuestions" @click="nextQuestion" color="primary" flat icon>
+                        <v-icon x-large>play_arrow</v-icon>
+                    </v-btn>
+                </v-layout>
             </v-layout>
         </transition>
 
@@ -59,7 +62,7 @@
             <h1 v-else-if="bonnesReponses / nbReponses> 0.7" class="font-weight-thin align"><img src="/img/medal.svg" class="logo"/><br>Vraiment bon! <b>Bravo!!</b><br>La médaille d'encouragement est à vous :)</h1>
             <h1 v-else-if="bonnesReponses / nbReponses > 0.5" class="font-weight-thin align"><img src="/img/thumb1.svg" class="logo"/>De bonnes connaissances! <b>Poursuivez!!</b></h1>
             <h1 v-else-if="bonnesReponses / nbReponses > 0.3" class="font-weight-thin align"><img src="/img/thumb.svg" class="logo"/>Oups!</h1>
-            <h1 v-else class="font-weight-thin"><img src="/img/broken-heart.svg" class="logo-petit"/>Il faut trouver là où il y a le plus de {{name(leftFragment)}} :(</h1>
+            <v-layout v-else class="font-weight-thin headline"><img src="/img/broken-heart.svg" class="logo-petit mr-3"/>Il faut trouver là où il y a le<b> plus </b>de {{name(leftFragment)}} :(</v-layout>
 
             <v-layout v-if="saved">
                 <v-btn @click="replay" color="primary">rejouer</v-btn>
@@ -152,7 +155,7 @@
         methods: {
             qtUnitName, name,
             ...mapActions({
-                loadTree: On.LOAD_OPEN_TREE,
+                loadTree: On.LOAD_TREE,
                 loadGame: On.LOAD_GAME,
                 saveGame: On.SAVE_GAME,
                 saveScore: On.SAVE_SCORE,
@@ -161,6 +164,7 @@
             async newGame() {
                 if (this.gameId) {
                     this.game = await this.loadGame({_id: this.gameId})
+                    this.nbReponses = this.game.questions.length
                 } else {
                     this.game = {
                         type: QUI2,
@@ -190,16 +194,16 @@
                 this.coef = this.nextSavedGameQuestion ?
                     this.nextSavedGameQuestion.coef
                     :
-                    Math.random() - 0.5//random de -0.5 à +0.5
+                    Math.round(Math.random() * 10) / 10 - 0.5//random de -0.5 à +0.5
 
-                this.right = await this.loadRandomTreeFromFragment({
+                const rightRep = await this.loadRandomTreeFromFragment({
                     bqt: this.applyCoef(this.leftFragment.quantity.bqt),
                     entryId: this.game.fragmentId,
                     type: this.game.fragment,
-                    treeId: this.nextSavedGameQuestion ? this.nextSavedGameQuestion.rightId : undefined
+                    trunkId: this.nextSavedGameQuestion ? this.nextSavedGameQuestion.rightId : undefined
                 })
-                await this.right.promises.all
-
+                await rightRep.promises.all
+                this.right = rightRep
             },
             playLeft() {
                 this.playWith(this.leftFragment.quantity.bqt >= this.rightFragment.quantity.bqt)
@@ -216,8 +220,14 @@
                 }
             },
             async finishPartie() {
-                this.game._id = this.game._id || createStringObjectId()
-                await this.saveGame(this.game)
+                if (!this.game._id) {
+                    this.game._id = createStringObjectId()
+                    await this.saveGame({
+                        ...this.game,
+                        leftName: this.tree.trunk.name,
+                        fragmentName: this.leftFragment.name
+                    })
+                }
                 await this.saveScore({
                     _id: createStringObjectId(),
                     type: QUI2,
@@ -227,6 +237,7 @@
                 this.saved = true
             },
             replay() {
+                this.saved = false
                 this.score = []
                 this.state = 'playing'
                 this.newGame()

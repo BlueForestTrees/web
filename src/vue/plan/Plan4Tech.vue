@@ -1,13 +1,13 @@
 <template>
     <div id="t">
-        <h1 class="display-3 font-weight-thin">Technique</h1>
-        <p>
-        <p>
-            <v-icon color="orange">info</v-icon>
-            <v-icon color="orange">info</v-icon>
-            <b>Pour les curieux ou les développeurs en informatique :)</b>
-        </p>
-        <p>BlueForest utilise entre autres JS, Docker, MongoDB, RabbitMQ, l'approche micro-services</p>
+        <v-layout class="display-2 font-weight-thin mb-3">
+            Technique
+            <v-icon color="primary" x-large class="ml-2">fiber_manual_record</v-icon>
+        </v-layout>
+
+        <p><v-icon color="green">info</v-icon><b>Pour les curieux ou les développeurs en informatique :)</b></p>
+
+        <p>BlueForest utilise JS, Docker, MongoDB, RabbitMQ, l'approche micro-services, etc.</p>
         <p>Voici une bonne part des outils et méthodes utilisés sur blueforest.org:</p>
         <ul>
             <li>
@@ -43,17 +43,21 @@
                 </ul>
             </li>
         </ul>
-        <h2 class="display-1 font-weight-thin">Discussion</h2>
-        <p>
-            <open-message :section="secs.TECH"></open-message>
-            <a href="https://github.com/BlueForestTrees" target="_blank">
-                <span class="sr">BlueForest est sur GitHub</span>
-                <svg width="20px" xmlns="http://www.w3.org/2000/svg" viewBox="10 10 30 30">
-                    <path fill-rule="evenodd" clip-rule="evenodd" fill="#181616"
-                          d="M25 10c-8.3 0-15 6.7-15 15 0 6.6 4.3 12.2 10.3 14.2.8.1 1-.3 1-.7v-2.6c-4.2.9-5.1-2-5.1-2-.7-1.7-1.7-2.2-1.7-2.2-1.4-.9.1-.9.1-.9 1.5.1 2.3 1.5 2.3 1.5 1.3 2.3 3.5 1.6 4.4 1.2.1-1 .5-1.6 1-2-3.3-.4-6.8-1.7-6.8-7.4 0-1.6.6-3 1.5-4-.2-.4-.7-1.9.1-4 0 0 1.3-.4 4.1 1.5 1.2-.3 2.5-.5 3.8-.5 1.3 0 2.6.2 3.8.5 2.9-1.9 4.1-1.5 4.1-1.5.8 2.1.3 3.6.1 4 1 1 1.5 2.4 1.5 4 0 5.8-3.5 7-6.8 7.4.5.5 1 1.4 1 2.8v4.1c0 .4.3.9 1 .7 6-2 10.2-7.6 10.2-14.2C40 16.7 33.3 10 25 10z"></path>
-                </svg>
-            </a>
-        </p>
+
+        <div class="mt-5">
+        <a href="https://github.com/BlueForestTrees" target="_blank">
+            <img src="img/logo.svg" class="logo"/>
+            <img src="img/heart.svg" class="logo-petit mx-1"/>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="10 10 30 30" class="logo">
+                <path fill-rule="evenodd" clip-rule="evenodd" fill="#181616"
+                      d="M25 10c-8.3 0-15 6.7-15 15 0 6.6 4.3 12.2 10.3 14.2.8.1 1-.3 1-.7v-2.6c-4.2.9-5.1-2-5.1-2-.7-1.7-1.7-2.2-1.7-2.2-1.4-.9.1-.9.1-.9 1.5.1 2.3 1.5 2.3 1.5 1.3 2.3 3.5 1.6 4.4 1.2.1-1 .5-1.6 1-2-3.3-.4-6.8-1.7-6.8-7.4 0-1.6.6-3 1.5-4-.2-.4-.7-1.9.1-4 0 0 1.3-.4 4.1 1.5 1.2-.3 2.5-.5 3.8-.5 1.3 0 2.6.2 3.8.5 2.9-1.9 4.1-1.5 4.1-1.5.8 2.1.3 3.6.1 4 1 1 1.5 2.4 1.5 4 0 5.8-3.5 7-6.8 7.4.5.5 1 1.4 1 2.8v4.1c0 .4.3.9 1 .7 6-2 10.2-7.6 10.2-14.2C40 16.7 33.3 10 25 10z"></path>
+            </svg>
+        </a>
+        </div>
+
+        <p class="mt-2"><v-icon color="orange">new_releases</v-icon>Une question ou une suggestion:</p>
+        <open-message :section="secs.TECH"></open-message>
+
     </div>
 </template>
 

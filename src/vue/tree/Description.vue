@@ -16,6 +16,11 @@
                 <h5 class="font-weight-thin subheading">Code:</h5>
                 <h5 class="font-weight-thin subheading">{{code}}</h5>
             </v-layout>
+
+            <v-layout align-center justify-space-between v-if="store">
+                <h5 class="font-weight-thin subheading">Magasins:</h5>
+                <h5 class="font-weight-thin subheading">{{store}}</h5>
+            </v-layout>
         </div>
     </v-layout>
 </template>
@@ -42,6 +47,9 @@
             },
             owner() {
                 return this.tree && this.tree.owner
+            },
+            store() {
+                return this.trunk && this.trunk.stores
             }
         }
     }

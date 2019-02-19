@@ -1,7 +1,7 @@
 <template>
     <ressource-adder v-if="modeAdd" :tree="tree" @close="$emit('close')"/>
     <v-card v-else>
-        <subpage-title :title="title"/>
+        <subpage-title :title="title" iconClass="scope-tree logo"/>
 
         <transition name="slide-fade" mode="out-in">
             <tree-nav v-if="idx === 0" :tree="tree" key="2"/>
@@ -14,7 +14,7 @@
         <v-layout>
             <v-spacer/>
             <scope-menu :value="idx" @input="setIdx" :dense="$vuetify.breakpoint.xsOnly" :scope="rootScope"/>
-            <open-message :section="section" dense/>
+            <open-message :section="section" no-text/>
         </v-layout>
     </v-card>
 </template>
@@ -73,7 +73,7 @@
             title() {
                 switch (this.idx) {
                     case 0:
-                        return "Carte des ressources"
+                        return "Fabrication"
                     case 1:
                         return "Ressources"
                     case 2:

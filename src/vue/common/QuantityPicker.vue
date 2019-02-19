@@ -1,9 +1,9 @@
 <template>
-    <span>
-        <div class="font-weight-medium subheading">
-            <v-icon color="green" class="mr-2">info</v-icon>{{name(item)}}
-        </div>
-        <v-icon large color="grey" @click.stop="close" class="top-right">close</v-icon>
+    <div>
+        <subpage-title sub iconClass="carton logo" title="Quantité">
+            <slot slot="left"></slot>
+            <closer slot="right" @close="close"/>
+        </subpage-title>
 
         <v-form v-model="valid" v-on:submit.prevent="" ref="form">
 
@@ -13,12 +13,15 @@
                 <div v-if="item.eq">eq. {{item.eq}}</div>
             </v-layout>
 
-                <v-layout row justify-center class="mt-5">
-                    <v-btn flat icon @click.stop="validate"><v-icon large color="primary">done</v-icon></v-btn>
-                </v-layout>
+            <v-layout row justify-center class="mt-5">
+                <v-spacer/>
+                <v-btn flat icon @click.stop="validate">
+                    <v-icon color="primary">save</v-icon>
+                </v-btn>
+            </v-layout>
 
         </v-form>
-    </span>
+    </div>
 </template>
 
 <script>
@@ -30,10 +33,12 @@
     import {bqtGToQtUnit, getGrandeur, unit, toBqtG, bestQuantity} from 'unit-manip'
     import UnitSelect from "../common/UnitSelect"
     import GrandeurSelect from "../common/GrandeurSelect"
+    import SubpageTitle from "../tree/SubpageTitle"
+    import Closer from "./Closer"
 
     export default {
         name: 'quantity-picker',
-        components: {GrandeurSelect, UnitSelect, Destination},
+        components: {Closer, SubpageTitle, GrandeurSelect, UnitSelect, Destination},
         mixins: [closable],
         props: ['item'],
         data: function () {

@@ -11,9 +11,6 @@
                 <v-window-item key="f" lazy>
                     <plan-func/>
                 </v-window-item>
-                <v-window-item key="m" lazy>
-                    <plan-model-eco/>
-                </v-window-item>
                 <v-window-item key="t" lazy>
                     <plan-tech/>
                 </v-window-item>
@@ -26,7 +23,7 @@
                     <v-item key="bb">
                         <v-flex slot-scope="{ active, toggle }">
                             <span class="label-command">
-                                <span :class="active?'bold-font':''" @click="toggle">Intro</span>
+                                <span :class="active?'bold-font':''" @click="toggle">Aujourd'hui</span>
                                 <v-btn :input-value="active" icon class="ml-0" @click="toggle"><v-icon color="primary">fiber_manual_record</v-icon></v-btn>
                             </span>
                         </v-flex>
@@ -43,14 +40,6 @@
                         <v-flex slot-scope="{ active, toggle }">
                             <span class="label-command">
                                 <span :class="active?'bold-font':''" @click="toggle">Offre</span>
-                                <v-btn :input-value="active" icon class="ml-0" @click="toggle"><v-icon color="primary">fiber_manual_record</v-icon></v-btn>
-                            </span>
-                        </v-flex>
-                    </v-item>
-                    <v-item key="bm">
-                        <v-flex slot-scope="{ active, toggle }">
-                            <span class="label-command">
-                                <span :class="active?'bold-font':''" @click="toggle">Modèle éco.</span>
                                 <v-btn :input-value="active" icon class="ml-0" @click="toggle"><v-icon color="primary">fiber_manual_record</v-icon></v-btn>
                             </span>
                         </v-flex>
@@ -82,11 +71,10 @@
     const PlanBesoin = () => import(/* webpackChunkName: "PlanBesoin"*/ "./Plan2Besoin")
     const PlanFunc = () => import(/* webpackChunkName: "PlanFunc"*/ "./Plan3Fonc")
     const PlanTech = () => import(/* webpackChunkName: "PlanTech"*/ "./Plan4Tech")
-    const PlanModelEco = () => import(/* webpackChunkName: "PlanModelEco"*/ "./Plan4ModelEco")
 
     export default {
         name: "plan",
-        components: {PlanModelEco, PlanTech, PlanFunc, PlanBesoin, PlanConstat, ConnectToContinueDialog, Card, Messages},
+        components: {PlanTech, PlanFunc, PlanBesoin, PlanConstat, ConnectToContinueDialog, Card, Messages},
         data: () => ({GO, window: null}),
         computed: {
             ...mapState(['nav'])

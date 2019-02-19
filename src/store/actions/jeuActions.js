@@ -8,6 +8,7 @@ import {TRUNK} from "../../const/fragments"
 
 export default {
     [On.LOAD_GAME]: ({}, {_id}) => api.loadGame(_id),
+    [On.SEARCH_GAMES]: ({}, filter) => api.searchGames(filter),
     [On.SAVE_GAME]: ({}, game) => api.saveGame(game),
     [On.SAVE_SCORE]: ({}, score) => api.saveScore(score),
     [On.GO_EQUIV]: ({dispatch}, {_id, bqt, sbqt, s_id}) => {

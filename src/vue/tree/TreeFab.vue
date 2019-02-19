@@ -5,7 +5,7 @@
         </v-btn>
         <v-list v-if="tree" class="font-weight-thin subheading">
             <v-list-tile @click="goInfo">
-                <v-list-tile-avatar class="megaphone logo"/>
+                <v-list-tile-avatar class="voice logo"/>
                 <v-list-tile-title>Utiliser dans un message...</v-list-tile-title>
             </v-list-tile>
             <v-divider/>

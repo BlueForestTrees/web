@@ -6,7 +6,6 @@ const NotFound = () => import(/* webpackChunkName: "NotFound" */ "../vue/NotFoun
 const Tree = () => import(/* webpackChunkName: "Tree" */ '../vue/tree/Tree.vue')
 const Equivalence = () => import(/* webpackChunkName: "Equivalence" */ '../vue/equivalence/Equivalence')
 const Qui2 = () => import(/* webpackChunkName: "Qui2" */ '../vue/jeu/QuiDeuxFoisPlus')
-const Selection = () => import (/* webpackChunkName: "Selection" */ '../vue/basket/Navigator')
 const RootEditor = () => import(/* webpackChunkName: "Root" */ '../vue/root/RootEditorPage')
 const SearchPage = () => import(/* webpackChunkName: "Search" */ '../vue/search/MainPage')
 const BlueForest = () => import(/* webpackChunkName: "BlueForest" */ '../vue/BlueForest')
@@ -42,14 +41,13 @@ export default new VueRouter({
             path: "/", component: BlueForest,
             children: [
                 {name: GO.SEARCH, path: "", component: SearchPage},
-                {name: GO.PLAN_INTRO, path: "/plan/intro", component: BFCestQuoi},
+                {name: GO.PLAN_INTRO, path: "/aide", component: BFCestQuoi},
                 {name: GO.PLAN, path: "/plan", component: Plan},
                 {name: GO.TEAM, path: "/equipe", component: MyTeam},
                 {name: GO.MESSAGE, path: "/message", component: MyMessages},
                 {name: GO.ROAD_MAP, path: 'roadmap', component: RoadMap},
                 {name: GO.DATA_EXPLAINED, path: 'explain/datas', component: DatasExplained},
                 {name: GO.CREATE_TREE, path: "create/tree", component: CreateTree},
-
 
                 {name: GO.TREE, path: "tree/:bqt/:_id", component: Tree, props: (route) => ({_id: route.params._id, bqt: Number(Number.parseFloat(route.params.bqt))})},
                 {name: GO.SELECTION, path: "sel/:_id", component: Tree, props: (route) => ({sid: route.params._id})},
@@ -66,11 +64,10 @@ export default new VueRouter({
                 {name: GO.CREATE_GROUP, path: "create/g", component: CreateGroup},
                 {name: GO.EDIT_GROUP, path: "edit/g/:path", component: CreateGroup, props: true},
 
-                // {name: GO.QUI_2, path: "jeu/:_id", component: Jeu, props: true},
+                {name: GO.GAME, path: "play/:gameId", component: Qui2, props: true},
                 {name: GO.QUI_2, path: "qui2fois/:bqt/:_id/:f/:fid", component: Qui2, props: ({params}) => ({leftBqt: params.bqt, leftId: params._id, fragment: params.f, fragmentId: params.fid})},
                 {name: GO.TREE_EMPTY, path: "tree", component: Tree},
                 {name: GO.ROOT, path: "root/:treeId/:rootId", component: RootEditor, props: true},
-                {name: GO.BASKET, path: "selection", component: Selection},
                 {name: GO.RECENT, path: "recent", component: MyBasket},
                 {name: GO.COMPARE_EMPTY, path: "compare", component: Compare},
                 {name: GO.COMPARE_PARTIAL, path: "compare/:leftId", component: Compare, props: true},

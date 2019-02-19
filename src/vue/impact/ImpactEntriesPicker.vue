@@ -13,7 +13,7 @@
             </v-list-tile>
         </v-list>
 
-        <add-entry-fab title="Créer un type d'impact" :action="GO.ADD_IMPACT_ENTRY"/>
+        <add-entry-fab title="Créer un type d'impact" :route="GO.ADD_IMPACT_ENTRY"/>
     </v-layout>
 
     <!--<v-dialog v-model="detailsDialog" max-width="800">-->

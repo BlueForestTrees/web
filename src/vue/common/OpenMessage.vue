@@ -1,11 +1,11 @@
 <template>
     <div @click="showMessages">
         <slot>
-            <v-layout row justify-center align-center class="hand">
+            <v-layout row class="hand" align-center>
                 <v-btn v-if="!noicon" flat icon>
                     <v-icon color="primary">message</v-icon>
                 </v-btn>
-                <h3 v-if="!dense" class="font-weight-thin">{{section.title}}</h3>
+                <h3 v-if="!noText" class="font-weight-thin">{{section.title}}</h3>
             </v-layout>
         </slot>
     </div>
@@ -18,7 +18,7 @@
 
     export default {
         name: "open-message",
-        props: {section: {type: Object}, dense: {type: Boolean, default: false}, noicon: {type: Boolean, default: false}},
+        props: {section: {type: Object}, noText: {type: Boolean, default: false}, noicon: {type: Boolean, default: false}},
         methods: {
             showMessages() {
                 this.dispatchShowMessages(this.section)

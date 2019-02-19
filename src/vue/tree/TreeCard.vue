@@ -4,12 +4,12 @@
             <template slot="front">
                 <photo :trunk="trunk" size="200" class="mb-2"/>
                 <qt-unit-name :tree="tree"/>
-                <slot name="bottom"></slot>
+                <slot/>
             </template>
             <v-card slot="back">
-                <v-container>
-                    <selection-picker :tree="tree" @close="flip" @change="selectionChanged"/>
-                </v-container>
+                <selection-picker :tree="tree" @close="flip" @pick="pickSelection">
+                    <v-icon large color="red">favorite_bordered</v-icon>
+                </selection-picker>
             </v-card>
         </card3d>
     </v-layout>
@@ -39,7 +39,7 @@
                 saveApplySelection: On.SAVE_APPLY_SELECTION,
             }),
             ...mapMutations({setFlipped: Do.SET_TREE_CARD_FLIPPED}),
-            selectionChanged(selection) {
+            pickSelection(selection) {
                 this.saveApplySelection(selection)
                 this.flip()
             },
