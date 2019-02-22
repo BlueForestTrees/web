@@ -1,5 +1,5 @@
 <template>
-    <span>
+    <v-flex>
         <note v-if="note" :text="note" />
         <selectable-list :items="items" :maxSelectionSize="1">
             <template slot="no-items">
@@ -8,7 +8,7 @@
                 </v-layout>
             </template>
         </selectable-list>
-    </span>
+    </v-flex>
 </template>
 <script>
     import SelectableList from "../common/SelectableList"

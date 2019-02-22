@@ -5,6 +5,5 @@ export const Dial = {
     SUSCRIBE: 'suscribe',
     ADD_RESSOURCE: "addRessource",
     FACET_ENTRY: "facetEntry",
-    ADD_IMPACT_ENTRY: "impactEntry",
-    CREATE: "create"
+    ADD_IMPACT_ENTRY: "impactEntry"
 }

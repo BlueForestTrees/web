@@ -5,9 +5,7 @@
 
         <transition name="slide-fade" mode="out-in">
             <fragment-list v-if="idx === 0" :tree="tree" :fragment="IMPACT_TANK" none="Pas encore d'informations sur les impacts sur l'environnement" key="0"></fragment-list>
-            <fragment-list v-else-if="idx === 1" :tree="tree" :fragment="IMPACTS" none="Pas encore d'informations sur les impacts sur l'environnement" key="1"
-                note="Note: Vous êtes en train de regarder les impacts déclarés au niveau du produit sans compter ceux de ces ressources."
-            ></fragment-list>
+            <fragment-list v-else-if="idx === 1" :tree="tree" :fragment="IMPACTS" none="Pas encore d'informations sur les impacts sur l'environnement" key="1" note="Note: Vous êtes en train de regarder les impacts déclarés au niveau du produit sans compter ceux de ces ressources."></fragment-list>
         </transition>
 
         <v-divider/>

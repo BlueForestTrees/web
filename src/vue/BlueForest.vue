@@ -1,23 +1,19 @@
 <template>
-    <span>
+    <v-content>
         <messages v-if="nav.rightMenuVisible"/>
         <left-menu v-if="nav.leftMenuVisible"/>
         <bar/>
         <span v-if="dispo.grandeurs">
-
-            <v-content>
-                <transition :name="transitionName" mode="out-in">
-                    <router-view></router-view>
-                </transition>
-            </v-content>
-
+            <transition :name="transitionName" mode="out-in">
+                <router-view></router-view>
+            </transition>
         </span>
 
         <snack :snack="snack" v-if="snack.visible"/>
         <connect-to-continue-dialog v-if="dialogs[Dial.CONNECT_TO_CONTINUE].visible"/>
-        <add-ressource-dialog />
+        <add-ressource-dialog/>
 
-    </span>
+    </v-content>
 </template>
 
 

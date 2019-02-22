@@ -1,6 +1,6 @@
 <template>
     <card>
-        <subpage-title title="Créer un message" icon-class="voice logo-petit"/>
+        <subpage-title title="Nouvelle information" icon-class="voice logo"/>
 
         <div class="pa-3">Enregistrez les informations que vous trouvez intéressantes pour les diffuser et les soumettre au débat. <br>Vous pouvez créer différents types d'informations:</div>
 

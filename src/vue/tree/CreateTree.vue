@@ -1,6 +1,6 @@
 <template>
     <card>
-        <subpage-title title="Créer un produit" icon-class="scope-tree logo"/>
+        <subpage-title title="Nouveau produit" icon-class="scope-tree logo"/>
 
         <v-layout key="create-tree" column wrap justify-center align-center>
             <v-stepper v-model="idx" vertical @input="next" class="elevation-0">

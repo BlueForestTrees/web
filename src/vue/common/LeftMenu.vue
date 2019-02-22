@@ -24,17 +24,7 @@
                     <img src="/img/voice.svg" class="logo-petit"/>
                 </v-list-tile-action>
                 <v-list-tile-content>
-                    <v-list-tile-title>Nouveau message</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
-
-
-            <v-list-tile @click="goto(GO.TEAM)">
-                <v-list-tile-action>
-                    <v-icon color="primary">group</v-icon>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                    <v-list-tile-title>Equipes</v-list-tile-title>
+                    <v-list-tile-title>Nouvelle information</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
 
@@ -116,7 +106,6 @@
             ...mapActions({
                 goto: On.GO_TO,
                 showDialog: On.SHOW_DIALOG,
-                dispatchDeleteTrunk: On.DELETE_TREE,
                 goImpactEntry: On.GO_IMPACT_ENTRY,
                 goFacetEntry: On.GO_FACET_ENTRY,
                 goCreateTree: On.GO_CREATE_TREE,

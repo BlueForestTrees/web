@@ -40,6 +40,7 @@ export default {
     searchUsers: ({term}) => get(`/api/user/term/${term}`),
 
     getUser: _id => cached(get, `/api/user/${_id}`, userCache),
+    updateUser: user => put(`/api/user`, user),
     getTrunk: _id => get(`/api/tree/trunk/${_id}`),
     getGrandeurs: () => get('/api/grandeur'),
     getFacets: _id => get(`/api/facet/${_id}`),

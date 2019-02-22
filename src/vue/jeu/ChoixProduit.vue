@@ -1,5 +1,5 @@
 <template>
-    <v-card style="width: 320px; height:27em" class="ma-3 pa-3">
+    <div style="width: 320px; height:27em" class="ma-3 pa-3">
 
         <transition name="slide-fade" mode="out-in">
             <v-layout v-if="tree && tree.trunk && fragment" column align-center justify-center style="height:80%">
@@ -10,14 +10,14 @@
         </transition>
 
         <v-layout v-if="tree && tree.trunk && fragment" align-center column>
-            <span style="position:absolute;bottom:0">
+            <span style="position:absolute;bottom:1em">
                 <h3 v-if="showFragment">{{name(fragment)}}: {{qtUnit(fragment)}}</h3>
                 <h3 v-else>{{name(fragment)}}: ???</h3>
                 <v-btn color="primary" small :disabled="!canAnswer" @click="select" class="mb-2">moi</v-btn>
             </span>
         </v-layout>
 
-    </v-card>
+    </div>
 </template>
 
 <script>

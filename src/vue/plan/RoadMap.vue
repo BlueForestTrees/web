@@ -11,7 +11,7 @@
                         <v-icon>{{item.icon}}</v-icon>
                         {{ item.title }}
                     </div>
-                    <v-container v-html="item.text"/>
+                    <v-container v-html="item.description"/>
                     <template v-if="item.maquette" v-for="m in item.maquette">
                         <v-divider/>
                         <v-divider/>

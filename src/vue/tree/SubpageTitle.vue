@@ -1,8 +1,8 @@
 <template>
-    <v-toolbar class="elevation-0">
+    <v-toolbar class="elevation-0" :color="color" :dark="color==='primary'">
         <slot name="left"></slot>
         <icon :icon-color="iconColor" :icon="icon" :icon-class="iconClass"/>
-        <div :class="titleClass">{{title}}</div>
+        <v-toolbar-title :class="titleClass">{{title}}</v-toolbar-title>
         <v-spacer></v-spacer>
         <slot name="right"></slot>
     </v-toolbar>
@@ -15,6 +15,7 @@
         name: "subpage-title",
         components: {Icon},
         props: {
+            color: String,
             title: String,
             iconClass: String,
             iconColor: {type: String, default: 'primary'},

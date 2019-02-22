@@ -1,5 +1,5 @@
 <template>
-    <div class="scene">
+    <v-flex class="scene">
         <div :class="cardClass">
             <v-layout column align-center justify-center class="card__face card__face--front">
                 <slot name="front"></slot>
@@ -8,7 +8,7 @@
                 <slot name="back"></slot>
             </div>
         </div>
-    </div>
+    </v-flex>
 </template>
 
 <script>

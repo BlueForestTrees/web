@@ -1,7 +1,9 @@
 <template>
-    <div>
-        <v-card>
-            <v-list two-line>
+    <view-edit-save>
+
+        <v-card slot="left">
+            <subpage-title :title="`Groupe: ${info.path}`" iconClass="voice logo"/>
+            <v-list two-line v-if="info.items.length">
                 <draggable :list="info.items" @change="orderChange" :options="{dragClass:'dragClass', chosenClass:'chosenClass'}">
                     <template v-for="(infoId, i) in info.items">
                         <div :key="infoId">
@@ -17,75 +19,80 @@
                     </template>
                 </draggable>
             </v-list>
+            <v-container v-else>
+                <v-layout>
+                    <v-card-text class="font-italic align">Le groupe est vide</v-card-text>
+                </v-layout>
+            </v-container>
         </v-card>
 
-        <v-container>
-            <v-card>
-                <v-toolbar class="elevation-0" color="primary" dark>
-                    <v-toolbar-title class="font-weight-black">Détails du groupe</v-toolbar-title>
-                </v-toolbar>
+        <v-card slot="right">
 
-                <v-container>
-                    <v-layout column>
-                        <v-list>
-                            <v-list-tile v-if="!editing || idx === 1" key="1">
-                                <v-list-tile-content>
-                                    <v-list-tile-title>Nom:<span class="font-weight-medium ml-3">{{info && info.path}}</span></v-list-tile-title>
-                                </v-list-tile-content>
-                                <v-list-tile-action>
-                                    <v-btn v-if="editing" icon @click="close">
-                                        <v-icon color="grey" large>close</v-icon>
-                                    </v-btn>
-                                    <v-btn v-else icon @click="idx = 1">
-                                        <v-icon color="primary">edit</v-icon>
-                                    </v-btn>
-                                </v-list-tile-action>
-                            </v-list-tile>
-                            <v-list-tile v-if="!editing || idx === 2" key="2">
-                                <v-list-tile-content>
-                                    <v-list-tile-title>Commentaire (optionnel):<span class="font-weight-medium ml-3">{{info && info.description}}</span></v-list-tile-title>
-                                </v-list-tile-content>
-                                <v-list-tile-action>
-                                    <v-btn v-if="editing" icon @click="close">
-                                        <v-icon color="grey" large>close</v-icon>
-                                    </v-btn>
-                                    <v-btn v-else icon @click="idx = 2">
-                                        <v-icon color="primary">edit</v-icon>
-                                    </v-btn>
-                                </v-list-tile-action>
-                            </v-list-tile>
-                            <v-list-tile v-if="!editing || idx === 3" key="3">
-                                <v-list-tile-content>
-                                    <v-list-tile-title>Informations:<span class="font-weight-medium ml-3">{{info.items.length}}</span></v-list-tile-title>
-                                </v-list-tile-content>
-                                <v-list-tile-action>
-                                    <v-btn v-if="editing" icon @click="close">
-                                        <v-icon color="grey" large>close</v-icon>
-                                    </v-btn>
-                                    <v-btn v-else icon @click="idx = 3">
-                                        <v-icon color="primary" large>add</v-icon>
-                                    </v-btn>
-                                </v-list-tile-action>
-                            </v-list-tile>
-                        </v-list>
-                    </v-layout>
-                </v-container>
-                <v-window v-model="idx">
-                    <v-window-item></v-window-item>
-                    <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
-                        <path-checker @save="selectPath" :path="info && info.path"/>
-                    </v-window-item>
-                    <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
-                        <description-input @save="selectDescription" :value="info && info.description"/>
-                    </v-window-item>
-                    <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
-                        <information-picker @select="addInfo"/>
-                    </v-window-item>
-                </v-window>
-            </v-card>
-        </v-container>
-        <info-saver v-if="!editing" v-model="canSave" :info="info" @delete="info = createInfo()"/>
-    </div>
+            <subpage-title icon="edit" title="Modifier"/>
+
+            <v-container>
+                <v-layout column>
+                    <v-list>
+                        <v-list-tile v-if="!editing || idx === 1" key="1">
+                            <v-list-tile-content>
+                                <v-list-tile-title>Nom:<span class="font-weight-medium ml-3">{{info && info.path}}</span></v-list-tile-title>
+                            </v-list-tile-content>
+                            <v-list-tile-action>
+                                <v-btn v-if="editing" icon @click="close">
+                                    <v-icon color="grey" large>close</v-icon>
+                                </v-btn>
+                                <v-btn v-else icon @click="idx = 1">
+                                    <v-icon color="primary">edit</v-icon>
+                                </v-btn>
+                            </v-list-tile-action>
+                        </v-list-tile>
+                        <v-list-tile v-if="!editing || idx === 2" key="2">
+                            <v-list-tile-content>
+                                <v-list-tile-title>Commentaire (optionnel):<span class="font-weight-medium ml-3">{{info && info.description}}</span></v-list-tile-title>
+                            </v-list-tile-content>
+                            <v-list-tile-action>
+                                <v-btn v-if="editing" icon @click="close">
+                                    <v-icon color="grey" large>close</v-icon>
+                                </v-btn>
+                                <v-btn v-else icon @click="idx = 2">
+                                    <v-icon color="primary">edit</v-icon>
+                                </v-btn>
+                            </v-list-tile-action>
+                        </v-list-tile>
+                        <v-list-tile v-if="!editing || idx === 3" key="3">
+                            <v-list-tile-content>
+                                <v-list-tile-title>Informations:<span class="font-weight-medium ml-3">{{info.items.length}}</span></v-list-tile-title>
+                            </v-list-tile-content>
+                            <v-list-tile-action>
+                                <v-btn v-if="editing" icon @click="close">
+                                    <v-icon color="grey" large>close</v-icon>
+                                </v-btn>
+                                <v-btn v-else icon @click="idx = 3">
+                                    <v-icon color="primary" large>add</v-icon>
+                                </v-btn>
+                            </v-list-tile-action>
+                        </v-list-tile>
+                    </v-list>
+                </v-layout>
+            </v-container>
+            <v-window v-model="idx">
+                <v-window-item></v-window-item>
+                <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
+                    <path-checker @save="selectPath" :path="info && info.path"/>
+                </v-window-item>
+                <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
+                    <textarea-editor @save="selectDescription" :value="info && info.description" placeholder="Entrez un commentaire pour votre groupe"/>
+                </v-window-item>
+                <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
+                    <information-picker @select="addInfo"/>
+                </v-window-item>
+            </v-window>
+        </v-card>
+
+        <info-saver slot="bottom" v-if="!editing" v-model="canSave" :info="info" @delete="info = createInfo()"/>
+
+    </view-edit-save>
+
 </template>
 <script>
     import Card from "../common/Card"
@@ -96,16 +103,19 @@
     import draggable from 'vuedraggable'
     import {GO} from "../../const/go"
     import PathChecker from "./PathChecker"
-    import DescriptionInput from "./DescriptionInput"
     import InfoLoader from "./InfoLoader"
     import InfoIdDense from "../home/InfoIdDense"
+    import TextareaEditor from "../editor/TextAreaEditor"
+    import Connected from "../mixin/Connected"
+    import SubpageTitle from "../tree/SubpageTitle"
+    import ViewEditSave from "./ViewEditSave"
 
-    const createInfo = () => ({type: "gr", path: null, description: null, items: []})
+    const createInfo = () => ({type: "gr", path: "", text: null, items: []})
 
     export default {
         name: "create-group",
-        mixins: [InfoLoader],
-        components: {InfoIdDense, DescriptionInput, PathChecker, InfoSaver, InformationPicker, Card, draggable},
+        mixins: [InfoLoader, Connected],
+        components: {ViewEditSave, SubpageTitle, TextareaEditor, InfoIdDense, PathChecker, InfoSaver, InformationPicker, Card, draggable},
         data: () => ({
             GO,
             idx: 0,

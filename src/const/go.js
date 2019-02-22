@@ -32,6 +32,8 @@ export const GO = {
     EDIT_GROUP: 'editGroup',
     ROOT: 'root',
     TEAM: 'team',
+    USER: 'user',
+    USER_ID: 'userId',
     MESSAGE: 'message',
     COMPARE_EMPTY: 'compareEmpty',
     COMPARE_PARTIAL: 'comparePartial',

@@ -1,11 +1,14 @@
 <template>
-    <div @click="showMessages">
+    <v-btn v-if="noText" flat icon>
+        <v-icon color="primary">chat</v-icon>
+    </v-btn>
+    <div v-else @click="showMessages">
         <slot>
             <v-layout row class="hand" align-center>
                 <v-btn v-if="!noicon" flat icon>
-                    <v-icon color="primary">message</v-icon>
+                    <v-icon color="primary">chat</v-icon>
                 </v-btn>
-                <h3 v-if="!noText" class="font-weight-thin">{{section.title}}</h3>
+                <h3 class="font-weight-thin">{{section.title}}</h3>
             </v-layout>
         </slot>
     </div>

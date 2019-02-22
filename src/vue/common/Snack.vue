@@ -7,17 +7,10 @@
             :vertical="snack.vertical"
             :color="snack.color"
     >
-        <v-layout column align-center>
-            <v-layout row align-center>
-                <span>{{ snack.text }}</span>
-                <v-btn icon flat color="white" @click="close">
-                    <v-icon>close</v-icon>
-                </v-btn>
-            </v-layout>
-            <v-btn v-if="snack.link" flat @click="dispatchAction">
-                <v-icon>{{snack.link.icon}}</v-icon>
-                {{snack.link.text}}
-            </v-btn>
+        <v-layout row align-center @click="dispatchAction" class="hand">
+            <v-btn v-if="snack.icon" flat><v-icon>{{snack.icon}}</v-icon></v-btn>
+            <v-flex>{{ snack.text }}</v-flex>
+            <v-btn icon flat color="white" @click="close"><v-icon>close</v-icon></v-btn>
         </v-layout>
     </v-snackbar>
 </template>
@@ -32,7 +25,9 @@
                 this.snack.visible = false
             },
             dispatchAction() {
-                this.$store.dispatch(this.snack.link.action)
+                if(this.snack.action){
+                    this.$store.dispatch(this.snack.action)
+                }
                 this.close()
             }
         }

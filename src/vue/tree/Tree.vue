@@ -1,9 +1,9 @@
 <template>
-    <div v-if="tree" style="min-height: 1200px" class="mb-5">
+    <v-container v-if="tree && tree.trunk" fluid fill-height>
 
-        <tree-headpage :tree="tree" :value="currentSubPage" @input="changeSubPage"/>
+        <v-layout :column="$vuetify.breakpoint.smAndDown">
 
-        <v-container class="enought-high" v-if="tree.trunk">
+            <tree-headpage :tree="tree" :value="currentSubPage" @input="changeSubPage" @nav="fabnav" :class="$vuetify.breakpoint.smAndDown ? 'mb-5':'mr-5'"/>
 
             <transition name="slide-fade" mode="out-in">
 
@@ -15,11 +15,9 @@
 
             </transition>
 
-        </v-container>
+        </v-layout>
 
-        <tree-fab v-if="tree.trunk && !modeAdd" @nav="fabnav"></tree-fab>
-
-    </div>
+    </v-container>
 
 </template>
 

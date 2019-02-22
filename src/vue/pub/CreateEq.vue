@@ -1,7 +1,8 @@
 <template>
-    <div>
+    <view-edit-save>
 
-        <v-card>
+        <v-card slot="left">
+            <subpage-title :title="`Equivalence: ${info.path}`" iconClass="voice logo"/>
             <v-layout column align-center>
                 <v-layout :column="$vuetify.breakpoint.smAndDown" align-center justify-center ma-5>
                     <selection-card-front v-if="leftTree && leftTree.selection" :selection="leftTree.selection" :attribute="leftAttribute"/>
@@ -13,96 +14,94 @@
             </v-layout>
         </v-card>
 
+        <v-card slot="right">
+            <subpage-title icon="edit" title="Modifier"/>
+            <v-container>
+                <v-layout column>
+                    <v-list>
+                        <v-list-tile v-if="!editing || idx === 1" key="1">
+                            <v-list-tile-content>
+                                <v-list-tile-title>Produit A:<span v-if="leftTree && leftTree.selection" class="font-weight-medium ml-3">{{qtUnitName(leftTree.selection)}}</span></v-list-tile-title>
+                            </v-list-tile-content>
+                            <v-list-tile-action>
+                                <closer v-if="editing" @close="close"/>
+                                <v-btn v-else icon @click="idx = 1">
+                                    <v-icon color="primary">edit</v-icon>
+                                </v-btn>
+                            </v-list-tile-action>
+                        </v-list-tile>
+                        <v-list-tile v-if="!editing || idx === 2" key="2">
+                            <v-list-tile-content>
+                                <v-list-tile-title>Produit B:<span v-if="rightTree && rightTree.selection" class="font-weight-medium ml-3">{{name(rightTree.selection)}}</span></v-list-tile-title>
+                            </v-list-tile-content>
+                            <v-list-tile-action>
+                                <closer v-if="editing" @close="close"/>
+                                <v-btn v-else icon @click="idx = 2">
+                                    <v-icon color="primary">edit</v-icon>
+                                </v-btn>
+                            </v-list-tile-action>
+                        </v-list-tile>
+                        <v-list-tile v-if="!editing || idx === 3" key="3">
+                            <v-list-tile-content>
+                                <v-list-tile-title>Aspect pris en compte:<span v-if="info && info.fragment" class="font-weight-medium ml-3">{{info.fragment.name}}</span></v-list-tile-title>
+                            </v-list-tile-content>
+                            <v-list-tile-action>
+                                <closer v-if="editing" @close="close"/>
+                                <v-btn v-else icon @click="idx = 3">
+                                    <v-icon color="primary">edit</v-icon>
+                                </v-btn>
+                            </v-list-tile-action>
+                        </v-list-tile>
+                        <v-list-tile v-if="!editing || idx === 4" key="4">
+                            <v-list-tile-content>
+                                <v-list-tile-title>Nom:<span class="font-weight-medium ml-3">{{info && info.path}}</span></v-list-tile-title>
+                            </v-list-tile-content>
+                            <v-list-tile-action>
+                                <closer v-if="editing" @close="close"/>
+                                <v-btn v-else icon @click="idx = 4">
+                                    <v-icon color="primary">edit</v-icon>
+                                </v-btn>
+                            </v-list-tile-action>
+                        </v-list-tile>
+                        <v-list-tile v-if="!editing || idx === 5" key="5">
+                            <v-list-tile-content>
+                                <v-list-tile-title>Commentaire (optionnel):<span class="font-weight-medium ml-3">{{info && info.description}}</span></v-list-tile-title>
+                            </v-list-tile-content>
+                            <v-list-tile-action>
+                                <closer v-if="editing" @close="close"/>
+                                <v-btn v-else icon @click="idx = 5">
+                                    <v-icon color="primary">edit</v-icon>
+                                </v-btn>
+                            </v-list-tile-action>
+                        </v-list-tile>
+                    </v-list>
+                    <v-divider v-if="editing"/>
+                </v-layout>
+            </v-container>
+            <v-window v-model="idx">
+                <v-window-item></v-window-item>
+                <v-window-item lazy transition="fade-transition">
+                    <tree-selection-picker @select="selectProductA" :tree="leftTree"/>
+                </v-window-item>
+                <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
+                    <tree-selection-picker @select="selectProductB" :tree="rightTree"/>
+                </v-window-item>
+                <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
+                    <attribute-finder :trees="[leftTree, rightTree]" @select="selectFragment"/>
+                </v-window-item>
+                <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
+                    <path-checker @save="selectPath" :path="info && info.path"/>
+                </v-window-item>
+                <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
+                    <textarea-editor @save="selectDescription" :value="info && info.description" :maxLength="100" placeholder="Entrez un commentaire pour votre équivalence"/>
+                </v-window-item>
+            </v-window>
+        </v-card>
 
-        <v-container transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
-            <v-card>
-                <v-toolbar class="elevation-0" color="primary" dark>
-                    <v-toolbar-title class="font-weight-black">Détails de l'équivalence</v-toolbar-title>
-                </v-toolbar>
-                <v-container>
-                    <v-layout column>
-                        <v-list>
-                            <v-list-tile v-if="!editing || idx === 1" key="1">
-                                <v-list-tile-content>
-                                    <v-list-tile-title>Produit A:<span v-if="leftTree && leftTree.selection" class="font-weight-medium ml-3">{{qtUnitName(leftTree.selection)}}</span></v-list-tile-title>
-                                </v-list-tile-content>
-                                <v-list-tile-action>
-                                    <closer v-if="editing" @close="close"/>
-                                    <v-btn v-else icon @click="idx = 1">
-                                        <v-icon color="primary">edit</v-icon>
-                                    </v-btn>
-                                </v-list-tile-action>
-                            </v-list-tile>
-                            <v-list-tile v-if="!editing || idx === 2" key="2">
-                                <v-list-tile-content>
-                                    <v-list-tile-title>Produit B:<span v-if="rightTree && rightTree.selection" class="font-weight-medium ml-3">{{name(rightTree.selection)}}</span></v-list-tile-title>
-                                </v-list-tile-content>
-                                <v-list-tile-action>
-                                    <closer v-if="editing" @close="close"/>
-                                    <v-btn v-else icon @click="idx = 2">
-                                        <v-icon color="primary">edit</v-icon>
-                                    </v-btn>
-                                </v-list-tile-action>
-                            </v-list-tile>
-                            <v-list-tile v-if="!editing || idx === 3" key="3">
-                                <v-list-tile-content>
-                                    <v-list-tile-title>Aspect pris en compte:<span v-if="info && info.fragment" class="font-weight-medium ml-3">{{info.fragment.name}}</span></v-list-tile-title>
-                                </v-list-tile-content>
-                                <v-list-tile-action>
-                                    <closer v-if="editing" @close="close"/>
-                                    <v-btn v-else icon @click="idx = 3">
-                                        <v-icon color="primary">edit</v-icon>
-                                    </v-btn>
-                                </v-list-tile-action>
-                            </v-list-tile>
-                            <v-list-tile v-if="!editing || idx === 4" key="4">
-                                <v-list-tile-content>
-                                    <v-list-tile-title>Nom:<span class="font-weight-medium ml-3">{{info && info.path}}</span></v-list-tile-title>
-                                </v-list-tile-content>
-                                <v-list-tile-action>
-                                    <closer v-if="editing" @close="close"/>
-                                    <v-btn v-else icon @click="idx = 4">
-                                        <v-icon color="primary">edit</v-icon>
-                                    </v-btn>
-                                </v-list-tile-action>
-                            </v-list-tile>
-                            <v-list-tile v-if="!editing || idx === 5" key="5">
-                                <v-list-tile-content>
-                                    <v-list-tile-title>Commentaire (optionnel):<span class="font-weight-medium ml-3">{{info && info.description}}</span></v-list-tile-title>
-                                </v-list-tile-content>
-                                <v-list-tile-action>
-                                    <closer v-if="editing" @close="close"/>
-                                    <v-btn v-else icon @click="idx = 5">
-                                        <v-icon color="primary">edit</v-icon>
-                                    </v-btn>
-                                </v-list-tile-action>
-                            </v-list-tile>
-                        </v-list>
-                        <v-divider v-if="editing"/>
-                    </v-layout>
-                </v-container>
-                <v-window v-model="idx">
-                    <v-window-item></v-window-item>
-                    <v-window-item lazy transition="fade-transition">
-                        <tree-selection-picker @select="selectProductA" :tree="leftTree"/>
-                    </v-window-item>
-                    <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
-                        <tree-selection-picker @select="selectProductB" :tree="rightTree"/>
-                    </v-window-item>
-                    <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
-                        <attribute-finder :trees="[leftTree, rightTree]" @select="selectFragment"/>
-                    </v-window-item>
-                    <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
-                        <path-checker @save="selectPath" :path="info && info.path"/>
-                    </v-window-item>
-                    <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
-                        <description-input @save="selectDescription" :value="info && info.description"/>
-                    </v-window-item>
-                </v-window>
-            </v-card>
-        </v-container>
-        <info-saver v-if="!editing" v-model="canSave" :info="info" @delete="remove"/>
-    </div>
+        <info-saver slot="bottom" v-if="!editing" v-model="canSave" :info="info" @delete="remove"/>
+
+    </view-edit-save>
+
 </template>
 <script>
     import Card from "../common/Card"
@@ -112,7 +111,6 @@
     import On from "../../const/on"
     import {mapActions} from "vuex"
     import PathChecker from "./PathChecker"
-    import DescriptionInput from "./DescriptionInput"
     import SelectionLink from "./Selection-Link"
     import {infoFragments} from "../../const/fragments"
     import TransitionExpand from "../common/TransitionExpand"
@@ -122,14 +120,18 @@
     import InfoLoader from "./InfoLoader"
     import Closer from "../common/Closer"
     import TreeSelectionPicker from "../tree/TreeSelectionPicker"
+    import SubpageTitle from "../tree/SubpageTitle"
+    import TextareaEditor from "../editor/TextAreaEditor"
+    import Connected from "../mixin/Connected"
+    import ViewEditSave from "./ViewEditSave"
 
-    const createInfo = () => ({type: "eq", fragment: null, leftSelection: null, rightSelection: null, path: null, description: null})
+    const createInfo = () => ({type: "eq", fragment: null, leftSelection: null, rightSelection: null, path: "", text: null})
 
     export default {
         name: "create-eq",
-        components: {TreeSelectionPicker, Closer, InfoSaver, SelectionCardFront, TransitionExpand, SelectionLink, DescriptionInput, PathChecker, AttributeFinder, TreeCard, Card},
+        components: {ViewEditSave, TextareaEditor, SubpageTitle, TreeSelectionPicker, Closer, InfoSaver, SelectionCardFront, TransitionExpand, SelectionLink, PathChecker, AttributeFinder, TreeCard, Card},
         props: ['path'],
-        mixins: [InfoLoader],
+        mixins: [InfoLoader, Connected],
         data: () => ({
             GO,
             idx: 0,

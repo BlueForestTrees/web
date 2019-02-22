@@ -1,11 +1,12 @@
 <template>
-    <v-flex my-2>
-        <slot></slot>
-        <v-layout column align-center>
-            <v-progress-circular indeterminate color="primary" :width="width" :size="size"></v-progress-circular>
-            <span v-if="text" class="font-italic" style="font-size: smaller">{{text}}</span>
+    <v-container fill-height>
+        <v-layout align-center>
+            <v-layout column align-center>
+                <v-progress-circular indeterminate color="primary" :width="width" :size="size"></v-progress-circular>
+                <span v-if="text" class="font-italic" style="font-size: smaller">{{text}}</span>
+            </v-layout>
         </v-layout>
-    </v-flex>
+    </v-container>
 </template>
 <script>
     export default {

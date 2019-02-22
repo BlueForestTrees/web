@@ -1,7 +1,7 @@
 {
   "name": "web-blueforest",
   "version": "1.9.1",
-  "description": "web for trees",
+  "text": "web for trees",
   "main": "index.js",
   "author": "slim",
   "license": "MIT",

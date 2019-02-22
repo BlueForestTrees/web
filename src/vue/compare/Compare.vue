@@ -4,7 +4,7 @@
             <v-spacer/>
             <v-flex class="title">Comparaison</v-flex>
         </v-layout>
-        <v-card-text v-if="!compare.left || !compare.right" class="text-md-center">Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche</span> ou prenez des produits du <span><v-icon @click="goBasket" color="primary">shopping_basket</v-icon> panier pour les comparer.</span></v-card-text>
+        <v-card-text v-if="!compare.left || !compare.right" class="text-md-center">Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche</span> pour les comparer.</v-card-text>
 
         <v-card v-else class="pt-4">
             <v-layout :column="$vuetify.breakpoint.xsOnly" align-content-center justify-center>

@@ -1,45 +1,39 @@
 <template>
-    <v-flex key="equiv">
+    <v-container key="equiv">
+        <v-card>
 
-        <v-layout column align-center>
-            <v-toolbar class="elevation-0" color="primary" dark>
-                <v-list-tile-avatar class="game logo"></v-list-tile-avatar>
-                <v-toolbar-title>Jouer avec "{{name(tree)}}"</v-toolbar-title>
-            </v-toolbar>
+            <v-layout column align-center>
 
-            <v-layout column wrap justify-center align-center class="ma-4">
-                <h2 class="font-weight-thin">
-                    <v-layout v-if="leftFragment" row align-center>
-                        <span>Quel est celui qui a <b>plus de {{ name(leftFragment)}}</b>?</span>
-                        <v-btn :disabled="!canAnswer" color="grey" flat small @click="passQuestion">je passe
-                            <v-icon>play_arrow</v-icon>
-                        </v-btn>
-                    </v-layout>
-                    <loader v-else/>
-                </h2>
+                <subpage-title color="primary" :title="`Jouer avec ${name(tree)}`" iconClass="game logo"/>
+
+                <v-layout column wrap justify-center align-center class="ma-4">
+                    <h2 class="font-weight-thin">
+                        <v-layout v-if="leftFragment" row align-center>
+                            <span>Quel est celui qui a <b>plus de {{ name(leftFragment)}}</b>?</span>
+                            <v-btn :disabled="!canAnswer" color="grey" flat small @click="passQuestion">je passe
+                                <v-icon>play_arrow</v-icon>
+                            </v-btn>
+                        </v-layout>
+                        <loader v-else/>
+                    </h2>
+                </v-layout>
+
+                <v-layout row justify-center align-center>
+                    <template v-for="n in nbReponses">
+                        <v-icon x-large v-if="score[n-1] !== undefined" :color="score[n-1] ? 'green' : 'red'">check_circle</v-icon>
+                        <v-icon v-else x-large>panorama_fish_eye</v-icon>
+                    </template>
+                </v-layout>
+
+                <v-layout :column="$vuetify.breakpoint.xsOnly">
+                    <choix-produit :tree="tree" :fragment="leftFragment" showFragment @select="playLeft" :can-answer="canAnswer"/>
+                    <choix-produit :tree="right" :fragment="rightFragment" :showFragment="state === 'answered'" @select="playRight" :can-answer="canAnswer"/>
+                </v-layout>
             </v-layout>
-
-            <v-layout row justify-center align-center>
-                <template v-for="n in nbReponses">
-                    <v-icon x-large v-if="score[n-1] !== undefined" :color="score[n-1] ? 'green' : 'red'">check_circle</v-icon>
-                    <v-icon v-else x-large>panorama_fish_eye</v-icon>
-                </template>
-            </v-layout>
-
-            <v-layout :column="$vuetify.breakpoint.xsOnly">
-
-                <choix-produit :tree="tree" :fragment="leftFragment" showFragment
-                               @select="playLeft" :can-answer="canAnswer"/>
-                <choix-produit :tree="right" :fragment="rightFragment" :showFragment="state === 'answered'"
-                               @select="playRight" :can-answer="canAnswer"/>
-
-            </v-layout>
-        </v-layout>
-
+        </v-card>
 
         <transition name="slide-fade" mode="out-in">
-            <v-layout v-if="state === 'answered' && lastWasGood !== undefined"
-                      row align-center justify-center mb-4>
+            <v-layout v-if="state === 'answered' && lastWasGood !== undefined" row align-center justify-center mt-4>
                 <v-layout class="font-weight-thin display-1" align-center justify-center>
                     <template v-if="lastWasGood">
                         <img src="/img/heart.svg" class="logo-petit mr-3"/>
@@ -74,7 +68,8 @@
             </v-layout>
 
         </v-layout>
-    </v-flex>
+
+    </v-container>
 </template>
 <script>
     import {mapActions} from "vuex"
@@ -91,10 +86,11 @@
     import {TRUNK} from "../../const/fragments"
     import ChoixProduit from "./ChoixProduit"
     import {QUI2} from "../../const/games"
+    import SubpageTitle from "../tree/SubpageTitle"
 
     export default {
         name: "qui-deux",
-        components: {ChoixProduit, QtUnitName, Photo, Card, TreeCard, SelectableList, TreeHead, Loader},
+        components: {SubpageTitle, ChoixProduit, QtUnitName, Photo, Card, TreeCard, SelectableList, TreeHead, Loader},
         data() {
             return {
                 nbReponses: 5,

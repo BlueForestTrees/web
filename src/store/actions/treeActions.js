@@ -8,6 +8,7 @@ import {GO} from "../../const/go"
 import Do from "../../const/do"
 import {DAMAGE, FACET, IMPACT} from "../../const/attributesTypes"
 import {allFragments, IMPACTS, OWNER} from "../../const/fragments"
+import {deleteCatch} from "./commons"
 
 
 //on détecte que l'objet est à charger en se basant arbitrairement sur le champ branches
@@ -101,12 +102,15 @@ export default {
     [On.CLONE_TREE]: ({dispatch}, {_id}) =>
         dispatch(On.CLONE_TRUNK, _id),
 
-    [On.DELETE_TREE]: ({dispatch}, tree) => {
-        const promises = {}
-        promises.trunk = api.deleteTrunk(tree._id)
-        dispatch(On.REMOVE_FROM_BASKET, [tree])
-        return promises
-    },
+    [On.DELETE_TREE]: ({dispatch}, tree) =>
+        api.deleteTrunk(tree._id)
+            .then(() => dispatch(On.REMOVE_FROM_BASKET, [tree])),
+
+    [On.DELETE_OPENED_TREE]: ({commit, dispatch, state}) =>
+        deleteCatch(dispatch, dispatch(On.DELETE_TREE, state.tree)
+            .then(() => commit(Do.CLOSE_TREE))
+            .then(() => dispatch(On.GO_HOME))
+            .then(() => dispatch(On.SNACKBAR, {text: "1 élement supprimé"}))),
 
     [On.ADD_TRANSPORT]: ({dispatch}, {tree, item, transport}) => dispatch(On.CREATE_ROOT, {
         _id: createStringObjectId(),

@@ -10,7 +10,6 @@ const dialogFactory = {
     [Dial.FACET_ENTRY]: () => ({visible: false, data: {qt: null, unit: null, name: null}}),
     [Dial.ADD_IMPACT_ENTRY]: () => ({visible: false, data: {qt: null, unit: null, name: null}}),
     [Dial.ADD_RESSOURCE]: () => ({visible: false, data: {left: null, right: null}}),
-    [Dial.CREATE]: () => ({visible: false, data: {}}),
     [Dial.SUSCRIBE]: () => ({noAuth: true, visible: false, data: {}}),
     [Dial.LOGIN]: () => ({noAuth: true, visible: false, data: {}}),
     [Dial.CONNECT_TO_CONTINUE]: () => ({noAuth: true, visible: false, data: {message: null}}),
@@ -67,7 +66,7 @@ export default {
         }
     },
     snack: snack(),
-    messages: {title: null, description: null, hasMore: false, filter: {}, list: []},
+    messages: {title: null, text: null, hasMore: false, filter: {}, list: []},
     myMessages: [],
     maquettes,
     xRequestId: null,

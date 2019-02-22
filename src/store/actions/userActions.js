@@ -50,7 +50,9 @@ export default {
         }
     },
 
-    [On.SEARCH_USERS]: ({}, {term}) => api.searchUsers({term})
+    [On.SEARCH_USERS]: ({}, {term}) => api.searchUsers({term}),
+
+    [On.UPDATE_USER]: ({}, user) => api.updateUser(user)
 }
 
 const saveToken = (commit, token) => {

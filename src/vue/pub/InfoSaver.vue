@@ -1,20 +1,16 @@
 <template>
-    <div>
-        <v-container>
-            <v-layout column align-center>
-                <v-layout>
-                    <v-btn :disabled="!canSave || !owned" color="primary" @click="saveOrUpdate">Enregistrer</v-btn>
-                    <v-btn v-if="canSaveCopy" color="primary" @click="save">Enregistrer une copie</v-btn>
-                    <v-btn v-if="canDelete" icon @click="remove">
-                        <v-icon>delete</v-icon>
-                    </v-btn>
-                </v-layout>
-                <div v-if="canBrowseToViewPage">Accès à l'{{infoType[info.type]}}:
-                    <router-link :to="{name:GO.INFO, params:{path:info.path}}">{{url}}</router-link>
-                </div>
+    <v-container>
+        <v-layout column align-center>
+            <v-layout>
+                <v-btn :disabled="!canSave || !owned" color="primary" @click="saveOrUpdate">Enregistrer</v-btn>
+                <v-btn v-if="canSaveCopy" color="primary" @click="save">Enregistrer une copie</v-btn>
+                <v-btn v-if="canDelete" icon @click="remove"><v-icon color="grey">delete</v-icon></v-btn>
             </v-layout>
-        </v-container>
-    </div>
+            <div v-if="canBrowseToViewPage">Accès à l'{{infoType[info.type]}}:
+                <router-link :to="{name:GO.INFO, params:{path:info.path}}">{{url}}</router-link>
+            </div>
+        </v-layout>
+    </v-container>
 </template>
 
 <script>
@@ -71,7 +67,8 @@
                 this.$emit('input', false)
             },
             remove() {
-                this.deleteInfo(this.info._id).then(() => this.$emit('delete'))
+                this.deleteInfo(this.info._id)
+                    .then(deleted => deleted && this.$emit('delete'))
             }
         },
         computed: {

@@ -42,7 +42,6 @@
             ...mapActions({
                 goto: On.GO_TO,
                 addToBasket: On.ADD_TO_BASKET,
-                compare: On.GO_COMPARE,
                 showDialog: On.SHOW_DIALOG,
                 unselect: On.UNSELECT,
                 clearSearch: On.CLEAR_SEARCH

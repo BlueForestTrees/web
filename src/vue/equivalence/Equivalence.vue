@@ -58,7 +58,6 @@
                 dispatchSearchEquiv: On.SEARCH_EQUIV,
                 snack: On.SNACKBAR,
                 goTree: On.GO_TREE,
-                compare: On.GO_COMPARE,
                 dispatchAddToBasket: On.ADD_TO_BASKET,
                 showDialog: On.SHOW_DIALOG
             }),

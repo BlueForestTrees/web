@@ -6,7 +6,7 @@ import {createStringObjectId} from "../../services/calculations"
 
 export default {
     [On.SHOW_MESSAGES]: ({commit}, {title, filter, description}) => {
-        commit(Do.SET_MESSAGES_FILTER, {title, filter, description})
+        commit(Do.SET_MESSAGES_FILTER, {title, filter, description: text})
         commit(Do.RIGHT_MENU_VISIBLE, true)
     },
     [On.LOAD_MESSAGES]: ({commit}, filter) => api.getMessages(filter).then(ms => commit(Do.PUSH_MESSAGES, ms)),

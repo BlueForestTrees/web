@@ -30,6 +30,7 @@ const CreateCompens = () => import(/* webpackChunkName: "CreateCompens"*/ "../vu
 const CreateAlt = () => import(/* webpackChunkName: "CreateAlt"*/ "../vue/pub/CreateAlt")
 const CreateGroup = () => import(/* webpackChunkName: "CreateGroup"*/ "../vue/pub/CreateGroup")
 const MyBasket = () => import(/* webpackChunkName: "MyBasket"*/ "../vue/home/MyBasket")
+const UserPage = () => import(/* webpackChunkName: "UserPage"*/ "../vue/user/UserPage")
 
 Vue.use(VueRouter)
 
@@ -44,12 +45,17 @@ export default new VueRouter({
                 {name: GO.PLAN_INTRO, path: "/aide", component: BFCestQuoi},
                 {name: GO.PLAN, path: "/plan", component: Plan},
                 {name: GO.TEAM, path: "/equipe", component: MyTeam},
+
+                {name: GO.USER, path: "/user", component: UserPage},
+                {name: GO.USER_ID, path: "/user/:_id", component: UserPage, props:true},
+
                 {name: GO.MESSAGE, path: "/message", component: MyMessages},
                 {name: GO.ROAD_MAP, path: 'roadmap', component: RoadMap},
                 {name: GO.DATA_EXPLAINED, path: 'explain/datas', component: DatasExplained},
                 {name: GO.CREATE_TREE, path: "create/tree", component: CreateTree},
 
                 {name: GO.TREE, path: "tree/:bqt/:_id", component: Tree, props: (route) => ({_id: route.params._id, bqt: Number(Number.parseFloat(route.params.bqt))})},
+                {name: GO.TREE_EMPTY, path: "tree", component: Tree},
                 {name: GO.SELECTION, path: "sel/:_id", component: Tree, props: (route) => ({sid: route.params._id})},
 
                 {name: GO.EQUIV, path: "equiv/:bqt/:_id/:sbqt/:s_id", component: Equivalence, props: true},
@@ -66,7 +72,6 @@ export default new VueRouter({
 
                 {name: GO.GAME, path: "play/:gameId", component: Qui2, props: true},
                 {name: GO.QUI_2, path: "qui2fois/:bqt/:_id/:f/:fid", component: Qui2, props: ({params}) => ({leftBqt: params.bqt, leftId: params._id, fragment: params.f, fragmentId: params.fid})},
-                {name: GO.TREE_EMPTY, path: "tree", component: Tree},
                 {name: GO.ROOT, path: "root/:treeId/:rootId", component: RootEditor, props: true},
                 {name: GO.RECENT, path: "recent", component: MyBasket},
                 {name: GO.COMPARE_EMPTY, path: "compare", component: Compare},

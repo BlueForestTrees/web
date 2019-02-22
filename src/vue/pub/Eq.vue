@@ -1,11 +1,8 @@
 <template>
     <v-container>
         <v-card>
-            <v-layout class="top-left" row>
-                <v-btn color="primary" flat icon @click="gotoEq(info)">
-                    <v-icon>edit</v-icon>
-                </v-btn>
-                <open-message no-text :section="{title: `Discuter sur ${info.path}`, description:info.description, filter: {topicId:info._id, type: `eq.info`}}"/>
+            <v-layout row align-center pa-3>
+                <div class="font-weight-medium font-italic">{{info.path}}</div>
             </v-layout>
             <v-layout column align-center>
                 <v-layout :column="$vuetify.breakpoint.smAndDown" align-center justify-center my-5>
@@ -14,7 +11,10 @@
                     <selection-card-front v-if="info && info.rightSelection" :selection="info.rightSelection" :attribute="rightAttribute"/>
                 </v-layout>
             </v-layout>
-            <div class="bottom-right pa-2 font-weight-medium font-italic">{{info.path}}</div>
+            <v-layout class="bottom-right" row>
+                <v-btn color="primary" flat icon @click="gotoEq(info)"><v-icon>edit</v-icon></v-btn>
+                <open-message no-text :section="{title: `Discuter sur ${info.path}`, text:info.description, filter: {topicId:info._id, type: `eq.info`}}"/>
+            </v-layout>
         </v-card>
     </v-container>
 </template>
