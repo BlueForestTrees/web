@@ -1,22 +1,26 @@
 <template>
-    <v-container>
-        <v-card>
-            <v-layout row align-center pa-3>
-                <div class="font-weight-medium font-italic">{{info.path}}</div>
+    <v-flex>
+
+        <v-layout row align-center pa-3>
+            <div class="font-weight-medium font-italic">{{info.path}}</div>
+        </v-layout>
+        <v-layout column align-center>
+            <v-layout :column="$vuetify.breakpoint.smAndDown" align-center justify-center my-5>
+                <selection-card-front v-if="info && info.leftSelection" :selection="info.leftSelection" :attribute="leftAttribute"/>
+                <v-flex v-else class="bold-font display-2">A</v-flex>
+                <div class="bold-font align display-2 ma-4">=</div>
+                <selection-card-front v-if="info && info.rightSelection" :selection="info.rightSelection" :attribute="rightAttribute"/>
+                <v-flex v-else class="bold-font display-2">B</v-flex>
             </v-layout>
-            <v-layout column align-center>
-                <v-layout :column="$vuetify.breakpoint.smAndDown" align-center justify-center my-5>
-                    <selection-card-front v-if="info && info.leftSelection" :selection="info.leftSelection" :attribute="leftAttribute"/>
-                    <div class="bold-font align display-2 ma-4">=</div>
-                    <selection-card-front v-if="info && info.rightSelection" :selection="info.rightSelection" :attribute="rightAttribute"/>
-                </v-layout>
-            </v-layout>
-            <v-layout class="bottom-right" row>
-                <v-btn color="primary" flat icon @click="gotoEq(info)"><v-icon>edit</v-icon></v-btn>
-                <open-message no-text :section="{title: `Discuter sur ${info.path}`, text:info.description, filter: {topicId:info._id, type: `eq.info`}}"/>
-            </v-layout>
-        </v-card>
-    </v-container>
+        </v-layout>
+        <v-layout class="bottom-right" row v-if="info._id">
+            <v-btn color="primary" flat icon @click="gotoEq(info)">
+                <v-icon>edit</v-icon>
+            </v-btn>
+            <open-message no-text :section="{title: `Discuter sur ${info.path}`, text:info.description, filter: {topicId:info._id, type: `eq.info`}}"/>
+        </v-layout>
+    </v-flex>
+
 </template>
 
 <script>
@@ -46,7 +50,7 @@
                 applyCoefAll: On.APPLY_QUANTITY_COEF_ALL
             }),
             async refresh() {
-                if (this.info) {
+                if (this.info && this.info._id) {
                     try {
                         this.leftTree = await this.refreshTree(this.info.leftSelection, this.info.fragment)
                         this.rightTree = await this.refreshTree(this.info.rightSelection, this.info.fragment)

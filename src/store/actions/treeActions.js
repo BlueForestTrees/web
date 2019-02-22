@@ -66,6 +66,9 @@ export default {
                 return tree
             }),
 
+    [On.LOAD_TREES]: ({dispatch}, {treesIds, fragments = allFragments}) => {
+        return Promise.all(treesIds.map(_id => dispatch(On.LOAD_TREE, {_id, fragments})))
+    },
     [On.LOAD_TREE]: ({commit, state, dispatch}, {_id, bqt = 1, fragments = allFragments}) => {
         const basketItem = state.basket[_id]
         if (basketItem && !needRefresh(basketItem)) {

@@ -122,19 +122,19 @@
             <v-window v-model="idx">
                 <v-window-item></v-window-item>
                 <v-window-item lazy transition="fade-transition">
-                    <tree-selection-picker @select="selectProductA" :tree="leftTree"/>
+                    <tree-selection-picker @save="selectProductA" :value="leftTree"/>
                 </v-window-item>
                 <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
-                    <tree-selection-picker @select="selectProductB" :tree="rightTree"/>
+                    <tree-selection-picker @save="selectProductB" :value="rightTree"/>
                 </v-window-item>
                 <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
-                    <tree-selection-picker @select="selectProductC" :tree="equivTree"/>
+                    <tree-selection-picker @save="selectProductC" :value="equivTree"/>
                 </v-window-item>
                 <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
-                    <attribute-finder :trees="[leftTree, rightTree, equivTree]" @select="selectFragment"/>
+                    <common-fragment-picker :trees="[leftTree, rightTree, equivTree]" @save="selectFragment"/>
                 </v-window-item>
                 <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
-                    <path-checker @save="selectPath" :path="info && info.path"/>
+                    <path-editor @save="selectPath" :path="info && info.path"/>
                 </v-window-item>
                 <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
                     <textarea-editor @save="selectDescription" :value="info && info.description" placeholder="Entrez un commentaire pour votre alternative"/>
@@ -155,8 +155,8 @@
     import {getAttributeByFragment, qtFreq, name, qtUnitName} from "../../services/calculations"
     import On from "../../const/on"
     import {mapActions} from "vuex"
-    import AttributeFinder from "../tree/AttributeFinder"
-    import PathChecker from "./PathChecker"
+    import AttributeFinder from "../tree/CommonFragmentPicker"
+    import PathChecker from "./PathEditor"
     import InfoSaver from "./InfoSaver"
     import {infoFragments} from "../../const/fragments"
     import InfoLoader from "./InfoLoader"

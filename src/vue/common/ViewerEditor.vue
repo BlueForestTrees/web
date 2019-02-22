@@ -3,12 +3,12 @@
         <v-container>
             <v-layout column>
                 <v-list>
-                    <v-list-tile v-if="!editing || idx === i" v-for="(field,i) in fields" :key="i">
+                    <v-list-tile v-if="field && !editing || idx === i" v-for="(field,i) in fields" :key="i">
                         <v-list-tile-content>
                             <v-list-tile-title>
                                 <v-icon v-if="field.warning" color="red">warning</v-icon>
                                 <span>{{field.title}}:</span>
-                                <span :class="` font-weight-medium ml-3 ${field.newvalue ? 'font-italic' : ''}`">{{field.newvalue || field.value}}</span>
+                                <span :class="` font-weight-medium ml-3 ${field.newvalue ? 'font-italic' : ''}`">{{field.displayFct ? field.displayFct(field.newvalue || field.value) : field.newvalue || field.value}}</span>
                             </v-list-tile-title>
                         </v-list-tile-content>
                         <v-list-tile-action v-if="editable && !field.noedit">
@@ -19,8 +19,10 @@
             </v-layout>
         </v-container>
         <v-window v-model="idx" v-if="editing">
-            <v-window-item lazy v-for="(field,i) in fields" transition="fade-transition" :key="i">
-                <component :is="field.editor" :value="field.newvalue || field.value" @save="v => save(field, v)"/>
+            <v-window-item lazy v-if="field" v-for="(field,i) in fields" transition="fade-transition" :key="i">
+                <template v-if="field">
+                    <component :is="field.editor" :value="field.newvalue || field.value" :params="field.params" @save="v => save(field, v)"/>
+                </template>
             </v-window-item>
         </v-window>
     </span>
@@ -29,11 +31,15 @@
 <script>
     import SubpageTitle from "../tree/SubpageTitle"
     import CloseEditBtn from "./CloseEditBtn"
-    import TextareaEditor from "../editor/TextAreaEditor"
+
+    const TextareaEditor = () => import("../editor/TextAreaEditor")
+    const TreeSelectionPicker = () => import("../tree/TreeSelectionPicker")
+    const PathEditor = () => import ("../pub/PathEditor")
+    const CommonFragmentPicker = () => import("../tree/CommonFragmentPicker")
 
     export default {
         name: "viewer-editor",
-        components: {CloseEditBtn, SubpageTitle, TextareaEditor},
+        components: {CloseEditBtn, SubpageTitle, TextareaEditor, TreeSelectionPicker, PathEditor, CommonFragmentPicker},
         props: {
             title: String,
             fields: Array,

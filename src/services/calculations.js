@@ -49,7 +49,11 @@ export const qtFreq = selection => selection && selection.repeted ? `${qtUnit(se
 
 export const qtFreqOrUnit = item => qtFreq(item) || qtUnit(item)
 
-export const name = item => item && item.selection && item.selection.name || item && item.name || item && item.trunk && item.trunk.name || '?'
+export const name = item =>
+    item && item.selection && item.selection.name
+    || item && item.trunk && item.trunk.name
+    || item && item.name
+    || ''
 
 export const color = item => item.color || item.trunk.color
 export const equiv = item => item.eq ? `(éq. ${item.eq})` : ""

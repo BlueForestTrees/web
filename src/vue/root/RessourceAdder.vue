@@ -6,7 +6,7 @@
             </subpage-title>
             <v-divider/>
 
-            <tree-selection-picker v-if="!selection" @select="select" :tree="selection"/>
+            <tree-selection-picker v-if="!selection" @save="select" :value="selection"/>
 
             <order-picker v-else @revert="revert" @validate="validate" :up="up" :down="down"/>
         </v-card>

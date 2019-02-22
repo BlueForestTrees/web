@@ -88,6 +88,7 @@ export default {
     LOGOUT: 'logout',
     MOUNT_APP: 'mountApp',
     LOAD_TREE: 'loadTree',
+    LOAD_TREES: 'loadTrees',
     RENAME_TRUNK: 'renameTrunk',
     REFRESH_MY_MESSAGES: 'refreshMyMessages',
     REFRESH_ROOTS: 'refreshRoots',

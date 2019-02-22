@@ -1,7 +1,7 @@
 <template>
     <v-menu offset-y>
         <v-btn flat icon slot="activator" @click="unselect">
-            <v-icon large>more_vert</v-icon>
+            <v-icon>more_horiz</v-icon>
         </v-btn>
         <v-list v-if="tree" class="font-weight-thin subheading">
             <v-list-tile @click="$emit('nav', IMPACTS)">
@@ -19,6 +19,10 @@
                 <v-list-tile-title>Ajouter une propriété...</v-list-tile-title>
             </v-list-tile>
             <v-divider/>
+            <v-list-tile @click="deleteTree">
+                <v-list-tile-avatar><v-icon color="grey" class="ml-3">delete</v-icon></v-list-tile-avatar>
+                <v-list-tile-title>Supprimer...</v-list-tile-title>
+            </v-list-tile>
         </v-list>
     </v-menu>
 
@@ -54,6 +58,7 @@
                 closeTree: Do.CLOSE_TREE
             }),
             ...mapActions({
+                deleteTree: On.DELETE_OPENED_TREE,
                 showDialog: On.SHOW_DIALOG,
                 dispatchDeleteTrunk: On.DELETE_TREE,
                 goHome: On.GO_HOME,

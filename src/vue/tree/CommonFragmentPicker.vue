@@ -1,11 +1,11 @@
 <template>
     <div>
-        <fragment-select v-model="currentSubPage" class="pt-3"/>
-
-        <v-window v-model="currentSubPage" class="pt-1">
+        <fragment-select v-model="idx" class="pt-3"/>
+        <v-divider/>
+        <v-window v-model="idx" class="pt-1">
             <template v-for="fragment in fragments">
                 <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
-                    <common-attribute :key="fragment.type" :trees="trees" :type="fragment.type" :fragment="fragment.type" :noItem="fragment.noItem" @select="i => $emit('select', i)"/>
+                    <common-attribute :key="fragment.type" :treesIds="params" :type="fragment.type" :fragment="fragment.type" :noItem="fragment.noItem" @select="v => $emit('save', v)"/>
                 </v-window-item>
             </template>
         </v-window>
@@ -14,16 +14,16 @@
 </template>
 <script>
     import Loader from "../loader/Loader"
-    import {FACETS, IMPACT_TANK, TANK} from "../../const/fragments"
+    import {FACETS, IMPACT_TANK, IMPACTS, TANK} from "../../const/fragments"
     import FragmentSelect from "./FragmentSelect"
     import CommonAttribute from "./CommonAttribute"
 
     export default {
-        name: "attribute-finder",
+        name: "common-fragment-picker",
         components: {CommonAttribute, FragmentSelect, Loader},
-        props: ['trees'],
+        props: ['params'],
         data: () => ({
-            currentSubPage: 0,
+            idx: 0,
             commons: null,
             facetCommons: null,
             ressourceCommons: null,

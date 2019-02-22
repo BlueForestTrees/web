@@ -87,7 +87,8 @@
                     const freq = toBqtG({qt: this.qtFreq, unit: this.unitFreq.shortname})
                     const duree = toBqtG({qt: this.qtDuree, unit: this.unitDuree.shortname})
                     const name = this.name
-                    this.$emit("pick", {tree, selection: {quantity, repeted, freq, duree, name}})
+                    const trunkId = this.tree._id
+                    this.$emit("pick", {tree, selection: {trunkId, quantity, repeted, freq, duree, name}})
                 }
             },
             close() {

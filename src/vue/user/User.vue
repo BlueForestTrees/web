@@ -32,9 +32,7 @@
             this.initFields()
             this.initChanges()
         },
-        computed: {
-            ...mapState({loggedUser: s => s.user}),
-            owned() {
+             owned() {
                 return this.loggedUser && this.loggedUser._id === this.user._id
             }
         },

@@ -58,7 +58,7 @@ export default {
         search: {cat: {opened: false}, owner: {opened: false}},
         leftMenuVisible: false, rightMenuVisible: false, dark: false, detailsDialog: false,
         tree: {
-            currentSubPage: FACETS, modeAdd: false, cardFlipped: false,
+            currentSubPage: 0, modeAdd: false, cardFlipped: false,
             impact: {idx: 0, term: ""},
             root: {idx: 0, term: "", scope: ROOTS},
             facet: {term: ""},

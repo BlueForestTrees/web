@@ -18,8 +18,8 @@
     import debounce from 'lodash.debounce'
 
     export default {
-        name: "path-checker",
-        props: ['path'],
+        name: "path-editor",
+        props: ['value'],
         components: {Loader},
         data: () => ({name: null, valid: false, errors: null, loading: false}),
         methods: {
@@ -46,7 +46,7 @@
             ...mapActions({checkAvailable: On.CHECK_NAME_AVAILABLE})
         },
         mounted() {
-            this.name = this.path
+            this.name = this.value
         }
     }
 </script>

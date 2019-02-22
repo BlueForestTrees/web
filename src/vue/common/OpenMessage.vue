@@ -1,5 +1,5 @@
 <template>
-    <v-btn v-if="noText" flat icon>
+    <v-btn v-if="noText" flat icon @click="showMessages">
         <v-icon color="primary">chat</v-icon>
     </v-btn>
     <div v-else @click="showMessages">

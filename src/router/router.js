@@ -52,7 +52,7 @@ export default new VueRouter({
                 {name: GO.MESSAGE, path: "/message", component: MyMessages},
                 {name: GO.ROAD_MAP, path: 'roadmap', component: RoadMap},
                 {name: GO.DATA_EXPLAINED, path: 'explain/datas', component: DatasExplained},
-                {name: GO.CREATE_TREE, path: "create/tree", component: CreateTree},
+                {name: GO.CREATE_TREE, path: "new/tree", component: CreateTree},
 
                 {name: GO.TREE, path: "tree/:bqt/:_id", component: Tree, props: (route) => ({_id: route.params._id, bqt: Number(Number.parseFloat(route.params.bqt))})},
                 {name: GO.TREE_EMPTY, path: "tree", component: Tree},
@@ -62,12 +62,12 @@ export default new VueRouter({
 
                 {name: GO.CREATE_INFO, path: "info", component: CreateInfo},
                 {name: GO.INFO, path: "info/:path", component: Info, props: true},
-                {name: GO.CREATE_EQUIV, path: "create/eq", component: CreateEq},
+                {name: GO.CREATE_EQUIV, path: "new/eq", component: CreateEq},
                 {name: GO.EDIT_EQUIV, path: "edit/eq/:path", component: CreateEq, props: true},
-                {name: GO.CREATE_COMPENS, path: "create/co", component: CreateCompens},
-                {name: GO.CREATE_ALT, path: "create/alt", component: CreateAlt},
+                {name: GO.CREATE_COMPENS, path: "new/co", component: CreateCompens},
+                {name: GO.CREATE_ALT, path: "new/alt", component: CreateAlt},
                 {name: GO.EDIT_ALT, path: "edit/alt/:path", component: CreateAlt, props: true},
-                {name: GO.CREATE_GROUP, path: "create/g", component: CreateGroup},
+                {name: GO.CREATE_GROUP, path: "new/g", component: CreateGroup},
                 {name: GO.EDIT_GROUP, path: "edit/g/:path", component: CreateGroup, props: true},
 
                 {name: GO.GAME, path: "play/:gameId", component: Qui2, props: true},

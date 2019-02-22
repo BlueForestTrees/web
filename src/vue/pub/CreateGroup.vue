@@ -78,7 +78,7 @@
             <v-window v-model="idx">
                 <v-window-item></v-window-item>
                 <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
-                    <path-checker @save="selectPath" :path="info && info.path"/>
+                    <path-editor @save="selectPath" :path="info && info.path"/>
                 </v-window-item>
                 <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
                     <textarea-editor @save="selectDescription" :value="info && info.description" placeholder="Entrez un commentaire pour votre groupe"/>
@@ -102,7 +102,7 @@
     import {mapActions} from "vuex"
     import draggable from 'vuedraggable'
     import {GO} from "../../const/go"
-    import PathChecker from "./PathChecker"
+    import PathChecker from "./PathEditor"
     import InfoLoader from "./InfoLoader"
     import InfoIdDense from "../home/InfoIdDense"
     import TextareaEditor from "../editor/TextAreaEditor"

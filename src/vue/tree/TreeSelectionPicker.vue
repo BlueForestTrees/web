@@ -21,7 +21,7 @@
     export default {
         name: "tree-selection-picker",
         components: {TreePicker, SelectionPicker, Card},
-        props: ['tree'],
+        props: ['value'],
         data: () => ({selectedTree: null, selectionPickerClosed: false}),
         methods: {
             name,
@@ -35,7 +35,7 @@
             },
             pickSelection({tree, selection}) {
                 this.applySelection({tree, selection})
-                this.$emit("select", this.pickedTree)
+                this.$emit("save", selection)
                 this.selectionPickerClosed = false
             },
             closeSelectionPicker() {
@@ -47,7 +47,7 @@
                 return this.selectionPickerClosed || !this.pickedTree
             },
             pickedTree() {
-                return this.selectedTree || this.tree
+                return this.selectedTree || this.value
             },
             ...mapState({
                 user: s => s.user

@@ -2,103 +2,16 @@
     <view-edit-save>
 
         <v-card slot="left">
-            <subpage-title :title="`Equivalence: ${info.path}`" iconClass="voice logo"/>
-            <v-layout column align-center>
-                <v-layout :column="$vuetify.breakpoint.smAndDown" align-center justify-center ma-5>
-                    <selection-card-front v-if="leftTree && leftTree.selection" :selection="leftTree.selection" :attribute="leftAttribute"/>
-                    <v-flex v-else class="bold-font display-2">A</v-flex>
-                    <div class="bold-font align display-2 ma-4">=</div>
-                    <selection-card-front v-if="rightTree && rightTree.selection" :selection="rightTree.selection" :attribute="rightAttribute"/>
-                    <v-flex v-else class="bold-font display-2">B</v-flex>
-                </v-layout>
-            </v-layout>
+            <subpage-title iconClass="voice logo" title="Equivalence"/>
+            <eq-show :info="info"/>
         </v-card>
 
         <v-card slot="right">
             <subpage-title icon="edit" title="Modifier"/>
-            <v-container>
-                <v-layout column>
-                    <v-list>
-                        <v-list-tile v-if="!editing || idx === 1" key="1">
-                            <v-list-tile-content>
-                                <v-list-tile-title>Produit A:<span v-if="leftTree && leftTree.selection" class="font-weight-medium ml-3">{{qtUnitName(leftTree.selection)}}</span></v-list-tile-title>
-                            </v-list-tile-content>
-                            <v-list-tile-action>
-                                <closer v-if="editing" @close="close"/>
-                                <v-btn v-else icon @click="idx = 1">
-                                    <v-icon color="primary">edit</v-icon>
-                                </v-btn>
-                            </v-list-tile-action>
-                        </v-list-tile>
-                        <v-list-tile v-if="!editing || idx === 2" key="2">
-                            <v-list-tile-content>
-                                <v-list-tile-title>Produit B:<span v-if="rightTree && rightTree.selection" class="font-weight-medium ml-3">{{name(rightTree.selection)}}</span></v-list-tile-title>
-                            </v-list-tile-content>
-                            <v-list-tile-action>
-                                <closer v-if="editing" @close="close"/>
-                                <v-btn v-else icon @click="idx = 2">
-                                    <v-icon color="primary">edit</v-icon>
-                                </v-btn>
-                            </v-list-tile-action>
-                        </v-list-tile>
-                        <v-list-tile v-if="!editing || idx === 3" key="3">
-                            <v-list-tile-content>
-                                <v-list-tile-title>Aspect pris en compte:<span v-if="info && info.fragment" class="font-weight-medium ml-3">{{info.fragment.name}}</span></v-list-tile-title>
-                            </v-list-tile-content>
-                            <v-list-tile-action>
-                                <closer v-if="editing" @close="close"/>
-                                <v-btn v-else icon @click="idx = 3">
-                                    <v-icon color="primary">edit</v-icon>
-                                </v-btn>
-                            </v-list-tile-action>
-                        </v-list-tile>
-                        <v-list-tile v-if="!editing || idx === 4" key="4">
-                            <v-list-tile-content>
-                                <v-list-tile-title>Nom:<span class="font-weight-medium ml-3">{{info && info.path}}</span></v-list-tile-title>
-                            </v-list-tile-content>
-                            <v-list-tile-action>
-                                <closer v-if="editing" @close="close"/>
-                                <v-btn v-else icon @click="idx = 4">
-                                    <v-icon color="primary">edit</v-icon>
-                                </v-btn>
-                            </v-list-tile-action>
-                        </v-list-tile>
-                        <v-list-tile v-if="!editing || idx === 5" key="5">
-                            <v-list-tile-content>
-                                <v-list-tile-title>Commentaire (optionnel):<span class="font-weight-medium ml-3">{{info && info.description}}</span></v-list-tile-title>
-                            </v-list-tile-content>
-                            <v-list-tile-action>
-                                <closer v-if="editing" @close="close"/>
-                                <v-btn v-else icon @click="idx = 5">
-                                    <v-icon color="primary">edit</v-icon>
-                                </v-btn>
-                            </v-list-tile-action>
-                        </v-list-tile>
-                    </v-list>
-                    <v-divider v-if="editing"/>
-                </v-layout>
-            </v-container>
-            <v-window v-model="idx">
-                <v-window-item></v-window-item>
-                <v-window-item lazy transition="fade-transition">
-                    <tree-selection-picker @select="selectProductA" :tree="leftTree"/>
-                </v-window-item>
-                <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
-                    <tree-selection-picker @select="selectProductB" :tree="rightTree"/>
-                </v-window-item>
-                <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
-                    <attribute-finder :trees="[leftTree, rightTree]" @select="selectFragment"/>
-                </v-window-item>
-                <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
-                    <path-checker @save="selectPath" :path="info && info.path"/>
-                </v-window-item>
-                <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
-                    <textarea-editor @save="selectDescription" :value="info && info.description" :maxLength="100" placeholder="Entrez un commentaire pour votre équivalence"/>
-                </v-window-item>
-            </v-window>
+            <viewer-editor v-model="editing" :fields="fields" @change="change"/>
         </v-card>
 
-        <info-saver slot="bottom" v-if="!editing" v-model="canSave" :info="info" @delete="remove"/>
+        <saver slot="bottom" v-if="!editing" :changes="changes"/>
 
     </view-edit-save>
 
@@ -106,94 +19,74 @@
 <script>
     import Card from "../common/Card"
     import TreeCard from "../tree/TreeCard"
-    import AttributeFinder from "../tree/AttributeFinder"
     import {getAttributeByFragment, name, qtUnitName, qtFreq, attributeCoef, createSelection} from "../../services/calculations"
     import On from "../../const/on"
     import {mapActions} from "vuex"
-    import PathChecker from "./PathChecker"
     import SelectionLink from "./Selection-Link"
-    import {infoFragments} from "../../const/fragments"
     import TransitionExpand from "../common/TransitionExpand"
     import SelectionCardFront from "../tree/SelectionCardFront"
     import {GO} from "../../const/go"
     import InfoSaver from "./InfoSaver"
     import InfoLoader from "./InfoLoader"
     import Closer from "../common/Closer"
-    import TreeSelectionPicker from "../tree/TreeSelectionPicker"
+
+    const TreeSelectionPicker = () => import("../tree/TreeSelectionPicker")
     import SubpageTitle from "../tree/SubpageTitle"
     import TextareaEditor from "../editor/TextAreaEditor"
     import Connected from "../mixin/Connected"
     import ViewEditSave from "./ViewEditSave"
+    import ViewerEditor from "../common/ViewerEditor"
+    import Vue from "vue"
+    import PathEditor from "./PathEditor"
+    import CommonFragmentPicker from "../tree/CommonFragmentPicker"
+    import Saver from "../editor/Saver"
+    import EqShow from "./Eq"
 
     const createInfo = () => ({type: "eq", fragment: null, leftSelection: null, rightSelection: null, path: "", text: null})
 
     export default {
         name: "create-eq",
-        components: {ViewEditSave, TextareaEditor, SubpageTitle, TreeSelectionPicker, Closer, InfoSaver, SelectionCardFront, TransitionExpand, SelectionLink, PathChecker, AttributeFinder, TreeCard, Card},
+        components: {EqShow, Saver, CommonFragmentPicker, PathEditor, ViewerEditor, ViewEditSave, TextareaEditor, SubpageTitle, TreeSelectionPicker, Closer, InfoSaver, SelectionCardFront, TransitionExpand, SelectionLink, TreeCard, Card},
         props: ['path'],
         mixins: [InfoLoader, Connected],
         data: () => ({
             GO,
-            idx: 0,
-            canSave: false,
+            editing: null,
             info: createInfo(),
-            leftTree: null, rightTree: null
+            changes: {}
         }),
         methods: {
-            qtUnitName, name, qtFreq, createInfo,
+            qtUnitName, name, qtFreq,
             ...mapActions({
                 loadSelectionTree: On.LOAD_SELECTION_TREE,
                 applyCoefAll: On.APPLY_QUANTITY_COEF_ALL,
             }),
-            close() {
-                this.idx = 0
-            },
-            selectProductA({selection}) {
-                this.info.leftSelection = selection
-                this.refreshTree(this.info.leftSelection).then(leftTree => this.leftTree = leftTree)
-                this.canSave = true
-                this.close()
-            },
-            selectProductB({selection}) {
-                this.info.rightSelection = selection
-                this.refreshTree(this.info.rightSelection).then(rightTree => this.rightTree = rightTree)
-                this.canSave = true
-                this.close()
-            },
-            selectFragment(fragment) {
-                this.info.fragment = fragment
-                this.canSave = true
-                this.close()
-            },
-            selectPath(path) {
-                this.info.path = path
-                this.canSave = true
-                this.close()
-            },
-            selectDescription(description) {
-                this.info.description = description
-                this.canSave = true
-                this.close()
-            },
-            async infoChanged(info) {
-                if (info) {
-                    this.info = info
-                    this.leftTree = await this.refreshTree(this.info.leftSelection)
-                    this.rightTree = await this.refreshTree(this.info.rightSelection)
+            change({key, value, newvalue}) {
+                if (value !== newvalue) {
+                    if (newvalue !== undefined) {
+                        Vue.set(this.changes, key, newvalue)
+                    } else {
+                        Vue.delete(this.changes, key)
+                    }
                 }
-            },
-            refreshTree(selection) {
-                return this.loadSelectionTree({selection, fragments: infoFragments})
             },
             remove() {
                 this.info = createInfo()
-                this.leftTree = null
-                this.rightTree = null
             }
         },
         computed: {
-            editing() {
-                return this.idx !== 0
+            fields() {
+                return [
+                    {key: "leftSelection", title: "Produit A", displayFct: qtUnitName, value: this.info.leftSelection, editor: "tree-selection-picker"},
+                    {key: "rightSelection", title: "Produit B", displayFct: name, value: this.info.rightSelection, editor: "tree-selection-picker"},
+                    {
+                        key: "fragment", title: "Aspect pris en compte", displayFct: name, value: this.info.fragment, editor: "common-fragment-picker",
+                        params: [this.info.leftSelection && this.info.leftSelection.trunkId, this.info.rightSelection && this.info.rightSelection.trunkId],
+                        noedit: !(this.info.rightSelection && this.info.leftSelection)
+                    },
+                    {key: "path", title: "Nom", value: this.info.path || "", editor: "path-editor"},
+                    {key: "description", title: "Commentaire", value: this.info.description || "", editor: "textarea-editor"},
+                ]
             },
             leftAttribute() {
                 return this.leftTree && this.info.fragment && getAttributeByFragment(this.leftTree, this.info.fragment)
@@ -218,10 +111,10 @@
         created() {
             if (this.$store.state.tree) {
                 if (this.$store.state.tree.selection) {
-                    this.selectProductA(this.$store.state.tree)
+                    this.change({key: "leftSelection", newvalue: this.$store.state.tree.selection})
                 } else {
                     const selection = createSelection(this.$store.state.tree)
-                    this.selectProductA({selection})
+                    this.change({key: "leftSelection", newvalue: selection})
                 }
             }
         }

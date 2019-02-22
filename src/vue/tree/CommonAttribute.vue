@@ -12,7 +12,7 @@
             <v-layout column align-center>
                 <p class="font-weight-medium">
                     <v-icon color="green" class="mr-2">info</v-icon>
-                    {{noItem || "Il n'y a pas d'information commune à ces deux produits :("}}
+                    {{noItem || "Il n'y a pas d'information commune à ces produits :("}}
                 </p>
             </v-layout>
         </v-container>
@@ -27,20 +27,23 @@
     export default {
         name: "common-attribute",
         components: {Loader},
-        props: ['noItem', 'loading', 'trees', 'type'],
-        data: () => ({commons: null}),
+        props: ['noItem', 'loading', 'treesIds', 'type'],
+        data: () => ({commons: null, trees: null}),
         methods: {
-            ...mapActions({updateTrees: On.UPDATE_TREES}),
+            ...mapActions({loadTrees: On.LOAD_TREES}),
             async refresh() {
-                if (this.trees && this.trees.length > 1) {
-                    await this.updateTrees({trees: this.trees, fragments: [this.type]})
+                if (this.treesIds && this.treesIds.length > 1) {
+                    this.trees = await this.loadTrees({treesIds: this.treesIds, fragments: [this.type]})
+                    for (let i = 0; i < this.trees.length; i++) {
+                        await this.trees[i].promises.all
+                    }
                     this.commons = extractCommons(this.trees, this.type)
                 } else {
                     this.commons = null
                 }
             }
         },
-        mounted() {
+        created() {
             this.refresh()
         }
     }
