@@ -1,28 +1,25 @@
 <template>
     <v-card>
-        <v-layout column>
+
+        <v-layout column align-center>
 
             <subpage-title iconClass="scope-tree logo" title="Produit"/>
 
-            <v-flex grow>
-                <tree-card :tree="tree" class="mt-3">
-                    <v-card-actions>
-                        <v-btn icon flat @click="setFlipped(true)">
-                            <v-icon color="red">favorite_border</v-icon>
-                        </v-btn>
-                        <v-btn icon flat @click="goInfo">
-                            <v-icon class="voice logo-petit"/>
-                        </v-btn>
-                        <open-message :section="section" no-text/>
-                        <tree-fab slot="right" v-if="tree.trunk" @nav="v=>$emit('nav', v)"/>
-                    </v-card-actions>
-                </tree-card>
-                <description :tree="tree" class="my-5"/>
-            </v-flex>
+            <tree-card :tree="tree" class="mt-3">
+                <v-card-actions>
+                    <v-btn icon flat @click="setFlipped(true)"><v-icon color="red">favorite_border</v-icon></v-btn>
+                    <v-btn icon flat @click="goInfo"><v-icon class="voice logo-petit"/></v-btn>
+                    <open-message :section="section" no-text/>
+                    <tree-fab slot="right" v-if="tree.trunk" @nav="v=>$emit('nav', v)"/>
+                </v-card-actions>
+            </tree-card>
 
-            <v-divider/>
-            <fragment-select :value="value" @input="i=>$emit('input', i)"/>
+            <description :tree="tree" class="my-5"/>
+
         </v-layout>
+
+        <v-divider/>
+        <fragment-select :value="value" @input="i=>$emit('input', i)"/>
     </v-card>
 </template>
 <script>

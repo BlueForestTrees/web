@@ -9,11 +9,18 @@ export default {
         }),
         async refresh() {
             if (this.path) {
-                this.infoChanged(await this.getInfo({path: this.path}))
+                if (this.path !== 'new') {
+                    const info = await this.getInfo({path: this.path})
+                    if (info) {
+                        this.setInitial(info)
+                    } else {
+                        this.setInitial({path: this.path})
+                    }
+                }
             }
         }
     },
-    mounted() {
+    created() {
         this.refresh()
     },
     watch: {

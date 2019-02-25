@@ -1,5 +1,5 @@
 <template>
-    <p class="font-weight-thin subheading font-italic">{{text}}</p>
+    <div class="font-weight-thin subheading font-italic">{{text}}</div>
 </template>
 <script>
     export default {

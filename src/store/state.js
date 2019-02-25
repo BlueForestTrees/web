@@ -24,14 +24,7 @@ const dialogs = () => {
     return dials
 }
 
-export const snack = () => ({
-    visible: false,
-    multiline: false,
-    timeout: 5000,
-    vertical: false,
-    text: "this message should be overriden.",
-    color: "black"
-})
+export const snack = () => ({visible: false,multiline: false,timeout: 5000,vertical: false,text: "this message should be overriden.",color: "black"})
 
 export const tree = () => ({_id: null, trunk: null, selection: null, facets: null})
 
@@ -66,7 +59,7 @@ export default {
         }
     },
     snack: snack(),
-    messages: {title: null, text: null, hasMore: false, filter: {}, list: []},
+    messages: {title: null, comment: null, hasMore: false, filter: {}, list: []},
     myMessages: [],
     maquettes,
     xRequestId: null,

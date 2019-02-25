@@ -7,7 +7,7 @@ import router from "../../router/router"
 import {GO} from "../../const/go"
 import Do from "../../const/do"
 import {DAMAGE, FACET, IMPACT} from "../../const/attributesTypes"
-import {allFragments, IMPACTS, OWNER} from "../../const/fragments"
+import {allFragments, OWNER} from "../../const/fragments"
 import {deleteCatch} from "./commons"
 
 
@@ -142,7 +142,6 @@ export default {
     },
 
     [On.SAVE_APPLY_SELECTION]: ({dispatch}, {tree, selection}) => {
-        selection.trunkId = tree._id
         if (tree.selection) {
             selection._id = tree.selection._id
             api.updateSelection(selection)

@@ -4,7 +4,7 @@
 
             <selection-card-front :selection="info.leftSelection" :attribute="leftAttribute" no-selection="A"/>
 
-            <div class="bold-font align display-2 ma-4">=</div>
+            <div class="font-weight-thin text-no-wrap display-1 ma-4">compense</div>
 
             <selection-card-front :selection="info.rightSelection" :attribute="rightAttribute" no-selection="B"/>
 
@@ -13,14 +13,14 @@
 </template>
 
 <script>
+    import SelectionCardFront from "../tree/SelectionCardFront"
+    import InfoBase from "./InfoBase"
+    import On from "../../const/on"
     import {attributeCoef, getAttributeByFragment} from "../../services/calculations"
     import {mapActions} from "vuex"
-    import SelectionCardFront from "../tree/SelectionCardFront"
-    import On from "../../const/on"
-    import InfoBase from "./InfoBase"
 
     export default {
-        name: "eq-show",
+        name: "comp-show",
         components: {InfoBase, SelectionCardFront},
         props: ['info'],
         data: () => ({On, leftTree: null, rightTree: null}),
@@ -52,7 +52,7 @@
                 return this.rightTree && this.info.fragment && getAttributeByFragment(this.rightTree, this.info.fragment)
             },
             coef() {
-                return this.leftAttribute && this.rightAttribute && attributeCoef(this.leftAttribute, this.rightAttribute)
+                return this.leftAttribute && this.rightAttribute && -attributeCoef(this.leftAttribute, this.rightAttribute)
             }
         },
         watch: {

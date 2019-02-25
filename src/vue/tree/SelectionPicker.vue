@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <v-flex>
 
         <subpage-title sub iconClass="carton logo" title="Quantité">
             <slot slot="left"></slot>
@@ -7,7 +7,6 @@
         </subpage-title>
 
         <v-container>
-
             <v-layout align-center column>
 
                 <v-form v-model="valid" v-on:submit.prevent="" ref="form">
@@ -32,12 +31,12 @@
 
                 <v-layout row style="width:100%">
                     <v-spacer/>
-                    <v-icon @click.stop="validate" color="primary" class="hand">save</v-icon>
+                    <v-btn icon @click.stop="validate" >Ok</v-btn>
                 </v-layout>
 
             </v-layout>
         </v-container>
-    </div>
+    </v-flex>
 
 </template>
 
@@ -50,7 +49,7 @@
     import UnitSelect from "../common/UnitSelect"
     import GrandeurSelect from "../common/GrandeurSelect"
     import {selectionNameMaxLength} from "../../const/validation"
-    import {createSelection} from "../../services/calculations"
+    import {selectionFromTree} from "../../services/calculations"
     import Card from "../common/Card"
     import SubpageTitle from "./SubpageTitle"
     import Closer from "../common/Closer"
@@ -59,7 +58,7 @@
         name: 'selection-picker',
         components: {Closer, SubpageTitle, Card, GrandeurSelect, UnitSelect, Destination},
         mixins: [closable],
-        props: ['tree'],
+        props: ['selection'],
         data: function () {
             return {
                 qt: null,
@@ -81,14 +80,13 @@
             validate() {
                 this.$refs.form.validate()
                 if (this.valid) {
-                    const tree = this.tree
                     const quantity = toBqtG({qt: this.qt, unit: this.unit.shortname})
                     const repeted = this.isRegulier
                     const freq = toBqtG({qt: this.qtFreq, unit: this.unitFreq.shortname})
                     const duree = toBqtG({qt: this.qtDuree, unit: this.unitDuree.shortname})
                     const name = this.name
-                    const trunkId = this.tree._id
-                    this.$emit("pick", {tree, selection: {trunkId, quantity, repeted, freq, duree, name}})
+                    const trunkId = this.selection.trunkId
+                    this.$emit("pick", {trunkId, quantity, repeted, freq, duree, name})
                 }
             },
             close() {
@@ -98,31 +96,30 @@
             noMore30: v => v && v.length <= selectionNameMaxLength || "trop long"
         },
         mounted() {
-            if (this.tree.selection) {
-                const bqtG = this.tree.selection.quantity
+            if (this.selection) {
+
+                const bqtG = this.selection.quantity
                 const qtUnit = bestQuantity(bqtGToQtUnit(bqtG))
                 this.qt = qtUnit.qt
                 this.unit = unit(qtUnit.unit)
                 this.grandeur = getGrandeur(bqtG.g)
 
-                const qtUnitFreq = bestQuantity(bqtGToQtUnit(this.tree.selection.freq))
-                this.qtFreq = qtUnitFreq.qt
-                this.unitFreq = unit(qtUnitFreq.unit)
+                this.isRegulier = this.selection.repeted
 
-                const qtUnitDuree = bestQuantity(bqtGToQtUnit(this.tree.selection.duree))
-                this.qtDuree = qtUnitDuree.qt
-                this.unitDuree = unit(qtUnitDuree.unit)
+                if (this.selection.freq) {
+                    const qtUnitFreq = bestQuantity(bqtGToQtUnit(this.selection.freq))
+                    this.qtFreq = qtUnitFreq.qt
+                    this.unitFreq = unit(qtUnitFreq.unit)
+                }
 
-                this.isRegulier = this.tree.selection.repeted
-                this.name = this.tree.selection.name || this.tree.trunk.name.substr(0, selectionNameMaxLength)
-            } else {
-                const selection = createSelection(this.tree)
-                const qtUnit = bestQuantity(bqtGToQtUnit(selection.quantity))
+                if (this.selection.duree) {
+                    const qtUnitDuree = bestQuantity(bqtGToQtUnit(this.selection.duree))
+                    this.qtDuree = qtUnitDuree.qt
+                    this.unitDuree = unit(qtUnitDuree.unit)
+                }
 
-                this.name = selection.name
-                this.grandeur = getGrandeur(selection.quantity.g)
-                this.unit = unit(qtUnit.unit)
-                this.qt = qtUnit.qt
+                this.name = this.selection.name || this.tree.trunk.name.substr(0, selectionNameMaxLength)
+
             }
         }
     }

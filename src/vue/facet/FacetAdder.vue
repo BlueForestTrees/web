@@ -61,7 +61,7 @@
                         this.snack({text: "1 propriété ajoutée", color: "green"})
                     })
                     .catch(e => {
-                        this.snack({text: e.message, color: "orange"})
+                        this.snack({text: e, color: "orange"})
                         console.error(e)
                     })
             },

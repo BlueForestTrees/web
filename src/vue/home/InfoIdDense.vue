@@ -1,17 +1,19 @@
 <template>
-    <info-dense :info="info"/>
+    <info-dense v-if="info" :info="info"/>
+    <loader v-else/>
 </template>
 
 <script>
     import {GO} from "../../const/go"
-    import {infoType} from "../../const/labels"
+    import {infoType} from "../../const/infoType"
     import On from "../../const/on"
     import {mapActions} from "vuex"
     import InfoDense from "./InfoDense"
+    import Loader from "../loader/Loader"
 
     export default {
         name: "info-id-dense",
-        components: {InfoDense},
+        components: {Loader, InfoDense},
         props: ["infoId"],
         data: () => ({
             GO,

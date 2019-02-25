@@ -1,5 +1,6 @@
 import On from "../../const/on"
 import {applyAspectCoef, applyRessourceCoef, applySelectionCoef} from "../../services/calculations"
+import {FACETS} from "../../const/fragments"
 
 export default {
     [On.APPLY_QUANTITY_COEF_ALL]: ({dispatch}, {tree, coef}) => {
@@ -14,7 +15,7 @@ export default {
         applyAspectCoef(coef, tree.tank)
         applyAspectCoef(coef, tree.impacts)
         applyAspectCoef(coef, tree.damages)
-        applyAspectCoef(coef, tree.facets)
+        applyAspectCoef(coef, tree[FACETS])
         applyAspectCoef(coef, tree.impactsTank)
         applyAspectCoef(coef, tree.damagesTank)
     },

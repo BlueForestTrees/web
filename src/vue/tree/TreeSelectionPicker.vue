@@ -1,53 +1,57 @@
 <template>
     <transition name="slide-fade" mode="out-in">
+
         <tree-picker v-if="showTreePicker" @pick="pickTree"/>
 
-        <selection-picker v-else
-                          :tree="pickedTree" @pick="pickSelection"
-                          @close="closeSelectionPicker">
 
-        </selection-picker>
+        <selection-picker v-else
+                          :selection="finalSelection"
+                          @pick="pickSelection" @close="closeSelectionPicker"/>
+
     </transition>
 </template>
 <script>
-    import On from "../../const/on"
-    import {mapActions, mapState} from "vuex"
-    import {name, treefySelection} from "../../services/calculations"
+    import {mapState} from "vuex"
+    import {selectionFromTree, name} from "../../services/calculations"
     import Card from "../common/Card"
     import SelectionPicker from "./SelectionPicker"
     import TreePicker from "./TreePicker"
-    import {TRUNK} from "../../const/fragments"
 
     export default {
         name: "tree-selection-picker",
         components: {TreePicker, SelectionPicker, Card},
         props: ['value'],
-        data: () => ({selectedTree: null, selectionPickerClosed: false}),
+        data: () => ({
+            selection: null,
+            selectionPickerClosed: false
+        }),
         methods: {
             name,
-            ...mapActions({
-                loadTreeFromSelection: On.LOAD_SELECTION,
-                applySelection: On.APPLY_SELECTION
-            }),
-            async pickTree(item) {
-                this.selectedTree = treefySelection(item)
+            async pickTree(tree) {
+                this.selection = tree.selection || selectionFromTree(tree)
                 this.selectionPickerClosed = false
             },
-            pickSelection({tree, selection}) {
-                this.applySelection({tree, selection})
+            pickSelection(selection) {
                 this.$emit("save", selection)
                 this.selectionPickerClosed = false
             },
             closeSelectionPicker() {
+                this.selection = null
                 this.selectionPickerClosed = true
             }
         },
         computed: {
-            showTreePicker() {
-                return this.selectionPickerClosed || !this.pickedTree
+            initialSelection() {
+                return this.value
             },
-            pickedTree() {
-                return this.selectedTree || this.value
+            pickedSelection() {
+                return this.selection
+            },
+            finalSelection() {
+                return this.pickedSelection || this.initialSelection
+            },
+            showTreePicker() {
+                return this.selectionPickerClosed || !this.finalSelection
             },
             ...mapState({
                 user: s => s.user

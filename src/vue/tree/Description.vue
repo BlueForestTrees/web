@@ -1,28 +1,26 @@
 <template>
-    <v-layout column align-center>
-        <div style="min-width: 17em">
-            <v-layout align-center justify-space-between>
-                <h5 class="font-weight-thin subheading">Propriétaire:</h5>
-                <a v-if="owner" :href="owner.site" target="_blank" class="not-too-third">{{owner.fullname}}</a>
-            </v-layout>
+    <div style="min-width: 17em">
+        <v-layout align-center justify-space-between>
+            <h5 class="font-weight-thin subheading">Propriétaire:</h5>
+            <a v-if="owner" :href="owner.site" target="_blank" class="not-too-third">{{owner.fullname}}</a>
+        </v-layout>
 
-            <v-layout align-center justify-space-between>
-                <h5 class="font-weight-thin subheading flex">Source:</h5>
-                <a v-if="isOff" :href="`https://world.openfoodfacts.org/product/${code}`">voir site</a>
-                <h5 class="font-weight-thin subheading" v-else>{{origin}}</h5>
-            </v-layout>
+        <v-layout align-center justify-space-between>
+            <h5 class="font-weight-thin subheading flex">Source:</h5>
+            <a v-if="isOff" :href="`https://world.openfoodfacts.org/product/${code}`">voir site</a>
+            <h5 class="font-weight-thin subheading" v-else>{{origin}}</h5>
+        </v-layout>
 
-            <v-layout align-center justify-space-between>
-                <h5 class="font-weight-thin subheading">Code:</h5>
-                <h5 class="font-weight-thin subheading">{{code}}</h5>
-            </v-layout>
+        <v-layout align-center justify-space-between>
+            <h5 class="font-weight-thin subheading">Code:</h5>
+            <h5 class="font-weight-thin subheading">{{code}}</h5>
+        </v-layout>
 
-            <v-layout align-center justify-space-between v-if="store">
-                <h5 class="font-weight-thin subheading">Magasins:</h5>
-                <h5 class="font-weight-thin subheading">{{store}}</h5>
-            </v-layout>
-        </div>
-    </v-layout>
+        <v-layout align-center justify-space-between v-if="store">
+            <h5 class="font-weight-thin subheading">Magasins:</h5>
+            <h5 class="font-weight-thin subheading">{{store}}</h5>
+        </v-layout>
+    </div>
 </template>
 <script>
     import TreeCardFront from "./QtUnitName"

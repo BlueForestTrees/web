@@ -32,7 +32,7 @@
         methods: {
             ...mapActions({loadTrees: On.LOAD_TREES}),
             async refresh() {
-                if (this.treesIds && this.treesIds.length > 1) {
+                if (this.treesIds && this.treesIds.length > 0) {
                     this.trees = await this.loadTrees({treesIds: this.treesIds, fragments: [this.type]})
                     for (let i = 0; i < this.trees.length; i++) {
                         await this.trees[i].promises.all

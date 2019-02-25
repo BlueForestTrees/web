@@ -1,13 +1,14 @@
 <template>
     <v-container>
-        <v-layout row align-center justify-center>
-            <v-text-field solo autofocus v-model="name" class="not-too-half" append-icon="save"
+        <v-layout row justify-center class="not-too-small">
+            <v-text-field solo autofocus v-model="name" class="not-too-half"
                           @input="check"
                           :error-messages="errors"
-                          @click:append="validate" @enter="validate" v-on:keyup.enter="validate"
-            />
+                          @enter="validate" v-on:keyup.enter="validate">
+                <mini-loader v-if="loading" slot="append" :size="20" :width="2"/>
+                <v-btn slot="append-outer" :disabled="!!errors.length" @click="validate">Ok</v-btn>
+            </v-text-field>
         </v-layout>
-        <loader v-if="loading" :width="2" :size="15"/>
     </v-container>
 </template>
 
@@ -16,15 +17,16 @@
     import {mapActions} from "vuex"
     import Loader from "../loader/Loader"
     import debounce from 'lodash.debounce'
+    import MiniLoader from "../loader/miniloader"
 
     export default {
         name: "path-editor",
         props: ['value'],
-        components: {Loader},
-        data: () => ({name: null, valid: false, errors: null, loading: false}),
+        components: {MiniLoader, Loader},
+        data: () => ({name: null, valid: false, errors: [], loading: false}),
         methods: {
             check: debounce(function () {
-                this.errors = null
+                this.errors = []
                 if (this.name) {
                     this.loading = true
                     return this.checkAvailable(this.name)
@@ -40,7 +42,7 @@
             }, 400),
             async validate() {
                 await this.check()
-                if (!this.errors)
+                if (!this.errors.length)
                     this.$emit("save", this.name)
             },
             ...mapActions({checkAvailable: On.CHECK_NAME_AVAILABLE})

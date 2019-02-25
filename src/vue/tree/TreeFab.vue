@@ -4,17 +4,17 @@
             <v-icon>more_horiz</v-icon>
         </v-btn>
         <v-list v-if="tree" class="font-weight-thin subheading">
-            <v-list-tile @click="$emit('nav', IMPACTS)">
+            <v-list-tile @click="$emit('nav', 0)">
                 <v-list-tile-avatar class="planet logo-petit"/>
                 <v-list-tile-title>Ajouter un impact environnemental...</v-list-tile-title>
             </v-list-tile>
             <v-divider/>
-            <v-list-tile @click="$emit('nav', ROOTS)">
+            <v-list-tile @click="$emit('nav', 1)">
                 <v-list-tile-avatar class="scope-tree logo-petit"/>
                 <v-list-tile-title>Ajouter une ressource...</v-list-tile-title>
             </v-list-tile>
             <v-divider/>
-            <v-list-tile @click="$emit('nav', FACETS)">
+            <v-list-tile @click="$emit('nav', 2)">
                 <v-list-tile-avatar class="facet logo-petit"/>
                 <v-list-tile-title>Ajouter une propriété...</v-list-tile-title>
             </v-list-tile>

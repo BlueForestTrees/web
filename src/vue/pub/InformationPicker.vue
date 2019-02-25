@@ -1,5 +1,5 @@
 <template>
-    <my-infos :user="userOnly && user" @select="v=>$emit('select', v)"/>
+    <my-infos :user="userOnly && user" @select="add"/>
 </template>
 
 <script>
@@ -8,12 +8,22 @@
 
     export default {
         name: "information-picker",
+        props: ["value"],
         components: {MyInfos},
         data: () => ({
             userOnly: true,
         }),
         computed: {
             ...mapState(['user'])
+        },
+        methods: {
+            add(item) {
+                if (this.value) {
+                    this.$emit('save', [...this.value, item._id])
+                } else {
+                    this.$emit('save', [item._id])
+                }
+            }
         }
     }
 </script>

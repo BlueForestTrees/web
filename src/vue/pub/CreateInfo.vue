@@ -15,7 +15,7 @@
                     </v-container>
                     <v-layout row justify-end>
                         <v-spacer/>
-                        <v-btn color="primary" class="ma-3" :to="{name:GO.CREATE_EQUIV}">Créer une équivalence</v-btn>
+                        <v-btn color="primary" class="ma-3" :to="{name:GO.EDIT_EQUIV, params:{path:'new'}}">Créer une équivalence</v-btn>
                     </v-layout>
                 </v-expansion-panel-content>
                 <v-expansion-panel-content>
@@ -27,7 +27,7 @@
                     </v-container>
                     <v-layout row justify-end>
                         <v-spacer/>
-                        <v-btn color="primary" class="ma-3" :to="{name:GO.CREATE_COMPENS}">Créer une Compensation</v-btn>
+                        <v-btn color="primary" class="ma-3" :to="{name:GO.EDIT_COMP, params:{path:'new'}}">Créer une Compensation</v-btn>
                     </v-layout>
                 </v-expansion-panel-content>
                 <v-expansion-panel-content>
@@ -39,7 +39,7 @@
                     </v-container>
                     <v-layout row justify-end>
                         <v-spacer/>
-                        <v-btn color="primary" class="ma-3" :to="{name:GO.CREATE_ALT}">Créer une alternative</v-btn>
+                        <v-btn color="primary" class="ma-3" :to="{name:GO.EDIT_ALT, params:{path:'new'}}">Créer une alternative</v-btn>
                     </v-layout>
                 </v-expansion-panel-content>
                 <v-expansion-panel-content>
@@ -49,7 +49,7 @@
                     </v-container>
                     <v-layout row justify-end>
                         <v-spacer/>
-                        <v-btn color="primary" class="ma-3" :to="{name:GO.CREATE_GROUP}">Créer un groupe</v-btn>
+                        <v-btn color="primary" class="ma-3" :to="{name:GO.EDIT_GROUP}">Créer un groupe</v-btn>
                     </v-layout>
                 </v-expansion-panel-content>
             </v-expansion-panel>

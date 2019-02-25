@@ -7,7 +7,6 @@
         </v-layout>
 
         <v-layout :column="$vuetify.breakpoint.xsOnly" align-center justify-center>
-
             <owner-picker @input="pickOwner" :value="search.owner"/>
         </v-layout>
 
@@ -38,7 +37,8 @@
 
     export default {
         name: "my-infos",
-        components: {SearchList, OwnerPicker, SearchText, TransitionExpand, InfoDense, Loader, Info},
+        components: {
+            SearchList, OwnerPicker, SearchText, TransitionExpand, InfoDense, Loader,Info},
         props: ['user'],
         data: () => ({On}),
         computed: {

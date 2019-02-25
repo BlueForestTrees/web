@@ -3,56 +3,75 @@
         <subpage-title :title="user.fullname">
             <user-icon slot="left" :user="user"/>
         </subpage-title>
-        <viewer-editor v-model="editing" :fields="fields" @change="change" :editable="owned"/>
-        <saver v-if="owned && !editing" :changes="changes" :update-action="On.UPDATE_USER" @saved="saved" updated-text="Utilisateur mis à jour."/>
+
+        <editor v-model="editing"
+                :initial="initial" :changes="changes" :editor="editor" :editable="owned"
+                @change="change"
+        />
+
+        <saver v-if="owned && !editing"
+               :initial="initial" :changes="changes"
+               :update-action="On.UPDATE_USER" updated-text="Utilisateur mis à jour."
+               @saved="saved"
+        />
     </card>
 </template>
 
 <script>
     import SubpageTitle from "../tree/SubpageTitle"
     import UserIcon from "./UserIcon"
-    import ViewerEditor from "../common/ViewerEditor"
+    import Editor from "../common/Editor"
     import Vue from 'vue'
     import Saver from "../editor/Saver"
     import On from "../../const/on"
-    import {mapState} from "vuex"
     import Card from "../common/Card"
+    import {formatDate} from "../../services/calculations"
+    import {mapState} from "vuex"
 
     export default {
         name: "user",
         props: ['user'],
-        components: {Card, Saver, ViewerEditor, UserIcon, SubpageTitle},
+        components: {Card, Saver, Editor, UserIcon, SubpageTitle},
         data: () => ({
-            fields: null,
+            editor: null,
             changes: null,
             editing: null,
             On
         }),
         created() {
-            this.initFields()
+            this.initEditor()
             this.initChanges()
         },
-             owned() {
-                return this.loggedUser && this.loggedUser._id === this.user._id
-            }
+        computed: {
+            ...mapState({loggedUser: s => s.user}),
+            initial() {
+                return this.user
+            },
+            owned() {
+                return this.loggedUser && this.loggedUser._id === this.initial._id
+            },
         },
         methods: {
-            initFields() {
-                this.fields = [
-                    {key: "description", title: "Description", value: this.user.description || "", editor: "textarea-editor"},
-                    {key: "fullname", title: "Nom", value: this.user.fullname || "", editor: "textarea-editor"},
-                    {key: "mail", title: "Adresse", value: this.user.mail || "", noedit: true},
-                    {title: "Inscription", value: new Date(this.user.wantSuscribeDate).toLocaleString(), noedit: true},
+            initEditor() {
+                this.editor = [
+                    {key: "description", title: "Description", editor: "textarea-editor"},
+                    {key: "fullname", title: "Nom", editor: "textarea-editor"},
+                    {key: "mail", title: "Adresse", noedit: true},
+                    {key: "wantSuscribeDate", title: "Inscription", displayFct: formatDate, noedit: true},
                 ]
             },
             initChanges() {
                 this.changes = {_id: this.user._id}
             },
-            change({key, value, newvalue}) {
-                if (value !== newvalue) {
-                    Vue.set(this.changes, key, newvalue)
+            change(field, newvalue) {
+                if (field.value !== newvalue) {
+                    if (newvalue !== undefined) {
+                        Vue.set(this.changes, field.key, newvalue)
+                    } else {
+                        Vue.delete(this.changes, field.key)
+                    }
                 } else {
-                    Vue.delete(this.changes, key)
+                    Vue.delete(this.changes, field.key)
                 }
             },
             saved(changes) {
@@ -61,7 +80,6 @@
                     Object.assign(this.loggedUser, changes)
                 }
                 this.initChanges()
-                this.initFields()
             }
         }
     }

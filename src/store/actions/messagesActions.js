@@ -5,8 +5,8 @@ import api from "../../rest/api"
 import {createStringObjectId} from "../../services/calculations"
 
 export default {
-    [On.SHOW_MESSAGES]: ({commit}, {title, filter, text}) => {
-        commit(Do.SET_MESSAGES_FILTER, {title, filter, text})
+    [On.SHOW_MESSAGES]: ({commit}, {title, filter, comment}) => {
+        commit(Do.SET_MESSAGES_FILTER, {title, filter, comment})
         commit(Do.RIGHT_MENU_VISIBLE, true)
     },
     [On.LOAD_MESSAGES]: ({commit}, filter) => api.getMessages(filter).then(ms => commit(Do.PUSH_MESSAGES, ms)),

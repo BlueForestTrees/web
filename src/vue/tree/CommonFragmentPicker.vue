@@ -14,7 +14,7 @@
 </template>
 <script>
     import Loader from "../loader/Loader"
-    import {FACETS, IMPACT_TANK, IMPACTS, TANK} from "../../const/fragments"
+    import {FACETS, IMPACT_TANK, TANK} from "../../const/fragments"
     import FragmentSelect from "./FragmentSelect"
     import CommonAttribute from "./CommonAttribute"
 

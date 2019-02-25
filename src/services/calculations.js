@@ -238,16 +238,11 @@ export const getAttribute = (tree, {type, _id}) => find(tree[type], "_id", _id)
 
 export const needS = count => count > 1 ? 's' : ''
 
-export const createSelection = tree => ({
+export const selectionFromTree = tree => ({
     trunkId: tree._id,
     quantity: tree.trunk.quantity,
-    name: tree.trunk.name.substr(0, selectionNameMaxLength)
-
+    name: tree.trunk.name.substr(0, selectionNameMaxLength),
+    repeted: false
 })
 
-//TODO les bonnes quantités
-export const treefySelection = item => item.freq && {
-    _id: item.trunkId,
-    trunk: {_id: item.trunkId, name: item.name, quantity: item.quantity},
-    selection: item
-} || item
+export const formatDate = value => new Date(value).toLocaleString()

@@ -2,10 +2,10 @@
     <view-edit-save>
 
         <v-card slot="left">
-            <subpage-title :title="`Groupe: ${info.path}`" iconClass="voice logo"/>
-            <v-list two-line v-if="info.items.length">
-                <draggable :list="info.items" @change="orderChange" :options="{dragClass:'dragClass', chosenClass:'chosenClass'}">
-                    <template v-for="(infoId, i) in info.items">
+            <subpage-title :title="`Groupe ${final.path}`" iconClass="voice logo"/>
+            <v-list two-line v-if="final.items && final.items.length">
+                <draggable :list="final.items" @change="orderChanged" :options="{dragClass:'dragClass', chosenClass:'chosenClass'}">
+                    <template v-for="(infoId, i) in final.items">
                         <div :key="infoId">
                             <v-list-tile @click="">
                                 <v-icon color="primary" class="mr-4">apps</v-icon>
@@ -14,7 +14,7 @@
                                     <v-icon>close</v-icon>
                                 </v-btn>
                             </v-list-tile>
-                            <v-divider v-if="i+1 < info.items.length"/>
+                            <v-divider v-if="i+1 < final.items.length"/>
                         </div>
                     </template>
                 </draggable>
@@ -27,144 +27,63 @@
         </v-card>
 
         <v-card slot="right">
-
             <subpage-title icon="edit" title="Modifier"/>
-
-            <v-container>
-                <v-layout column>
-                    <v-list>
-                        <v-list-tile v-if="!editing || idx === 1" key="1">
-                            <v-list-tile-content>
-                                <v-list-tile-title>Nom:<span class="font-weight-medium ml-3">{{info && info.path}}</span></v-list-tile-title>
-                            </v-list-tile-content>
-                            <v-list-tile-action>
-                                <v-btn v-if="editing" icon @click="close">
-                                    <v-icon color="grey" large>close</v-icon>
-                                </v-btn>
-                                <v-btn v-else icon @click="idx = 1">
-                                    <v-icon color="primary">edit</v-icon>
-                                </v-btn>
-                            </v-list-tile-action>
-                        </v-list-tile>
-                        <v-list-tile v-if="!editing || idx === 2" key="2">
-                            <v-list-tile-content>
-                                <v-list-tile-title>Commentaire (optionnel):<span class="font-weight-medium ml-3">{{info && info.description}}</span></v-list-tile-title>
-                            </v-list-tile-content>
-                            <v-list-tile-action>
-                                <v-btn v-if="editing" icon @click="close">
-                                    <v-icon color="grey" large>close</v-icon>
-                                </v-btn>
-                                <v-btn v-else icon @click="idx = 2">
-                                    <v-icon color="primary">edit</v-icon>
-                                </v-btn>
-                            </v-list-tile-action>
-                        </v-list-tile>
-                        <v-list-tile v-if="!editing || idx === 3" key="3">
-                            <v-list-tile-content>
-                                <v-list-tile-title>Informations:<span class="font-weight-medium ml-3">{{info.items.length}}</span></v-list-tile-title>
-                            </v-list-tile-content>
-                            <v-list-tile-action>
-                                <v-btn v-if="editing" icon @click="close">
-                                    <v-icon color="grey" large>close</v-icon>
-                                </v-btn>
-                                <v-btn v-else icon @click="idx = 3">
-                                    <v-icon color="primary" large>add</v-icon>
-                                </v-btn>
-                            </v-list-tile-action>
-                        </v-list-tile>
-                    </v-list>
-                </v-layout>
-            </v-container>
-            <v-window v-model="idx">
-                <v-window-item></v-window-item>
-                <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
-                    <path-editor @save="selectPath" :path="info && info.path"/>
-                </v-window-item>
-                <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
-                    <textarea-editor @save="selectDescription" :value="info && info.description" placeholder="Entrez un commentaire pour votre groupe"/>
-                </v-window-item>
-                <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
-                    <information-picker @select="addInfo"/>
-                </v-window-item>
-            </v-window>
+            <editor v-model="editing"
+                    :initial="initial" :changes="changes" :editor="editor"
+                    @change="change"
+            />
         </v-card>
 
-        <info-saver slot="bottom" v-if="!editing" v-model="canSave" :info="info" @delete="info = createInfo()"/>
+        <saver slot="bottom" v-if="!editing" updated-text="Groupe mis à jour"
+               :initial="initial" :changes="changes" :final="final" :editor="editor"
+               :save-action="On.SAVE_GROUP" :update-action="On.UPDATE_INFO" :delete-action="On.DELETE_INFO"
+               @saved="saved" @deleted="deleted"
+               :route="route"
+        />
 
     </view-edit-save>
 
 </template>
 <script>
-    import Card from "../common/Card"
-    import InformationPicker from "./InformationPicker"
-    import InfoSaver from "./InfoSaver"
     import On from "../../const/on"
-    import {mapActions} from "vuex"
     import draggable from 'vuedraggable'
-    import {GO} from "../../const/go"
-    import PathChecker from "./PathEditor"
     import InfoLoader from "./InfoLoader"
     import InfoIdDense from "../home/InfoIdDense"
-    import TextareaEditor from "../editor/TextAreaEditor"
     import Connected from "../mixin/Connected"
     import SubpageTitle from "../tree/SubpageTitle"
     import ViewEditSave from "./ViewEditSave"
-
-    const createInfo = () => ({type: "gr", path: "", text: null, items: []})
+    import Editor from "../common/Editor"
+    import Vue from "vue"
+    import Saver from "../editor/Saver"
+    import {GO} from "../../const/go"
+    import Edition from "../editor/Edition"
 
     export default {
         name: "create-group",
-        mixins: [InfoLoader, Connected],
-        components: {ViewEditSave, SubpageTitle, TextareaEditor, InfoIdDense, PathChecker, InfoSaver, InformationPicker, Card, draggable},
-        data: () => ({
-            GO,
-            idx: 0,
-            canSave: false,
-            info: createInfo(),
-        }),
+        mixins: [InfoLoader, Connected, Edition],
+        components: {Saver, Editor, ViewEditSave, SubpageTitle, InfoIdDense, draggable},
+        data: () => ({On}),
         methods: {
-            createInfo,
-            ...mapActions({
-                snack: On.SNACKBAR,
-                getInfo: On.GET_INFO
-            }),
-            addInfo(info) {
-                if (this.info._id === info._id) {
-                    this.snack({text: "Impossible d'ajouter un élément en lui même.", color: "orange"})
-                } else if (this.info.items.indexOf(info._id) === -1) {
-                    this.info.items.push(info._id)
-                    this.canSave = true
-                } else {
-                    this.snack({text: "Cet élement est déjà présent dans le groupe. On ne peux pas ajouter deux fois la même information", color: "orange"})
-                }
-            },
             removeInfo(infoId) {
-                this.info.items.splice(this.info.items.indexOf(infoId), 1)
-                this.canSave = true
+                const items = this.final.items.slice()
+                items.splice(this.final.items.indexOf(infoId), 1)
+                Vue.set(this.changes, "items", items)
             },
-            orderChange() {
-                this.canSave = true
-            },
-            selectPath(path) {
-                this.info.path = path
-                this.canSave = true
-                this.close()
-            },
-            selectDescription(description) {
-                this.info.description = description
-                this.canSave = true
-                this.close()
-            },
-            close() {
-                this.idx = 0
-            },
-            infoChanged(info) {
-                this.info = info
+            orderChanged() {
+                const items = this.final.items.slice()
+                Vue.set(this.changes, "items", items)
             }
         },
         computed: {
-            editing() {
-                return this.idx !== 0
+            editor() {
+                return [
+                    {key: "path", title: "Nom", editor: "path-editor"},
+                    {key: "description", title: "Commentaire", editor: "textarea-editor", optional: true},
+                    {key: "items", title: "Informations", editor: "information-picker", displayFct: i => i && i.length}
+                ]
+            },
+            route() {
+                return this.final.path && {name: GO.INFO, params: {path: this.final.path}} || null
             }
         }
     }

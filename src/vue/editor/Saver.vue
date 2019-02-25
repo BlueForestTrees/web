@@ -3,15 +3,13 @@
         <v-container>
             <v-layout column align-center>
                 <v-layout>
+                    <v-btn v-if="canBrowseToViewPage" :to="route">Consulter</v-btn>
                     <v-btn :disabled="!canSaveOwn" color="primary" @click="saveOrUpdate">Enregistrer</v-btn>
-                    <!--<v-btn v-if="canSaveCopy" color="primary" @click="save">Enregistrer une copie</v-btn>-->
-                    <!--<v-btn v-if="canDelete" icon @click="remove">-->
-                    <!--<v-icon color="grey">delete</v-icon>-->
-                    <!--</v-btn>-->
+                    <v-btn v-if="canSaveCopy" color="primary" @click="saveCopy">Enregistrer une copie</v-btn>
+                    <v-btn v-if="canDelete" icon @click="remove">
+                        <v-icon color="grey">delete</v-icon>
+                    </v-btn>
                 </v-layout>
-                <!--<div v-if="canBrowseToViewPage">Accès à l'{{infoType[info.type]}}:-->
-                <!--<router-link :to="{name:GO.INFO, params:{path:info.path}}">{{url}}</router-link>-->
-                <!--</div>-->
             </v-layout>
         </v-container>
     </div>
@@ -24,9 +22,11 @@
     export default {
         name: 'saver',
         props: {
+            initial: Object,
             changes: Object,
-            allowSave: {type: Boolean, default: true},
-            path: {type: String, default: null},
+            final: Object,
+            editor: Array,
+            route: Object,
             saveAction: String,
             updateAction: String,
             deleteAction: String,
@@ -37,43 +37,59 @@
                 snack: On.SNACKBAR
             }),
             saveOrUpdate() {
-                if (this.changes._id) {
+                if (this.initial && this.initial._id) {
                     this.update()
                 } else {
                     this.save()
                 }
             },
+            saveCopy() {
+                const _id = createStringObjectId()
+                return this.$store.dispatch(this.saveAction, {...this.final, _id})
+                    .then(() => {
+                        this.changes._id = _id
+                        this.emitSaved(this.changes)
+                    }).catch(e => {
+                        console.error(e)
+                        this.snack({text: e.body.message, color: "red"})
+                    })
+            },
             save() {
-                // const _id = createStringObjectId()
-                // return this.$store.dispatch(this.saveAction, {...this.changes, _id}).then(() => {
-                //     this.changes._id = _id
-                //     this.emitSaved(this.changes)
-                //     // this.$router.push({name: this.$route.name, params: {path: this.info.path}})
-                // }).catch(e => {
-                //     console.error(e)
-                //     this.snack({text: e.body.message, color: "red"})
-                // })
+                const _id = createStringObjectId()
+                return this.$store.dispatch(this.saveAction, {...this.changes, _id})
+                    .then(() => {
+                        this.changes._id = _id
+                        this.emitSaved(this.changes)
+                    }).catch(e => {
+                        console.error(e)
+                        this.snack({text: e.body.message, color: "red"})
+                    })
             },
             update() {
-                this.$store.dispatch(this.updateAction, this.changes)
+                const _id = this.initial._id
+                this.$store.dispatch(this.updateAction, {...this.changes, _id})
                     .then(() => {
                         this.emitSaved(this.changes)
                         this.snack({text: this.updatedText, color: "green"})
-                        // this.$router.push({name: this.$route.name, params: {path: this.info.path}})
                     }).catch(() => this.snack({text: "Erreur à l'enregistrement", color: "orange"}))
             },
             emitSaved(changes) {
                 this.$emit('saved', changes)
             },
-            // remove() {
-            //     this.$store.dispatch(this.deleteAction, this.changes._id)
-            //         .then(deleted => deleted && this.$emit('deleted'))
-            // },
+            remove() {
+                this.$store.dispatch(this.deleteAction, this.initial._id)
+                    .then(deleted => {
+                        if (deleted) {
+                            this.snack({text: "Supprimé", color: "green"})
+                            this.$emit('deleted')
+                        }
+                    })
+            },
         },
         computed: {
             ...mapState(['user']),
             canSave() {
-                return this.allowSave && this.changed
+                return this.allRequired && this.changed
             },
             canSaveOwn() {
                 return this.canSave && this.owned
@@ -84,20 +100,19 @@
                         this.changes._id === this.user._id
                         ||
                         this.changes.oid === this.user._id
+                        ||
+                        this.changes.oid === undefined
                     )
             },
-            // canSaveCopy() {
-            //     return this.canSave && this.changes._id
-            // },
-            // canDelete() {
-            //     return this.changes && this.changes._id
-            // },
-            // canBrowseToViewPage() {
-            //     return this.url && !this.canSave
-            // },
-            // url() {
-            //     return `${Vue.http.options.root}/${this.path}`
-            // },
+            canSaveCopy() {
+                return this.canSave && this.initial._id
+            },
+            canDelete() {
+                return this.initial._id
+            },
+            canBrowseToViewPage() {
+                return this.route && !this.canSave
+            },
             changed() {
                 for (let prop in this.changes) {
                     if (prop !== "_id" && this.changes.hasOwnProperty(prop)) {
@@ -105,6 +120,18 @@
                     }
                 }
                 return false
+            },
+            allRequired() {
+                let allRequired = true
+
+                for (let i = 0; i < this.editor.length; i++) {
+                    if (!this.editor[i].optional && !this.final.hasOwnProperty(this.editor[i].key)) {
+                        allRequired = false
+                        break
+                    }
+                }
+
+                return allRequired
             }
         },
     }

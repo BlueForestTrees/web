@@ -62,8 +62,6 @@
 <script>
     import Messages from "../messages/Messages"
     import {GO} from "../../const/go"
-    import On from "../../const/on"
-    import {mapActions, mapState} from "vuex"
     import Card from "../common/Card"
     import ConnectToContinueDialog from "../dialog/ConnectToContinueDialog"
 
@@ -75,16 +73,7 @@
     export default {
         name: "plan",
         components: {PlanTech, PlanFunc, PlanBesoin, PlanConstat, ConnectToContinueDialog, Card, Messages},
-        data: () => ({GO, window: null}),
-        computed: {
-            ...mapState(['nav'])
-        },
-        methods: {
-            showMessages(filter) {
-                this.dispatchShowMessage(filter)
-            },
-            ...mapActions({goHome: On.GO_HOME, dispatchShowMessage: On.SHOW_MESSAGES})
-        }
+        data: () => ({GO, window: null})
     }
 </script>
 

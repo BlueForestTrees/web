@@ -12,9 +12,9 @@
                 <span class="subheading font-weight-thin">{{messages.title}}</span>
             </v-layout>
             <v-divider/>
-            <template v-if="messages.description">
+            <template v-if="messages.comment">
                 <v-container>
-                    <div style="white-space: pre-line" class="subheading font-weight-thin"><b>Commentaire de l'auteur:</b> {{messages.description}}</div>
+                    <div style="white-space: pre-line" class="subheading font-weight-thin"><b>Commentaire de l'auteur:</b> {{messages.comment}}</div>
                 </v-container>
                 <v-divider/>
             </template>

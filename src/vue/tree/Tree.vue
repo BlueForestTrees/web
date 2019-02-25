@@ -1,11 +1,11 @@
 <template>
-    <v-container v-if="tree && tree.trunk" fluid>
+    <v-container v-if="tree && tree.trunk">
 
-        <v-layout :column="$vuetify.breakpoint.smAndDown" >
+        <v-layout column style="min-height: 1200px">
 
-            <tree-headpage :tree="tree" :value="currentSubPage" @input="changeSubPage" @nav="fabnav" :class="$vuetify.breakpoint.smAndDown ? 'mb-5':'mr-5'"/>
+            <tree-headpage :tree="tree" :value="currentSubPage" @input="changeSubPage" @nav="fabnav"/>
 
-            <v-flex grow>
+            <v-container>
                 <transition name="slide-fade" mode="out-in">
 
                     <impacts-sub-page v-if="currentSubPage === 0" :tree="tree" :modeAdd="modeAdd" @close="unsetModeAdd"/>
@@ -15,7 +15,7 @@
                     <facets-sub-page v-else-if="currentSubPage === 2" :tree="tree" :modeAdd="modeAdd" @close="unsetModeAdd"/>
 
                 </transition>
-            </v-flex>
+            </v-container>
 
         </v-layout>
 

@@ -7,7 +7,7 @@ const Tree = () => import(/* webpackChunkName: "Tree" */ '../vue/tree/Tree.vue')
 const Equivalence = () => import(/* webpackChunkName: "Equivalence" */ '../vue/equivalence/Equivalence')
 const Qui2 = () => import(/* webpackChunkName: "Qui2" */ '../vue/jeu/QuiDeuxFoisPlus')
 const RootEditor = () => import(/* webpackChunkName: "Root" */ '../vue/root/RootEditorPage')
-const SearchPage = () => import(/* webpackChunkName: "Search" */ '../vue/search/MainPage')
+const MainPage = () => import(/* webpackChunkName: "Search" */ '../vue/search/MainPage')
 const BlueForest = () => import(/* webpackChunkName: "BlueForest" */ '../vue/BlueForest')
 const Compare = () => import(/* webpackChunkName: "Compare" */ '../vue/compare/Compare')
 const Confirmation = () => import(/* webpackChunkName: "Confirmation" */ '../vue/user/Confirmation')
@@ -41,7 +41,7 @@ export default new VueRouter({
         {
             path: "/", component: BlueForest,
             children: [
-                {name: GO.SEARCH, path: "", component: SearchPage},
+                {name: GO.SEARCH, path: "", component: MainPage},
                 {name: GO.PLAN_INTRO, path: "/aide", component: BFCestQuoi},
                 {name: GO.PLAN, path: "/plan", component: Plan},
                 {name: GO.TEAM, path: "/equipe", component: MyTeam},
@@ -61,14 +61,15 @@ export default new VueRouter({
                 {name: GO.EQUIV, path: "equiv/:bqt/:_id/:sbqt/:s_id", component: Equivalence, props: true},
 
                 {name: GO.CREATE_INFO, path: "info", component: CreateInfo},
+
                 {name: GO.INFO, path: "info/:path", component: Info, props: true},
-                {name: GO.CREATE_EQUIV, path: "new/eq", component: CreateEq},
-                {name: GO.EDIT_EQUIV, path: "edit/eq/:path", component: CreateEq, props: true},
-                {name: GO.CREATE_COMPENS, path: "new/co", component: CreateCompens},
-                {name: GO.CREATE_ALT, path: "new/alt", component: CreateAlt},
-                {name: GO.EDIT_ALT, path: "edit/alt/:path", component: CreateAlt, props: true},
-                {name: GO.CREATE_GROUP, path: "new/g", component: CreateGroup},
-                {name: GO.EDIT_GROUP, path: "edit/g/:path", component: CreateGroup, props: true},
+
+                {name: GO.EDIT_EQUIV, path: "eq/:path", component: CreateEq, props:true},
+                {name: GO.EDIT_ALT, path: "alt/:path", component: CreateAlt, props: true},
+                {name: GO.EDIT_GROUP, path: "g/:path", component: CreateGroup, props: true},
+
+                {name: GO.EDIT_COMP, path: "co/:path", component: CreateCompens, props: true},
+
 
                 {name: GO.GAME, path: "play/:gameId", component: Qui2, props: true},
                 {name: GO.QUI_2, path: "qui2fois/:bqt/:_id/:f/:fid", component: Qui2, props: ({params}) => ({leftBqt: params.bqt, leftId: params._id, fragment: params.f, fragmentId: params.fid})},

@@ -13,11 +13,9 @@
                 <div v-if="item.eq">eq. {{item.eq}}</div>
             </v-layout>
 
-            <v-layout row justify-center class="mt-5">
+            <v-layout row justify-center class="mt-3">
                 <v-spacer/>
-                <v-btn flat icon @click.stop="validate">
-                    <v-icon color="primary">save</v-icon>
-                </v-btn>
+                <v-btn icon @click.stop="validate">Ok</v-btn>
             </v-layout>
 
         </v-form>
