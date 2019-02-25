@@ -10,8 +10,9 @@
         />
 
         <saver v-if="owned && !editing"
-               :initial="initial" :changes="changes"
+               :initial="initial" :changes="changes" :final="final" :editor="editor"
                :update-action="On.UPDATE_USER" updated-text="Utilisateur mis à jour."
+               copy-forbidden delete-forbidden
                @saved="saved"
         />
     </card>
@@ -27,59 +28,37 @@
     import Card from "../common/Card"
     import {formatDate} from "../../services/calculations"
     import {mapState} from "vuex"
+    import Edition from "../editor/Edition"
 
     export default {
         name: "user",
         props: ['user'],
+        mixins: [Edition],
         components: {Card, Saver, Editor, UserIcon, SubpageTitle},
-        data: () => ({
-            editor: null,
-            changes: null,
-            editing: null,
-            On
-        }),
+        data: () => ({On}),
         created() {
-            this.initEditor()
-            this.initChanges()
+            this.initial = this.user
+            this.change({key: "_id"}, this.initial._id)
         },
         computed: {
             ...mapState({loggedUser: s => s.user}),
-            initial() {
-                return this.user
-            },
             owned() {
                 return this.loggedUser && this.loggedUser._id === this.initial._id
             },
-        },
-        methods: {
-            initEditor() {
-                this.editor = [
-                    {key: "description", title: "Description", editor: "textarea-editor"},
+            editor() {
+                return [
+                    {key: "description", title: "Statut", editor: "textarea-editor"},
                     {key: "fullname", title: "Nom", editor: "textarea-editor"},
                     {key: "mail", title: "Adresse", noedit: true},
                     {key: "wantSuscribeDate", title: "Inscription", displayFct: formatDate, noedit: true},
                 ]
-            },
-            initChanges() {
-                this.changes = {_id: this.user._id}
-            },
-            change(field, newvalue) {
-                if (field.value !== newvalue) {
-                    if (newvalue !== undefined) {
-                        Vue.set(this.changes, field.key, newvalue)
-                    } else {
-                        Vue.delete(this.changes, field.key)
-                    }
-                } else {
-                    Vue.delete(this.changes, field.key)
-                }
-            },
-            saved(changes) {
-                Object.assign(this.user, changes)
+            }
+        },
+        methods: {
+            onSaved() {
                 if (this.owned) {
-                    Object.assign(this.loggedUser, changes)
+                    Object.assign(this.loggedUser, this.initial)
                 }
-                this.initChanges()
             }
         }
     }

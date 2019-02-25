@@ -2,7 +2,7 @@
     <view-edit-save>
 
         <v-card slot="left">
-            <subpage-title :title="`Groupe ${final.path}`" iconClass="voice logo"/>
+            <subpage-title :title="`Groupe ${final.path || ''}`" iconClass="voice logo"/>
             <v-list two-line v-if="final.items && final.items.length">
                 <draggable :list="final.items" @change="orderChanged" :options="{dragClass:'dragClass', chosenClass:'chosenClass'}">
                     <template v-for="(infoId, i) in final.items">

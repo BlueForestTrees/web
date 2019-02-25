@@ -30,7 +30,9 @@
             saveAction: String,
             updateAction: String,
             deleteAction: String,
-            updatedText: String
+            updatedText: String,
+            copyForbidden: {type: Boolean, default: false},
+            deleteForbidden: {type: Boolean, default: false}
         },
         methods: {
             ...mapActions({
@@ -89,7 +91,7 @@
         computed: {
             ...mapState(['user']),
             canSave() {
-                return this.allRequired && this.changed
+                return this.allRequiredFieldsAreValued && this.changed
             },
             canSaveOwn() {
                 return this.canSave && this.owned
@@ -105,10 +107,10 @@
                     )
             },
             canSaveCopy() {
-                return this.canSave && this.initial._id
+                return this.canSave && this.initial._id && !this.copyForbidden
             },
             canDelete() {
-                return this.initial._id
+                return this.initial._id && !this.deleteForbidden
             },
             canBrowseToViewPage() {
                 return this.route && !this.canSave
@@ -121,17 +123,22 @@
                 }
                 return false
             },
-            allRequired() {
-                let allRequired = true
+            allRequiredFieldsAreValued() {
 
                 for (let i = 0; i < this.editor.length; i++) {
-                    if (!this.editor[i].optional && !this.final.hasOwnProperty(this.editor[i].key)) {
-                        allRequired = false
+
+                    if (this.editor[i].noedit) {
                         break
+                    }
+
+                    const requiredFieldWithoutValue = !this.editor[i].optional && !this.final.hasOwnProperty(this.editor[i].key)
+
+                    if (requiredFieldWithoutValue) {
+                        return false
                     }
                 }
 
-                return allRequired
+                return true
             }
         },
     }

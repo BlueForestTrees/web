@@ -30,6 +30,7 @@ export default {
             Object.assign(this.initial, changes)
             this.changes = {}
             this.$router.push({name: this.$route.name, params: {path: this.final.path}})
+            this.onSaved && this.onSaved()
         },
         deleted() {
             this.changes = {}
