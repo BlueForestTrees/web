@@ -58,7 +58,7 @@
                 return this.changes.hasOwnProperty(field.key)
             },
             value(field) {
-                return this.changes[field.key] || this.initial[field.key]
+                return this.changes.hasOwnProperty(field.key) ? this.changes[field.key] : this.initial[field.key]
             },
             displayValue(field) {
                 return field.displayFct ?

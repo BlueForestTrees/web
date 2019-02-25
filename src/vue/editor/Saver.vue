@@ -39,7 +39,7 @@
                 snack: On.SNACKBAR
             }),
             saveOrUpdate() {
-                if (this.initial && this.initial._id) {
+                if (this.updateMode) {
                     this.update()
                 } else {
                     this.save()
@@ -90,6 +90,9 @@
         },
         computed: {
             ...mapState(['user']),
+            updateMode() {
+                return this.initial && this.initial._id
+            },
             canSave() {
                 return this.allRequiredFieldsAreValued && this.changed
             },
@@ -131,9 +134,9 @@
                         break
                     }
 
-                    const requiredFieldWithoutValue = !this.editor[i].optional && !this.final.hasOwnProperty(this.editor[i].key)
+                    const fieldValued = this.editor[i].optional || this.final.hasOwnProperty(this.editor[i].key)
 
-                    if (requiredFieldWithoutValue) {
+                    if (!fieldValued) {
                         return false
                     }
                 }
