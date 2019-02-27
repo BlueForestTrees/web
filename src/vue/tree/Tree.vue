@@ -3,7 +3,7 @@
 
         <v-layout column>
 
-            <tree-headpage v-model="tabIdx" :tree="tree" class="mb-5" @close="goHome"/>
+            <tree-headpage :value="tabIdx" @input="setTabidx" :tree="tree" class="mb-5" @close="goHome"/>
 
             <div id="sub-page" style="min-height: 600px">
                 <transition name="slide-fade" mode="out-in">
@@ -20,12 +20,13 @@
 </template>
 
 <script>
-    import {mapActions, mapState} from "vuex"
+    import {mapActions, mapState, mapMutations} from "vuex"
     import On from "../../const/on"
     import TreeFab from "./TreeFab"
     import {FACETS, IMPACTS, ROOTS, treeHeadFragments} from "../../const/fragments"
     import TreeHeadpage from "./TreeHeadPage"
     import {scrollSubPage, scrollTopPage} from "../../const/ux"
+    import Do from "../../const/do"
 
     const RessourcesSubPage = () => import(/* webpackChunkName: "RessourcesSubPage" */ "./RessourcesSubPage")
     const FacetsSubPage = () => import(/* webpackChunkName: "FacetsSubPage" */ "./FacetsSubPage")
@@ -41,7 +42,6 @@
         },
         data: () => ({
             selection: [],
-            tabIdx: null,
             IMPACTS, ROOTS, FACETS
         }),
         props: ['_id', 'bqt', 'sid'],
@@ -51,7 +51,8 @@
         computed: {
             ...mapState({
                 tree: s => s.tree,
-                modeAdd: s => s.nav.tree.modeAdd
+                modeAdd: s => s.nav.tree.modeAdd,
+                tabIdx: s => s.nav.tree.tabIdx
             }),
         },
         watch: {
@@ -67,6 +68,9 @@
             }
         },
         methods: {
+            ...mapMutations({
+                setTabidx: Do.SET_NAV_TREE_TAB_IDX
+            }),
             ...mapActions({
                 dispatchLoad: On.LOAD_OPEN_TREE,
                 dispatchSelLoad: On.LOAD_SELECTION,
@@ -74,7 +78,7 @@
                 goHome: On.GO_HOME
             }),
             close() {
-                this.tabIdx = null
+                this.setTabidx(null)
             },
             getTreeLoad() {
                 if (this.bqt && this._id) {
@@ -100,6 +104,10 @@
                     }
                 }
             }
+        },
+        beforeRouteLeave(to, from, next){
+            this.close()
+            next()
         }
     }
 </script>

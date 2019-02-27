@@ -3,7 +3,7 @@
 
         <v-layout column align-center mb-1>
 
-            <subpage-title iconClass="blueforest logo" title="Produit">
+            <subpage-title iconClass="blueforest logo" :title="qtUnitName(tree)">
                 <closer slot="right" @close="$emit('close')"/>
             </subpage-title>
 
@@ -30,7 +30,7 @@
     import Do from "../../const/do"
     import {mapMutations, mapActions} from "vuex"
     import OpenMessage from "../common/OpenMessage"
-    import {name} from "../../services/calculations"
+    import {name, qtUnitName} from "../../services/calculations"
     import On from "../../const/on"
     import Subheader from "./Subheader"
     import SubpageTitle from "./SubpageTitle"
@@ -42,6 +42,7 @@
         components: {Closer, TreeFab, SubpageTitle, Subheader, OpenMessage, FragmentSelect, TreeCard, Description},
         props: ['tree', 'value'],
         methods: {
+            qtUnitName,
             ...mapMutations({setFlipped: Do.SET_TREE_CARD_FLIPPED}),
             ...mapActions({
                 goInfo: On.GO_CREATE_INFO,

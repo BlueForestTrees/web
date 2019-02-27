@@ -2,7 +2,7 @@
         <card3d v-if="trunk" :flipped="flipped">
             <template slot="front">
                 <photo :trunk="trunk" size="200" class="mb-2"/>
-                <qt-unit-name :tree="tree"/>
+                <!--<qt-unit-name :tree="tree"/>-->
                 <slot/>
             </template>
             <v-card slot="back">

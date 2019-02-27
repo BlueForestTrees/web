@@ -22,7 +22,7 @@ const dialogs = () => {
     return dials
 }
 
-export const snack = () => ({visible: false,multiline: false,timeout: 5000,vertical: false,text: "this message should be overriden.",color: "black"})
+export const snack = () => ({visible: false, multiline: false, timeout: 5000, vertical: false, text: "this message should be overriden.", color: "black"})
 
 export const tree = () => ({_id: null, trunk: null, selection: null, facets: null})
 
@@ -47,10 +47,11 @@ export default {
         search: {cat: {opened: false}, owner: {opened: false}},
         leftMenuVisible: false, rightMenuVisible: false, dark: false, detailsDialog: false,
         tree: {
+            tabIdx: null,
             cardFlipped: false,
-            impact: {idx: 0, term: ""},
-            root: {idx: 0, term: ""},
-            facet: {term: ""},
+            impact: {idx: 0, term: "", adding: false},
+            root: {idx: 0, term: "", adding: false},
+            facet: {term: "", adding: false},
             picker: {tab: null}
         }
     },

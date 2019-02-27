@@ -2,7 +2,7 @@
     <div>
         <v-card class="mb-5">
             <subpage-title title="Propriétés" icon-class="facet logo">
-                <closer slot="right" @close="$emit('close')" />
+                <closer slot="right" @close="$emit('close')"/>
             </subpage-title>
 
             <fragment-list :tree="tree" :fragment="FACETS" none="Pas encore d'informations sur les propriétés"></fragment-list>
@@ -10,7 +10,9 @@
             <v-divider/>
             <v-layout justify-center>
                 <open-message :section="section" no-text/>
-                <v-btn icon><v-list-tile-avatar class="facet-add logo-moyen" @click="setAdding(true)"></v-list-tile-avatar></v-btn>
+                <v-btn icon>
+                    <v-list-tile-avatar class="facet-add logo-moyen" @click="setAdding(true)"></v-list-tile-avatar>
+                </v-btn>
             </v-layout>
         </v-card>
         <div id="adder">
@@ -22,7 +24,7 @@
 <script>
     import SelectableList from "../common/SelectableList"
     import On from "../../const/on"
-    import {mapActions} from 'vuex'
+    import {mapActions, mapState, mapMutations} from 'vuex'
     import OpenMessage from "../common/OpenMessage"
     import Card from "../common/Card"
     import FacetAdder from "../facet/FacetAdder"
@@ -32,6 +34,7 @@
     import {name} from "../../services/calculations"
     import Closer from "../common/Closer"
     import {scrollSubPage, scrollTo} from "../../const/ux"
+    import Do from "../../const/do"
 
     export default {
         name: "facets-subpage",
@@ -46,13 +49,15 @@
         },
         props: ['tree', 'modeAdd'],
         data: () => ({
-            adding: false,
             FACETS
         }),
         created() {
             this.refresh()
         },
         computed: {
+            ...mapState({
+                adding: s => s.nav.tree.facet.adding
+            }),
             facets() {
                 return this.tree && this.tree.facets
             },
@@ -67,6 +72,9 @@
             }
         },
         methods: {
+            ...mapMutations({
+                setAdding: Do.SET_NAV_TREE_FACET_ADDING
+            }),
             ...mapActions({
                 dispatchGoEquiv: On.GO_EQUIV,
                 updateTree: On.UPDATE_TREE
@@ -84,8 +92,9 @@
                 this.updateTree({tree: this.tree, fragments: [FACETS]})
                 this.loading = false
             },
-            setAdding(adding) {
-                this.adding = adding
+        },
+        watch: {
+            adding(adding) {
                 if (adding) {
                     this.$nextTick(() => scrollTo("#adder"))
                 } else {
