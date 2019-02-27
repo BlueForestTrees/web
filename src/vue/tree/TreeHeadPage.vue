@@ -1,7 +1,7 @@
 <template>
     <v-card>
 
-        <v-layout column align-center>
+        <v-layout column align-center mb-1>
 
             <subpage-title iconClass="blueforest logo" title="Produit">
                 <closer slot="right" @close="$emit('close')"/>
@@ -9,20 +9,14 @@
 
             <tree-card :tree="tree" class="mt-3">
                 <v-card-actions>
-                    <v-btn icon flat @click="setFlipped(true)">
-                        <v-icon color="red">favorite_border</v-icon>
-                    </v-btn>
-                    <v-btn icon flat @click="goInfo">
-                        <v-icon class="voice logo-petit"/>
-                    </v-btn>
+                    <v-btn icon flat @click="setFlipped(true)"><v-icon class="carton logo-petit"/></v-btn>
+                    <v-btn icon flat @click="goInfo"><v-icon class="voice logo-petit"/></v-btn>
                     <open-message :section="section" no-text/>
-                    <v-btn icon flat @click="deleteTree">
-                        <v-icon color="grey">delete</v-icon>
-                    </v-btn>
+                    <v-btn icon flat @click="deleteTree"><v-icon color="grey">delete</v-icon></v-btn>
                 </v-card-actions>
             </tree-card>
 
-            <description :tree="tree" class="my-5"/>
+            <description :tree="tree" class="my-1"/>
 
         </v-layout>
         <v-divider/>

@@ -160,6 +160,14 @@ a {
     background: url(/img/logo.svg) no-repeat center;
 }
 
+.planet-add {
+    background: url(/img/planetadd.svg) no-repeat center;
+}
+
+.facet-add {
+    background: url(/img/facetAdder.svg) no-repeat center;
+}
+
 .enough-high {
     min-height: 50em
 }

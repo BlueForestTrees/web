@@ -1,13 +1,13 @@
 <template>
     <v-item-group :value="value" @change="idx => $emit('change',idx)">
-        <v-layout py-2>
+        <v-layout py-1 justify-center>
             <v-item v-for="(tab,i) in tabs" :key="i">
-                <v-flex xs12 md4 slot-scope="{ active, toggle }">
-                    <v-layout column align-center @click="toggle" :style="{opacity: active ? 1 : 0.5}">
+                <div slot-scope="{ active, toggle }" class="mx-2">
+                    <v-layout column align-center justify-center @click="toggle" :style="{opacity: active ? 1 : 0.5}">
                         <v-list-tile-avatar :class="tab.class"/>
                         <span class="font-weight-thin">{{tab.text}}</span>
                     </v-layout>
-                </v-flex>
+                </div>
             </v-item>
         </v-layout>
     </v-item-group>

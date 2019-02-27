@@ -4,7 +4,7 @@
             <selection-link :selection="selection"/>
             <h5 class="align font-weight-thin">{{qtFreq(selection)}}</h5>
         </template>
-        <v-flex v-else class="bold-font display-2 mx-3">{{noSelection}}</v-flex>
+        <v-flex v-else class="bold-font display-2 mx-2">{{noSelection}}</v-flex>
         <transition-expand>
             <div v-if="attribute" class="font-weight-thin">Soit {{qtUnitName(attribute)}}</div>
         </transition-expand>

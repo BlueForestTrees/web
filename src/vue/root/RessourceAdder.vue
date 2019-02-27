@@ -1,16 +1,16 @@
 <template>
     <div>
         <v-card>
-            <subpage-title title="Ajouter une ressource">
+            <subpage-title title="Ajouter une ressource" icon-class="root-add logo">
                 <closer slot="right" @close="$emit('close')"/>
             </subpage-title>
             <v-divider/>
 
             <v-container>
                 <order-picker @revert="revert" :up="final.tree" :down="final.root"/>
-                <v-divider/>
-                <editor v-model="editing" :editor="editor" :initial="initial" :changes="changes" @change="change"/>
             </v-container>
+            <v-divider/>
+            <editor v-model="editing" :editor="editor" :initial="initial" :changes="changes" @change="change"/>
 
             <add-entry-fab title="Créer un produit ou un service" :route="GO.CREATE_TREE" :callback="On.NAV_PREVIOUS"/>
         </v-card>

@@ -1,18 +1,22 @@
 <template>
-    <facet-adder v-if="modeAdd" :tree="tree" @close="$emit('close')"/>
-    <v-card v-else>
-        <subpage-title title="Propriétés" icon-class="facet logo">
-            <closer slot="right" @close="$emit('close')" />
-        </subpage-title>
+    <div>
+        <v-card class="mb-5">
+            <subpage-title title="Propriétés" icon-class="facet logo">
+                <closer slot="right" @close="$emit('close')" />
+            </subpage-title>
 
-        <fragment-list :tree="tree" :fragment="FACETS" none="Pas encore d'informations sur les propriétés"></fragment-list>
+            <fragment-list :tree="tree" :fragment="FACETS" none="Pas encore d'informations sur les propriétés"></fragment-list>
 
-        <v-divider/>
-        <v-layout>
-            <v-spacer/>
-            <open-message :section="section" no-text/>
-        </v-layout>
-    </v-card>
+            <v-divider/>
+            <v-layout justify-center>
+                <open-message :section="section" no-text/>
+                <v-btn icon><v-list-tile-avatar class="facet-add logo-moyen" @click="setAdding(true)"></v-list-tile-avatar></v-btn>
+            </v-layout>
+        </v-card>
+        <div id="adder">
+            <facet-adder v-if="adding" :tree="tree" @close="setAdding(false)"/>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -27,6 +31,7 @@
     import SubpageTitle from "./SubpageTitle"
     import {name} from "../../services/calculations"
     import Closer from "../common/Closer"
+    import {scrollSubPage, scrollTo} from "../../const/ux"
 
     export default {
         name: "facets-subpage",
@@ -41,8 +46,12 @@
         },
         props: ['tree', 'modeAdd'],
         data: () => ({
+            adding: false,
             FACETS
         }),
+        created() {
+            this.refresh()
+        },
         computed: {
             facets() {
                 return this.tree && this.tree.facets
@@ -74,10 +83,15 @@
                 this.loading = true
                 this.updateTree({tree: this.tree, fragments: [FACETS]})
                 this.loading = false
+            },
+            setAdding(adding) {
+                this.adding = adding
+                if (adding) {
+                    this.$nextTick(() => scrollTo("#adder"))
+                } else {
+                    scrollSubPage()
+                }
             }
-        },
-        created() {
-            this.refresh()
         }
     }
 </script>

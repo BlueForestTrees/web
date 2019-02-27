@@ -25,13 +25,13 @@
             canChangeTree: {type: Boolean, default: true}
         },
         data: () => ({
-            tree: null,
+            pickedTree: null,
             selectionPickerClosed: false
         }),
         methods: {
             name,
-            async pickTree(tree) {
-                this.tree = tree
+            async pickTree(pickedTree) {
+                this.pickedTree = pickedTree
                 this.selectionPickerClosed = false
             },
             pickSelection(selection) {
@@ -43,25 +43,25 @@
                 this.selectionPickerClosed = false
             },
             closeSelectionPicker() {
-                this.tree = null
+                this.pickedTree = null
                 this.selectionPickerClosed = true
             }
         },
         computed: {
             propsTree() {
-                return this.value && this.value.selection && this.value
+                return this.value
             },
             propsSelection() {
                 return this.value && this.value.selection || this.value
             },
             pickedTreeSelection() {
-                return this.tree && selectionFromTree(this.tree)
+                return this.pickedTree && selectionFromTree(this.pickedTree)
             },
             finalSelection() {
                 return this.pickedTreeSelection || this.propsSelection
             },
             finalTree() {
-                return this.tree || this.propsTree
+                return this.pickedTree || this.propsTree
             },
             showTreePicker() {
                 return this.selectionPickerClosed || !this.finalSelection

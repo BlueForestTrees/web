@@ -1,21 +1,20 @@
 <template>
     <div>
         <v-card class="mb-5">
-            <subpage-title :title="title" iconClass="scope-tree logo">
+            <subpage-title title="Fabrication" iconClass="scope-tree logo">
                 <closer slot="right" @close="$emit('close')"/>
             </subpage-title>
 
             <transition name="slide-fade" mode="out-in">
-                <tree-nav v-if="idx === 0" :tree="tree" key="2"/>
-                <fragment-list v-if="idx === 1" :tree="tree" :fragment="ROOTS" none="Pas encore d'informations sur les ressources" key="0"></fragment-list>
-                <fragment-list v-else-if="idx === 2" :tree="tree" :fragment="TANK" none="Pas encore d'informations sur les matières premières" key="1"></fragment-list>
-                <fragment-list v-else-if="idx === 3" :tree="tree" :fragment="BRANCHES" none="Pas encore d'informations sur les usages" key="4"></fragment-list>
+                <tree-nav v-if="idx === 0" :tree="tree" key="2" :note="`Carte des ressources et des usages ${deQtUnitName}`"/>
+                <fragment-list v-if="idx === 1" :tree="tree" :fragment="ROOTS" none="Pas encore d'informations sur les ressources" key="0" :note="`Liste des dernières ressources ${deQtUnitName}`"/>
+                <fragment-list v-else-if="idx === 2" :tree="tree" :fragment="TANK" none="Pas encore d'informations sur les matières premières" key="1" :note="`Liste des premières ressources ${deQtUnitName}`"/>
+                <fragment-list v-else-if="idx === 3" :tree="tree" :fragment="BRANCHES" none="Pas encore d'informations sur les usages" key="4" :note="`Liste des usages possibles ${deQtUnitName}`"/>
             </transition>
 
             <v-divider/>
-            <v-layout>
-                <scope-menu :value="idx" @input="setIdx" :dense="$vuetify.breakpoint.xsOnly" :scope="rootScope"/>
-                <v-spacer/>
+            <v-layout justify-center>
+                <scope-menu :value="idx" @input="setIdx" dense :scope="rootScope"/>
                 <open-message :section="section" no-text/>
                 <v-btn icon>
                     <v-list-tile-avatar class="root-add logo-moyen" @click="setAdding(true)"></v-list-tile-avatar>
@@ -36,7 +35,7 @@
     import {BRANCHES, ROOTS, TANK} from "../../const/fragments"
     import SubpageTitle from "./SubpageTitle"
     import {rootScope} from "../../const/img"
-    import {name} from "../../services/calculations"
+    import {qtUnitName, de, name} from "../../services/calculations"
     import Closer from "../common/Closer"
     import {scrollSubPage, scrollTo} from "../../const/ux"
     import OpenMessage from "../common/OpenMessage"
@@ -67,6 +66,9 @@
             ...mapState({
                 idx: s => s.nav.tree.root.idx
             }),
+            deQtUnitName() {
+                return de(qtUnitName(this.tree))
+            },
             section: function () {
                 return {
                     title: `Discussion sur les ressources de \"${name(this.tree)}\"`,
@@ -75,22 +77,11 @@
                         topicId: this.tree._id
                     }
                 }
-            },
-            title() {
-                switch (this.idx) {
-                    case 0:
-                        return "Fabrication"
-                    case 1:
-                        return "Ressources"
-                    case 2:
-                        return "Matières premières"
-                    case 3:
-                        return "Usages"
-                }
             }
         },
 
         methods: {
+            de, qtUnitName, name,
             ...mapActions({
                 dispatchGoRoot: On.GO_ROOT,
                 deleteRoot: On.DELETE_ROOT,

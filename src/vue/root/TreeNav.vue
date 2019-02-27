@@ -1,5 +1,8 @@
 <template>
-    <div ref="network" style="height:400px"></div>
+    <div>
+        <note :text="note" style="position:absolute;z-index:2;background-color: rgba(255,255,255,0.8);"/>
+        <div ref="network" style="height:400px"></div>
+    </div>
 </template>
 
 <script>
@@ -11,11 +14,13 @@
     import Selectable from "../mixin/Selectable"
     import {BRANCHES, ROOTS} from "../../const/fragments"
     import {PRIMARY} from "../../const/colors"
+    import Note from "../common/Note"
 
     export default {
         name: "TreeNav",
+        components: {Note},
         mixins: [Static, Selectable],
-        props: ['tree'],
+        props: ['tree','note'],
         static: () => ({
             options: {
                 interaction: {
@@ -25,7 +30,7 @@
                 edges: {
                     arrows: {
                         to: {
-                            enabled: false,
+                            enabled: true,
                             type: "arrow",
                         }
                     },
@@ -48,7 +53,7 @@
                     color: {
                         border: "#444444",
                         background: "white",
-                        highlight:{
+                        highlight: {
                             background: "#D8E9F5"
                         }
                     },
@@ -76,10 +81,16 @@
             })
             this.network.on("deselectNode", params => this.toggleSelect(this.itemsMap[params.previousSelection.nodes[0]]))
             this.addNode(this.tree, {color: {background: PRIMARY}})
-            this.expand(this.tree, ROOTS)
-            this.expand(this.tree, BRANCHES)
+            this.refreshRoots()
+            this.refreshBranches()
         },
         methods: {
+            refreshRoots() {
+                this.expand(this.tree, ROOTS)
+            },
+            refreshBranches() {
+                this.expand(this.tree, BRANCHES)
+            },
             async expand(tree, scope) {
                 if (!tree[scope]) {
                     await this.updateTree({tree, fragments: [scope]})

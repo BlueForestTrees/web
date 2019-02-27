@@ -1,5 +1,5 @@
 import chai, {expect} from 'chai'
-import {remove, add, createStringObjectId} from "../src/services/calculations"
+import {remove, add, createStringObjectId, de} from "../src/services/calculations"
 import {init} from "./setup"
 import {ObjectID} from 'mongodb'
 
@@ -38,6 +38,14 @@ describe('Divers calculations', function () {
         const strObjID = createStringObjectId()
         const objID = new ObjectID(strObjID)
         expect(objID.toString()).to.equals(strObjID)
+    })
+
+    it('dename', function(){
+        expect(de("camenbert")).to.equals("de camenbert")
+        expect(de("Camenbert")).to.equals("de Camenbert")
+
+        expect(de("ail")).to.equals("d'ail")
+        expect(de("Ail")).to.equals("d'Ail")
     })
 
 })

@@ -4,6 +4,7 @@ import router from "../../router/router"
 import {GO} from "../../const/go"
 import {applyRessourceCoef, createStringObjectId, treeBqt} from "../../services/calculations"
 import {BRANCHES, ROOTS} from "../../const/fragments"
+import Vue from "vue"
 
 export default {
 
@@ -20,9 +21,13 @@ export default {
 
         if (tree[ROOTS]) {
             tree[ROOTS].push(root)
+        } else {
+            Vue.set(tree, ROOTS, [root])
         }
         if (root[BRANCHES]) {
             root[BRANCHES].push(tree)
+        } else {
+            Vue.set(root, BRANCHES, tree)
         }
 
         return dispatch(On.CREATE_ROOT, item)

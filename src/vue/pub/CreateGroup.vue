@@ -79,7 +79,7 @@
                 return [
                     {key: "path", title: "Nom", editor: "path-editor"},
                     {key: "description", title: "Commentaire", editor: "textarea-editor", optional: true},
-                    {key: "items", title: "Informations", editor: "information-picker", displayFct: i => i && i.length}
+                    {key: "items", title: "Information", editor: "information-picker", displayFct: i => i && i.length}
                 ]
             },
             route() {

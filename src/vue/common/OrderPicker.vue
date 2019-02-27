@@ -2,7 +2,7 @@
         <v-layout column align-center>
             <v-layout align-center>
                 <selection-card-front :selection="up && up.selection" no-selection="A"/>
-                <div class="bold-font align display-2 ma-4">contient</div>
+                <h5 class="align display-1 ma-2">contient</h5>
                 <selection-card-front :selection="down && down.selection" no-selection="B"/>
             </v-layout>
             <v-btn icon @click="revert">

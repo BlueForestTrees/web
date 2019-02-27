@@ -58,9 +58,17 @@ export const name = item =>
     || item && item.name
     || ''
 
+const regex = /^[AEIOUY1]/i
+export const de = name => {
+    const startVoyelle = name && name.match(regex)
+    return `d${startVoyelle ? "'" : "e "}${name}`
+}
+
+export const dename = item => de(name(item))
+
 export const color = item => item.color || item.trunk.color
 export const equiv = item => item.eq ? `(éq. ${item.eq})` : ""
-export const qtUnitName = item => item && `${qtUnit(item)} ${name(item)} ${equiv((item.trunk && item.trunk.quantity) || item.quantity || item)}`
+export const qtUnitName = item => item && `${qtUnit(item)} ${dename(item)} ${equiv((item.trunk && item.trunk.quantity) || item.quantity || item)}`
 
 export const getRandomColor = () => {
     const letters = '0123456789ABCDEF'
@@ -253,3 +261,5 @@ export const selectionFromTree = tree => {
     return tree.selection
 }
 export const formatDate = value => new Date(value).toLocaleString()
+
+export const lowFirst = s => s.charAt(0).toLowerCase() + s.slice(1)

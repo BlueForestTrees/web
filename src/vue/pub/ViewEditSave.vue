@@ -1,6 +1,6 @@
 <template>
 
-    <v-container fill-height fluid>
+    <v-container>
         <v-layout column>
 
             <v-layout :column="$vuetify.breakpoint.lgAndDown">

@@ -1,41 +1,39 @@
 <template>
     <v-flex>
 
-        <subpage-title sub iconClass="carton logo" title="Quantité">
-            <slot slot="left"></slot>
+        <subpage-title sub title="Quantité">
+            <v-icon slot="left" class="carton logo"/>
             <closer v-if="closable" slot="right" @close="$emit('close')"/>
         </subpage-title>
 
-        <v-container>
-            <v-layout align-center column>
+        <v-layout align-center column px-3>
 
-                <v-form v-model="valid" v-on:submit.prevent="" ref="form">
-                    <v-layout row align-center>
-                        <v-text-field type="number" v-model="qt" :rules="[required, isNumber]" @keyup.enter="validate"></v-text-field>
-                        <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]" @keyup.enter="validate"></unit-select>
-                    </v-layout>
-                    <v-layout row justify-center>
-                        <v-checkbox v-model="isRegulier" label="répéter" class="tiny"></v-checkbox>
-                        <v-text-field :counter="selectionNameMaxLength" type="text" v-model="name" :rules="[required, noMore30]" @keyup.enter="validate" label="Nom d'affichage"></v-text-field>
-                    </v-layout>
-
-                    <v-layout row align-center>
-                        <v-text-field :disabled="!isRegulier" type="number" v-model="qtFreq" :rules="isRegulier ? [required, isNumber] : []" @keyup.enter="validate" label="Tou(te)s les:"></v-text-field>
-                        <unit-select :disabled="!isRegulier" v-model="unitFreq" :grandeur="dureeGrandeur" :rules="isRegulier ? [required] : []" @keyup.enter="validate"></unit-select>
-                    </v-layout>
-                    <v-layout row align-center>
-                        <v-text-field :disabled="!isRegulier" type="number" v-model="qtDuree" :rules="isRegulier ? [required, isNumber] : []" @keyup.enter="validate" label="Pendant:"></v-text-field>
-                        <unit-select :disabled="!isRegulier" v-model="unitDuree" :grandeur="dureeGrandeur" :rules="isRegulier ? [required] : []" @keyup.enter="validate"></unit-select>
-                    </v-layout>
-                </v-form>
-
-                <v-layout row style="width:100%">
-                    <v-spacer/>
-                    <v-btn icon @click.stop="validate">Ok</v-btn>
+            <v-form v-model="valid" v-on:submit.prevent="" ref="form">
+                <v-layout row align-center>
+                    <v-text-field type="number" v-model="qt" :rules="[required, isNumber]" @keyup.enter="validate"></v-text-field>
+                    <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]" @keyup.enter="validate"></unit-select>
+                </v-layout>
+                <v-layout row justify-center>
+                    <v-checkbox v-model="isRegulier" label="répéter" class="tiny"></v-checkbox>
+                    <v-text-field :counter="selectionNameMaxLength" type="text" v-model="name" :rules="[required, noMore30]" @keyup.enter="validate" label="Nom d'affichage"></v-text-field>
                 </v-layout>
 
+                <v-layout row align-center>
+                    <v-text-field :disabled="!isRegulier" type="number" v-model="qtFreq" :rules="isRegulier ? [required, isNumber] : []" @keyup.enter="validate" label="Tou(te)s les:"></v-text-field>
+                    <unit-select :disabled="!isRegulier" v-model="unitFreq" :grandeur="dureeGrandeur" :rules="isRegulier ? [required] : []" @keyup.enter="validate"></unit-select>
+                </v-layout>
+                <v-layout row align-center>
+                    <v-text-field :disabled="!isRegulier" type="number" v-model="qtDuree" :rules="isRegulier ? [required, isNumber] : []" @keyup.enter="validate" label="Pendant:"></v-text-field>
+                    <unit-select :disabled="!isRegulier" v-model="unitDuree" :grandeur="dureeGrandeur" :rules="isRegulier ? [required] : []" @keyup.enter="validate"></unit-select>
+                </v-layout>
+            </v-form>
+
+            <v-layout row style="width:100%">
+                <v-spacer/>
+                <v-btn icon @click.stop="validate">Ok</v-btn>
             </v-layout>
-        </v-container>
+
+        </v-layout>
     </v-flex>
 
 </template>

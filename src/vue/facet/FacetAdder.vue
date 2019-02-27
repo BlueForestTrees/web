@@ -1,28 +1,24 @@
 <template>
-    <v-container>
-        <v-card>
+    <v-card>
+        <subpage-title title="Ajouter une propriété" icon-class="facet-add logo">
+            <closer slot="right" @close="$emit('close')"/>
+        </subpage-title>
+        <v-divider/>
 
-            <subpage-title title="Ajouter une propriété">
-                <closer slot="right" @close="$emit('close')"/>
-            </subpage-title>
-            <v-divider/>
+        <transition name="slide-fade" mode="out-in">
 
-            <transition name="slide-fade" mode="out-in">
+            <facet-entry-picker v-if="changeItem || !selectedEntry" @select="select" :create-entry-route="GO.ADD_FACET_ENTRY"/>
 
-                <facet-entry-picker v-if="changeItem || !selectedEntry" @select="select" :create-entry-route="GO.ADD_FACET_ENTRY"/>
+            <v-layout v-else align-center column>
+                <v-card>
+                    <v-container>
+                        <quantity-picker :item="selectedEntry" @change="validate" @close="closeQtPicker"></quantity-picker>
+                    </v-container>
+                </v-card>
+            </v-layout>
 
-                <v-layout v-else align-center column>
-                    <v-card>
-                        <v-container>
-                            <quantity-picker :item="selectedEntry" @change="validate" @close="closeQtPicker"></quantity-picker>
-                        </v-container>
-                    </v-card>
-                </v-layout>
-
-            </transition>
-        </v-card>
-
-    </v-container>
+        </transition>
+    </v-card>
 </template>
 
 <script>

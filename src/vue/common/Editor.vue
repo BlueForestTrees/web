@@ -2,7 +2,7 @@
     <div>
         <v-layout column>
             <v-list>
-                <v-list-tile v-if="field && !editing || idx === i" v-for="(field,i) in editor" :key="i">
+                <v-list-tile v-if="field && !editing || idx === i" v-for="(field,i) in editor" :key="i" @click="toggle(i)">
                     <v-list-tile-content>
                         <v-list-tile-title>
                             <v-icon v-if="field.warning" color="red">warning</v-icon>
@@ -11,7 +11,8 @@
                         </v-list-tile-title>
                     </v-list-tile-content>
                     <v-list-tile-action v-if="editable && !field.noedit">
-                        <close-edit-btn :editing="editing" @close="close" @edit="goto(i)"/>
+                        <v-btn v-if="editing" @click.stop="close" icon><v-icon color="primary">close</v-icon></v-btn>
+                        <v-btn v-else @click.stop="goto(i)" icon><v-icon color="primary">edit</v-icon></v-btn>
                     </v-list-tile-action>
                 </v-list-tile>
             </v-list>
@@ -29,6 +30,7 @@
 <script>
     import SubpageTitle from "../tree/SubpageTitle"
     import CloseEditBtn from "./CloseEditBtn"
+    import {lowFirst} from "../../services/calculations"
 
     const TextareaEditor = () => import("../editor/TextAreaEditor")
     const TreeSelectionPicker = () => import("../tree/TreeSelectionPicker")
@@ -52,6 +54,14 @@
             }
         },
         methods: {
+            lowFirst,
+            toggle(i) {
+                if (this.editing) {
+                    this.close()
+                } else {
+                    this.goto(i)
+                }
+            },
             changed(field) {
                 return this.changes.hasOwnProperty(field.key)
             },
