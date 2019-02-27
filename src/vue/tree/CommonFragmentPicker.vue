@@ -5,7 +5,7 @@
         <v-window v-model="idx" class="pt-1">
             <template v-for="fragment in fragments">
                 <v-window-item lazy transition="slide-x-transition" reverse-transition="slide-x-reverse-transition">
-                    <common-attribute :key="fragment.type" :treesIds="params" :type="fragment.type" :fragment="fragment.type" :noItem="fragment.noItem" @select="v => $emit('save', v)"/>
+                    <common-attribute :key="fragment.type" :treesIds="treesIds" :type="fragment.type" :fragment="fragment.type" :noItem="fragment.noItem" @select="v => $emit('save', v)"/>
                 </v-window-item>
             </template>
         </v-window>
@@ -20,8 +20,8 @@
 
     export default {
         name: "common-fragment-picker",
+        props:["treesIds"],
         components: {CommonAttribute, FragmentSelect, Loader},
-        props: ['params'],
         data: () => ({
             idx: 0,
             commons: null,

@@ -109,14 +109,19 @@ a {
     width: 1.5em
 }
 
+.logo-moyen {
+    height: 2em;
+    width: 2em
+}
+
 .logo {
     height: 2.5em;
     width: 2.5em;
 }
 
 .logo-big {
-    height: 4em;
-    width: 4em;
+    height: 3em;
+    width: 3em;
 }
 
 .voice {
@@ -145,6 +150,14 @@ a {
 
 .carton {
     background: url(/img/carton.svg) no-repeat center;
+}
+
+.root-add {
+    background: url(/img/rootAdd.svg) no-repeat center;
+}
+
+.blueforest {
+    background: url(/img/logo.svg) no-repeat center;
 }
 
 .enough-high {

@@ -6,7 +6,7 @@
                 <slot/>
             </template>
             <v-card slot="back">
-                <selection-picker :selection="selection" @close="flip" @pick="pickSelection">
+                <selection-picker :value="selection" @close="flip" @pick="pickSelection">
                     <v-icon large color="red">favorite_bordered</v-icon>
                 </selection-picker>
             </v-card>

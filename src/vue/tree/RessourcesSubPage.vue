@@ -1,38 +1,45 @@
 <template>
-    <ressource-adder v-if="modeAdd" :tree="tree" @close="$emit('close')"/>
-    <v-card v-else>
-        <subpage-title :title="title" iconClass="scope-tree logo"/>
+    <div>
+        <v-card class="mb-5">
+            <subpage-title :title="title" iconClass="scope-tree logo">
+                <closer slot="right" @close="$emit('close')"/>
+            </subpage-title>
 
-        <transition name="slide-fade" mode="out-in">
-            <tree-nav v-if="idx === 0" :tree="tree" key="2"/>
-            <fragment-list v-if="idx === 1" :tree="tree" :fragment="ROOTS" none="Pas encore d'informations sur les ressources" key="0"></fragment-list>
-            <fragment-list v-else-if="idx === 2" :tree="tree" :fragment="TANK" none="Pas encore d'informations sur les matières premières" key="1"></fragment-list>
-            <fragment-list v-else-if="idx === 3" :tree="tree" :fragment="BRANCHES" none="Pas encore d'informations sur les usages" key="4"></fragment-list>
-        </transition>
+            <transition name="slide-fade" mode="out-in">
+                <tree-nav v-if="idx === 0" :tree="tree" key="2"/>
+                <fragment-list v-if="idx === 1" :tree="tree" :fragment="ROOTS" none="Pas encore d'informations sur les ressources" key="0"></fragment-list>
+                <fragment-list v-else-if="idx === 2" :tree="tree" :fragment="TANK" none="Pas encore d'informations sur les matières premières" key="1"></fragment-list>
+                <fragment-list v-else-if="idx === 3" :tree="tree" :fragment="BRANCHES" none="Pas encore d'informations sur les usages" key="4"></fragment-list>
+            </transition>
 
-        <v-divider/>
-        <v-layout>
-            <v-spacer/>
-            <scope-menu :value="idx" @input="setIdx" :dense="$vuetify.breakpoint.xsOnly" :scope="rootScope"/>
-            <open-message :section="section" no-text/>
-        </v-layout>
-    </v-card>
+            <v-divider/>
+            <v-layout>
+                <scope-menu :value="idx" @input="setIdx" :dense="$vuetify.breakpoint.xsOnly" :scope="rootScope"/>
+                <v-spacer/>
+                <open-message :section="section" no-text/>
+                <v-btn icon>
+                    <v-list-tile-avatar class="root-add logo-moyen" @click="setAdding(true)"></v-list-tile-avatar>
+                </v-btn>
+            </v-layout>
+        </v-card>
+        <div id="adder">
+            <ressource-adder v-if="adding" :tree="tree" @close="setAdding(false)"/>
+        </div>
+    </div>
 </template>
 
 <script>
     import On from "../../const/on"
+    import Do from "../../const/do"
     import {mapActions, mapMutations, mapState} from 'vuex'
-    import goTree from "../mixin/GoTree"
-    import {getRandomColor, qtUnitName} from "../../services/calculations"
-    import {bqtGToQtUnit} from "unit-manip"
-    import OpenMessage from "../common/OpenMessage"
-    import Card from "../common/Card"
     import ScopeMenu from "../root/ScopeMenu"
     import {BRANCHES, ROOTS, TANK} from "../../const/fragments"
-    import Do from "../../const/do"
     import SubpageTitle from "./SubpageTitle"
     import {rootScope} from "../../const/img"
     import {name} from "../../services/calculations"
+    import Closer from "../common/Closer"
+    import {scrollSubPage, scrollTo} from "../../const/ux"
+    import OpenMessage from "../common/OpenMessage"
 
     const TreeNav = () => import(/* webpackChunkName: "RootsNav"*/"../root/TreeNav")
     const RessourceAdder = () => import(/* webpackChunkName: "RessourceAdder"*/"../root/RessourceAdder")
@@ -41,20 +48,19 @@
     export default {
         name: "ressources-subpage",
         components: {
+            OpenMessage,
+            Closer,
             SubpageTitle,
             TreeNav,
             RessourceAdder,
             FragmentList,
             ScopeMenu,
-            Card,
-            OpenMessage
         },
         props: {
-            modeAdd: Boolean,
-            tree: Object, selection: Array, bilan: {type: Boolean, default: false}
+            tree: Object
         },
-        mixins: [goTree],
         data: () => ({
+            adding: false,
             ROOTS, TANK, BRANCHES, rootScope
         }),
         computed: {
@@ -112,7 +118,14 @@
                     sbqt: root.trunk.quantity.bqt
                 })
             },
-            qtUnitName, getRandomColor, bqtGToQtUnit
+            setAdding(adding) {
+                this.adding = adding
+                if (adding) {
+                    this.$nextTick(() => scrollTo("#adder"))
+                } else {
+                    scrollSubPage()
+                }
+            }
         }
     }
 </script>

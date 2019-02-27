@@ -52,7 +52,12 @@
                     {key: "leftSelection", title: "Produit A", displayFct: qtUnitName, editor: "tree-selection-picker"},
                     {
                         key: "fragment", title: "Comparateur", displayFct: name, editor: "common-fragment-picker",
-                        params: [this.final.leftSelection && this.final.leftSelection.trunkId, this.final.rightSelection && this.final.rightSelection.trunkId].filter(v => v),
+                        props: {
+                            treesIds: [
+                                this.final.leftSelection && this.final.leftSelection.trunkId,
+                                this.final.rightSelection && this.final.rightSelection.trunkId
+                            ].filter(v => v)
+                        },
                         noedit: !(this.final.rightSelection || this.final.leftSelection)
                     },
                     {key: "rightSelection", title: "Produit B", displayFct: name, editor: "tree-selection-picker"},

@@ -1,21 +1,17 @@
 <template>
-    <v-container v-if="tree && tree.trunk">
+    <v-container v-if="tree && tree.trunk" id="top-page" style="min-height: 2000px">
 
-        <v-layout column style="min-height: 1200px">
+        <v-layout column>
 
-            <tree-headpage :tree="tree" :value="currentSubPage" @input="changeSubPage" @nav="fabnav"/>
+            <tree-headpage v-model="tabIdx" :tree="tree" class="mb-5" @close="goHome"/>
 
-            <v-container>
+            <div id="sub-page" style="min-height: 600px">
                 <transition name="slide-fade" mode="out-in">
-
-                    <impacts-sub-page v-if="currentSubPage === 0" :tree="tree" :modeAdd="modeAdd" @close="unsetModeAdd"/>
-
-                    <ressources-sub-page v-else-if="currentSubPage === 1" :tree="tree" :modeAdd="modeAdd" @close="unsetModeAdd"/>
-
-                    <facets-sub-page v-else-if="currentSubPage === 2" :tree="tree" :modeAdd="modeAdd" @close="unsetModeAdd"/>
-
+                    <impacts-sub-page v-if="tabIdx === 0" :tree="tree" @close="close"/>
+                    <ressources-sub-page v-else-if="tabIdx === 1" :tree="tree" @close="close"/>
+                    <facets-sub-page v-else-if="tabIdx === 2" :tree="tree" @close="close"/>
                 </transition>
-            </v-container>
+            </div>
 
         </v-layout>
 
@@ -24,12 +20,12 @@
 </template>
 
 <script>
-    import {mapActions, mapState, mapMutations} from "vuex"
+    import {mapActions, mapState} from "vuex"
     import On from "../../const/on"
     import TreeFab from "./TreeFab"
     import {FACETS, IMPACTS, ROOTS, treeHeadFragments} from "../../const/fragments"
     import TreeHeadpage from "./TreeHeadPage"
-    import Do from "../../const/do"
+    import {scrollSubPage, scrollTopPage} from "../../const/ux"
 
     const RessourcesSubPage = () => import(/* webpackChunkName: "RessourcesSubPage" */ "./RessourcesSubPage")
     const FacetsSubPage = () => import(/* webpackChunkName: "FacetsSubPage" */ "./FacetsSubPage")
@@ -45,36 +41,40 @@
         },
         data: () => ({
             selection: [],
+            tabIdx: null,
             IMPACTS, ROOTS, FACETS
         }),
         props: ['_id', 'bqt', 'sid'],
+        created: function () {
+            this.refresh()
+        },
         computed: {
             ...mapState({
                 tree: s => s.tree,
-                currentSubPage: s => s.nav.tree.currentSubPage,
                 modeAdd: s => s.nav.tree.modeAdd
             }),
         },
-        methods: {
-            ...mapMutations({
-                setCurrentSubpage: Do.SET_CURRENT_TREE_SUBPAGE,
-                setModeAdd: Do.SET_TREE_MODEADD
-            }),
-            unsetModeAdd() {
-                this.setModeAdd(false)
+        watch: {
+            '$route'(to, from) {
+                this.refresh()
             },
+            tabIdx(v, o) {
+                if (v === null) {
+                    scrollTopPage()
+                } else {
+                    scrollSubPage()
+                }
+            }
+        },
+        methods: {
             ...mapActions({
                 dispatchLoad: On.LOAD_OPEN_TREE,
                 dispatchSelLoad: On.LOAD_SELECTION,
-                snack: On.SNACKBAR
+                snack: On.SNACKBAR,
+                goHome: On.GO_HOME
             }),
-            changeSubPage(name) {
-                this.setModeAdd(false)
-                this.setCurrentSubpage(name)
-            },
-            fabnav(name) {
-                this.setCurrentSubpage(name)
-                this.setModeAdd(true)
+            close() {
+                this.tabIdx = null
             },
             getTreeLoad() {
                 if (this.bqt && this._id) {
@@ -100,14 +100,6 @@
                     }
                 }
             }
-        },
-        created: function () {
-            this.refresh()
-        },
-        watch: {
-            '$route'(to, from) {
-                this.refresh()
-            }
-        },
+        }
     }
 </script>

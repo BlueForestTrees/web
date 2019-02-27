@@ -11,7 +11,6 @@
 
         <snack :snack="snack" v-if="snack.visible"/>
         <connect-to-continue-dialog v-if="dialogs[Dial.CONNECT_TO_CONTINUE].visible"/>
-        <add-ressource-dialog/>
 
     </v-content>
 </template>
@@ -27,7 +26,6 @@
     const Snack = () => import(/* webpackChunkName: "Snack" */ "./common/Snack")
 
     const ConnectToContinueDialog = () => import(/* webpackChunkName: "CTCDialog"*/ "./dialog/ConnectToContinueDialog")
-    const AddRessourceDialog = () => import(/* webpackChunkName: "AddResDialog"*/ "./dialog/AddRessourceDialog")
 
     const LeftMenu = () => import(/* webpackChunkName: "LeftMenu" */ "./common/LeftMenu")
     const Messages = () => import(/* webpackChunkName: "Messages" */ "./messages/Messages")
@@ -49,7 +47,6 @@
             ConnectToContinueDialog,
             Snack,
             Bar,
-            AddRessourceDialog,
             LeftMenu
         },
         mounted: async function () {

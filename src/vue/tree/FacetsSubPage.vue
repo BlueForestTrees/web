@@ -1,7 +1,9 @@
 <template>
     <facet-adder v-if="modeAdd" :tree="tree" @close="$emit('close')"/>
     <v-card v-else>
-        <subpage-title title="Propriétés" icon-class="facet logo"/>
+        <subpage-title title="Propriétés" icon-class="facet logo">
+            <closer slot="right" @close="$emit('close')" />
+        </subpage-title>
 
         <fragment-list :tree="tree" :fragment="FACETS" none="Pas encore d'informations sur les propriétés"></fragment-list>
 
@@ -24,10 +26,12 @@
     import FragmentList from "./FragmentList"
     import SubpageTitle from "./SubpageTitle"
     import {name} from "../../services/calculations"
+    import Closer from "../common/Closer"
 
     export default {
         name: "facets-subpage",
         components: {
+            Closer,
             SubpageTitle,
             FragmentList,
             FacetAdder,

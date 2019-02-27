@@ -1,7 +1,9 @@
 <template>
     <impact-adder v-if="modeAdd" :tree="tree" @close="$emit('close')"/>
     <v-card v-else>
-        <subpage-title title="Environnement" icon-class="planet logo"/>
+        <subpage-title title="Environnement" icon-class="planet logo">
+            <closer slot="right" @close="$emit('close')" />
+        </subpage-title>
 
         <transition name="slide-fade" mode="out-in">
             <fragment-list v-if="idx === 0" :tree="tree" :fragment="IMPACT_TANK" none="Pas encore d'informations sur les impacts sur l'environnement" key="0"></fragment-list>
@@ -30,6 +32,7 @@
     import Do from "../../const/do"
     import SubpageTitle from "./SubpageTitle"
     import {name} from "../../services/calculations"
+    import Closer from "../common/Closer"
 
     const FragmentList = () => import(/* webpackChunkName: "FragmentList"*/"./FragmentList")
 
@@ -40,6 +43,7 @@
             impactScope, IMPACTS, IMPACT_TANK
         }),
         components: {
+            Closer,
             SubpageTitle,
             FragmentList,
             ScopeMenu,

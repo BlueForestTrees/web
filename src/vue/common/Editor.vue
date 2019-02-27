@@ -1,31 +1,29 @@
 <template>
-    <span>
-        <v-container>
-            <v-layout column>
-                <v-list>
-                    <v-list-tile v-if="field && !editing || idx === i" v-for="(field,i) in editor" :key="i">
-                        <v-list-tile-content>
-                            <v-list-tile-title>
-                                <v-icon v-if="field.warning" color="red">warning</v-icon>
-                                <span>{{field.title}}:</span>
-                                <span :class="` font-weight-medium ml-3 ${changed(field) ? 'font-italic' : ''}`">{{displayValue(field)}}</span>
-                            </v-list-tile-title>
-                        </v-list-tile-content>
-                        <v-list-tile-action v-if="editable && !field.noedit">
-                            <close-edit-btn :editing="editing" @close="close" @edit="goto(i)"/>
-                        </v-list-tile-action>
-                    </v-list-tile>
-                </v-list>
-            </v-layout>
+    <div>
+        <v-layout column>
+            <v-list>
+                <v-list-tile v-if="field && !editing || idx === i" v-for="(field,i) in editor" :key="i">
+                    <v-list-tile-content>
+                        <v-list-tile-title>
+                            <v-icon v-if="field.warning" color="red">warning</v-icon>
+                            <span>{{field.title}}:</span>
+                            <span :class="` font-weight-medium ml-3 ${changed(field) ? 'font-italic' : ''}`">{{displayValue(field)}}</span>
+                        </v-list-tile-title>
+                    </v-list-tile-content>
+                    <v-list-tile-action v-if="editable && !field.noedit">
+                        <close-edit-btn :editing="editing" @close="close" @edit="goto(i)"/>
+                    </v-list-tile-action>
+                </v-list-tile>
+            </v-list>
+        </v-layout>
         <v-window v-model="idx" v-if="editing">
             <v-window-item lazy v-if="field" v-for="(field,i) in editor" transition="fade-transition" :key="i">
                 <template v-if="field">
-                    <component :is="field.editor" :value="value(field)" :params="field.params" @save="v => save(field, v)"/>
+                    <component :is="field.editor" v-bind="field.props" :value="value(field)" @save="v => save(field, v)"/>
                 </template>
             </v-window-item>
         </v-window>
-        </v-container>
-    </span>
+    </div>
 </template>
 
 <script>

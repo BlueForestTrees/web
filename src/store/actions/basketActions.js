@@ -2,7 +2,6 @@ import router from "../../router/router"
 import {GO} from "../../const/go"
 import On from "../../const/on"
 import Do from "../../const/do"
-import Link from "../../const/link"
 // import {find} from "unit-manip"
 // import forage from "../../services/forage"
 
@@ -10,24 +9,13 @@ export default {
     [On.GO_BASKET]: ({}) => {
         router.push({name: GO.BASKET})
     },
-    [On.ADD_SELECTION_TO_BASKET]: ({dispatch, state}) => {
-        dispatch(On.ADD_TO_BASKET, state.selection)
-        const length = state.selection.length
-        const s = state.selection.length > 1 ? 's' : ''
-        dispatch(On.SNACKBAR, {text: `${length} élément${s} sélectionné${s}`, color: "green", link: Link.GO_TO_SELECTION})
-        dispatch(On.UNSELECT)
-    },
     [On.ADD_TO_BASKET]: async ({commit, dispatch, state}, items) => {
-        commit(Do.ADD_TO_BASKET, items)
-        return dispatch(On.SAVE_BASKET)
-    },
-    [On.REMOVE_SELECTION_FROM_BASKET]: ({dispatch, state}) => {
-        dispatch(On.REMOVE_FROM_BASKET, state.selection)
-        dispatch(On.UNSELECT)
+        commit(Do.ADD_TO_BASKET, Array.isArray(items) ? items : [items])
+        // return dispatch(On.SAVE_BASKET)
     },
     [On.REMOVE_FROM_BASKET]: ({state, commit, dispatch}, items) => {
-        commit(Do.REMOVE_FROM_BASKET, items)
-        dispatch(On.SAVE_BASKET)
+        commit(Do.REMOVE_FROM_BASKET, Array.isArray(items) ? items : [items])
+        // dispatch(On.SAVE_BASKET)
     },
     [On.SAVE_BASKET]: ({state}) => {
         // forage.setBasket(Object.values(state.basket))

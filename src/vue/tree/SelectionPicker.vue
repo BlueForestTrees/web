@@ -3,7 +3,7 @@
 
         <subpage-title sub iconClass="carton logo" title="Quantité">
             <slot slot="left"></slot>
-            <closer slot="right" @close="$emit('close')"/>
+            <closer v-if="closable" slot="right" @close="$emit('close')"/>
         </subpage-title>
 
         <v-container>
@@ -31,7 +31,7 @@
 
                 <v-layout row style="width:100%">
                     <v-spacer/>
-                    <v-btn icon @click.stop="validate" >Ok</v-btn>
+                    <v-btn icon @click.stop="validate">Ok</v-btn>
                 </v-layout>
 
             </v-layout>
@@ -58,7 +58,10 @@
         name: 'selection-picker',
         components: {Closer, SubpageTitle, Card, GrandeurSelect, UnitSelect, Destination},
         mixins: [closable],
-        props: ['selection'],
+        props: {
+            value: Object,
+            closable: {type: Boolean, default: true}
+        },
         data: function () {
             return {
                 qt: null,
@@ -74,6 +77,11 @@
                 isRegulier: false,
                 name: "",
                 selectionNameMaxLength
+            }
+        },
+        computed: {
+            selection() {
+                return this.value
             }
         },
         methods: {
@@ -99,6 +107,7 @@
             if (this.selection) {
 
                 const bqtG = this.selection.quantity
+
                 const qtUnit = bestQuantity(bqtGToQtUnit(bqtG))
                 this.qt = qtUnit.qt
                 this.unit = unit(qtUnit.unit)

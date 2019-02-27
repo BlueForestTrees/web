@@ -22,7 +22,6 @@ const MyTeam = () => import(/* webpackChunkName: "MyTeam" */ '../vue/home/MyTeam
 const MyMessages = () => import(/* webpackChunkName: "MyMessages" */ '../vue/home/MyMessage')
 const AddImpactEntry = () => import(/* webpackChunkName: "AIE" */ '../vue/dialog/AddImpactEntry')
 const AddFacetEntry = () => import(/* webpackChunkName: "AFEDialog" */ "../vue/dialog/AddFacetEntry")
-const AddRessource = () => import(/* webpackChunkName: "ARDialog"*/ "../vue/dialog/AddRessourceDialog")
 const Info = () => import(/* webpackChunkName: "Info"*/ "../vue/pub/Info")
 const CreateInfo = () => import(/* webpackChunkName: "Info"*/ "../vue/pub/CreateInfo")
 const CreateEq = () => import(/* webpackChunkName: "CreateEq"*/ "../vue/pub/CreateEq")
@@ -79,7 +78,6 @@ export default new VueRouter({
                 {name: GO.COMPARE_PARTIAL, path: "compare/:leftId", component: Compare, props: true},
                 {name: GO.ADD_IMPACT_ENTRY, path: "add/entry/impact", component: AddImpactEntry},
                 {name: GO.ADD_FACET_ENTRY, path: "add/entry/facet", component: AddFacetEntry},
-                {name: GO.ADD_RESSOURCE, path: "add/ressource", component: AddRessource},
                 {name: GO.COMPARE, path: "compare/:leftId/:rightId", component: Compare, props: true},
                 {name: GO.NOT_FOUND, path: '/404', component: NotFound},
             ]

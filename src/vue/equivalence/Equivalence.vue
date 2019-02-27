@@ -58,12 +58,8 @@
                 dispatchSearchEquiv: On.SEARCH_EQUIV,
                 snack: On.SNACKBAR,
                 goTree: On.GO_TREE,
-                dispatchAddToBasket: On.ADD_TO_BASKET,
                 showDialog: On.SHOW_DIALOG
             }),
-            addToBasket: function (selection) {
-                this.dispatchAddToBasket(map(selection, e => ({_id: e._id, trunk: e})))
-            },
             refresh: async function () {
                 try {
                     this.tree = await this.dispatchLoad({bqt: this.bqt, _id: this._id})

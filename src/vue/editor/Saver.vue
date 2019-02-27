@@ -31,6 +31,7 @@
             updateAction: String,
             deleteAction: String,
             updatedText: String,
+            savedText: String,
             copyForbidden: {type: Boolean, default: false},
             deleteForbidden: {type: Boolean, default: false}
         },
@@ -62,6 +63,7 @@
                     .then(() => {
                         this.changes._id = _id
                         this.emitSaved(this.changes)
+                        this.snack({text: this.savedText, color: "green"})
                     }).catch(e => {
                         console.error(e)
                         this.snack({text: e.body.message, color: "red"})

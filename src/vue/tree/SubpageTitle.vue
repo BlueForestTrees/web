@@ -10,10 +10,11 @@
 
 <script>
     import Icon from "../common/icon"
+    import Closer from "../common/Closer"
 
     export default {
         name: "subpage-title",
-        components: {Icon},
+        components: {Closer, Icon},
         props: {
             color: String,
             title: String,

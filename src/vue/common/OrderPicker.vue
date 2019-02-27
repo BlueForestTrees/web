@@ -1,27 +1,29 @@
 <template>
-    <v-card>
-        <v-container>
-            <v-layout column align-center>
-                <destination noqt :tree="up"/>
-                <v-list-tile>
-                    <v-icon x-large>call_merge</v-icon>
-                </v-list-tile>
-                <destination noqt :tree="down"/>
+        <v-layout column align-center>
+            <v-layout align-center>
+                <selection-card-front :selection="up && up.selection" no-selection="A"/>
+                <div class="bold-font align display-2 ma-4">contient</div>
+                <selection-card-front :selection="down && down.selection" no-selection="B"/>
             </v-layout>
-        </v-container>
-        <v-layout>
-            <v-spacer/>
-            <v-btn dense @click="$emit('revert')"><v-icon>swap_horiz</v-icon>inverser</v-btn>
-            <v-btn color="primary" @click="$emit('validate')">Ok</v-btn>
+            <v-btn icon @click="revert">
+                <v-icon large>swap_horiz</v-icon>
+            </v-btn>
         </v-layout>
-    </v-card>
 </template>
 
 <script>
     import Destination from "./Destination"
-    export default{
-        name:"order-picker",
-        components: {Destination},
-        props:['up','down']
+    import QtUnitName from "../tree/QtUnitName"
+    import SelectionCardFront from "../tree/SelectionCardFront"
+
+    export default {
+        name: "order-picker",
+        components: {SelectionCardFront, QtUnitName, Destination},
+        props: ['up', 'down'],
+        methods: {
+            revert() {
+                this.$emit('revert')
+            }
+        }
     }
 </script>

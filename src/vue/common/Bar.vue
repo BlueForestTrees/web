@@ -48,13 +48,14 @@
 </template>
 
 <script>
-    import {mapActions, mapState, mapGetters} from "vuex"
+    import {mapActions, mapState} from "vuex"
     import {Dial} from "../../const/dial"
     import On from "../../const/on"
     import {GO} from "../../const/go"
     import LoginSuscribeList from "./LoginSuscribeList"
     import selectable from "../mixin/Selectable"
     import LoggedIn from "../user/LoggedIn"
+    import WelcomePanel from "../search/WelcomePanel"
 
     export default {
         data: function () {
@@ -64,6 +65,7 @@
         },
         mixins: [selectable],
         components: {
+            WelcomePanel,
             LoggedIn,
             LoginSuscribeList
         },
@@ -77,14 +79,12 @@
                 }
                 return true
             },
-            ...mapGetters(['notEmptyBasket'])
         },
         methods: {
             go: function (p) {
                 this.$router.push(p)
             },
             ...mapActions({
-                removeSelectionFromBasket: On.REMOVE_SELECTION_FROM_BASKET,
                 goSearch: On.GO_SEARCH,
                 goTree: On.GO_TREE,
                 goHome: On.GO_HOME,

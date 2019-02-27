@@ -3,10 +3,10 @@
 
         <tree-picker v-if="showTreePicker" @pick="pickTree"/>
 
-
         <selection-picker v-else
-                          :selection="finalSelection"
-                          @pick="pickSelection" @close="closeSelectionPicker"/>
+                          :value="finalSelection"
+                          @pick="pickSelection" @close="closeSelectionPicker"
+                          :closable="canChangeTree"/>
 
     </transition>
 </template>
@@ -20,35 +20,48 @@
     export default {
         name: "tree-selection-picker",
         components: {TreePicker, SelectionPicker, Card},
-        props: ['value'],
+        props: {
+            value: Object,
+            canChangeTree: {type: Boolean, default: true}
+        },
         data: () => ({
-            selection: null,
+            tree: null,
             selectionPickerClosed: false
         }),
         methods: {
             name,
             async pickTree(tree) {
-                this.selection = tree.selection || selectionFromTree(tree)
+                this.tree = tree
                 this.selectionPickerClosed = false
             },
             pickSelection(selection) {
-                this.$emit("save", selection)
+                if (this.finalTree) {
+                    this.$emit("save", {...this.finalTree, selection})
+                } else {
+                    this.$emit("save", selection)
+                }
                 this.selectionPickerClosed = false
             },
             closeSelectionPicker() {
-                this.selection = null
+                this.tree = null
                 this.selectionPickerClosed = true
             }
         },
         computed: {
-            initialSelection() {
-                return this.value
+            propsTree() {
+                return this.value && this.value.selection && this.value
             },
-            pickedSelection() {
-                return this.selection
+            propsSelection() {
+                return this.value && this.value.selection || this.value
+            },
+            pickedTreeSelection() {
+                return this.tree && selectionFromTree(this.tree)
             },
             finalSelection() {
-                return this.pickedSelection || this.initialSelection
+                return this.pickedTreeSelection || this.propsSelection
+            },
+            finalTree() {
+                return this.tree || this.propsTree
             },
             showTreePicker() {
                 return this.selectionPickerClosed || !this.finalSelection

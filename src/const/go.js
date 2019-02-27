@@ -11,7 +11,6 @@ export const GO = {
     IMPACT_ENTRY: 'impactEntry',
     ADD_IMPACT_ENTRY: 'addImpactEntry',
     ADD_FACET_ENTRY: 'addFacetEntry',
-    ADD_RESSOURCE: 'addRessource',
     SEARCH: 'search',
     BASKET: 'basket',
     TREE_EMPTY: 'emptyTree',

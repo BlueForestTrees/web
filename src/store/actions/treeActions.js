@@ -37,10 +37,7 @@ export default {
         const dest = tree ?
             {_id: tree._id, bqt: tree.trunk.quantity.bqt}
             :
-            getters.basketArray[0] ?
-                {_id: getters.basketArray[0]._id, bqt: getters.basketArray[0].trunk.quantity.bqt}
-                :
-                null
+            null
 
         commit(Do.CLOSE_TREE)
 
@@ -76,7 +73,7 @@ export default {
         } else {
             const tree = {_id}
             dispatch(On.UPDATE_TREE, {tree, bqt, fragments})
-            dispatch(On.ADD_TO_BASKET, [tree])
+            dispatch(On.ADD_TO_BASKET, tree)
             return tree
         }
     },

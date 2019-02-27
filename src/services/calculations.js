@@ -18,7 +18,7 @@ export const hasQuantity = e => e && e.quantity && e.quantity.bqt && e.quantity.
 export const transportQuantity = (masse, distance) => baseQt({qt: changeUnit(masse, "t") * changeUnit(distance, "km"), unit: "t*km"})
 export const treefyAll = items => map(items, treefy)
 export const treefy = trunk => ({_id: trunk._id, trunk})
-export const idQtFrom = item => ({_id: item._id, quantity: item.quantity})
+
 export const qtUnit = (item, opts = {}) => {
     const bqtG = quantity(item)
     if (bqtG) {
@@ -33,14 +33,17 @@ export const qtUnit = (item, opts = {}) => {
         return "??"
     }
 }
+
 export const quantity = item => item && (
     (item.selection && item.selection.repeted && item.selection.duree)
     ||
+    (item.selection && item.selection.quantity)
+    ||
     (item.repeted && item.duree)
     ||
-    (item.trunk && item.trunk.quantity)
-    ||
     item.quantity
+    ||
+    (item.trunk && item.trunk.quantity)
     ||
     item
 )
@@ -238,11 +241,15 @@ export const getAttribute = (tree, {type, _id}) => find(tree[type], "_id", _id)
 
 export const needS = count => count > 1 ? 's' : ''
 
-export const selectionFromTree = tree => ({
-    trunkId: tree._id,
-    quantity: tree.trunk.quantity,
-    name: tree.trunk.name.substr(0, selectionNameMaxLength),
-    repeted: false
-})
-
+export const selectionFromTree = tree => {
+    if (!tree.selection) {
+        tree.selection = {
+            trunkId: tree._id,
+            quantity: tree.trunk.quantity,
+            name: tree.trunk.name.substr(0, selectionNameMaxLength),
+            repeted: false
+        }
+    }
+    return tree.selection
+}
 export const formatDate = value => new Date(value).toLocaleString()

@@ -1,7 +1,6 @@
 import {Dial} from "../const/dial"
 import ENV from "../env"
 import {maquettes} from "../const/maquettes"
-import {FACETS, IMPACT_TANK, ROOTS} from "../const/fragments"
 
 export const createDialog = name => (dialogFactory[name] && dialogFactory[name]()) || (console.warn(`state.js il manque dialogFactory['${name}']`) || {})
 
@@ -9,7 +8,6 @@ const dialogFactory = {
     [Dial.LOGIN]: () => ({noAuth: true, vivisible: false, data: {destination: null}}),
     [Dial.FACET_ENTRY]: () => ({visible: false, data: {qt: null, unit: null, name: null}}),
     [Dial.ADD_IMPACT_ENTRY]: () => ({visible: false, data: {qt: null, unit: null, name: null}}),
-    [Dial.ADD_RESSOURCE]: () => ({visible: false, data: {left: null, right: null}}),
     [Dial.SUSCRIBE]: () => ({noAuth: true, visible: false, data: {}}),
     [Dial.LOGIN]: () => ({noAuth: true, visible: false, data: {}}),
     [Dial.CONNECT_TO_CONTINUE]: () => ({noAuth: true, visible: false, data: {message: null}}),
@@ -39,9 +37,7 @@ export default {
     userStatus: null,
     expire: null,
     search: {name: null, cats: [], owner: null},
-    basket: {},
-    ['basket' + IMPACT_TANK]: {},
-    ['basket' + FACETS]: {},
+    basket: [],
     tree: null,
     compare: {left: null, right: null, leftAxises: null, rightAxises: null, axis: null},
     dialogs: dialogs(),
@@ -51,9 +47,9 @@ export default {
         search: {cat: {opened: false}, owner: {opened: false}},
         leftMenuVisible: false, rightMenuVisible: false, dark: false, detailsDialog: false,
         tree: {
-            currentSubPage: 0, modeAdd: false, cardFlipped: false,
+            cardFlipped: false,
             impact: {idx: 0, term: ""},
-            root: {idx: 0, term: "", scope: ROOTS},
+            root: {idx: 0, term: ""},
             facet: {term: ""},
             picker: {tab: null}
         }
