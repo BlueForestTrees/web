@@ -57,7 +57,7 @@
     "@material/button": "0.26.0",
     "jwt-decode": "2.2.0",
     "lodash.debounce": "4.0.8",
-    "unit-manip": "^1.0.7",
+    "unit-manip": "1.0.11",
     "vis": "4.21.0",
     "vue": "2.5.17",
     "vue-infinite-loading": "2.3.1",

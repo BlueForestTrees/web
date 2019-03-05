@@ -1,14 +1,13 @@
 <template>
-        <card3d v-if="trunk" :flipped="flipped">
-            <template slot="front">
-                <photo :trunk="trunk" size="200" class="mb-2"/>
-                <!--<qt-unit-name :tree="tree"/>-->
-                <slot/>
-            </template>
-            <v-card slot="back">
-                <selection-picker :value="selection" @close="flip" @pick="pickSelection"/>
-            </v-card>
-        </card3d>
+    <card3d v-if="trunk" :flipped="flipped">
+        <template slot="front">
+            <photo :trunk="trunk" size="200" class="mb-2"/>
+            <slot/>
+        </template>
+        <v-card slot="back">
+            <selection-picker :value="selection" @close="flip" @pick="pickSelection"/>
+        </v-card>
+    </card3d>
 </template>
 
 <script>
@@ -33,11 +32,13 @@
         methods: {
             ...mapActions({
                 saveApplySelection: On.SAVE_APPLY_SELECTION,
+                snackError: On.SNACKERROR
             }),
             ...mapMutations({setFlipped: Do.SET_TREE_CARD_FLIPPED}),
             pickSelection(selection) {
                 this.saveApplySelection({tree: this.tree, selection})
-                this.flip()
+                    .then(this.flip)
+                    .catch(this.snackError)
             },
             flip() {
                 this.setFlipped(!this.flipped)

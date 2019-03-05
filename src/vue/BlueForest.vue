@@ -40,7 +40,7 @@
             }
         },
         computed: {
-            ...mapState(['nav', 'basket', 'snack', 'dispo', 'dialogs'])
+            ...mapState(['nav', 'snack', 'dispo', 'dialogs'])
         },
         components: {
             Messages,

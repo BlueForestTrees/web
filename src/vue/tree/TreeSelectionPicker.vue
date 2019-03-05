@@ -1,7 +1,7 @@
 <template>
     <transition name="slide-fade" mode="out-in">
 
-        <tree-picker v-if="showTreePicker" @pick="pickTree"/>
+        <tree-picker v-if="showTreePicker" @pick="pickTree" :no-create="noCreate"/>
 
         <selection-picker v-else
                           :value="finalSelection"
@@ -22,7 +22,9 @@
         components: {TreePicker, SelectionPicker, Card},
         props: {
             value: Object,
-            canChangeTree: {type: Boolean, default: true}
+            canChangeTree: {type: Boolean, default: true},
+            noCreate: {type: Boolean, default: false},
+            returnTree: {type: Boolean, default: false}
         },
         data: () => ({
             pickedTree: null,
@@ -30,12 +32,16 @@
         }),
         methods: {
             name,
-            async pickTree(pickedTree) {
+            async pickTree(pickedTree, way) {
                 this.pickedTree = pickedTree
                 this.selectionPickerClosed = false
+                //si on vient de créer on oblige pas à rechoisir une quantité
+                if (way === 'create') {
+                    this.pickSelection(selectionFromTree(pickedTree))
+                }
             },
             pickSelection(selection) {
-                if (this.finalTree) {
+                if (this.returnTree) {
                     this.$emit("save", {...this.finalTree, selection})
                 } else {
                     this.$emit("save", selection)
@@ -49,7 +55,7 @@
         },
         computed: {
             propsTree() {
-                return this.value
+                return this.value && !this.value.selection && this.value
             },
             propsSelection() {
                 return this.value && this.value.selection || this.value

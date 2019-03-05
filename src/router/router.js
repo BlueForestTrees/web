@@ -16,7 +16,7 @@ const Login = () => import(/* webpackChunkName: "Login" */ '../vue/user/Login')
 const Plan = () => import(/* webpackChunkName: "Plan" */ '../vue/plan/Plan')
 const RoadMap = () => import(/* webpackChunkName: "RoadMap" */ '../vue/plan/RoadMap')
 const BFCestQuoi = () => import(/* webpackChunkName: "BFCestQuoi" */ '../vue/plan/PlanIntro')
-const CreateTree = () => import(/* webpackChunkName: "CreateTree" */ '../vue/tree/CreateTree')
+const CreateTree = () => import(/* webpackChunkName: "CreateTree" */ '../vue/tree/CreateTreePage')
 const DatasExplained = () => import(/* webpackChunkName: "DatasExplained" */ '../vue/explain/DataExplained')
 const MyTeam = () => import(/* webpackChunkName: "MyTeam" */ '../vue/home/MyTeam')
 const MyMessages = () => import(/* webpackChunkName: "MyMessages" */ '../vue/home/MyMessage')
@@ -28,7 +28,7 @@ const CreateEq = () => import(/* webpackChunkName: "CreateEq"*/ "../vue/pub/Crea
 const CreateCompens = () => import(/* webpackChunkName: "CreateCompens"*/ "../vue/pub/CreateCompens")
 const CreateAlt = () => import(/* webpackChunkName: "CreateAlt"*/ "../vue/pub/CreateAlt")
 const CreateGroup = () => import(/* webpackChunkName: "CreateGroup"*/ "../vue/pub/CreateGroup")
-const MyBasket = () => import(/* webpackChunkName: "MyBasket"*/ "../vue/home/MyBasket")
+const RecentPage = () => import(/* webpackChunkName: "MyBasket"*/ "../vue/home/RecentPage")
 const UserPage = () => import(/* webpackChunkName: "UserPage"*/ "../vue/user/UserPage")
 
 Vue.use(VueRouter)
@@ -73,7 +73,7 @@ export default new VueRouter({
                 {name: GO.GAME, path: "play/:gameId", component: Qui2, props: true},
                 {name: GO.QUI_2, path: "qui2fois/:bqt/:_id/:f/:fid", component: Qui2, props: ({params}) => ({leftBqt: params.bqt, leftId: params._id, fragment: params.f, fragmentId: params.fid})},
                 {name: GO.ROOT, path: "root/:treeId/:rootId", component: RootEditor, props: true},
-                {name: GO.RECENT, path: "recent", component: MyBasket},
+                {name: GO.RECENT, path: "recent", component: RecentPage},
                 {name: GO.COMPARE_EMPTY, path: "compare", component: Compare},
                 {name: GO.COMPARE_PARTIAL, path: "compare/:leftId", component: Compare, props: true},
                 {name: GO.ADD_IMPACT_ENTRY, path: "add/entry/impact", component: AddImpactEntry},

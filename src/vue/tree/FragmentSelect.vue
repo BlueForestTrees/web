@@ -1,5 +1,5 @@
 <template>
-    <v-item-group :value="value" @change="idx => $emit('change',idx)">
+    <v-item-group :value="value" @change="idx => $emit('input',idx)">
         <v-layout py-1 justify-center>
             <v-item v-for="(tab,i) in tabs" :key="i">
                 <div slot-scope="{ active, toggle }" class="mx-2">

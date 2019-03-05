@@ -1,40 +1,48 @@
 <template>
     <span>
         <v-tabs :value="tab" @change="setTab" centered slider-color="primary">
+            <v-tab v-if="!noCreate" href="#create">Nouveau</v-tab>
             <v-tab href="#search">Recherche</v-tab>
             <v-tab href="#favoris">Favoris</v-tab>
         </v-tabs>
         <v-divider/>
-        <search v-if="tab==='search'" @select="pickTree" class="mt-5"/>
-        <my-selects v-else-if="tab==='favoris'" :user="user" @select="pickSelection"/>
+        <create-tree v-if="!noCreate && tab==='create'" @create="pickTree" no-title/>
+        <search v-else-if="tab==='search'" @select="pickTree" class="mt-5"/>
+        <favorites v-else-if="tab==='favoris'" :user="user" @select="pickSelection"/>
     </span>
 </template>
 <script>
     import Do from "../../const/do"
     import {mapMutations, mapState, mapActions} from "vuex"
     import On from "../../const/on"
-    import {TRUNK} from "../../const/fragments"
+    import {TRUNK, trunkFragment} from "../../const/fragments"
 
+    const CreateTree = () => import(/* webpackChunkName: "CreateTree" */ './CreateTree')
     const Search = () => import(/* webpackChunkName: "MyBasket"*/ "../search/Search")
-    const MySelects = () => import(/* webpackChunkName: "MySelects"*/ "../home/MySelects")
+    const Favorites = () => import(/* webpackChunkName: "MySelects"*/ "../home/Favorites")
 
     export default {
         name: 'tree-picker',
-        components: {MySelects, Search},
+        props: {noCreate: {type: Boolean, default: false}},
+        components: {CreateTree, Favorites, Search},
         methods: {
-            pickSelection(selection) {
-                const tree = this.loadTreeFromSelection({selection, fragments: [TRUNK]})
-                this.$emit('pick', tree)
+            async pickSelection(selection) {
+                this.loadTreeFromSelection({selection, fragments: trunkFragment})
+                    .then(tree => tree.promises.all
+                        .then(() => this.$emit('pick', tree))
+                        .catch(this.snackError)
+                    )
             },
             pickTree(tree) {
-                this.$emit('pick', tree)
+                this.$emit('pick', tree, this.tab)
             },
             ...mapActions({
-                loadTreeFromSelection: On.LOAD_SELECTION_TREE
+                loadTreeFromSelection: On.LOAD_SELECTION_TREE,
+                snackError: On.SNACKERROR
             }),
             ...mapMutations({
                 setTab: Do.SET_NAV_TREE_PICKER_TAB
-            }),
+            })
         },
         computed: {
             ...mapState({

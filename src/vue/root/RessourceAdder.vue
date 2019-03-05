@@ -6,13 +6,17 @@
             </subpage-title>
             <v-divider/>
 
-            <v-container>
-                <order-picker @revert="revert" :up="final.tree" :down="final.root"/>
-            </v-container>
+            <v-layout row align-center>
+                <v-flex class="font-weight-black headline ml-2">{{text}}</v-flex>
+                <v-spacer/>
+                <v-btn v-if="!editing" icon @click.stop="revert">
+                    <v-icon large color="primary">{{$vuetify.breakpoint.smAndUp ? 'swap_horiz':'swap_vert'}}</v-icon>
+                </v-btn>
+            </v-layout>
+
             <v-divider/>
             <editor v-model="editing" :editor="editor" :initial="initial" :changes="changes" @change="change"/>
 
-            <add-entry-fab title="Créer un produit ou un service" :route="GO.CREATE_TREE" :callback="On.NAV_PREVIOUS"/>
         </v-card>
         <saver v-if="!editing" saved-text="Ressource ajoutée"
                :initial="initial" :changes="changes" :final="final" :editor="editor"
@@ -30,8 +34,6 @@
     import TreeSelectionPicker from "../tree/TreeSelectionPicker"
     import SubpageTitle from "../tree/SubpageTitle"
     import AddEntryFab from "../common/AddEntryFab"
-    import Destination from "../common/Destination"
-    import OrderPicker from "../common/OrderPicker"
     import TreePicker from "../tree/TreePicker"
     import Editor from "../common/Editor"
     import Edition from "../editor/Edition"
@@ -41,18 +43,21 @@
         name: "ressource-adder",
         props: ['tree'],
         mixins: [Edition],
-        components: {Saver, Editor, TreePicker, OrderPicker, Destination, AddEntryFab, SubpageTitle, TreeSelectionPicker, QuantityPicker, Closer},
+        components: {Saver, Editor, TreePicker, AddEntryFab, SubpageTitle, TreeSelectionPicker, QuantityPicker, Closer},
         data: () => ({
             editing: false,
             GO, On
         }),
         computed: {
+            text() {
+                return `${this.final.tree && qtUnitName(this.final.tree.selection) || "'A'"} contient ${this.final.root && qtUnitName(this.final.root.selection) || "'B'"}`
+            },
             editor() {
                 const canChangeTree = this.final.tree && this.final.tree._id !== this.tree._id
                 const canChangeRoot = !canChangeTree
                 return [
-                    {key: "tree", title: "Produit A", displayFct: qtUnitName, editor: "tree-selection-picker", props: {canChangeTree}},
-                    {key: "root", title: "Produit B", displayFct: qtUnitName, editor: "tree-selection-picker", props: {canChangeTree: canChangeRoot}},
+                    {key: "tree", title: "A", displayFct: qtUnitName, editor: "tree-selection-picker", props: {canChangeTree, returnTree: true}},
+                    {key: "root", title: "B", displayFct: qtUnitName, editor: "tree-selection-picker", props: {canChangeTree: canChangeRoot, returnTree: true}}
                 ]
             }
         },

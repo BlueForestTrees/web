@@ -2,19 +2,20 @@
     <view-edit-save>
 
         <v-card slot="left">
-            <subpage-title iconClass="voice logo" title="Equivalence"/>
-            <eq-show :info="final"/>
+            <subpage-title iconClass="voice logo" title="Créer une équivalence"/>
+            <v-container>
+                <eq-show :info="final"/>
+            </v-container>
         </v-card>
 
         <v-card slot="right">
-            <subpage-title icon="edit" title="Modifier"/>
             <editor v-model="editing"
                     :initial="initial" :changes="changes" :editor="editor"
                     @change="change"
             />
         </v-card>
 
-        <saver slot="bottom" v-if="!editing" updated-text="Equivalence mise à jour."
+        <saver slot="bottom" v-if="!editing" updated-text="Equivalence mise à jour." saved-text="Equivalence crée."
                :initial="initial" :changes="changes" :final="final" :editor="editor"
                :save-action="On.SAVE_EQ" :update-action="On.UPDATE_INFO" :delete-action="On.DELETE_INFO"
                @saved="saved" @deleted="deleted"
@@ -49,7 +50,7 @@
         computed: {
             editor() {
                 return [
-                    {key: "leftSelection", title: "Produit A", displayFct: qtUnitName, editor: "tree-selection-picker"},
+                    {key: "leftSelection", title: "Produit A", displayFct: qtUnitName, editor: "tree-selection-picker", props: {noCreate: true}},
                     {
                         key: "fragment", title: "Comparateur", displayFct: name, editor: "common-fragment-picker",
                         props: {

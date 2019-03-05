@@ -45,7 +45,7 @@
             IMPACTS, ROOTS, FACETS
         }),
         props: ['_id', 'bqt', 'sid'],
-        created: function () {
+        mounted: function () {
             this.refresh()
         },
         computed: {
@@ -75,6 +75,7 @@
                 dispatchLoad: On.LOAD_OPEN_TREE,
                 dispatchSelLoad: On.LOAD_SELECTION,
                 snack: On.SNACKBAR,
+                snackError: On.SNACKERROR,
                 goHome: On.GO_HOME
             }),
             close() {
@@ -82,7 +83,11 @@
             },
             getTreeLoad() {
                 if (this.bqt && this._id) {
-                    return this.dispatchLoad({bqt: this.bqt, _id: this._id, fragments: treeHeadFragments})
+                    if (!this.tree || this.tree._id !== this._id
+                        ||
+                        !this.tree.trunk || this.tree.trunk.quantity.bqt !== this.bqt) {
+                        return this.dispatchLoad({bqt: this.bqt, _id: this._id, fragments: treeHeadFragments})
+                    }
                 } else if (this.sid) {
                     return this.dispatchSelLoad({_id: this.sid, fragments: treeHeadFragments})
                 } else {
@@ -90,22 +95,11 @@
                 }
             },
             refresh: async function () {
-                const treeLoad = await this.getTreeLoad()
-                if (treeLoad) {
-                    const tree = await treeLoad
-                    try {
-                        await tree.promises.all
-                    } catch (e) {
-                        if (e.status === 404) {
-                            this.snack({text: "L'élément n'a pas été trouvé :(", color: "orange"})
-                        } else if (e.status === 400) {
-                            this.snack({text: "L'url contient des éléments incorrects.", color: "orange"})
-                        }
-                    }
-                }
+                const work = this.getTreeLoad()
+                work && work.then(tree => tree.promises.all.catch(this.snackError))
             }
         },
-        beforeRouteLeave(to, from, next){
+        beforeRouteLeave(to, from, next) {
             this.close()
             next()
         }

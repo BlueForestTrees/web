@@ -101,7 +101,7 @@
                 this.dispatchShowMessages(section)
             },
             createTree() {
-                this.goCreateTree({callback: On.GO_TREE})
+                this.goCreateTree()
             },
             ...mapActions({
                 goto: On.GO_TO,

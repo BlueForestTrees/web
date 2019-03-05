@@ -30,7 +30,7 @@
     import {qtFreqOrUnit, name} from "../../services/calculations"
 
     export default {
-        name: "my-selects",
+        name: "favorites",
         components: {Loader},
         props: {user: Object},
         data: () => ({items: [], loaded: false, loading: false}),

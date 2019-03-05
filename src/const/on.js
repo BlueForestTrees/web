@@ -114,6 +114,7 @@ export default {
     SHOW_DIALOG: 'showDialog',
     SHOW_MESSAGES: 'showMessages',
     SNACKBAR: 'snackbar',
+    SNACKERROR: 'snackbarError',
     SWIPE_LEFT: 'SWIPE_LEFT',
     SWIPE_RIGHT: 'SWIPE_RIGHT',
     SWITCH_COLORS: 'switchColors',

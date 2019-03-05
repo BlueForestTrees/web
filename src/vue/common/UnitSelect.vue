@@ -1,5 +1,5 @@
 <template>
-    <v-select :disabled="disabled"
+    <v-select :disabled="disabled" label="Unité..."
             item-text="name" required :solo="solo" :outline="outline" :label="label"
             :items="items" :value="value" @input="v => $emit('input',v)" :rules="rules"
             return-object></v-select>

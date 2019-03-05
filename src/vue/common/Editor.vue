@@ -1,18 +1,27 @@
 <template>
     <div>
         <v-layout column>
-            <v-list>
+            <v-list class="py-0">
                 <v-list-tile v-if="field && !editing || idx === i" v-for="(field,i) in editor" :key="i" @click="toggle(i)">
                     <v-list-tile-content>
                         <v-list-tile-title>
                             <v-icon v-if="field.warning" color="red">warning</v-icon>
-                            <span>{{field.title}}:</span>
-                            <span :class="` font-weight-medium ml-3 ${changed(field) ? 'font-italic' : ''}`">{{displayValue(field)}}</span>
+                            <span class="font-weight-bold">{{field.title}}</span>
+                            <span :class="`font-weight-medium ml-3 ${changed(field) ? 'font-italic' : ''}`">{{displayValue(field)}}</span>
                         </v-list-tile-title>
                     </v-list-tile-content>
                     <v-list-tile-action v-if="editable && !field.noedit">
-                        <v-btn v-if="editing" @click.stop="close" icon><v-icon color="primary">close</v-icon></v-btn>
-                        <v-btn v-else @click.stop="goto(i)" icon><v-icon color="primary">edit</v-icon></v-btn>
+                        <v-layout>
+                            <v-btn v-if="editing" @click.stop="close" icon>
+                                <v-icon color="primary">close</v-icon>
+                            </v-btn>
+                            <v-btn v-else @click.stop="goto(i)" icon>
+                                <v-icon color="primary">edit</v-icon>
+                            </v-btn>
+                            <v-btn v-if="changed(field)" @click.stop="clear(field)" icon>
+                                <v-icon>close</v-icon>
+                            </v-btn>
+                        </v-layout>
                     </v-list-tile-action>
                 </v-list-tile>
             </v-list>
@@ -70,9 +79,9 @@
             },
             displayValue(field) {
                 return field.displayFct ?
-                    field.displayFct(this.value(field))
+                    field.displayFct(this.value(field)) || '...'
                     :
-                    this.value(field)
+                    this.value(field) || '...'
             },
             goto(idx) {
                 this.idx = idx
@@ -88,6 +97,9 @@
             save(field, newvalue) {
                 this.$emit('change', field, newvalue)
                 this.close()
+            },
+            clear(field) {
+                this.save(field, undefined)
             }
         }
     }

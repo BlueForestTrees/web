@@ -20,7 +20,7 @@
 
         </v-layout>
         <v-divider/>
-        <fragment-select :value="value" @change="i=>$emit('input', i)"/>
+        <fragment-select :value="value" @input="i=>$emit('input', i)"/>
     </v-card>
 </template>
 <script>

@@ -12,25 +12,27 @@ export default {
         router.push({name: GO.ROOT, params: {treeId, rootId}})
     },
     [On.ADD_ROOT]: ({commit, dispatch}, {tree, root}) => {
-        const item = {
+
+        const request = {
             _id: createStringObjectId(),
             trunkId: tree._id,
             rootId: root._id,
             bqt: treeBqt(root) / treeBqt(tree),
         }
 
-        if (tree[ROOTS]) {
-            tree[ROOTS].push(root)
-        } else {
-            Vue.set(tree, ROOTS, [root])
-        }
-        if (root[BRANCHES]) {
-            root[BRANCHES].push(tree)
-        } else {
-            Vue.set(root, BRANCHES, tree)
-        }
-
-        return dispatch(On.CREATE_ROOT, item)
+        return dispatch(On.CREATE_ROOT, request)
+            .then(() => {
+                if (tree[ROOTS]) {
+                    tree[ROOTS].push(root)
+                } else {
+                    Vue.set(tree, ROOTS, [root])
+                }
+                if (root[BRANCHES]) {
+                    root[BRANCHES].push(tree)
+                } else {
+                    Vue.set(root, BRANCHES, tree)
+                }
+            })
     },
     [On.CREATE_ROOT]: async ({commit}, {_id, trunkId, rootId, bqt, relativeTo}) => api.postRoot({_id, trunkId, rootId, bqt, relativeTo}),
     [On.LOAD_ROOTS]: ({commit}, {_id, bqt}) =>

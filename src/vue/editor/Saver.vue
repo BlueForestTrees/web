@@ -37,7 +37,8 @@
         },
         methods: {
             ...mapActions({
-                snack: On.SNACKBAR
+                snack: On.SNACKBAR,
+                snackError: On.SNACKERROR,
             }),
             saveOrUpdate() {
                 if (this.updateMode) {
@@ -52,10 +53,7 @@
                     .then(() => {
                         this.changes._id = _id
                         this.emitSaved(this.changes)
-                    }).catch(e => {
-                        console.error(e)
-                        this.snack({text: e.body.message, color: "red"})
-                    })
+                    }).catch(this.snackError)
             },
             save() {
                 const _id = createStringObjectId()

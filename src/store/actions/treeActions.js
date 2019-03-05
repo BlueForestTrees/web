@@ -7,16 +7,11 @@ import router from "../../router/router"
 import {GO} from "../../const/go"
 import Do from "../../const/do"
 import {DAMAGE, FACET, IMPACT} from "../../const/attributesTypes"
-import {allFragments, OWNER} from "../../const/fragments"
+import {allFragments, OWNER, TRUNK} from "../../const/fragments"
 import {deleteCatch} from "./commons"
 
-
-//on détecte que l'objet est à charger en se basant arbitrairement sur le champ branches
-const needRefresh = basketTree => !basketTree.branches
-
 export default {
-    [On.GO_CREATE_TREE]: ({dispatch}, {callback}) => {
-        dispatch(On.ADD_CALLBACK, callback)
+    [On.GO_CREATE_TREE]: ({}) => {
         router.push({name: GO.CREATE_TREE})
     },
     [On.GO_CREATE_INFO]: () => router.push({name: GO.CREATE_INFO}),
@@ -39,8 +34,6 @@ export default {
             :
             null
 
-        commit(Do.CLOSE_TREE)
-
         if (dest) {
             return router.push({name: GO.TREE, params: dest})
         } else {
@@ -50,11 +43,15 @@ export default {
 
     [On.LOAD_SELECTION]: async ({dispatch}, {_id, fragments}) => dispatch(On.LOAD_SELECTION_TREE, {selection: await api.getSelection(_id), fragments}),
 
-    [On.LOAD_SELECTION_TREE]: async ({dispatch}, {selection, fragments}) => {
-        const tree = await dispatch(On.LOAD_TREE, {_id: selection.trunkId, bqt: selectionBqt(selection), fragments})
-        tree.selection = selection
-        return tree
+
+    [On.LOAD_TREES]: ({dispatch}, {treesIds, fragments = allFragments}) => {
+        return Promise.all(treesIds.map(_id => dispatch(On.LOAD_TREE, {_id, fragments})))
     },
+
+    [On.UPDATE_TREES]: ({dispatch}, {trees, fragments = allFragments}) => {
+        return Promise.all(trees.map(tree => dispatch(On.UPDATE_TREE, {tree, fragments})))
+    },
+
 
     [On.LOAD_OPEN_TREE]: async ({state, dispatch, commit}, {_id, bqt, fragments = allFragments}) =>
         dispatch(On.LOAD_TREE, {_id, bqt, fragments})
@@ -63,28 +60,24 @@ export default {
                 return tree
             }),
 
-    [On.LOAD_TREES]: ({dispatch}, {treesIds, fragments = allFragments}) => {
-        return Promise.all(treesIds.map(_id => dispatch(On.LOAD_TREE, {_id, fragments})))
-    },
-    [On.LOAD_TREE]: ({commit, state, dispatch}, {_id, bqt = 1, fragments = allFragments}) => {
-        const basketItem = state.basket[_id]
-        if (basketItem && !needRefresh(basketItem)) {
-            return basketItem
-        } else {
-            const tree = {_id}
-            dispatch(On.UPDATE_TREE, {tree, bqt, fragments})
-            dispatch(On.ADD_TO_BASKET, tree)
-            return tree
-        }
-    },
 
-    [On.UPDATE_TREES]: ({dispatch}, {trees, fragments = allFragments}) => {
-        return Promise.all(trees.map(tree => dispatch(On.UPDATE_TREE, {tree, fragments})))
+    [On.LOAD_SELECTION_TREE]: async ({dispatch}, {selection, fragments}) =>
+        dispatch(On.LOAD_TREE, {_id: selection.trunkId, bqt: selectionBqt(selection), fragments})
+            .then(tree => {
+                tree.selection = selection
+                return tree
+            }),
+
+
+    [On.LOAD_TREE]: ({commit, state, dispatch}, {_id, bqt = 1, fragments = allFragments}) => {
+        const tree = {_id}
+        const all = dispatch(On.UPDATE_TREE, {tree, bqt, fragments})
+        tree.promises.all = all
+        dispatch(On.ADD_TO_BASKET, tree)
+        return tree
     },
-    [On.UPDATE_TREE]: ({dispatch}, {tree, bqt = 0, fragments = allFragments}) => {
-        if (bqt === 0) {
-            bqt = treeBqt(tree)
-        }
+    [On.UPDATE_TREE]: ({dispatch}, {tree, bqt = treeBqt(tree), fragments = allFragments}) => {
+
         tree.promises = {}
         for (let i = 0; i < fragments.length; i++) {
             if (fragments[i] !== OWNER) {
@@ -93,7 +86,8 @@ export default {
                 tree.promises.owner = tree.promises.trunk.then(trunk => dispatch(On.LOAD_USER, trunk.oid).then(owner => Vue.set(tree, "owner", owner)))
             }
         }
-        return tree.promises.all = Promise.all(Object.values(tree.promises))
+
+        return Promise.all(Object.values(tree.promises))
     },
 
 
@@ -139,14 +133,17 @@ export default {
     },
 
     [On.SAVE_APPLY_SELECTION]: ({dispatch}, {tree, selection}) => {
-        if (tree.selection) {
+        let update
+        if (tree.selection && tree.selection._id) {
             selection._id = tree.selection._id
-            api.updateSelection(selection)
+            update = true
         } else {
             selection._id = createStringObjectId()
-            api.createSelection(selection)
+            update = false
         }
-        return dispatch(On.APPLY_SELECTION, {tree, selection})
+        return (update ? api.updateSelection(selection) : api.createSelection(selection))
+            .then(() => dispatch(On.APPLY_SELECTION, {tree, selection}))
+            .then(() => dispatch(On.SNACKBAR, {"text": `Favoris ${update ? "mis à jour" : "crée"}`}))
     },
 
     [On.APPLY_SELECTION]: ({dispatch}, {tree, selection}) => {
