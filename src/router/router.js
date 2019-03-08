@@ -28,7 +28,7 @@ const CreateEq = () => import(/* webpackChunkName: "CreateEq"*/ "../vue/pub/Crea
 const CreateCompens = () => import(/* webpackChunkName: "CreateCompens"*/ "../vue/pub/CreateCompens")
 const CreateAlt = () => import(/* webpackChunkName: "CreateAlt"*/ "../vue/pub/CreateAlt")
 const CreateGroup = () => import(/* webpackChunkName: "CreateGroup"*/ "../vue/pub/CreateGroup")
-const RecentPage = () => import(/* webpackChunkName: "MyBasket"*/ "../vue/home/RecentPage")
+const RecentPage = () => import(/* webpackChunkName: "Recent"*/ "../vue/home/RecentPage")
 const UserPage = () => import(/* webpackChunkName: "UserPage"*/ "../vue/user/UserPage")
 
 Vue.use(VueRouter)

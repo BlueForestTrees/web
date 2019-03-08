@@ -361,3 +361,35 @@ a {
 .very-height {
     height: 105%
 }
+
+.size-enter-active {
+    transition: all .1s ease;
+}
+
+.size-leave-active {
+    transition: all .1s ease-in;
+}
+
+.size-enter {
+    transform: scale(0.5);
+    /*opacity: 0;*/
+}
+
+.size-leave-to {
+    transform: scale(0.5);
+    /*opacity: 0;*/
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+.disabled {
+    opacity: 0.4;
+}

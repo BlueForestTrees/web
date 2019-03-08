@@ -7,7 +7,7 @@
 
             <div id="sub-page" style="min-height: 600px">
                 <transition name="slide-fade" mode="out-in">
-                    <impacts-sub-page v-if="tabIdx === 0" :tree="tree" @close="close"/>
+                    <impacts-sub-page v-if="tabIdx === 0" :tree="tree" @close="close" />
                     <ressources-sub-page v-else-if="tabIdx === 1" :tree="tree" @close="close"/>
                     <facets-sub-page v-else-if="tabIdx === 2" :tree="tree" @close="close"/>
                 </transition>

@@ -9,10 +9,12 @@
 
             <v-divider/>
             <v-layout justify-center>
-                <open-message :section="section" no-text/>
+                <open-message :section="section" no-text large/>
                 <v-btn icon>
-                    <v-list-tile-avatar class="facet-add logo-moyen" @click="setAdding(true)"></v-list-tile-avatar>
+                    <v-list-tile-avatar class="facet-add logo" @click="setAdding(true)"></v-list-tile-avatar>
                 </v-btn>
+                <btn :enabled="oneSelected" icon-class="balance logo" @click="goEquiv({tree, oneSelected})"></btn>
+                <btn :enabled="oneSelected" icon-class="game logo" @click="goQuiDeuxFoisPlus({tree, oneSelected})"></btn>
             </v-layout>
         </v-card>
         <div id="adder">
@@ -35,10 +37,13 @@
     import Closer from "../common/Closer"
     import {scrollSubPage, scrollTo} from "../../const/ux"
     import Do from "../../const/do"
+    import selectable from "../mixin/Selectable"
+    import Btn from "../common/btn"
 
     export default {
         name: "facets-subpage",
         components: {
+            Btn,
             Closer,
             SubpageTitle,
             FragmentList,
@@ -48,6 +53,7 @@
             SelectableList,
         },
         props: ['tree', 'modeAdd'],
+        mixins: [selectable],
         data: () => ({
             FACETS
         }),
@@ -76,17 +82,10 @@
                 setAdding: Do.SET_NAV_TREE_FACET_ADDING
             }),
             ...mapActions({
-                dispatchGoEquiv: On.GO_EQUIV,
-                updateTree: On.UPDATE_TREE
+                updateTree: On.UPDATE_TREE,
+                goEquiv: On.GO_EQUIV,
+                goQuiDeuxFoisPlus: On.GO_QUI_DEUX_FOIS_PLUS
             }),
-            goEquiv(facet) {
-                this.dispatchGoEquiv({
-                    _id: this.tree._id,
-                    bqt: this.tree.trunk.quantity.bqt,
-                    s_id: facet._id,
-                    sbqt: facet.quantity.bqt
-                })
-            },
             refresh: async function () {
                 this.loading = true
                 this.updateTree({tree: this.tree, fragments: [FACETS]})

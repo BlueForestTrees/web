@@ -6,7 +6,7 @@
             </subpage-title>
 
             <transition name="slide-fade" mode="out-in">
-                <tree-nav v-if="idx === 0" :tree="tree" key="2" :note="`Carte des ressources et des usages ${deQtUnitName}`"/>
+                <tree-nav2 v-if="idx === 0" :tree="tree" key="2" :note="`Carte des ressources et des usages ${deQtUnitName}`"/>
                 <fragment-list v-if="idx === 1" :tree="tree" :fragment="ROOTS" none="Pas encore d'informations sur les ressources" key="0" :note="`Liste des dernières ressources ${deQtUnitName}`"/>
                 <fragment-list v-else-if="idx === 2" :tree="tree" :fragment="TANK" none="Pas encore d'informations sur les matières premières" key="1" :note="`Liste des premières ressources ${deQtUnitName}`"/>
                 <fragment-list v-else-if="idx === 3" :tree="tree" :fragment="BRANCHES" none="Pas encore d'informations sur les usages" key="4" :note="`Liste des usages possibles ${deQtUnitName}`"/>
@@ -16,13 +16,14 @@
             <v-layout justify-center>
                 <scope-menu :value="idx" @input="setIdx" dense :scope="rootScope"/>
                 <open-message :section="section" no-text/>
-                <v-btn icon>
-                    <v-list-tile-avatar class="root-add logo-moyen" @click="setAdding(true)"></v-list-tile-avatar>
-                </v-btn>
+                <btn icon-class="root-add logo logo" @click="setAdding(true)"></btn>
+                <btn :enabled="oneSelected" icon-class="blueforest logo" @click="goTree(oneSelected)"></btn>
+                <btn :enabled="oneSelected" icon-class="balance logo" @click="goEquiv({tree, oneSelected})"></btn>
+                <btn :enabled="oneSelected" icon-class="game logo" @click="goQuiDeuxFoisPlus({tree, oneSelected})"></btn>
             </v-layout>
         </v-card>
         <div id="adder">
-            <ressource-adder v-if="adding" :tree="tree" @close="setAdding(false)"/>
+            <ressource-adder v-if="adding" :tree="oneSelected || tree" @close="setAdding(false)"/>
         </div>
     </div>
 </template>
@@ -39,14 +40,20 @@
     import Closer from "../common/Closer"
     import {scrollSubPage, scrollTo} from "../../const/ux"
     import OpenMessage from "../common/OpenMessage"
+    import Selectable from "../mixin/Selectable"
+    import Btn from "../common/btn"
 
-    const TreeNav = () => import(/* webpackChunkName: "RootsNav"*/"../root/TreeNav")
+    const TreeNav = () => import(/* webpackChunkName: "TreeNav"*/"../root/TreeNav")
+    const TreeNav2 = () => import(/* webpackChunkName: "TreeNav2"*/"../treenav/TreeNav2")
     const RessourceAdder = () => import(/* webpackChunkName: "RessourceAdder"*/"../root/RessourceAdder")
     const FragmentList = () => import(/* webpackChunkName: "FragmentList"*/"./FragmentList")
 
     export default {
         name: "ressources-subpage",
+        mixins:[Selectable],
         components: {
+            Btn,
+            TreeNav2,
             OpenMessage,
             Closer,
             SubpageTitle,
@@ -83,10 +90,13 @@
         methods: {
             de, qtUnitName, name,
             ...mapActions({
+                goTree: On.GO_TREE,
                 dispatchGoRoot: On.GO_ROOT,
                 deleteRoot: On.DELETE_ROOT,
                 dispatchLoadRoots: On.LOAD_ROOTS,
-                dispatchGoEquiv: On.GO_EQUIV
+                dispatchGoEquiv: On.GO_EQUIV,
+                goEquiv: On.GO_EQUIV,
+                goQuiDeuxFoisPlus: On.GO_QUI_DEUX_FOIS_PLUS
             }),
             ...mapMutations({
                 setIdx: Do.SET_TREE_ROOT_IDX

@@ -18,8 +18,8 @@
     import {TRUNK, trunkFragment} from "../../const/fragments"
 
     const CreateTree = () => import(/* webpackChunkName: "CreateTree" */ './CreateTree')
-    const Search = () => import(/* webpackChunkName: "MyBasket"*/ "../search/Search")
-    const Favorites = () => import(/* webpackChunkName: "MySelects"*/ "../home/Favorites")
+    const Search = () => import(/* webpackChunkName: "Search"*/ "../search/Search")
+    const Favorites = () => import(/* webpackChunkName: "Favorites"*/ "../home/Favorites")
 
     export default {
         name: 'tree-picker',

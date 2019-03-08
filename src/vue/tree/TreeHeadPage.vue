@@ -19,7 +19,6 @@
             <description :tree="tree" class="my-1"/>
 
         </v-layout>
-        <v-divider/>
         <fragment-select :value="value" @input="i=>$emit('input', i)"/>
     </v-card>
 </template>

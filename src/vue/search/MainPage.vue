@@ -20,9 +20,9 @@
     import {mapActions, mapState, mapMutations} from "vuex"
     import Do from "../../const/do"
 
-    const Search = () => import(/* webpackChunkName: "MyBasket"*/ "../search/Search")
+    const Search = () => import(/* webpackChunkName: "Search"*/ "../search/Search")
     const MyInfos = () => import(/* webpackChunkName: "MyInfos"*/ "../home/MyInfos")
-    const Games = () => import(/* webpackChunkName: "MyInfos"*/ "../jeu/Games")
+    const Games = () => import(/* webpackChunkName: "Games"*/ "../jeu/Games")
 
     export default {
         name: "search-page",

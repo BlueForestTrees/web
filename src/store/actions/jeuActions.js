@@ -11,13 +11,25 @@ export default {
     [On.SEARCH_GAMES]: ({}, filter) => api.searchGames(filter),
     [On.SAVE_GAME]: ({}, game) => api.saveGame(game),
     [On.SAVE_SCORE]: ({}, score) => api.saveScore(score),
-    [On.GO_EQUIV]: ({dispatch}, {_id, bqt, sbqt, s_id}) => {
+    [On.GO_EQUIV]: ({dispatch}, {tree, oneSelected}) => {
+        const params = {
+            _id: tree._id,
+            bqt: tree.trunk.quantity.bqt,
+            s_id: oneSelected._id,
+            sbqt: oneSelected.trunk ? oneSelected.trunk.quantity.bqt : oneSelected.quantity.bqt
+        }
         dispatch(On.UNSELECT)
-        return router.push({name: GO.EQUIV, params: {_id, bqt, sbqt, s_id}})
+        return router.push({name: GO.EQUIV, params})
     },
-    [On.GO_QUI_DEUX_FOIS_PLUS]: ({dispatch}, {_id, bqt, f, fid}) => {
+    [On.GO_QUI_DEUX_FOIS_PLUS]: ({dispatch}, {tree, oneSelected}) => {
+        const params = {
+            _id: tree._id,
+            bqt: tree.trunk.quantity.bqt,
+            fid: oneSelected[`${oneSelected.type}Id`],
+            f: oneSelected.type
+        }
         dispatch(On.UNSELECT)
-        return router.push({name: GO.QUI_2, params: {_id, bqt, f, fid}})
+        return router.push({name: GO.QUI_2, params})
     },
     [On.RANDOM_TREE_FROM_FRAGMENT]: ({dispatch}, {entryId, bqt, type, trunkId}) => {
         if (type === "facet") {

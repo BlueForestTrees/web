@@ -1,28 +1,22 @@
 <template>
-    <v-flex key="equiv">
-        <v-layout row wrap justify-center align-center class="ma-4">
-            <span class="title">Equivalence</span>
-        </v-layout>
+    <v-container key="equiv">
+        <v-card>
 
-        <v-layout column>
-            <v-layout row wrap justify-center align-center class="ma-4">
-                <v-card class="pl-2 pr-3 py-2 ma-1" style="border-radius:2em">
-                    <v-container>
-                        <v-layout row align-center v-if="filter">
-                            <v-flex class="display-1">Produits avec: {{qtUnitName(filter)}}</v-flex>
-                        </v-layout>
-                        <tree-head :photo="false" :tree="tree" v-if="tree" selectable/>
-                        <loader v-else/>
-                        <selectable-list :items="equivalences" :exceptId="_id"/>
+            <v-layout column align-center mb-1>
 
-                        <loader v-if="loading"/>
-                        <v-btn v-else flat @click="updateEquivalences" block>Plus</v-btn>
+                <subpage-title iconClass="balance logo" title="Equivalence">
+                    <closer slot="right" @close="goHome"/>
+                </subpage-title>
+                <subpage-title :title="qtUnitName(filter)"></subpage-title>
 
-                    </v-container>
-                </v-card>
+                <v-container v-if="filter">
+                    <tree-link :tree="tree"/>
+                    <selectable-list :items="equivalences" :exceptId="_id"/>
+                </v-container>
+
             </v-layout>
-        </v-layout>
-    </v-flex>
+        </v-card>
+    </v-container>
 </template>
 <script>
     import {mapActions} from "vuex"
@@ -32,10 +26,17 @@
     import {find, map} from "unit-manip"
     import SelectableList from "../common/SelectableList"
     import {qtUnitName} from "../../services/calculations"
+    import SubpageTitle from "../tree/SubpageTitle"
+    import Closer from "../common/Closer"
+    import QtUnitName from "../tree/QtUnitName"
+    import TreeSubHead from "../tree/TreeSubHead"
+    import SelectionCardFront from "../tree/SelectionCardFront"
+    import SelectionLink from "../pub/Selection-Link"
+    import TreeLink from "../pub/TreeLink"
 
     export default {
         name: "equivalence",
-        components: {SelectableList, TreeHead, Loader},
+        components: {TreeLink, SelectionLink, SelectionCardFront, TreeSubHead, QtUnitName, Closer, SubpageTitle, SelectableList, TreeHead, Loader},
         data() {
             return {
                 tree: null,
@@ -58,6 +59,7 @@
                 dispatchSearchEquiv: On.SEARCH_EQUIV,
                 snack: On.SNACKBAR,
                 goTree: On.GO_TREE,
+                goHome: On.GO_HOME,
                 showDialog: On.SHOW_DIALOG
             }),
             refresh: async function () {
@@ -97,7 +99,13 @@
             async updateEquivalences() {
                 if (this.filter) {
                     this.loading = true
-                    await this.dispatchSearchEquiv({results: this.equivalences, type: this.type, bqt: this.sbqt, _id: this.filter[(this.type === "root" ? "_id" : `${this.type}Id`)]})
+
+                    console.log(this.type, this.filter)
+
+                    await this.dispatchSearchEquiv({
+                        _id: this.filter[(this.type === "root" ? "_id" : `${this.type}Id`)],
+                        results: this.equivalences, type: this.type, bqt: this.sbqt
+                    })
                     this.loading = false
                 }
             }

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
-	 viewBox="0 0 495 495" style="enable-background:new 0 0 495 495;" xml:space="preserve">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+	 viewBox="-80 -80 655 655" >
+
+	<circle style="fill:#1565c0;" cx="247.5" cy="247.5" r="326"/>
 
 	<polygon style="fill:#FF9811;" points="247.5,495 371.68,495 338.34,395 247.5,395 	"/>
 	<polygon style="fill:#FFB655;" points="247.5,395 156.66,395 123.32,495 247.5,495 	"/>

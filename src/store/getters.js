@@ -17,4 +17,12 @@ export default {
         }
         return changes ? filter : null
     },
+    selectionIsTree: state => {
+        for (let i = 0; i < state.selection.length; i++) {
+            if (!state.selection[i].trunk) {
+                return false
+            }
+        }
+        return true
+    },
 }

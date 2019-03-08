@@ -5,6 +5,11 @@
         <div v-else>
             <selectable-list :items="basket"/>
         </div>
+
+        <v-layout justify-center>
+            <btn :enabled="oneSelected" icon-class="blueforest logo" @click="goTree(oneSelected)"></btn>
+        </v-layout>
+
     </v-card>
 </template>
 <script>
@@ -13,15 +18,21 @@
     import On from "../../const/on"
     import SubpageTitle from "../tree/SubpageTitle"
     import SelectableList from "../common/SelectableList"
+    import Selectable from "../mixin/Selectable"
+    import Btn from "../common/btn"
 
     export default {
-        name: "my-basket",
-        components: {SelectableList, SubpageTitle, BasketComp},
+        name: "recent",
+        mixins:[Selectable],
+        components: {Btn, SelectableList, SubpageTitle, BasketComp},
         computed: {
             ...mapState(['basket'])
         },
         methods: {
-            ...mapActions({goSearch: On.GO_SEARCH})
+            ...mapActions({
+                goSearch: On.GO_SEARCH,
+                goTree: On.GO_TREE
+            })
         }
     }
 </script>
