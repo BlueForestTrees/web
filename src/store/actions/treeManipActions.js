@@ -4,13 +4,11 @@ import {FACETS} from "../../const/fragments"
 
 export default {
     [On.APPLY_QUANTITY_COEF_ALL]: ({dispatch}, {tree, coef}) => {
-        dispatch(On.APPLY_QUANTITY_COEF, {tree, coef})
+        dispatch(On.APPLY_COEF_TO_TREE, {tree, coef})
         applySelectionCoef(coef, tree.selection)
     },
-    [On.APPLY_QUANTITY_COEF]: ({dispatch}, {tree, coef}) => {
+    [On.APPLY_COEF_TO_TREE]: ({dispatch}, {tree, coef}) => {
         applyRessourceCoef(coef, [tree])
-        applyRessourceCoef(coef, tree.roots)
-        applyRessourceCoef(coef, tree.branches)
 
         applyAspectCoef(coef, tree.tank)
         applyAspectCoef(coef, tree.impacts)
@@ -18,5 +16,8 @@ export default {
         applyAspectCoef(coef, tree[FACETS])
         applyAspectCoef(coef, tree.impactsTank)
         applyAspectCoef(coef, tree.damagesTank)
+
+        tree.roots && tree.roots.forEach(tree => dispatch(On.APPLY_COEF_TO_TREE, {tree, coef}))
+        tree.branches && tree.branches.forEach(tree => dispatch(On.APPLY_COEF_TO_TREE, {tree, coef}))
     },
 }

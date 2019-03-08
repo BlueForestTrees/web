@@ -95,7 +95,7 @@
             ...mapActions({
                 loadTree: On.LOAD_TREE,
                 snack: On.SNACKBAR,
-                applyCoef: On.APPLY_QUANTITY_COEF
+                applyCoef: On.APPLY_COEF_TO_TREE
             }),
             refresh: async function () {
 

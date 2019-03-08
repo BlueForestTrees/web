@@ -29,10 +29,10 @@
             }
         },
         methods: {
-            ...mapActions({updateTree: On.UPDATE_TREE}),
+            ...mapActions({loadTreeFragment: On.UPDATE_TREE}),
             refresh: async function () {
                 this.loading = true
-                this.updateTree({tree: this.tree, fragments: [this.fragment]})
+                this.loadTreeFragment({tree: this.tree, fragments: [this.fragment]})
                 this.loading = false
             }
         },

@@ -93,7 +93,7 @@
             },
             async expand(tree, scope) {
                 if (!tree[scope]) {
-                    await this.updateTree({tree, fragments: [scope]})
+                    await this.loadTreeFragment({tree, fragments: [scope]})
                 }
 
                 for (let i = 0; i < tree[scope].length; i++) {
@@ -116,7 +116,7 @@
                     this.edges.add({from: tree._id, to: item._id})
                 }
             },
-            ...mapActions({updateTree: On.UPDATE_TREE})
+            ...mapActions({loadTreeFragment: On.UPDATE_TREE})
         },
     }
 </script>

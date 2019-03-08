@@ -82,13 +82,13 @@
                 setAdding: Do.SET_NAV_TREE_FACET_ADDING
             }),
             ...mapActions({
-                updateTree: On.UPDATE_TREE,
+                loadTreeFragment: On.UPDATE_TREE,
                 goEquiv: On.GO_EQUIV,
                 goQuiDeuxFoisPlus: On.GO_QUI_DEUX_FOIS_PLUS
             }),
             refresh: async function () {
                 this.loading = true
-                this.updateTree({tree: this.tree, fragments: [FACETS]})
+                this.loadTreeFragment({tree: this.tree, fragments: [FACETS]})
                 this.loading = false
             },
         },

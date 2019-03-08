@@ -81,7 +81,7 @@
         },
         methods: {
             ...mapActions({
-                updateTree: On.UPDATE_TREE,
+                loadTreeFragment: On.UPDATE_TREE,
                 goEquiv: On.GO_EQUIV,
                 goQuiDeuxFoisPlus: On.GO_QUI_DEUX_FOIS_PLUS
             }),
@@ -90,7 +90,7 @@
             }),
             refresh: async function () {
                 this.loading = true
-                this.updateTree({tree: this.tree, fragments: [IMPACT_TANK]})
+                this.loadTreeFragment({tree: this.tree, fragments: [IMPACT_TANK]})
                 this.loading = false
             },
             setAdding(adding) {

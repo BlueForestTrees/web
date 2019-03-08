@@ -20,7 +20,8 @@ export class DrawTree {
         this.thread = null
         this.mod = 0
         this.ancestor = this
-        this.change = this.shift = 0
+        this.change = 0
+        this.shift = 0
         this._lmost_sibling = null
         this.number = number
     }
@@ -57,33 +58,38 @@ DrawTree.prototype.leftmost_sibling = function () {
     return this._lmost_sibling
 }
 
-export function treePlacement(tree, fragmentName = "children", reversed = true) {
+export function treePlacement(tree, fragmentName = "children", sX = 1, sY = 1) {
     const dt = new DrawTree(tree, fragmentName)
     const result = buchheim(dt)
     const listResult = iterativelyWalk(result)
-    return reversed && listResult.sort((a, b) => b.y - a.y) || listResult
+    const sorted = listResult.sort((a, b) => b.y - a.y)
+    const head = sorted.pop()
+    return deltaAndScale(sorted, head.x, sX, sY)
+}
+
+function deltaAndScale(nodes, deltaX, sX, sY) {
+    for (let i = 0; i < nodes.length; i++) {
+        nodes[i].x -= deltaX
+        nodes[i].x *= sX
+        nodes[i].y *= sY
+    }
+    return nodes
 }
 
 function buchheim(tree) {
     let dt = firstwalk(tree)
-    console.log()
     second_walk(dt)
     return dt
 }
 
 function firstwalk(v, distance = 1) {
-    console.log()
-    console.log(v.tree.name, "firstwalk")
     if (v.children.length === 0) {
         if (v.leftmost_sibling()) {
             v.x = v.left_brother().x + distance
-            console.log(v.tree.name, "no children. Left most: x =", v.x)
         } else {
             v.x = 0
-            console.log(v.tree.name, "no children. No left most, x = 0")
         }
     } else {
-        console.log(v.tree.name, "children:")
         let default_ancestor = v.children[0]
         for (let i = 0; i < v.children.length; i++) {
             const w = v.children[i]
@@ -94,26 +100,19 @@ function firstwalk(v, distance = 1) {
 
         let midpoint = (v.children[0].x + v.children[v.children.length - 1].x) / 2
 
-        console.log(v.tree.name, "midpoint:", midpoint)
-
         let w = v.left_brother()
         if (w) {
             v.x = w.x + distance
             v.mod = v.x - midpoint
-            console.log(v.tree.name, " left brother ", w.tree.name, " v.mod = ", v.mod)
         } else {
-            console.log(v.tree.name, "no left brother")
             v.x = midpoint
         }
     }
-    console.log(v.tree.name, "end firstwalk")
     return v
 }
 
 
 function apportion(v, default_ancestor, distance) {
-    // console.log()
-    // console.log(v.tree.name, "apportion")
     let w = v.left_brother()
     if (w !== null) {
         let vir = v
@@ -132,31 +131,25 @@ function apportion(v, default_ancestor, distance) {
             vor.ancestor = v
             let shift = (vil.x + sil) - (vir.x + sir) + distance
             if (shift > 0) {
-                let a = ancestor(vil, v, default_ancestor)
-                move_subtree(a, v, shift)
+                move_subtree(ancestor(vil, v, default_ancestor), v, shift)
                 sir = sir + shift
                 sor = sor + shift
-                sil += vil.mod
-                sir += vir.mod
-                sol += vol.mod
-                sor += vor.mod
-                if (vil.right() && !vor.right()) {
-                    vor.thread = vil.right()
-                    vor.mod += sil - sor
-                } else {
-                    if (vir.left() && !vol.left()) {
-                        vol.thread = vir.left()
-                        vol.mod += sir - sol
-                        default_ancestor = v
-
-                        //console.log(v.tree.name, "apportion, ancestor:", default_ancestor)
-                        return default_ancestor
-                    }
-                }
             }
+            sil += vil.mod
+            sir += vir.mod
+            sol += vol.mod
+            sor += vor.mod
+        }
+        if (vil.right() && !vor.right()) {
+            vor.thread = vil.right()
+            vor.mod += sil - sor
+        } else if (vir.left() && !vol.left()) {
+            vol.thread = vir.left()
+            vol.mod += sir - sol
+            default_ancestor = v
         }
     }
-    // console.log(v.tree.name, "apportion, no default ancestor")
+    return default_ancestor
 }
 
 
@@ -188,7 +181,6 @@ function ancestor(vil, v, default_ancestor) {
 
 
 function second_walk(v, m = 0, depth = 0, min = null) {
-    //console.log(v.tree.name, "second walk, v.mod =", v.mod, " v.x += ", m)
     v.x += m
     v.y = depth
 
@@ -200,6 +192,5 @@ function second_walk(v, m = 0, depth = 0, min = null) {
         second_walk(v.children[i], m + v.mod, depth + 1, min)
     }
 
-    console.log(`{name:${v.tree.name}, x:${v.x}, y:${v.y}}`)
     return min
 }

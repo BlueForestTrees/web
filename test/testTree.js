@@ -27,6 +27,6 @@ describe('tree', function () {
             ]
         }
 
-        console.log(treePlacement(tree, "roots").map(n=>n.tree.name + " - " + n.y))
+        console.log(treePlacement(tree, "roots").map(n=>n.tree.name + " - " + n.y + " - " + n.x))
     })
 })

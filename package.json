@@ -1,6 +1,6 @@
 {
   "name": "web-blueforest",
-  "version": "1.9.6",
+  "version": "1.9.7",
   "text": "web for trees",
   "main": "index.js",
   "author": "slim",
@@ -55,6 +55,7 @@
   },
   "dependencies": {
     "@material/button": "0.26.0",
+    "@tweenjs/tween.js": "^17.3.0",
     "jwt-decode": "2.2.0",
     "lodash.debounce": "4.0.8",
     "unit-manip": "1.0.11",
