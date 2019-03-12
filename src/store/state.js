@@ -30,6 +30,7 @@ export default {
     version: {web: ENV.VERSION},
     dispo: {grandeurs: false},
     selection: [],
+    nodeSelection: [],
     "menu.selection": [],
     maxSelectionSize: null,
     token: null,
@@ -46,7 +47,10 @@ export default {
         search: {cat: {opened: false}, owner: {opened: false}},
         leftMenuVisible: false, rightMenuVisible: false, dark: false, detailsDialog: false,
         tree: {
-            tabIdx: null,
+            menu: {
+                visible: false
+            },
+            tabIdx: 0,
             cardFlipped: false,
             impact: {idx: 0, term: "", adding: false},
             root: {idx: 0, term: "", adding: false},

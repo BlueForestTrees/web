@@ -19,6 +19,7 @@ export default {
     SET_NAV_MAIN_TAB: "setNavMainTab",
     SET_NAV_TREE_PICKER_TAB: "setNavTreePickerTab",
     SET_NAV_TREE_TAB_IDX: "setNavTreeTabidx",
+    SET_NAV_TREE_MENU: "setNavTreeMenu",
     SET_NAV_SEARCH_CAT_OPENED: "setNavTreeCatTab",
     SET_NAV_SEARCH_OWNER_OPENED: "setNavTreeCatTab",
     SET_NAV_TREE_IMPACT_ADDING: "setNavTreeImpactAdding",

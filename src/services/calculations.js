@@ -263,3 +263,10 @@ export const selectionFromTree = tree => {
 export const formatDate = value => new Date(value).toLocaleString()
 
 export const lowFirst = s => s.charAt(0).toLowerCase() + s.slice(1)
+
+export const globalToLocal = (e, {svgPoint, svg}) => {
+    svgPoint.x = e.center ? e.center.x : e.clientX;
+    svgPoint.y = e.center ? e.center.y : e.clientY;
+    const p = svgPoint.matrixTransform(svg.getScreenCTM().inverse());
+    return {x: p.x, y: p.y};
+};

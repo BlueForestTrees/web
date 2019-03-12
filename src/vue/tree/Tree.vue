@@ -1,21 +1,48 @@
 <template>
-    <v-container v-if="tree && tree.trunk" id="top-page" style="min-height: 2000px">
 
-        <v-layout column>
+    <div v-if="tree && tree.trunk" style="height: 100%">
 
-            <tree-headpage :value="tabIdx" @input="setTabidx" :tree="tree" class="mb-5" @close="goHome"/>
+        <tree-nav2 :tree="tree"/>
 
-            <div id="sub-page" style="min-height: 600px">
-                <transition name="slide-fade" mode="out-in">
-                    <impacts-sub-page v-if="tabIdx === 0" :tree="tree" @close="close" />
-                    <ressources-sub-page v-else-if="tabIdx === 1" :tree="tree" @close="close"/>
-                    <facets-sub-page v-else-if="tabIdx === 2" :tree="tree" @close="close"/>
-                </transition>
-            </div>
+        <transition name="slide-left-right">
+            <v-layout v-if="oneSelected" column :style="menuStyle">
+                <v-card class="pl-5 elevation-5" style="height:100%">
+                    <v-layout row style="height: 100%" ml-1>
+                        <v-divider vertical/>
+                        <v-layout column>
+                            <subpage-title sub color="primary" :title="qtUnitName(oneSelected)" centered>
+                                <v-btn icon slot="left" @click="openPickQt"><v-icon class="carton logo-petit"/></v-btn>
+                                <template slot="right">
+                                    <v-btn icon flat @click="deleteTree"><v-icon color="white">delete</v-icon></v-btn>
+                                    <v-btn icon @click="close"><v-icon color="white">arrow_back</v-icon></v-btn>
+                                </template>
+                            </subpage-title>
 
-        </v-layout>
+                            <transition-expand>
+                                <v-card v-if="pickQt" class="ma-2">
+                                    <selection-picker :value="treeSelection" @close="closePickQt" @pick="pickSelection"/>
+                                </v-card>
+                            </transition-expand>
 
-    </v-container>
+
+                            <transition name="slide-fade-simple" mode="out-in">
+                                    <tree-headpage v-if="tabIdx === 0" :tree="oneSelected" @close="close"/>
+                                    <impacts-sub-page v-else-if="tabIdx === 1" :tree="oneSelected" @close="close"/>
+                                    <facets-sub-page v-else-if="tabIdx === 2" :tree="oneSelected" @close="close"/>
+                                    <ressources-sub-page v-else-if="tabIdx === 3" :tree="oneSelected" @close="close"/>
+                            </transition>
+
+                        </v-layout>
+                    </v-layout>
+                </v-card>
+            </v-layout>
+        </transition>
+
+
+        <transition name="slide-left-right">
+            <tree-menu v-if="oneSelected" :value="tabIdx" @input="setTabidx" :tree="oneSelected" class="mt-5 top-left"/>
+        </transition>
+    </div>
 
 </template>
 
@@ -24,16 +51,30 @@
     import On from "../../const/on"
     import TreeFab from "./TreeFab"
     import {FACETS, IMPACTS, ROOTS, treeHeadFragments} from "../../const/fragments"
-    import TreeHeadpage from "./TreeHeadPage"
-    import {scrollSubPage, scrollTopPage} from "../../const/ux"
     import Do from "../../const/do"
+    import TreeNav2 from "../treenav/TreeNav2"
+    import Selectable from "../mixin/Selectable"
+    import SubpageTitle from "./SubpageTitle"
+    import Closer from "../common/Closer"
+    import {qtUnitName, selectionFromTree} from "../../services/calculations"
+    import SelectionPicker from "./SelectionPicker"
+    import TransitionExpand from "../common/TransitionExpand"
 
+
+    const TreeHeadpage = () => import(/* webpackChunkName: "TreeHP" */ "./TreeHeadPage")
+    const TreeMenu = () => import(/* webpackChunkName: "TreeMenu" */ "./TreeMenu")
     const RessourcesSubPage = () => import(/* webpackChunkName: "RessourcesSubPage" */ "./RessourcesSubPage")
     const FacetsSubPage = () => import(/* webpackChunkName: "FacetsSubPage" */ "./FacetsSubPage")
     const ImpactsSubPage = () => import(/* webpackChunkName: "ImpactsSubPage" */ "./ImpactsSubPage")
 
     export default {
         components: {
+            TransitionExpand,
+            SelectionPicker,
+            Closer,
+            SubpageTitle,
+            TreeMenu,
+            TreeNav2,
             TreeHeadpage,
             ImpactsSubPage,
             RessourcesSubPage,
@@ -41,9 +82,10 @@
             TreeFab,
         },
         data: () => ({
-            selection: [],
-            IMPACTS, ROOTS, FACETS
+            IMPACTS, ROOTS, FACETS,
+            pickQt: false
         }),
+        mixins: [Selectable],
         props: ['_id', 'bqt', 'sid'],
         mounted: function () {
             this.refresh()
@@ -52,34 +94,56 @@
             ...mapState({
                 tree: s => s.tree,
                 modeAdd: s => s.nav.tree.modeAdd,
-                tabIdx: s => s.nav.tree.tabIdx
+                tabIdx: s => s.nav.tree.tabIdx,
+                menu: s => s.nav.tree.menu,
+                selection: s => s.nodeSelection
             }),
+            menuWidth() {
+                return this.tab === null ? 50 : 450
+            },
+            menuStyle() {
+                return {
+                    width: `${this.menuWidth}px`,
+                    height: "100%"
+                }
+            },
+            treeSelection() {
+                return this.tree.selection || selectionFromTree(this.tree)
+            },
         },
         watch: {
             '$route'(to, from) {
                 this.refresh()
-            },
-            tabIdx(v, o) {
-                if (v === null) {
-                    scrollTopPage()
-                } else {
-                    scrollSubPage()
-                }
             }
         },
         methods: {
+            closePickQt(){
+                this.pickQt = false
+            },
+            openPickQt(){
+                this.pickQt = true
+            },
+            pickSelection(selection) {
+                this.saveApplySelection({tree: this.tree, selection})
+                    .catch(this.snackError)
+                this.closePickQt()
+            },
+            qtUnitName,
             ...mapMutations({
-                setTabidx: Do.SET_NAV_TREE_TAB_IDX
+                setTabidx: Do.SET_NAV_TREE_TAB_IDX,
+                setMenu: Do.SET_NAV_TREE_MENU
             }),
             ...mapActions({
+                saveApplySelection: On.SAVE_APPLY_SELECTION,
                 dispatchLoad: On.LOAD_OPEN_TREE,
                 dispatchSelLoad: On.LOAD_SELECTION,
                 snack: On.SNACKBAR,
                 snackError: On.SNACKERROR,
-                goHome: On.GO_HOME
+                goHome: On.GO_HOME,
+                deleteTree: On.DELETE_OPENED_TREE,
             }),
             close() {
-                this.setTabidx(null)
+                this.unselect()
             },
             getTreeLoad() {
                 if (this.bqt && this._id) {

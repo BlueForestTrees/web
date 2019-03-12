@@ -1,5 +1,5 @@
 <template>
-    <v-toolbar class="elevation-0" :color="color" :dark="color==='primary'">
+    <v-toolbar class="elevation-0" :color="color || 'white'" :dark="color==='primary'">
         <slot name="left"></slot>
         <icon :icon-color="iconColor" :icon="icon" :icon-class="iconClass"/>
         <v-toolbar-title :class="titleClass"><slot name="middle">{{title}}</slot></v-toolbar-title>

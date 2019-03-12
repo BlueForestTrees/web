@@ -1,9 +1,12 @@
 <template>
-    <v-flex>
-        <note v-if="note" :text="note" />
+    <v-flex class="enough-high-small">
+        <subpage-title v-if="note" :title="note" sub color="whitegrey">
+            <slot slot="right"></slot>
+        </subpage-title>
+
         <selectable-list :items="items" :maxSelectionSize="1">
             <template slot="no-items">
-                <v-layout class="align-center justify-center my-5 font-weight-thin title">
+                <v-layout class="align-center justify-center my-5 font-weight-thin subheading font-italic">
                     <img src="/img/broken-heart.svg" class="logo-petit ma-1"/>{{none}}
                 </v-layout>
             </template>
@@ -15,13 +18,19 @@
     import On from "../../const/on"
     import {mapActions} from "vuex"
     import Note from "../common/Note"
+    import SubpageTitle from "./SubpageTitle"
 
     export default {
         name: "fragment-list",
-        components: {Note, SelectableList},
+        components: {SubpageTitle, Note, SelectableList},
         props: ['tree', 'fragment', 'none', 'note'],
         created() {
             this.refresh()
+        },
+        watch: {
+            tree: function () {
+                this.refresh()
+            }
         },
         computed: {
             items() {

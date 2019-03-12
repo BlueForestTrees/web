@@ -1,15 +1,5 @@
 <template>
     <action-bar v-if="$vuetify.breakpoint.xsOnly"/>
-    <v-toolbar v-else dense app class="elevation-0" style='background-color:#FFFFFFBB'>
-        <v-toolbar-side-icon @click="nav.leftMenuVisible = !nav.leftMenuVisible"></v-toolbar-side-icon>
-        <v-spacer/>
-
-        <v-btn icon :to="{name: GO.SEARCH}"><v-icon color="primary">home</v-icon></v-btn>
-
-        <logged-in/>
-    </v-toolbar>
-
-
 </template>
 
 <script>

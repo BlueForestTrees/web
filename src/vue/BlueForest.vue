@@ -2,12 +2,22 @@
     <v-content>
         <messages v-if="nav.rightMenuVisible"/>
         <left-menu v-if="nav.leftMenuVisible"/>
-        <bar/>
+
         <span v-if="dispo.grandeurs">
             <transition :name="transitionName" mode="out-in">
                 <router-view></router-view>
             </transition>
         </span>
+
+        <v-layout class="top-left">
+            <v-avatar class="elevation-3 ma-2" size="32px" @click="nav.leftMenuVisible = !nav.leftMenuVisible">
+                <v-btn icon>
+                    <v-icon>menu</v-icon>
+                </v-btn>
+            </v-avatar>
+        </v-layout>
+
+        <logged-in class="top-right"/>
 
         <snack :snack="snack" v-if="snack.visible"/>
         <connect-to-continue-dialog v-if="dialogs[Dial.CONNECT_TO_CONTINUE].visible"/>
@@ -22,6 +32,7 @@
     import {mapState} from 'vuex'
     import Bar from "./common/Bar"
     import {Dial} from "../const/dial"
+    import LoggedIn from "./user/LoggedIn"
 
     const Snack = () => import(/* webpackChunkName: "Snack" */ "./common/Snack")
 
@@ -43,6 +54,7 @@
             ...mapState(['nav', 'snack', 'dispo', 'dialogs'])
         },
         components: {
+            LoggedIn,
             Messages,
             ConnectToContinueDialog,
             Snack,

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 460 460" style="enable-background:new 0 0 460 460;" xml:space="preserve">
+	<circle style="fill:#1565c0;" cx="230" cy="230" r="230"/>
+    <g transform="translate(260,-150), rotate(45), scale(1.2)">
+
+	<polygon style="fill:#E8E8E8;" points="357.633,230.354 187.927,400.059 123.934,336.066 194.645,237.071 293.64,166.36"/>
+
+        <rect x="56.789" y="173.967" transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 456.805 249.2186)" style="fill:#FFFFFF;" width="239.998" height="90.499"/>
+
+        <rect x="80.501" y="212.928" transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 465.7672 252.9296)" style="fill:#B9A285;" width="199.998" height="20"/>
+
+        <rect x="108.785" y="241.213" transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 534.0502 281.2144)" style="fill:#B9A285;" width="199.998" height="20"/>
+
+        <rect x="151.713" y="304.852" transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 566.9788 394.8536)" style="fill:#B9A285;" width="99.999" height="20"/>
+</g>
+
+
+</svg>

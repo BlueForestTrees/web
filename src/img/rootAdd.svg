@@ -7,6 +7,6 @@
 
         <circle cx="9" cy="18" r="4" stroke-dasharray="3 1"/>
 
-        <text x="0" y="13" font-size="25" fill="#444444" stroke="none">+</text>
+        <text x="0" y="13" font-size="25" fill="#444444">+</text>
 
 </svg>

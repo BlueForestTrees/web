@@ -8,7 +8,7 @@ export const TRUNK = "trunk"
 export const BRANCHES = "branches"
 
 
-export const allFragments = [TRUNK, OWNER, ROOTS, BRANCHES, IMPACTS, "damages", IMPACT_TANK, "damagesTank", FACETS, TANK]
+export const allFragments = [TRUNK, OWNER, ROOTS, BRANCHES, IMPACTS, IMPACT_TANK, FACETS, TANK]
 export const trunkFragment = [TRUNK, OWNER]
 export const treeHeadFragments = [TRUNK, OWNER]
 export const treeFragments = [TRUNK, OWNER, TANK, IMPACT_TANK, FACETS]

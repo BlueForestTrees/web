@@ -1,9 +1,10 @@
 <template>
-    <v-card>
+    <div>
 
-        <subpage-title title="Ajouter un impact" icon-class="planet-add logo">
+        <subpage-title title="Ajouter un impact" icon-class="planet-add logo" sub>
             <closer slot="right" @close="$emit('close')"/>
         </subpage-title>
+
         <v-divider/>
 
         <transition name="slide-fade" mode="out-in">
@@ -15,7 +16,8 @@
             </v-layout>
 
         </transition>
-    </v-card>
+    </div>
+
 </template>
 
 <script>

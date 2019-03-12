@@ -1,5 +1,5 @@
 <template>
-    <svg :viewBox="viewBox" version="1.2" xmlns="http://www.w3.org/2000/svg">
+    <svg id="surface" :viewBox="viewBox" v-resize="onResize" class="surface" version="1.2" xmlns="http://www.w3.org/2000/svg">
 
         <template v-for="branch in branchesList">
             <g :key="branch.tree._id+'b'">
@@ -8,7 +8,6 @@
                 <trunk :key="branch.tree._id" :x="branch.x" :y="branch.y" :tree="branch.tree" :selected="isSelected(branch.tree)" @click="select(branch, BRANCHES)"/>
             </g>
         </template>
-
 
         <template v-for="root in rootsList">
             <g :key="root.tree._id">
@@ -25,7 +24,7 @@
 
 <script>
     import On from "../../const/on"
-    import {mapActions} from "vuex"
+    import {mapActions, mapState} from "vuex"
     import Selectable from "../mixin/Selectable"
     import {BRANCHES, ROOTS} from "../../const/fragments"
     import Note from "../common/Note"
@@ -40,9 +39,13 @@
         props: ['tree', 'note'],
         data: () => ({
             BRANCHES, ROOTS,
+            stateKey: "nodeSelection",
             rootsOk: false,
             branchesOk: false,
-            zoom: 1, size: 1000,
+            paddingLeft: 0,
+            width: 1000,
+            height: 1000,
+            zoom: 1,
             panx: 0, pany: 0,
             sX: 250, sY: 150,
             maxSelectionSize: 1
@@ -63,10 +66,24 @@
                 .then(() => this.tree[BRANCHES].forEach(root => this.loadTreeFragment({tree: root, fragments: [BRANCHES]})))
                 .then(() => this.branchesOk = true)
         },
+        watch: {
+            oneSelected(v, o) {
+                const tfrom = {v: this.paddingLeft}
+                const tto = {v: this.oneSelected ? 225 : 0}
+                const updatePaddingLeft = ({v}) => this.paddingLeft = v
+
+                new TWEEN.Tween(tfrom)
+                    .to(tto, 300)
+                    .easing(TWEEN.Easing.Quadratic.Out)
+                    .onUpdate(updatePaddingLeft)
+                    .start()
+            }
+        },
         computed: {
             viewBox: function () {
-                const size = this.zoom * this.size
-                return `${-0.5 * size + this.panx} ${-0.25 * size + this.pany} ${size} ${0.5 * size}`
+                const width = this.zoom * this.width
+                const height = this.zoom * this.height
+                return `${-0.5 * width + this.panx - this.paddingLeft} ${-0.5 * height + this.pany} ${width} ${height}`
             },
             rootsList() {
                 return this.rootsOk &&
@@ -78,7 +95,13 @@
             }
         },
         methods: {
-            ...mapActions({loadTreeFragment: On.UPDATE_TREE}),
+            onResize: function (e) {
+                this.width = window.innerWidth
+                this.height = window.innerHeight
+            },
+            ...mapActions({
+                loadTreeFragment: On.UPDATE_TREE
+            }),
             selectTrunk(tree) {
                 this.toggleSelect(tree)
                 this.lookAt({x: 0, y: 0})
@@ -110,12 +133,21 @@
 </script>
 
 <style>
+    .surface {
+        overflow-x: hidden;
+        overflow-y: hidden;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+    }
+
     .line {
         stroke: #444444;
     }
 
-    .dash{
-        stroke-dasharray: 5,5;
+    .dash {
+        stroke-dasharray: 5, 5;
     }
 
     .pin {
@@ -124,7 +156,7 @@
     }
 
     .selection {
-        stroke: #D21E1E;
+        stroke: #22B573;
         stroke-opacity: 0.5;
         stroke-width: 8px;
         fill: none;
@@ -144,6 +176,6 @@
         alignment-baseline: hanging;
         font-size: 1.5em;
         color: #444444;
-        background-color: rgba(255, 255, 255, 0.7);
+        background-color: rgba(250, 250, 250, 0.8);
     }
 </style>

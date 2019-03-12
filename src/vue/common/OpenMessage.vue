@@ -4,7 +4,7 @@
         <v-list-tile-title><h3 class="font-weight-thin">{{section.title}}</h3></v-list-tile-title>
     </v-list-tile>
     <v-btn v-else-if="noText" flat icon @click="showMessages">
-        <v-icon color="primary" :large="large">chat</v-icon>
+        <v-icon color="primary" :large="large" :small="small">chat</v-icon>
     </v-btn>
     <div v-else @click="showMessages">
         <slot>
@@ -28,6 +28,7 @@
             noText: {type: Boolean, default: false},
             noIcon: {type: Boolean, default: false},
             large: {type: Boolean, default: false},
+            small: {type: Boolean, default: false},
             listTile: Boolean
         },
         methods: {

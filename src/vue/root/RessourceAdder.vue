@@ -1,13 +1,13 @@
 <template>
     <div>
         <v-card>
-            <subpage-title title="Ajouter une ressource" icon-class="root-add logo">
+            <subpage-title sub title="Ajouter une ressource" icon-class="root-add logo">
                 <closer slot="right" @close="$emit('close')"/>
             </subpage-title>
             <v-divider/>
 
             <v-layout row align-center>
-                <v-flex class="font-weight-black headline ml-2">{{text}}</v-flex>
+                <v-flex class="font-weight-thin subheading ml-2">{{text}}</v-flex>
                 <v-spacer/>
                 <v-btn v-if="!editing" icon @click.stop="revert">
                     <v-icon large color="primary">{{$vuetify.breakpoint.smAndUp ? 'swap_horiz':'swap_vert'}}</v-icon>
@@ -17,11 +17,11 @@
             <v-divider/>
             <editor v-model="editing" :editor="editor" :initial="initial" :changes="changes" @change="change"/>
 
+            <saver v-if="!editing" saved-text="Ressource ajoutée"
+                   :initial="initial" :changes="changes" :final="final" :editor="editor"
+                   :save-action="On.ADD_ROOT" @saved="saved"
+            />
         </v-card>
-        <saver v-if="!editing" saved-text="Ressource ajoutée"
-               :initial="initial" :changes="changes" :final="final" :editor="editor"
-               :save-action="On.ADD_ROOT" @saved="saved"
-        />
     </div>
 </template>
 

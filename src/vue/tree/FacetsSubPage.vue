@@ -1,26 +1,37 @@
 <template>
     <div>
-        <v-card class="mb-5">
-            <subpage-title title="Propriétés" icon-class="facet logo">
-                <closer slot="right" @close="$emit('close')"/>
+        <v-card class="ma-2">
+            <subpage-title title="Propriétés" sub color="whitegrey">
+                <v-layout slot="right" row justify-end>
+                    <v-btn icon>
+                        <v-list-tile-avatar class="facet-add logo" @click="setAdding(true)"></v-list-tile-avatar>
+                    </v-btn>
+                    <open-message slot="right" :section="section" no-text/>
+                </v-layout>
             </subpage-title>
 
-            <fragment-list :tree="tree" :fragment="FACETS" none="Pas encore d'informations sur les propriétés"></fragment-list>
+            <transition-expand>
+                <v-card class="ma-2">
+                    <facet-adder v-if="adding" :tree="tree" @close="setAdding(false)"/>
+                </v-card>
+            </transition-expand>
 
-            <v-divider/>
-            <v-layout justify-center>
-                <open-message :section="section" no-text large/>
-                <v-btn icon>
-                    <v-list-tile-avatar class="facet-add logo" @click="setAdding(true)"></v-list-tile-avatar>
-                </v-btn>
-                <btn :enabled="oneSelected" icon-class="balance logo" @click="goEquiv({tree, oneSelected})"></btn>
-                <btn :enabled="oneSelected" icon-class="game logo" @click="goQuiDeuxFoisPlus({tree, oneSelected})"></btn>
-            </v-layout>
+            <fragment-list :tree="tree" :fragment="FACETS" none="Pas encore d'informations sur les propriétés"></fragment-list>
         </v-card>
-        <div id="adder">
-            <facet-adder v-if="adding" :tree="tree" @close="setAdding(false)"/>
-        </div>
+
+        <transition-expand>
+            <v-card class="ma-2" v-if="oneSelected">
+                <subpage-title title="Actions" sub color="whitegrey">
+                </subpage-title>
+                <v-layout justify-center>
+                    <btn icon-class="balance logo" @click="goEquiv({tree, oneSelected})"></btn>
+                    <btn icon-class="game logo" @click="goQuiDeuxFoisPlus({tree, oneSelected})"></btn>
+                    <btn icon="delete" iconColor="grey"></btn>
+                </v-layout>
+            </v-card>
+        </transition-expand>
     </div>
+
 </template>
 
 <script>
@@ -35,14 +46,15 @@
     import SubpageTitle from "./SubpageTitle"
     import {name} from "../../services/calculations"
     import Closer from "../common/Closer"
-    import {scrollSubPage, scrollTo} from "../../const/ux"
     import Do from "../../const/do"
     import selectable from "../mixin/Selectable"
     import Btn from "../common/btn"
+    import TransitionExpand from "../common/TransitionExpand"
 
     export default {
         name: "facets-subpage",
         components: {
+            TransitionExpand,
             Btn,
             Closer,
             SubpageTitle,
@@ -91,15 +103,6 @@
                 this.loadTreeFragment({tree: this.tree, fragments: [FACETS]})
                 this.loading = false
             },
-        },
-        watch: {
-            adding(adding) {
-                if (adding) {
-                    this.$nextTick(() => scrollTo("#adder"))
-                } else {
-                    scrollSubPage()
-                }
-            }
         }
     }
 </script>

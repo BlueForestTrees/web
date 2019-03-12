@@ -1,6 +1,6 @@
 <template>
     <v-menu v-if="user">
-        <v-avatar slot="activator" size="32px" :style="{backgroundColor:user.color}" class="ml-2">
+        <v-avatar slot="activator" class="elevation-3 ma-2" size="32px" :style="{backgroundColor:user.color}">
             <span :style="{color:overcolor(user.color)}">{{initiales(user.fullname)}}</span>
         </v-avatar>
 
@@ -27,7 +27,6 @@
                 <v-list-tile-content>Déconnexion</v-list-tile-content>
             </v-list-tile>
         </v-list>
-
     </v-menu>
     <v-menu v-else>
         <v-btn slot="activator" icon dense>

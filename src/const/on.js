@@ -115,6 +115,7 @@ export default {
     SHOW_MESSAGES: 'showMessages',
     SNACKBAR: 'snackbar',
     SNACKERROR: 'snackbarError',
+    START_CAMERA_MOVE: 'startCameraMove',
     SWIPE_LEFT: 'SWIPE_LEFT',
     SWIPE_RIGHT: 'SWIPE_RIGHT',
     SWITCH_COLORS: 'switchColors',

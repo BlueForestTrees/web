@@ -1,8 +1,7 @@
 <template>
     <v-card>
-        <subpage-title title="Ajouter une propriété" icon-class="facet-add logo">
-            <closer slot="right" @close="$emit('close')"/>
-        </subpage-title>
+        <subpage-title sub title="Ajouter une propriété" icon-class="facet-add logo"><closer slot="right" @close="$emit('close')"/></subpage-title>
+
         <v-divider/>
 
         <transition name="slide-fade" mode="out-in">

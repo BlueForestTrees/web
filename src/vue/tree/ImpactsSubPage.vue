@@ -1,26 +1,42 @@
 <template>
     <div>
-        <v-card class="mb-5">
-            <subpage-title title="Environnement" icon-class="planet logo">
-                <closer slot="right" @close="$emit('close')"/>
+
+        <v-card class="ma-2">
+            <subpage-title title="Impacts sur l'environnement" sub color="whitegrey">
+                <open-message slot="right" :section="section" no-text/>
             </subpage-title>
-
-            <transition name="slide-fade" mode="out-in">
-                <fragment-list v-if="idx === 0" :tree="tree" :fragment="IMPACT_TANK" none="Pas encore d'informations sur les impacts sur l'environnement" key="0" class="enough-high-small"></fragment-list>
-                <fragment-list v-else-if="idx === 1" :tree="tree" :fragment="IMPACTS" none="Pas encore d'informations sur les impacts sur l'environnement" key="1" class="enough-high-small" note="Note: Les impacts provoqués par les ressources ne figurent pas ici."></fragment-list>
-            </transition>
-
             <v-layout justify-center>
                 <scope-menu :value="idx" @input="setIdx" :dense="$vuetify.breakpoint.xsOnly" :scope="impactScope"/>
-                <open-message :section="section" no-text/>
-                <v-btn icon><v-list-tile-avatar class="planet-add logo" @click="setAdding(true)"></v-list-tile-avatar></v-btn>
-                <btn :enabled="oneSelected" icon-class="balance logo" @click="goEquiv({tree, oneSelected})"></btn>
-                <btn :enabled="oneSelected" icon-class="game logo" @click="goQuiDeuxFoisPlus({tree, oneSelected})"></btn>
             </v-layout>
         </v-card>
-        <div id="adder">
-            <impact-adder v-if="adding" :tree="tree" @close="setAdding(false)"/>
-        </div>
+
+        <transition-expand>
+            <v-card class="ma-2" v-if="adding">
+                <impact-adder :tree="tree" @close="setAdding(false)"/>
+            </v-card>
+        </transition-expand>
+
+        <v-card class="ma-2">
+            <transition name="slide-fade" mode="out-in">
+                <fragment-list v-if="idx === 0" :tree="tree" :fragment="IMPACT_TANK" none="Pas encore d'informations" note="Liste des impacts (tout)"></fragment-list>
+                <fragment-list v-else-if="idx === 1" :tree="tree" :fragment="IMPACTS" none="Pas encore d'informations" note="Liste des impact (selection)">
+                    <v-btn icon><v-list-tile-avatar class="planet-add logo" @click="setAdding(true)"></v-list-tile-avatar></v-btn>
+                </fragment-list>
+            </transition>
+        </v-card>
+
+        <transition-expand>
+            <v-card class="ma-2" v-if="oneSelected && idx === 1">
+                <subpage-title title="Actions" sub color="whitegrey">
+                </subpage-title>
+                <v-layout justify-center>
+                    <btn icon-class="balance logo" @click="goEquiv({tree, oneSelected})"></btn>
+                    <btn icon-class="game logo" @click="goQuiDeuxFoisPlus({tree, oneSelected})"></btn>
+                    <btn icon="delete" iconColor="grey"></btn>
+                </v-layout>
+            </v-card>
+        </transition-expand>
+
     </div>
 </template>
 
@@ -38,9 +54,9 @@
     import SubpageTitle from "./SubpageTitle"
     import {name} from "../../services/calculations"
     import Closer from "../common/Closer"
-    import {scrollSubPage, scrollTo} from "../../const/ux"
     import selectable from "../mixin/Selectable"
     import Btn from "../common/btn"
+    import TransitionExpand from "../common/TransitionExpand"
 
     const FragmentList = () => import(/* webpackChunkName: "FragmentList"*/"./FragmentList")
 
@@ -53,6 +69,7 @@
             impactScope, IMPACTS, IMPACT_TANK
         }),
         components: {
+            TransitionExpand,
             Btn,
             Closer,
             SubpageTitle,
@@ -95,11 +112,6 @@
             },
             setAdding(adding) {
                 this.adding = adding
-                if (adding) {
-                    this.$nextTick(() => scrollTo("#adder"))
-                } else {
-                    scrollSubPage()
-                }
             }
         }
     }

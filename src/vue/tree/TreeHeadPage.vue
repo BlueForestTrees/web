@@ -1,25 +1,13 @@
 <template>
-    <v-card>
+    <v-card class="ma-2">
+    <v-layout column align-center mb-1>
+        <subpage-title title="Description" sub color="whitegrey"><open-message slot="right" :section="section" no-text/></subpage-title>
 
-        <v-layout column align-center mb-1>
+        <photo :trunk="tree.trunk" size="200" class="my-3"/>
 
-            <subpage-title iconClass="blueforest logo" :title="qtUnitName(tree)">
-                <closer slot="right" @close="$emit('close')"/>
-            </subpage-title>
+        <description :tree="tree"/>
 
-            <tree-card :tree="tree" class="mt-3">
-                <v-card-actions>
-                    <v-btn icon flat @click="setFlipped(true)"><v-icon class="carton logo-petit"/></v-btn>
-                    <v-btn icon flat @click="goInfo"><v-icon class="voice logo-petit"/></v-btn>
-                    <open-message :section="section" no-text/>
-                    <v-btn icon flat @click="deleteTree"><v-icon color="grey">delete</v-icon></v-btn>
-                </v-card-actions>
-            </tree-card>
-
-            <description :tree="tree" class="my-1"/>
-
-        </v-layout>
-        <fragment-select :value="value" @input="i=>$emit('input', i)"/>
+    </v-layout>
     </v-card>
 </template>
 <script>
@@ -29,24 +17,37 @@
     import Do from "../../const/do"
     import {mapMutations, mapActions} from "vuex"
     import OpenMessage from "../common/OpenMessage"
-    import {name, qtUnitName} from "../../services/calculations"
+    import {name} from "../../services/calculations"
     import On from "../../const/on"
     import Subheader from "./Subheader"
     import SubpageTitle from "./SubpageTitle"
     import TreeFab from "./TreeFab"
     import Closer from "../common/Closer"
+    import QtUnitName from "./QtUnitName"
+    import Photo from "../common/Photo"
+    import {OWNER, TRUNK} from "../../const/fragments"
 
     export default {
         name: "tree-headpage",
-        components: {Closer, TreeFab, SubpageTitle, Subheader, OpenMessage, FragmentSelect, TreeCard, Description},
-        props: ['tree', 'value'],
+        components: {Photo, QtUnitName, Closer, TreeFab, SubpageTitle, Subheader, OpenMessage, FragmentSelect, TreeCard, Description},
+        props: ['tree'],
         methods: {
-            qtUnitName,
             ...mapMutations({setFlipped: Do.SET_TREE_CARD_FLIPPED}),
             ...mapActions({
-                goInfo: On.GO_CREATE_INFO,
-                deleteTree: On.DELETE_OPENED_TREE
+                updateTree: On.UPDATE_TREE
             })
+        },
+        watch: {
+            tree: function (tree) {
+                if (tree) {
+                    if (!tree.trunk) {
+                        this.updateTree({tree}, [TRUNK])
+                    }
+                    if (!tree.owner) {
+                        this.updateTree({tree}, [OWNER])
+                    }
+                }
+            }
         },
         computed: {
             section() {

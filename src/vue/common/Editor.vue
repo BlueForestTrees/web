@@ -18,7 +18,7 @@
                             <v-btn v-else @click.stop="goto(i)" icon>
                                 <v-icon color="primary">edit</v-icon>
                             </v-btn>
-                            <v-btn v-if="changed(field)" @click.stop="clear(field)" icon>
+                            <v-btn v-if="!editing && changed(field)" @click.stop="clear(field)" icon>
                                 <v-icon>close</v-icon>
                             </v-btn>
                         </v-layout>

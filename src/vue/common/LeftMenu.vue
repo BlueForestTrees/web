@@ -2,6 +2,15 @@
     <v-navigation-drawer app v-model="nav.leftMenuVisible">
         <v-list dense>
 
+            <v-list-tile @click="goto(GO.SEARCH)">
+                <v-list-tile-action>
+                    <v-icon color="primary">search</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                    <v-list-tile-title>Recherche</v-list-tile-title>
+                </v-list-tile-content>
+            </v-list-tile>
+
             <v-list-tile @click="goto(GO.RECENT)">
                 <v-list-tile-action>
                     <v-icon color="primary">schedule</v-icon>
