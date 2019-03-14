@@ -1,13 +1,15 @@
 <template>
     <v-card class="ma-2">
-    <v-layout column align-center mb-1>
-        <subpage-title title="Description" sub color="whitegrey"><open-message slot="right" :section="section" no-text/></subpage-title>
+        <v-layout column align-center mb-1>
+            <subpage-title title="Description" sub color="whitegrey">
+                <open-message slot="right" :section="section" no-text/>
+            </subpage-title>
 
-        <photo :trunk="tree.trunk" size="200" class="my-3"/>
+            <photo :trunk="tree.trunk" size="200" class="my-3"/>
 
-        <description :tree="tree"/>
+            <description :tree="tree"/>
 
-    </v-layout>
+        </v-layout>
     </v-card>
 </template>
 <script>
@@ -40,12 +42,10 @@
         watch: {
             tree: function (tree) {
                 if (tree) {
-                    if (!tree.trunk) {
-                        this.updateTree({tree}, [TRUNK])
-                    }
-                    if (!tree.owner) {
-                        this.updateTree({tree}, [OWNER])
-                    }
+                    const toUpdate = []
+                    !toUpdate[TRUNK] && toUpdate.push(TRUNK)
+                    !toUpdate[OWNER] && toUpdate.push(OWNER)
+                    toUpdate.length && this.updateTree({tree, fragments: toUpdate})
                 }
             }
         },
@@ -59,6 +59,6 @@
                     }
                 }
             }
-        },
+        }
     }
 </script>

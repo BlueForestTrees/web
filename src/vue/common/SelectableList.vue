@@ -22,7 +22,14 @@
 
     export default {
         name: "selectable-list",
-        props: {nobar: Boolean, items: Array, maxSelectionSize: Number, exceptId: String, noQt: {type: Boolean, default: false}},
+        props: {
+            nobar: Boolean,
+            items: Array,
+            maxSelectionSize: Number,
+            exceptId: String,
+            noQt: {type: Boolean, default: false},
+            selectionKey: {type: String, required:true}
+        },
         mixins: [selectable],
         computed: {
             hasItems: function () {

@@ -264,9 +264,13 @@ export const formatDate = value => new Date(value).toLocaleString()
 
 export const lowFirst = s => s.charAt(0).toLowerCase() + s.slice(1)
 
-export const globalToLocal = (e, {svgPoint, svg}) => {
-    svgPoint.x = e.center ? e.center.x : e.clientX;
-    svgPoint.y = e.center ? e.center.y : e.clientY;
-    const p = svgPoint.matrixTransform(svg.getScreenCTM().inverse());
-    return {x: p.x, y: p.y};
-};
+export const mergeQt = (qt1, qt2) => ({bqt: qt1.bqt + qt2.bqt, g: qt1.g})
+
+export const findFct = function (array, fct) {
+    const length = array.length
+    for (let i = 0; i < length; i++) {
+        if (fct(array[i])) {
+            return array[i]
+        }
+    }
+}

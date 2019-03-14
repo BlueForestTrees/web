@@ -4,7 +4,7 @@ export default {
     data: () => ({
         loading: false,
         menuVisible: false,
-        stateKey: "menu.selection",
+        selectionKey: "menu.selection",
         items: []
     }),
 

@@ -28,7 +28,6 @@ export default {
             fid: oneSelected[`${oneSelected.type}Id`],
             f: oneSelected.type
         }
-        dispatch(On.UNSELECT)
         return router.push({name: GO.QUI_2, params})
     },
     [On.RANDOM_TREE_FROM_FRAGMENT]: ({dispatch}, {entryId, bqt, type, trunkId}) => {

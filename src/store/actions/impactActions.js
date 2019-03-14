@@ -3,7 +3,7 @@ import api from "../../rest/api"
 import Do from "../../const/do"
 import {applyAspectCoef, createStringObjectId, treeBqt} from "../../services/calculations"
 import {map} from 'unit-manip'
-import {IMPACTS} from "../../const/fragments"
+import {IMPACT_TANK, IMPACTS} from "../../const/fragments"
 
 export default {
 
@@ -35,8 +35,7 @@ export default {
         return api.postImpactAdeme(formData)
     },
 
-    [On.ADD_IMPACT]: ({}, {tree, entry, quantity}) => {
-
+    [On.ADD_IMPACT]: ({commit}, {tree, entry, quantity}) => {
         const impact = ({
             _id: createStringObjectId(), type: "impact", color: entry.color,
             impactId: entry._id, name: entry.name,
@@ -45,9 +44,13 @@ export default {
                 g: quantity.g,
             }
         })
-        if (tree[IMPACTS]) {
-            tree[IMPACTS].push(impact)
-        }
+        const impactTank = {...impact, _id: impact.impactId}
+        delete impactTank.impactId
+
         return api.postImpact(impact._id, tree._id, impact.impactId, impact.quantity.bqt)
+            .then(() => {
+                commit(Do.ADD_TO_FRAGMENT, {tree, fragment: IMPACTS, element: impact})
+                commit(Do.ADD_TO_FRAGMENT, {tree, fragment: IMPACT_TANK, element: impactTank, merge: true})
+            })
     }
 }

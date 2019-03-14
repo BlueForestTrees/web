@@ -100,8 +100,6 @@
                 if (this.filter) {
                     this.loading = true
 
-                    console.log(this.type, this.filter)
-
                     await this.dispatchSearchEquiv({
                         _id: this.filter[(this.type === "root" ? "_id" : `${this.type}Id`)],
                         results: this.equivalences, type: this.type, bqt: this.sbqt

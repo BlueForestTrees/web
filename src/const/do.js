@@ -1,7 +1,9 @@
 export default {
     ADD_IMPACTS_TANK: 'addImpactsTank',
     ADD_IMPACT_TANK: 'addImpactTank',
+    ADD_TO_FRAGMENT: 'addToFragment',
     ADD_TO_BASKET: 'addToBasket',
+    ADD_SELECTION_KEY: "addSelectionKey",
     CLEAR_DIALOG_DATA: 'clearDialogData',
     CLOSE_TREE: "closeTree",
     DELETE_FACETS: 'deleteFacets',

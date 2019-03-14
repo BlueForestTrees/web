@@ -28,7 +28,6 @@ export default {
     [On.GO_SELECTION]: ({}, selection) => router.push({name: GO.SELECTION, params: {_id: selection._id}}),
 
     [On.GO_TREE]: ({commit, getters, dispatch}, tree) => {
-        dispatch(On.UNSELECT)
         const dest = tree ?
             {_id: tree._id, bqt: tree.trunk.quantity.bqt}
             :

@@ -1,3 +1,5 @@
+import {treeMap} from "../const/selections"
+
 export default {
     filter: state => {
         const cat = {}
@@ -25,4 +27,7 @@ export default {
         }
         return true
     },
+    treeMenu: state => {
+        return state.selections[treeMap] && state.selections[treeMap].length === 1 && state.nav.tree.tabIdx !== null
+    }
 }

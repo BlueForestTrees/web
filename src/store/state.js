@@ -29,9 +29,7 @@ export const tree = () => ({_id: null, trunk: null, selection: null, facets: nul
 export default {
     version: {web: ENV.VERSION},
     dispo: {grandeurs: false},
-    selection: [],
-    nodeSelection: [],
-    "menu.selection": [],
+    selections: {},
     maxSelectionSize: null,
     token: null,
     user: null,
@@ -50,7 +48,7 @@ export default {
             menu: {
                 visible: false
             },
-            tabIdx: 0,
+            tabIdx: null,
             cardFlipped: false,
             impact: {idx: 0, term: "", adding: false},
             root: {idx: 0, term: "", adding: false},

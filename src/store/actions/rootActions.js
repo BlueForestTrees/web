@@ -3,8 +3,9 @@ import api from "../../rest/api"
 import router from "../../router/router"
 import {GO} from "../../const/go"
 import {applyRessourceCoef, createStringObjectId, treeBqt} from "../../services/calculations"
-import {BRANCHES, ROOTS} from "../../const/fragments"
+import {BRANCHES, IMPACTS, ROOTS} from "../../const/fragments"
 import Vue from "vue"
+import Do from "../../const/do"
 
 export default {
 
@@ -22,16 +23,8 @@ export default {
 
         return dispatch(On.CREATE_ROOT, request)
             .then(() => {
-                if (tree[ROOTS]) {
-                    tree[ROOTS].push(root)
-                } else {
-                    Vue.set(tree, ROOTS, [root])
-                }
-                if (root[BRANCHES]) {
-                    root[BRANCHES].push(tree)
-                } else {
-                    Vue.set(root, BRANCHES, tree)
-                }
+                commit(Do.ADD_TO_FRAGMENT, {tree, fragment: ROOTS, element: root})
+                commit(Do.ADD_TO_FRAGMENT, {tree:root, fragment: BRANCHES, element: tree})
             })
     },
     [On.CREATE_ROOT]: async ({commit}, {_id, trunkId, rootId, bqt, relativeTo}) => api.postRoot({_id, trunkId, rootId, bqt, relativeTo}),

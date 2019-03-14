@@ -4,10 +4,11 @@
             <slot slot="right"></slot>
         </subpage-title>
 
-        <selectable-list :items="items" :maxSelectionSize="1">
+        <loader v-if="loading"/>
+        <selectable-list v-else :items="items" :maxSelectionSize="1" :selectionKey="selectionKey">
             <template slot="no-items">
                 <v-layout class="align-center justify-center my-5 font-weight-thin subheading font-italic">
-                    <img src="/img/broken-heart.svg" class="logo-petit ma-1"/>{{none}}
+                    <slot name="none"><img src="/img/broken-heart.svg" class="logo-petit ma-1"/>Pas encore d'informations</slot>
                 </v-layout>
             </template>
         </selectable-list>
@@ -19,11 +20,21 @@
     import {mapActions} from "vuex"
     import Note from "../common/Note"
     import SubpageTitle from "./SubpageTitle"
+    import Loader from "../loader/Loader"
+    import Btn from "../common/btn"
 
     export default {
         name: "fragment-list",
-        components: {SubpageTitle, Note, SelectableList},
-        props: ['tree', 'fragment', 'none', 'note'],
+        components: {Btn, Loader, SubpageTitle, Note, SelectableList},
+        props: {
+            tree: Object,
+            fragment: String,
+            none: String,
+            note: String,
+            forced: {type: Boolean, default: false},
+            selectionKey: {type: String, required: true}
+        },
+        data: () => ({loading: false, refreshable: {type: Boolean, default: true}}),
         created() {
             this.refresh()
         },
@@ -39,10 +50,13 @@
         },
         methods: {
             ...mapActions({loadTreeFragment: On.UPDATE_TREE}),
-            refresh: async function () {
+            update: function () {
                 this.loading = true
                 this.loadTreeFragment({tree: this.tree, fragments: [this.fragment]})
-                this.loading = false
+                    .then(() => setTimeout(() => this.loading = false))
+            },
+            refresh: async function () {
+                this.tree && (this.forced || !this.tree[this.fragment]) && this.update()
             }
         },
     }

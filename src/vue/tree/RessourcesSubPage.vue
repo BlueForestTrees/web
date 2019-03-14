@@ -3,7 +3,7 @@
 
         <v-card class="ma-2">
             <subpage-title title="Fabrication" sub color="whitegrey">
-                    <open-message slot=right" :section="section" no-text/>
+                <open-message slot=right" :section="section" no-text/>
             </subpage-title>
             <v-layout justify-center>
                 <scope-menu :value="idx" @input="setIdx" :scope="rootScope"/>
@@ -11,21 +11,27 @@
 
         </v-card>
 
-        <transition-expand>
-            <v-card class="ma-2" v-if="adding">
-                <ressource-adder :tree="oneSelected || tree" @close="setAdding(false)"/>
-            </v-card>
-        </transition-expand>
 
         <v-card class="ma-2">
-            <fragment-list v-if="idx === 0" :tree="tree" :fragment="ROOTS" none="Pas encore d'informations" key="0" :note="`Les premières ressources`">
+            <fragment-list v-if="idx === 0" :tree="tree" :fragment="ROOTS" :selectionKey="selectionKey" key="0" :note="`Les premières ressources`">
                 <btn icon-class="root-add logo logo" @click="setAdding(true)"></btn>
             </fragment-list>
-            <fragment-list v-else-if="idx === 1" :tree="tree" :fragment="TANK" none="Pas encore d'informations" key="1" :note="`Les dernières ressources`" />
-            <fragment-list v-else-if="idx === 2" :tree="tree" :fragment="BRANCHES" none="Pas encore d'informations" key="4" :note="`Les utilisations possibles`" >
-                <btn icon-class="root-add logo logo" @click="setAdding(true)"></btn>
+            <fragment-list v-else-if="idx === 1" :tree="tree" :fragment="TANK" :selectionKey="selectionKey" key="1" :note="`Les dernières ressources`"/>
+            <fragment-list v-else-if="idx === 2" :tree="tree" :fragment="BRANCHES" :selectionKey="selectionKey" key="4" :note="`Les utilisations possibles`">
+                <btn icon-class="branch-add logo logo" @click="setAdding(true, true)"></btn>
             </fragment-list>
         </v-card>
+
+        <transition-expand>
+            <v-card class="ma-2" v-if="adding">
+                <v-card>
+                    <subpage-title sub title="Ajouter une ressource" icon-class="root-add logo">
+                        <closer slot="right" @close="setAdding(false)"/>
+                    </subpage-title>
+                    <ressource-adder :tree="oneSelected || tree" :reverted="reverted" @close="setAdding(false)"/>
+                </v-card>
+            </v-card>
+        </transition-expand>
 
         <transition-expand>
             <v-card class="ma-2" v-if="oneSelected">
@@ -36,6 +42,7 @@
                     <btn icon-class="game logo" @click="goQuiDeuxFoisPlus({tree, oneSelected})"></btn>
                     <btn :enabled="idx !== 1" icon="delete" iconColor="grey"></btn>
                 </v-layout>
+                <note :text="qtUnitName(oneSelected)" />
             </v-card>
         </transition-expand>
     </div>
@@ -56,9 +63,10 @@
     import Selectable from "../mixin/Selectable"
     import Btn from "../common/btn"
     import TransitionExpand from "../common/TransitionExpand"
+    import {rootbranch} from "../../const/selections"
+    import Note from "../common/Note"
 
-    const TreeNav = () => import(/* webpackChunkName: "TreeNav"*/"../root/TreeNav")
-    const TreeNav2 = () => import(/* webpackChunkName: "TreeNav2"*/"../treenav/TreeNav2")
+    const TreeNav2 = () => import(/* webpackChunkName: "TreeNav2"*/"../treenav/TreeMap")
     const RessourceAdder = () => import(/* webpackChunkName: "RessourceAdder"*/"../root/RessourceAdder")
     const FragmentList = () => import(/* webpackChunkName: "FragmentList"*/"./FragmentList")
 
@@ -66,13 +74,13 @@
         name: "ressources-subpage",
         mixins: [Selectable],
         components: {
+            Note,
             TransitionExpand,
             Btn,
             TreeNav2,
             OpenMessage,
             Closer,
             SubpageTitle,
-            TreeNav,
             RessourceAdder,
             FragmentList,
             ScopeMenu,
@@ -81,7 +89,8 @@
             tree: Object
         },
         data: () => ({
-            adding: false,
+            selectionKey:rootbranch,
+            adding: false, reverted: false,
             ROOTS, TANK, BRANCHES, rootScope
         }),
         computed: {
@@ -134,8 +143,9 @@
                     sbqt: root.trunk.quantity.bqt
                 })
             },
-            setAdding(adding) {
+            setAdding(adding, reverted) {
                 this.adding = adding
+                this.reverted = reverted
             }
         }
     }

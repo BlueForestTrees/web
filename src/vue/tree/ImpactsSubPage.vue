@@ -18,9 +18,11 @@
 
         <v-card class="ma-2">
             <transition name="slide-fade" mode="out-in">
-                <fragment-list v-if="idx === 0" :tree="tree" :fragment="IMPACT_TANK" none="Pas encore d'informations" note="Liste des impacts (tout)"></fragment-list>
-                <fragment-list v-else-if="idx === 1" :tree="tree" :fragment="IMPACTS" none="Pas encore d'informations" note="Liste des impact (selection)">
-                    <v-btn icon><v-list-tile-avatar class="planet-add logo" @click="setAdding(true)"></v-list-tile-avatar></v-btn>
+                <fragment-list v-if="idx === 0" :tree="tree" :fragment="IMPACT_TANK" :selectionKey="selectionKey" forced note="Liste des impacts (complet)"></fragment-list>
+                <fragment-list v-else-if="idx === 1" :tree="tree" :fragment="IMPACTS" :selectionKey="selectionKey" note="Liste des impacts (local)">
+                    <v-btn icon>
+                        <v-list-tile-avatar class="planet-add logo" @click="setAdding(true)"></v-list-tile-avatar>
+                    </v-btn>
                 </fragment-list>
             </transition>
         </v-card>
@@ -57,6 +59,7 @@
     import selectable from "../mixin/Selectable"
     import Btn from "../common/btn"
     import TransitionExpand from "../common/TransitionExpand"
+    import {impact} from "../../const/selections"
 
     const FragmentList = () => import(/* webpackChunkName: "FragmentList"*/"./FragmentList")
 
@@ -66,7 +69,8 @@
         data: () => ({
             adding: false,
             loading: false,
-            impactScope, IMPACTS, IMPACT_TANK
+            impactScope, IMPACTS, IMPACT_TANK,
+            selectionKey: impact
         }),
         components: {
             TransitionExpand,
@@ -105,11 +109,6 @@
             ...mapMutations({
                 setIdx: Do.SET_TREE_IMPACT_IDX
             }),
-            refresh: async function () {
-                this.loading = true
-                this.loadTreeFragment({tree: this.tree, fragments: [IMPACT_TANK]})
-                this.loading = false
-            },
             setAdding(adding) {
                 this.adding = adding
             }

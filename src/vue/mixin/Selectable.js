@@ -1,14 +1,18 @@
-import {mapState} from "vuex"
+import {mapState, mapMutations} from "vuex"
+import Do from "../../const/do"
 
 export default {
+    created() {
+        this.addSelectionKey(this.selectionKey)
+    },
     computed: {
         ...mapState({
             selection(state) {
-                return state[this.stateKey || "selection"]
+                return state.selections[this.selectionKey]
             }
         }),
         selectionCount() {
-            return this.selection.length
+            return this.selection.length || 0
         },
         noneSelected() {
             return this.selectionCount === 0
@@ -30,6 +34,7 @@ export default {
         }
     },
     methods: {
+        ...mapMutations({addSelectionKey: Do.ADD_SELECTION_KEY}),
         unselect: function () {
             this.selection.splice(0, this.selection.length)
         },

@@ -160,6 +160,10 @@ a {
     background: url(/img/rootAdd.svg) no-repeat center;
 }
 
+.branch-add {
+    background: url(/img/branchAdd.svg) no-repeat center;
+}
+
 .blueforest {
     background: url(/img/logo.svg) no-repeat center;
 }
@@ -268,8 +272,6 @@ a {
 }
 
 
-
-
 .slide-fade-enter-active {
     transition: all .2s ease;
 }
@@ -302,7 +304,6 @@ a {
 .slide-fade-simple-leave-to {
     opacity: 0;
 }
-
 
 
 .slide-left-right-enter-active {
@@ -428,8 +429,9 @@ a {
     -khtml-user-select: none; /* Konqueror HTML */
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
+    user-select: none;
+    /* Non-prefixed version, currently
+                                     supported by Chrome and Opera */
 }
 
 .disabled {

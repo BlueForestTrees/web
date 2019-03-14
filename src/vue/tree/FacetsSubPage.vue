@@ -16,18 +16,18 @@
                 </v-card>
             </transition-expand>
 
-            <fragment-list :tree="tree" :fragment="FACETS" none="Pas encore d'informations sur les propriétés"></fragment-list>
+            <fragment-list :tree="tree" :fragment="FACETS" :selectionKey="selectionKey"></fragment-list>
         </v-card>
 
         <transition-expand>
             <v-card class="ma-2" v-if="oneSelected">
-                <subpage-title title="Actions" sub color="whitegrey">
-                </subpage-title>
+                <subpage-title title="Actions" sub color="whitegrey"/>
                 <v-layout justify-center>
                     <btn icon-class="balance logo" @click="goEquiv({tree, oneSelected})"></btn>
                     <btn icon-class="game logo" @click="goQuiDeuxFoisPlus({tree, oneSelected})"></btn>
                     <btn icon="delete" iconColor="grey"></btn>
                 </v-layout>
+                <note :text="qtUnitName(oneSelected)" />
             </v-card>
         </transition-expand>
     </div>
@@ -44,16 +44,19 @@
     import {FACETS} from "../../const/fragments"
     import FragmentList from "./FragmentList"
     import SubpageTitle from "./SubpageTitle"
-    import {name} from "../../services/calculations"
+    import {name, qtUnitName} from "../../services/calculations"
     import Closer from "../common/Closer"
     import Do from "../../const/do"
     import selectable from "../mixin/Selectable"
     import Btn from "../common/btn"
     import TransitionExpand from "../common/TransitionExpand"
+    import {facet} from "../../const/selections"
+    import Note from "../common/Note"
 
     export default {
         name: "facets-subpage",
         components: {
+            Note,
             TransitionExpand,
             Btn,
             Closer,
@@ -67,7 +70,7 @@
         props: ['tree', 'modeAdd'],
         mixins: [selectable],
         data: () => ({
-            FACETS
+            FACETS, selectionKey: facet
         }),
         created() {
             this.refresh()
@@ -90,6 +93,7 @@
             }
         },
         methods: {
+            qtUnitName,
             ...mapMutations({
                 setAdding: Do.SET_NAV_TREE_FACET_ADDING
             }),

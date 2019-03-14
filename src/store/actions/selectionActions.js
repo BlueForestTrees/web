@@ -2,8 +2,8 @@ import On from "../../const/on"
 import Do from "../../const/do"
 
 export default {
-    [On.UNSELECT]: ({commit}) => {
-        commit(Do.UNSELECT)
+    [On.UNSELECT]: ({commit}, key) => {
+        commit(Do.UNSELECT, key)
     },
     [On.TOGGLE_SELECT]: ({state}, {item, opts = {}}) => {
         let removed = false

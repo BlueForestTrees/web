@@ -42,7 +42,6 @@
             ...mapActions({
                 goto: On.GO_TO,
                 showDialog: On.SHOW_DIALOG,
-                unselect: On.UNSELECT,
                 clearSearch: On.CLEAR_SEARCH
             }),
             pickCat(cats) {
