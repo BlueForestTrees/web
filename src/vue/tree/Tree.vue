@@ -35,7 +35,8 @@
                                 <tree-headpage v-if="tabIdx === 0" :tree="oneSelected" @close="close"/>
                                 <impacts-sub-page v-else-if="tabIdx === 1" :tree="oneSelected" @close="close"/>
                                 <facets-sub-page v-else-if="tabIdx === 2" :tree="oneSelected" @close="close"/>
-                                <ressources-sub-page v-else-if="tabIdx === 3" :tree="oneSelected" @close="close"/>
+                                <utilisation-sub-page v-else-if="tabIdx === 3" :tree="oneSelected" @close="close"/>
+                                <ressources-sub-page v-else-if="tabIdx === 4" :tree="oneSelected" @close="close"/>
                             </transition>
 
                         </v-layout>
@@ -71,6 +72,7 @@
     const TreeHeadpage = () => import(/* webpackChunkName: "TreeHP" */ "./TreeHeadPage")
     const TreeMenu = () => import(/* webpackChunkName: "TreeMenu" */ "./TreeMenu")
     const RessourcesSubPage = () => import(/* webpackChunkName: "RessourcesSubPage" */ "./RessourcesSubPage")
+    const UtilisationSubPage = () => import(/* webpackChunkName: "UtilisationSubPage" */ "./UtilisationSubPage")
     const FacetsSubPage = () => import(/* webpackChunkName: "FacetsSubPage" */ "./FacetsSubPage")
     const ImpactsSubPage = () => import(/* webpackChunkName: "ImpactsSubPage" */ "./ImpactsSubPage")
 
@@ -85,6 +87,7 @@
             TreeHeadpage,
             ImpactsSubPage,
             RessourcesSubPage,
+            UtilisationSubPage,
             FacetsSubPage,
             TreeFab,
         },

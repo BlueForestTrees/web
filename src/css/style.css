@@ -132,6 +132,13 @@ a {
     background: url(/img/planet.svg) no-repeat center;
 }
 
+.roots {
+    background: url(/img/scopeRoots.svg) no-repeat center bottom;
+}
+.branches {
+    background: url(/img/scopeBranch.svg) no-repeat center bottom;
+}
+
 .scope-tree {
     background: url(/img/scopeTree.svg) no-repeat center bottom;
 }

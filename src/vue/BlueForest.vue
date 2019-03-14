@@ -9,12 +9,16 @@
             </transition>
         </span>
 
+
         <v-layout class="top-left">
-            <v-avatar class="elevation-3 ma-2" size="32px" @click="nav.leftMenuVisible = !nav.leftMenuVisible">
-                <v-btn icon>
+            <v-card>
+
+            <v-avatar class="ma-2" size="36px" @click="nav.leftMenuVisible = !nav.leftMenuVisible">
+                <v-btn icon flat icon>
                     <v-icon>menu</v-icon>
                 </v-btn>
             </v-avatar>
+            </v-card>
         </v-layout>
 
         <logged-in class="top-right"/>

@@ -1,17 +1,21 @@
 <template>
     <v-flex class="enough-high-small">
         <subpage-title v-if="note" :title="note" sub color="whitegrey">
-            <slot slot="right"></slot>
+            <slot name="right" slot="right"></slot>
         </subpage-title>
 
-        <loader v-if="loading"/>
-        <selectable-list v-else :items="items" :maxSelectionSize="1" :selectionKey="selectionKey">
-            <template slot="no-items">
-                <v-layout class="align-center justify-center my-5 font-weight-thin subheading font-italic">
-                    <slot name="none"><img src="/img/broken-heart.svg" class="logo-petit ma-1"/>Pas encore d'informations</slot>
-                </v-layout>
-            </template>
-        </selectable-list>
+        <slot name="subbar"></slot>
+
+        <template v-if="!hide">
+            <loader v-if="loading"/>
+            <selectable-list v-else :items="items" :maxSelectionSize="1" :selectionKey="selectionKey">
+                <template slot="no-items">
+                    <v-layout class="align-center justify-center my-5 font-weight-thin subheading font-italic">
+                        <slot name="none"><img src="/img/broken-heart.svg" class="logo-petit ma-1"/>Pas encore d'informations</slot>
+                    </v-layout>
+                </template>
+            </selectable-list>
+        </template>
     </v-flex>
 </template>
 <script>
@@ -32,7 +36,8 @@
             none: String,
             note: String,
             forced: {type: Boolean, default: false},
-            selectionKey: {type: String, required: true}
+            selectionKey: {type: String, required: true},
+            hide: {type: Boolean, default: false}
         },
         data: () => ({loading: false, refreshable: {type: Boolean, default: true}}),
         created() {

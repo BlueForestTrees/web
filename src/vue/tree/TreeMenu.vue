@@ -1,9 +1,12 @@
 <template>
+    <v-card>
+
     <v-layout column>
         <template v-for="(tab,i) in tabs">
             <v-btn icon :input-value="i === value" @click="$emit('input',i)"><icon :iconClass="tab.class" /></v-btn>
         </template>
     </v-layout>
+    </v-card>
 </template>
 
 <script>
@@ -18,7 +21,8 @@
                     {class: "description logo-petit ma-2"},
                     {class: "planet logo-petit ma-2"},
                     {class: "facet logo-petit ma-2"},
-                    {class: "scope-tree logo-petit ma-2"},
+                    {class: "branches logo-petit ma-2"},
+                    {class: "roots logo-petit ma-2"}
                 ]
             }
         }

@@ -1,17 +1,17 @@
 <template>
     <div>
 
-        <v-card class="ma-2" >
-            <fragment-list :tree="tree" :hide="adding" :fragment="ROOTS" :selectionKey="selectionKey" key="0" note="Fabrication">
-                <btn v-if="!adding" slot="right" icon-class="root-add logo" @click="setAdding(true)"></btn>
+        <v-card class="ma-2">
+            <fragment-list :tree="tree" :hide="adding" :fragment="BRANCHES" :selectionKey="selectionKey" key="0" note="Utilisation">
+                <btn v-if="!adding" slot="right" icon-class="branch-add logo" @click="setAdding(true)"></btn>
                 <transition-expand slot="subbar">
                     <v-card class="ma-2" v-if="adding">
                         <v-card>
-                            <subpage-title sub title="Ajouter une ressource">
-                                <icon slot="left" iconClass="root-add logo"></icon>
+                            <subpage-title sub title="Ajouter une utilisation">
+                                <icon slot="left" iconClass="branch-add logo"></icon>
                                 <closer slot="right" @close="setAdding(false)"/>
                             </subpage-title>
-                            <ressource-adder :tree="oneSelected || tree" @close="setAdding(false)"/>
+                            <ressource-adder :reversed="true" :tree="oneSelected || tree" @close="setAdding(false)"/>
                         </v-card>
                     </v-card>
                 </transition-expand>
@@ -31,10 +31,6 @@
         </transition-expand>
     </div>
 
-    <!--<fragment-list v-else-if="idx === 1" :tree="tree" :fragment="TANK" :selectionKey="selectionKey" key="1" :note="`Les dernières ressources`"/>-->
-    <!--<fragment-list v-else-if="idx === 2" :tree="tree" :fragment="BRANCHES" :selectionKey="selectionKey" key="4" :note="`Les utilisations possibles`">-->
-    <!--<btn icon-class="branch-add logo logo" @click="setAdding(true, true)"></btn>-->
-    <!--</fragment-list>-->
 </template>
 
 <script>
@@ -83,6 +79,9 @@
             ROOTS, TANK, BRANCHES, rootScope
         }),
         computed: {
+            ...mapState({
+                idx: s => s.nav.tree.root.idx
+            }),
             section: function () {
                 return {
                     title: `Discussion sur les ressources de \"${name(this.tree)}\"`,
@@ -93,7 +92,6 @@
                 }
             }
         },
-
         methods: {
             de, qtUnitName, name,
             ...mapActions({

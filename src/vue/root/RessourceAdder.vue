@@ -1,15 +1,7 @@
 <template>
     <div>
-        <v-layout row align-center>
-            <v-spacer/>
-            <v-btn v-if="!editing" icon @click.stop="revert">
-                <v-icon large color="primary">swap_vert</v-icon>
-            </v-btn>
-        </v-layout>
 
-        <v-divider/>
-
-        <editor v-model="editing" :editor="editor" :initial="initial" :changes="changes" @change="change"/>
+        <tree-selection-picker :returnTree="true" @save="select"/>
 
         <saver v-if="!editing" saved-text="Ressource ajoutée"
                :initial="initial" :changes="changes" :final="final" :editor="editor"
@@ -20,7 +12,7 @@
 
 <script>
     import Closer from "../common/Closer"
-    import {name, qtUnitName} from "../../services/calculations"
+    import {name} from "../../services/calculations"
     import QuantityPicker from "../common/QuantityPicker"
     import On from "../../const/on"
     import {GO} from "../../const/go"
@@ -28,7 +20,6 @@
     import SubpageTitle from "../tree/SubpageTitle"
     import AddEntryFab from "../common/AddEntryFab"
     import TreePicker from "../tree/TreePicker"
-    import Editor from "../common/Editor"
     import Edition from "../editor/Edition"
     import Saver from "../editor/Saver"
 
@@ -36,21 +27,16 @@
         name: "ressource-adder",
         props: ['tree', 'reverted'],
         mixins: [Edition],
-        components: {Saver, Editor, TreePicker, AddEntryFab, SubpageTitle, TreeSelectionPicker, QuantityPicker, Closer},
+        components: {Saver, TreePicker, AddEntryFab, SubpageTitle, TreeSelectionPicker, QuantityPicker, Closer},
         data: () => ({
             editing: false,
             GO, On
         }),
         computed: {
-            text() {
-                return `${this.final.tree && qtUnitName(this.final.tree.selection) || "..."} contient ${this.final.root && qtUnitName(this.final.root.selection) || "..."}`
-            },
             editor() {
-                const canChangeTree = this.final.tree && this.final.tree._id !== this.tree._id
-                const canChangeRoot = !canChangeTree
                 return [
-                    {key: "tree", title: "A", displayFct: qtUnitName, editor: "tree-selection-picker", props: {canChangeTree, returnTree: true}},
-                    {key: "root", title: "B", displayFct: qtUnitName, editor: "tree-selection-picker", props: {canChangeTree: canChangeRoot, returnTree: true}}
+                    {key: "tree"},
+                    {key: "root"}
                 ]
             }
         },
@@ -66,6 +52,9 @@
                 const tmp = this.final.tree
                 this.change({key: "tree"}, this.final.root)
                 this.change({key: "root"}, tmp)
+            },
+            select(root) {
+                this.change({key: "root"}, root)
             },
             saved() {
                 this.$emit('close')
