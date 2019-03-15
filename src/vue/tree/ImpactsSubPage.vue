@@ -1,37 +1,26 @@
 <template>
     <div>
-
-        <v-card class="ma-2">
+        <v-card class="ma-2 elevation-5">
             <subpage-title title="Impacts sur l'environnement" sub color="whitegrey">
-                <open-message slot="right" :section="section" no-text/>
+                <closer v-if="adding" slot="right" @close="setAdding(false)"/>
+                <btn v-else slot="right" icon="add_box" icon-color="grey" @click="setAdding(true)"/>
             </subpage-title>
-            <v-layout justify-center>
-                <scope-menu :value="idx" @input="setIdx" :dense="$vuetify.breakpoint.xsOnly" :scope="impactScope"/>
-            </v-layout>
+
+            <transition-expand>
+                <div v-if="adding">
+                    <subpage-title centered title="Ajouter un impact" sub icon-class="planet logo"/>
+                    <impact-adder :tree="tree" @close="setAdding(false)"/>
+                </div>
+            </transition-expand>
+
+            <fragment-list v-if="!adding" :tree="tree" :fragment="IMPACT_TANK" :selectionKey="selectionKey" forced/>
         </v-card>
 
         <transition-expand>
-            <v-card class="ma-2" v-if="adding">
-                <impact-adder :tree="tree" @close="setAdding(false)"/>
-            </v-card>
-        </transition-expand>
-
-        <v-card class="ma-2">
-            <transition name="slide-fade" mode="out-in">
-                <fragment-list v-if="idx === 0" :tree="tree" :fragment="IMPACT_TANK" :selectionKey="selectionKey" forced note="Liste des impacts (complet)"></fragment-list>
-                <fragment-list v-else-if="idx === 1" :tree="tree" :fragment="IMPACTS" :selectionKey="selectionKey" note="Liste des impacts (local)">
-                    <v-btn icon>
-                        <v-list-tile-avatar class="planet-add logo" @click="setAdding(true)"></v-list-tile-avatar>
-                    </v-btn>
-                </fragment-list>
-            </transition>
-        </v-card>
-
-        <transition-expand>
-            <v-card class="ma-2" v-if="oneSelected && idx === 1">
-                <subpage-title title="Actions" sub color="whitegrey">
-                </subpage-title>
+            <v-card class="ma-2 elevation-5" v-if="oneSelected">
+                <subpage-title :title="qtUnitName(oneSelected)" sub color="whitegrey"/>
                 <v-layout justify-center>
+                    <open-message slot="right" :section="section" no-text/>
                     <btn icon-class="balance logo" @click="goEquiv({tree, oneSelected})"></btn>
                     <btn icon-class="game logo" @click="goQuiDeuxFoisPlus({tree, oneSelected})"></btn>
                     <btn icon="delete" iconColor="grey"></btn>
@@ -48,11 +37,10 @@
     import ImpactAdder from "../impact/ImpactAdder"
     import {IMPACT_TANK, IMPACTS} from "../../const/fragments"
     import On from "../../const/on"
-    import {mapActions, mapMutations, mapState} from "vuex"
+    import {mapActions} from "vuex"
     import Loader from "../loader/Loader"
     import ScopeMenu from "../root/ScopeMenu"
     import {impactScope} from "../../const/img"
-    import Do from "../../const/do"
     import SubpageTitle from "./SubpageTitle"
     import {name} from "../../services/calculations"
     import Closer from "../common/Closer"
@@ -60,6 +48,7 @@
     import Btn from "../common/btn"
     import TransitionExpand from "../common/TransitionExpand"
     import {impact} from "../../const/selections"
+    import Note from "../common/Note"
 
     const FragmentList = () => import(/* webpackChunkName: "FragmentList"*/"./FragmentList")
 
@@ -73,6 +62,7 @@
             selectionKey: impact
         }),
         components: {
+            Note,
             TransitionExpand,
             Btn,
             Closer,
@@ -86,7 +76,6 @@
         },
         props: ['tree', 'modeAdd'],
         computed: {
-            ...mapState({idx: s => s.nav.tree.impact.idx}),
             items() {
                 return this.tree && this.tree.impactsTank
             },
@@ -95,7 +84,8 @@
                     title: `Discussion sur les impacts de \"${name(this.tree)}\"`,
                     filter: {
                         type: 'impact.trunk',
-                        topicId: this.tree._id
+                        topicId: this.tree._id,
+                        subTopicId: this.oneSelected.impactId
                     }
                 }
             }
@@ -105,9 +95,6 @@
                 loadTreeFragment: On.UPDATE_TREE,
                 goEquiv: On.GO_EQUIV,
                 goQuiDeuxFoisPlus: On.GO_QUI_DEUX_FOIS_PLUS
-            }),
-            ...mapMutations({
-                setIdx: Do.SET_TREE_IMPACT_IDX
             }),
             setAdding(adding) {
                 this.adding = adding

@@ -34,7 +34,6 @@
     import On from "../const/on"
     import {GO} from "../const/go"
     import {mapState} from 'vuex'
-    import Bar from "./common/Bar"
     import {Dial} from "../const/dial"
     import LoggedIn from "./user/LoggedIn"
 
@@ -62,7 +61,6 @@
             Messages,
             ConnectToContinueDialog,
             Snack,
-            Bar,
             LeftMenu
         },
         mounted: async function () {

@@ -42,7 +42,7 @@
                     <v-icon color="primary">chat</v-icon>
                 </v-list-tile-action>
                 <v-list-tile-content>
-                    <v-list-tile-title>Discussions</v-list-tile-title>
+                    <v-list-tile-title>Vos messages</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
 

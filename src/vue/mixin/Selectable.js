@@ -21,7 +21,7 @@ export default {
             return this.selectionCount > 0 && this.selection
         },
         oneSelected() {
-            return this.selectionCount === 1 && this.selection[0]
+            return (this.selectionCount === 1 || null) && this.selection[0]
         },
         twoSelected() {
             return this.selectionCount === 2 && this.selection

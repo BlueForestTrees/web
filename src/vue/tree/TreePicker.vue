@@ -15,7 +15,7 @@
     import Do from "../../const/do"
     import {mapMutations, mapState, mapActions} from "vuex"
     import On from "../../const/on"
-    import {TRUNK, trunkFragment} from "../../const/fragments"
+    import {OWNER, TRUNK} from "../../const/fragments"
 
     const CreateTree = () => import(/* webpackChunkName: "CreateTree" */ './CreateTree')
     const Search = () => import(/* webpackChunkName: "Search"*/ "../search/Search")
@@ -27,7 +27,8 @@
         components: {CreateTree, Favorites, Search},
         methods: {
             async pickSelection(selection) {
-                this.loadTreeFromSelection({selection, fragments: trunkFragment})
+                const fragments = [TRUNK, OWNER]
+                this.loadTreeFromSelection({selection, fragments})
                     .then(tree => tree.promises.all
                         .then(() => this.$emit('pick', tree))
                         .catch(this.snackError)

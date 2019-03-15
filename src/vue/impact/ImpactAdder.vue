@@ -1,21 +1,12 @@
 <template>
     <div>
 
-        <subpage-title title="Ajouter un impact" icon-class="planet-add logo" sub>
-            <closer slot="right" @close="$emit('close')"/>
-        </subpage-title>
-
-        <v-divider/>
-
-        <transition name="slide-fade" mode="out-in">
-
             <impact-entry-picker v-if="changeItem || !selectedEntry" @select="select"/>
 
             <v-layout v-else align-center column>
                 <quantity-picker :item="selectedEntry" @change="validate" @close="closeQtPicker"></quantity-picker>
             </v-layout>
 
-        </transition>
     </div>
 
 </template>

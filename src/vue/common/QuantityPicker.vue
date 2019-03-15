@@ -2,16 +2,18 @@
     <div>
         <subpage-title sub iconClass="carton logo" title="Quantité">
             <slot slot="left"></slot>
-            <closer slot="right" @close="close"/>
+            <closer previous slot="right" @close="close"/>
         </subpage-title>
 
+        <v-divider/>
         <v-form v-model="valid" v-on:submit.prevent="" ref="form">
-
-            <v-layout :column="$vuetify.breakpoint.xsOnly" align-center class="font-weight-thin subheading my-5">
-                <v-text-field type="number" v-model="qt" :rules="[required, isNumber]" @keyup.enter="validate" class="chars-width-5" label="Quantité"></v-text-field>
-                <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]" @keyup.enter="validate" class="chars-width-15" label="Unité"></unit-select>
-                <div v-if="item.eq">eq. {{item.eq}}</div>
-            </v-layout>
+            <v-container>
+                <v-layout :column="$vuetify.breakpoint.xsOnly" align-center class="font-weight-thin subheading my-5">
+                    <v-text-field type="number" v-model="qt" :rules="[required, isNumber]" @keyup.enter="validate" class="chars-width-5" label="Quantité"></v-text-field>
+                    <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]" @keyup.enter="validate" class="chars-width-15" label="Unité"></unit-select>
+                    <div v-if="item.eq">eq. {{item.eq}}</div>
+                </v-layout>
+            </v-container>
 
             <v-layout row justify-center class="mt-3">
                 <v-spacer/>

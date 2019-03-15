@@ -7,7 +7,6 @@
                           :value="finalSelection"
                           @pick="pickSelection" @close="closeSelectionPicker"
                           :closable="canChangeTree"/>
-
     </transition>
 </template>
 <script>
@@ -34,11 +33,11 @@
             name,
             async pickTree(pickedTree, way) {
                 this.pickedTree = pickedTree
-                this.selectionPickerClosed = false
                 //si on vient de créer on oblige pas à rechoisir une quantité
                 if (way === 'create') {
                     this.pickSelection(selectionFromTree(pickedTree))
                 }
+                this.selectionPickerClosed = false
             },
             pickSelection(selection) {
                 if (this.returnTree) {

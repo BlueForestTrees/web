@@ -1,6 +1,6 @@
 <template>
     <v-flex key="search-page">
-        <v-card class="elevation-4">
+        <v-card class="elevation-4 pt-3">
             <welcome-panel/>
             <v-tabs :value="tab" @change="setTab" centered slider-color="primary">
                 <v-tab href="#search"><v-list-tile-avatar class="scope-tree logo"/>Produits</v-tab>

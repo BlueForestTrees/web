@@ -1,16 +1,14 @@
 <template>
-    <v-card>
-
     <v-layout column>
-        <template v-for="(tab,i) in tabs">
-            <v-btn icon :input-value="i === value" @click="$emit('input',i)"><icon :iconClass="tab.class" /></v-btn>
-        </template>
+        <v-btn v-for="(tab,i) in tabs" :key="i" icon :input-value="i === value" @click="$emit('input',i !== value ? i : null)">
+            <icon :iconClass="tab.class"/>
+        </v-btn>
     </v-layout>
-    </v-card>
 </template>
 
 <script>
     import Icon from "../common/icon"
+
     export default {
         name: "tree-menu",
         components: {Icon},
@@ -18,17 +16,16 @@
         computed: {
             tabs() {
                 return [
-                    {class: "description logo-petit ma-2"},
-                    {class: "planet logo-petit ma-2"},
-                    {class: "facet logo-petit ma-2"},
-                    {class: "branches logo-petit ma-2"},
-                    {class: "roots logo-petit ma-2"}
+                    {class: "description logo-petit"},
+                    {class: "planet logo-petit"},
+                    {class: "facet logo-petit"},
+                    {class: "branches logo-petit"},
+                    {class: "trunk logo-petit"},
+                    {class: "roots logo-petit"},
+                    {class: "voice logo-petit"},
+                    {class: "game logo-petit"}
                 ]
             }
         }
     }
 </script>
-
-<style scoped>
-
-</style>

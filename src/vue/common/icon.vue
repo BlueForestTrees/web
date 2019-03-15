@@ -1,6 +1,6 @@
 <template>
     <v-list-tile-avatar v-if="iconClass" :class="iconClass"/>
-    <v-icon v-else-if="icon" x-large :color="iconColor">{{icon}}</v-icon>
+    <v-icon v-else-if="icon" :color="iconColor">{{icon}}</v-icon>
 </template>
 
 <script>

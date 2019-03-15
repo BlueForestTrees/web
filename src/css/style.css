@@ -159,6 +159,10 @@ a {
     background: url(/img/balance.svg) no-repeat center;
 }
 
+.trunk {
+    background: url(/img/trunk.svg) no-repeat center;
+}
+
 .carton {
     background: url(/img/carton.svg) no-repeat center;
 }
@@ -177,10 +181,6 @@ a {
 
 .planet-add {
     background: url(/img/planetadd.svg) no-repeat center;
-}
-
-.facet-add {
-    background: url(/img/facetAdder.svg) no-repeat center;
 }
 
 .enough-high {
@@ -328,6 +328,24 @@ a {
 
 .slide-left-right-leave-to {
     transform: translateX(-450px);
+    opacity: 0;
+}
+
+.slide-up-down-enter-active {
+    transition: all .3s ease;
+}
+
+.slide-up-down-leave-active {
+    transition: all .3s ease;
+}
+
+.slide-up-down-enter {
+    transform: translateY(-450px);
+    opacity: 0;
+}
+
+.slide-up-down-leave-to {
+    transform: translateY(-450px);
     opacity: 0;
 }
 

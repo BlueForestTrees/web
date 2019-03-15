@@ -1,33 +1,33 @@
 <template>
     <div>
-        <v-card class="ma-2">
+        <v-card class="ma-2 elevation-5">
             <subpage-title title="Propriétés" sub color="whitegrey">
-                <v-layout slot="right" row justify-end>
-                    <v-btn icon>
-                        <v-list-tile-avatar class="facet-add logo" @click="setAdding(true)"></v-list-tile-avatar>
-                    </v-btn>
-                    <open-message slot="right" :section="section" no-text/>
-                </v-layout>
+                <btn v-if="!adding" slot="right" icon="add_box" icon-color="grey" @click="setAdding(true)"/>
             </subpage-title>
 
             <transition-expand>
-                <v-card class="ma-2">
-                    <facet-adder v-if="adding" :tree="tree" @close="setAdding(false)"/>
-                </v-card>
+                <div v-if="adding">
+                    <v-divider/>
+                    <subpage-title sub title="Ajouter une propriété" icon-class="facet logo">
+                        <closer slot="right" @close="setAdding(false)"/>
+                    </subpage-title>
+                    <v-divider/>
+                    <facet-adder :tree="tree" @close="setAdding(false)"/>
+                </div>
             </transition-expand>
 
-            <fragment-list :tree="tree" :fragment="FACETS" :selectionKey="selectionKey"></fragment-list>
+            <fragment-list v-if="!adding" :tree="tree" :fragment="FACETS" :selectionKey="selectionKey"/>
         </v-card>
 
         <transition-expand>
-            <v-card class="ma-2" v-if="oneSelected">
-                <subpage-title title="Actions" sub color="whitegrey"/>
+            <v-card class="ma-2 elevation-5" v-if="oneSelected">
+                <subpage-title :title="qtUnitName(oneSelected)" sub color="whitegrey"/>
                 <v-layout justify-center>
+                    <open-message slot="right" :section="section" no-text/>
                     <btn icon-class="balance logo" @click="goEquiv({tree, oneSelected})"></btn>
                     <btn icon-class="game logo" @click="goQuiDeuxFoisPlus({tree, oneSelected})"></btn>
                     <btn icon="delete" iconColor="grey"></btn>
                 </v-layout>
-                <note :text="qtUnitName(oneSelected)" />
             </v-card>
         </transition-expand>
     </div>
@@ -52,6 +52,7 @@
     import TransitionExpand from "../common/TransitionExpand"
     import {facet} from "../../const/selections"
     import Note from "../common/Note"
+    import UnselectOnTreeChange from "../mixin/UnselectOnTreeChange"
 
     export default {
         name: "facets-subpage",
@@ -68,7 +69,7 @@
             SelectableList,
         },
         props: ['tree', 'modeAdd'],
-        mixins: [selectable],
+        mixins: [selectable, UnselectOnTreeChange],
         data: () => ({
             FACETS, selectionKey: facet
         }),
@@ -87,7 +88,8 @@
                     title: `Discussion sur les propriétés de \"${name(this.tree)}\"`,
                     filter: {
                         type: 'trunk-facet',
-                        topicId: this.tree._id
+                        topicId: this.tree._id,
+                        subTopicId: this.oneSelected.facetId
                     }
                 }
             }
@@ -106,7 +108,7 @@
                 this.loading = true
                 this.loadTreeFragment({tree: this.tree, fragments: [FACETS]})
                 this.loading = false
-            },
+            }
         }
     }
 </script>

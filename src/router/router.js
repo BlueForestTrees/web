@@ -3,11 +3,11 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 const NotFound = () => import(/* webpackChunkName: "NotFound" */ "../vue/NotFound")
-const Tree = () => import(/* webpackChunkName: "Tree" */ '../vue/tree/Tree.vue')
+const TreePage = () => import(/* webpackChunkName: "Tree" */ '../vue/tree/TreePage.vue')
 const Equivalence = () => import(/* webpackChunkName: "Equivalence" */ '../vue/equivalence/Equivalence')
 const Qui2 = () => import(/* webpackChunkName: "Qui2" */ '../vue/jeu/QuiDeuxFoisPlus')
 const RootEditor = () => import(/* webpackChunkName: "Root" */ '../vue/root/RootEditorPage')
-const MainPage = () => import(/* webpackChunkName: "Search" */ '../vue/search/MainPage')
+const SearchPage = () => import(/* webpackChunkName: "Search" */ '../vue/search/SearchPage')
 const BlueForest = () => import(/* webpackChunkName: "BlueForest" */ '../vue/BlueForest')
 const Compare = () => import(/* webpackChunkName: "Compare" */ '../vue/compare/Compare')
 const Confirmation = () => import(/* webpackChunkName: "Confirmation" */ '../vue/user/Confirmation')
@@ -40,7 +40,7 @@ export default new VueRouter({
         {
             path: "/", component: BlueForest,
             children: [
-                {name: GO.SEARCH, path: "", component: MainPage},
+                {name: GO.SEARCH, path: "", component: SearchPage},
                 {name: GO.PLAN_INTRO, path: "/aide", component: BFCestQuoi},
                 {name: GO.PLAN, path: "/plan", component: Plan},
                 {name: GO.TEAM, path: "/equipe", component: MyTeam},
@@ -53,9 +53,9 @@ export default new VueRouter({
                 {name: GO.DATA_EXPLAINED, path: 'explain/datas', component: DatasExplained},
                 {name: GO.CREATE_TREE, path: "new/tree", component: CreateTree},
 
-                {name: GO.TREE, path: "tree/:bqt/:_id", component: Tree, props: (route) => ({_id: route.params._id, bqt: Number(Number.parseFloat(route.params.bqt))})},
-                {name: GO.TREE_EMPTY, path: "tree", component: Tree},
-                {name: GO.SELECTION, path: "sel/:_id", component: Tree, props: (route) => ({sid: route.params._id})},
+                {name: GO.TREE, path: "tree/:bqt/:_id", component: TreePage, props: (route) => ({_id: route.params._id, bqt: Number(Number.parseFloat(route.params.bqt))})},
+                {name: GO.TREE_EMPTY, path: "tree", component: TreePage},
+                {name: GO.SELECTION, path: "sel/:_id", component: TreePage, props: (route) => ({sid: route.params._id})},
 
                 {name: GO.EQUIV, path: "equiv/:bqt/:_id/:sbqt/:s_id", component: Equivalence, props: true},
 

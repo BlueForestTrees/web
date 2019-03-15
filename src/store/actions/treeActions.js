@@ -7,7 +7,7 @@ import router from "../../router/router"
 import {GO} from "../../const/go"
 import Do from "../../const/do"
 import {DAMAGE, FACET, IMPACT} from "../../const/attributesTypes"
-import {allFragments, OWNER, TRUNK} from "../../const/fragments"
+import {OWNER} from "../../const/fragments"
 import {deleteCatch} from "./commons"
 
 export default {
@@ -43,16 +43,16 @@ export default {
     [On.LOAD_SELECTION]: async ({dispatch}, {_id, fragments}) => dispatch(On.LOAD_SELECTION_TREE, {selection: await api.getSelection(_id), fragments}),
 
 
-    [On.LOAD_TREES]: ({dispatch}, {treesIds, fragments = allFragments}) => {
+    [On.LOAD_TREES]: ({dispatch}, {treesIds, fragments = []}) => {
         return Promise.all(treesIds.map(_id => dispatch(On.LOAD_TREE, {_id, fragments})))
     },
 
-    [On.UPDATE_TREES]: ({dispatch}, {trees, fragments = allFragments}) => {
+    [On.UPDATE_TREES]: ({dispatch}, {trees, fragments = []}) => {
         return Promise.all(trees.map(tree => dispatch(On.UPDATE_TREE, {tree, fragments})))
     },
 
 
-    [On.LOAD_OPEN_TREE]: async ({state, dispatch, commit}, {_id, bqt, fragments = allFragments}) =>
+    [On.LOAD_OPEN_TREE]: async ({state, dispatch, commit}, {_id, bqt, fragments = []}) =>
         dispatch(On.LOAD_TREE, {_id, bqt, fragments})
             .then(tree => {
                 commit(Do.OPEN_TREE, tree)
@@ -68,14 +68,14 @@ export default {
             }),
 
 
-    [On.LOAD_TREE]: ({commit, state, dispatch}, {_id, bqt = 1, fragments = allFragments}) => {
+    [On.LOAD_TREE]: ({commit, state, dispatch}, {_id, bqt = 1, fragments = []}) => {
         const tree = {_id}
         const all = dispatch(On.UPDATE_TREE, {tree, bqt, fragments})
         tree.promises.all = all
         dispatch(On.ADD_TO_BASKET, tree)
         return tree
     },
-    [On.UPDATE_TREE]: ({dispatch}, {tree, bqt = treeBqt(tree), fragments = allFragments}) => {
+    [On.UPDATE_TREE]: ({dispatch}, {tree, bqt = treeBqt(tree), fragments = []}) => {
 
         tree.promises = {}
         for (let i = 0; i < fragments.length; i++) {

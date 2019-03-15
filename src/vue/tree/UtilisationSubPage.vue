@@ -1,28 +1,26 @@
 <template>
     <div>
+        <v-card class="ma-2  elevation-5">
+            <subpage-title title="Utilisation" sub color="whitegrey">
+                <closer v-if="adding" slot="right" @close="setAdding(false)"/>
+                <btn v-else slot="right" icon="add_box" icon-color="grey" @click="setAdding(true)"/>
+            </subpage-title>
 
-        <v-card class="ma-2">
-            <fragment-list :tree="tree" :hide="adding" :fragment="BRANCHES" :selectionKey="selectionKey" key="0" note="Utilisation">
-                <btn v-if="!adding" slot="right" icon-class="branch-add logo" @click="setAdding(true)"></btn>
-                <transition-expand slot="subbar">
-                    <v-card class="ma-2" v-if="adding">
-                        <v-card>
-                            <subpage-title sub title="Ajouter une utilisation">
-                                <icon slot="left" iconClass="branch-add logo"></icon>
-                                <closer slot="right" @close="setAdding(false)"/>
-                            </subpage-title>
-                            <ressource-adder :reversed="true" :tree="oneSelected || tree" @close="setAdding(false)"/>
-                        </v-card>
-                    </v-card>
-                </transition-expand>
-            </fragment-list>
+            <transition-expand>
+                <div v-if="adding">
+                    <subpage-title sub title="Ajouter une utilisation" icon-class="branches logo"/>
+                    <ressource-adder reversed :tree="oneSelected || tree" @close="setAdding(false)"/>
+                </div>
+            </transition-expand>
+
+            <fragment-list v-if="!adding" :tree="tree" :fragment="BRANCHES" :selectionKey="selectionKey"/>
         </v-card>
 
         <transition-expand>
-            <v-card class="ma-2" v-if="oneSelected">
-                <subpage-title :title="qtUnitName(oneSelected)" sub color="whitegrey">
-                </subpage-title>
+            <v-card class="ma-2  elevation-5" v-if="oneSelected">
+                <subpage-title :title="qtUnitName(oneSelected)" sub color="whitegrey"/>
                 <v-layout justify-center>
+                    <open-message slot="right" :section="section" no-text/>
                     <btn icon-class="balance logo" @click="goEquiv({tree, oneSelected})"></btn>
                     <btn icon-class="game logo" @click="goQuiDeuxFoisPlus({tree, oneSelected})"></btn>
                     <btn icon="delete" iconColor="grey"></btn>
@@ -56,7 +54,7 @@
     const FragmentList = () => import(/* webpackChunkName: "FragmentList"*/"./FragmentList")
 
     export default {
-        name: "ressources-subpage",
+        name: "fabrication-subpage",
         mixins: [Selectable, UnselectOnTreeChange],
         components: {
             Icon,
@@ -87,7 +85,8 @@
                     title: `Discussion sur les ressources de \"${name(this.tree)}\"`,
                     filter: {
                         type: 'trunk-root',
-                        topicId: this.tree._id
+                        topicId: this.tree._id,
+                        subTopicId: this.oneSelected._id
                     }
                 }
             }
@@ -124,9 +123,8 @@
                     sbqt: root.trunk.quantity.bqt
                 })
             },
-            setAdding(adding, reverted) {
+            setAdding(adding) {
                 this.adding = adding
-                this.reverted = reverted
             }
         }
     }

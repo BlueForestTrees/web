@@ -7,11 +7,6 @@ export const ROOTS = "roots"
 export const TRUNK = "trunk"
 export const BRANCHES = "branches"
 
-
-export const allFragments = [TRUNK, OWNER, ROOTS, BRANCHES, IMPACTS, IMPACT_TANK, FACETS, TANK]
-export const trunkFragment = [TRUNK, OWNER]
-export const treeHeadFragments = [TRUNK, OWNER]
-
 //Lien entre les fragments et les id d'entry de chaque fragment.
 export const entryKeyFromFragmentName = {
     [IMPACT_TANK]: "_id",

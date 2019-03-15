@@ -2,7 +2,7 @@
     <svg id="surface" :viewBox="viewBox" v-resize="onResize" class="surface" version="1.2" xmlns="http://www.w3.org/2000/svg">
 
         <template v-for="branch in branchesList">
-            <g>
+            <g :key="branch.linkId">
                 <line class="line" :x1="branch.x" :y1="branch.y" :x2="branch.parent.x" :y2="branch.parent.y"></line>
                 <line class="line" v-if="!branch.tree.branches" :x1="branch.x" :y1="branch.y" :x2="branch.x" :y2="branch.y-sY*0.3"></line>
                 <trunk :key="branch.tree._id" :x="branch.x" :y="branch.y" :tree="branch.tree" :selected="isSelected(branch.tree)" @click="select(branch, BRANCHES)"/>
@@ -10,7 +10,7 @@
         </template>
 
         <template v-for="root in rootsList">
-            <g>
+            <g :key="root.linkId">
                 <line class="line" :x1="root.x" :y1="root.y" :x2="root.parent.x" :y2="root.parent.y"></line>
                 <line class="line" v-if="!root.tree.roots" :x1="root.x" :y1="root.y" :x2="root.x" :y2="root.y+sY*0.3"></line>
                 <trunk :key="root.tree._id" :x="root.x" :y="root.y" :tree="root.tree" :selected="isSelected(root.tree)" @click="select(root, ROOTS)"/>
@@ -56,16 +56,20 @@
                 requestAnimationFrame(animate)
                 TWEEN.update(time)
             }
-
             requestAnimationFrame(animate)
-
-            this.loadTreeFragment({tree: this.tree, fragments: [ROOTS]})
-            this.loadTreeFragment({tree: this.tree, fragments: [BRANCHES]})
+            this.updateFragments(this.tree, [ROOTS, BRANCHES])
         },
         watch: {
-            treeMenu(v, o) {
+            tree(v, o) {
+                if ((v && v._id) !== (o && o._id)) {
+                    console.log("watch tree change")
+                    this.lookAt({x: 0, y: 0}, true)
+                    this.updateFragments(this.tree, [ROOTS, BRANCHES])
+                }
+            },
+            showTreeRuban() {
                 const tfrom = {v: this.paddingLeft}
-                const tto = {v: this.treeMenu ? 225 : 0}
+                const tto = {v: this.showTreeRuban ? 225 : 0}
                 const updatePaddingLeft = ({v}) => this.paddingLeft = v
 
                 new TWEEN.Tween(tfrom)
@@ -82,7 +86,7 @@
             }
         },
         computed: {
-            ...mapGetters(['treeMenu']),
+            ...mapGetters(['showTreeRuban']),
             viewBox: function () {
                 const width = this.zoom * this.width
                 const height = this.zoom * this.height
@@ -96,6 +100,9 @@
             }
         },
         methods: {
+            ...mapActions({
+                loadTreeFragment: On.UPDATE_TREE
+            }),
             tweenNodes: function (newNodes, oldNodes) {
                 const oldCount = oldNodes.length || 0
                 const newCount = newNodes.length
@@ -134,9 +141,6 @@
                 this.width = window.innerWidth
                 this.height = window.innerHeight
             },
-            ...mapActions({
-                loadTreeFragment: On.UPDATE_TREE
-            }),
             selectTrunk(tree) {
                 this.toggleSelect(tree)
                 this.lookAt({x: 0, y: 0})
@@ -147,20 +151,28 @@
                 this.lookAt(drawTree)
                 if (this.isSelected(tree)) {
                     if (!tree[fragment]) {
-                        await this.loadTreeFragment({tree, fragments: [fragment]})
+                        await this.updateFragments(tree, [fragment])
                     }
                 }
             },
-            lookAt({x, y}) {
-                const current = {x: this.panx, y: this.pany}
-                new TWEEN.Tween(current)
-                    .to({x, y}, 300)
-                    .easing(TWEEN.Easing.Quadratic.Out)
-                    .onUpdate(() => {
-                        this.panx = current.x
-                        this.pany = current.y
-                    })
-                    .start()
+            async updateFragments(tree, fragments) {
+                return await this.loadTreeFragment({tree, fragments})
+            },
+            lookAt({x, y}, now = false) {
+                if (now) {
+                    this.panx = x
+                    this.pany = y
+                } else {
+                    const current = {x: this.panx, y: this.pany}
+                    new TWEEN.Tween(current)
+                        .to({x, y}, 300)
+                        .easing(TWEEN.Easing.Quadratic.Out)
+                        .onUpdate(() => {
+                            this.panx = current.x
+                            this.pany = current.y
+                        })
+                        .start()
+                }
             }
         },
     }

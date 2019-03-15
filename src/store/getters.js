@@ -19,15 +19,7 @@ export default {
         }
         return changes ? filter : null
     },
-    selectionIsTree: state => {
-        for (let i = 0; i < state.selection.length; i++) {
-            if (!state.selection[i].trunk) {
-                return false
-            }
-        }
-        return true
-    },
-    treeMenu: state => {
+    showTreeRuban: state => {
         return state.selections[treeMap] && state.selections[treeMap].length === 1 && state.nav.tree.tabIdx !== null
     }
 }

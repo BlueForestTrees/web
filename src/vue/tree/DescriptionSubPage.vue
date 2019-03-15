@@ -1,9 +1,8 @@
 <template>
     <v-card class="ma-2">
         <v-layout column align-center mb-1>
-            <subpage-title title="Description" sub color="whitegrey">
-                <open-message slot="right" :section="section" no-text/>
-            </subpage-title>
+
+            <subpage-title title="Description" sub color="whitegrey"/>
 
             <photo :trunk="tree.trunk" size="200" class="my-3"/>
 
@@ -30,7 +29,7 @@
     import {OWNER, TRUNK} from "../../const/fragments"
 
     export default {
-        name: "tree-headpage",
+        name: "DescriptionSubPage",
         components: {Photo, QtUnitName, Closer, TreeFab, SubpageTitle, Subheader, OpenMessage, FragmentSelect, TreeCard, Description},
         props: ['tree'],
         methods: {
@@ -46,17 +45,6 @@
                     !toUpdate[TRUNK] && toUpdate.push(TRUNK)
                     !toUpdate[OWNER] && toUpdate.push(OWNER)
                     toUpdate.length && this.updateTree({tree, fragments: toUpdate})
-                }
-            }
-        },
-        computed: {
-            section() {
-                return {
-                    title: `Message pour "${name(this.tree)}"`,
-                    filter: {
-                        type: 'tree',
-                        topicId: this.tree._id
-                    }
                 }
             }
         }

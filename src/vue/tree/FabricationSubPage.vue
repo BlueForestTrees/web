@@ -1,40 +1,34 @@
 <template>
     <div>
+        <v-card class="ma-2 elevation-5">
+            <subpage-title title="Fabrication" sub color="whitegrey">
+                <closer v-if="adding" slot="right" @close="setAdding(false)"/>
+                <btn v-else slot="right" icon="add_box" icon-color="grey" @click="setAdding(true)"/>
+            </subpage-title>
 
-        <v-card class="ma-2" >
-            <fragment-list :tree="tree" :hide="adding" :fragment="ROOTS" :selectionKey="selectionKey" key="0" note="Fabrication">
-                <btn v-if="!adding" slot="right" icon-class="root-add logo" @click="setAdding(true)"></btn>
-                <transition-expand slot="subbar">
-                    <v-card class="ma-2" v-if="adding">
-                        <v-card>
-                            <subpage-title sub title="Ajouter une ressource">
-                                <icon slot="left" iconClass="root-add logo"></icon>
-                                <closer slot="right" @close="setAdding(false)"/>
-                            </subpage-title>
-                            <ressource-adder :tree="oneSelected || tree" @close="setAdding(false)"/>
-                        </v-card>
-                    </v-card>
-                </transition-expand>
-            </fragment-list>
+            <transition-expand>
+                <div v-if="adding">
+                    <subpage-title sub title="Ajouter une ressource" icon-class="roots logo"/>
+                    <ressource-adder :tree="oneSelected || tree" @close="setAdding(false)"/>
+                </div>
+            </transition-expand>
+
+            <fragment-list v-if="!adding" :tree="tree" :fragment="ROOTS" :selectionKey="selectionKey"/>
         </v-card>
 
         <transition-expand>
-            <v-card class="ma-2" v-if="oneSelected">
-                <subpage-title :title="qtUnitName(oneSelected)" sub color="whitegrey">
-                </subpage-title>
+            <v-card class="ma-2 elevation-5" v-if="oneSelected">
+                <subpage-title :title="qtUnitName(oneSelected)" sub color="whitegrey"/>
                 <v-layout justify-center>
+                    <open-message slot="right" :section="section" no-text/>
                     <btn icon-class="balance logo" @click="goEquiv({tree, oneSelected})"></btn>
                     <btn icon-class="game logo" @click="goQuiDeuxFoisPlus({tree, oneSelected})"></btn>
-                    <btn icon="delete" iconColor="grey"></btn>
+                    <btn icon="delete" iconColor="grey" @click="deleteRoot({tree, root:oneSelected})"></btn>
                 </v-layout>
             </v-card>
         </transition-expand>
     </div>
 
-    <!--<fragment-list v-else-if="idx === 1" :tree="tree" :fragment="TANK" :selectionKey="selectionKey" key="1" :note="`Les dernières ressources`"/>-->
-    <!--<fragment-list v-else-if="idx === 2" :tree="tree" :fragment="BRANCHES" :selectionKey="selectionKey" key="4" :note="`Les utilisations possibles`">-->
-    <!--<btn icon-class="branch-add logo logo" @click="setAdding(true, true)"></btn>-->
-    <!--</fragment-list>-->
 </template>
 
 <script>
@@ -60,7 +54,7 @@
     const FragmentList = () => import(/* webpackChunkName: "FragmentList"*/"./FragmentList")
 
     export default {
-        name: "ressources-subpage",
+        name: "fabrication-subpage",
         mixins: [Selectable, UnselectOnTreeChange],
         components: {
             Icon,
@@ -88,7 +82,8 @@
                     title: `Discussion sur les ressources de \"${name(this.tree)}\"`,
                     filter: {
                         type: 'trunk-root',
-                        topicId: this.tree._id
+                        topicId: this.tree._id,
+                        subTopicId: this.oneSelected._id
                     }
                 }
             }
@@ -112,12 +107,6 @@
                 this.dispatchGoRoot({treeId: this.tree._id, rootId: root._id})
                 this.unselect()
             },
-            remove(items) {
-                for (let i = 0; i < items.length; i++) {
-                    this.deleteRoot(items[i].linkId)
-                }
-                this.unselect()
-            },
             goEquiv(root) {
                 this.dispatchGoEquiv({
                     _id: this.tree._id,
@@ -126,9 +115,8 @@
                     sbqt: root.trunk.quantity.bqt
                 })
             },
-            setAdding(adding, reverted) {
+            setAdding(adding) {
                 this.adding = adding
-                this.reverted = reverted
             }
         }
     }

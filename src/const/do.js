@@ -16,6 +16,7 @@ export default {
     RENAME_TRUNK: 'renameTree',
     REMOVE_FROM_BASKET: 'removeSelectionFromBasket',
     REMOVE_MESSAGE: "removeMessage",
+    REMOVE_FROM_FRAGMENT: "removeFromFragment",
     RESPOND_MESSAGE: "respondMessage",
     RIGHT_MENU_VISIBLE: 'rightMenuVisible',
     SET_NAV_MAIN_TAB: "setNavMainTab",

@@ -23,7 +23,8 @@
 
     export default {
         name: "recent",
-        mixins:[Selectable],
+        mixins: [Selectable],
+        props: {selectionKey: "recent"},
         components: {Btn, SelectableList, SubpageTitle, BasketComp},
         computed: {
             ...mapState(['basket'])

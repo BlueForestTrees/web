@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-layout column>
+        <v-layout column v-if="!modeSolo || !editing">
             <v-list class="py-0">
                 <v-list-tile v-if="field && !editing || idx === i" v-for="(field,i) in editor" :key="i" @click="toggle(i)">
                     <v-list-tile-content>
@@ -10,7 +10,7 @@
                             <span :class="`font-weight-medium ml-3 ${changed(field) ? 'font-italic' : ''}`">{{displayValue(field)}}</span>
                         </v-list-tile-title>
                     </v-list-tile-content>
-                    <v-list-tile-action v-if="editable && !field.noedit">
+                    <v-list-tile-action v-if="editable && !field.noedit && !modeSolo">
                         <v-layout>
                             <v-btn v-if="editing" @click.stop="close" icon>
                                 <v-icon color="primary">close</v-icon>
@@ -54,12 +54,18 @@
             initial: Object,
             changes: Object,
             editor: Array,
-            editable: {type: Boolean, default: true}
+            editable: {type: Boolean, default: true},
+            editIdx: {type: Number, default: null}
         },
-        data: () => ({idx: null}),
+        data: function () {
+            return {idx: this.editIdx}
+        },
         computed: {
             editing() {
                 return this.idx !== null
+            },
+            modeSolo() {
+                return this.editor.length === 1
             }
         },
         methods: {

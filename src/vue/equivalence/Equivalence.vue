@@ -55,7 +55,7 @@
         methods: {
             qtUnitName,
             ...mapActions({
-                dispatchLoad: On.LOAD_TREE,
+                loadOpenTree: On.LOAD_TREE,
                 dispatchSearchEquiv: On.SEARCH_EQUIV,
                 snack: On.SNACKBAR,
                 goTree: On.GO_TREE,
@@ -64,7 +64,7 @@
             }),
             refresh: async function () {
                 try {
-                    this.tree = await this.dispatchLoad({bqt: this.bqt, _id: this._id})
+                    this.tree = await this.loadOpenTree({bqt: this.bqt, _id: this._id})
                     await this.tree.promises.facets
                     await this.tree.promises.impactsTank
                     this.updateFilter()

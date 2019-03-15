@@ -1,5 +1,5 @@
 <template>
-    <v-flex class="enough-high-small">
+    <div class="enough-high-small">
         <subpage-title v-if="note" :title="note" sub color="whitegrey">
             <slot name="right" slot="right"></slot>
         </subpage-title>
@@ -16,7 +16,7 @@
                 </template>
             </selectable-list>
         </template>
-    </v-flex>
+    </div>
 </template>
 <script>
     import SelectableList from "../common/SelectableList"

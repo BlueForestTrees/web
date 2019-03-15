@@ -1,7 +1,7 @@
 import Do from "../../const/do"
 import Vue from "vue"
 import {mergeQt} from "../../services/calculations"
-import {find} from "unit-manip"
+import {find, findIndex} from "unit-manip"
 
 export default {
     [Do.OPEN_TREE]: (state, tree) => state.tree = tree,
@@ -31,6 +31,14 @@ export default {
             }
         } else {
             Vue.set(tree, fragment, [element])
+        }
+    },
+    [Do.REMOVE_FROM_FRAGMENT]: (state, {tree, fragment, element}) => {
+        if (tree[fragment]) {
+            const existingIndex = findIndex(tree[fragment], "_id", element._id)
+            if (existingIndex >= 0) {
+                tree[fragment].splice(existingIndex, 1)
+            }
         }
     }
 }
