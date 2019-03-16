@@ -57,13 +57,13 @@
                 TWEEN.update(time)
             }
             requestAnimationFrame(animate)
-            this.updateFragments(this.tree, [ROOTS, BRANCHES])
+            this.addNode(this.tree, [ROOTS, BRANCHES])
         },
         watch: {
             tree(v, o) {
                 if ((v && v._id) !== (o && o._id)) {
                     this.lookAt({x: 0, y: 0}, true)
-                    this.updateFragments(this.tree, [ROOTS, BRANCHES])
+                    this.addNode(this.tree, [ROOTS, BRANCHES])
                 }
             },
             showTreeRuban() {
@@ -113,16 +113,16 @@
                         if (oldNode) {
                             const hasMoved = newNode.x !== oldNode.x || newNode.y !== oldNode.y
                             if (hasMoved) {
-                                this.tween(oldNode, newNode)
+                                this.tweenNode(oldNode, newNode)
                             }
                         } else {
                             const parentNode = findFct(oldNodes, node => node.tree.linkId === newNode.parent.linkId) || newNode.parent
-                            this.tween(parentNode, newNode)
+                            this.tweenNode(parentNode, newNode)
                         }
                     }
                 }
             },
-            tween: function (o, n) {
+            tweenNode: function (o, n) {
                 const curPos = {x: o.x, y: o.y}
                 const newPos = {x: n.x, y: n.y}
                 const update = () => {
@@ -150,11 +150,11 @@
                 this.lookAt(drawTree)
                 if (this.isSelected(tree)) {
                     if (!tree[fragment]) {
-                        await this.updateFragments(tree, [fragment])
+                        await this.addNode(tree, [fragment])
                     }
                 }
             },
-            async updateFragments(tree, fragments) {
+            async addNode(tree, fragments) {
                 return await this.loadTreeFragment({tree, fragments})
             },
             lookAt({x, y}, now = false) {
