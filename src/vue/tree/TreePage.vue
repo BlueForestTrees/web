@@ -2,8 +2,7 @@
 
     <div v-if="tree && tree.trunk" style="height: 100%">
 
-        <!--<tree-map :tree="tree" :selection-key="selectionKey"/>-->
-        <tree-map-debug/>
+        <tree-map :tree="tree" :selection-key="selectionKey"/>
 
         <transition name="slide-left-right">
             <tree-ruban v-if="showTreeRuban" :tree="oneSelected" :tabIdx="tabIdx"/>
@@ -25,7 +24,6 @@
 
     import {treeMap} from "../../const/selections"
     import {OWNER, TRUNK} from "../../const/fragments"
-    import TreeMapDebug from "../treenav/TreeMapDebug"
 
     const TreeRuban = () => import(/* webpackChunkName: "TreeRuban" */ "./TreeRuban")
     const TreeMenu = () => import(/* webpackChunkName: "TreeMenu" */ "./TreeMenu")
@@ -33,7 +31,6 @@
 
     export default {
         components: {
-            TreeMapDebug,
             TreeRuban,
             TreeMenu,
             TreeMap,
