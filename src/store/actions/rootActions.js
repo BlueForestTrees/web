@@ -25,6 +25,7 @@ export default {
 
         return dispatch(On.CREATE_ROOT, request)
             .then(() => {
+                root.linkId = request._id
                 commit(Do.ADD_TO_FRAGMENT, {tree, fragment: ROOTS, element: root})
                 commit(Do.ADD_TO_FRAGMENT, {tree: root, fragment: BRANCHES, element: tree})
             })
@@ -35,9 +36,9 @@ export default {
             .then(roots => applyRessourceCoef(bqt, roots)),
     [On.UPDATE_ROOT]: ({commit}, {_id, trunkId, rootId, bqt}) => api.putRoot({_id, trunkId, rootId, bqt}),
     [On.DELETE_ROOT]: ({dispatch, commit}, {tree, root}) => {
-        return api.deleteRoot(root._id)
+        return api.deleteRoot(root.linkId || tree.linkId)
             .then(() => {
-                commit(Do.REMOVE_FROM_FRAGMENT, {tree, fragment: ROOTS, element: root})
+                commit(Do.REMOVE_FROM_FRAGMENT, {tree, fragment: ROOTS, element: root, key: "linkId"})
                 commit(Do.REMOVE_FROM_FRAGMENT, {tree: root, fragment: BRANCHES, element: tree})
             })
             .then(() => dispatch(On.SNACKBAR, {text: "Ressource retirée"}))

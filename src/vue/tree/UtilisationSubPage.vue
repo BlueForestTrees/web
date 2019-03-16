@@ -9,7 +9,7 @@
             <transition-expand>
                 <div v-if="adding">
                     <subpage-title sub title="Ajouter une utilisation" icon-class="branches logo"/>
-                    <ressource-adder reversed :tree="oneSelected || tree" @close="setAdding(false)"/>
+                    <ressource-adder reversed :tree="tree" @close="setAdding(false)"/>
                 </div>
             </transition-expand>
 
@@ -23,7 +23,7 @@
                     <open-message slot="right" :section="section" no-text/>
                     <btn icon-class="balance logo" @click="goEquiv({tree, oneSelected})"></btn>
                     <btn icon-class="game logo" @click="goQuiDeuxFoisPlus({tree, oneSelected})"></btn>
-                    <btn icon="delete" iconColor="grey"></btn>
+                    <btn icon="delete" iconColor="grey" @click="deleteOneSelected"></btn>
                 </v-layout>
             </v-card>
         </transition-expand>
@@ -105,14 +105,12 @@
             ...mapMutations({
                 setIdx: Do.SET_TREE_ROOT_IDX
             }),
+            deleteOneSelected() {
+                this.deleteRoot({tree: this.oneSelected, root: this.tree})
+                    .then(this.unselect)
+            },
             goRoot: function (root) {
                 this.dispatchGoRoot({treeId: this.tree._id, rootId: root._id})
-                this.unselect()
-            },
-            remove(items) {
-                for (let i = 0; i < items.length; i++) {
-                    this.deleteRoot(items[i].linkId)
-                }
                 this.unselect()
             },
             goEquiv(root) {

@@ -33,9 +33,9 @@ export default {
             Vue.set(tree, fragment, [element])
         }
     },
-    [Do.REMOVE_FROM_FRAGMENT]: (state, {tree, fragment, element}) => {
+    [Do.REMOVE_FROM_FRAGMENT]: (state, {tree, fragment, element, key = "_id"}) => {
         if (tree[fragment]) {
-            const existingIndex = findIndex(tree[fragment], "_id", element._id)
+            const existingIndex = findIndex(tree[fragment], key, element[key])
             if (existingIndex >= 0) {
                 tree[fragment].splice(existingIndex, 1)
             }

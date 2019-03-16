@@ -21,9 +21,7 @@
                     {class: "facet logo-petit"},
                     {class: "branches logo-petit"},
                     {class: "trunk logo-petit"},
-                    {class: "roots logo-petit"},
-                    {class: "voice logo-petit"},
-                    {class: "game logo-petit"}
+                    {class: "roots logo-petit"}
                 ]
             }
         }

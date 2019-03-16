@@ -62,7 +62,6 @@
         watch: {
             tree(v, o) {
                 if ((v && v._id) !== (o && o._id)) {
-                    console.log("watch tree change")
                     this.lookAt({x: 0, y: 0}, true)
                     this.updateFragments(this.tree, [ROOTS, BRANCHES])
                 }
