@@ -1,14 +1,15 @@
 import {mapActions} from "vuex"
 import On from "../../const/on"
+import Connected from "./Connected"
 
 export default {
     data() {
         return {ok: false}
     },
     created() {
-        this.checkAuth().then(v => this.ok = v)
+        this.checkAdmin().then(v => this.ok = v)
     },
     methods: {
-        ...mapActions({checkAuth: On.CHECK_AUTH})
+        ...mapActions({checkAdmin: On.CHECK_ADMIN})
     }
 }

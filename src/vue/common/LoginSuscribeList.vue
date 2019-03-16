@@ -6,7 +6,7 @@
             </v-list-tile-avatar>
             <v-list-tile-content>
                 <v-list-tile-title>{{(user && user.fullname) || "Visiteur"}}</v-list-tile-title>
-                <v-list-tile-sub-title>{{(user && "session expirée") || "non connecté"}}</v-list-tile-sub-title>
+                <v-list-tile-sub-title>{{(user && "Contrôle d'accès") || "non connecté"}}</v-list-tile-sub-title>
             </v-list-tile-content>
         </v-list-tile>
         <v-list-tile>

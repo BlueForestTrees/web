@@ -12,6 +12,7 @@ export default {
     ADD_CALLBACK: 'addCallback',
     POP_CALLBACK: 'PopCallback',
     CHECK_AUTH: "checkAuth",
+    CHECK_ADMIN: "checkAdmin",
     CHECK_OWNERSHIP: "checkOwnership",
     CHECK_NAME_AVAILABLE: "checkNameAvailable",
     CLEAR_SEARCH: 'clearSearch',

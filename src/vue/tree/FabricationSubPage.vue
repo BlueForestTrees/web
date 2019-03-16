@@ -121,6 +121,7 @@
             },
             setAdding(adding) {
                 this.adding = adding
+                this.adding && this.unselect()
             }
         }
     }

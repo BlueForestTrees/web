@@ -8,13 +8,7 @@
 
         <template v-if="!hide">
             <loader v-if="loading"/>
-            <selectable-list v-else :items="items" :maxSelectionSize="1" :selectionKey="selectionKey">
-                <template slot="no-items">
-                    <v-layout class="align-center justify-center my-5 font-weight-thin subheading font-italic">
-                        <slot name="none"><img src="/img/broken-heart.svg" class="logo-petit ma-1"/>Pas encore d'informations</slot>
-                    </v-layout>
-                </template>
-            </selectable-list>
+            <selectable-list v-else :items="items" :maxSelectionSize="1" :selectionKey="selectionKey"/>
         </template>
     </div>
 </template>

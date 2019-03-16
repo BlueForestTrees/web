@@ -12,7 +12,9 @@
     </v-list>
     <div v-else>
         <slot name="no-items">
-            <h5>Pas encore d'informations</h5>
+            <v-layout class="align-center justify-center my-5 font-weight-thin subheading font-italic">
+                <slot name="none"><img src="/img/broken-heart.svg" class="logo-petit ma-1"/>Pas encore d'informations</slot>
+            </v-layout>
         </slot>
     </div>
 </template>
@@ -28,7 +30,7 @@
             maxSelectionSize: Number,
             exceptId: String,
             noQt: {type: Boolean, default: false},
-            selectionKey: {type: String, required:true}
+            selectionKey: {type: String, required: true}
         },
         mixins: [selectable],
         computed: {

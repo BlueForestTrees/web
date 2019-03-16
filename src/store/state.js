@@ -50,9 +50,9 @@ export default {
             },
             tabIdx: null,
             cardFlipped: false,
-            impact: {idx: 0, term: "", adding: false},
-            root: {idx: 0, term: "", adding: false},
-            facet: {term: "", adding: false},
+            impact: {idx: 0, term: ""},
+            root: {idx: 0, term: ""},
+            facet: {term: ""},
             picker: {tab: null}
         }
     },

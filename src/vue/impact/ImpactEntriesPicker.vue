@@ -7,31 +7,9 @@
 
         <v-divider/>
 
-        <v-list v-if="items">
-            <v-list-tile @click="$emit('select', item)" v-for="item in items" :key="item._id">
-                <v-list-tile-content>{{name(item)}}</v-list-tile-content>
-            </v-list-tile>
-        </v-list>
+        <selectable-list :items="items" no-qt selection-key="impactEntryPicker" :maxSelectionSize="1" @select="item => $emit('select',item)"/>
 
-        <add-entry-fab title="Créer un type d'impact" :route="GO.ADD_IMPACT_ENTRY"/>
     </v-layout>
-
-    <!--<v-dialog v-model="detailsDialog" max-width="800">-->
-    <!--<v-card>-->
-    <!--<v-card-title class="headline">Détails de {{oneSelected.name}}</v-card-title>-->
-    <!--<v-divider/>-->
-    <!--<v-card-text>-->
-    <!--<v-list-tile v-for="(value, key) in oneSelected.raw" :key="key">-->
-    <!--<p>{{key}}</p><v-spacer/><p>{{value}}</p>-->
-    <!--</v-list-tile>-->
-    <!--</v-card-text>-->
-
-    <!--<v-card-actions>-->
-    <!--<v-spacer></v-spacer>-->
-    <!--<v-btn color="primary" flat="flat" @click="nav.detailsDialog = false">OK</v-btn>-->
-    <!--</v-card-actions>-->
-    <!--</v-card>-->
-    <!--</v-dialog>-->
 
 </template>
 <script>
@@ -41,11 +19,10 @@
     import {name} from "../../services/calculations"
     import Do from "../../const/do"
     import {GO} from "../../const/go"
-    import AddEntryFab from "../common/AddEntryFab"
 
     export default {
-        name:"impact-entry-picker",
-        components: {AddEntryFab, SelectableList},
+        name: "impact-entry-picker",
+        components: {SelectableList},
         data: function () {
             return {
                 GO,

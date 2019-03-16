@@ -1,12 +1,11 @@
 <template>
     <div>
 
-            <impact-entry-picker v-if="changeItem || !selectedEntry" @select="select"/>
+        <impact-entry-picker v-if="changeItem || !selectedEntry" @select="select"/>
 
-            <v-layout v-else align-center column>
-                <quantity-picker :item="selectedEntry" @change="validate" @close="closeQtPicker"></quantity-picker>
-            </v-layout>
-
+        <v-layout v-else align-center column>
+            <quantity-picker :item="selectedEntry" @change="validate" @close="closeQtPicker"></quantity-picker>
+        </v-layout>
     </div>
 
 </template>

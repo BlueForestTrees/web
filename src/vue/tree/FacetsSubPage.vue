@@ -71,15 +71,13 @@
         props: ['tree', 'modeAdd'],
         mixins: [selectable, UnselectOnTreeChange],
         data: () => ({
-            FACETS, selectionKey: facet
+            FACETS, selectionKey: facet,
+            adding: false
         }),
         created() {
             this.refresh()
         },
         computed: {
-            ...mapState({
-                adding: s => s.nav.tree.facet.adding
-            }),
             facets() {
                 return this.tree && this.tree.facets
             },
@@ -101,9 +99,6 @@
                     .then(this.unselect)
                     .then(() => this.snack({text: "Propriété rétirée"}))
             },
-            ...mapMutations({
-                setAdding: Do.SET_NAV_TREE_FACET_ADDING
-            }),
             ...mapActions({
                 snack: On.SNACKBAR,
                 deleteFacet: On.DELETE_FACET,
@@ -115,6 +110,10 @@
                 this.loading = true
                 this.loadTreeFragment({tree: this.tree, fragments: [FACETS]})
                 this.loading = false
+            },
+            setAdding(adding) {
+                this.adding = adding
+                this.adding && this.unselect()
             }
         }
     }

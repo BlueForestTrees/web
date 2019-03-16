@@ -46,6 +46,15 @@
                 </v-list-tile-content>
             </v-list-tile>
 
+            <v-list-tile @click="goto(GO.ADD_IMPACT_ENTRY)" v-if="isAdmin">
+                <v-list-tile-action>
+                    <v-icon color="primary">add_box</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                    <v-list-tile-title>Catalogue d'impact</v-list-tile-title>
+                </v-list-tile-content>
+            </v-list-tile>
+
         </v-list>
 
 
@@ -86,7 +95,7 @@
 </template>
 
 <script>
-    import {mapActions, mapState} from "vuex"
+    import {mapActions, mapState, mapGetters} from "vuex"
     import {Dial} from "../../const/dial"
     import On from "../../const/on"
     import {secs} from "../../const/sections"
@@ -97,7 +106,8 @@
             Dial, GO, secs
         }),
         computed: {
-            ...mapState(['tree', 'nav', 'version'])
+            ...mapState(['tree', 'nav', 'version']),
+            ...mapGetters(['isAdmin'])
         },
         methods: {
             switchColors() {
