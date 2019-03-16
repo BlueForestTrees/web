@@ -28,7 +28,7 @@
 </template>
 
 <script>
-    import {getAttributeByFragment, qtUnitName} from "../../services/calculations"
+    import {getFragment, qtUnitName} from "../../services/calculations"
     import {mapActions} from "vuex"
     import {GO} from "../../const/go"
     import SelectionCardFront from "../tree/SelectionCardFront"
@@ -67,10 +67,10 @@
         },
         computed: {
             leftAttribute() {
-                return this.leftTree && this.info.fragment && getAttributeByFragment(this.leftTree, this.info.fragment)
+                return this.leftTree && this.info.fragment && getFragment(this.leftTree, this.info.fragment)
             },
             rightAttribute() {
-                return this.rightTree && this.info.fragment && getAttributeByFragment(this.rightTree, this.info.fragment)
+                return this.rightTree && this.info.fragment && getFragment(this.rightTree, this.info.fragment)
             },
             deltaAttribute() {
                 if (this.leftAttribute && this.rightAttribute) {
@@ -84,7 +84,7 @@
                 return this.deltaAttribute && this.deltaAttribute.quantity.bqt
             },
             equivAttribute() {
-                return this.equivTree && this.info.fragment && getAttributeByFragment(this.equivTree, this.info.fragment)
+                return this.equivTree && this.info.fragment && getFragment(this.equivTree, this.info.fragment)
             },
             coef() {
                 if (this.deltaAttribute && this.equivAttribute) {

@@ -1,20 +1,20 @@
 import On from "../../const/on"
 import api from "../../rest/api"
-import Do from "../../const/do"
 import {applyAspectCoef, createStringObjectId, treeBqt} from "../../services/calculations"
-import {map} from 'unit-manip'
 import {FACETS} from "../../const/fragments"
+import Do from "../../const/do"
 
 export default {
 
     [On.LOAD_FACET]: ({commit}, {_id, bqt}) => api.getFacets(_id)
         .then(facets => applyAspectCoef(bqt, facets)),
 
-    [On.DELETE_FACETS]:
-        ({commit}, {facets, toDelete}) => {
-            api.deleteFacets(facets._id, map(toDelete, e => e._id))
-            commit(Do.DELETE_FACETS, {facets, toDelete})
-        },
+    [On.DELETE_FACET]:
+        ({commit}, {tree, facet}) =>
+            api.deleteFacet(facet._id)
+                .then(() => commit(Do.DELETE_FACET, {tree, facet})),
+
+
     [On.ADD_FACET]: ({}, {tree, entry, quantity}) => {
         const attribute = ({
             _id: createStringObjectId(), type: "facet", color: entry.color,

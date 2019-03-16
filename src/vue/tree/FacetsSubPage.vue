@@ -26,7 +26,7 @@
                     <open-message slot="right" :section="section" no-text/>
                     <btn icon-class="balance logo" @click="goEquiv({tree, oneSelected})"></btn>
                     <btn icon-class="game logo" @click="goQuiDeuxFoisPlus({tree, oneSelected})"></btn>
-                    <btn icon="delete" iconColor="grey"></btn>
+                    <btn icon="delete" iconColor="grey" @click="deleteOneSelected"></btn>
                 </v-layout>
             </v-card>
         </transition-expand>
@@ -96,10 +96,17 @@
         },
         methods: {
             qtUnitName,
+            deleteOneSelected() {
+                this.deleteFacet({tree: this.tree, facet: this.oneSelected})
+                    .then(this.unselect)
+                    .then(() => this.snack({text: "Propriété rétirée"}))
+            },
             ...mapMutations({
                 setAdding: Do.SET_NAV_TREE_FACET_ADDING
             }),
             ...mapActions({
+                snack: On.SNACKBAR,
+                deleteFacet: On.DELETE_FACET,
                 loadTreeFragment: On.UPDATE_TREE,
                 goEquiv: On.GO_EQUIV,
                 goQuiDeuxFoisPlus: On.GO_QUI_DEUX_FOIS_PLUS

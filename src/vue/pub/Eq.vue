@@ -13,7 +13,7 @@
 </template>
 
 <script>
-    import {attributeCoef, getAttributeByFragment} from "../../services/calculations"
+    import {attributeCoef, getFragment} from "../../services/calculations"
     import {mapActions} from "vuex"
     import SelectionCardFront from "../tree/SelectionCardFront"
     import On from "../../const/on"
@@ -46,10 +46,10 @@
         },
         computed: {
             leftAttribute() {
-                return this.leftTree && this.info.fragment && getAttributeByFragment(this.leftTree, this.info.fragment)
+                return this.leftTree && this.info.fragment && getFragment(this.leftTree, this.info.fragment)
             },
             rightAttribute() {
-                return this.rightTree && this.info.fragment && getAttributeByFragment(this.rightTree, this.info.fragment)
+                return this.rightTree && this.info.fragment && getFragment(this.rightTree, this.info.fragment)
             },
             coef() {
                 return this.leftAttribute && this.rightAttribute && attributeCoef(this.leftAttribute, this.rightAttribute)

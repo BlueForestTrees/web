@@ -243,11 +243,7 @@ const allValued = (treesFragment, key) => {
 
 export const attributeCoef = (leftAttribute, rightAttribute) => (quantity(leftAttribute).bqt / quantity(rightAttribute).bqt)
 
-export const getAttributeByFragment = (tree, {type, _id}) => tree[type] && find(tree[type], entryKeyFromFragmentName[type], _id)
-
-export const getAttribute = (tree, {type, _id}) => find(tree[type], "_id", _id)
-
-export const needS = count => count > 1 ? 's' : ''
+export const getFragment = (tree, {type, _id}) => tree[type] && find(tree[type], entryKeyFromFragmentName[type], _id)
 
 export const selectionFromTree = tree => {
     if (!tree.selection) {

@@ -11,5 +11,6 @@ export const BRANCHES = "branches"
 export const entryKeyFromFragmentName = {
     [IMPACT_TANK]: "_id",
     [FACETS]: "facetId",
-    [TANK]: "_id"
+    [TANK]: "_id",
+    [IMPACTS]: "impactId"
 }

@@ -13,7 +13,7 @@ export default {
         }
     },
 
-    [Do.DELETE_IMPACTS]: ({}, {impacts, toDelete}) => {
+    [Do.DELETE_IMPACT]: ({}, {tree, impact}) => {
         if (impacts.items) {
             _.forEach(toDelete, impact => impacts.items.splice(impacts.items.indexOf(impact), 1))
         }

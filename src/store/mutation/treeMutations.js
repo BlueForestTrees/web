@@ -40,5 +40,15 @@ export default {
                 tree[fragment].splice(existingIndex, 1)
             }
         }
+    },
+    [Do.REMOVE_PARTIAL_FROM_FRAGMENT]: (state, {tree, fragment, element, key = "_id"}) => {
+        if (tree[fragment]) {
+            const existing = find(tree[fragment], key, element["impactId"])
+            if (existing) {
+                Vue.set(existing.quantity, "bqt", existing.quantity.bqt - element.quantity.bqt)
+            }
+        }
     }
+
+
 }

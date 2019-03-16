@@ -7,7 +7,13 @@ export default {
         dispatch(On.APPLY_COEF_TO_TREE, {tree, coef})
         applySelectionCoef(coef, tree.selection)
     },
-    [On.APPLY_COEF_TO_TREE]: ({dispatch}, {tree, coef}) => {
+    [On.APPLY_COEF_TO_TREE]: ({dispatch}, {tree, coef, seen = []}) => {
+        if (seen.indexOf(tree) >= 0) {
+            return
+        } else {
+            seen.push(tree)
+        }
+
         applyRessourceCoef(coef, [tree])
 
         applyAspectCoef(coef, tree.tank)

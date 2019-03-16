@@ -1,8 +1,7 @@
 import On from "../../const/on"
 import api from "../../rest/api"
 import Do from "../../const/do"
-import {applyAspectCoef, createStringObjectId, treeBqt} from "../../services/calculations"
-import {map} from 'unit-manip'
+import {applyAspectCoef, createStringObjectId, getFragment, getFragment2, treeBqt} from "../../services/calculations"
 import {IMPACT_TANK, IMPACTS} from "../../const/fragments"
 
 export default {
@@ -23,11 +22,31 @@ export default {
         api.getDamage(_id)
             .then(damages => applyAspectCoef(bqt, damages)),
 
-    [On.DELETE_IMPACTS]:
-        async ({commit}, {impacts, toDelete}) => {
-            await api.deleteImpacts(impacts._id, map(toDelete, e => e._id))
-            commit(Do.DELETE_IMPACTS, {impacts, toDelete})
-        },
+    [On.DELETE_IMPACT_TANK]: async ({dispatch, commit}, {tree, impactTank}) => {
+        await dispatch(On.UPDATE_TREE, {tree, fragments: [IMPACTS]})
+        const impact = getFragment(tree, {_id: impactTank._id, type: IMPACTS})
+        if (impact) {
+            const deleteResult = dispatch(On.DELETE_IMPACT, {tree, impact})
+            if (impact.quantity.bqt === impactTank.quantity.bqt) {
+                return deleteResult
+                    .then(() => commit(Do.REMOVE_FROM_FRAGMENT, {tree, element: impactTank, fragment: IMPACT_TANK}))
+                    .then(() => dispatch(On.SNACKBAR, {text: "Impact retiré"}))
+            } else {
+                return deleteResult
+                    .then(() => {
+                    })
+                    .then(() => commit(Do.REMOVE_PARTIAL_FROM_FRAGMENT, {tree, element: impact, fragment: IMPACT_TANK}))
+                    .then(() => dispatch(On.SNACKBAR, {text: "Impact partiellement retiré. Le reste provient de la fabrication. Pour réduire encore cet impact, il faut changer la fabrication.", color: "orange"}))
+            }
+        } else {
+            return dispatch(On.SNACKBAR, {text: "Cet impact est provient de la fabrication. Pour réduire cet impact, il faut changer la fabrication.", color: "orange"})
+        }
+    },
+
+    [On.DELETE_IMPACT]:
+        ({commit}, {tree, impact}) =>
+            api.deleteImpact(impact._id)
+                .then(() => commit(Do.REMOVE_FROM_FRAGMENT, {tree, element: impact, fragment: IMPACTS})),
 
     [On.IMPORT_IMPACT_ADEME]: ({}, file) => {
         const formData = new FormData(file)

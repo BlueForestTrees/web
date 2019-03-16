@@ -23,7 +23,7 @@
                     <open-message slot="right" :section="section" no-text/>
                     <btn icon-class="balance logo" @click="goEquiv({tree, oneSelected})"></btn>
                     <btn icon-class="game logo" @click="goQuiDeuxFoisPlus({tree, oneSelected})"></btn>
-                    <btn icon="delete" iconColor="grey"></btn>
+                    <btn icon="delete" iconColor="grey" @click="deleteOneSelected"></btn>
                 </v-layout>
             </v-card>
         </transition-expand>
@@ -42,7 +42,7 @@
     import ScopeMenu from "../root/ScopeMenu"
     import {impactScope} from "../../const/img"
     import SubpageTitle from "./SubpageTitle"
-    import {name} from "../../services/calculations"
+    import {name, qtUnitName} from "../../services/calculations"
     import Closer from "../common/Closer"
     import selectable from "../mixin/Selectable"
     import Btn from "../common/btn"
@@ -91,11 +91,17 @@
             }
         },
         methods: {
+            qtUnitName,
             ...mapActions({
                 loadTreeFragment: On.UPDATE_TREE,
                 goEquiv: On.GO_EQUIV,
-                goQuiDeuxFoisPlus: On.GO_QUI_DEUX_FOIS_PLUS
+                goQuiDeuxFoisPlus: On.GO_QUI_DEUX_FOIS_PLUS,
+                deleteImpactTank: On.DELETE_IMPACT_TANK
             }),
+            deleteOneSelected() {
+                this.deleteImpactTank({tree: this.tree, impactTank: this.oneSelected})
+                    .then(this.unselect)
+            },
             setAdding(adding) {
                 this.adding = adding
             }
