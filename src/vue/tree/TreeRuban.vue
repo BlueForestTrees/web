@@ -5,7 +5,7 @@
                 <v-layout column>
 
                     <v-card class="ma-2 elevation-5">
-                        <tree-ruban-head :tree="tree" @close="close" @editQt="openPickQt" />
+                        <tree-ruban-head :tree="tree" @close="close" @editQt="openPickQt"/>
                     </v-card>
 
                     <transition-expand>
@@ -17,9 +17,7 @@
                     <transition name="slide-fade-simple" mode="out-in">
                         <description-sub-page v-if="tabIdx === 0" :tree="tree" @close="close"/>
                         <impacts-sub-page v-else-if="tabIdx === 1" :tree="tree" @close="close"/>
-                        <facets-sub-page v-else-if="tabIdx === 2" :tree="tree" @close="close"/>
-                        <utilisation-sub-page v-else-if="tabIdx === 3" :tree="tree" @close="close"/>
-                        <ressources-sub-page v-else-if="tabIdx === 5" :tree="tree" @close="close"/>
+                        <fabrication-sub-page v-else-if="tabIdx === 2" :tree="tree" @close="close"/>
                     </transition>
 
                 </v-layout>
@@ -39,8 +37,7 @@
 
     const SelectionPicker = () => import(/* webpackChunkName: "SelectionPicker" */ "./SelectionPicker")
     const DescriptionSubPage = () => import(/* webpackChunkName: "TreeHP" */ "./DescriptionSubPage")
-    const RessourcesSubPage = () => import(/* webpackChunkName: "RessourcesSubPage" */ "./FabricationSubPage")
-    const UtilisationSubPage = () => import(/* webpackChunkName: "UtilisationSubPage" */ "./UtilisationSubPage")
+    const FabricationSubPage = () => import(/* webpackChunkName: "UtilisationSubPage" */ "./FabricationSubPage")
     const FacetsSubPage = () => import(/* webpackChunkName: "FacetsSubPage" */ "./FacetsSubPage")
     const ImpactsSubPage = () => import(/* webpackChunkName: "ImpactsSubPage" */ "./ImpactsSubPage")
 
@@ -53,8 +50,7 @@
             SelectionPicker,
             DescriptionSubPage,
             ImpactsSubPage,
-            RessourcesSubPage,
-            UtilisationSubPage,
+            FabricationSubPage,
             FacetsSubPage,
         },
         data: () => ({pickQt: false}),

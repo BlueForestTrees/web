@@ -16,12 +16,9 @@
         computed: {
             tabs() {
                 return [
-                    {class: "description logo-petit"},
-                    {class: "planet logo-petit"},
                     {class: "facet logo-petit"},
-                    {class: "branches logo-petit"},
-                    {class: "trunk logo-petit"},
-                    {class: "roots logo-petit"}
+                    {class: "planet logo-petit"},
+                    {class: "tree logo-petit"}
                 ]
             }
         }

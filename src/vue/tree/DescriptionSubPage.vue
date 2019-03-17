@@ -1,15 +1,19 @@
 <template>
-    <v-card class="ma-2">
-        <v-layout column align-center mb-1>
+    <div>
+        <v-card class="ma-2 elevation-5">
+            <v-layout column align-center mb-1>
 
-            <subpage-title title="Description" sub color="whitegrey"/>
+                <subpage-title title="Description" sub color="whitegrey"/>
 
-            <photo :trunk="tree.trunk" size="200" class="my-3"/>
+                <photo :trunk="tree.trunk" size="200" class="my-3"/>
 
-            <description :tree="tree"/>
+                <description :tree="tree"/>
 
-        </v-layout>
-    </v-card>
+
+            </v-layout>
+        </v-card>
+        <facets-sub-page :tree="tree" />
+    </div>
 </template>
 <script>
     import Description from "./Description"
@@ -27,10 +31,11 @@
     import QtUnitName from "./QtUnitName"
     import Photo from "../common/Photo"
     import {OWNER, TRUNK} from "../../const/fragments"
+    import FacetsSubPage from "./FacetsSubPage"
 
     export default {
         name: "DescriptionSubPage",
-        components: {Photo, QtUnitName, Closer, TreeFab, SubpageTitle, Subheader, OpenMessage, FragmentSelect, TreeCard, Description},
+        components: {FacetsSubPage, Photo, QtUnitName, Closer, TreeFab, SubpageTitle, Subheader, OpenMessage, FragmentSelect, TreeCard, Description},
         props: ['tree'],
         methods: {
             ...mapMutations({setFlipped: Do.SET_TREE_CARD_FLIPPED}),

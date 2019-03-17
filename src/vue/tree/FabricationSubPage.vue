@@ -1,7 +1,8 @@
 <template>
     <div>
+
         <v-card class="ma-2 elevation-5">
-            <subpage-title title="Fabrication" sub color="whitegrey">
+            <subpage-title title="Fabrication" sub color="whitegrey" icon-class="roots logo">
                 <closer v-if="adding" slot="right" @close="setAdding(false)"/>
                 <btn v-else slot="right" icon="add_box" icon-color="grey" @click="setAdding(true)"/>
             </subpage-title>
@@ -27,6 +28,8 @@
                 </v-layout>
             </v-card>
         </transition-expand>
+
+        <utilisation-sub-page :tree="tree"/>
     </div>
 
 </template>
@@ -49,6 +52,7 @@
     import Note from "../common/Note"
     import Icon from "../common/icon"
     import UnselectOnTreeChange from "../mixin/UnselectOnTreeChange"
+    import UtilisationSubPage from "./UtilisationSubPage"
 
     const RessourceAdder = () => import(/* webpackChunkName: "RessourceAdder"*/"../root/RessourceAdder")
     const FragmentList = () => import(/* webpackChunkName: "FragmentList"*/"./FragmentList")
@@ -57,6 +61,7 @@
         name: "fabrication-subpage",
         mixins: [Selectable, UnselectOnTreeChange],
         components: {
+            UtilisationSubPage,
             Icon,
             Note,
             TransitionExpand,

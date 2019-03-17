@@ -1,7 +1,7 @@
 <template>
     <div>
-        <v-card class="ma-2  elevation-5">
-            <subpage-title title="Utilisation" sub color="whitegrey">
+        <v-card class="ma-2 elevation-5">
+            <subpage-title title="Utilisation" sub color="whitegrey" icon-class="branches logo">
                 <closer v-if="adding" slot="right" @close="setAdding(false)"/>
                 <btn v-else slot="right" icon="add_box" icon-color="grey" @click="setAdding(true)"/>
             </subpage-title>
@@ -17,7 +17,7 @@
         </v-card>
 
         <transition-expand>
-            <v-card class="ma-2  elevation-5" v-if="oneSelected">
+            <v-card class="ma-2 elevation-5" v-if="oneSelected">
                 <subpage-title :title="qtUnitName(oneSelected)" sub color="whitegrey"/>
                 <v-layout justify-center>
                     <open-message slot="right" :section="section" no-text/>
@@ -54,7 +54,7 @@
     const FragmentList = () => import(/* webpackChunkName: "FragmentList"*/"./FragmentList")
 
     export default {
-        name: "fabrication-subpage",
+        name: "utilisation-sub-page",
         mixins: [Selectable, UnselectOnTreeChange],
         components: {
             Icon,

@@ -143,6 +143,10 @@ a {
     background: url(/img/scopeTree.svg) no-repeat center bottom;
 }
 
+.tree {
+    background: url(/img/tree.svg) no-repeat center bottom;
+}
+
 .facet {
     background: url(/img/facet.svg) no-repeat center;
 }

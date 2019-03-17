@@ -1,6 +1,7 @@
 <template>
     <v-layout column align-center>
         <subpage-title :title="qtUnitName(tree)" color="primary">
+            <btn slot="left" @click="nodeNav" icon-class="trunk logo"></btn>
             <v-btn slot="right" icon @click="$emit('close')">
                 <v-icon color="white">chevron_left</v-icon>
             </v-btn>
@@ -18,12 +19,13 @@
 </template>
 
 <script>
-    import {mapActions} from "vuex"
+    import {mapActions, mapMutations} from "vuex"
     import OpenMessage from "../common/OpenMessage"
     import SubpageTitle from "./SubpageTitle"
     import {name, qtUnitName} from "../../services/calculations"
     import On from "../../const/on"
     import Btn from "../common/btn"
+    import Do from "../../const/do"
 
     export default {
         name: "TreeRubanHead",
@@ -31,9 +33,15 @@
         props: {tree: Object},
         methods: {
             qtUnitName, name,
-            ...mapActions({
-                deleteTree: On.DELETE_OPENED_TREE
+            ...mapMutations({
+                openTree: Do.OPEN_TREE
             }),
+            ...mapActions({
+                deleteTree: On.DELETE_OPENED_TREE,
+            }),
+            nodeNav() {
+                this.openTree(this.tree)
+            }
         },
         computed: {
             section() {

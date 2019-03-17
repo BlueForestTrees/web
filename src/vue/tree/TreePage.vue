@@ -9,7 +9,7 @@
         </transition>
 
         <transition name="slide-up-down">
-            <tree-menu v-if="oneSelected" :value="tabIdx" @input="tabClick" :tree="oneSelected" class="mt-5 top-left"/>
+            <tree-menu v-if="oneSelected" :value="tabIdx" @input="setTabidx" :tree="oneSelected" class="mt-5 top-left"/>
         </transition>
     </div>
 
@@ -57,8 +57,7 @@
         },
         methods: {
             ...mapMutations({
-                setTabidx: Do.SET_NAV_TREE_TAB_IDX,
-                openTree: Do.OPEN_TREE
+                setTabidx: Do.SET_NAV_TREE_TAB_IDX
             }),
             ...mapActions({
                 loadOpenTree: On.LOAD_OPEN_TREE,
@@ -80,17 +79,6 @@
                 } else {
                     console.warn(`bad params. bqt:${this.bqt}, _id:${this._id}, sid:${this.sid}`)
                 }
-            },
-            tabClick(i) {
-                if (i === 4) {
-                    this.nodeNav()
-                } else {
-                    this.setTabidx(i)
-                }
-            },
-            nodeNav() {
-                this.openTree(this.oneSelected)
-
             },
             refresh: async function () {
                 const work = this.getTreeLoad()

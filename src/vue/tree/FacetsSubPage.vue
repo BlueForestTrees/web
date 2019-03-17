@@ -55,7 +55,7 @@
     import UnselectOnTreeChange from "../mixin/UnselectOnTreeChange"
 
     export default {
-        name: "facets-subpage",
+        name: "facets-sub-page",
         components: {
             Note,
             TransitionExpand,
