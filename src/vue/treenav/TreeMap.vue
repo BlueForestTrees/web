@@ -1,5 +1,7 @@
 <template>
-    <svg id="surface" :viewBox="viewBox" v-resize="onResize" class="surface" version="1.2" xmlns="http://www.w3.org/2000/svg">
+    <svg id="surface" ref="surface" class="surface"
+         v-pan="pan" v-pinch="pinch" v-resize="resize"
+         :viewBox="viewBox">
 
         <template v-for="branch in branchList">
             <g :key="branch.linkId">
@@ -33,6 +35,28 @@
     import TWEEN from "@tweenjs/tween.js"
     import Static from "../mixin/Static"
     import {initTween, tweenNodes} from "../../services/anim"
+    import Vue from "vue"
+    import Hammer from 'hammerjs'
+
+    Vue.directive("pan", {
+        bind: function (el, binding) {
+            if (typeof binding.value === "function") {
+                const mc = new Hammer(el)
+                mc.get("pan").set({direction: Hammer.DIRECTION_ALL})
+                mc.on("pan", binding.value)
+            }
+        }
+    })
+
+    Vue.directive("pinch", {
+        bind: function (el, binding) {
+            if (typeof binding.value === "function") {
+                const mc = new Hammer(el)
+                mc.get("pinch").set({enable: true})
+                mc.on("pinch", binding.value)
+            }
+        }
+    })
 
     export default {
         name: "TreeMap",
@@ -106,7 +130,13 @@
             ...mapActions({
                 loadTreeFragment: On.UPDATE_TREE
             }),
-            onResize: function (e) {
+            pinch(evt) {
+                console.log("PINCH", evt)
+            },
+            pan(evt) {
+                this.lookAt({x: this.panx - evt.srcEvent.movementX, y: this.pany - evt.srcEvent.movementY}, true)
+            },
+            resize: function (e) {
                 this.width = window.innerWidth
                 this.height = window.innerHeight
             },
@@ -151,6 +181,7 @@
         height: 100%;
         position: absolute;
         top: 0;
+        pointer-events: all
     }
 
     .line {

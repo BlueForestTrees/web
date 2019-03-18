@@ -9,7 +9,6 @@
 
                 <description :tree="tree"/>
 
-
             </v-layout>
         </v-card>
         <facets-sub-page :tree="tree" />

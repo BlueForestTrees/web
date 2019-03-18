@@ -5,7 +5,7 @@
                 <v-layout column>
 
                     <v-card class="ma-2 elevation-5">
-                        <tree-ruban-head :tree="tree" @close="close" @editQt="openPickQt"/>
+                        <tree-ruban-head :tree="tree" @close="$emit('close')" @editQt="openPickQt"/>
                     </v-card>
 
                     <transition-expand>
@@ -14,10 +14,10 @@
                         </v-card>
                     </transition-expand>
 
-                    <transition name="slide-fade-simple" mode="out-in">
-                        <description-sub-page v-if="tabIdx === 0" :tree="tree" @close="close"/>
-                        <impacts-sub-page v-else-if="tabIdx === 1" :tree="tree" @close="close"/>
-                        <fabrication-sub-page v-else-if="tabIdx === 2" :tree="tree" @close="close"/>
+                    <transition name="slide-left-right" mode="out-in">
+                        <description-sub-page v-if="tabIdx === 0" :tree="tree"/>
+                        <impacts-sub-page v-else-if="tabIdx === 1" :tree="tree"/>
+                        <fabrication-sub-page v-else-if="tabIdx === 2" :tree="tree"/>
                     </transition>
 
                 </v-layout>
@@ -78,9 +78,6 @@
             ...mapActions({
                 saveApplySelection: On.SAVE_APPLY_SELECTION
             }),
-            close() {
-                this.setTabidx(null)
-            },
             closePickQt() {
                 this.pickQt = false
             },

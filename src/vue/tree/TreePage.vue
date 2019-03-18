@@ -5,7 +5,7 @@
         <tree-map :tree="tree" :selection-key="selectionKey"/>
 
         <transition name="slide-left-right">
-            <tree-ruban v-if="showTreeRuban" :tree="oneSelected" :tabIdx="tabIdx"/>
+            <tree-ruban v-if="showTreeRuban" :tree="oneSelected" :tabIdx="tabIdx" @close="unselect"/>
         </transition>
 
         <transition name="slide-up-down">

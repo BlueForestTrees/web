@@ -1,6 +1,6 @@
 <template>
     <v-layout column>
-        <v-btn v-for="(tab,i) in tabs" :key="i" icon :input-value="i === value" @click="$emit('input',i !== value ? i : null)">
+        <v-btn v-for="(tab,i) in tabs" :key="i" icon :input-value="i === value" @click="$emit('input',i)">
             <icon :iconClass="tab.class"/>
         </v-btn>
     </v-layout>
