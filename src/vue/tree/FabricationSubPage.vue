@@ -16,19 +16,16 @@
             </transition-expand>
 
             <fragment-list v-if="!adding" :tree="tree" :fragment="ROOTS" :selectionKey="selectionKey"/>
-        </v-card>
 
-        <transition-expand>
-            <v-card class="ma-2 elevation-5" v-if="oneSelected">
-                <subpage-title :title="qtUnitName(oneSelected)" sub color="whitegrey"/>
-                <v-layout justify-center>
+            <transition name="slide-left-right">
+                <v-layout v-if="oneSelected" justify-center>
                     <open-message slot="right" :section="section" no-text/>
                     <btn icon-class="balance logo" @click="goEquiv({tree, oneSelected})"></btn>
                     <btn icon-class="game logo" @click="goQuiDeuxFoisPlus({tree, oneSelected})"></btn>
                     <btn icon="delete" iconColor="grey" @click="deleteOneSelected"></btn>
                 </v-layout>
-            </v-card>
-        </transition-expand>
+            </transition>
+        </v-card>
 
     </div>
 
@@ -37,7 +34,7 @@
 <script>
     import On from "../../const/on"
     import Do from "../../const/do"
-    import {mapActions, mapMutations, mapState} from 'vuex'
+    import {mapActions, mapMutations} from 'vuex'
     import ScopeMenu from "../root/ScopeMenu"
     import {BRANCHES, ROOTS, TANK} from "../../const/fragments"
     import SubpageTitle from "./SubpageTitle"
@@ -48,7 +45,7 @@
     import Selectable from "../mixin/Selectable"
     import Btn from "../common/btn"
     import TransitionExpand from "../common/TransitionExpand"
-    import {rootbranch} from "../../const/selections"
+    import {root} from "../../const/selections"
     import Note from "../common/Note"
     import Icon from "../common/icon"
     import UnselectOnTreeChange from "../mixin/UnselectOnTreeChange"
@@ -77,7 +74,7 @@
             tree: Object
         },
         data: () => ({
-            selectionKey: rootbranch,
+            selectionKey: root,
             adding: false, reverted: false,
             ROOTS, TANK, BRANCHES, rootScope
         }),
