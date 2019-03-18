@@ -1,6 +1,7 @@
 <template>
     <svg id="surface" ref="surface" class="surface"
-         v-pan="pan" v-pinch="pinch" v-resize="resize"
+         v-pan="pan"
+         v-resize="resize"
          :viewBox="viewBox">
 
         <template v-for="branch in branchList">

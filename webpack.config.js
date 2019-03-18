@@ -54,6 +54,10 @@ if (conf.mode === "development") {
                 app.use(convert(proxy(targets[i].path, {target: targets[i].host, secure: false, changeOrigin: true})))
             }
             app.use(convert(history()))
+        },
+        host: {
+            client: '0.0.0.0',
+            server: '0.0.0.0'
         }
     }
     conf.output = {
