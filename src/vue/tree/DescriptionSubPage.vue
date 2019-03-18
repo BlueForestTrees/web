@@ -22,7 +22,6 @@
     import Do from "../../const/do"
     import {mapMutations, mapActions} from "vuex"
     import OpenMessage from "../common/OpenMessage"
-    import {name} from "../../services/calculations"
     import On from "../../const/on"
     import Subheader from "./Subheader"
     import SubpageTitle from "./SubpageTitle"

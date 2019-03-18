@@ -8,7 +8,7 @@
 
             <transition-expand>
                 <div v-if="adding">
-                    <subpage-title sub title="Ajouter une utilisation" icon-class="branches logo"/>
+                    <subpage-title sub title="Ajouter une utilisation" />
                     <ressource-adder reversed :tree="tree" @close="setAdding(false)"/>
                 </div>
             </transition-expand>

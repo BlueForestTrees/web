@@ -40,7 +40,7 @@
         }),
         mixins: [Selectable],
         props: ['_id', 'bqt', 'sid'],
-        mounted: function () {
+        created: function () {
             this.refresh()
         },
         computed: {
@@ -54,6 +54,10 @@
             '$route'(to, from) {
                 this.refresh()
             }
+        },
+        beforeRouteLeave(to, from, next) {
+            this.unselect()
+            next()
         },
         methods: {
             ...mapMutations({

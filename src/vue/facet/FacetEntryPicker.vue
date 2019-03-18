@@ -13,8 +13,6 @@
             </v-list-tile>
         </v-list>
 
-        <add-entry-fab title="Créer un type de propriété" :route="createEntryRoute"/>
-
     </v-layout>
 </template>
 
@@ -25,14 +23,10 @@
     import On from "../../const/on"
     import Do from "../../const/do"
     import {GO} from "../../const/go"
-    import AddEntryFab from "../common/AddEntryFab"
 
     export default {
         name: 'facet-entry-picker',
-        components: {AddEntryFab, SelectableList},
-        props: {
-            createEntryRoute: {type: String}
-        },
+        components: {SelectableList},
         data: function () {
             return {
                 GO,

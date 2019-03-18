@@ -1,7 +1,7 @@
 <template>
     <div>
 
-        <facet-entry-picker v-if="changeItem || !selectedEntry" @select="select" :create-entry-route="GO.ADD_FACET_ENTRY"/>
+        <facet-entry-picker v-if="changeItem || !selectedEntry" @select="select" />
 
         <quantity-picker v-else :item="selectedEntry" @change="validate" @close="closeQtPicker"></quantity-picker>
 

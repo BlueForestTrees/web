@@ -16,7 +16,7 @@
                     <v-layout column>
                         <grandeur-select v-model="grandeur"/>
                         <v-layout>
-                            <v-text-field autofocus type="number" label="Quantité..." v-model="qt" :rules="[required, isNumber]" @keydown.enter="validQt"></v-text-field>
+                            <v-text-field type="number" label="Quantité..." v-model="qt" :rules="[required, isNumber]" @keydown.enter="validQt"></v-text-field>
                             <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]"/>
                         </v-layout>
                     </v-layout>

@@ -20,7 +20,7 @@ export default {
         return changes ? filter : null
     },
     showTreeRuban: state => {
-        return state.selections[treeMap] && state.selections[treeMap].length === 1 && state.nav.tree.tabIdx !== null
+        return state.selections[treeMap] && state.selections[treeMap].length === 1
     },
     isAdmin: state => {
         return state.user && state.user.rights && state.user.rights.charAt(0) === 'G'

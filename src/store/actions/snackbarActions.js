@@ -8,7 +8,7 @@ const mapValidationErrors = ({message, errors}) =>
         .join("; ")}"`
 
 const errorText = ex =>
-    ex.status === 404 && "L'élément n'a pas été trouvé :("
+    ex.status === 404 && "L'élément n'a pas été trouvé. Il n'existe pas ou il est en préparation."
     ||
     ex.status && ex.body && ex.body.errorCode === 2 && mapValidationErrors(ex.body)
     ||
@@ -20,6 +20,9 @@ const errorText = ex =>
 
 export default {
     [On.SNACKBAR]: ({commit}, snackOptions) => {
+        if (snackOptions.color !== "green") {
+            snackOptions.timeout = 0
+        }
         commit(Do.UPDATE_SNACKBAR, Object.assign(snack(), {visible: true, ...snackOptions}))
     },
     [On.SNACKERROR]: ({dispatch}, ex) => dispatch(On.SNACKBAR, {multiline: true, text: errorText(ex), color: "red"})

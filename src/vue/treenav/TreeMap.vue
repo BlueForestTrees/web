@@ -5,7 +5,7 @@
             <g :key="branch.linkId">
                 <line class="line" :x1="branch.x" :y1="branch.y" :x2="branch.parent.x" :y2="branch.parent.y"></line>
                 <line class="line" v-if="!branch.tree.branches" :x1="branch.x" :y1="branch.y" :x2="branch.x" :y2="branch.y-sY*0.3"></line>
-                <trunk :key="branch.tree._id" :x="branch.x" :y="branch.y" :tree="branch.tree" :selected="isSelected(branch.tree)" @click="select(branch, BRANCHES)"/>
+                <trunk :key="branch.tree._id" :x="branch.x" :y="branch.y" :tree="branch.tree" :selected="isSelected(branch.tree)" @click="nodeClick(branch, BRANCHES)"/>
             </g>
         </template>
 
@@ -13,11 +13,11 @@
             <g :key="root.linkId">
                 <line class="line" :x1="root.x" :y1="root.y" :x2="root.parent.x" :y2="root.parent.y"></line>
                 <line class="line" v-if="!root.tree.roots" :x1="root.x" :y1="root.y" :x2="root.x" :y2="root.y+sY*0.3"></line>
-                <trunk :key="root.tree._id" :x="root.x" :y="root.y" :tree="root.tree" :selected="isSelected(root.tree)" @click="select(root, ROOTS)"/>
+                <trunk :key="root.tree._id" :x="root.x" :y="root.y" :tree="root.tree" :selected="isSelected(root.tree)" @click="nodeClick(root, ROOTS)"/>
             </g>
         </template>
 
-        <trunk :tree="tree" trunk :selected="isSelected(tree)" @click="selectTrunk(tree)"/>
+        <trunk :tree="tree" trunk :selected="isSelected(tree)" @click="nodeClick({tree})"/>
 
     </svg>
 </template>
@@ -31,7 +31,6 @@
     import Trunk from "./Trunk"
     import {treePlacement} from "../../services/tree"
     import TWEEN from "@tweenjs/tween.js"
-    import {findFct} from "../../services/calculations"
     import Static from "../mixin/Static"
     import {initTween, tweenNodes} from "../../services/anim"
 
@@ -111,15 +110,11 @@
                 this.width = window.innerWidth
                 this.height = window.innerHeight
             },
-            selectTrunk(tree) {
-                this.toggleSelect(tree)
-                this.lookAt({x: 0, y: 0})
-            },
-            async select(drawTree, fragment) {
+            async nodeClick(drawTree, fragment) {
                 const tree = drawTree.tree
                 this.toggleSelect(tree)
                 this.lookAt(drawTree)
-                if (this.isSelected(tree)) {
+                if (fragment && this.isSelected(tree)) {
                     if (!tree[fragment]) {
                         await this.loadFragment(tree, [fragment])
                     }
@@ -128,7 +123,7 @@
             async loadFragment(tree, fragments) {
                 return await this.loadTreeFragment({tree, fragments})
             },
-            lookAt({x, y}, now = false) {
+            lookAt({x = 0, y = 0}, now = false) {
                 if (now) {
                     this.panx = x
                     this.pany = y

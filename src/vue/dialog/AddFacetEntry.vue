@@ -29,10 +29,11 @@
     import Card from "../common/Card"
     import Connected from "../mixin/Connected"
     import Do from "../../const/do"
+    import Admin from "../mixin/Admin"
 
     export default {
         name: 'add-facet-entry',
-        mixins: [Connected],
+        mixins: [Admin],
         data() {
             return {
                 Dial: Dial,

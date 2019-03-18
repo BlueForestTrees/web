@@ -48,7 +48,7 @@ export default {
             menu: {
                 visible: false
             },
-            tabIdx: null,
+            tabIdx: 0,
             cardFlipped: false,
             impact: {idx: 0, term: ""},
             root: {idx: 0, term: ""},

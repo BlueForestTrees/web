@@ -51,7 +51,15 @@
                     <v-icon color="primary">add_box</v-icon>
                 </v-list-tile-action>
                 <v-list-tile-content>
-                    <v-list-tile-title>Catalogue d'impact</v-list-tile-title>
+                    <v-list-tile-title>Nouvel impact</v-list-tile-title>
+                </v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile @click="goto(GO.ADD_FACET_ENTRY)" v-if="isAdmin">
+                <v-list-tile-action>
+                    <v-icon color="primary">add_box</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                    <v-list-tile-title>Nouvelle propriété</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
 

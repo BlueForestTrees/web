@@ -1,5 +1,6 @@
 <template>
     <div>
+        <utilisation-sub-page :tree="tree"/>
 
         <v-card class="ma-2 elevation-5">
             <subpage-title title="Fabrication" sub color="whitegrey" icon-class="roots logo">
@@ -9,7 +10,7 @@
 
             <transition-expand>
                 <div v-if="adding">
-                    <subpage-title sub title="Ajouter une ressource" icon-class="roots logo"/>
+                    <subpage-title sub title="Ajouter une ressource" />
                     <ressource-adder :tree="tree" @close="setAdding(false)"/>
                 </div>
             </transition-expand>
@@ -29,7 +30,6 @@
             </v-card>
         </transition-expand>
 
-        <utilisation-sub-page :tree="tree"/>
     </div>
 
 </template>
