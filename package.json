@@ -11,8 +11,7 @@
     "dev-on-prod": "cross-env NODE_ENV=development TARGET=prod webpack-serve --host 0.0.0.0  --port 8079 --config webpack.config.js",
     "test": "cross-env NODE_ENV=development mocha --recursive --require @babel/register --exit \"test/test*.js\"",
     "build": "rimraf dist && cross-env NODE_ENV=production webpack",
-    "build-stats": "rimraf dist && cross-env NODE_ENV=production STATS=true node --trace-deprecation node_modules/webpack/bin/webpack",
-    "deploy": "yarn run build && scp -r dist/www/. pi@one.blueforest.org:/var/www"
+    "build-stats": "rimraf dist && cross-env NODE_ENV=production STATS=true node --trace-deprecation node_modules/webpack/bin/webpack"
   },
   "devDependencies": {
     "@babel/core": "7.0.0",
@@ -43,12 +42,12 @@
     "rimraf": "2.6.2",
     "style-loader": "0.23.0",
     "uglifyjs-webpack-plugin": "1.2.4",
-    "vue-loader": "15.0.7",
-    "vue-style-loader": "3.0.3",
-    "vue-template-compiler": "2.5.17",
-    "webpack": "4.23.1",
-    "webpack-bundle-analyzer": "3.0.3",
-    "webpack-command": "0.4.1",
+    "vue-loader": "15.7.0",
+    "vue-style-loader": "4.1.2",
+    "vue-template-compiler": "2.6.9",
+    "webpack": "4.29.6",
+    "webpack-bundle-analyzer": "3.1.0",
+    "webpack-command": "0.4.2",
     "webpack-node-externals": "1.7.2",
     "webpack-serve": "2.0.2",
     "webpack-visualizer-plugin": "0.1.11"
