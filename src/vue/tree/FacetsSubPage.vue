@@ -95,14 +95,15 @@
             deleteOneSelected() {
                 this.deleteFacet({tree: this.tree, facet: this.oneSelected})
                     .then(this.unselect)
-                    .then(() => this.snack({text: "Propriété rétirée"}))
+                    .catch(this.snackError)
             },
             ...mapActions({
                 snack: On.SNACKBAR,
                 deleteFacet: On.DELETE_FACET,
                 loadTreeFragment: On.UPDATE_TREE,
                 goEquiv: On.GO_EQUIV,
-                goQuiDeuxFoisPlus: On.GO_QUI_DEUX_FOIS_PLUS
+                goQuiDeuxFoisPlus: On.GO_QUI_DEUX_FOIS_PLUS,
+                snackError: On.SNACKERROR
             }),
             refresh: async function () {
                 this.loading = true

@@ -98,7 +98,8 @@
                 dispatchLoadRoots: On.LOAD_ROOTS,
                 dispatchGoEquiv: On.GO_EQUIV,
                 goEquiv: On.GO_EQUIV,
-                goQuiDeuxFoisPlus: On.GO_QUI_DEUX_FOIS_PLUS
+                goQuiDeuxFoisPlus: On.GO_QUI_DEUX_FOIS_PLUS,
+                snackError: On.SNACKERROR
             }),
             ...mapMutations({
                 setIdx: Do.SET_TREE_ROOT_IDX
@@ -106,6 +107,7 @@
             deleteOneSelected() {
                 this.deleteRoot({tree: this.oneSelected, root: this.tree})
                     .then(this.unselect)
+                    .catch(this.snackError)
             },
             goRoot: function (root) {
                 this.dispatchGoRoot({treeId: this.tree._id, rootId: root._id})

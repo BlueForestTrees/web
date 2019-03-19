@@ -93,11 +93,13 @@
                 loadTreeFragment: On.UPDATE_TREE,
                 goEquiv: On.GO_EQUIV,
                 goQuiDeuxFoisPlus: On.GO_QUI_DEUX_FOIS_PLUS,
-                deleteImpactTank: On.DELETE_IMPACT_TANK
+                deleteImpactTank: On.DELETE_IMPACT_TANK,
+                snackError: On.SNACKERROR
             }),
             deleteOneSelected() {
                 this.deleteImpactTank({tree: this.tree, impactTank: this.oneSelected})
                     .then(this.unselect)
+                    .catch(this.snackError)
             },
             setAdding(adding) {
                 this.adding = adding
