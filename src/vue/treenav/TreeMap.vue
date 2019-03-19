@@ -1,6 +1,8 @@
 <template>
     <svg id="surface" ref="surface" class="surface"
          v-pan="pan"
+         v-pinch="pinch"
+         v-on:mousewheel="mousewheel"
          v-resize="resize"
          :viewBox="viewBox">
 
@@ -20,7 +22,7 @@
             </g>
         </template>
 
-        <trunk :tree="tree" trunk :selected="isSelected(tree)" @click="nodeClick({tree})"/>
+        <trunk :tree="tree" trunk :selected="isSelected(tree)" @click="nodeClick(trunk)"/>
 
     </svg>
 </template>
@@ -66,13 +68,16 @@
         props: ['tree', 'note', 'selectionKey'],
         static: {
             BRANCHES, ROOTS,
-            sX: 250, sY: 150
+            sX: 250, sY: 150,
+            menuLeftWidth: 225,
+            scaleMin: 0.4, scaleMax: 10,
+            pointer: {down: null},
         },
         data: () => ({
             paddingLeft: 0,
             width: 1000,
             height: 1000,
-            zoom: 1,
+            scale: 1,
             panx: 0, pany: 0,
             maxSelectionSize: 1,
             rootList: [],
@@ -91,9 +96,8 @@
             },
             showTreeRuban() {
                 const tfrom = {v: this.paddingLeft}
-                const tto = {v: this.showTreeRuban ? 225 : 0}
+                const tto = {v: this.showTreeRuban ? this.menuLeftWidth : 0}
                 const updatePaddingLeft = ({v}) => this.paddingLeft = v
-
                 new TWEEN.Tween(tfrom)
                     .to(tto, 300)
                     .easing(TWEEN.Easing.Quadratic.Out)
@@ -115,10 +119,23 @@
         },
         computed: {
             ...mapGetters(['showTreeRuban']),
+            viewW: function () {
+                return this.scale * this.width
+            },
+            viewH: function () {
+                return this.scale * this.height
+            },
+            viewOriginX: function () {
+                return -0.5 * this.viewW + this.scale * (this.panx - this.paddingLeft)
+            },
+            viewOriginY: function () {
+                return -0.5 * this.viewH + this.scale * this.pany
+            },
             viewBox: function () {
-                const width = this.zoom * this.width
-                const height = this.zoom * this.height
-                return `${-0.5 * width + this.panx - this.paddingLeft} ${-0.5 * height + this.pany} ${width} ${height}`
+                return `${this.viewOriginX} ${this.viewOriginY} ${this.viewW} ${this.viewH}`
+            },
+            trunk() {
+                return {tree: this.tree, x: 0, y: 0}
             },
             preRootsList() {
                 return treePlacement(this.tree, ROOTS, this.sX, this.sY)
@@ -131,8 +148,17 @@
             ...mapActions({
                 loadTreeFragment: On.UPDATE_TREE
             }),
+            mousewheel(evt) {
+                const zoomDelta = -evt.deltaY / 1000
+                this.applyZoom(this.scale + zoomDelta)
+            },
             pinch(evt) {
-                console.log("PINCH", evt)
+                this.pan(evt)
+                if (evt.srcEvent.type === "pointerdown") {
+                    this.pointer.down = this.scale
+                } else {
+                    this.applyZoom(this.pointer.down / evt.scale)
+                }
             },
             pan(evt) {
                 this.lookAt({x: this.panx - evt.srcEvent.movementX, y: this.pany - evt.srcEvent.movementY}, true)
@@ -141,10 +167,9 @@
                 this.width = window.innerWidth
                 this.height = window.innerHeight
             },
-            async nodeClick(drawTree, fragment) {
-                const tree = drawTree.tree
+            async nodeClick({tree, x, y}, fragment) {
                 this.toggleSelect(tree)
-                this.lookAt(drawTree)
+                this.lookAt({x: x / this.scale, y: y / this.scale})
                 if (fragment && this.isSelected(tree)) {
                     if (!tree[fragment]) {
                         await this.loadFragment(tree, [fragment])
@@ -169,6 +194,9 @@
                         })
                         .start()
                 }
+            },
+            applyZoom(zoom) {
+                this.scale = Math.min(this.scaleMax, Math.max(this.scaleMin, zoom))
             }
         },
     }
