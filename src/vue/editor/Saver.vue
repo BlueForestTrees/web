@@ -62,10 +62,7 @@
                         this.changes._id = _id
                         this.emitSaved(this.changes)
                         this.snack({text: this.savedText, color: "green"})
-                    }).catch(e => {
-                        console.error(e)
-                        this.snack({text: e.body.message, color: "red"})
-                    })
+                    }).catch(this.snackError)
             },
             update() {
                 const _id = this.initial._id
@@ -73,7 +70,7 @@
                     .then(() => {
                         this.emitSaved(this.changes)
                         this.snack({text: this.updatedText, color: "green"})
-                    }).catch(() => this.snack({text: "Erreur à l'enregistrement", color: "orange"}))
+                    }).catch(this.snackError)
             },
             emitSaved(changes) {
                 this.$emit('saved', changes)
@@ -85,7 +82,7 @@
                             this.snack({text: "Supprimé", color: "green"})
                             this.$emit('deleted')
                         }
-                    })
+                    }).catch(this.snackError)
             },
         },
         computed: {

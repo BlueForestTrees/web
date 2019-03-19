@@ -30,7 +30,8 @@
             name,
             ...mapActions({
                 addToTree: On.ADD_FACET,
-                snack: On.SNACKBAR
+                snack: On.SNACKBAR,
+                snackError: On.SNACKERROR
             }),
             select(entry) {
                 this.selectedEntry = entry
@@ -43,10 +44,7 @@
                         this.$emit('close')
                         this.snack({text: "1 propriété ajoutée", color: "green"})
                     })
-                    .catch(e => {
-                        this.snack({text: e, color: "orange"})
-                        console.error(e)
-                    })
+                    .catch(this.snackError)
             },
             closeQtPicker() {
                 this.changeItem = true

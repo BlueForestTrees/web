@@ -1,6 +1,5 @@
 import On from "../../const/on"
 import api from "../../rest/api"
-import {deleteCatch} from "./commons"
 import router from "../../router/router"
 import {infoType} from "../../const/infoType"
 
@@ -13,7 +12,7 @@ export default {
     [On.SAVE_ALT]: ({}, info) => api.postInfo({...info, type: 'alt'}),
     [On.SAVE_COMP]: ({}, info) => api.postInfo({...info, type: 'comp'}),
     [On.UPDATE_INFO]: ({}, info) => api.putInfo(info),
-    [On.DELETE_INFO]: ({dispatch}, info) => deleteCatch(dispatch, api.deleteInfo(info)),
+    [On.DELETE_INFO]: ({dispatch}, info) => api.deleteInfo(info).catch(e => dispatch(On.SNACKERROR, e)),
     [On.GET_INFO]: ({}, {_id, path}) => _id ? api.getInfo(_id) : api.getInfoByPath(path),
     [On.SEARCH_INFO]: ({}, query) => api.searchInfo(query),
 }

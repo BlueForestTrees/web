@@ -1,6 +1,6 @@
 <template>
 
-    <div v-if="tree && tree.trunk" style="height: 100%">
+    <div v-if="tree && tree.trunk">
 
         <tree-map :tree="tree" :selection-key="selectionKey"/>
 

@@ -1,5 +1,5 @@
 <template>
-    <div style="min-width: 17em">
+    <v-container style="min-width: 17em">
         <v-layout align-center justify-space-between>
             <h5 class="font-weight-thin subheading">Propriétaire:</h5>
             <a v-if="owner" :href="owner.site" target="_blank" class="not-too-third">{{owner.fullname}}</a>
@@ -20,7 +20,7 @@
             <h5 class="font-weight-thin subheading">Magasins:</h5>
             <h5 class="font-weight-thin subheading">{{store}}</h5>
         </v-layout>
-    </div>
+    </v-container>
 </template>
 <script>
     import TreeCardFront from "./QtUnitName"

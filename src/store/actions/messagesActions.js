@@ -3,8 +3,12 @@ import Do from "../../const/do"
 import {messages} from "../state"
 import api from "../../rest/api"
 import {createStringObjectId} from "../../services/calculations"
+import {secs} from "../../const/sections"
 
 export default {
+
+    [On.GO_CHAT_BUG]: ({dispatch}) => dispatch(On.SHOW_MESSAGES, secs.BUG),
+
     [On.SHOW_MESSAGES]: ({commit}, {title, filter, comment}) => {
         commit(Do.SET_MESSAGES_FILTER, {title, filter, comment})
         commit(Do.RIGHT_MENU_VISIBLE, true)
@@ -58,6 +62,6 @@ export default {
             _id: createStringObjectId(),
             type: feature,
             message
-        }))
+        })),
 
 }

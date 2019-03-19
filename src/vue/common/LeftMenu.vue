@@ -82,20 +82,20 @@
                     <v-list-tile-title>Aide</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
-            <v-list-tile @click="showChat(secs.BUG)">
-                <v-list-tile-action>
-                    <v-icon color="primary">chat</v-icon>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                    <v-list-tile-title>{{secs.BUG.title}}</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
             <v-list-tile @click="switchColors">
                 <v-list-tile-action>
                     <v-icon color="primary">invert_colors</v-icon>
                 </v-list-tile-action>
                 <v-list-tile-content>
                     <v-list-tile-title>Mode {{nav.dark ? "clair" : "sombre"}}</v-list-tile-title>
+                </v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile @click="chatBug">
+                <v-list-tile-action>
+                    <v-icon color="primary">bug_report</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                    <v-list-tile-title>Reporter un bug</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
         </v-list>
@@ -123,9 +123,9 @@
                 localStorage.setItem("dark", this.nav.dark)
                 this.$vuetify.theme.primary = this.nav.dark ? "1098F7" : "1565c0"
             },
-            showChat(section) {
+            chatBug() {
                 this.nav.leftMenuVisible = false
-                this.dispatchShowMessages(section)
+                this.goChatBug()
             },
             createTree() {
                 this.goCreateTree()
@@ -137,7 +137,7 @@
                 goFacetEntry: On.GO_FACET_ENTRY,
                 goCreateTree: On.GO_CREATE_TREE,
                 goCreateInfo: On.GO_CREATE_INFO,
-                dispatchShowMessages: On.SHOW_MESSAGES
+                goChatBug: On.GO_CHAT_BUG
             })
         },
     }

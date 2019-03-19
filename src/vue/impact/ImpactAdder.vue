@@ -28,7 +28,8 @@
             name,
             ...mapActions({
                 addToTree: On.ADD_IMPACT,
-                snack: On.SNACKBAR
+                snack: On.SNACKBAR,
+                snackError: On.SNACKERROR
             }),
             select(entry) {
                 this.selectedEntry = entry
@@ -41,10 +42,7 @@
                         this.$emit('close')
                         this.snack({text: "1 impact ajouté", color: "green"})
                     })
-                    .catch(e => {
-                        this.snack({text: e.message, color: "orange"})
-                        console.error(e)
-                    })
+                    .catch(this.snackError)
             },
             closeQtPicker() {
                 this.changeItem = true

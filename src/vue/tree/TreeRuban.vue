@@ -1,29 +1,25 @@
 <template>
-    <v-layout column :style="menuStyle">
-        <v-card class="pl-5 elevation-5" style="height:100%">
-            <v-layout row style="height: 100%" ml-1>
-                <v-layout column>
 
-                    <v-card class="ma-2 elevation-5">
-                        <tree-ruban-head :tree="tree" @close="$emit('close')" @editQt="openPickQt"/>
-                    </v-card>
+    <div :style="rubanStyle" class="scroll">
 
-                    <transition-expand>
-                        <v-card v-if="pickQt" class="ma-2">
-                            <selection-picker :value="treeSelection" @close="closePickQt" @pick="pickSelection"/>
-                        </v-card>
-                    </transition-expand>
-
-                    <transition name="slide-left-right" mode="out-in">
-                        <description-sub-page v-if="tabIdx === 0" :tree="tree"/>
-                        <impacts-sub-page v-else-if="tabIdx === 1" :tree="tree"/>
-                        <fabrication-sub-page v-else-if="tabIdx === 2" :tree="tree"/>
-                    </transition>
-
-                </v-layout>
-            </v-layout>
+        <v-card class="ma-2 elevation-5">
+            <tree-ruban-head :tree="tree" @close="$emit('close')" @editQt="openPickQt"/>
         </v-card>
-    </v-layout>
+
+        <transition-expand>
+            <v-card v-if="pickQt" class="ma-2">
+                <selection-picker :value="treeSelection" @close="closePickQt" @pick="pickSelection"/>
+            </v-card>
+        </transition-expand>
+
+        <transition name="slide-left-right" mode="out-in">
+            <description-sub-page v-if="tabIdx === 0" :tree="tree"/>
+            <impacts-sub-page v-else-if="tabIdx === 1" :tree="tree"/>
+            <fabrication-sub-page v-else-if="tabIdx === 2" :tree="tree"/>
+        </transition>
+
+    </div>
+
 
 </template>
 
@@ -61,10 +57,12 @@
             menuWidth() {
                 return this.tab === null ? 50 : 450
             },
-            menuStyle() {
+            rubanStyle() {
                 return {
                     width: `${this.menuWidth}px`,
-                    height: "100%"
+                    height: "100%",
+                    left: "3.3em",
+                    position: "absolute"
                 }
             },
             treeSelection() {

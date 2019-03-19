@@ -9,7 +9,7 @@
             <open-message slot="right" :section="section" no-text/>
             <v-btn icon slot="left" @click="$emit('editQt')"><v-icon class="carton logo-petit"/></v-btn>
             <btn @click="nodeNav" icon-class="trunk logo"></btn>
-            <v-btn icon flat @click="deleteTree"><v-icon color="grey">delete</v-icon></v-btn>
+            <v-btn icon flat @click="deleteOpenedTree"><v-icon color="grey">delete</v-icon></v-btn>
         </v-layout>
     </v-layout>
 </template>
@@ -33,7 +33,7 @@
                 openTree: Do.OPEN_TREE
             }),
             ...mapActions({
-                deleteTree: On.DELETE_OPENED_TREE,
+                deleteOpenedTree: On.DELETE_OPENED_TREE,
             }),
             nodeNav() {
                 this.openTree(this.tree)

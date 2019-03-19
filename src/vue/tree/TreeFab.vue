@@ -52,7 +52,7 @@
                 closeTree: Do.CLOSE_TREE
             }),
             ...mapActions({
-                deleteTree: On.DELETE_OPENED_TREE,
+                deleteOpenedTree: On.DELETE_OPENED_TREE,
                 showDialog: On.SHOW_DIALOG,
                 dispatchDeleteTrunk: On.DELETE_TREE,
                 goHome: On.GO_HOME,

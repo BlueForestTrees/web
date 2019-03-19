@@ -7,16 +7,24 @@ const mapValidationErrors = ({message, errors}) =>
         .map(err => `${err.param} ${err.msg}`)
         .join("; ")}"`
 
-const errorText = ex =>
-    ex.status === 404 && "L'élément n'a pas été trouvé. Il n'existe pas ou il est en préparation."
+const toSnack = ex =>
+    ex.status === 404 && {text: "L'élément n'a pas été trouvé. Il n'existe pas ou il est en préparation.", color: "orange"}
     ||
-    ex.status && ex.body && ex.body.errorCode === 2 && mapValidationErrors(ex.body)
+    ex.status === 403 && {text: "Interdit: cet élément n'est pas à vous.", icon: "pan_tool", color: "orange"}
     ||
-    ex.status && ex.body && ex.body.errorCode && ex.body.message
+    ex.status === 401 && {text: "Connectez-vous pour faire cette action.", icon: "power_off", color: "orange", action: On.GO_LOGIN}
     ||
-    ex.statusText
+    ex.status === 500 && {text: "Erreur du serveur. Rééssayez plus tard. Reportez le bug si cela persiste ou vous embête.", icon: "bug_report", action: On.GO_CHAT_BUG}
     ||
-    ex
+    ex.status && ex.body && ex.body.errorCode === 2 && {text: mapValidationErrors(ex.body)}
+    ||
+    ex.status && ex.body && ex.body.errorCode && {text: ex.body.message}
+    ||
+    ex.statusText && {text: ex.statusText}
+    ||
+    ex && {text: ex}
+    ||
+    {text: "Erreur indéfinie."}
 
 export default {
     [On.SNACKBAR]: ({commit}, snackOptions) => {
@@ -25,5 +33,5 @@ export default {
         }
         commit(Do.UPDATE_SNACKBAR, Object.assign(snack(), {visible: true, ...snackOptions}))
     },
-    [On.SNACKERROR]: ({dispatch}, ex) => dispatch(On.SNACKBAR, {multiline: true, text: errorText(ex), color: "red"})
+    [On.SNACKERROR]: ({dispatch}, ex) => dispatch(On.SNACKBAR, {multiline: true, color: "orange", ...toSnack(ex)})
 }
