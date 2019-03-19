@@ -4,10 +4,10 @@
 
             <v-list-tile @click="goto(GO.SEARCH)">
                 <v-list-tile-action>
-                    <v-icon color="primary">search</v-icon>
+                    <img src="/img/home.svg" class="logo" style="margin-left: -5px"/>
                 </v-list-tile-action>
                 <v-list-tile-content>
-                    <v-list-tile-title>Recherche</v-list-tile-title>
+                    <v-list-tile-title>Accueil</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
 
@@ -108,8 +108,10 @@
     import On from "../../const/on"
     import {secs} from "../../const/sections"
     import {GO} from "../../const/go"
+    import Icon from "./icon"
 
     export default {
+        components: {Icon},
         data: () => ({
             Dial, GO, secs
         }),

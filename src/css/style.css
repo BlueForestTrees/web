@@ -1,5 +1,5 @@
 html {
-    overflow-y: hidden
+    overflow-y: auto
 }
 
 .scroll{
@@ -153,6 +153,10 @@ a {
 
 .tree {
     background: url(/img/tree.svg) no-repeat center bottom;
+}
+
+.home {
+    background: url(/img/home.svg) no-repeat center bottom;
 }
 
 .facet {
