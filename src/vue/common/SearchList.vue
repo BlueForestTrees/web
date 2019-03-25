@@ -15,6 +15,8 @@
     import InfiniteLoading from 'vue-infinite-loading'
     import Loader from "../loader/Loader"
     import debounce from 'lodash.debounce'
+    import On from "../../const/on"
+    import {mapActions} from "vuex"
 
     export default {
         name: "search-list",
@@ -24,7 +26,7 @@
             type: {required: true, type: String},
             filter: Object,
             emptySearch: {type: Boolean, default: false},
-            value:Boolean
+            value: Boolean
         },
         data: () => ({
             items: [],
@@ -48,8 +50,9 @@
             }
         },
         methods: {
+            ...mapActions({snackerror: On.SNACKERROR}),
             search: function (query) {
-                return this.$store.dispatch(this.type, query)
+                return this.$store.dispatch(this.type, query).catch(this.snackerror)
             },
             reset: function () {
                 this.enabled = this.filter !== null || this.emptySearch

@@ -43,6 +43,7 @@ export default {
     updateUser: user => put(`/api/user`, user),
     getTrunk: _id => get(`/api/tree/trunk/${_id}`),
     getGrandeurs: () => get('/api/grandeur'),
+    getFilm: _id => get(`/api/film/name/${_id}`),
     getFacets: _id => get(`/api/facet/${_id}`),
     getImpact: _id => get(`/api/impact/${_id}`),
     getDamage: _id => get(`/api/damage/${_id}`),

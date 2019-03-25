@@ -14,7 +14,7 @@ const toSnack = ex =>
     ||
     ex.status === 401 && {text: "Connectez-vous pour faire cette action.", icon: "power_off", color: "orange", action: On.GO_LOGIN}
     ||
-    ex.status === 500 && {text: "Erreur du serveur. Rééssayez plus tard. Reportez le bug si cela persiste ou vous embête.", icon: "bug_report", action: On.GO_CHAT_BUG}
+    ex.status >= 500 && {text: "Oups nous avons une erreur de fonctionnement. Rééssayez plus tard, rapportez le bug si cela persiste ou vous embête.", icon: "bug_report", action: On.GO_CHAT_BUG}
     ||
     ex.status && ex.body && ex.body.errorCode === 2 && {text: mapValidationErrors(ex.body)}
     ||

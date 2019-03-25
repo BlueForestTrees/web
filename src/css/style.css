@@ -313,11 +313,11 @@ a {
 }
 
 .slide-fade-simple-enter-active {
-    transition: all .1s ease;
+    transition: all .35s ease;
 }
 
 .slide-fade-simple-leave-active {
-    transition: all .1s ease;
+    transition: all .35s ease;
 }
 
 .slide-fade-simple-enter {

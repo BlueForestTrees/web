@@ -42,6 +42,7 @@ export default {
     EXCEPTION: 'exception',
     SWITCH_LEFT_MENU: 'switchLeftMenu',
     GET_INFO: 'getIngo',
+    GET_FILM: 'getFilm',
     GO_EDIT_INFO: "goEditInfo",
     GO_IMPACT_ENTRY: 'goImpactEntry',
     GO_FACET_ENTRY: 'goFacetEntry',

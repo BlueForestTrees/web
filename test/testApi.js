@@ -1,7 +1,15 @@
 import {arrayOf, paramsOf} from "../src/rest/rest"
 import {expect} from 'chai'
 
+
 describe('rest', function () {
+
+    it('namaste', function(){
+
+
+
+    })
+
     it('an array parameter chain', function () {
         expect(arrayOf("_ids", [1, 2, 3])).to.equal("_ids=1&_ids=2&_ids=3")
     })

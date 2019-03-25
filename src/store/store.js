@@ -42,6 +42,7 @@ import equivActions from "./actions/jeuActions"
 import treeManipActions from "./actions/treeManipActions"
 import infoActions from "./actions/infoActions"
 import navActions from "./actions/navActions"
+import filmActions from "./actions/filmActions"
 
 
 
@@ -68,6 +69,7 @@ const store = new Vuex.Store({
         ...selectionMutations
     },
     actions: {
+        ...filmActions,
         ...navActions,
         ...infoActions,
         ...selectionActions,
