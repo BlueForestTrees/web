@@ -23,7 +23,6 @@
     import {play} from "../js/playerControl"
     import {mapActions} from "vuex"
     import On from "../const/on"
-    import Vue from "vue"
 
     export default {
         name: 't-play',

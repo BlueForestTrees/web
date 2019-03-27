@@ -20,7 +20,7 @@
                 </v-list-tile-content>
             </v-list-tile>
 
-            <v-list-tile @click="createTree">
+            <v-list-tile @click="goto(GO.CREATE_TREE)">
                 <v-list-tile-action>
                     <img src="/img/scopeTree.svg" class="logo-petit"/>
                 </v-list-tile-action>
@@ -28,7 +28,7 @@
                     <v-list-tile-title>Nouveau produit</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
-            <v-list-tile @click="goCreateInfo">
+            <v-list-tile @click="goto(GO.CREATE_INFO)">
                 <v-list-tile-action>
                     <img src="/img/voice.svg" class="logo-petit"/>
                 </v-list-tile-action>
@@ -90,7 +90,7 @@
                     <v-list-tile-title>Mode {{nav.dark ? "clair" : "sombre"}}</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
-            <v-list-tile @click="chatBug">
+            <v-list-tile @click="goto(On.GO_CHAT_BUG)">
                 <v-list-tile-action>
                     <v-icon color="primary">bug_report</v-icon>
                 </v-list-tile-action>
@@ -125,21 +125,12 @@
                 localStorage.setItem("dark", this.nav.dark)
                 this.$vuetify.theme.primary = this.nav.dark ? "1098F7" : "1565c0"
             },
-            chatBug() {
+            goto(route) {
                 this.nav.leftMenuVisible = false
-                this.goChatBug()
-            },
-            createTree() {
-                this.goCreateTree()
+                this.got(route)
             },
             ...mapActions({
-                goto: On.GO_TO,
-                showDialog: On.SHOW_DIALOG,
-                goImpactEntry: On.GO_IMPACT_ENTRY,
-                goFacetEntry: On.GO_FACET_ENTRY,
-                goCreateTree: On.GO_CREATE_TREE,
-                goCreateInfo: On.GO_CREATE_INFO,
-                goChatBug: On.GO_CHAT_BUG
+                got: On.GO_TO
             })
         },
     }

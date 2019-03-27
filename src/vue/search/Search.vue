@@ -2,7 +2,6 @@
     <v-container key="search">
 
         <v-layout row wrap justify-center align-center xs-4 mb-1>
-            <v-list-tile-avatar class="scope-tree logo my-3"></v-list-tile-avatar>
             <search-text :value="search.name" @input="pickName" class="not-too-half"/>
         </v-layout>
 

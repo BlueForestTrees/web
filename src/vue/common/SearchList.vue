@@ -22,7 +22,7 @@
         name: "search-list",
         components: {Loader, InfiniteLoading},
         props: {
-            ps: {default: 20, type: Number},
+            ps: {default: 7, type: Number},
             type: {required: true, type: String},
             filter: Object,
             emptySearch: {type: Boolean, default: false},
@@ -45,7 +45,8 @@
                 return {
                     ...this.filter,
                     ps: this.ps,
-                    aidx: (this.items && this.items.length > 0) ? this.items[this.items.length - 1]._id : null
+                    aidx: (this.items && this.items.length > 0) ? this.items[this.items.length - 1]._id : null,
+                    adate: (this.items && this.items.length > 0) ? this.items[this.items.length - 1].date : null,
                 }
             }
         },

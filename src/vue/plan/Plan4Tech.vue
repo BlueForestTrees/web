@@ -55,7 +55,15 @@
         </a>
         </div>
 
-        <p class="mt-2"><v-icon color="orange">new_releases</v-icon>Une question ou une suggestion:</p>
+        <div class="mt-5">
+            <a href=" https://www.jetbrains.com/?from=https://blueforest.org" target="_blank">
+                <img src="img/logo.svg" class="logo"/>
+                <img src="img/heart.svg" class="logo-petit mx-1"/>
+                <img src="img/jetbrains-variant-3.svg" />
+                <p>Merci à JetBrain pour ses licenses offertes au titre de projet à but non-lucratif.</p>
+            </a>
+        </div>
+
         <open-message :section="secs.TECH"></open-message>
 
     </div>

@@ -1,17 +1,17 @@
 <template>
     <v-container>
 
-        <v-layout row wrap justify-center align-center xs-4 mb-1>
-            <v-list-tile-avatar class="game logo my-3"></v-list-tile-avatar>
-            <search-text :value="search.name" @input="pickName" class="not-too-half"/>
-        </v-layout>
+        <!--<v-layout row wrap justify-center align-center xs-4 mb-1>-->
+            <!--<v-list-tile-avatar class="game logo my-3"></v-list-tile-avatar>-->
+            <!--<search-text :value="search.name" @input="pickName" class="not-too-half"/>-->
+        <!--</v-layout>-->
 
-        <v-layout :column="$vuetify.breakpoint.xsOnly" align-center justify-center>
+        <!--<v-layout :column="$vuetify.breakpoint.xsOnly" align-center justify-center>-->
 
-            <owner-picker @input="pickOwner" :value="search.owner"/>
-        </v-layout>
+            <!--<owner-picker @input="pickOwner" :value="search.owner"/>-->
+        <!--</v-layout>-->
 
-        <v-card class="mt-3">
+        <v-card>
             <search-list :type="On.SEARCH_GAMES" :filter="filter" empty-search>
                 <template slot-scope="{item}">
                     <v-list-tile :key="item._id" avatar @click="select(item)">
@@ -19,6 +19,9 @@
                             <v-list-tile-title>Qui a le plus de {{item.fragmentName}}?</v-list-tile-title>
                             <v-list-tile-sub-title>Avec {{ item.leftName }}</v-list-tile-sub-title>
                         </v-list-tile-content>
+                        <v-list-tile-action>
+                            <v-list-tile-action-text>{{deltaTime(item.date)}}</v-list-tile-action-text>
+                        </v-list-tile-action>
                     </v-list-tile>
                     <v-divider/>
                 </template>
@@ -34,12 +37,14 @@
     import SearchText from "../search/SearchText"
     import {mapState, mapGetters} from "vuex"
     import OwnerPicker from "../search/OwnerPicker"
+    import {deltaTime} from "../../services/calculations"
 
     export default {
         name: 'games',
         components: {OwnerPicker, SearchText, SearchList},
         data: () => ({On}),
         methods: {
+            deltaTime,
             select(item) {
                 if (item.type === QUI2) {
                     this.$router.push({name: GO.GAME, params: {gameId: item._id}})

@@ -1,27 +1,30 @@
 <template>
-    <v-container>
+<v-container>
 
-        <v-layout row wrap justify-center align-center xs-4 mb-1>
-            <v-list-tile-avatar class="voice logo my-3"></v-list-tile-avatar>
-            <search-text :value="search.name" @input="pickName" class="not-too-half"/>
-        </v-layout>
+        <!--<v-layout row wrap justify-center align-center xs-4 mb-1>-->
+            <!--<v-list-tile-avatar class="voice logo my-3"></v-list-tile-avatar>-->
+            <!--<search-text :value="search.name" @input="pickName" class="not-too-half"/>-->
+        <!--</v-layout>-->
 
-        <v-layout :column="$vuetify.breakpoint.xsOnly" align-center justify-center>
-            <owner-picker @input="pickOwner" :value="search.owner"/>
-        </v-layout>
+        <!--<v-layout :column="$vuetify.breakpoint.xsOnly" align-center justify-center>-->
+            <!--<owner-picker @input="pickOwner" :value="search.owner"/>-->
+        <!--</v-layout>-->
 
-        <v-card class="mt-3">
-            <search-list :type="On.SEARCH_INFO" :filter="filter" empty-search>
+        <v-card>
+            <search-list :type="On.SEARCH_INFO" empty-search>
                 <template slot-scope="{item, i, length}">
                     <v-list-tile @click="$emit('select',item)" avatar :key="item._id">
                         <info-dense :info="item"/>
+                        <v-list-tile-action>
+                            <v-list-tile-action-text>{{deltaTime(item.date)}}</v-list-tile-action-text>
+                        </v-list-tile-action>
                     </v-list-tile>
                     <v-divider v-if="i + 1 < length"></v-divider>
                 </template>
             </search-list>
         </v-card>
+</v-container>
 
-    </v-container>
 </template>
 
 <script>
@@ -34,6 +37,7 @@
     import SearchText from "../search/SearchText"
     import OwnerPicker from "../search/OwnerPicker"
     import SearchList from "../common/SearchList"
+    import {deltaTime} from "../../services/calculations"
 
     export default {
         name: "my-infos",
@@ -46,6 +50,7 @@
             ...mapGetters(['filter'])
         },
         methods: {
+            deltaTime,
             pickName(name) {
                 this.search.name = name
             },

@@ -20,7 +20,7 @@ export default {
 
     searchGames: ({aidx, ps, oid, term}) => get(`/api/game${paramsOf({q: term, aidx, ps, oid})}`),
 
-    searchInfo: ({term, type, aidx, ps, oid}) => get(`/api/info${paramsOf({q: term, t: type, aidx, ps, oid})}`),
+    searchInfo: ({term, type, adate, ps, oid}) => get(`/api/info${paramsOf({q: term, t: type, adate, ps, oid})}`),
 
     deleteInfo: _id => del(`api/info/${_id}`),
     getInfoByPath: path => get(`api/info/path/${path}`),

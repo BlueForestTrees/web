@@ -162,29 +162,31 @@ export const applySelectionCoef = (coef, selection) => {
 }
 
 export const deltaTime = time => {
+    if(!time) return ""
     const delta = (Date.now() - new Date(time)) / 1000
     return delta < 30 ?
         `à l'instant`
         :
-        delta < 60 ?
-            `${Math.floor(delta)} sec`
-            :
-            delta < 3600 ?
-                `${Math.floor(delta / 60)} min`
+        "il y a " + (
+            delta < 60 ?
+                `${Math.floor(delta)} sec`
                 :
-                delta < 24 * 3600 ?
-                    `${Math.floor(delta / 3600)} h`
+                delta < 3600 ?
+                    `${Math.floor(delta / 60)} min`
                     :
-                    delta < 7 * 24 * 3600 ?
-                        `${Math.floor(delta / (24 * 3600))} j`
+                    delta < 24 * 3600 ?
+                        `${Math.floor(delta / 3600)} h`
                         :
-                        delta < 4 * 7 * 24 * 3600 ?
-                            `${Math.floor(delta / (7 * 24 * 3600))} sem`
+                        delta < 7 * 24 * 3600 ?
+                            `${Math.floor(delta / (24 * 3600))} j`
                             :
-                            delta < 12 * 4 * 7 * 24 * 3600 ?
-                                `${Math.floor(delta / (4 * 7 * 24 * 3600))} mois`
+                            delta < 4 * 7 * 24 * 3600 ?
+                                `${Math.floor(delta / (7 * 24 * 3600))} sem`
                                 :
-                                `${Math.floor(delta / (12 * 4 * 7 * 24 * 3600))} an`
+                                delta < 12 * 4 * 7 * 24 * 3600 ?
+                                    `${Math.floor(delta / (4 * 7 * 24 * 3600))} mois`
+                                    :
+                                    `${Math.floor(delta / (12 * 4 * 7 * 24 * 3600))} an`)
 
 }
 

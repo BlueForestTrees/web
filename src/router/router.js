@@ -22,7 +22,7 @@ const MyTeam = () => import(/* webpackChunkName: "MyTeam" */ '../vue/home/MyTeam
 const MyMessages = () => import(/* webpackChunkName: "MyMessages" */ '../vue/home/MyMessage')
 const AddImpactEntry = () => import(/* webpackChunkName: "AIE" */ '../vue/dialog/AddImpactEntry')
 const AddFacetEntry = () => import(/* webpackChunkName: "AFEDialog" */ "../vue/dialog/AddFacetEntry")
-const Info = () => import(/* webpackChunkName: "Info"*/ "../vue/pub/Info")
+const InfoPage = () => import(/* webpackChunkName: "Info"*/ "../vue/pub/InfoPage")
 const CreateInfo = () => import(/* webpackChunkName: "Info"*/ "../vue/pub/CreateInfo")
 const CreateEq = () => import(/* webpackChunkName: "CreateEq"*/ "../vue/pub/CreateEq")
 const CreateCompens = () => import(/* webpackChunkName: "CreateCompens"*/ "../vue/pub/CreateCompens")
@@ -61,7 +61,7 @@ export default new VueRouter({
 
                 {name: GO.CREATE_INFO, path: "info", component: CreateInfo},
 
-                {name: GO.INFO, path: "info/:path", component: Info, props: true},
+                {name: GO.INFO, path: "info/:path", component: InfoPage, props: true},
 
                 {name: GO.EDIT_EQUIV, path: "eq/:path", component: CreateEq, props:true},
                 {name: GO.EDIT_ALT, path: "alt/:path", component: CreateAlt, props: true},

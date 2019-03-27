@@ -4,7 +4,7 @@
         <v-card-text v-if="user" class="text-md-center">
             <v-list>
                 <v-list-tile v-for="m in messages" :key="m._id" @click="">
-                    il y a {{deltaTime(m.modifDate || m.creationDate)}} - {{m.message}}
+                    {{deltaTime(m.modifDate || m.creationDate)}} - {{m.message}}
                 </v-list-tile>
             </v-list>
             <span v-if="messages.length === 0">

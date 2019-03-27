@@ -9,7 +9,6 @@
             <alt-show v-else-if="info && info.type === 'alt'" :info="info"/>
             <comp-show v-else-if="info && info.type ==='comp'" :info="info"/>
         </v-card>
-
     </v-container>
     <v-container v-else>
         <v-layout row align-center justify-center style="height:10em">
