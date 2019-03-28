@@ -1,6 +1,5 @@
 import Do from "../../const/do"
 import decode from 'jwt-decode'
-import {deltaTime} from "../../services/calculations"
 
 export default {
     [Do.SET_TOKEN]: (state, token) => {

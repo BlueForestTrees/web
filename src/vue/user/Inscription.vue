@@ -15,7 +15,7 @@
                         <v-text-field prepend-icon="mail" type="text" placeholder="vous@exemple.com"
                                       label="Votre adresse e-mail" autocomplete="username"
                                       v-model="mail" required autofocus
-                                      :rules="[mailRequired, validMail]" :validate-on-blur="true"
+                                      :rules="[mailRequired, validMail]"
                         />
                     </v-form>
                 </v-card-text>
@@ -63,11 +63,15 @@
             validate: async function () {
                 this.$refs.form.validate()
                 if (this.valid) {
-                    await this.wantSuscribe({mail: this.mail})
-                    this.mailSent = true
+                    this.wantSuscribe({mail: this.mail})
+                        .then(() => this.mailSent = true)
+                        .catch(this.snackerror)
                 }
             },
-            ...mapActions({wantSuscribe: On.WANT_SUSCRIBE})
+            ...mapActions({
+                wantSuscribe: On.WANT_SUSCRIBE,
+                snackerror: On.SNACKERROR
+            })
         }
     }
 </script>

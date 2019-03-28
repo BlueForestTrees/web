@@ -1,14 +1,12 @@
 <template>
-    <div id="app">
-        <v-app :light="!nav.dark" :dark="nav.dark">
-            <transition name="slide-fade-simple" mode="out-in">
-                <t-play v-if="nav.intro" @end="nav.intro = false"/>
-                <transition v-else name="slide-fade" mode="out-in">
-                    <router-view></router-view>
-                </transition>
+    <v-app id="app" :light="!nav.dark" :dark="nav.dark">
+        <transition name="slide-fade-simple" mode="out-in">
+            <t-play v-if="nav.intro" @end="nav.intro = false"/>
+            <transition v-else name="slide-fade" mode="out-in">
+                <router-view></router-view>
             </transition>
-        </v-app>
-    </div>
+        </transition>
+    </v-app>
 </template>
 
 <script>
