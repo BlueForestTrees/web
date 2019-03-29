@@ -36,7 +36,8 @@ export default {
     searchFacetEntry: namepart => get(`/api/facetEntry${paramsOf({q: namepart})}`),
     searchImpactEntry: namepart => get(`/api/impactEntry${paramsOf({q: namepart})}`),
 
-    searchTrunk: ({g, term, type, aidx, ps, cat, oid}) => get(`/api/tree/trunks${paramsOf({g, q: term, t: type, aidx, ps, ...cat, oid})}`),
+    searchTrunk: ({g, term, type, aidx, ps, cat, oid}) => get(`/api/search${paramsOf({g, q: term, t: type, aidx, ps, ...cat, oid})}`),
+    searchAll: ({type, ps}) => get(`/api/search${paramsOf({t: type, ps})}`),
     searchUsers: ({term}) => get(`/api/user/term/${term}`),
 
     getUser: _id => cached(get, `/api/user/${_id}`, userCache),

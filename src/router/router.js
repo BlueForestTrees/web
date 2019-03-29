@@ -2,6 +2,7 @@ import {GO} from "../const/go"
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+const Wall = () => import(/* webpackChunkName: "Wall" */ "../vue/Wall")
 const NotFound = () => import(/* webpackChunkName: "NotFound" */ "../vue/NotFound")
 const TreePage = () => import(/* webpackChunkName: "Tree" */ '../vue/tree/TreePage.vue')
 const Equivalence = () => import(/* webpackChunkName: "Equivalence" */ '../vue/equivalence/Equivalence')
@@ -40,7 +41,7 @@ export default new VueRouter({
         {
             path: "/", component: BlueForest,
             children: [
-                {name: GO.SEARCH, path: "", component: SearchPage},
+                {name: GO.SEARCH, path: "", component: Wall},
                 {name: GO.PLAN_INTRO, path: "/aide", component: BFCestQuoi},
                 {name: GO.PLAN, path: "/plan", component: Plan},
                 {name: GO.TEAM, path: "/equipe", component: MyTeam},

@@ -26,7 +26,6 @@
             type: {required: true, type: String},
             filter: Object,
             emptySearch: {type: Boolean, default: false},
-            value: Boolean
         },
         data: () => ({
             items: [],

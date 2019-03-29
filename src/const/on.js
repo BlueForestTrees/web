@@ -108,6 +108,7 @@ export default {
     SAVE_COMP: "saveComp",
     SAVE_BASKET: 'saveBasket',
     SAVE_APPLY_SELECTION: 'saveApplySelection',
+    SEARCH_ALL: 'searchAll',
     SEARCH_TREE: 'searchTree',
     SEARCH_INFO: 'searchInfo',
     SEARCH_FACET_ENTRY: 'searchFacetEntry',
