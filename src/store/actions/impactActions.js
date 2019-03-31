@@ -45,7 +45,7 @@ export default {
 
     [On.DELETE_IMPACT]:
         ({commit}, {tree, impact}) =>
-            api.deleteImpact(impact._id)
+            api.deleteImpact(tree._id, impact._id)
                 .then(() => commit(Do.REMOVE_FROM_FRAGMENT, {tree, element: impact, fragment: IMPACTS})),
 
     [On.IMPORT_IMPACT_ADEME]: ({}, file) => {

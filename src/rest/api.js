@@ -37,7 +37,7 @@ export default {
     searchImpactEntry: namepart => get(`/api/impactEntry${paramsOf({q: namepart})}`),
 
     searchTrunk: ({g, term, type, aidx, ps, cat, oid}) => get(`/api/search${paramsOf({g, q: term, t: type, aidx, ps, ...cat, oid})}`),
-    searchAll: ({type, ps}) => get(`/api/search${paramsOf({t: type, ps})}`),
+    searchAll: ({type, ps, adate}) => get(`/api/search${paramsOf({t: type, ps, adate})}`),
     searchUsers: ({term}) => get(`/api/user/term/${term}`),
 
     getUser: _id => cached(get, `/api/user/${_id}`, userCache),
@@ -65,14 +65,15 @@ export default {
     deleteReply: ({msgId, _id}) => del(`/api/message/reply/${msgId}/${_id}`),
     putReply: reply => put(`/api/message/reply`, reply),
     postReply: ({_id, msgId, message}) => post(`/api/message/reply`, {_id, msgId, message}),
-    deleteRoot: _id => del(`/api/tree/root/${_id}`),
 
     putFacet: (trunk, facet) => post(`/api/facet`, {trunk, facet}),
     putTrunkName: (_id, name) => put(`/api/tree/trunk/${_id}`, {name}),
     putTrunkQuantity: (treeId, quantity) => put(`/api/tree/trunk/${treeId}`, {quantity}),
 
-    deleteFacet: _id => del(`/api/facet/${_id}`),
-    deleteImpact: _id => del(`/api/impact/${_id}`),
+    deleteRoot: (trunkId, _id) => del(`/api/tree/root/${trunkId}/${_id}`),
+    deleteFacet: (trunkId, _id) => del(`/api/facet/${trunkId}/${_id}`),
+    deleteImpact: (trunkId, _id) => del(`/api/impact/${trunkId}/${_id}`),
+
     deleteTrunk: trunkId => del(`/api/tree/trunk/${trunkId}`),
 
 

@@ -1,7 +1,11 @@
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" style="fill:#FFFFFF;stroke:#444444;stroke-width:1px">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" style="fill:#FFFFFF;stroke:#444444;stroke-width:0.5px">
 
-        <circle style="stroke:none;fill:rgb(140,213,180);" cx="8" cy="8" r="8"/>
+        <circle style="stroke:none;fill:rgb(140,213,180);" cx="8" cy="9" r="7"/>
 
-        <circle cx="8" cy="8" r="6" fill="#1565c0" stroke-width="0.5px"/>
+        <line x1="8" y1="8" x2="8" y2="0"/>
+        <line x1="8" y1="8" x2="3" y2="16"/>
+        <line x1="8" y1="8" x2="13" y2="16"/>
+
+        <circle cx="8" cy="9" r="5" fill="#1565c0" />
 
 </svg>

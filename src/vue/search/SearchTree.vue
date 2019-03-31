@@ -1,5 +1,5 @@
 <template>
-    <search-list :type="On.SEARCH_TREE" :filter="filter">
+    <search-list :action="On.SEARCH_TREE" :filter="filter">
         <template slot-scope="{item}">
             <v-list-tile :key="item._id" avatar @click="select(item)">
                 <v-list-tile-content>

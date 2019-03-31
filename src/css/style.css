@@ -132,6 +132,11 @@ a {
     width: 3em;
 }
 
+.logo-very-big {
+    height: 7em;
+    width: 7em;
+}
+
 .voice {
     background: url(/img/voice.svg) no-repeat center;
 }
@@ -153,10 +158,6 @@ a {
 
 .tree {
     background: url(/img/tree.svg) no-repeat center bottom;
-}
-
-.home {
-    background: url(/img/home.svg) no-repeat center bottom;
 }
 
 .facet {

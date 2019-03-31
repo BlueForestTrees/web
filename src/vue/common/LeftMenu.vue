@@ -4,7 +4,7 @@
 
             <v-list-tile @click="goto(GO.SEARCH)">
                 <v-list-tile-action>
-                    <img src="/img/home.svg" class="logo" style="margin-left: -5px"/>
+                    <v-icon color="primary">home</v-icon>
                 </v-list-tile-action>
                 <v-list-tile-content>
                     <v-list-tile-title>Accueil</v-list-tile-title>
@@ -19,6 +19,8 @@
                     <v-list-tile-title>Vu récemment</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
+
+            <v-divider/>
 
             <v-list-tile @click="goto(GO.CREATE_TREE)">
                 <v-list-tile-action>
@@ -37,15 +39,7 @@
                 </v-list-tile-content>
             </v-list-tile>
 
-            <v-list-tile @click="goto(GO.MESSAGE)">
-                <v-list-tile-action>
-                    <v-icon color="primary">chat</v-icon>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                    <v-list-tile-title>Vos messages</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
-
+            <v-divider/>
             <v-list-tile @click="goto(GO.ADD_IMPACT_ENTRY)" v-if="isAdmin">
                 <v-list-tile-action>
                     <v-icon color="primary">add_box</v-icon>

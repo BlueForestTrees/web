@@ -22,6 +22,15 @@
                 </v-list-tile-content>
             </v-list-tile>
 
+            <v-list-tile @click="goto(GO.MESSAGE)">
+                <v-list-tile-avatar>
+                    <v-icon color="primary">chat</v-icon>
+                </v-list-tile-avatar>
+                <v-list-tile-content>
+                    <v-list-tile-title>Messagerie</v-list-tile-title>
+                </v-list-tile-content>
+            </v-list-tile>
+
             <v-list-tile @click="logout">
                 <v-list-tile-avatar><v-icon>power_off</v-icon></v-list-tile-avatar>
                 <v-list-tile-content>Déconnexion</v-list-tile-content>

@@ -12,7 +12,7 @@
         <!--</v-layout>-->
 
         <v-card>
-            <search-list :type="On.SEARCH_GAMES" :filter="filter" empty-search>
+            <search-list :action="On.SEARCH_GAMES" :filter="filter" empty-search>
                 <template slot-scope="{item}">
                     <v-list-tile :key="item._id" avatar @click="select(item)">
                         <v-list-tile-content v-if="item.type==='qui2'">

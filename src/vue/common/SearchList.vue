@@ -1,10 +1,10 @@
 <template>
     <v-list v-if="enabled">
         <template v-for="(item,i) in items">
-            <slot :item="item" :i="i" :length="items.length"/>
+            <slot :item="item" :i="i" :length="items.length" :last="i === items.length - 1"/>
         </template>
-        <infinite-loading ref="iloading" @infinite="loadResults" :distance="500" style="padding-bottom: 3em">
-            <span slot="no-more">{{items.length}} résultat{{items.length > 1 ? 's':''}}</span>
+        <infinite-loading ref="iloading" @infinite="loadResults" :distance="500">
+            <span slot="no-more"><slot name="no-more">{{items.length}} résultat{{items.length > 1 ? 's':''}}</slot></span>
             <span slot="no-results"><slot name="no-results"><div class="font-weight-thin bold-font mt-5">Pas de résultats</div></slot></span>
             <span slot="spinner"><loader class="mt-5"/></span>
         </infinite-loading>
@@ -23,7 +23,7 @@
         components: {Loader, InfiniteLoading},
         props: {
             ps: {default: 7, type: Number},
-            type: {required: true, type: String},
+            action: {required: true, type: String},
             filter: Object,
             emptySearch: {type: Boolean, default: false},
         },
@@ -52,7 +52,7 @@
         methods: {
             ...mapActions({snackerror: On.SNACKERROR}),
             search: function (query) {
-                return this.$store.dispatch(this.type, query).catch(this.snackerror)
+                return this.$store.dispatch(this.action, query).catch(this.snackerror)
             },
             reset: function () {
                 this.enabled = this.filter !== null || this.emptySearch

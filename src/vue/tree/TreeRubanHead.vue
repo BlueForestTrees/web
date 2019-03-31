@@ -7,15 +7,19 @@
         </subpage-title>
         <v-layout justify-center>
             <open-message slot="right" :section="section" no-text/>
-            <v-btn icon slot="left" @click="$emit('editQt')"><v-icon class="carton logo-petit"/></v-btn>
-            <btn @click="nodeNav" icon-class="trunk logo"></btn>
-            <v-btn icon flat @click="deleteOpenedTree"><v-icon color="grey">delete</v-icon></v-btn>
+            <v-btn icon slot="left" @click="$emit('editQt')">
+                <v-icon class="carton logo-petit"/>
+            </v-btn>
+            <btn :enabled="tree !== stateTree" @click="nodeNav" icon-class="trunk logo"></btn>
+            <v-btn icon flat @click="deleteOpenedTree">
+                <v-icon color="grey">delete</v-icon>
+            </v-btn>
         </v-layout>
     </v-layout>
 </template>
 
 <script>
-    import {mapActions, mapMutations} from "vuex"
+    import {mapActions, mapMutations, mapState} from "vuex"
     import OpenMessage from "../common/OpenMessage"
     import SubpageTitle from "./SubpageTitle"
     import {name} from "../../services/calculations"
@@ -40,6 +44,7 @@
             }
         },
         computed: {
+            ...mapState({stateTree: s => s.tree}),
             section() {
                 return {
                     title: `Message pour "${name(this.tree)}"`,

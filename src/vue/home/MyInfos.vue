@@ -11,7 +11,7 @@
         <!--</v-layout>-->
 
         <v-card>
-            <search-list :type="On.SEARCH_INFO" empty-search>
+            <search-list :action="On.SEARCH_INFO" empty-search>
                 <template slot-scope="{item, i, length}">
                     <v-list-tile @click="$emit('select',item)" avatar :key="item._id">
                         <info-dense :info="item"/>

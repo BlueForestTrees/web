@@ -20,16 +20,25 @@
             <h5 class="font-weight-thin subheading">Magasins:</h5>
             <h5 class="font-weight-thin subheading">{{store}}</h5>
         </v-layout>
+
+        <v-layout align-center justify-space-between v-if="date">
+            <h5 class="font-weight-thin subheading">Crée:</h5>
+            <h5 class="font-weight-thin subheading">{{deltaTime(date)}}</h5>
+        </v-layout>
     </v-container>
 </template>
 <script>
     import TreeCardFront from "./QtUnitName"
+    import {deltaTime} from "../../services/calculations"
 
     const Photo = () => import(/* webpackChunkName: "Photo" */ "../common/Photo")
 
     export default {
         components: {TreeCardFront, Photo},
         props: ['tree'],
+        methods:{
+            deltaTime
+        },
         computed: {
             isOff() {
                 return this.origin === "off"
@@ -48,6 +57,9 @@
             },
             store() {
                 return this.trunk && this.trunk.stores
+            },
+            date() {
+                return this.trunk && this.trunk.date
             }
         }
     }

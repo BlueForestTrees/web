@@ -10,8 +10,8 @@ export default {
         .then(facets => applyAspectCoef(bqt, facets)),
 
     [On.DELETE_FACET]:
-        ({commit}, {tree, facet}) =>
-            api.deleteFacet(facet._id)
+        ({commit, dispatch}, {tree, facet}) =>
+            api.deleteFacet(tree._id, facet._id)
                 .then(() => commit(Do.DELETE_FACET, {tree, facet}))
                 .then(() => dispatch(On.SNACKBAR, {text: "Propriété rétirée"})),
 
