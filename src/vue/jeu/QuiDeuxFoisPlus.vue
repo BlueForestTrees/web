@@ -1,5 +1,5 @@
 <template>
-    <v-container key="equiv">
+    <v-container key="equiv" class="mt-5">
         <v-card>
 
             <v-layout column align-center>

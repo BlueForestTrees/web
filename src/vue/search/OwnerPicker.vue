@@ -3,7 +3,7 @@
         <div slot="activator" class="font-weight-thin caption mx-2">
             <v-layout row align-center>
                 <span v-if="title" class="font-weight-medium">{{title}}</span>
-                <span v-else>tout le monde</span>
+                <span v-else>à tout le monde</span>
                 <v-icon>arrow_drop_down</v-icon>
             </v-layout>
         </div>
@@ -13,8 +13,8 @@
 
                 <v-layout :column="$vuetify.breakpoint.xsOnly" class="grey lighten-5" pa-2 align-center>
                     <v-layout row ml-3 align-center>
-                        <a @click="select(null)" class="no-wrap mx-2">tout le monde</a>
-                        <a v-if="user" @click="select(user)" class="no-wrap mx-2">moi</a>
+                        <a @click="select(null)" class="no-wrap mx-2">à tout le monde</a>
+                        <a v-if="user" @click="select(user)" class="no-wrap mx-2">à moi</a>
                     </v-layout>
                 </v-layout>
 

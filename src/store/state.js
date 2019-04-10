@@ -35,13 +35,13 @@ export default {
     user: null,
     userStatus: null,
     expire: null,
-    search: {name: null, cats: [], owner: null},
+    search: {type: null, term: null, cats: [], owner: null, impact: null, facet: null},
     basket: [],
     tree: null,
     compare: {left: null, right: null, leftAxises: null, rightAxises: null, axis: null},
     dialogs: dialogs(),
     nav: {
-        intro: true,
+        intro: false,
         main: {tab: null},
         search: {cat: {opened: false}, owner: {opened: false}},
         leftMenuVisible: false, rightMenuVisible: false, dark: false, detailsDialog: false,
@@ -63,6 +63,4 @@ export default {
     maquettes,
     xRequestId: null,
     info: {},
-
-
 }

@@ -1,7 +1,7 @@
 <template>
     <div>
 
-        <impact-entry-picker v-if="changeItem || !selectedEntry" @select="select"/>
+        <entry-list v-if="changeItem || !selectedEntry" @select="select" :action="On.SEARCH_IMPACT_ENTRY"/>
 
         <v-layout v-else align-center column>
             <quantity-picker :item="selectedEntry" @change="validate" @close="closeQtPicker"></quantity-picker>
@@ -16,14 +16,14 @@
     import QuantityPicker from "../common/QuantityPicker"
     import On from "../../const/on"
     import {mapActions} from "vuex"
-    import ImpactEntryPicker from "./ImpactEntriesPicker"
     import SubpageTitle from "../tree/SubpageTitle"
+    import EntryList from "./EntriesList"
 
     export default {
         name: "impact-adder",
         props: ['tree'],
-        components: {SubpageTitle, ImpactEntryPicker, QuantityPicker, Closer},
-        data: () => ({selectedEntry: null, changeItem: false}),
+        components: {EntryList, SubpageTitle, QuantityPicker, Closer},
+        data: () => ({selectedEntry: null, changeItem: false, On}),
         methods: {
             name,
             ...mapActions({

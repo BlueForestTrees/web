@@ -2,19 +2,30 @@ import {treeMap} from "../const/selections"
 
 export default {
     filter: state => {
-        const cat = {}
-        const filter = {cat}
+        const filter = {}
         let changes = false
-        for (let i = 0; i < state.search.cats.length; i++) {
-            cat["c" + i] = state.search.cats[i]._id
+        if (state.search.type) {
+            filter.type = state.search.type
             changes = true
         }
-        if (state.search.name) {
-            filter.term = state.search.name
+        if (state.search.cats.length) {
+            filter.cat = state.search.cats[state.search.cats.length - 1]._id
+            changes = true
+        }
+        if (state.search.term) {
+            filter.term = state.search.term
             changes = true
         }
         if (state.search.owner) {
             filter.oid = state.search.owner._id
+            changes = true
+        }
+        if (state.search.impact) {
+            filter.iid = state.search.impact._id
+            changes = true
+        }
+        if (state.search.facet) {
+            filter.fid = state.search.facet._id
             changes = true
         }
         return changes ? filter : null

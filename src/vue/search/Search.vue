@@ -2,7 +2,7 @@
     <v-container key="search">
 
         <v-layout row wrap justify-center align-center xs-4 mb-1>
-            <search-text :value="search.name" @input="pickName" class="not-too-half"/>
+            <search-text :value="search.term" @input="pickName" class="not-too-half"/>
         </v-layout>
 
         <v-layout :column="$vuetify.breakpoint.xsOnly" align-center justify-center>
@@ -27,7 +27,7 @@
     import OwnerPicker from "./OwnerPicker"
 
     const SearchTree = () => import(/* webpackChunkName: "SearchComp" */ './SearchTree')
-    const ImpactEntries = () => import(/* webpackChunkName: "ImpactEntries" */ '../impact/ImpactEntriesPicker')
+    const ImpactEntries = () => import(/* webpackChunkName: "ImpactEntries" */ '../impact/EntriesList')
     const FacetEntries = () => import(/* webpackChunkName: "FacetEntries" */ '../facet/FacetEntryPicker')
 
     export default {

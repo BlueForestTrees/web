@@ -2,13 +2,9 @@
     <div>
         <v-card class="ma-2 elevation-5">
             <v-layout column align-center mb-1>
-
                 <subpage-title title="Description" sub color="whitegrey"/>
-
                 <photo :trunk="tree.trunk" size="200" class="my-3"/>
-
                 <description :tree="tree"/>
-
             </v-layout>
         </v-card>
         <facets-sub-page :tree="tree" />

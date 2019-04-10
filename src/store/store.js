@@ -43,6 +43,7 @@ import treeManipActions from "./actions/treeManipActions"
 import infoActions from "./actions/infoActions"
 import navActions from "./actions/navActions"
 import filmActions from "./actions/filmActions"
+import searchMutations from "./mutation/searchMutations"
 
 
 
@@ -66,7 +67,8 @@ const store = new Vuex.Store({
         ...snackbarMutations,
         ...navMutations,
         ...messagesMutations,
-        ...selectionMutations
+        ...selectionMutations,
+        ...searchMutations
     },
     actions: {
         ...filmActions,

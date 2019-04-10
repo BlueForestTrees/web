@@ -2,8 +2,8 @@
     <v-menu v-model="menuVisible" :close-on-content-click="false" :min-width="menuMinWidth">
         <div slot="activator" class="font-weight-thin caption mx-2">
             <v-layout row align-center>
-                <span v-if="title" class="font-weight-medium">Catégorie: {{title}}</span>
-                <span v-else>toutes les catégories</span>
+                <span v-if="title" class="font-weight-medium">{{title}}</span>
+                <span v-else>dans toutes les catégories</span>
                 <v-icon>arrow_drop_down</v-icon>
             </v-layout>
         </div>
@@ -11,7 +11,7 @@
             <v-layout column>
 
                 <v-layout row wrap class="grey lighten-5" pa-2>
-                    <a @click="pathSelect(null)" class="no-wrap">toutes les catégories</a>
+                    <a @click="pathSelect(null)" class="no-wrap">tout</a>
                     <v-icon v-if="anySelected" small>keyboard_arrow_right</v-icon>
                     <template v-for="(cat, i) in selection">
                         <a @click="pathSelect(cat)" class="no-wrap">{{cat.name}}</a>
@@ -22,8 +22,8 @@
                 <v-divider/>
 
                 <v-layout column wrap ma-2 :style="itemsStyle">
-                    <loader v-if="loading" class="list-complete-item"/>
-                    <a v-else-if="items.length > 0" v-for="item in items" @click="select(item)" :key="'o'+item._id" class="list-complete-item">
+                    <loader v-if="loading"/>
+                    <a v-else-if="items.length > 0" v-for="item in items" @click="select(item)" :key="'o'+item._id">
                         <v-layout row align-center>
                             <v-icon :style="'color: '+item.color">stop</v-icon>
                             <a style="padding-right:0.5em">{{item.name}}</a></v-layout>
