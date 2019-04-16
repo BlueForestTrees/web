@@ -1,6 +1,6 @@
 <template>
     <v-card>
-        <search-list :ps="10" :action="On.SEARCH_ALL" :filter="filter" empty-search>
+        <search-list :ps="20" :action="On.SEARCH_ALL" :filter="filter" empty-search>
             <template slot-scope="{item, last}">
                 <component v-bind:is="`${item.searchType}-line`" :item="item" @select="select"></component>
                 <v-divider v-if="!last"/>

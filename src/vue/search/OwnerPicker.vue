@@ -3,7 +3,7 @@
         <div slot="activator" class="font-weight-thin caption mx-2">
             <v-layout row align-center>
                 <span v-if="title" class="font-weight-medium">{{title}}</span>
-                <span v-else>à tout le monde</span>
+                <span v-else>Propriétaire</span>
                 <v-icon>arrow_drop_down</v-icon>
             </v-layout>
         </div>

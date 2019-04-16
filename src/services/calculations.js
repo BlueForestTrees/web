@@ -190,6 +190,8 @@ export const deltaTime = time => {
 
 }
 
+export const monthYear = date => new Date(date).toLocaleDateString()
+
 const possible = "abcdefghijklmnopqrstuvwxyz0123456789"
 export const generateXRequestId = () => {
     let xRequestId = ""

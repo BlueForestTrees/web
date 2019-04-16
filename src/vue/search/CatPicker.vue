@@ -3,7 +3,7 @@
         <div slot="activator" class="font-weight-thin caption mx-2">
             <v-layout row align-center>
                 <span v-if="title" class="font-weight-medium">{{title}}</span>
-                <span v-else>dans toutes les catégories</span>
+                <span v-else>Catégorie</span>
                 <v-icon>arrow_drop_down</v-icon>
             </v-layout>
         </div>

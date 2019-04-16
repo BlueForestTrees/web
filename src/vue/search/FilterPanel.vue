@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="align">
         <type-picker @input="setSearchType" :value="search.type"/>
         <term-picker @input="setSearchTerm" :value="search.term"/>
         <cat-picker @input="setSearchCats" :value="search.cats"/>

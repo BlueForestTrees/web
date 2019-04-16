@@ -3,7 +3,7 @@
         <div slot="activator" class="font-weight-thin caption mx-2">
             <v-layout row align-center>
                 <span v-if="term" class="font-weight-medium">{{term}}</span>
-                <span v-else>avec tous les noms</span>
+                <span v-else>Nom</span>
                 <v-icon>arrow_drop_down</v-icon>
             </v-layout>
         </div>

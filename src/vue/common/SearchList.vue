@@ -3,7 +3,7 @@
         <template v-for="(item,i) in items">
             <slot :item="item" :i="i" :length="items.length" :last="i === items.length - 1"/>
         </template>
-        <infinite-loading ref="iloading" @infinite="loadResults" :distance="500">
+        <infinite-loading ref="iloading" @infinite="loadResults" :distance="600">
             <span slot="no-more"><slot name="no-more">{{items.length}} résultat{{items.length > 1 ? 's':''}}</slot></span>
             <span slot="no-results"><slot name="no-results"><div class="font-weight-thin bold-font mt-5">Pas de résultats</div></slot></span>
             <span slot="spinner"><loader class="mt-5"/></span>

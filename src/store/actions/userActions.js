@@ -57,7 +57,7 @@ export default {
 
     [On.CHECK_OWNERSHIP]: ({state}, tree) => {
         if (!state.user && state.user._id !== tree._id) {
-            throw {code: "bf403"}
+            throw {externId: "bf403"}
         }
     },
 
