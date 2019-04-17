@@ -8,7 +8,6 @@ const TreePage = () => import(/* webpackChunkName: "Tree" */ '../vue/tree/TreePa
 const Equivalence = () => import(/* webpackChunkName: "Equivalence" */ '../vue/equivalence/Equivalence')
 const Qui2 = () => import(/* webpackChunkName: "Qui2" */ '../vue/jeu/QuiDeuxFoisPlus')
 const RootEditor = () => import(/* webpackChunkName: "Root" */ '../vue/root/RootEditorPage')
-const SearchPage = () => import(/* webpackChunkName: "Search" */ '../vue/search/SearchPage')
 const BlueForest = () => import(/* webpackChunkName: "BlueForest" */ '../vue/BlueForest')
 const Compare = () => import(/* webpackChunkName: "Compare" */ '../vue/compare/Compare')
 const Confirmation = () => import(/* webpackChunkName: "Confirmation" */ '../vue/user/Confirmation')
@@ -42,7 +41,6 @@ export default new VueRouter({
             path: "/", component: BlueForest,
             children: [
                 {name: GO.SEARCH, path: "", component: Wall},
-                {name: "phantom", path: "doudou", component: SearchPage},
                 {name: GO.PLAN_INTRO, path: "/aide", component: BFCestQuoi},
                 {name: GO.PLAN, path: "/plan", component: Plan},
                 {name: GO.TEAM, path: "/equipe", component: MyTeam},

@@ -38,6 +38,8 @@ export default {
     SET_TREE_FACET_TERM: 'setTreeFacetTerm',
     SET_MESSAGES_FILTER: 'setMessagesFilter',
     SET_ROOTS: 'setRoots',
+    SHOW_SEARCH_PANEL: 'showSearchPanel',
+    HIDE_SEARCH_PANEL: 'hideSearchPanel',
     SET_SEARCH_TYPE: 'setSearchType',
     SET_SEARCH_CATS: 'setSearchCat',
     SET_SEARCH_TERM: 'setSearchTerm',

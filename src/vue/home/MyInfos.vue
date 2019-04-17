@@ -35,7 +35,7 @@
     import InfoDense from "./InfoDense"
     import TransitionExpand from "../common/TransitionExpand"
     import SearchText from "../search/SearchText"
-    import OwnerPicker from "../search/OwnerPicker"
+    import OwnerPicker from "../search/OwnerPanel"
     import SearchList from "../common/SearchList"
     import {deltaTime} from "../../services/calculations"
 

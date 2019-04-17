@@ -1,6 +1,8 @@
 html {
-    overflow-y: auto
+    overflow-y: scroll
 }
+
+
 
 .scroll{
     overflow-x: hidden;
@@ -36,6 +38,10 @@ html {
 
 .tiny {
     width: 1.5em;
+}
+
+.rounded-big{
+    border-radius:30px;
 }
 
 .rounded {
@@ -375,6 +381,10 @@ a {
     height: 1.8em;
 }
 
+.type-panel--active{
+    transform: scale(1.2);
+    background-color: #D8E9F5;
+}
 
 .list-complete-item {
     transition: all 0.3s;
@@ -439,7 +449,7 @@ a {
 }
 
 .slide-bottom-leave-to {
-    transform: translateY(10px);
+    transform: translateY(-10px);
     opacity: 0;
 }
 

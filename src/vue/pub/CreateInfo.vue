@@ -15,7 +15,7 @@
                     </v-container>
                     <v-layout row justify-end>
                         <v-spacer/>
-                        <v-btn color="primary" class="ma-3" :to="{name:GO.EDIT_EQUIV, params:{path:'new'}}">Créer une équivalence</v-btn>
+                        <v-btn color="primary" class="ma-3" :to="{name:GO.EDIT_EQUIV, params:{path:'new'}}">Information d'équivalence</v-btn>
                     </v-layout>
                 </v-expansion-panel-content>
                 <v-expansion-panel-content>

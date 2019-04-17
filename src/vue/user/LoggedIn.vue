@@ -1,8 +1,7 @@
 <template>
     <v-menu v-if="user">
-        <v-avatar slot="activator" class="elevation-3 ma-2" size="32px" :style="{backgroundColor:user.color}">
-            <span :style="{color:overcolor(user.color)}">{{initiales(user.fullname)}}</span>
-        </v-avatar>
+
+        <badge slot="activator" :user="user"/>
 
         <v-list>
             <v-list-tile @click="goto(GO.USER)">
@@ -32,7 +31,9 @@
             </v-list-tile>
 
             <v-list-tile @click="logout">
-                <v-list-tile-avatar><v-icon>power_off</v-icon></v-list-tile-avatar>
+                <v-list-tile-avatar>
+                    <v-icon>power_off</v-icon>
+                </v-list-tile-avatar>
                 <v-list-tile-content>Déconnexion</v-list-tile-content>
             </v-list-tile>
         </v-list>
@@ -52,16 +53,16 @@
     import {initiales, overcolor} from "../../services/calculations"
     import {GO} from "../../const/go"
     import UserIcon from "./UserIcon"
+    import Badge from "./Badge"
 
     export default {
         name: "logged-in",
-        data:()=>({GO}),
-        components: {UserIcon, LoginSuscribeList},
+        data: () => ({GO}),
+        components: {Badge, UserIcon, LoginSuscribeList},
         computed: {
             ...mapState(['user'])
         },
-        methods:{
-            overcolor, initiales,
+        methods: {
             ...mapActions({logout: On.LOGOUT, goto: On.GO_TO})
         }
     }

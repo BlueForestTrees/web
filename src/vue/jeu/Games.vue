@@ -36,7 +36,7 @@
     import {GO} from "../../const/go"
     import SearchText from "../search/SearchText"
     import {mapState, mapGetters} from "vuex"
-    import OwnerPicker from "../search/OwnerPicker"
+    import OwnerPicker from "../search/OwnerPanel"
     import {deltaTime} from "../../services/calculations"
 
     export default {

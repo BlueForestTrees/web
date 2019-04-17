@@ -8,7 +8,7 @@ export default {
             filter.type = state.search.type
             changes = true
         }
-        if (state.search.cats.length) {
+        if (state.search.cats && state.search.cats.length) {
             filter.cat = state.search.cats[state.search.cats.length - 1]._id
             changes = true
         }

@@ -1,7 +1,8 @@
 <template>
     <v-text-field
+            flat
             :value="value" @input="update" class="mb-1" :placeholder="label"
-            :solo="!notSolo" hide-details autofocus append-icon="search" clearable
+            :solo="!notSolo" hide-details autofocus append-icon="search"
             @click:append="emitInput" @enter="emitInput" v-on:keyup.enter="emitInput"
     ></v-text-field>
 </template>

@@ -35,7 +35,7 @@ export default {
     user: null,
     userStatus: null,
     expire: null,
-    search: {type: null, term: null, cats: [], owner: null, impact: null, facet: null},
+    search: {panels: [], type: null, term: null, cats: null, owner: null, impact: null, facet: null},
     basket: [],
     tree: null,
     compare: {left: null, right: null, leftAxises: null, rightAxises: null, axis: null},

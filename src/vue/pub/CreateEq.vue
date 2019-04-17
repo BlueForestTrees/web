@@ -2,7 +2,7 @@
     <view-edit-save>
 
         <v-card slot="left">
-            <subpage-title iconClass="voice logo" title="Créer une équivalence"/>
+            <subpage-title iconClass="voice logo" title="Information d'équivalence"/>
             <v-container>
                 <eq-show :info="final"/>
             </v-container>
