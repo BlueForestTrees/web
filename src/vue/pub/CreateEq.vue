@@ -61,7 +61,7 @@
                         },
                         noedit: !(this.final.rightSelection || this.final.leftSelection)
                     },
-                    {key: "rightSelection", title: "Produit B", displayFct: name, editor: "tree-selection-picker"},
+                    {key: "rightSelection", title: "Produit B", displayFct: name, editor: "tree-selection-picker", props: {noCreate: true}},
                     {key: "path", title: "Nom", editor: "path-editor"},
                     {key: "description", title: "Commentaire", editor: "textarea-editor", optional: true},
                 ]

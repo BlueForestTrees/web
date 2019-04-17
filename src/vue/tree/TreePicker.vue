@@ -7,7 +7,11 @@
         </v-tabs>
         <v-divider/>
         <create-tree v-if="!noCreate && tab==='create'" @create="pickTree" no-title/>
-        <search-result-panel v-else-if="tab==='search'" @select="pickTree" class="mt-5"/>
+        <template v-else-if="tab==='search'">
+            <filters-bar/>
+            <filters-panel />
+            <search-result-panel @select="pickTree"/>
+        </template>
         <favorites v-else-if="tab==='favoris'" :user="user" @select="pickSelection"/>
     </span>
 </template>
@@ -17,6 +21,8 @@
     import On from "../../const/on"
     import {OWNER, TRUNK} from "../../const/fragments"
     import SearchResultPanel from "../search/SearchResultPanel"
+    import FiltersBar from "../search/FiltersBar"
+    import FiltersPanel from "../search/FiltersPanel"
 
     const CreateTree = () => import(/* webpackChunkName: "CreateTree" */ './CreateTree')
     const Favorites = () => import(/* webpackChunkName: "Favorites"*/ "../home/Favorites")
@@ -24,7 +30,7 @@
     export default {
         name: 'tree-picker',
         props: {noCreate: {type: Boolean, default: false}},
-        components: {SearchResultPanel, CreateTree, Favorites},
+        components: {FiltersPanel, FiltersBar, SearchResultPanel, CreateTree, Favorites},
         methods: {
             async pickSelection(selection) {
                 const fragments = [TRUNK, OWNER]
