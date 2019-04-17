@@ -1,8 +1,7 @@
 <template>
     <panel title="Propriétés" @close="$emit('close')">
-        <a v-if="value" @click="emitInput(null)">{{name(value)}}
-            <v-icon>edit</v-icon>
-        </a>
+        <icon slot="left" icon-class="facet logo-petit"/>
+        <a v-if="value" @click="emitInput(null)">{{name(value)}}</a>
         <entry-list v-else @select="emitInput" :action="On.SEARCH_FACET_ENTRY"/>
     </panel>
 </template>
@@ -12,12 +11,13 @@
     import On from "../../const/on"
     import Panel from "./Panel"
     import {name} from "../../services/calculations"
+    import Icon from "../common/icon"
 
 
     export default {
         name: "facet-panel",
         props: ['value'],
-        components: {Panel, EntryList},
+        components: {Icon, Panel, EntryList},
         data: function () {
             return {On}
         },

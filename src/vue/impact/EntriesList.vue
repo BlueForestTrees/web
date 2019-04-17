@@ -2,7 +2,7 @@
     <v-layout column>
 
         <v-layout column align-center>
-            <v-text-field label="Nom..." autofocus v-model="term" clearable class="not-too-half"/>
+            <v-text-field autofocus v-model="term" clearable class="not-too-large"/>
         </v-layout>
 
         <v-divider/>

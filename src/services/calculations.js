@@ -67,8 +67,8 @@ export const de = name => {
 export const dename = item => de(name(item))
 
 export const color = item => item.color || item.trunk.color
-export const equiv = item => item.eq ? `(éq. ${item.eq})` : ""
-export const qtUnitName = item => item && `${qtUnit(item)} ${dename(item)} ${equiv((item.trunk && item.trunk.quantity) || item.quantity || item)}`
+export const equiv = item => item.eq ? `éq. ${item.eq}` : ""
+export const qtUnitName = item => item && `${qtUnit(item)} ${equiv((item.trunk && item.trunk.quantity) || item.quantity || item)} ${dename(item)}`
 
 export const getRandomColor = () => {
     const letters = '0123456789ABCDEF'

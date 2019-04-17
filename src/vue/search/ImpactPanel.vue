@@ -1,8 +1,7 @@
 <template>
     <panel title="Environnement" @close="$emit('close')">
-        <a v-if="value" @click="emitInput(null)">{{name(value)}}
-            <v-icon>edit</v-icon>
-        </a>
+        <icon slot="left" icon-class="planet logo-petit"/>
+        <a v-if="value" @click="emitInput(null)">{{name(value)}}</a>
         <entry-list v-else @select="emitInput" :action="On.SEARCH_IMPACT_ENTRY"/>
     </panel>
 </template>
@@ -12,11 +11,12 @@
     import On from "../../const/on"
     import Panel from "./Panel"
     import {name} from "../../services/calculations"
+    import Icon from "../common/icon"
 
     export default {
         name: "impact-panel",
         props: ['value'],
-        components: {Panel, EntryList},
+        components: {Icon, Panel, EntryList},
         data: function () {
             return {On}
         },

@@ -1,7 +1,8 @@
 <template>
-    <panel title="Catégories" @close="close">
+    <panel title="Catégorie" @close="close">
+        <icon slot="left" icon="category" class="mx-3"/>
         <v-layout column py-2>
-            <v-layout row wrap>
+            <v-layout row wrap justify-center>
                 <template v-if="anySelected">
                     <a @click="pathSelect(null)" class="no-wrap">Tout</a>
                     <v-icon small>keyboard_arrow_right</v-icon>
@@ -14,7 +15,7 @@
 
             <v-divider v-if="anySelected && items && items.length" class="py-2"/>
 
-            <v-layout row wrap>
+            <v-layout row wrap justify-center>
                 <loader v-if="loading"/>
                 <a v-else-if="items.length > 0" v-for="item in items" @click="select(item)" :key="'o'+item._id">
                     <v-layout row align-center>
@@ -34,10 +35,11 @@
     import Loader from "../loader/Loader"
     import MenuPicker from "./MenuPicker"
     import Panel from "./Panel"
+    import Icon from "../common/icon"
 
     export default {
         name: "CategoriesPanel",
-        components: {Panel, Loader},
+        components: {Icon, Panel, Loader},
         mixins: [selectable],
         props: ['value'],
         data: function () {

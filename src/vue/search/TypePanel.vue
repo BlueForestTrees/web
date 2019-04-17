@@ -1,6 +1,8 @@
 <template>
     <panel title="Genre" @close="$emit('close')">
-        <v-item-group v-model="idx" active-class="type-panel--active">
+        <span slot="left" class="ml-4 display-1">?</span>
+        <a v-if="value" @click="emitInput(null)">{{map(value)}}</a>
+        <v-item-group v-else v-model="idx">
             <v-item>
                 <v-btn flat round slot-scope="{ active, toggle }" @click="toggle" class="text-none">
                     <v-list-tile-avatar class="trunk logo-petit"/>
@@ -25,6 +27,7 @@
 
 <script>
     import Panel from "./Panel"
+
     const types = ['trunk', 'game', 'info']
     export default {
         name: "TypePanel",
@@ -40,7 +43,22 @@
         },
         watch: {
             type(v) {
+                this.emitInput(v)
+            }
+        },
+        methods: {
+            emitInput(v) {
                 this.$emit("input", v)
+            },
+            map(v){
+                switch(v){
+                    case 'trunk':
+                        return "Produits, Services"
+                    case 'game':
+                        return "Jeux"
+                    case 'info':
+                        return "Informations"
+                }
             }
         }
     }

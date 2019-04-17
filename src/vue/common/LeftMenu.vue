@@ -1,5 +1,5 @@
 <template>
-    <v-navigation-drawer app v-model="nav.leftMenuVisible">
+    <v-navigation-drawer floating app v-model="nav.leftMenuVisible" width="340">
         <v-list dense>
 
             <v-list-tile @click="goto(GO.SEARCH)">
@@ -92,7 +92,11 @@
                     <v-list-tile-title>Reporter un bug</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
+            <v-divider/>
+            <links-bar class="mt-2"/>
         </v-list>
+
+
     </v-navigation-drawer>
 </template>
 
@@ -103,9 +107,10 @@
     import {secs} from "../../const/sections"
     import {GO} from "../../const/go"
     import Icon from "./icon"
+    import LinksBar from "../home/LinksBar"
 
     export default {
-        components: {Icon},
+        components: {LinksBar, Icon},
         data: () => ({
             Dial, GO, secs
         }),

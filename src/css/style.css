@@ -143,6 +143,30 @@ a {
     width: 7em;
 }
 
+.link-youtube {
+    background: url(/img/icon-youtube.svg) no-repeat center;
+}
+
+.link-facebook {
+    background: url(/img/icon-facebook.svg) no-repeat center;
+}
+
+.link-github {
+    background: url(/img/icon-github.svg) no-repeat center;
+}
+
+.link-linkedin {
+    background: url(/img/icon-linkedin.svg) no-repeat center;
+}
+
+.link-slack {
+    background: url(/img/icon-slack.svg) no-repeat center;
+}
+
+.link-twitter {
+    background: url(/img/icon-twitter.svg) no-repeat center;
+}
+
 .voice {
     background: url(/img/voice.svg) no-repeat center;
 }
@@ -379,11 +403,6 @@ a {
 .loader {
     width: 1.8em;
     height: 1.8em;
-}
-
-.type-panel--active{
-    transform: scale(1.2);
-    background-color: #D8E9F5;
 }
 
 .list-complete-item {

@@ -1,6 +1,8 @@
 <template>
     <panel title="Nom" @close="$emit('close')">
-        <search-text :value="value" @input="emitInput" label="Entrez un nom"/>
+        <v-icon slot="left" color="primary" class="ml-3">search</v-icon>
+        <a v-if="value" @click="emitInput(null)">{{value}}</a>
+        <search-text v-else :value="value" @input="emitInput" label="Entrez un nom"/>
     </panel>
 </template>
 

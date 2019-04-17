@@ -1,13 +1,7 @@
 <template>
     <panel title="Propriétaire" @close="$emit('close')">
-
-        <a v-if="value" @click="select(null)">
-            <v-layout row align-center>
-                <badge :user="value"/>
-                <a style="padding-right:0.5em">{{value.fullname}}</a>
-                <v-icon>edit</v-icon>
-            </v-layout>
-        </a>
+        <icon slot="left" icon="people" class="mx-3"/>
+        <a v-if="value" @click="select(null)">{{value.fullname}}</a>
         <v-layout v-else column>
             <v-layout align-center>
                 <v-text-field placeholder="Recherche" autofocus @input="termChange" clearable hide-details></v-text-field>
@@ -43,10 +37,11 @@
     import debounce from 'lodash.debounce'
     import Panel from "./Panel"
     import Badge from "../user/Badge"
+    import Icon from "../common/icon"
 
     export default {
         name: "owner-panel",
-        components: {Badge, Panel, Loader},
+        components: {Icon, Badge, Panel, Loader},
         props: ['value'],
         data: () => ({
             items: null,
