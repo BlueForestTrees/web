@@ -22,11 +22,12 @@ export default {
         }
         if (state.search.impact) {
             filter.iid = state.search.impact._id
-            filter.bqt = state.search.impact.bqt
+            filter.ibqt = state.search.impact.bqt
             changes = true
         }
         if (state.search.facet) {
             filter.fid = state.search.facet._id
+            filter.fbqt = state.search.facet.bqt
             changes = true
         }
         return changes ? filter : null
