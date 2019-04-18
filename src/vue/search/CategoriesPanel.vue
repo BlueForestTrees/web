@@ -1,10 +1,10 @@
 <template>
     <panel title="Catégorie" @close="close">
-        <icon slot="left" icon="category" class="mx-3"/>
+        <v-icon slot="left" large class="mx-3 mt-3" color="primary" style="align-items:normal">category</v-icon>
         <v-layout column py-2>
             <v-layout row wrap justify-center>
                 <template v-if="anySelected">
-                    <a @click="pathSelect(null)" class="no-wrap">Tout</a>
+                    <a @click="pathSelect(null)" class="no-wrap">Toutes les catégories</a>
                     <v-icon small>keyboard_arrow_right</v-icon>
                 </template>
                 <template v-for="(cat, i) in selection">

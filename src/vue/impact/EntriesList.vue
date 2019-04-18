@@ -1,13 +1,22 @@
 <template>
     <v-layout column>
 
-        <v-layout column align-center>
-            <v-text-field autofocus v-model="term" clearable class="not-too-large"/>
-        </v-layout>
+        <v-container pt-0>
+            <v-text-field autofocus v-model="term" clearable placeholder="Recherche"></v-text-field>
+        </v-container>
 
-        <v-divider/>
-
-        <selectable-list :items="items" no-qt selection-key="impactEntryPicker" :maxSelectionSize="1" @select="item => $emit('select',item)"/>
+        <v-list scoped-slot="{items}" dense>
+            <template v-for="(item,i) in items">
+                <slot :item="item">
+                    <v-list-tile :key="item._id" @click="$emit('select',item)">
+                        <v-list-tile-content>
+                            <v-list-tile-title>{{ name(item) }}</v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+                </slot>
+                <v-divider v-if="i+1 < items.length"/>
+            </template>
+        </v-list>
 
     </v-layout>
 
@@ -18,7 +27,7 @@
     import {GO} from "../../const/go"
 
     export default {
-        name: "entry-list",
+        name: "entries-list",
         props: {action: {type: String}},
         components: {SelectableList},
         data: function () {

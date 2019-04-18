@@ -8,7 +8,7 @@ import css from "./css/style.css"
 Vue.config.productionTip = false
 Vue.use(Vuetify, {
     theme: {
-        primary: "#1E88E5"//"1565c0"
+        primary: "#1565c0"
     }
 })
 

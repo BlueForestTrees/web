@@ -22,6 +22,7 @@ export default {
         }
         if (state.search.impact) {
             filter.iid = state.search.impact._id
+            filter.bqt = state.search.impact.bqt
             changes = true
         }
         if (state.search.facet) {

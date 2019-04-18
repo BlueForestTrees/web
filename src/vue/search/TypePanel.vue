@@ -1,12 +1,12 @@
 <template>
     <panel title="Genre" @close="$emit('close')">
-        <span slot="left" class="ml-4 display-1">?</span>
+        <span slot="left" class="mx-4 mt-3 display-1 bf-blue">?</span>
         <a v-if="value" @click="emitInput(null)">{{map(value)}}</a>
-        <v-item-group v-else v-model="idx">
+        <v-item-group v-else v-model="idx" active-class="line-hightlight">
             <v-item>
                 <v-btn flat round slot-scope="{ active, toggle }" @click="toggle" class="text-none">
                     <v-list-tile-avatar class="trunk logo-petit"/>
-                    <span>Produits, Services</span>
+                    <span>Produits & Services</span>
                 </v-btn>
             </v-item>
             <v-item>
@@ -53,7 +53,7 @@
             map(v){
                 switch(v){
                     case 'trunk':
-                        return "Produits, Services"
+                        return "Produits & Services"
                     case 'game':
                         return "Jeux"
                     case 'info':

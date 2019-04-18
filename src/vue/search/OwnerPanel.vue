@@ -1,11 +1,13 @@
 <template>
     <panel title="Propriétaire" @close="$emit('close')">
-        <icon slot="left" icon="people" class="mx-3"/>
+        <v-icon slot="left" class="mx-3 mt-3" color="primary" large style="align-items:normal">people</v-icon>
         <a v-if="value" @click="select(null)">{{value.fullname}}</a>
         <v-layout v-else column>
-            <v-layout align-center>
-                <v-text-field placeholder="Recherche" autofocus @input="termChange" clearable hide-details></v-text-field>
-            </v-layout>
+            <v-container pt-0>
+                <v-layout align-center>
+                    <v-text-field placeholder="Recherche" autofocus @input="termChange" clearable hide-details></v-text-field>
+                </v-layout>
+            </v-container>
 
             <v-layout column wrap ma-2>
                 <a @click="select(user)">

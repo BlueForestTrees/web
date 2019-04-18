@@ -2,8 +2,6 @@ html {
     overflow-y: scroll
 }
 
-
-
 .scroll{
     overflow-x: hidden;
     overflow-y: fragments;
@@ -16,6 +14,10 @@ html {
     position: absolute;
     bottom: 5px;
     right: 5px;
+}
+
+.bf-blue {
+    color: #1565c0;
 }
 
 .top-left {
@@ -118,6 +120,11 @@ a {
     width: 15em
 }
 
+.logo-petit-max {
+    height: 1em;
+    width: 1em
+}
+
 .logo-petit {
     height: 1.5em;
     width: 1.5em
@@ -173,6 +180,14 @@ a {
 
 .planet {
     background: url(/img/planet.svg) no-repeat center;
+}
+
+.planet-gray {
+    background: url(/img/planet-gray.svg) no-repeat center;
+}
+
+.facet-gray {
+    background: url(/img/facet-gray.svg) no-repeat center;
 }
 
 .roots {
@@ -252,7 +267,7 @@ a {
 }
 
 .not-too-half {
-    max-width: 350px;
+    max-width: 400px;
 }
 
 .align {
@@ -453,24 +468,27 @@ a {
     opacity: 1;
 }
 
+.slide-bottom {
+    transition: all .4s ease;
+}
 
-.slide-bottom-enter-active {
-    transition: all .2s ease;
+.panel-height {
+    min-height: 4.8em;
+}
+
+.line-hightlight {
+    color: #7FABDC;
+}
+
+.slide-bottom-enter, .slide-bottom-leave-to {
+    transform: translateY(-10px);
+    opacity: 0;
 }
 
 .slide-bottom-leave-active {
-    transition: all .2s ease;
+    position: absolute;
 }
 
-.slide-bottom-enter {
-    transform: translateY(-10px);
-    opacity: 0;
-}
-
-.slide-bottom-leave-to {
-    transform: translateY(-10px);
-    opacity: 0;
-}
 
 .very-height {
     height: 105%

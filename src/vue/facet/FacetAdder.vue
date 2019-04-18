@@ -3,7 +3,7 @@
 
         <facet-entry-picker v-if="changeItem || !selectedEntry" @select="select" />
 
-        <quantity-picker v-else :item="selectedEntry" @change="validate" @close="closeQtPicker"></quantity-picker>
+        <quantity-picker v-else :value="selectedEntry" @input="validate" @close="closeQtPicker"></quantity-picker>
 
     </div>
 </template>

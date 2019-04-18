@@ -2,8 +2,11 @@
     <v-container class="mt-5">
         <welcome-panel class="mb-5"/>
         <filters-bar/>
-        <filters-panel />
-        <search-result-panel @select="goAny"/>
+        <filters-panel>
+            <v-container key="sp" py-0>
+                <search-result-panel @select="goAny" key="sp"/>
+            </v-container>
+        </filters-panel>
     </v-container>
 </template>
 

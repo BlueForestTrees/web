@@ -11,8 +11,10 @@
 
     export default {
         name: "search-text",
-        props: ['value','not-solo', 'label'],
-        data: () => ({v: null}),
+        props: ['value', 'not-solo', 'label'],
+        data: function () {
+            return {v: this.value}
+        },
         methods: {
             update(v) {
                 this.v = v
@@ -20,11 +22,6 @@
             },
             emitInput() {
                 this.$emit("input", this.v)
-            }
-        },
-        watch: {
-            value(v) {
-                this._value = v
             }
         }
     }

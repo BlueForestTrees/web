@@ -1,10 +1,14 @@
 <template>
-    <v-card class="rounded-big">
-        <v-layout row align-center justify-space-between>
+    <v-card class="rounded-big panel-height elevation-4">
+        <v-layout row>
             <slot name="left"/>
-            <slot/>
-            <v-btn icon>
-                <v-icon large color="grey" @click="$emit('close')">close</v-icon>
+
+            <v-layout row align-center justify-center class="panel-height">
+                <slot/>
+            </v-layout>
+
+            <v-btn icon style="margin-top: 15px">
+                <v-icon large color="grey darken-2" @click="$emit('close')">close</v-icon>
             </v-btn>
         </v-layout>
     </v-card>

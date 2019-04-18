@@ -1,9 +1,12 @@
 <template>
     <v-layout column>
-        <transition-group name="slide-bottom" mode="out-in">
+        <transition-group name="slide-bottom">
             <template v-for="(panel,i) in visiblePanels">
-                <component :key="panel.key" :is="panel.type" @input="v=>input(panel.mutation,v)" :value="search[panel.key]" @close="hidePanel(panel.key)" :class="i+1 < visiblePanels.length ? 'mb-2':'mb-3'"/>
+                <component :key="panel.key" :is="panel.type" :value="search[panel.key]" v-bind="panel.props"
+                           @input="v=>input(panel.mutation,v)" @close="hidePanel(panel.key)"
+                           :class="i+1 < visiblePanels.length ? 'mb-2':'mb-3'"/>
             </template>
+            <slot/>
         </transition-group>
     </v-layout>
 </template>
@@ -16,20 +19,20 @@
     import Do from "../../const/do"
     import {mapMutations, mapState} from "vuex"
     import TransitionExpand from "../common/TransitionExpand"
-    import ImpactPanel from "./ImpactPanel"
-    import FacetPanel from "./FacetPanel"
+    import EntryPanel from "./EntryPanel"
+    import ON from "../../const/on"
 
     export default {
         name: "FiltersPanel",
-        components: {FacetPanel, ImpactPanel, TransitionExpand, TypePanel, TermPanel, CategoriesPanel, OwnerPanel},
+        components: {EntryPanel, TransitionExpand, TypePanel, TermPanel, CategoriesPanel, OwnerPanel},
         data: () => ({
             panels: {
                 type: {key: "type", type: "type-panel", mutation: Do.SET_SEARCH_TYPE},
                 term: {key: "term", type: "term-panel", mutation: Do.SET_SEARCH_TERM},
                 cats: {key: "cats", type: "categories-panel", mutation: Do.SET_SEARCH_CATS},
                 owner: {key: "owner", type: "owner-panel", mutation: Do.SET_SEARCH_OWNER},
-                impact: {key: "impact", type: "impact-panel", mutation: Do.SET_SEARCH_IMPACT},
-                facet: {key: "facet", type: "facet-panel", mutation: Do.SET_SEARCH_FACET}
+                impact: {key: "impact", type: "entry-panel", mutation: Do.SET_SEARCH_IMPACT, props: {title: "Environnement", iconClass: "planet logo", action: ON.SEARCH_IMPACT_ENTRY}},
+                facet: {key: "facet", type: "entry-panel", mutation: Do.SET_SEARCH_FACET, props: {title: "Propriétés", iconClass: "facet logo", action: ON.SEARCH_FACET_ENTRY}},
             }
         }),
         computed: {

@@ -2,10 +2,10 @@
     <div>
 
         <entry-list v-if="changeItem || !selectedEntry" @select="select" :action="On.SEARCH_IMPACT_ENTRY"/>
-
-        <v-layout v-else align-center column>
-            <quantity-picker :item="selectedEntry" @change="validate" @close="closeQtPicker"></quantity-picker>
-        </v-layout>
+        <template v-else>
+            <v-divider/>
+            <quantity-picker :value="selectedEntry" @input="validate" @close="closeQtPicker"></quantity-picker>
+        </template>
     </div>
 
 </template>
