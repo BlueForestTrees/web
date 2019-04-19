@@ -1,7 +1,7 @@
 <template>
     <g :class="trunk ? 'node trunk' : 'node root'" @click="$emit('click', tree)" :transform="`translate(${x} ${y})`">
 
-        <foreignObject x="-110" :y="size+5" width="220" height="80">
+        <foreignObject x="-110" :y="size+5" width="220" height="85">
             <div class="text align noselect">{{qtUnitName(tree)}}</div>
         </foreignObject>
 

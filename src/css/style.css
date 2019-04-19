@@ -452,7 +452,7 @@ a {
 .expand-leave-to {
     height: 0;
     opacity: 0;
-    transform: translateY(-30px);
+    /*transform: translateY(-30px);*/
 }
 
 .flip-list-move {

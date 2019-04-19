@@ -64,11 +64,12 @@ export const de = name => {
     return `d${startVoyelle ? "'" : "e "}${name}`
 }
 
-export const dename = item => de(name(item))
+// pas de "de" ou "d'" pour "1 apéro"
+// export const dename = item => quantity(item).g !== "Nomb" && de(name(item)) || name(item)
 
 export const color = item => item.color || item.trunk.color
 export const equiv = item => item.eq ? `éq. ${item.eq}` : ""
-export const qtUnitName = item => item && `${qtUnit(item)} ${equiv((item.trunk && item.trunk.quantity) || item.quantity || item)} ${dename(item)}`
+export const qtUnitName = item => item && `${qtUnit(item)} ${equiv((item.trunk && item.trunk.quantity) || item.quantity || item)} ${name(item)}`
 
 export const getRandomColor = () => {
     const letters = '0123456789ABCDEF'
@@ -162,7 +163,7 @@ export const applySelectionCoef = (coef, selection) => {
 }
 
 export const deltaTime = time => {
-    if(!time) return ""
+    if (!time) return ""
     const delta = (Date.now() - new Date(time)) / 1000
     return delta < 30 ?
         `à l'instant`

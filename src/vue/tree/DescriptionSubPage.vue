@@ -2,12 +2,25 @@
     <div>
         <v-card class="ma-2 elevation-5">
             <v-layout column align-center mb-1>
-                <subpage-title title="Description" sub color="whitegrey"/>
-                <photo :trunk="tree.trunk" size="200" class="my-3"/>
-                <description :tree="tree"/>
+                <subpage-title title="Description" sub color="whitegrey">
+                    <v-btn v-if="isEditing" slot="right" icon @click="unedit">
+                        <v-icon color="grey">close</v-icon>
+                    </v-btn>
+                    <v-btn v-else-if="canEditDescription" slot="right" icon @click="edit">
+                        <v-icon color="grey">edit</v-icon>
+                    </v-btn>
+                </subpage-title>
+
+                <transition-expand>
+                    <description-editor v-if="isEditing" :value="tree.trunk" @saved="save"/>
+                </transition-expand>
+                <transition-expand>
+                    <description v-if="!isEditing" :tree="tree"/>
+                </transition-expand>
+
             </v-layout>
         </v-card>
-        <facets-sub-page :tree="tree" />
+        <facets-sub-page :tree="tree"/>
     </div>
 </template>
 <script>
@@ -15,7 +28,7 @@
     import TreeCard from "./TreeCard"
     import FragmentSelect from "./FragmentSelect"
     import Do from "../../const/do"
-    import {mapMutations, mapActions} from "vuex"
+    import {mapMutations, mapActions, mapGetters} from "vuex"
     import OpenMessage from "../common/OpenMessage"
     import On from "../../const/on"
     import Subheader from "./Subheader"
@@ -26,16 +39,36 @@
     import Photo from "../common/Photo"
     import {OWNER, TRUNK} from "../../const/fragments"
     import FacetsSubPage from "./FacetsSubPage"
+    import TransitionExpand from "../common/TransitionExpand"
+
+    const DescriptionEditor = () => import("./DescriptionEditor")
 
     export default {
         name: "DescriptionSubPage",
-        components: {FacetsSubPage, Photo, QtUnitName, Closer, TreeFab, SubpageTitle, Subheader, OpenMessage, FragmentSelect, TreeCard, Description},
+        components: {TransitionExpand, DescriptionEditor, FacetsSubPage, Photo, QtUnitName, Closer, TreeFab, SubpageTitle, Subheader, OpenMessage, FragmentSelect, TreeCard, Description},
         props: ['tree'],
+        data: () => ({isEditing: false}),
         methods: {
             ...mapMutations({setFlipped: Do.SET_TREE_CARD_FLIPPED}),
             ...mapActions({
                 updateTree: On.UPDATE_TREE
-            })
+            }),
+            edit() {
+                this.isEditing = true
+            },
+            save(trunk) {
+                Object.assign(this.tree.trunk, trunk)
+                this.unedit()
+            },
+            unedit() {
+                this.isEditing = false
+            }
+        },
+        computed: {
+            ...mapGetters(['isAdmin', 'isOwner']),
+            canEditDescription() {
+                return this.isAdmin || this.isOwner(this.tree.trunk)
+            }
         },
         watch: {
             tree: function (tree) {

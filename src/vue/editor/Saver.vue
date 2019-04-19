@@ -6,9 +6,7 @@
                     <v-btn v-if="canBrowseToViewPage" :to="route">Consulter</v-btn>
                     <v-btn :disabled="!canSaveOwn" color="primary" @click="saveOrUpdate">Enregistrer</v-btn>
                     <v-btn v-if="canSaveCopy" color="primary" @click="saveCopy">Enregistrer une copie</v-btn>
-                    <v-btn v-if="canDelete" icon @click="remove">
-                        <v-icon color="grey">delete</v-icon>
-                    </v-btn>
+                    <v-btn v-if="canDelete" icon @click="remove"><v-icon color="grey">delete</v-icon></v-btn>
                 </v-layout>
             </v-layout>
         </v-container>
@@ -32,8 +30,8 @@
             deleteAction: String,
             updatedText: String,
             savedText: String,
-            copyForbidden: {type: Boolean, default: false},
-            deleteForbidden: {type: Boolean, default: false}
+            noCopy: {type: Boolean, default: false},
+            noDelete: {type: Boolean, default: false}
         },
         methods: {
             ...mapActions({
@@ -107,10 +105,10 @@
                     )
             },
             canSaveCopy() {
-                return this.canSave && this.initial._id && !this.copyForbidden
+                return this.canSave && this.initial._id && !this.noCopy
             },
             canDelete() {
-                return this.initial._id && !this.deleteForbidden
+                return this.initial._id && !this.noDelete
             },
             canBrowseToViewPage() {
                 return this.route && !this.canSave

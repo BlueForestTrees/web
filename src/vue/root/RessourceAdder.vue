@@ -1,6 +1,6 @@
 <template>
     <div>
-        <editor v-model="editing" :edit-idx="0"
+        <editor v-model="editing" :edit-idx="0" solo
                 :initial="initial" :changes="changes" :editor="editor"
                 @change="change"
         />

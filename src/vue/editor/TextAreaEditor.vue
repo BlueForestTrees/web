@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <v-textarea v-model="text"
-                    autofocus outline :placeholder="placeholder" :counter="maxLength"
+                    autofocus outline :placeholder="placeholder" :label="label" :counter="maxLength"
                     :error-messages="errors"
                     @input="check" @enter="validate" v-on:keyup.ctrl.enter="validate"/>
 
@@ -18,7 +18,8 @@
         props: {
             value: String,
             maxLength: {type: Number, default: 100},
-            placeholder: String
+            placeholder: String,
+            label: String
         },
         data: () => ({
             text: null,

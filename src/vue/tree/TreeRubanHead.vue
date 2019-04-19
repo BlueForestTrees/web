@@ -1,6 +1,6 @@
 <template>
     <v-layout column align-center>
-        <subpage-title :title="name(tree)" color="primary">
+        <subpage-title :title="name(tree)" color="primary" sub>
             <v-btn slot="right" icon @click="$emit('close')">
                 <v-icon color="white">chevron_left</v-icon>
             </v-btn>

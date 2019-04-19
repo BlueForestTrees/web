@@ -66,9 +66,7 @@ export default {
     putReply: reply => put(`/api/message/reply`, reply),
     postReply: ({_id, msgId, message}) => post(`/api/message/reply`, {_id, msgId, message}),
 
-    putFacet: (trunk, facet) => post(`/api/facet`, {trunk, facet}),
-    putTrunkName: (_id, name) => put(`/api/tree/trunk/${_id}`, {name}),
-    putTrunkQuantity: (treeId, quantity) => put(`/api/tree/trunk/${treeId}`, {quantity}),
+    putTrunk: trunk => put(`/api/tree/trunk`, trunk),
 
     deleteRoot: (trunkId, _id) => del(`/api/tree/root/${trunkId}/${_id}`),
     deleteFacet: (trunkId, _id) => del(`/api/facet/${trunkId}/${_id}`),
