@@ -1,6 +1,6 @@
 <template>
     <v-layout row>
-        <a href="https://youtube.com" target="_blank"><v-list-tile-avatar class="link-youtube hover-opaque hand"/></a>
+        <a href="https://www.youtube.com/channel/UCgoi19-rWSmHz0nvn3hplAg" target="_blank"><v-list-tile-avatar class="link-youtube hover-opaque hand"/></a>
         <a href="https://github.com/BlueForestTrees" target="_blank"><v-list-tile-avatar class="link-github hover-opaque hand"/></a>
         <a href="https://twitter.com/foret_bleue" target="_blank"><v-list-tile-avatar class="link-twitter hover-opaque hand"/></a>
         <a href="https://www.facebook.com/blueforesttrees" target="_blank"><v-list-tile-avatar class="link-facebook hover-opaque hand"/></a>
