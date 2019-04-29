@@ -39,13 +39,13 @@ export default {
                     .then(() => dispatch(On.SNACKBAR, {text: "Impact partiellement retiré. Le reste provient de la fabrication. Pour réduire encore cet impact, il faut changer la fabrication.", color: "orange"}))
             }
         } else {
-            return dispatch(On.SNACKBAR, {text: "Cet impact est provient de la fabrication. Pour réduire cet impact, il faut changer la fabrication.", color: "orange"})
+            return dispatch(On.SNACKBAR, {text: "Cet impact provient de la fabrication.", color: "orange"})
         }
     },
 
     [On.DELETE_IMPACT]:
         ({commit}, {tree, impact}) =>
-            api.deleteImpact(tree._id, impact._id)
+            api.deleteImpact(tree._id, impact._id, impact.impactId)
                 .then(() => commit(Do.REMOVE_FROM_FRAGMENT, {tree, element: impact, fragment: IMPACTS})),
 
     [On.IMPORT_IMPACT_ADEME]: ({}, file) => {

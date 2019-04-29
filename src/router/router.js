@@ -7,7 +7,6 @@ const NotFound = () => import(/* webpackChunkName: "NotFound" */ "../vue/NotFoun
 const TreePage = () => import(/* webpackChunkName: "Tree" */ '../vue/tree/TreePage.vue')
 const Equivalence = () => import(/* webpackChunkName: "Equivalence" */ '../vue/equivalence/Equivalence')
 const Qui2 = () => import(/* webpackChunkName: "Qui2" */ '../vue/jeu/QuiDeuxFoisPlus')
-const RootEditor = () => import(/* webpackChunkName: "Root" */ '../vue/root/RootEditorPage')
 const BlueForest = () => import(/* webpackChunkName: "BlueForest" */ '../vue/BlueForest')
 const Compare = () => import(/* webpackChunkName: "Compare" */ '../vue/compare/Compare')
 const Confirmation = () => import(/* webpackChunkName: "Confirmation" */ '../vue/user/Confirmation')
@@ -72,7 +71,6 @@ export default new VueRouter({
 
                 {name: GO.GAME, path: "play/:gameId", component: Qui2, props: true},
                 {name: GO.QUI_2, path: "qui2fois/:bqt/:_id/:f/:fid", component: Qui2, props: ({params}) => ({leftBqt: params.bqt, leftId: params._id, fragment: params.f, fragmentId: params.fid})},
-                {name: GO.ROOT, path: "root/:treeId/:rootId", component: RootEditor, props: true},
                 {name: GO.RECENT, path: "recent", component: RecentPage},
                 {name: GO.COMPARE_EMPTY, path: "compare", component: Compare},
                 {name: GO.COMPARE_PARTIAL, path: "compare/:leftId", component: Compare, props: true},

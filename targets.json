@@ -1,5 +1,6 @@
 {
   "dev": [
+    {"path":"/api/impactTank", "host":"http://localhost:8097"},
     {"path":"/api/search", "host":"http://localhost:8096"},
     {"path":"/api/film", "host":"http://localhost:8095"},
     {"path":"/api/game", "host":"http://localhost:8094"},

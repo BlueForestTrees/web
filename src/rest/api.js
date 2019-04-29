@@ -68,9 +68,9 @@ export default {
 
     putTrunk: trunk => put(`/api/tree/trunk`, trunk),
 
-    deleteRoot: (trunkId, _id) => del(`/api/tree/root/${trunkId}/${_id}`),
-    deleteFacet: (trunkId, _id) => del(`/api/facet/${trunkId}/${_id}`),
-    deleteImpact: (trunkId, _id) => del(`/api/impact/${trunkId}/${_id}`),
+    deleteRoot: (trunkId, rootId, _id) => del(`/api/tree/root/${trunkId}/${rootId}/${_id}`),
+    deleteFacet: (trunkId, _id, facetId) => del(`/api/facet/${trunkId}/${_id}/${facetId}`),
+    deleteImpact: (trunkId, _id, impactId) => del(`/api/impact/${trunkId}/${_id}/${impactId}`),
 
     deleteTrunk: trunkId => del(`/api/tree/trunk/${trunkId}`),
 

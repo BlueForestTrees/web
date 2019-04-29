@@ -13,7 +13,7 @@
                 </div>
             </transition-expand>
 
-            <fragment-list v-if="!adding" :tree="tree" :fragment="IMPACT_TANK" :selectionKey="selectionKey" forced/>
+            <fragment-list v-if="!adding" :tree="tree" :fragments="[IMPACT_TANK, IMPACTS]" :selectionKey="selectionKey" forced/>
 
             <transition name="slide-left-right">
                 <v-layout v-if="oneSelected" justify-center>

@@ -26,6 +26,7 @@
         components: {Btn, Loader, SubpageTitle, Note, SelectableList},
         props: {
             tree: Object,
+            fragments: Array,
             fragment: String,
             none: String,
             note: String,
@@ -44,14 +45,14 @@
         },
         computed: {
             items() {
-                return this.tree && this.tree[this.fragment]
+                return this.tree && this.tree[this.fragment || this.fragments[0]]
             }
         },
         methods: {
             ...mapActions({loadTreeFragment: On.UPDATE_TREE}),
             update: function () {
                 this.loading = true
-                this.loadTreeFragment({tree: this.tree, fragments: [this.fragment]})
+                this.loadTreeFragment({tree: this.tree, fragments: this.fragments || [this.fragment]})
                     .then(() => setTimeout(() => this.loading = false))
             },
             refresh: async function () {

@@ -11,7 +11,7 @@ export default {
 
     [On.DELETE_FACET]:
         ({commit, dispatch}, {tree, facet}) =>
-            api.deleteFacet(tree._id, facet._id)
+            api.deleteFacet(tree._id, facet._id, facet.facetId)
                 .then(() => commit(Do.DELETE_FACET, {tree, facet}))
                 .then(() => dispatch(On.SNACKBAR, {text: "Propriété rétirée"})),
 
