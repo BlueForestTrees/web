@@ -6803,10 +6803,10 @@ unique-string@^1.0.0:
   dependencies:
     crypto-random-string "^1.0.0"
 
-unit-manip@1.0.11:
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/unit-manip/-/unit-manip-1.0.11.tgz#7486b442bd70f66fb3adfdc47314bbe721aaa9d1"
-  integrity sha512-WmYjXzhZOEXavzWjnESekF7VYSZtWSgdq2sowpJ7SjKipta15yLc0P1/nMRREDogon9xfpANPRQO/Db1oF6Hfg==
+unit-manip@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/unit-manip/-/unit-manip-1.1.0.tgz#d9304c3da91aa9261c32f4198491465afee628f3"
+  integrity sha512-X+eHLhruJ9263u+mXUKweA+OY/GaioDQhgtOVBldfoCTDoqWt6HN72B+0d5EWL2QEd5GUaeoY0UPkQTt6hleig==
   dependencies:
     fraction.js "4.0.4"
 

@@ -22,7 +22,7 @@ const dialogs = () => {
     return dials
 }
 
-export const snack = () => ({visible: false, multiline: false, timeout: 5000, vertical: false, text: "this message should be overriden.", color: "green"})
+export const snack = () => ({visible: false, multiline: false, timeout: 2000, vertical: false, text: "this message should be overriden.", color: "green"})
 
 export const tree = () => ({_id: null, trunk: null, selection: null, facets: null})
 
@@ -41,7 +41,7 @@ export default {
     compare: {left: null, right: null, leftAxises: null, rightAxises: null, axis: null},
     dialogs: dialogs(),
     nav: {
-        intro: false,
+        intro: true,
         main: {tab: null},
         search: {cat: {opened: false}, owner: {opened: false}},
         leftMenuVisible: false, rightMenuVisible: false, dark: false, detailsDialog: false,
