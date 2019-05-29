@@ -11,7 +11,7 @@
                         <v-icon>{{item.icon}}</v-icon>
                         {{ item.title }}
                     </div>
-                    <v-container v-html="item.description"/>
+                    <v-container v-html="item.text"/>
                     <template v-if="item.maquette" v-for="m in item.maquette">
                         <v-divider/>
                         <v-divider/>
@@ -39,10 +39,11 @@
     import Maquette from "../maquette/Maquette"
     import Card from "../common/Card"
     import VoteBtn from "../messages/VoteBtn"
+    import SubpageTitle from "../tree/SubpageTitle"
 
     export default {
         name: "road-map",
-        components: {VoteBtn, Card, Maquette, OpenMessage},
+        components: {SubpageTitle, VoteBtn, Card, Maquette, OpenMessage},
         data() {
             return {
                 secs,

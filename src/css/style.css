@@ -4,9 +4,11 @@ html {
 
 .scroll{
     overflow-x: hidden;
-    overflow-y: fragments;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(0,0,0,0.1) !important;
 }
 .scroll::-webkit-scrollbar { width: 0 !important }
 
@@ -36,6 +38,11 @@ html {
     position: absolute;
     top: 5px;
     right: 5px;
+}
+.bottom-left {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
 }
 
 .tiny {
@@ -176,6 +183,10 @@ a {
 
 .voice {
     background: url(/img/voice.svg) no-repeat center;
+}
+
+.docu {
+    background: url(/img/docu.svg) no-repeat center;
 }
 
 .planet {
@@ -359,11 +370,11 @@ a {
 }
 
 .slide-fade-simple-enter-active {
-    transition: all .35s ease;
+    transition: all .15s ease;
 }
 
 .slide-fade-simple-leave-active {
-    transition: all .35s ease;
+    transition: all .15s ease;
 }
 
 .slide-fade-simple-enter {
@@ -390,24 +401,6 @@ a {
 
 .slide-left-right-leave-to {
     transform: translateX(-450px);
-    opacity: 0;
-}
-
-.slide-up-down-enter-active {
-    transition: all .3s ease;
-}
-
-.slide-up-down-leave-active {
-    transition: all .3s ease;
-}
-
-.slide-up-down-enter {
-    transform: translateY(-450px);
-    opacity: 0;
-}
-
-.slide-up-down-leave-to {
-    transform: translateY(-450px);
     opacity: 0;
 }
 

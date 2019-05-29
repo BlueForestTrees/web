@@ -23,7 +23,7 @@ export const qtUnit = (item, opts = {}) => {
     const bqtG = quantity(item)
     if (bqtG) {
         const qtUnit = bqtGToQtUnit(bqtG)
-        if (qtUnit.qt && qtUnit.unit) {
+        if (!isNil(qtUnit.qt) && qtUnit.unit) {
             const best = bestQuantity(qtUnit)
             return `${(best.qt === 1 && opts.hideOne) ? '' : best.qt} ${grandeur(best.unit) !== "Nomb" ? best.unit : ''}`
         } else {
@@ -275,3 +275,10 @@ export const findFct = function (array, fct) {
         }
     }
 }
+
+export const sortOn = sortKey => data => data && Array.isArray(data) && data.sort((a, b) => a[sortKey].localeCompare(b[sortKey])) || data
+
+export const filterOn = filterKey => (data, filter) => filterKey && data && filter ?
+    data.filter(i => RegExp(filter.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'i').test(i[filterKey]))
+    :
+    data

@@ -1,10 +1,6 @@
 <template>
     <v-container style="min-width: 17em" pt-3>
 
-        <v-layout align-center justify-center>
-            <photo :trunk="tree.trunk" size="200" class="mb-2"/>
-        </v-layout>
-
         <v-layout align-center justify-space-between>
             <h5 class="font-weight-thin subheading">Propriétaire:</h5>
             <a v-if="owner" :href="owner.site" target="_blank" class="not-too-third">{{owner.fullname}}</a>

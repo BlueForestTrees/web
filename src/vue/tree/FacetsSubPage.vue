@@ -1,17 +1,10 @@
 <template>
-    <div>
-        <v-card class="ma-2 elevation-5">
-            <subpage-title title="Propriétés" sub color="whitegrey">
-                <btn v-if="!adding" slot="right" icon="add_box" icon-color="grey" @click="setAdding(true)"/>
-            </subpage-title>
-
+    <v-layout column align-center mb-1>
             <transition-expand>
                 <div v-if="adding">
-                    <v-divider/>
-                    <subpage-title sub title="Ajouter une propriété" icon-class="facet logo">
+                    <subpage-title sub title="Ajouter une propriété">
                         <closer slot="right" @close="setAdding(false)"/>
                     </subpage-title>
-                    <v-divider/>
                     <facet-adder :tree="tree" @close="setAdding(false)"/>
                 </div>
             </transition-expand>
@@ -26,9 +19,10 @@
                     <btn icon="delete" iconColor="grey" @click="deleteOneSelected"></btn>
                 </v-layout>
             </transition>
-        </v-card>
 
-    </div>
+            <btn v-if="!adding" slot="right" icon="add_box" icon-color="grey" @click="setAdding(true)"/>
+
+    </v-layout>
 
 </template>
 

@@ -85,24 +85,12 @@
         }),
         mounted() {
             initTween()
-            this.loadFragment(this.tree, [ROOTS, BRANCHES])
         },
         watch: {
-            tree(v, o) {
-                if ((v && v._id) !== (o && o._id)) {
-                    this.lookAt({x: 0, y: 0}, true)
-                    this.loadFragment(this.tree, [ROOTS, BRANCHES])
+            tree(v) {
+                if (v && v.trunk && v._id) {
+                    this.select(v)
                 }
-            },
-            showTreeRuban() {
-                const tfrom = {v: this.paddingLeft}
-                const tto = {v: this.showTreeRuban ? this.menuLeftWidth : 0}
-                const updatePaddingLeft = ({v}) => this.paddingLeft = v
-                new TWEEN.Tween(tfrom)
-                    .to(tto, 300)
-                    .easing(TWEEN.Easing.Quadratic.Out)
-                    .onUpdate(updatePaddingLeft)
-                    .start()
             },
             preRootsList(n) {
                 this.rootList = n
@@ -118,7 +106,6 @@
             }
         },
         computed: {
-            ...mapGetters(['showTreeRuban']),
             viewW: function () {
                 return this.scale * this.width
             },
@@ -136,12 +123,6 @@
             },
             trunk() {
                 return {tree: this.tree, x: 0, y: 0}
-            },
-            preRootsList() {
-                return treePlacement(this.tree, ROOTS, this.sX, this.sY)
-            },
-            preBranchesList() {
-                return treePlacement(this.tree, BRANCHES, this.sX, -this.sY)
             }
         },
         methods: {
@@ -172,6 +153,7 @@
                 this.lookAt({x: x / this.scale, y: y / this.scale})
                 if (fragment && this.isSelected(tree)) {
                     if (!tree[fragment]) {
+                        console.log("nodeClick")
                         await this.loadFragment(tree, [fragment])
                     }
                 }

@@ -13,7 +13,7 @@
     <div v-else>
         <slot name="no-items">
             <v-layout class="align-center justify-center my-5 font-weight-thin subheading font-italic">
-                <slot name="none"><img src="/img/broken-heart.svg" class="logo-petit ma-1"/>Pas encore d'informations</slot>
+                <slot name="none"><img src="/img/broken-heart.svg" class="logo-petit ma-1"/>Pas d'informations</slot>
             </v-layout>
         </slot>
     </div>

@@ -5,6 +5,11 @@
                 <v-icon color="white">chevron_left</v-icon>
             </v-btn>
         </subpage-title>
+
+        <v-layout align-center justify-center class="pt-3">
+            <photo :trunk="tree && tree.trunk" size="200" class="mb-2"/>
+        </v-layout>
+
         <v-layout justify-center>
             <open-message slot="right" :section="section" no-text/>
             <v-btn icon slot="left" @click="$emit('editQt')">
@@ -26,10 +31,11 @@
     import On from "../../const/on"
     import Btn from "../common/btn"
     import Do from "../../const/do"
+    import Photo from "../common/Photo"
 
     export default {
         name: "TreeRubanHead",
-        components: {Btn, SubpageTitle, OpenMessage},
+        components: {Photo, Btn, SubpageTitle, OpenMessage},
         props: {tree: Object},
         methods: {
             name,
@@ -46,7 +52,7 @@
         computed: {
             ...mapState({stateTree: s => s.tree}),
             section() {
-                return {
+                return this.tree && {
                     title: `Message pour "${name(this.tree)}"`,
                     filter: {
                         type: 'tree',

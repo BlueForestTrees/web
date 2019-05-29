@@ -1,7 +1,8 @@
 <template>
     <v-content>
         <messages v-if="nav.rightMenuVisible"/>
-        <left-menu v-if="nav.leftMenuVisible"/>
+
+        <left-menu v-if="nav.treeRubanVisible"/>
 
         <span v-if="dispo.grandeurs">
             <transition :name="transitionName" mode="out-in">
@@ -10,7 +11,7 @@
         </span>
 
         <v-layout class="top-left">
-            <v-avatar class="ma-2" size="36px" @click="nav.leftMenuVisible = !nav.leftMenuVisible">
+            <v-avatar class="ma-2" size="36px" @click="nav.treeRubanVisible = !nav.treeRubanVisible">
                 <v-btn icon flat icon>
                     <v-icon>menu</v-icon>
                 </v-btn>
@@ -29,7 +30,7 @@
 <script>
     import On from "../const/on"
     import {GO} from "../const/go"
-    import {mapState} from 'vuex'
+    import {mapState, mapGetters} from 'vuex'
     import {Dial} from "../const/dial"
     import LoggedIn from "./user/LoggedIn"
 
@@ -50,7 +51,8 @@
             }
         },
         computed: {
-            ...mapState(['nav', 'snack', 'dispo', 'dialogs'])
+            ...mapState(['nav', 'snack', 'dispo', 'dialogs']),
+            ...mapGetters(['treeMenuVisible'])
         },
         components: {
             LoggedIn,

@@ -1,27 +1,20 @@
 <template>
-    <div>
-        <v-card class="ma-2 elevation-5">
-            <v-layout column align-center mb-1>
-                <subpage-title title="Description" sub color="whitegrey">
-                    <v-btn v-if="isEditing" slot="right" icon @click="unedit">
-                        <v-icon color="grey">close</v-icon>
-                    </v-btn>
-                    <v-btn v-else-if="canEditDescription" slot="right" icon @click="edit">
-                        <v-icon color="grey">edit</v-icon>
-                    </v-btn>
-                </subpage-title>
+    <v-layout column align-center mb-1>
 
-                <transition-expand>
-                    <description-editor v-if="isEditing" :value="tree.trunk" @saved="save"/>
-                </transition-expand>
-                <transition-expand>
-                    <description v-if="!isEditing" :tree="tree"/>
-                </transition-expand>
+        <transition-expand>
+            <description-editor v-if="isEditing" :value="tree.trunk" @saved="save"/>
+        </transition-expand>
+        <transition-expand>
+            <description v-if="!isEditing" :tree="tree"/>
+        </transition-expand>
+        <v-btn v-if="isEditing" icon @click="unedit">
+            <v-icon color="grey">close</v-icon>
+        </v-btn>
+        <v-btn v-else-if="canEditDescription" icon @click="edit">
+            <v-icon color="grey">edit</v-icon>
+        </v-btn>
 
-            </v-layout>
-        </v-card>
-        <facets-sub-page :tree="tree"/>
-    </div>
+    </v-layout>
 </template>
 <script>
     import Description from "./Description"

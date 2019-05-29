@@ -1,33 +1,27 @@
 <template>
-    <div>
-        <utilisation-sub-page :tree="tree"/>
+    <v-layout column align-center mb-1>
 
-        <v-card class="ma-2 elevation-5">
-            <subpage-title title="Fabrication" sub color="whitegrey" icon-class="roots logo">
-                <closer v-if="adding" slot="right" @close="setAdding(false)"/>
-                <btn v-else slot="right" icon="add_box" icon-color="grey" @click="setAdding(true)"/>
-            </subpage-title>
+        <transition-expand>
+            <div v-if="adding">
+                <subpage-title sub title="Ajouter une ressource">
+                    <closer v-if="adding" slot="right" @close="setAdding(false)" />
+                </subpage-title>
+                <ressource-adder :tree="tree" @close="setAdding(false)"/>
+            </div>
+        </transition-expand>
 
-            <transition-expand>
-                <div v-if="adding">
-                    <subpage-title sub title="Ajouter une ressource" />
-                    <ressource-adder :tree="tree" @close="setAdding(false)"/>
-                </div>
-            </transition-expand>
+        <fragment-list v-if="!adding" :tree="tree" :fragment="ROOTS" :selectionKey="selectionKey"/>
 
-            <fragment-list v-if="!adding" :tree="tree" :fragment="ROOTS" :selectionKey="selectionKey"/>
-
-            <transition name="slide-left-right">
-                <v-layout v-if="oneSelected" justify-center>
-                    <open-message slot="right" :section="section" no-text/>
-                    <btn icon-class="balance logo" @click="goEquiv({tree, oneSelected})"></btn>
-                    <btn icon-class="game logo" @click="goQuiDeuxFoisPlus({tree, oneSelected})"></btn>
-                    <btn icon="delete" iconColor="grey" @click="deleteOneSelected"></btn>
-                </v-layout>
-            </transition>
-        </v-card>
-
-    </div>
+        <transition name="slide-left-right">
+            <v-layout v-if="oneSelected" justify-center>
+                <open-message slot="right" :section="section" no-text/>
+                <btn icon-class="balance logo" @click="goEquiv({tree, oneSelected})"></btn>
+                <btn icon-class="game logo" @click="goQuiDeuxFoisPlus({tree, oneSelected})"></btn>
+                <btn icon="delete" iconColor="grey" @click="deleteOneSelected"></btn>
+            </v-layout>
+        </transition>
+        <btn v-if="!adding" slot="right" icon="add_box" icon-color="grey" @click="setAdding(true)"/>
+    </v-layout>
 
 </template>
 

@@ -1,14 +1,11 @@
 <template>
-    <div>
-        <v-card class="ma-2 elevation-5">
-            <subpage-title title="Utilisation" sub color="whitegrey" icon-class="branches logo">
-                <closer v-if="adding" slot="right" @close="setAdding(false)"/>
-                <btn v-else slot="right" icon="add_box" icon-color="grey" @click="setAdding(true)"/>
-            </subpage-title>
+    <v-layout column align-center mb-1>
 
             <transition-expand>
                 <div v-if="adding">
-                    <subpage-title sub title="Ajouter une utilisation" />
+                    <subpage-title sub title="Ajouter une utilisation">
+                        <closer slot="right" @close="setAdding(false)"/>
+                    </subpage-title>
                     <ressource-adder reversed :tree="tree" @close="setAdding(false)"/>
                 </div>
             </transition-expand>
@@ -23,9 +20,8 @@
                     <btn icon="delete" iconColor="grey" @click="deleteOneSelected"></btn>
                 </v-layout>
             </transition>
-        </v-card>
-
-    </div>
+            <btn v-if="!adding" slot="right" icon="add_box" icon-color="grey" @click="setAdding(true)"/>
+    </v-layout>
 
 </template>
 

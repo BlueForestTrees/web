@@ -1,5 +1,5 @@
 <template>
-    <div class="enough-high-small">
+    <div class="enough-high-small full-width px-2">
         <subpage-title v-if="note" :title="note" sub color="whitegrey">
             <slot name="right" slot="right"></slot>
         </subpage-title>
@@ -8,7 +8,10 @@
 
         <template v-if="!hide">
             <loader v-if="loading"/>
-            <selectable-list v-else :items="items" :maxSelectionSize="1" :selectionKey="selectionKey"/>
+            <v-layout column v-else>
+                <v-text-field v-if="rawItems.length > 20" v-model="filter" clearable autofocus placeholder="Filtre" hide-details />
+                <selectable-list :items="items" :maxSelectionSize="1" :selectionKey="selectionKey"/>
+            </v-layout>
         </template>
     </div>
 </template>
@@ -20,10 +23,12 @@
     import SubpageTitle from "./SubpageTitle"
     import Loader from "../loader/Loader"
     import Btn from "../common/btn"
+    import SearchText from "../search/SearchText"
+    import {filterOn} from "../../services/calculations"
 
     export default {
         name: "fragment-list",
-        components: {Btn, Loader, SubpageTitle, Note, SelectableList},
+        components: {SearchText, Btn, Loader, SubpageTitle, Note, SelectableList},
         props: {
             tree: Object,
             fragments: Array,
@@ -34,7 +39,11 @@
             selectionKey: {type: String, required: true},
             hide: {type: Boolean, default: false}
         },
-        data: () => ({loading: false, refreshable: {type: Boolean, default: true}}),
+        data: () => ({
+            loading: false,
+            refreshable: {type: Boolean, default: true},
+            filter: ""
+        }),
         created() {
             this.refresh()
         },
@@ -44,8 +53,11 @@
             }
         },
         computed: {
+            rawItems() {
+                return this.tree && this.tree[this.fragment || this.fragments[0]] || []
+            },
             items() {
-                return this.tree && this.tree[this.fragment || this.fragments[0]]
+                return filterOn("name")(this.rawItems, this.filter)
             }
         },
         methods: {

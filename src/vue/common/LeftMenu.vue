@@ -1,5 +1,6 @@
 <template>
-    <v-navigation-drawer floating app v-model="nav.leftMenuVisible" width="340">
+    <v-navigation-drawer temporary fixed v-model="nav.treeRubanVisible">
+
         <v-list dense>
 
             <v-list-tile @click="goto(GO.SEARCH)">
@@ -59,8 +60,7 @@
 
         </v-list>
 
-
-        <v-list style="position:absolute;bottom:0em;width:100%" dense>
+        <v-list style="position:absolute;bottom:0.2em;width:100%" dense>
             <v-layout ml-2 mb-2 row align-end>
                 <v-list-tile-action>
                     <img src="/img/logo.svg" class="logo-big"/>
@@ -96,7 +96,6 @@
             <links-bar class="mt-2"/>
         </v-list>
 
-
     </v-navigation-drawer>
 </template>
 
@@ -125,7 +124,7 @@
                 this.$vuetify.theme.primary = this.nav.dark ? "1098F7" : "1565c0"
             },
             goto(route) {
-                this.nav.leftMenuVisible = false
+                this.nav.treeRubanVisible = false
                 this.got(route)
             },
             ...mapActions({

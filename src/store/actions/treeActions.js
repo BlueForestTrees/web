@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import On from "../../const/on"
 import api from "../../rest/api"
-import {coefFromTrunkToSelection, createStringObjectId, selectionBqt, transportQuantity, treefyAll, treeBqt} from "../../services/calculations"
+import {coefFromTrunkToSelection, createStringObjectId, selectionBqt, transportQuantity, treefyAll, treeBqt, sortOn} from "../../services/calculations"
 import {bqtGToQtUnit, baseQt} from "unit-manip"
 import router from "../../router/router"
 import {GO} from "../../const/go"
@@ -79,7 +79,9 @@ export default {
         tree.promises = {}
         for (let i = 0; i < fragments.length; i++) {
             if (fragments[i] !== OWNER) {
-                tree.promises[fragments[i]] = dispatch(On.load(fragments[i]), {_id: tree._id, bqt}).then(fragment => Vue.set(tree, fragments[i], fragment))
+                tree.promises[fragments[i]] = dispatch(On.load(fragments[i]), {_id: tree._id, bqt})
+                    .then(sortOn("name"))
+                    .then(fragment => Vue.set(tree, fragments[i], fragment))
             } else {
                 tree.promises.owner = tree.promises.trunk.then(trunk => dispatch(On.LOAD_USER, trunk.oid).then(owner => Vue.set(tree, "owner", owner)))
             }

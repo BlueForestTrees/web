@@ -36,7 +36,7 @@ export default {
     methods: {
         ...mapMutations({addSelectionKey: Do.ADD_SELECTION_KEY}),
         select: function(item){
-            !this.isSelected() && this.toggleSelect(item)
+            !this.isSelected(item) && this.toggleSelect(item)
         },
         unselect: function () {
             this.selection.splice(0, this.selection.length)

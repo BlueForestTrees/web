@@ -1,6 +1,6 @@
 <template>
     <v-btn icon @click.stop="$emit('close')">
-        <v-icon color="grey" large>{{previous ? 'arrow_back' : 'close'}}</v-icon>
+        <v-icon color="grey">{{previous ? 'arrow_back' : 'close'}}</v-icon>
     </v-btn>
 </template>
 

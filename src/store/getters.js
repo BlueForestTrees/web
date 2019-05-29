@@ -38,5 +38,5 @@ export default {
     isAdmin: state => {
         return state.user && state.user.rights && state.user.rights.charAt(0) === 'G'
     },
-    isOwner: state => ({oid}) => state.user && state.user._id === oid
+    isOwner: state => ({oid}) => state.user && state.user._id === oid,
 }

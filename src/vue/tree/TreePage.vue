@@ -1,24 +1,19 @@
 <template>
 
-    <div v-if="tree && tree.trunk">
+    <div>
 
         <tree-map :tree="tree" :selection-key="selectionKey"/>
 
-        <transition name="slide-left-right">
-            <tree-ruban v-if="showTreeRuban" :tree="oneSelected" :tabIdx="tabIdx" @close="unselect"/>
-        </transition>
+        <v-navigation-drawer fixed app :value="showTreeRuban" :width="`${this.width}px`">
+            <tree-ruban :tree="oneSelected" @close="unselect"/>
+        </v-navigation-drawer>
 
-        <transition name="slide-up-down">
-            <tree-menu v-if="oneSelected" :value="tabIdx" @input="setTabidx" :tree="oneSelected" class="mt-5 top-left"/>
-        </transition>
     </div>
-
 </template>
 
 <script>
-    import {mapActions, mapState, mapMutations, mapGetters} from "vuex"
+    import {mapActions, mapState, mapGetters} from "vuex"
     import On from "../../const/on"
-    import Do from "../../const/do"
     import TreeMap from "../treenav/TreeMap"
     import Selectable from "../mixin/Selectable"
 
@@ -26,13 +21,11 @@
     import {OWNER, TRUNK} from "../../const/fragments"
 
     const TreeRuban = () => import(/* webpackChunkName: "TreeRuban" */ "./TreeRuban")
-    const TreeMenu = () => import(/* webpackChunkName: "TreeMenu" */ "./TreeMenu")
 
 
     export default {
         components: {
             TreeRuban,
-            TreeMenu,
             TreeMap,
         },
         data: () => ({
@@ -47,8 +40,10 @@
             ...mapGetters(['showTreeRuban']),
             ...mapState({
                 tree: s => s.tree,
-                tabIdx: s => s.nav.tree.tabIdx
-            })
+            }),
+            width() {
+                return this.$vuetify.breakpoint.xs ? 340 : 450
+            },
         },
         watch: {
             '$route'(to, from) {
@@ -60,9 +55,6 @@
             next()
         },
         methods: {
-            ...mapMutations({
-                setTabidx: Do.SET_NAV_TREE_TAB_IDX
-            }),
             ...mapActions({
                 loadOpenTree: On.LOAD_OPEN_TREE,
                 loadSelection: On.LOAD_SELECTION,
