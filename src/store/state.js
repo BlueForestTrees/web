@@ -5,11 +5,6 @@ import {maquettes} from "../const/maquettes"
 export const createDialog = name => (dialogFactory[name] && dialogFactory[name]()) || (console.warn(`state.js il manque dialogFactory['${name}']`) || {})
 
 const dialogFactory = {
-    [Dial.LOGIN]: () => ({noAuth: true, vivisible: false, data: {destination: null}}),
-    [Dial.FACET_ENTRY]: () => ({visible: false, data: {qt: null, unit: null, name: null}}),
-    [Dial.ADD_IMPACT_ENTRY]: () => ({visible: false, data: {qt: null, unit: null, name: null}}),
-    [Dial.SUSCRIBE]: () => ({noAuth: true, visible: false, data: {}}),
-    [Dial.LOGIN]: () => ({noAuth: true, visible: false, data: {}}),
     [Dial.CONNECT_TO_CONTINUE]: () => ({noAuth: true, visible: false, data: {message: null}}),
 }
 

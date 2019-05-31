@@ -26,16 +26,12 @@
                 element.style.visibility = null
                 element.style.height = 0
 
-                getComputedStyle(element).height
                 setTimeout(() => {
                     element.style.height = height
                 })
             },
             leave(element) {
-                const height = getComputedStyle(element).height
-
-                element.style.height = height
-                getComputedStyle(element).height
+                element.style.height = getComputedStyle(element).height
                 setTimeout(() => {
                     element.style.height = 0
                 })

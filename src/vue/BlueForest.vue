@@ -30,7 +30,7 @@
 <script>
     import On from "../const/on"
     import {GO} from "../const/go"
-    import {mapState, mapGetters} from 'vuex'
+    import {mapState} from 'vuex'
     import {Dial} from "../const/dial"
     import LoggedIn from "./user/LoggedIn"
 
@@ -52,7 +52,6 @@
         },
         computed: {
             ...mapState(['nav', 'snack', 'dispo', 'dialogs']),
-            ...mapGetters(['treeMenuVisible'])
         },
         components: {
             LoggedIn,

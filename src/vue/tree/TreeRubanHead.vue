@@ -1,9 +1,7 @@
 <template>
     <v-layout column align-center>
         <subpage-title :title="name(tree)" color="primary" sub>
-            <v-btn slot="right" icon @click="$emit('close')">
-                <v-icon color="white">chevron_left</v-icon>
-            </v-btn>
+            <v-btn slot="right" icon @click="$emit('close')"><v-icon color="white">chevron_left</v-icon></v-btn>
         </subpage-title>
 
         <v-layout align-center justify-center class="pt-3">

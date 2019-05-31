@@ -9,7 +9,7 @@
         <template v-if="!hide">
             <loader v-if="loading"/>
             <v-layout column v-else>
-                <v-text-field v-if="rawItems.length > 20" v-model="filter" clearable autofocus placeholder="Filtre" hide-details />
+                <v-text-field v-if="rawItems.length > 20" v-model="filter" clearable autofocus placeholder="Filtre" hide-details/>
                 <selectable-list :items="items" :maxSelectionSize="1" :selectionKey="selectionKey"/>
             </v-layout>
         </template>
@@ -31,7 +31,6 @@
         components: {SearchText, Btn, Loader, SubpageTitle, Note, SelectableList},
         props: {
             tree: Object,
-            fragments: Array,
             fragment: String,
             none: String,
             note: String,
@@ -48,7 +47,7 @@
             this.refresh()
         },
         watch: {
-            tree: function () {
+            "tree.trunk._id": function () {
                 this.refresh()
             }
         },
@@ -62,13 +61,13 @@
         },
         methods: {
             ...mapActions({loadTreeFragment: On.UPDATE_TREE}),
+            refresh: async function () {
+                return this.tree && (this.forced || !this.tree[this.fragment]) && this.update()
+            },
             update: function () {
                 this.loading = true
-                this.loadTreeFragment({tree: this.tree, fragments: this.fragments || [this.fragment]})
+                return this.loadTreeFragment({tree: this.tree, fragments: [this.fragment]})
                     .then(() => setTimeout(() => this.loading = false))
-            },
-            refresh: async function () {
-                this.tree && (this.forced || !this.tree[this.fragment]) && this.update()
             }
         },
     }

@@ -4,7 +4,7 @@
                 :initial="initial" :changes="changes" :editor="editor"
                 @change="change"
         />
-        <saver slot="bottom" v-if="!editing" updated-text="Produit mis à jour."
+        <saver slot="bottom" v-if="!editing" updated-text="Mise à jour effectuée."
                :initial="initial" :changes="changes" :final="final" :editor="editor"
                :update-action="On.UPDATE_TRUNK"
                @saved="saved" no-copy no-delete

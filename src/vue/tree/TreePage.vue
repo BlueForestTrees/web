@@ -1,10 +1,9 @@
 <template>
-
     <div>
 
         <tree-map :tree="tree" :selection-key="selectionKey"/>
 
-        <v-navigation-drawer fixed app :value="showTreeRuban" :width="`${this.width}px`">
+        <v-navigation-drawer :value="!!oneSelected" @input="v => !v && unselect()" fixed app :width="`${this.width}px`">
             <tree-ruban :tree="oneSelected" @close="unselect"/>
         </v-navigation-drawer>
 
@@ -37,10 +36,7 @@
             this.refresh()
         },
         computed: {
-            ...mapGetters(['showTreeRuban']),
-            ...mapState({
-                tree: s => s.tree,
-            }),
+            ...mapState({tree: s => s.tree}),
             width() {
                 return this.$vuetify.breakpoint.xs ? 340 : 450
             },

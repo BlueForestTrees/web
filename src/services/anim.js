@@ -15,7 +15,7 @@ export const tweenNodes = (newNodes, oldNodes) => {
     const oldCount = oldNodes.length || 0
     const newCount = newNodes.length
 
-    // console.log("TWEEN NODES: from", oldCount, "to", newCount)
+     // console.log("TWEEN NODES: from", oldCount, "to", newCount)
 
     if (newCount > oldCount) {
         for (var i = 0; i < newCount; i++) {

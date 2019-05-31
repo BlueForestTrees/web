@@ -11,7 +11,7 @@
             </div>
         </transition-expand>
 
-        <fragment-list v-if="!adding" :tree="tree" :fragments="[IMPACT_TANK, IMPACTS]" :selectionKey="selectionKey" forced/>
+        <fragment-list v-if="!adding" :tree="tree" :fragment="IMPACT_TANK" :selectionKey="selectionKey" />
 
         <transition name="slide-left-right">
             <v-layout v-if="oneSelected" justify-center>
@@ -71,9 +71,6 @@
         },
         props: ['tree', 'modeAdd'],
         computed: {
-            items() {
-                return this.tree && this.tree.impactsTank
-            },
             section() {
                 return {
                     title: `Discussion sur les impacts de \"${name(this.tree)}\"`,
@@ -88,7 +85,6 @@
         methods: {
             qtUnitName,
             ...mapActions({
-                loadTreeFragment: On.UPDATE_TREE,
                 goEquiv: On.GO_EQUIV,
                 goQuiDeuxFoisPlus: On.GO_QUI_DEUX_FOIS_PLUS,
                 deleteImpactTank: On.DELETE_IMPACT_TANK,

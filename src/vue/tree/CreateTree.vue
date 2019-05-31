@@ -38,13 +38,11 @@
     import {createStringObjectId, treefy} from "../../services/calculations"
     import TreeHead from "./TreeHead"
     import UnitSelect from "../common/UnitSelect"
-    import Connected from "../mixin/Connected"
     import GrandeurSelect from "../common/GrandeurSelect"
 
     export default {
         name: 'create-tree',
         components: {GrandeurSelect, UnitSelect, TreeHead},
-        mixins: [Connected],
         props: {noTitle: Boolean},
         data() {
             return {

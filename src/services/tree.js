@@ -59,6 +59,8 @@ DrawTree.prototype.leftmost_sibling = function () {
 }
 
 export function treePlacement(tree, fragmentName = "children", sX = 1, sY = 1) {
+    if (!tree || !tree[fragmentName]) return
+    
     const dt = new DrawTree(tree, fragmentName)
     const result = buchheim(dt)
     const listResult = iterativelyWalk(result)

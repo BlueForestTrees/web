@@ -7,16 +7,15 @@
         </v-layout>
 
         <v-layout v-if="isOff" align-center justify-space-between>
-            <h5 class="font-weight-thin subheading flex">Source:</h5>
-            <v-layout row align-center><a :href="`https://world.openfoodfacts.org/product/${externId}`" target="_blank">lien<v-icon>link</v-icon></a></v-layout>
+            <h5 class="font-weight-thin subheading">Source:</h5>
+            <a :href="`https://world.openfoodfacts.org/product/${externId}`" target="_blank"><v-icon>link</v-icon></a>
         </v-layout>
         <v-layout v-else-if="source" align-center justify-space-between>
             <h5 class="font-weight-thin subheading flex">Source:</h5>
             <a :href="source" target="_blank"><v-layout row align-center><v-icon>link</v-icon>lien</v-layout></a>
         </v-layout>
 
-
-        <v-layout v-if="origin" align-center justify-space-between>
+        <v-layout v-if="!isOff && origin" align-center justify-space-between>
             <h5 class="font-weight-thin subheading">Origine:</h5>
             <h5 class="font-weight-thin subheading">{{origin}}</h5>
         </v-layout>
@@ -30,8 +29,6 @@
             <h5 class="font-weight-thin subheading">Magasins:</h5>
             <h5 class="font-weight-thin subheading">{{store}}</h5>
         </v-layout>
-
-        <v-divider class="my-2"/>
 
         <v-layout align-center justify-space-between v-if="date">
             <h5 class="font-weight-thin subheading">Valable depuis:</h5>

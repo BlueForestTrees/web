@@ -9,10 +9,11 @@
 </template>
 <script>
     import VoteFor from "../messages/VoteFor"
+    import TransitionExpand from "./TransitionExpand"
 
     export default {
         name: "photo",
-        components: {VoteFor},
+        components: {TransitionExpand, VoteFor},
         data: () => ({photomenu: false}),
         props: {trunk: Object, size: {default: '400'}},
         computed: {

@@ -10,7 +10,7 @@
             <g :key="branch.linkId">
                 <line class="line" :x1="branch.x" :y1="branch.y" :x2="branch.parent.x" :y2="branch.parent.y"></line>
                 <line class="line" v-if="!branch.tree.branches" :x1="branch.x" :y1="branch.y" :x2="branch.x" :y2="branch.y-sY*0.3"></line>
-                <trunk :key="branch.tree._id" :x="branch.x" :y="branch.y" :tree="branch.tree" :selected="isSelected(branch.tree)" @click="nodeClick(branch, BRANCHES)"/>
+                <trunk :key="branch.tree._id" :x="branch.x" :y="branch.y" :tree="branch.tree" :selected="isSelected(branch.tree)" @click="treeClick(branch, BRANCHES)"/>
             </g>
         </template>
 
@@ -18,18 +18,18 @@
             <g :key="root.linkId">
                 <line class="line" :x1="root.x" :y1="root.y" :x2="root.parent.x" :y2="root.parent.y"></line>
                 <line class="line" v-if="!root.tree.roots" :x1="root.x" :y1="root.y" :x2="root.x" :y2="root.y+sY*0.3"></line>
-                <trunk :key="root.tree._id" :x="root.x" :y="root.y" :tree="root.tree" :selected="isSelected(root.tree)" @click="nodeClick(root, ROOTS)"/>
+                <trunk :key="root.tree._id" :x="root.x" :y="root.y" :tree="root.tree" :selected="isSelected(root.tree)" @click="treeClick(root, ROOTS)"/>
             </g>
         </template>
 
-        <trunk :tree="tree" trunk :selected="isSelected(tree)" @click="nodeClick(trunk)"/>
+        <trunk :tree="tree" trunk :selected="isSelected(tree)" @click="treeClick(trunk)"/>
 
     </svg>
 </template>
 
 <script>
     import On from "../../const/on"
-    import {mapGetters, mapActions} from "vuex"
+    import {mapActions} from "vuex"
     import Selectable from "../mixin/Selectable"
     import {BRANCHES, ROOTS} from "../../const/fragments"
     import Note from "../common/Note"
@@ -50,7 +50,6 @@
             }
         }
     })
-
     Vue.directive("pinch", {
         bind: function (el, binding) {
             if (typeof binding.value === "function") {
@@ -87,10 +86,9 @@
             initTween()
         },
         watch: {
-            tree(v) {
-                if (v && v.trunk && v._id) {
-                    this.select(v)
-                }
+            "tree.trunk._id"() {
+                this.select(this.tree)
+                this.loadFragment(this.tree, [BRANCHES, ROOTS])
             },
             preRootsList(n) {
                 this.rootList = n
@@ -123,6 +121,12 @@
             },
             trunk() {
                 return {tree: this.tree, x: 0, y: 0}
+            },
+            preRootsList() {
+                return treePlacement(this.tree, ROOTS, this.sX, this.sY)
+            },
+            preBranchesList() {
+                return treePlacement(this.tree, BRANCHES, this.sX, -this.sY)
             }
         },
         methods: {
@@ -148,15 +152,10 @@
                 this.width = window.innerWidth
                 this.height = window.innerHeight
             },
-            async nodeClick({tree, x, y}, fragment) {
+            async treeClick({tree, x, y}, fragment) {
                 this.toggleSelect(tree)
-                this.lookAt({x: x / this.scale, y: y / this.scale})
-                if (fragment && this.isSelected(tree)) {
-                    if (!tree[fragment]) {
-                        console.log("nodeClick")
-                        await this.loadFragment(tree, [fragment])
-                    }
-                }
+                this.isSelected(tree) && this.lookAt({x: x / this.scale, y: y / this.scale})
+                this.isSelected(tree) && fragment && !tree[fragment] && await this.loadFragment(tree, [fragment])
             },
             async loadFragment(tree, fragments) {
                 return await this.loadTreeFragment({tree, fragments})

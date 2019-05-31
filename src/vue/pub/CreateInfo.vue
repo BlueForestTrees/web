@@ -61,9 +61,11 @@
     import Card from "../common/Card"
     import {GO} from "../../const/go"
     import SubpageTitle from "../tree/SubpageTitle"
+    import Connected from "../mixin/Connected"
 
     export default {
         name: "create-info",
+        mixins: [Connected],
         components: {SubpageTitle, Card},
         data: () => ({GO})
     }

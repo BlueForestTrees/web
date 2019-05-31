@@ -12,9 +12,12 @@
     import On from "../../const/on"
     import {mapActions, mapMutations} from "vuex"
     import Do from "../../const/do"
+    import Connected from "../mixin/Connected"
+
 
     export default {
         name: 'create-tree-page',
+        mixins: [Connected],
         components: {CreateTree, SubpageTitle, Card},
         methods: {
             ...mapActions({goTree: On.GO_TREE}),

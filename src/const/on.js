@@ -45,7 +45,6 @@ export default {
     GET_FILM: 'getFilm',
     GO_EDIT_INFO: "goEditInfo",
     GO_IMPACT_ENTRY: 'goImpactEntry',
-    GO_FACET_ENTRY: 'goFacetEntry',
     GO_CHAT_BUG: 'goChatBug',
     GO_CREATE_TREE: "goCreateTree",
     GO_CREATE_INFO: 'goCreateInfo',

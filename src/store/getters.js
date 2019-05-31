@@ -32,11 +32,8 @@ export default {
         }
         return changes ? filter : null
     },
-    showTreeRuban: state => {
-        return state.selections[treeMap] && state.selections[treeMap].length === 1
-    },
     isAdmin: state => {
         return state.user && state.user.rights && state.user.rights.charAt(0) === 'G'
     },
-    isOwner: state => ({oid}) => state.user && state.user._id === oid,
+    isOwner: state => tree => tree && state.user && state.user._id === tree.oid,
 }

@@ -2,7 +2,7 @@
     <v-layout column align-center mb-1>
 
         <transition-expand>
-            <description-editor v-if="isEditing" :value="tree.trunk" @saved="save"/>
+            <description-editor v-if="isEditing" :value="trunk" @saved="save"/>
         </transition-expand>
         <transition-expand>
             <description v-if="!isEditing" :tree="tree"/>
@@ -31,14 +31,13 @@
     import QtUnitName from "./QtUnitName"
     import Photo from "../common/Photo"
     import {OWNER, TRUNK} from "../../const/fragments"
-    import FacetsSubPage from "./FacetsSubPage"
     import TransitionExpand from "../common/TransitionExpand"
 
     const DescriptionEditor = () => import("./DescriptionEditor")
 
     export default {
         name: "DescriptionSubPage",
-        components: {TransitionExpand, DescriptionEditor, FacetsSubPage, Photo, QtUnitName, Closer, TreeFab, SubpageTitle, Subheader, OpenMessage, FragmentSelect, TreeCard, Description},
+        components: {TransitionExpand, DescriptionEditor, Photo, QtUnitName, Closer, TreeFab, SubpageTitle, Subheader, OpenMessage, FragmentSelect, TreeCard, Description},
         props: ['tree'],
         data: () => ({isEditing: false}),
         methods: {
@@ -50,7 +49,7 @@
                 this.isEditing = true
             },
             save(trunk) {
-                Object.assign(this.tree.trunk, trunk)
+                Object.assign(this.trunk, trunk)
                 this.unedit()
             },
             unedit() {
@@ -60,7 +59,10 @@
         computed: {
             ...mapGetters(['isAdmin', 'isOwner']),
             canEditDescription() {
-                return this.isAdmin || this.isOwner(this.tree.trunk)
+                return this.trunk && this.isAdmin || this.isOwner(this.trunk)
+            },
+            trunk(){
+                return this.tree && this.tree.trunk
             }
         },
         watch: {
