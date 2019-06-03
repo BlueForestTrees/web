@@ -75,8 +75,7 @@
     import {mapActions} from "vuex"
     import On from "../../const/on"
     import Loader from "../loader/Loader"
-    import TreeHead from "../tree/TreeHead"
-    import {find, map} from "unit-manip"
+    import {find} from "unit-manip"
     import SelectableList from "../common/SelectableList"
     import {qtUnitName, name, createStringObjectId} from "../../services/calculations"
     import TreeCard from "../tree/TreeCard"
@@ -90,7 +89,7 @@
 
     export default {
         name: "qui-deux",
-        components: {SubpageTitle, ChoixProduit, QtUnitName, Photo, Card, TreeCard, SelectableList, TreeHead, Loader},
+        components: {SubpageTitle, ChoixProduit, QtUnitName, Photo, Card, TreeCard, SelectableList, Loader},
         data() {
             return {
                 nbReponses: 5,

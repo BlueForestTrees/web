@@ -38,7 +38,6 @@
 
     const CompareRibbon = () => import(/* webpackChunkName: "Cribbon" */"./CompareRibbon")
     const CompareCams = () => import(/* webpackChunkName: "Ccams" */"./CompareCams")
-    import TreeHead from "../tree/TreeHead"
     import {filter} from "unit-manip"
     import TreeCard from "../tree/TreeCard"
 
@@ -48,7 +47,6 @@
         components: {
             TreeCard,
             CompareCams,
-            TreeHead,
             CompareRibbon
         },
         data: function () {

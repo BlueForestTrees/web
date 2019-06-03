@@ -22,8 +22,7 @@
     import {mapActions} from "vuex"
     import On from "../../const/on"
     import Loader from "../loader/Loader"
-    import TreeHead from "../tree/TreeHead"
-    import {find, map} from "unit-manip"
+    import {find} from "unit-manip"
     import SelectableList from "../common/SelectableList"
     import {qtUnitName} from "../../services/calculations"
     import SubpageTitle from "../tree/SubpageTitle"
@@ -36,7 +35,7 @@
 
     export default {
         name: "equivalence",
-        components: {TreeLink, SelectionLink, SelectionCardFront, TreeSubHead, QtUnitName, Closer, SubpageTitle, SelectableList, TreeHead, Loader},
+        components: {TreeLink, SelectionLink, SelectionCardFront, TreeSubHead, QtUnitName, Closer, SubpageTitle, SelectableList, Loader},
         data() {
             return {
                 tree: null,

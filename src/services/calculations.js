@@ -276,7 +276,11 @@ export const findFct = function (array, fct) {
     }
 }
 
-export const sortOn = sortKey => data => data && Array.isArray(data) && data.sort((a, b) => a[sortKey].localeCompare(b[sortKey])) || data
+export const sortOn = sortKey => data => {
+    return data && Array.isArray(data) && data.sort((a, b) => a[sortKey].localeCompare(b[sortKey]))
+    ||
+    data
+}
 
 export const filterOn = filterKey => (data, filter) => filterKey && data && filter ?
     data.filter(i => RegExp(filter.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'i').test(i[filterKey]))

@@ -1,9 +1,9 @@
 <template>
     <div>
 
-        <subpage-title sub title="Quantité">
+        <subpage-title title="Choisir une quantité">
             <v-icon slot="left" class="carton logo"/>
-            <closer previous v-if="closable" slot="right" @close="$emit('close')"/>
+            <closer slot="right" v-if="closable" @close="$emit('close')"/>
         </subpage-title>
 
         <v-container>
@@ -12,9 +12,6 @@
                 <v-layout row align-center>
                     <v-text-field type="number" v-model="qt" :rules="[required, isNumber]" @keyup.enter="validate" label="Quantité"/>
                     <unit-select v-model="unit" :grandeur="grandeur" :rules="[required]" @keyup.enter="validate"/>
-                </v-layout>
-                <v-layout row justify-center>
-                    <v-text-field :counter="selectionNameMaxLength" type="text" v-model="name" :rules="[required, noMore30]" @keyup.enter="validate" label="Nom d'affichage"></v-text-field>
                 </v-layout>
 
                 <transition-expand>
@@ -27,12 +24,15 @@
                             <v-text-field type="number" v-model="qtDuree" :rules="isRegulier ? [required, isNumber] : []" @keyup.enter="validate" label="Pendant:"></v-text-field>
                             <unit-select v-model="unitDuree" :grandeur="dureeGrandeur" :rules="isRegulier ? [required] : []" @keyup.enter="validate"></unit-select>
                         </v-layout>
+                        <v-layout row justify-center>
+                            <v-text-field :counter="selectionNameMaxLength" type="text" v-model="name" :rules="[required, noMore30]" @keyup.enter="validate" label="Nom d'affichage"></v-text-field>
+                        </v-layout>
                     </div>
                 </transition-expand>
             </v-form>
 
             <v-layout row align-end>
-                <v-checkbox v-model="isRegulier" label="répéter" class="tiny"></v-checkbox>
+                <v-checkbox v-model="isRegulier" label="répéter" class="tiny"/>
                 <v-btn icon @click.stop="validate">Ok</v-btn>
             </v-layout>
         </v-container>

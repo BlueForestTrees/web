@@ -58,22 +58,27 @@ DrawTree.prototype.leftmost_sibling = function () {
     return this._lmost_sibling
 }
 
-export function treePlacement(tree, fragmentName = "children", sX = 1, sY = 1) {
+export function treePlacement(tree, fragmentName = "children", sX = 1, sY = 1, dx = 0, dy = 0) {
     if (!tree || !tree[fragmentName]) return
-    
+
     const dt = new DrawTree(tree, fragmentName)
     const result = buchheim(dt)
     const listResult = iterativelyWalk(result)
     const sorted = listResult.sort((a, b) => b.y - a.y)
     const head = sorted.pop()
-    return deltaAndScale(sorted, head.x, sX, sY)
+    const nodes = deltaAndScale(sorted, -head.x * sX + dx, dy, sX, sY)
+    head.x = dx //hack pour appliquer dxy sur les lines de depth 0
+    head.y = dy
+    return nodes
 }
 
-function deltaAndScale(nodes, deltaX, sX, sY) {
+function deltaAndScale(nodes, dX, dY, sX, sY) {
     for (let i = 0; i < nodes.length; i++) {
-        nodes[i].x -= deltaX
         nodes[i].x *= sX
         nodes[i].y *= sY
+
+        nodes[i].x += dX
+        nodes[i].y += dY
     }
     return nodes
 }

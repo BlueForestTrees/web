@@ -22,7 +22,10 @@
             </g>
         </template>
 
-        <trunk :tree="tree" trunk :selected="isSelected(tree)" @click="treeClick(trunk)"/>
+        <trunk v-if="tree" :key="trunk.tree._id" :tree="trunk.tree" trunk
+               :x="trunk.x" :y="trunk.y"
+               :selected="isSelected(trunk.tree)" @click="treeClick(trunk)"
+        />
 
     </svg>
 </template>
@@ -79,6 +82,8 @@
             scale: 1,
             panx: 0, pany: 0,
             maxSelectionSize: 1,
+            trunkDx: 0,
+            trunkDy: 0,
             rootList: [],
             branchList: [],
         }),
@@ -87,8 +92,7 @@
         },
         watch: {
             "tree.trunk._id"() {
-                this.select(this.tree)
-                this.loadFragment(this.tree, [BRANCHES, ROOTS])
+                this.updateTrunk()
             },
             preRootsList(n) {
                 this.rootList = n
@@ -120,13 +124,15 @@
                 return `${this.viewOriginX} ${this.viewOriginY} ${this.viewW} ${this.viewH}`
             },
             trunk() {
-                return {tree: this.tree, x: 0, y: 0}
+                return {tree: this.tree, x: this.trunkDx, y: this.trunkDy}
             },
             preRootsList() {
-                return treePlacement(this.tree, ROOTS, this.sX, this.sY)
+                // console.log("tree placement roots")
+                return treePlacement(this.trunk.tree, ROOTS, this.sX, this.sY, this.trunk.x, this.trunk.y)
             },
             preBranchesList() {
-                return treePlacement(this.tree, BRANCHES, this.sX, -this.sY)
+                // console.log("tree placement branches")
+                return treePlacement(this.trunk.tree, BRANCHES, this.sX, -this.sY, this.trunk.x, this.trunk.y)
             }
         },
         methods: {
@@ -178,6 +184,11 @@
             },
             applyZoom(zoom) {
                 this.scale = Math.min(this.scaleMax, Math.max(this.scaleMin, zoom))
+            },
+            updateTrunk() {
+                this.lookAt({}, true)
+                this.select(this.tree)
+                this.loadFragment(this.tree, [BRANCHES, ROOTS])
             }
         },
     }

@@ -42,14 +42,11 @@
 <script>
 
     import {equiv, overcolor, qtUnit, shadeColor} from "../../services/calculations"
-    import TreeHead from "../tree/TreeHead"
     import On from "../../const/on"
     import {mapActions} from "vuex"
-    import {rightRatio} from "../../services/axis"
 
     export default {
         name: "compare-cams",
-        components: {TreeHead},
         props: ['axises', 'leftColor', 'rightColor'],
         data: function () {
             const alpha = 0.7

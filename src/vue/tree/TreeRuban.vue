@@ -1,12 +1,10 @@
 <template>
 
-    <v-card class="scroll">
+    <v-card class="scroll full-width">
 
         <v-card class="ma-2">
-            <tree-ruban-head :tree="tree" @close="$emit('close')" @editQt="openPickQt"/>
+            <tree-ruban-head :tree="tree" @close="$emit('close')"/>
         </v-card>
-
-        <selection-dialog :value="treeSelection" @input="pickSelection"/>
 
         <v-card class="ma-2">
             <v-expansion-panel v-model="activePanelIdx">
@@ -23,15 +21,9 @@
 </template>
 
 <script>
-    import {mapActions} from "vuex"
-    import On from "../../const/on"
     import TreeRubanHead from "./TreeRubanHead"
-    import {selectionFromTree} from "../../services/calculations"
     import SubpageTitle from "./SubpageTitle"
     import Static from "../mixin/Static"
-    import SelectionDialog from "../selection/SelectionDialog"
-
-    const SelectionPicker = () => ({component: import(/* webpackChunkName: "SelectionPicker" */ "./SelectionPicker")})
 
     const DescriptionSubPage = () => ({component: import(/* webpackChunkName: "DescriptionSubPage" */ "./DescriptionSubPage")})
     const FabricationSubPage = () => ({component: import(/* webpackChunkName: "UtilisationSubPage" */ "./FabricationSubPage")})
@@ -44,11 +36,9 @@
         props: {tree: Object},
         mixins: [Static],
         components: {
-            SelectionDialog,
             UtilisationSubPage,
             SubpageTitle,
             TreeRubanHead,
-            SelectionPicker,
             DescriptionSubPage,
             ImpactsSubPage,
             FabricationSubPage,
@@ -66,21 +56,6 @@
         data: () => ({
             activePanelIdx: null
         }),
-        computed: {
-            treeSelection() {
-                return this.tree.selection || selectionFromTree(this.tree)
-            },
-        },
-        methods: {
-            ...mapActions({
-                saveApplySelection: On.SAVE_APPLY_SELECTION
-            }),
-            pickSelection(selection) {
-                this.saveApplySelection({tree: this.tree, selection})
-                    .catch(this.snackError)
-                this.closePickQt()
-            }
-        },
         beforeRouteLeave(to, from, next) {
             this.close()
             next()

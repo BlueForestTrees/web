@@ -36,13 +36,12 @@
     import {unit, grandeurFromShortname, toBqtG} from 'unit-manip'
     import {isNumber, length2min, required} from "../../services/rules"
     import {createStringObjectId, treefy} from "../../services/calculations"
-    import TreeHead from "./TreeHead"
     import UnitSelect from "../common/UnitSelect"
     import GrandeurSelect from "../common/GrandeurSelect"
 
     export default {
         name: 'create-tree',
-        components: {GrandeurSelect, UnitSelect, TreeHead},
+        components: {GrandeurSelect, UnitSelect},
         props: {noTitle: Boolean},
         data() {
             return {

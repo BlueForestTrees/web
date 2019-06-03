@@ -80,7 +80,6 @@ export default {
         for (let i = 0; i < fragments.length; i++) {
             if (fragments[i] !== OWNER) {
                 tree.promises[fragments[i]] = dispatch(On.load(fragments[i]), {_id: tree._id, bqt})
-                    .then(sortOn("name"))
                     .then(fragment => Vue.set(tree, fragments[i], fragment))
             } else {
                 tree.promises.owner = tree.promises.trunk.then(trunk => dispatch(On.LOAD_USER, trunk.oid).then(owner => Vue.set(tree, "owner", owner)))

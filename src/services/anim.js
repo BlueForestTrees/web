@@ -12,15 +12,15 @@ export const initTween = () => {
 }
 
 export const tweenNodes = (newNodes, oldNodes) => {
-    const oldCount = oldNodes.length || 0
-    const newCount = newNodes.length
+    const oldCount = oldNodes && oldNodes.length || 0
+    const newCount = newNodes && newNodes.length || 0
 
-     // console.log("TWEEN NODES: from", oldCount, "to", newCount)
+    // console.log("TWEEN NODES: from", oldCount, "to", newCount)
 
     if (newCount > oldCount) {
         for (var i = 0; i < newCount; i++) {
             const newNode = newNodes[i]
-            const oldNode = findFct(oldNodes, oldNode => oldNode.tree._id === newNode.tree._id)
+            const oldNode = oldCount && findFct(oldNodes, oldNode => oldNode.tree._id === newNode.tree._id)
             if (oldNode) {
                 const hasMoved = newNode.x !== oldNode.x || newNode.y !== oldNode.y
                 if (hasMoved) {
@@ -28,8 +28,8 @@ export const tweenNodes = (newNodes, oldNodes) => {
                     tweenNode(oldNode, newNode)
                 }
             } else {
-                const parentNode = findFct(oldNodes, node => node.tree._id === newNode.parent.tree._id) || newNode.parent
-                // console.log("NEW", newNode.tree._id, "move from parent", parentNode.tree._id)
+                const parentNode = oldCount && findFct(oldNodes, node => node.tree._id === newNode.parent.tree._id) || newNode.parent
+                // console.log("NEW", newNode.tree.trunk.name, "move from parent", parentNode.tree.trunk.name)
                 tweenNode(parentNode, newNode)
             }
         }
@@ -40,14 +40,14 @@ const tweenNode = (o, n) => {
     const curPos = {x: o.x, y: o.y}
     const newPos = {x: n.x, y: n.y}
     const update = () => {
-        Vue.set(n, 'x', curPos.x)
-        Vue.set(n, 'y', curPos.y)
+        n.x = curPos.x
+        n.y = curPos.y
         // console.log("node #", n.tree.trunk.name, " is now at", n.x, n.y)
     }
     update()
     new TWEEN.Tween(curPos)
         .to(newPos, 500)
-        .easing(TWEEN.Easing.Elastic.Out)
+        .easing(TWEEN.Easing.Quintic.Out)
         .onUpdate(update)
         .start()
 }

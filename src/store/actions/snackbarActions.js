@@ -29,7 +29,7 @@ const toSnack = ex =>
 export default {
     [On.SNACKBAR]: ({commit}, snackOptions) => {
         if (snackOptions.color !== "green") {
-            snackOptions.timeout = 0
+            snackOptions.timeout = 3000
         }
         commit(Do.UPDATE_SNACKBAR, Object.assign(snack(), {visible: true, ...snackOptions}))
     },
