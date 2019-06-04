@@ -65,6 +65,7 @@
                 return this.tree && (this.forced || !this.tree[this.fragment]) && this.update()
             },
             update: function () {
+                console.log("update", this.fragment)
                 this.loading = true
                 return this.loadTreeFragment({tree: this.tree, fragments: [this.fragment]})
                     .then(() => setTimeout(() => this.loading = false))

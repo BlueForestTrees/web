@@ -101,8 +101,8 @@ export default {
 
     [On.DELETE_OPENED_TREE]: ({commit, dispatch, state}) =>
         dispatch(On.DELETE_TREE, state.tree)
-            .then(() => commit(Do.CLOSE_TREE))
             .then(() => dispatch(On.GO_HOME))
+            .then(() => commit(Do.CLOSE_TREE))
             .then(() => dispatch(On.SNACKBAR, {text: "1 élement supprimé", icon: "done"}))
             .catch(e => dispatch(On.SNACKERROR, e))
     ,
