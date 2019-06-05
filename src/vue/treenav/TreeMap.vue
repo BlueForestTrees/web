@@ -160,7 +160,7 @@
             },
             async treeClick({tree, x, y}, fragment) {
                 this.toggleSelect(tree)
-                this.isSelected(tree) && this.lookAt({x: x / this.scale, y: y / this.scale})
+                // this.isSelected(tree) && this.lookAt({x: x / this.scale, y: y / this.scale})
                 this.isSelected(tree) && fragment && !tree[fragment] && await this.loadFragment(tree, [fragment])
             },
             async loadFragment(tree, fragments) {

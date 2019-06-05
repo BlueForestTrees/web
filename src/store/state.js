@@ -33,6 +33,7 @@ export default {
     search: {panels: [], type: null, term: null, cats: null, owner: null, impact: null, facet: null},
     basket: [],
     tree: null,
+    treeCoef: 1,
     compare: {left: null, right: null, leftAxises: null, rightAxises: null, axis: null},
     dialogs: dialogs(),
     nav: {

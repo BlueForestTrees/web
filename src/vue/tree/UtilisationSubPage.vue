@@ -1,15 +1,6 @@
 <template>
     <v-layout column align-center mb-1>
 
-            <transition-expand>
-                <div v-if="adding">
-                    <subpage-title sub title="Ajouter une utilisation">
-                        <closer slot="right" @close="setAdding(false)"/>
-                    </subpage-title>
-                    <ressource-adder reversed :tree="tree" @close="setAdding(false)"/>
-                </div>
-            </transition-expand>
-
             <fragment-list v-if="!adding" :tree="tree" :fragment="BRANCHES" :selectionKey="selectionKey"/>
 
             <transition name="slide-left-right">
@@ -21,6 +12,9 @@
                 </v-layout>
             </transition>
             <btn v-if="!adding" slot="right" icon="add_box" icon-color="grey" @click="setAdding(true)"/>
+            <simple-dialog v-model="adding" icon="branches" title="Ajouter une utilisation">
+                <ressource-adder reversed :tree="tree" @close="setAdding(false)"/>
+            </simple-dialog>
     </v-layout>
 
 </template>
@@ -43,6 +37,7 @@
     import Note from "../common/Note"
     import Icon from "../common/icon"
     import UnselectOnTreeChange from "../mixin/UnselectOnTreeChange"
+    const SimpleDialog = () => import("../selection/SimpleDialog")
 
     const RessourceAdder = () => import(/* webpackChunkName: "RessourceAdder"*/"../root/RessourceAdder")
     const FragmentList = () => import(/* webpackChunkName: "FragmentList"*/"./FragmentList")
@@ -51,6 +46,7 @@
         name: "utilisation-sub-page",
         mixins: [Selectable, UnselectOnTreeChange],
         components: {
+            SimpleDialog,
             Icon,
             Note,
             TransitionExpand,

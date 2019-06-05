@@ -5,6 +5,7 @@ import {find, findIndex} from "unit-manip"
 
 export default {
     [Do.OPEN_TREE]: (state, tree) => state.tree = tree,
+    [Do.SET_TREE_COEF]: (state, treeCoef) => state.treeCoef = treeCoef,
     [Do.CLOSE_TREE]: state => state.tree = null,
     [Do.SET_CURRENT_TREE_SUBPAGE]: (state, currentSubPage) => state.nav.tree.currentSubPage = currentSubPage,
     [Do.SET_TREE_CARD_FLIPPED]: (state, v) => state.nav.tree.cardFlipped = v,

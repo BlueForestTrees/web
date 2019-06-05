@@ -2,7 +2,7 @@
     <g :class="trunk ? 'node trunk' : 'node root'" @click="$emit('click', tree)" :transform="`translate(${x} ${y})`">
 
         <foreignObject x="-110" :y="size+5" width="220" height="85">
-            <div class="text align noselect">{{qtUnitName(tree)}}</div>
+            <div class="text align noselect">{{qtUnitName(tree, treeCoef)}}</div>
         </foreignObject>
 
         <transition name="size">
@@ -16,9 +16,11 @@
 
 <script>
     import {qtUnitName} from "../../services/calculations"
+    import TreeCoef from "../mixin/TreeCoef"
 
     export default {
         name: "trunk",
+        mixins: [TreeCoef],
         props: {
             tree: Object,
             x: {type: Number, default: 0}, y: {type: Number, default: 0},

@@ -6646,10 +6646,10 @@ unique-string@^1.0.0:
   dependencies:
     crypto-random-string "^1.0.0"
 
-unit-manip@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/unit-manip/-/unit-manip-1.1.0.tgz#d9304c3da91aa9261c32f4198491465afee628f3"
-  integrity sha512-X+eHLhruJ9263u+mXUKweA+OY/GaioDQhgtOVBldfoCTDoqWt6HN72B+0d5EWL2QEd5GUaeoY0UPkQTt6hleig==
+unit-manip@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/unit-manip/-/unit-manip-1.1.1.tgz#e97f82ac974d40c286c5f9606748e95a0d578abb"
+  integrity sha512-fmUJuHGh0a8ChlTwsm42g7ndVYpSZUjkgFodaOt134cc30hS8An6VnAbfsqqQAo3SIQHeddoFzXM5yF+m77nkQ==
   dependencies:
     fraction.js "4.0.4"
 

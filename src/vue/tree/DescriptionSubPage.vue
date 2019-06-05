@@ -1,19 +1,11 @@
 <template>
     <v-layout column align-center mb-1>
+        <description :tree="tree"/>
+        <v-btn icon @click="edit"><v-icon color="grey">edit</v-icon></v-btn>
 
-        <transition-expand>
-            <description-editor v-if="isEditing" :value="trunk" @saved="save"/>
-        </transition-expand>
-        <transition-expand>
-            <description v-if="!isEditing" :tree="tree"/>
-        </transition-expand>
-        <v-btn v-if="isEditing" icon @click="unedit">
-            <v-icon color="grey">close</v-icon>
-        </v-btn>
-        <v-btn v-else-if="canEditDescription" icon @click="edit">
-            <v-icon color="grey">edit</v-icon>
-        </v-btn>
-
+        <simple-dialog v-model="isEditing" icon="docu" title="Modifier la description">
+            <description-editor :value="trunk" @saved="save"/>
+        </simple-dialog>
     </v-layout>
 </template>
 <script>
@@ -32,12 +24,12 @@
     import Photo from "../common/Photo"
     import {OWNER, TRUNK} from "../../const/fragments"
     import TransitionExpand from "../common/TransitionExpand"
-
+    const SimpleDialog = () => import("../selection/SimpleDialog")
     const DescriptionEditor = () => import("./DescriptionEditor")
 
     export default {
         name: "DescriptionSubPage",
-        components: {TransitionExpand, DescriptionEditor, Photo, QtUnitName, Closer, TreeFab, SubpageTitle, Subheader, OpenMessage, FragmentSelect, TreeCard, Description},
+        components: {SimpleDialog, TransitionExpand, DescriptionEditor, Photo, QtUnitName, Closer, TreeFab, SubpageTitle, Subheader, OpenMessage, FragmentSelect, TreeCard, Description},
         props: ['tree'],
         data: () => ({isEditing: false}),
         methods: {
@@ -61,7 +53,7 @@
             canEditDescription() {
                 return this.trunk && this.isAdmin || this.isOwner(this.trunk)
             },
-            trunk(){
+            trunk() {
                 return this.tree && this.tree.trunk
             }
         },

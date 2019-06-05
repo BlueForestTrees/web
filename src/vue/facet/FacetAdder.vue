@@ -1,10 +1,7 @@
 <template>
     <div>
-
-        <facet-entry-picker v-if="changeItem || !selectedEntry" @select="select" />
-
+        <entry-list v-if="changeItem || !selectedEntry" @select="select" :action="On.SEARCH_FACET_ENTRY"/>
         <quantity-picker v-else :value="selectedEntry" @input="validate" @close="closeQtPicker"></quantity-picker>
-
     </div>
 </template>
 
@@ -15,16 +12,16 @@
     import On from "../../const/on"
     import {mapActions} from "vuex"
     import {GO} from "../../const/go"
-    import FacetEntryPicker from "./FacetEntryPicker"
     import SubpageTitle from "../tree/SubpageTitle"
+    import EntryList from "../common/EntryList"
 
     export default {
         name: "facet-adder",
         props: ['tree'],
-        components: {SubpageTitle, FacetEntryPicker, QuantityPicker, Closer},
+        components: {EntryList, SubpageTitle, QuantityPicker, Closer},
         data: () => ({
             selectedEntry: null, changeItem: false,
-            GO
+            GO, On
         }),
         methods: {
             name,

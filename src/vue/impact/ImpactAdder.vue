@@ -1,11 +1,7 @@
 <template>
     <div>
-
         <entry-list v-if="changeItem || !selectedEntry" @select="select" :action="On.SEARCH_IMPACT_ENTRY"/>
-        <template v-else>
-            <v-divider/>
-            <quantity-picker :value="selectedEntry" @input="validate" @close="closeQtPicker"></quantity-picker>
-        </template>
+        <quantity-picker v-else :value="selectedEntry" @input="validate" @close="closeQtPicker"></quantity-picker>
     </div>
 
 </template>
@@ -17,7 +13,7 @@
     import On from "../../const/on"
     import {mapActions} from "vuex"
     import SubpageTitle from "../tree/SubpageTitle"
-    import EntryList from "./EntriesList"
+    import EntryList from "../common/EntryList"
 
     export default {
         name: "impact-adder",

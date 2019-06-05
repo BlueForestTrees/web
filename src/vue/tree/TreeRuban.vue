@@ -8,12 +8,14 @@
 
         <v-card class="ma-2">
             <v-expansion-panel v-model="activePanelIdx">
-                <v-expansion-panel-content :key="panel.title" v-for="(panel, i) in panels">
+                <v-expansion-panel-content v-for="(panel, i) in panels" :key="panel.title">
                     <v-layout row align-center slot="header">
                         <v-list-tile-avatar :class="`${panel.icon} logo`"/>
                         <v-toolbar-title class="font-weight-thin title">{{panel.title}}</v-toolbar-title>
                     </v-layout>
-                    <component v-if="activePanelIdx === i" :is="panel.comp" :tree="tree"/>
+
+                    <component :is="panel.comp" :tree="tree"/>
+
                 </v-expansion-panel-content>
             </v-expansion-panel>
         </v-card>
@@ -26,10 +28,10 @@
     import Static from "../mixin/Static"
 
     const DescriptionSubPage = () => ({component: import(/* webpackChunkName: "DescriptionSubPage" */ "./DescriptionSubPage")})
-    const FabricationSubPage = () => ({component: import(/* webpackChunkName: "UtilisationSubPage" */ "./FabricationSubPage")})
     const FacetsSubPage = () => ({component: import(/* webpackChunkName: "FacetsSubPage" */ "./FacetsSubPage")})
     const ImpactsSubPage = () => ({component: import(/* webpackChunkName: "ImpactsSubPage" */ "./ImpactsSubPage")})
     const UtilisationSubPage = () => ({component: import(/* webpackChunkName: "UtilisationSubPage" */ "./UtilisationSubPage")})
+    const FabricationSubPage = () => ({component: import(/* webpackChunkName: "UtilisationSubPage" */ "./FabricationSubPage")})
 
     export default {
         name: "TreeRuban",

@@ -10,6 +10,7 @@ export default {
     DELETE_IMPACT: 'deleteImpact',
     DELETE_BRANCH: 'deleteBranch',
     DELETE_REPLY: 'deleteReply',
+    SET_TREE_COEF: 'setTreeCoef',
     PUSH_MESSAGES: 'appendMessages',
     PUSH_MY_MESSAGES: 'appendMyMessages',
     RENAME_TRUNK: 'renameTree',

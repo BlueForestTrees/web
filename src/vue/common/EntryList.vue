@@ -27,7 +27,7 @@
     import {GO} from "../../const/go"
 
     export default {
-        name: "entries-list",
+        name: "entry-list",
         props: {action: {type: String}},
         components: {SelectableList},
         data: function () {

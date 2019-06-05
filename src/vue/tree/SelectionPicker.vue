@@ -1,10 +1,4 @@
 <template>
-    <div>
-
-        <subpage-title title="Choisir une quantité">
-            <v-icon slot="left" class="carton logo"/>
-            <closer slot="right" v-if="closable" @close="$emit('close')"/>
-        </subpage-title>
 
         <v-container>
 
@@ -24,7 +18,7 @@
                             <v-text-field type="number" v-model="qtDuree" :rules="isRegulier ? [required, isNumber] : []" @keyup.enter="validate" label="Pendant:"></v-text-field>
                             <unit-select v-model="unitDuree" :grandeur="dureeGrandeur" :rules="isRegulier ? [required] : []" @keyup.enter="validate"></unit-select>
                         </v-layout>
-                        <v-layout row justify-center>
+                        <v-layout v-if="!noName" row justify-center>
                             <v-text-field :counter="selectionNameMaxLength" type="text" v-model="name" :rules="[required, noMore30]" @keyup.enter="validate" label="Nom d'affichage"></v-text-field>
                         </v-layout>
                     </div>
@@ -36,7 +30,6 @@
                 <v-btn icon @click.stop="validate">Ok</v-btn>
             </v-layout>
         </v-container>
-    </div>
 
 </template>
 
@@ -60,8 +53,8 @@
         components: {TransitionExpand, Closer, SubpageTitle, Card, GrandeurSelect, UnitSelect, Destination},
         mixins: [closable],
         props: {
+            noName: {type: Boolean, default: false},
             value: Object,
-            closable: {type: Boolean, default: true}
         },
         data: function () {
             return {
@@ -95,6 +88,7 @@
                     const duree = toBqtG({qt: this.qtDuree, unit: this.unitDuree.shortname})
                     const name = this.name
                     const trunkId = this.selection.trunkId
+
                     this.$emit("pick", {trunkId, quantity, repeted, freq, duree, name})
                 }
             },
@@ -102,34 +96,40 @@
                 this.$emit('close')
             },
             required, isNumber,
-            noMore30: v => v && v.length <= selectionNameMaxLength || "trop long"
+            noMore30: v => v && v.length <= selectionNameMaxLength || "trop long",
+            refresh() {
+                if (this.selection) {
+                    const bqtG = this.selection.quantity
+
+                    const qtUnit = bestQuantity(bqtGToQtUnit(bqtG))
+                    this.qt = qtUnit.qt
+                    this.unit = unit(qtUnit.unit)
+                    this.grandeur = getGrandeur(bqtG.g)
+
+                    this.isRegulier = this.selection.repeted
+
+                    if (this.selection.freq) {
+                        const qtUnitFreq = bestQuantity(bqtGToQtUnit(this.selection.freq))
+                        this.qtFreq = qtUnitFreq.qt
+                        this.unitFreq = unit(qtUnitFreq.unit)
+                    }
+
+                    if (this.selection.duree) {
+                        const qtUnitDuree = bestQuantity(bqtGToQtUnit(this.selection.duree))
+                        this.qtDuree = qtUnitDuree.qt
+                        this.unitDuree = unit(qtUnitDuree.unit)
+                    }
+
+                    this.name = this.selection.name || this.tree.trunk.name.substr(0, selectionNameMaxLength)
+                }
+            }
         },
         mounted() {
-            if (this.selection) {
-
-                const bqtG = this.selection.quantity
-
-                const qtUnit = bestQuantity(bqtGToQtUnit(bqtG))
-                this.qt = qtUnit.qt
-                this.unit = unit(qtUnit.unit)
-                this.grandeur = getGrandeur(bqtG.g)
-
-                this.isRegulier = this.selection.repeted
-
-                if (this.selection.freq) {
-                    const qtUnitFreq = bestQuantity(bqtGToQtUnit(this.selection.freq))
-                    this.qtFreq = qtUnitFreq.qt
-                    this.unitFreq = unit(qtUnitFreq.unit)
-                }
-
-                if (this.selection.duree) {
-                    const qtUnitDuree = bestQuantity(bqtGToQtUnit(this.selection.duree))
-                    this.qtDuree = qtUnitDuree.qt
-                    this.unitDuree = unit(qtUnitDuree.unit)
-                }
-
-                this.name = this.selection.name || this.tree.trunk.name.substr(0, selectionNameMaxLength)
-
+            this.refresh()
+        },
+        watch: {
+            selection() {
+                this.refresh()
             }
         }
     }

@@ -22,7 +22,7 @@ export const treefy = trunk => ({_id: trunk._id, trunk})
 export const qtUnit = (item, opts = {}) => {
     const bqtG = quantity(item)
     if (bqtG) {
-        const qtUnit = bqtGToQtUnit(bqtG)
+        const qtUnit = bqtGToQtUnit(bqtG, opts.coef)
         if (!isNil(qtUnit.qt) && qtUnit.unit) {
             const best = bestQuantity(qtUnit)
             return `${(best.qt === 1 && opts.hideOne) ? '' : best.qt} ${grandeur(best.unit) !== "Nomb" ? best.unit : ''}`
@@ -69,7 +69,7 @@ export const de = name => {
 
 export const color = item => item.color || item.trunk.color
 export const equiv = item => item.eq ? `éq. ${item.eq}` : ""
-export const qtUnitName = item => item && `${qtUnit(item)} ${equiv((item.trunk && item.trunk.quantity) || item.quantity || item)} ${name(item)}`
+export const qtUnitName = (item, coef = 1) => item && `${qtUnit(item, {coef})} ${equiv((item.trunk && item.trunk.quantity) || item.quantity || item)} ${name(item)}`
 
 export const getRandomColor = () => {
     const letters = '0123456789ABCDEF'
@@ -278,8 +278,8 @@ export const findFct = function (array, fct) {
 
 export const sortOn = sortKey => data => {
     return data && Array.isArray(data) && data.sort((a, b) => a[sortKey].localeCompare(b[sortKey]))
-    ||
-    data
+        ||
+        data
 }
 
 export const filterOn = filterKey => (data, filter) => filterKey && data && filter ?

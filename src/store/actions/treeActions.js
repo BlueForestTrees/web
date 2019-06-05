@@ -132,7 +132,7 @@ export default {
         }
     },
 
-    [On.SAVE_APPLY_SELECTION]: ({dispatch}, {tree, selection}) => {
+    [On.SAVE_APPLY_SELECTION]: ({dispatch, state}, {tree, selection}) => {
         let update
         if (tree.selection && tree.selection._id) {
             selection._id = tree.selection._id
@@ -141,8 +141,9 @@ export default {
             selection._id = createStringObjectId()
             update = false
         }
+
         return (update ? api.updateSelection(selection) : api.createSelection(selection))
-            .then(() => dispatch(On.APPLY_SELECTION, {tree, selection}))
+            .then(() => dispatch(On.APPLY_SELECTION, {tree: state.tree, selection}))
             .then(() => dispatch(On.SNACKBAR, {"text": `Favoris ${update ? "mis à jour" : "crée"}`}))
     },
 

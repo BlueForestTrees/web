@@ -16,12 +16,12 @@ export default {
                 .then(() => dispatch(On.SNACKBAR, {text: "Propriété rétirée"})),
 
 
-    [On.ADD_FACET]: ({}, {tree, entry, quantity}) => {
+    [On.ADD_FACET]: ({state}, {tree, entry, quantity}) => {
         const attribute = ({
             _id: createStringObjectId(), type: "facet", color: entry.color,
             impactId: entry._id, name: entry.name,
             quantity: {
-                bqt: quantity.bqt / treeBqt(tree),
+                bqt: quantity.bqt / treeBqt(tree) / state.treeCoef,
                 g: quantity.g,
             }
         })

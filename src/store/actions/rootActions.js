@@ -14,13 +14,14 @@ export default {
     [On.ADD_BRANCH]: ({commit, dispatch}, {tree, root}) => {
         return dispatch(On.ADD_ROOT, {tree: root, root: tree})
     },
-    [On.ADD_ROOT]: ({commit, dispatch}, {tree, root}) => {
+    [On.ADD_ROOT]: ({commit, dispatch, state}, {tree, root}) => {
 
         const request = {
             _id: createStringObjectId(),
             trunkId: tree._id,
             rootId: root._id,
-            bqt: treeBqt(root) / treeBqt(tree),
+            //TODO pas d'effet sur les données locales
+            bqt: treeBqt(root) / treeBqt(tree) / state.treeCoef,
         }
 
         return dispatch(On.CREATE_ROOT, request)

@@ -54,19 +54,19 @@ export default {
         return api.postImpactAdeme(formData)
     },
 
-    [On.ADD_IMPACT]: ({commit}, {tree, entry, quantity}) => {
+    [On.ADD_IMPACT]: ({state, commit}, {tree, entry, quantity}) => {
         const impact = ({
             _id: createStringObjectId(), type: "impact", color: entry.color,
             impactId: entry._id, name: entry.name,
             quantity: {
-                bqt: quantity.bqt,
+                bqt: quantity.bqt / state.treeCoef,
                 g: quantity.g,
             }
         })
         const impactTank = {...impact, _id: impact.impactId}
         delete impactTank.impactId
 
-        return api.postImpact(impact._id, tree._id, impact.impactId, quantity.bqt / treeBqt(tree))
+        return api.postImpact(impact._id, tree._id, impact.impactId, quantity.bqt / treeBqt(tree) / state.treeCoef)
             .then(() => {
                 commit(Do.ADD_TO_FRAGMENT, {tree, fragment: IMPACTS, element: impact})
                 commit(Do.ADD_TO_FRAGMENT, {tree, fragment: IMPACT_TANK, element: impactTank, merge: true})

@@ -1,16 +1,7 @@
 <template>
     <v-layout column align-center mb-1>
 
-        <transition-expand>
-            <div v-if="adding">
-                <subpage-title sub title="Ajouter une ressource">
-                    <closer v-if="adding" slot="right" @close="setAdding(false)" />
-                </subpage-title>
-                <ressource-adder :tree="tree" @close="setAdding(false)"/>
-            </div>
-        </transition-expand>
-
-        <fragment-list v-if="!adding" :tree="tree" :fragment="ROOTS" :selectionKey="selectionKey"/>
+        <fragment-list :tree="tree" :fragment="ROOTS" :selectionKey="selectionKey"/>
 
         <transition name="slide-left-right">
             <v-layout v-if="oneSelected" justify-center>
@@ -20,7 +11,10 @@
                 <btn icon="delete" iconColor="grey" @click="deleteOneSelected"></btn>
             </v-layout>
         </transition>
-        <btn v-if="!adding" slot="right" icon="add_box" icon-color="grey" @click="setAdding(true)"/>
+        <btn slot="right" icon="add_box" icon-color="grey" @click="setAdding(true)"/>
+        <simple-dialog v-model="adding" icon="roots" title="Ajouter une ressource">
+            <ressource-adder reversed :tree="tree" @close="setAdding(false)"/>
+        </simple-dialog>
     </v-layout>
 
 </template>
@@ -44,6 +38,7 @@
     import Icon from "../common/icon"
     import UnselectOnTreeChange from "../mixin/UnselectOnTreeChange"
     import UtilisationSubPage from "./UtilisationSubPage"
+    const SimpleDialog = () => import("../selection/SimpleDialog")
 
     const RessourceAdder = () => import(/* webpackChunkName: "RessourceAdder"*/"../root/RessourceAdder")
     const FragmentList = () => import(/* webpackChunkName: "FragmentList"*/"./FragmentList")
@@ -52,6 +47,7 @@
         name: "fabrication-subpage",
         mixins: [Selectable, UnselectOnTreeChange],
         components: {
+            SimpleDialog,
             UtilisationSubPage,
             Icon,
             Note,

@@ -1,15 +1,8 @@
 <template>
     <v-layout column align-center mb-1>
-        <transition-expand>
-            <div v-if="adding">
-                <subpage-title sub title="Ajouter une propriété">
-                    <closer slot="right" @close="setAdding(false)"/>
-                </subpage-title>
-                <facet-adder :tree="tree" @close="setAdding(false)"/>
-            </div>
-        </transition-expand>
 
-        <fragment-list v-if="!adding" :tree="tree" :fragment="FACETS" :selectionKey="selectionKey"/>
+        <fragment-list :tree="tree" :fragment="FACETS" :selectionKey="selectionKey"/>
+
 
         <transition name="slide-left-right">
             <v-layout v-if="oneSelected" justify-center>
@@ -20,7 +13,11 @@
             </v-layout>
         </transition>
 
-        <btn v-if="!adding" slot="right" icon="add_box" icon-color="grey" @click="setAdding(true)"/>
+        <btn icon="add_box" icon-color="grey" @click="setAdding(true)"/>
+
+        <simple-dialog v-model="adding" icon="facet" title="Ajouter une propriété">
+            <facet-adder :tree="tree" @close="setAdding(false)"/>
+        </simple-dialog>
 
     </v-layout>
 
@@ -44,10 +41,12 @@
     import {facet} from "../../const/selections"
     import Note from "../common/Note"
     import UnselectOnTreeChange from "../mixin/UnselectOnTreeChange"
+    const SimpleDialog = () => import("../selection/SimpleDialog")
 
     export default {
         name: "facets-sub-page",
         components: {
+            SimpleDialog,
             Note,
             TransitionExpand,
             Btn,

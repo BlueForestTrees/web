@@ -1,17 +1,7 @@
 <template>
     <v-layout column align-center mb-1>
 
-        <transition-expand>
-            <div v-if="adding">
-                <subpage-title title="Ajouter un impact" sub color="white">
-                    <closer v-if="adding" slot="right" @close="setAdding(false)"/>
-                </subpage-title>
-
-                <impact-adder :tree="tree" @close="setAdding(false)"/>
-            </div>
-        </transition-expand>
-
-        <fragment-list v-if="!adding" :tree="tree" :fragment="IMPACT_TANK" :selectionKey="selectionKey" />
+        <fragment-list :tree="tree" :fragment="IMPACT_TANK" :selectionKey="selectionKey" />
 
         <transition name="slide-left-right">
             <v-layout v-if="oneSelected" justify-center>
@@ -22,7 +12,12 @@
             </v-layout>
         </transition>
 
-        <btn v-if="!adding" icon="add_box" icon-color="grey" @click="setAdding(true)"/>
+        <btn icon="add_box" icon-color="grey" @click="setAdding(true)"/>
+
+        <simple-dialog v-model="adding" icon="facet" title="Ajouter un impact">
+            <impact-adder :tree="tree" @close="setAdding(false)"/>
+        </simple-dialog>
+
     </v-layout>
 </template>
 
@@ -44,6 +39,7 @@
     import TransitionExpand from "../common/TransitionExpand"
     import {impact} from "../../const/selections"
     import Note from "../common/Note"
+    const SimpleDialog = () => import("../selection/SimpleDialog")
 
     const FragmentList = () => import(/* webpackChunkName: "FragmentList"*/"./FragmentList")
 
@@ -57,6 +53,7 @@
             selectionKey: impact
         }),
         components: {
+            SimpleDialog,
             Note,
             TransitionExpand,
             Btn,

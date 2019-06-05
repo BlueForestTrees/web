@@ -1,24 +1,32 @@
 <template>
-    <transition name="slide-fade" mode="out-in">
 
-        <tree-picker v-if="showTreePicker" @pick="pickTree" :no-create="noCreate"/>
+    <tree-picker v-if="showTreePicker" @pick="pickTree" :no-create="noCreate"/>
 
-        <selection-picker v-else
-                          :value="finalSelection"
-                          @pick="pickSelection" @close="closeSelectionPicker"
-                          :closable="canChangeTree"/>
-    </transition>
+    <div v-else>
+        <subpage-title sub title="Choisir une quantité">
+            <v-icon slot="left" class="carton logo"/>
+            <closer slot="right" @close="closeSelectionPicker"/>
+        </subpage-title>
+        <selection-picker
+                :value="finalSelection"
+                @pick="pickSelection" @close="closeSelectionPicker"
+                :closable="canChangeTree"/>
+    </div>
+
 </template>
+
 <script>
     import {mapState} from "vuex"
     import {selectionFromTree, name} from "../../services/calculations"
     import Card from "../common/Card"
     import SelectionPicker from "./SelectionPicker"
     import TreePicker from "./TreePicker"
+    import SubpageTitle from "./SubpageTitle"
+    import Closer from "../common/Closer"
 
     export default {
         name: "tree-selection-picker",
-        components: {TreePicker, SelectionPicker, Card},
+        components: {Closer, SubpageTitle, TreePicker, SelectionPicker, Card},
         props: {
             value: Object,
             canChangeTree: {type: Boolean, default: true},

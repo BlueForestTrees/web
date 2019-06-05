@@ -17,7 +17,7 @@
 </template>
 
 <script>
-    import EntriesList from "../impact/EntriesList"
+    import EntryList from "../common/EntryList"
     import On from "../../const/on"
     import Panel from "./Panel"
     import Icon from "../common/icon"
@@ -27,7 +27,7 @@
     export default {
         name: "facet-panel",
         props: ['value', 'title', 'iconClass', 'action'],
-        components: {QuantityPicker, Icon, Panel, EntriesList},
+        components: {QuantityPicker, Icon, Panel, EntriesList: EntryList},
         data: function () {
             return {On, qtPicked: false}
         },
