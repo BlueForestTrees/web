@@ -6646,10 +6646,10 @@ unique-string@^1.0.0:
   dependencies:
     crypto-random-string "^1.0.0"
 
-unit-manip@1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/unit-manip/-/unit-manip-1.1.1.tgz#e97f82ac974d40c286c5f9606748e95a0d578abb"
-  integrity sha512-fmUJuHGh0a8ChlTwsm42g7ndVYpSZUjkgFodaOt134cc30hS8An6VnAbfsqqQAo3SIQHeddoFzXM5yF+m77nkQ==
+unit-manip@1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/unit-manip/-/unit-manip-1.1.2.tgz#e70ed11e984f88e3d6b9d34524997ebf9151d9c0"
+  integrity sha512-zKtbh1DBq70SjtZ/5qvtv32Ku448u8DmSnmAeXbAFECmZBXD0iCtz0dTN++5IHW9cijNv10ztgxIbOO8MsDexg==
   dependencies:
     fraction.js "4.0.4"
 
@@ -6806,6 +6806,11 @@ vm-browserify@0.0.4:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-0.0.4.tgz#5d7ea45bbef9e4a6ff65f95438e0a87c357d5a73"
   dependencies:
     indexof "0.0.1"
+
+vue-async-computed@^3.7.0:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/vue-async-computed/-/vue-async-computed-3.7.0.tgz#1ca3fc2743c9e3d4399b506f3e107e2141fdc34c"
+  integrity sha512-TyP37QJZK8pvN14wxBcXtt9TOjkpYYdndklABZNH+X1ZjeyM/krndloiS1DeFUg95MqIi5wzjevOPu6UTcD7pg==
 
 vue-hot-reload-api@^2.3.0:
   version "2.3.1"

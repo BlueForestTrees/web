@@ -1,5 +1,4 @@
 import {findFct} from "./calculations"
-import Vue from "vue"
 import TWEEN from "@tweenjs/tween.js"
 
 export const initTween = () => {

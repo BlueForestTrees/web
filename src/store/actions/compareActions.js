@@ -20,8 +20,6 @@ export default {
             }
         }
 
-        commit(Do.UNSELECT)
-
         if (dest.length === 0) {
             router.push({name: GO.COMPARE_EMPTY})
         } else if (dest.length === 1) {

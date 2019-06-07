@@ -1,14 +1,15 @@
 import chai from 'chai'
-import {applyAxisCoef, buildAxises, updateRatios, separate} from "../src/services/axis"
+import {buildAxises, updateRatios, separate} from "../src/services/axis"
 import {init, withNameIdBqtG} from "./setup"
+import {applyAxisCoef} from "../src/services/calculations"
 
 
 chai.should()
 
 describe('Axis calculations', function () {
-    
+
     beforeEach(init)
-    
+
     it('buildAxises', function () {
         const tree = {
             trunk: withNameIdBqtG("Skate", "a", 1000, "Mass"),
@@ -17,78 +18,44 @@ describe('Axis calculations', function () {
             impactsTank: [withNameIdBqtG("co2", "d", 3, "Mass"), withNameIdBqtG("poison", "e", 4, "Volu")]
         }
         const expected = [
-            {"name": "vitamine", "_bqt": 1,bqt: 1,"tree": "Skate","type": "facets","g": "Mass"},
-            {"name": "voutamine","_bqt": 7,bqt: 7,"tree": "Skate","type": "facets","g": "Mass"},
-            {"name": "eau","_bqt": 3,bqt: 3,"tree": "Skate","type": "tank","g": "Volu"},
-            {"name": "elec","_bqt": 2,bqt: 2,"tree": "Skate","type": "tank","g": "Volu"},
-            {"name": "co2","_bqt": 3,bqt: 3,"tree": "Skate","type": "impactsTank","g": "Mass"},
-            {"name": "poison","_bqt": 4,bqt: 4,"tree": "Skate","type": "impactsTank","g": "Volu"}
+            {"name": "vitamine", "bqt": 1, bqt: 1, "tree": "Skate", "type": "facets", "g": "Mass"},
+            {"name": "voutamine", "bqt": 7, bqt: 7, "tree": "Skate", "type": "facets", "g": "Mass"},
+            {"name": "eau", "bqt": 3, bqt: 3, "tree": "Skate", "type": "tank", "g": "Volu"},
+            {"name": "elec", "bqt": 2, bqt: 2, "tree": "Skate", "type": "tank", "g": "Volu"},
+            {"name": "co2", "bqt": 3, bqt: 3, "tree": "Skate", "type": "impactsTank", "g": "Mass"},
+            {"name": "poison", "bqt": 4, bqt: 4, "tree": "Skate", "type": "impactsTank", "g": "Volu"}
         ]
         buildAxises(tree).should.be.deep.equal(expected)
     })
-    
-   
-    it('separate', function () {
+
+    it('separate simple', function () {
         const leftAxises = [
-            {tree: "leftTreeName", type: "trunk", name: "idem", _bqt: 20, g: "Mass"},
-            {tree: "leftTreeName", type: "trunk", name: "Quantité", _bqt: 20, g: "Volu"},
-            {tree: "leftTreeName", type: "facet", name: "Prix", _bqt: null, g: null},
-            {tree: "leftTreeName", type: "tank", name: "Elec", _bqt: 12, g: "Dens"},
-            {tree: "leftTreeName", type: "tank", name: "Eau", _bqt: 5, g: "Dens"},
-            {tree: "leftTreeName", type: "impactTank", name: "Bik", _bqt: 0, g: "Mass"}
+            {name: "Energie", bqt: 1, g: "Ene1"},
+            {name: "Protéine", bqt: 10, g: "Mass"},
+            {name: "Saccharose", bqt: 1, g: "Mass"},
         ]
+
         const rightAxises = [
-            {tree: "rightTreeName", type: "trunk", name: "idem", _bqt: 30, g: "Volu"},
-            {tree: "rightTreeName", type: "trunk", name: "Quantité", _bqt: 30, g: "Volu"},
-            {tree: "rightTreeName", type: "facet", name: "Prix", _bqt: 10, g: "Prix"},
-            {tree: "rightTreeName", type: "tank", name: "Elec", _bqt: null, g: null},
-            {tree: "rightTreeName", type: "tank", name: "Pétrole", _bqt: 12, g: "Dens"},
-            {tree: "rightTreeName", type: "impactTank", name: "Bik", _bqt: 0, g: "Mass"}
+            {name: "Saccharose", bqt: 6, g: "Mass"},
+            {name: "Couscous", bqt: 9, g: "Grains"},
         ]
+
         const expected = {
             left: [
-                {tree: "leftTreeName", type: "facet", name: "Prix", _bqt: null, g: null},
-                {tree: "leftTreeName", type: "trunk", name: "idem", _bqt: 20, g: "Mass"},
-                {tree: "leftTreeName", type: "tank", name: "Elec", _bqt: 12, g: "Dens"},
-                {tree: "leftTreeName", type: "tank", name: "Eau", _bqt: 5, g: "Dens"}
+                {name: "Energie", bqt: 1, g: "Ene1"},
+                {name: "Protéine", bqt: 10, g: "Mass"},
             ],
-            common: [{
-                left: {tree: "leftTreeName", type: "trunk", name: "Quantité", _bqt: 20, g: "Volu"},
-                right: {tree: "rightTreeName", type: "trunk", name: "Quantité", _bqt: 30, g: "Volu"}
-            }],
-            zero: [{
-                left: {tree: "leftTreeName", type: "impactTank", name: "Bik", _bqt: 0, g: "Mass"},
-                right: {tree: "rightTreeName", type: "impactTank", name: "Bik", _bqt: 0, g: "Mass"}
-            }],
+            common: [
+                {left: {name: "Saccharose", bqt: 1, g: "Mass"}, right: {name: "Saccharose", bqt: 6, g: "Mass"}}
+            ],
             right: [
-                {tree: "rightTreeName", type: "tank", name: "Elec", _bqt: null, g: null},
-                {tree: "rightTreeName", type: "trunk", name: "idem", _bqt: 30, g: "Volu"},
-                {tree: "rightTreeName", type: "facet", name: "Prix", _bqt: 10, g: "Prix"},
-                {tree: "rightTreeName", type: "tank", name: "Pétrole", _bqt: 12, g: "Dens"}
-            ]
+                {name: "Couscous", bqt: 9, g: "Grains"}
+            ],
         }
+
         separate(leftAxises, rightAxises).should.deep.equal(expected)
     })
-    
-    it('applyAxisCoef', function () {
-        const axises = [
-            {tree: "leftTreeName", type: "facet", name: "Prix", _bqt: 4},
-            {tree: "leftTreeName", type: "trunk", name: "Quantité", _bqt: 6},
-            {tree: "leftTreeName", type: "tank", name: "Eau", _bqt: 8},
-            {tree: "leftTreeName", type: "tank", name: "Elec", _bqt: 10},
-        ]
-        const coef = 2
-        const expected = [
-            {tree: "leftTreeName", type: "facet", name: "Prix", _bqt: 4, bqt: 8},
-            {tree: "leftTreeName", type: "trunk", name: "Quantité", _bqt: 6, bqt: 12},
-            {tree: "leftTreeName", type: "tank", name: "Eau", _bqt: 8, bqt: 16},
-            {tree: "leftTreeName", type: "tank", name: "Elec", _bqt: 10, bqt: 20},
-        ]
-        
-        applyAxisCoef(coef, axises).should.deep.equal(expected)
-        
-    })
-    
+
     it('updateRatios', function () {
         const axises = {
             common: [
@@ -110,7 +77,7 @@ describe('Axis calculations', function () {
                 }
             ]
         }
-        
+
         const expected = {
             common: [
                 {
@@ -131,7 +98,7 @@ describe('Axis calculations', function () {
                 }
             ]
         }
-        
+
         updateRatios(axises).should.deep.equal(expected)
     })
 })

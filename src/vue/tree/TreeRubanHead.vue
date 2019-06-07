@@ -12,10 +12,13 @@
 
         <v-layout justify-center>
             <open-message slot="right" :section="section" no-text/>
-            <v-btn icon slot="left" @click="qtDialogVisible = true">
-                <v-icon class="carton logo-petit"/>
+            <v-btn icon flat @click="compareDialogVisible = true">
+                <v-icon class="compare logo-tout-petit"/>
             </v-btn>
-            <btn :enabled="tree !== stateTree" @click="nodeNav" icon-class="trunk logo"></btn>
+            <v-btn icon slot="left" @click="qtDialogVisible = true">
+                <v-icon class="carton logo-tout-petit"/>
+            </v-btn>
+            <btn :enabled="tree !== stateTree" @click="nodeNav" icon-class="trunk logo-petit"></btn>
             <v-btn icon flat @click="deleteOpenedTree">
                 <v-icon color="grey">delete</v-icon>
             </v-btn>
@@ -23,6 +26,10 @@
 
         <simple-dialog v-model="qtDialogVisible" icon="carton" title="Modifier la quantité">
             <selection-picker :value="treeSelection" @pick="pickSelection" @close="qtDialogVisible = false" no-name/>
+        </simple-dialog>
+
+        <simple-dialog v-model="compareDialogVisible" icon="compare" title="Comparer avec...">
+            <tree-picker no-create @pick="pickCompare"/>
         </simple-dialog>
 
     </v-layout>
@@ -39,15 +46,19 @@
     import Photo from "../common/Photo"
     import TreeCoef from "../mixin/TreeCoef"
     import SelectionPicker from "./SelectionPicker"
+    import TreeSelectionPicker from "./TreeSelectionPicker"
+    import TreePicker from "./TreePicker"
+
     const SimpleDialog = () => import("../selection/SimpleDialog")
 
     export default {
         name: "TreeRubanHead",
         mixins: [TreeCoef],
-        components: {SimpleDialog, SelectionPicker, Photo, Btn, SubpageTitle, OpenMessage},
+        components: {TreePicker, TreeSelectionPicker, SimpleDialog, SelectionPicker, Photo, Btn, SubpageTitle, OpenMessage},
         props: {tree: Object},
         data: () => ({
             qtDialogVisible: false,
+            compareDialogVisible: false
         }),
         methods: {
             name,
@@ -56,9 +67,13 @@
             }),
             ...mapActions({
                 deleteOpenedTree: On.DELETE_OPENED_TREE,
+                goCompare: On.GO_COMPARE
             }),
             nodeNav() {
                 this.openTree(this.tree)
+            },
+            pickCompare(compare) {
+                this.goCompare([this.tree, compare])
             },
             pickSelection(selection) {
                 this.treeCoef = coefFromTrunkToSelection(selection, this.tree)

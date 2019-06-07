@@ -111,6 +111,10 @@ a {
     margin-left: -70px;
 }
 
+.chars-width-1 {
+    width: 1em
+}
+
 .chars-width-3 {
     width: 3em
 }
@@ -137,9 +141,18 @@ a {
     width: 1.5em
 }
 
+.logo-tout-petit {
+    height: 1em;
+    width: 1em
+}
+
 .logo-moyen {
     height: 2em;
     width: 2em
+}
+
+.height-30 {
+    height: 30px;
 }
 
 .logo {
@@ -197,6 +210,14 @@ a {
 
 .planet {
     background: url(/img/planet.svg) no-repeat center;
+}
+
+.compare {
+    background: url(/img/compare.svg) no-repeat center;
+}
+
+.compare-white {
+    background: url(/img/compare-white.svg) no-repeat center;
 }
 
 .planet-gray {
@@ -289,6 +310,7 @@ a {
 
 .align {
     text-align: center;
+    align-items: center;
 }
 
 .full-width {

@@ -1,33 +1,33 @@
 <template>
-    <v-container key="compare">
-        <v-layout row align-center mb-4>
-            <v-spacer/>
-            <v-flex class="title">Comparaison</v-flex>
-        </v-layout>
-        <v-card-text v-if="!compare.left || !compare.right" class="text-md-center">Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche</span> pour les comparer.</v-card-text>
-
-        <v-card v-else class="pt-4">
-            <v-layout :column="$vuetify.breakpoint.xsOnly" align-content-center justify-center>
-                <tree-card :tree="compare.left" @nav="goTree(compare.left)" :style="{cursor: 'pointer'}" selectable/>
-                <tree-card :tree="compare.right" @nav="goTree(compare.right)" :style="{cursor: 'pointer'}" selectable/>
+        <v-container key="compare">
+            <v-layout row align-center mb-4>
+                <v-spacer/>
+                <v-flex class="title">Comparaison</v-flex>
             </v-layout>
-            <v-layout :column="$vuetify.breakpoint.xsOnly" align-content-center>
-                    <v-checkbox v-model="selectedDomain" label="ENVIRONNEMENT" value="impactsTank"></v-checkbox>
-                    <v-checkbox v-model="selectedDomain" label="RESSOURCES" value="tank"></v-checkbox>
-                    <v-checkbox v-model="selectedDomain" label="PROPRIETES" value="facets"></v-checkbox>
-            </v-layout>
-        </v-card>
+            <v-card-text v-if="!compare.left || !compare.right" class="text-md-center">Faites une <span><v-icon @click="goSearch" color="primary">search</v-icon> recherche</span> pour les comparer.</v-card-text>
 
-        <v-card v-if="hasAxises">
-            <v-layout row align-center pl-4 pt-4>
-                <v-icon class="corner" x-large @click="zoom = !zoom">{{zoom ? 'close':'search'}}</v-icon>
-            </v-layout>
+            <v-card v-else class="pt-4">
+                <v-layout :column="$vuetify.breakpoint.xsOnly" align-content-center justify-center>
+                    <tree-card :tree="compare.left" @nav="goTree(compare.left)" :style="{cursor: 'pointer'}" selectable/>
+                    <tree-card :tree="compare.right" @nav="goTree(compare.right)" :style="{cursor: 'pointer'}" selectable/>
+                </v-layout>
+                <v-layout :column="$vuetify.breakpoint.xsOnly" align-content-center>
+                        <v-checkbox v-model="selectedDomain" label="ENVIRONNEMENT" value="impactsTank"></v-checkbox>
+                        <v-checkbox v-model="selectedDomain" label="RESSOURCES" value="tank"></v-checkbox>
+                        <v-checkbox v-model="selectedDomain" label="PROPRIETES" value="facets"></v-checkbox>
+                </v-layout>
+            </v-card>
 
-            <compare-ribbon v-if="zoom" :axises="selectedAxises" :leftColor="leftColor" :rightColor="rightColor"/>
-            <compare-cams v-else :axises="selectedAxises" :leftColor="leftColor" :rightColor="rightColor"/>
-        </v-card>
+            <v-card v-if="hasAxises">
+                <v-layout row align-center pl-4 pt-4>
+                    <v-icon class="corner" x-large @click="zoom = !zoom">{{zoom ? 'close':'search'}}</v-icon>
+                </v-layout>
 
-    </v-container>
+                <compare-ribbon v-if="zoom" :axises="selectedAxises" :leftColor="leftColor" :rightColor="rightColor"/>
+                <compare-cams v-else :axises="selectedAxises" :leftColor="leftColor" :rightColor="rightColor"/>
+            </v-card>
+
+        </v-container>
 
 </template>
 
@@ -40,11 +40,14 @@
     const CompareCams = () => import(/* webpackChunkName: "Ccams" */"./CompareCams")
     import {filter} from "unit-manip"
     import TreeCard from "../tree/TreeCard"
+    import SubpageTitle from "../tree/SubpageTitle"
+    import {IMPACT_TANK, TRUNK} from "../../const/fragments"
 
     export default {
         name: 'compare',
         props: ['leftId', 'rightId'],
         components: {
+            SubpageTitle,
             TreeCard,
             CompareCams,
             CompareRibbon
@@ -68,11 +71,11 @@
             refresh: async function () {
                 this.compare.axis = null
                 if (this.leftId) {
-                    this.compare.left = await this.loadTree({_id: this.leftId})
+                    this.compare.left = await this.loadTree({_id: this.leftId, fragments: [TRUNK, IMPACT_TANK]})
                     this.compare.left.promises.all.then(() => this.compare.leftAxises = buildAxises(this.compare.left))
                 }
                 if (this.rightId) {
-                    this.compare.right = await this.loadTree({_id: this.rightId})
+                    this.compare.right = await this.loadTree({_id: this.rightId, fragments: [TRUNK, IMPACT_TANK]})
                     this.compare.right.promises.all.then(() => this.compare.rightAxises = buildAxises(this.compare.right))
                 }
             },

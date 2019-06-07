@@ -1,5 +1,5 @@
 import chai, {expect} from 'chai'
-import {remove, add, createStringObjectId, de} from "../src/services/calculations"
+import {add, createStringObjectId, de} from "../src/services/calculations"
 import {init} from "./setup"
 import {ObjectID} from 'mongodb'
 
@@ -8,10 +8,6 @@ chai.should()
 describe('Divers calculations', function () {
 
     beforeEach(init)
-
-    it('remove', function () {
-        expect(remove([1, 2, 3, 4, 5, 6], v => v < 3)).to.deep.equal([3, 4, 5, 6])
-    })
 
     it('add 2 quantities', function () {
         add({qt: 1, unit: "kg"}, {qt: 119, unit: "kg"}).should.be.deep.equal({qt: 120, unit: "kg"})

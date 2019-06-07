@@ -30,43 +30,39 @@ const buildAxis = ({name}, type, items) => items && map(items, item => ({
     ...eq(quantity(item).bqt.eq)
 })) || []
 
-/**
- * Placer les axes dans la bonne zone: commun, left ou right.
- * @param leftAxises
- * @param rightAxises
- * @returns {{left: *[], common: [{left: axis, right: axis}], right: *[]}}
- */
+export const toAxis = items => {
+    return items && map(items, item => ({
+        name: _name(item),
+        bqt: quantity(item).bqt,
+        g: quantity(item).g,
+        ...eq(quantity(item).bqt.eq)
+    })) || []
+}
+
 export const separate = (leftAxises, rightAxises) => {
+    const isCommon = others => axis =>
+        !isNil(axis.bqt)
+        &&
+        !isNil(axis.g)
+        &&
+        find(others, {name: axis.name, g: axis.g})
 
-    //Un axe sans quantité est retiré des axes communs
-    const leftWithoutQt = remove(leftAxises, axis => (isNil(axis.bqt) || isNil(axis.g)))
-    const rightWithoutQt = remove(rightAxises, axis => (isNil(axis.bqt) || isNil(axis.g)))
+    const isCommonLeft = isCommon(rightAxises)
+    const isCommonRight = isCommon(leftAxises)
 
-    //Un axe qui n'a pas son équivalent de l'autre côté est retiré des communs
-    const leftWithoutRight = remove(leftAxises, axis => !find(rightAxises, {name: axis.name, type: axis.type, g: axis.g}))
-    const rightWithoutLeft = remove(rightAxises, axis => !find(leftAxises, {name: axis.name, type: axis.type, g: axis.g}))
+    const isOnlyLeft = axis => !isCommonLeft(axis)
+    const isOnlyRight = axis => !isCommonRight(axis)
 
-    //Les axes restant sont les axes communs
-    const common = []
-    const zero = []
-    for (let i = 0; i < leftAxises.length; i++) {
-        if (!(leftAxises[i].bqt === 0 && rightAxises[i].bqt === 0)) {
-            common.push({left: leftAxises[i], right: rightAxises[i]})
-        } else {
-            zero.push({left: leftAxises[i], right: rightAxises[i]})
-        }
-    }
+    const left = leftAxises.filter(isOnlyLeft)
+    const right = rightAxises.filter(isOnlyRight)
+    const commonLeft = leftAxises.filter(isCommonLeft)
+    const commonRight = rightAxises.filter(isCommonRight)
+    const common = commonLeft.reduce((acc, cur, i) => {
+        acc.push({left: cur, right: commonRight[i]})
+        return acc
+    }, [])
 
-
-    return {
-        left: [
-            ...leftWithoutQt, ...leftWithoutRight
-        ],
-        common, zero,
-        right: [
-            ...rightWithoutQt, ...rightWithoutLeft
-        ]
-    }
+    return {left, common, right}
 }
 
 export const updateRatios = (axises) => {

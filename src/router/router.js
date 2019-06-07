@@ -8,6 +8,7 @@ const TreePage = () => import(/* webpackChunkName: "Tree" */ '../vue/tree/TreePa
 const Equivalence = () => import(/* webpackChunkName: "Equivalence" */ '../vue/equivalence/Equivalence')
 const Qui2 = () => import(/* webpackChunkName: "Qui2" */ '../vue/jeu/QuiDeuxFoisPlus')
 const BlueForest = () => import(/* webpackChunkName: "BlueForest" */ '../vue/BlueForest')
+const NewCompare = () => import(/* webpackChunkName: "NewCompare" */ '../vue/compare/NewCompare')
 const Compare = () => import(/* webpackChunkName: "Compare" */ '../vue/compare/Compare')
 const Confirmation = () => import(/* webpackChunkName: "Confirmation" */ '../vue/user/Confirmation')
 const Inscription = () => import(/* webpackChunkName: "Inscription" */ '../vue/user/Inscription')
@@ -76,7 +77,7 @@ export default new VueRouter({
                 {name: GO.COMPARE_PARTIAL, path: "compare/:leftId", component: Compare, props: true},
                 {name: GO.ADD_IMPACT_ENTRY, path: "add/entry/impact", component: AddImpactEntry},
                 {name: GO.ADD_FACET_ENTRY, path: "add/entry/facet", component: AddFacetEntry},
-                {name: GO.COMPARE, path: "compare/:leftId/:rightId", component: Compare, props: true},
+                {name: GO.COMPARE, path: "compare/:leftId/:rightId", component: NewCompare, props: true},
                 {name: GO.NOT_FOUND, path: '/404', component: NotFound},
             ]
         },

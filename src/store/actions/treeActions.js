@@ -74,8 +74,10 @@ export default {
         dispatch(On.ADD_TO_BASKET, tree)
         return tree
     },
-    [On.UPDATE_TREE]: ({dispatch}, {tree, bqt = treeBqt(tree), fragments = []}) => {
+    [On.GET_FRAGMENT]: ({dispatch}, {tree, bqt = treeBqt(tree), fragment}) => dispatch(On.load(fragment), {_id: tree._id, bqt}),
 
+    [On.UPDATE_TREE]: ({dispatch}, {tree, bqt = treeBqt(tree), fragments = []}) => {
+        console.log("update tree", tree._id, fragments)
         tree.promises = {}
         for (let i = 0; i < fragments.length; i++) {
             if (fragments[i] !== OWNER) {

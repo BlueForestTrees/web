@@ -12,6 +12,7 @@ export const remove = (source, filter) => {
     return dest
 }
 export const isNil = v => v === null || v === undefined
+export const notNil = v => !isNil(v)
 export const createStringObjectId = () => (new Date().getTime() / 1000 | 0).toString(16) + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, () => (Math.random() * 16 | 0).toString(16)).toLowerCase()
 
 export const hasQuantity = e => e && e.quantity && e.quantity.bqt && e.quantity.g
@@ -22,7 +23,7 @@ export const treefy = trunk => ({_id: trunk._id, trunk})
 export const qtUnit = (item, opts = {}) => {
     const bqtG = quantity(item)
     if (bqtG) {
-        const qtUnit = bqtGToQtUnit(bqtG, opts.coef)
+        const qtUnit = bqtGToQtUnit(bqtG, item.coef || opts.coef)
         if (!isNil(qtUnit.qt) && qtUnit.unit) {
             const best = bestQuantity(qtUnit)
             return `${(best.qt === 1 && opts.hideOne) ? '' : best.qt} ${grandeur(best.unit) !== "Nomb" ? best.unit : ''}`
@@ -33,6 +34,8 @@ export const qtUnit = (item, opts = {}) => {
         return "??"
     }
 }
+
+export const qt = (item, coef = 1) => coef * quantity(item).bqt
 
 export const quantity = item => item && (
     (item.selection && item.selection.repeted && item.selection.duree)
@@ -52,10 +55,11 @@ export const qtFreq = selection => selection && selection.repeted ? `${qtUnit(se
 
 export const qtFreqOrUnit = item => qtFreq(item) || qtUnit(item)
 
-export const name = item =>
+export const name = (item, def) =>
     item && item.selection && item.selection.name
     || item && item.trunk && item.trunk.name
     || item && item.name
+    || def
     || ''
 
 const regex = /^[AEIOUY1]/i
