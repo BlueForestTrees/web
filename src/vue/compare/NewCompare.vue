@@ -5,13 +5,16 @@
         <subpage-title centered title="pas assez"/>
         <subpage-title centered title="large"/>
     </card>
-    <card v-else>
+    <v-container v-else mt-5>
+        <v-card>
+
         <subpage-title centered icon-color="white" icon-class="compare-white" title="Comparaison" titleClass="align-center" color="primary"/>
 
         <v-layout>
-            <subpage-title centered :title="name(left, '????')" @click="goTree(left)"/>
-            <subpage-title centered :title="name(right, '????')" @click="goTree(right)"/>
+            <tree-link :tree="left" no-qt/>
+            <tree-link :tree="right" no-qt/>
         </v-layout>
+
         <v-layout>
             <v-flex>
                 <subpage-title @click="leftQtDialog = true" sub centered :title="qtUnit(left)" icon-class="carton logo"/>
@@ -64,7 +67,9 @@
                 <div>tank compare</div>
             </v-expansion-panel-content>
         </v-expansion-panel>
-    </card>
+        </v-card>
+
+    </v-container>
 </template>
 
 <script>
@@ -76,6 +81,7 @@
     import Card from "../common/Card"
     import SelectionPicker from "../tree/SelectionPicker"
     import Vue from "vue"
+    import TreeLink from "../pub/TreeLink"
 
     const Comparator = () => import(/* webpackChunkName: "Comparator" */"./Comparator")
     const SimpleDialog = () => import(/* webpackChunkName: "SimpleDialog" */"../selection/SimpleDialog")
@@ -85,7 +91,7 @@
 
     export default {
         name: "NewCompare",
-        components: {Comparator, WelcomePanel, SimpleDialog, SelectionPicker, Card, SubpageTitle},
+        components: {TreeLink, Comparator, WelcomePanel, SimpleDialog, SelectionPicker, Card, SubpageTitle},
         props: ['leftId', 'rightId'],
         data: () => ({
             left: null,

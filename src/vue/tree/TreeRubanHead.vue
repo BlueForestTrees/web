@@ -1,13 +1,13 @@
 <template>
-    <v-layout v-if="tree" column align-center>
-        <subpage-title :title="name(tree)" color="primary" sub>
+    <v-layout column align-center>
+        <subpage-title :title="name(tree, '???')" color="primary" sub>
             <v-btn slot="right" icon @click="$emit('close')">
                 <v-icon color="white">chevron_left</v-icon>
             </v-btn>
         </subpage-title>
 
         <v-layout align-center justify-center class="pt-3">
-            <photo :trunk="tree && tree.trunk" size="200" class="mb-2"/>
+            <photo :trunk="tree && tree.trunk" size="400" class="mb-2"/>
         </v-layout>
 
         <v-layout justify-center>
@@ -83,7 +83,7 @@
         computed: {
             ...mapState({stateTree: s => s.tree}),
             treeSelection() {
-                return this.tree && this.tree.selection || selectionFromTree(this.tree)
+                return this.tree && this.tree.selection ? selectionFromTree(this.tree) : null
             },
             section() {
                 return this.tree && {

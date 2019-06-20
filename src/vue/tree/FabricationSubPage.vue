@@ -13,7 +13,7 @@
         </transition>
         <btn slot="right" icon="add_box" icon-color="grey" @click="setAdding(true)"/>
         <simple-dialog v-model="adding" icon="roots" title="Ajouter une ressource">
-            <ressource-adder reversed :tree="tree" @close="setAdding(false)"/>
+            <ressource-adder :tree="tree" @close="setAdding(false)"/>
         </simple-dialog>
     </v-layout>
 

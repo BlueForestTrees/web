@@ -1,5 +1,5 @@
 <template>
-    <v-container ma-0 pa-0>
+    <v-container ma-0 pa-0 v-if="value">
         <editor v-model="editing" class="full-width"
                 :initial="initial" :changes="changes" :editor="editor"
                 @change="change"
