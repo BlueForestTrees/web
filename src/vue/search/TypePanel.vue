@@ -1,6 +1,6 @@
 <template>
     <panel title="Genre" @close="$emit('close')">
-        <span slot="left" class="mx-4 mt-3 display-1 bf-blue">?</span>
+        <div slot="left" class="type-panel logo ml-3 mt-3  mr-1"></div>
         <a v-if="value" @click="emitInput(null)">{{map(value)}}</a>
         <v-item-group v-else v-model="idx" active-class="line-hightlight">
             <v-item>

@@ -4,7 +4,7 @@
         <v-btn icon @click="edit"><v-icon color="grey">edit</v-icon></v-btn>
 
         <simple-dialog v-model="isEditing" icon="docu" title="Modifier la description">
-            <description-editor :value="trunk" @saved="save"/>
+            <description-editor v-if="isEditing" :value="trunk" @saved="save"/>
         </simple-dialog>
     </v-layout>
 </template>

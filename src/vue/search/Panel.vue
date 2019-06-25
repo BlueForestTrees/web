@@ -1,5 +1,5 @@
 <template>
-    <v-card class="rounded-big panel-height elevation-4">
+    <v-card class="panel-height elevation-4">
         <v-layout row>
             <slot name="left"/>
 

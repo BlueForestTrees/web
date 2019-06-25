@@ -1,6 +1,6 @@
 <template>
     <panel title="Propriétaire" @close="$emit('close')">
-        <v-icon slot="left" class="mx-3 mt-3" color="primary" large style="align-items:normal">people</v-icon>
+        <div slot="left" class="cravatte logo ml-3 mt-3  mr-1"></div>
         <a v-if="value" @click="select(null)">{{value.fullname}}</a>
         <v-layout v-else column>
             <v-container pt-0>

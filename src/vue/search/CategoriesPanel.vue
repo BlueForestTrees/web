@@ -1,6 +1,6 @@
 <template>
     <panel title="Catégorie" @close="close">
-        <v-icon slot="left" large class="mx-3 mt-3" color="primary" style="align-items:normal">category</v-icon>
+        <div slot="left" class="bloc logo ml-3 mt-3  mr-1"></div>
         <v-layout column py-2>
             <v-layout row wrap justify-center>
                 <template v-if="anySelected">

@@ -1,9 +1,9 @@
 <template>
     <v-container class="mt-5">
         <welcome-panel class="mb-5"/>
-        <filters-bar/>
+
         <filters-panel>
-            <v-container key="sp" py-0>
+            <v-container key="sp" py-0 px-1>
                 <search-result-panel @select="goAny" key="sp"/>
             </v-container>
         </filters-panel>

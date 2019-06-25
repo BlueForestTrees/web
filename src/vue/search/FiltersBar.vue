@@ -1,30 +1,59 @@
 <template>
-    <v-layout row wrap align-center justify-center class="align" mb-1>
-        <v-btn small flat round @click="showPanel('term')" class="text-none">
-            <v-icon color="grey">search</v-icon>
-            <span class="font-weight-medium subheading">Nom</span>
-        </v-btn>
-        <v-btn small flat round @click="showPanel('type')" class="text-none">
-            <span class="mr-1 font-weight-bold subheading grey--text">?</span>
-            <span class="font-weight-medium subheading">Genre</span>
-        </v-btn>
-        <v-btn small flat round @click="showPanel('cats')" class="text-none">
-            <v-icon color="grey" class="mr-1">category</v-icon>
-            <span class="font-weight-medium subheading">Catégories</span>
-        </v-btn>
-        <v-btn small flat round @click="showPanel('owner')" class="text-none">
-            <v-icon color="grey" class="mr-1">people</v-icon>
-            <span class="font-weight-medium subheading">Propriétaire</span>
-        </v-btn>
-        <v-btn small flat round @click="showPanel('impact')" class="text-none">
-            <v-flex class="planet-gray logo-petit mr-1"/>
-            <span class="font-weight-medium subheading">Environnement</span>
-        </v-btn>
-        <v-btn small flat round @click="showPanel('facet')" class="text-none">
-            <v-flex class="facet-gray logo-petit mr-1"/>
-            <span class="font-weight-medium subheading">Propriétés</span>
-        </v-btn>
-    </v-layout>
+    <v-list>
+        <v-list-tile @click="showPanel('term')">
+            <v-list-tile-avatar>
+                <v-flex class="pencil logo-petit mr-1"/>
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+                <v-list-tile-title>Nom</v-list-tile-title>
+            </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile @click="showPanel('type')">
+            <v-list-tile-avatar>
+                <v-flex class="type-panel logo-petit mr-1"/>
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+                <v-list-tile-title>Type</v-list-tile-title>
+            </v-list-tile-content>
+        </v-list-tile>
+
+        <v-list-tile @click="showPanel('cats')">
+            <v-list-tile-avatar>
+                <v-flex class="bloc logo-petit mr-1"/>
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+                <v-list-tile-title>Catégories</v-list-tile-title>
+            </v-list-tile-content>
+        </v-list-tile>
+
+        <v-list-tile @click="showPanel('owner')">
+            <v-list-tile-avatar>
+                <v-flex class="cravatte logo-petit mr-1"/>
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+                <v-list-tile-title>Propriétaire</v-list-tile-title>
+            </v-list-tile-content>
+        </v-list-tile>
+
+        <v-list-tile @click="showPanel('impact')">
+            <v-list-tile-avatar>
+                <v-flex class="planet logo-petit mr-1"/>
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+                <v-list-tile-title>Environnement</v-list-tile-title>
+            </v-list-tile-content>
+        </v-list-tile>
+
+        <v-list-tile @click="showPanel('facet')">
+            <v-list-tile-avatar>
+                <v-flex class="facet logo-petit mr-1"/>
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+                <v-list-tile-title>Propriétés</v-list-tile-title>
+            </v-list-tile-content>
+        </v-list-tile>
+
+    </v-list>
 </template>
 
 <script>
@@ -40,11 +69,13 @@
         },
         methods: {
             ...mapMutations({
-                showPanel: Do.SHOW_SEARCH_PANEL,
                 setSearchOwner: Do.SET_SEARCH_OWNER,
                 setSearchImpact: Do.SET_SEARCH_IMPACT,
                 setSearchFacet: Do.SET_SEARCH_FACET,
-            })
+            }),
+            showPanel(name){
+                this.$emit("input", name)
+            }
         }
     }
 </script>
