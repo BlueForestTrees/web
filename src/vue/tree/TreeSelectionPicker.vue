@@ -1,6 +1,6 @@
 <template>
 
-    <tree-picker v-if="showTreePicker" @pick="pickTree" :no-create="noCreate"/>
+    <tree-picker v-if="showTreePicker" @pick="pickTree" />
 
     <div v-else>
         <subpage-title sub title="Choisir une quantité">
@@ -30,7 +30,6 @@
         props: {
             value: Object,
             canChangeTree: {type: Boolean, default: true},
-            noCreate: {type: Boolean, default: false},
             returnTree: {type: Boolean, default: false}
         },
         data: () => ({

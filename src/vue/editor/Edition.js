@@ -15,9 +15,6 @@ export default {
         setInitial(initial) {
             this.initial = initial
         },
-        init(initial) {
-            this.initial = initial
-        },
         change(field, newvalue) {
             if (field.value !== newvalue) {
                 if (newvalue !== undefined) {

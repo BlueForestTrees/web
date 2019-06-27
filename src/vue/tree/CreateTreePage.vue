@@ -8,11 +8,11 @@
 <script>
     import Card from "../common/Card"
     import SubpageTitle from "./SubpageTitle"
-    import CreateTree from "./CreateTree"
     import On from "../../const/on"
     import {mapActions, mapMutations} from "vuex"
     import Do from "../../const/do"
     import Connected from "../mixin/Connected"
+    const CreateTree = () => import(/* webpackChunkName: "CreateTree" */ './CreateTree')
 
 
     export default {

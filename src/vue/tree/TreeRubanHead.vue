@@ -29,7 +29,7 @@
         </simple-dialog>
 
         <simple-dialog v-model="compareDialogVisible" icon="compare" title="Comparer avec...">
-            <tree-picker no-create @pick="pickCompare"/>
+            <tree-picker @pick="pickCompare"/>
         </simple-dialog>
 
     </v-layout>

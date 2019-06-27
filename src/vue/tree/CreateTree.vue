@@ -38,11 +38,13 @@
     import {createStringObjectId, treefy} from "../../services/calculations"
     import UnitSelect from "../common/UnitSelect"
     import GrandeurSelect from "../common/GrandeurSelect"
+    import Connected from "../mixin/Connected"
 
     export default {
         name: 'create-tree',
         components: {GrandeurSelect, UnitSelect},
         props: {noTitle: Boolean},
+        mixins: [Connected],
         data() {
             return {
                 Dial,

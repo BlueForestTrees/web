@@ -1,18 +1,18 @@
 <template>
     <span>
         <v-tabs :value="tab" @change="setTab" centered slider-color="primary">
-            <v-tab v-if="!noCreate" href="#create">Nouveau</v-tab>
             <v-tab href="#search">Recherche</v-tab>
             <v-tab href="#favoris">Favoris</v-tab>
+            <v-tab v-if="connected" href="#create">Nouveau</v-tab>
         </v-tabs>
         <v-divider/>
-        <create-tree v-if="!noCreate && tab==='create'" @create="pickTree" no-title/>
-        <template v-else-if="tab==='search'">
+        <template v-if="tab==='search'">
             <filters-bar/>
             <filters-panel />
             <search-result-panel @select="pickTree"/>
         </template>
         <favorites v-else-if="tab==='favoris'" :user="user" @select="pickSelection"/>
+        <create-tree v-else-if="connected && tab==='create'" @create="pickTree" no-title/>
     </span>
 </template>
 <script>
@@ -29,7 +29,6 @@
 
     export default {
         name: 'tree-picker',
-        props: {noCreate: {type: Boolean, default: false}},
         components: {FiltersPanel, FiltersBar, SearchResultPanel, CreateTree, Favorites},
         methods: {
             async pickSelection(selection) {
@@ -52,6 +51,9 @@
             })
         },
         computed: {
+            connected() {
+                return !!this.user
+            },
             ...mapState({
                 user: s => s.user,
                 tab: s => s.nav.tree.picker.tab

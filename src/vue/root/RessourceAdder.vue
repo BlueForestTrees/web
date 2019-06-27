@@ -12,15 +12,10 @@
 </template>
 
 <script>
-    import Closer from "../common/Closer"
     import {name, qtUnitName} from "../../services/calculations"
-    import QuantityPicker from "../common/QuantityPicker"
     import On from "../../const/on"
     import {GO} from "../../const/go"
     import TreeSelectionPicker from "../tree/TreeSelectionPicker"
-    import SubpageTitle from "../tree/SubpageTitle"
-    import AddEntryFab from "../common/AddEntryFab"
-    import TreePicker from "../tree/TreePicker"
     import Edition from "../editor/Edition"
     import Saver from "../editor/Saver"
     import Editor from "../common/Editor"
@@ -29,7 +24,7 @@
         name: "ressource-adder",
         props: {tree: Object, reversed: {type: Boolean, default: false}},
         mixins: [Edition],
-        components: {Editor, Saver, TreePicker, AddEntryFab, SubpageTitle, TreeSelectionPicker, QuantityPicker, Closer},
+        components: {Editor, Saver, TreeSelectionPicker},
         data: () => ({
             editing: false,
             GO, On
@@ -50,7 +45,7 @@
         },
         methods: {
             name,
-            saved() {
+            onSaved() {
                 this.$emit('close')
             }
         }

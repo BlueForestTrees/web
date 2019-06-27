@@ -49,7 +49,7 @@ export default {
             impact: {idx: 0, term: ""},
             root: {idx: 0, term: ""},
             facet: {term: ""},
-            picker: {tab: null}
+            picker: {tab: "search"}
         }
     },
     snack: snack(),

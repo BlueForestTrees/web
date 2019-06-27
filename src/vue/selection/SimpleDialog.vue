@@ -5,7 +5,7 @@
             <closer slot="right" v-if="!notClosable" @close="close"/>
         </subpage-title>
         <v-card>
-            <slot/>
+            <slot v-if="value"/>
         </v-card>
     </v-dialog>
 </template>
