@@ -4,42 +4,85 @@
         <v-list dense>
 
             <v-list-tile @click="goto(GO.SEARCH)">
-                <v-list-tile-action>
+                <v-list-tile-avatar>
                     <v-icon color="primary">home</v-icon>
-                </v-list-tile-action>
+                </v-list-tile-avatar>
                 <v-list-tile-content>
                     <v-list-tile-title>Accueil</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
 
             <v-list-tile @click="goto(GO.RECENT)">
-                <v-list-tile-action>
+                <v-list-tile-avatar>
                     <v-icon color="primary">schedule</v-icon>
-                </v-list-tile-action>
+                </v-list-tile-avatar>
                 <v-list-tile-content>
-                    <v-list-tile-title>Vu récemment</v-list-tile-title>
+                    <v-list-tile-title>Récent</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
 
-            <v-divider/>
 
-            <v-list-tile @click="goto(GO.CREATE_TREE)">
-                <v-list-tile-action>
-                    <img src="/img/scopeTree.svg" class="logo-petit"/>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                    <v-list-tile-title>Nouveau produit</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile @click="goto(GO.CREATE_INFO)">
-                <v-list-tile-action>
-                    <img src="/img/voice.svg" class="logo-petit"/>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                    <v-list-tile-title>Nouvelle information</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
-            <v-divider/>
+            <v-list-group>
+                <template slot="activator">
+                    <v-list-tile>
+                        <v-list-tile-avatar>
+                            <v-icon color="primary">add_box</v-icon>
+                        </v-list-tile-avatar>
+                        <v-list-tile-content>
+                            <v-list-tile-title>Créer...</v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+                </template>
+                <v-list-tile @click="goto(GO.CREATE_TREE)">
+                    <v-list-tile-avatar>
+                        <icon iconClass="scope-tree logo-petit"/>
+                    </v-list-tile-avatar>
+                    <v-list-tile-content>
+                        <v-list-tile-title>Produit</v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+                <v-list-tile @click="goto(GO.CREATE_INFO)">
+                    <v-list-tile-avatar>
+                        <icon iconClass="voice logo-petit"/>
+                    </v-list-tile-avatar>
+                    <v-list-tile-content>
+                        <v-list-tile-title>Information</v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+                <v-list-tile @click="">
+                    <v-list-tile-avatar>
+                        <icon iconClass="game logo-petit"/>
+                    </v-list-tile-avatar>
+                    <v-list-tile-content>
+                        <v-list-tile-title>Jeu</v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+                <v-list-tile @click="">
+                    <v-list-tile-avatar>
+                        <icon iconClass="compare logo-petit"/>
+                    </v-list-tile-avatar>
+                    <v-list-tile-content>
+                        <v-list-tile-title>Comparaison</v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+                <v-list-tile @click="goto(GO.ADD_IMPACT_ENTRY)" v-if="isAdmin">
+                    <v-list-tile-avatar>
+                        <img src="/img/planet.svg" class="logo-petit"/>
+                    </v-list-tile-avatar>
+                    <v-list-tile-content>
+                        <v-list-tile-title>Impact</v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+                <v-list-tile @click="goto(GO.ADD_FACET_ENTRY)" v-if="isAdmin">
+                    <v-list-tile-avatar>
+                        <img src="/img/facet.svg" class="logo-petit"/>
+                    </v-list-tile-avatar>
+                    <v-list-tile-content>
+                        <v-list-tile-title>Propriété</v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+            </v-list-group>
+
 
             <v-list-group v-if="onWall">
                 <template slot="activator">
@@ -55,22 +98,6 @@
                 <filters-bar @input="showPanel"/>
             </v-list-group>
 
-            <v-list-tile @click="goto(GO.ADD_IMPACT_ENTRY)" v-if="isAdmin">
-                <v-list-tile-action>
-                    <v-icon color="primary">add_box</v-icon>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                    <v-list-tile-title>Nouvel impact</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile @click="goto(GO.ADD_FACET_ENTRY)" v-if="isAdmin">
-                <v-list-tile-action>
-                    <v-icon color="primary">add_box</v-icon>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                    <v-list-tile-title>Nouvelle propriété</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
 
         </v-list>
 
@@ -138,7 +165,7 @@
         computed: {
             ...mapState(['tree', 'nav', 'version']),
             ...mapGetters(['isAdmin']),
-            onWall(){
+            onWall() {
                 return this.$router.currentRoute.path === "/"
             }
         },

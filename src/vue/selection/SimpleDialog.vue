@@ -1,7 +1,7 @@
 <template>
     <v-dialog :value="value" max-width="500px" persistent @input="emitVisible" @keydown.esc="close">
-        <subpage-title sub :title="title">
-            <v-icon slot="left" :class="`${icon} logo-petit`"/>
+        <subpage-title :title="title">
+            <v-icon slot="left" :class="`${icon} logo-petit mr-3`"/>
             <closer slot="right" v-if="!notClosable" @close="close"/>
         </subpage-title>
         <v-card>

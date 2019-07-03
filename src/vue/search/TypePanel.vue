@@ -5,7 +5,7 @@
         <v-item-group v-else v-model="idx" active-class="line-hightlight">
             <v-item>
                 <v-btn flat round slot-scope="{ active, toggle }" @click="toggle" class="text-none">
-                    <v-list-tile-avatar class="trunk logo-petit"/>
+                    <v-list-tile-avatar class="scope-tree logo-petit"/>
                     <span>Produits & Services</span>
                 </v-btn>
             </v-item>

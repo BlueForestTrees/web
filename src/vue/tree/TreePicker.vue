@@ -3,16 +3,19 @@
         <v-tabs :value="tab" @change="setTab" centered slider-color="primary">
             <v-tab href="#search">Recherche</v-tab>
             <v-tab href="#favoris">Favoris</v-tab>
-            <v-tab v-if="connected" href="#create">Nouveau</v-tab>
+            <v-tab href="#create">Nouveau</v-tab>
         </v-tabs>
         <v-divider/>
         <template v-if="tab==='search'">
-            <filters-bar/>
-            <filters-panel />
+            <filters-menu slot="left"/>
+            <filters-panel/>
             <search-result-panel @select="pickTree"/>
         </template>
         <favorites v-else-if="tab==='favoris'" :user="user" @select="pickSelection"/>
-        <create-tree v-else-if="connected && tab==='create'" @create="pickTree" no-title/>
+        <template v-else-if="tab==='create'">
+            <create-tree v-if="connected" @create="pickTree" no-title/>
+            <login-suscribe-list v-else title="Identifiez-vous pour pouvoir créer."/>
+        </template>
     </span>
 </template>
 <script>
@@ -23,13 +26,16 @@
     import SearchResultPanel from "../search/SearchResultPanel"
     import FiltersBar from "../search/FiltersBar"
     import FiltersPanel from "../search/FiltersPanel"
+    import FiltersMenu from "../search/FiltersMenu"
+    import SubpageTitle from "./SubpageTitle"
+    import LoginSuscribeList from "../common/LoginSuscribeList"
 
     const CreateTree = () => import(/* webpackChunkName: "CreateTree" */ './CreateTree')
     const Favorites = () => import(/* webpackChunkName: "Favorites"*/ "../home/Favorites")
 
     export default {
         name: 'tree-picker',
-        components: {FiltersPanel, FiltersBar, SearchResultPanel, CreateTree, Favorites},
+        components: {LoginSuscribeList, SubpageTitle, FiltersMenu, FiltersPanel, FiltersBar, SearchResultPanel, CreateTree, Favorites},
         methods: {
             async pickSelection(selection) {
                 const fragments = [TRUNK, OWNER]

@@ -22,7 +22,6 @@
     import SubpageTitle from "../tree/SubpageTitle"
     import UserIcon from "./UserIcon"
     import Editor from "../common/Editor"
-    import Vue from 'vue'
     import Saver from "../editor/Saver"
     import On from "../../const/on"
     import Card from "../common/Card"

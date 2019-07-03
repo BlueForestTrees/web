@@ -1,5 +1,5 @@
 <template>
-    <v-toolbar @click="$emit('click')" class="elevation-0" :color="color || 'whitegrey'" :dark="color==='primary'">
+    <v-toolbar @click="$emit('click')" class="elevation-0" :color="color || 'whitegrey'" :dark="color==='primary'" :dense="sub">
 
         <v-spacer v-if="centered"/>
         <slot name="left"></slot>
@@ -33,7 +33,7 @@
             titleClass() {
                 return this.sub ?
                     'font-weight-thin title' :
-                    "ma-3 display-1 font-weight-thin"
+                    "ma-3 title font-weight-medium"
             }
         },
     }

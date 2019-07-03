@@ -15,6 +15,7 @@
         <v-list-tile>
             <v-btn outline block class="elevation-0" @click="suscribe">Inscription</v-btn>
         </v-list-tile>
+        <v-list-tile v-if="title"><v-list-tile-sub-title>{{title}}</v-list-tile-sub-title></v-list-tile>
     </v-list>
 </template>
 
@@ -26,6 +27,9 @@
     export default {
         name: "login-suscribe-list",
         components: {ToIntro},
+        props: {
+            title: {type: String, default: null}
+        },
         computed: {
             ...mapState({user: s => s.user, userStatus: s => s.userStatus})
         },

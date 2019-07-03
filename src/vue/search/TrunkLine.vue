@@ -1,7 +1,7 @@
 <template>
     <v-list-tile :key="item._id" avatar @click="$emit('select', treefy(item))">
         <v-list-tile-action>
-            <v-list-tile-avatar class="trunk logo-petit"/>
+            <v-list-tile-avatar class="scope-tree logo-petit"/>
         </v-list-tile-action>
         <v-list-tile-content>
             <v-list-tile-title>{{ name(item) }}</v-list-tile-title>

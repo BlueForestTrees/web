@@ -3,7 +3,7 @@
         <subpage-title title="Vu récemment" icon="schedule"/>
         <v-card-text v-if="!basket.length" class="text-md-center"><br>Vous n'avez rien consulté récemment. <br><br>Faites une recherche pour trouver des choses intéressantes!</v-card-text>
         <div v-else>
-            <selectable-list :items="basket"/>
+            <selectable-list :items="basket" selection-key="recent"/>
         </div>
 
         <v-layout justify-center>

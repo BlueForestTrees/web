@@ -37,7 +37,7 @@ export default {
     compare: {left: null, right: null, leftAxises: null, rightAxises: null, axis: null},
     dialogs: dialogs(),
     nav: {
-        intro: false,
+        intro: ENV.INTRO,
         main: {tab: null},
         search: {cat: {opened: false}, owner: {opened: false}},
         treeRubanVisible: false, rightMenuVisible: false, dark: false, detailsDialog: false,
