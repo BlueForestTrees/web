@@ -1,15 +1,13 @@
 <template>
-    <v-card>
-        <search-list :ps="20" :action="On.SEARCH_ALL" :filter="filter" empty-search>
-            <template slot-scope="{item, last}">
-                <component v-bind:is="`${item.searchType}-line`" :item="item" @select="select"></component>
-                <v-divider v-if="!last"/>
-            </template>
-            <v-layout row justify-center slot="no-more">
-                <icon iconClass="blueforest logo"/>
-            </v-layout>
-        </search-list>
-    </v-card>
+    <search-list :ps="20" :action="On.SEARCH_ALL" :filter="filter" empty-search>
+        <template slot-scope="{item, last}">
+            <component v-bind:is="`${item.searchType}-line`" :item="item" @select="select"></component>
+            <v-divider v-if="!last"/>
+        </template>
+        <v-layout row justify-center slot="no-more">
+            <icon iconClass="blueforest logo"/>
+        </v-layout>
+    </search-list>
 </template>
 
 <script>

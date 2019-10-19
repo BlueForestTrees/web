@@ -1,12 +1,11 @@
 <template>
-    <v-layout column>
+    <v-layout column px-2>
         <transition-group name="slide-bottom">
             <template v-for="(panel,i) in visiblePanels">
                 <component :key="panel.key" :is="panel.type" :value="search[panel.key]" v-bind="panel.props"
                            @input="v=>input(panel.mutation,v)" @close="hidePanel(panel.key)"
                            :class="i+1 < visiblePanels.length ? 'mb-1':'mb-4'"/>
             </template>
-            <slot/>
         </transition-group>
     </v-layout>
 </template>

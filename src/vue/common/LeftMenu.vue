@@ -84,21 +84,6 @@
             </v-list-group>
 
 
-            <v-list-group v-if="onWall">
-                <template slot="activator">
-                    <v-list-tile>
-                        <v-list-tile-avatar>
-                            <v-flex class="tree-filter logo-big"/>
-                        </v-list-tile-avatar>
-                        <v-list-tile-content>
-                            <v-list-tile-title>Filtrer...</v-list-tile-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
-                </template>
-                <filters-bar @input="showPanel"/>
-            </v-list-group>
-
-
         </v-list>
 
         <v-list style="position:absolute;bottom:0.2em;width:100%" dense>
@@ -170,13 +155,6 @@
             }
         },
         methods: {
-            ...mapMutations({
-                doShowPanel: Do.SHOW_SEARCH_PANEL
-            }),
-            showPanel(name) {
-                this.hide()
-                this.doShowPanel(name)
-            },
             switchColors() {
                 this.nav.dark = !this.nav.dark
                 localStorage.setItem("dark", this.nav.dark)
